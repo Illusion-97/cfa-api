@@ -8,5 +8,6 @@ public interface FormateurService {
 	
 	List<FormateurDto> getAllContacts();
 	List<FormateurDto> getAllContacts(int page, int max);
+	FormateurDto findById(long id);
 
 }
