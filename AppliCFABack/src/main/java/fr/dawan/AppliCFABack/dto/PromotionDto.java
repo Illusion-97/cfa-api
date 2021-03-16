@@ -6,28 +6,47 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "promotion")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PromotionDto implements Serializable {
-
+	@XmlElement
 	private long id;
-
+	@XmlElement
 	private Date dateDebut;
-
+	@XmlElement
 	private Date dateFin;
-
+	@XmlElement
 	private CentreDto centre;
+	@XmlElement
+	private ProgrammePromotionDto programmePromotionDto;
+	@XmlElement
+	private ReferentDto referentDto;
+	@XmlElement
+	private List<EtudiantDto> etudiantsDto;
+	@XmlElement
+	private List<CoursDto> coursDto;
 
-	private ProgrammePromotionDto programmePromotion;
+	public PromotionDto() {
+		super();
+	}
 
-	private ReferentDto referent;
-
-	private List<EtudiantDto> etudiants;
-
-	private List<CoursDto> cours;
+	public PromotionDto(long id, Date dateDebut, Date dateFin, CentreDto centre,
+			ProgrammePromotionDto programmePromotionDto, ReferentDto referentDto, List<EtudiantDto> etudiantsDto,
+			List<CoursDto> coursDto) {
+		super();
+		this.id = id;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.centre = centre;
+		this.programmePromotionDto = programmePromotionDto;
+		this.referentDto = referentDto;
+		this.etudiantsDto = etudiantsDto;
+		this.coursDto = coursDto;
+	}
 
 	public long getId() {
 		return id;
@@ -61,36 +80,36 @@ public class PromotionDto implements Serializable {
 		this.centre = centre;
 	}
 
-	public ProgrammePromotionDto getProgrammePromotion() {
-		return programmePromotion;
+	public ProgrammePromotionDto getProgrammePromotionDto() {
+		return programmePromotionDto;
 	}
 
-	public void setProgrammePromotion(ProgrammePromotionDto programmePromotion) {
-		this.programmePromotion = programmePromotion;
+	public void setProgrammePromotionDto(ProgrammePromotionDto programmePromotionDto) {
+		this.programmePromotionDto = programmePromotionDto;
 	}
 
-	public ReferentDto getReferent() {
-		return referent;
+	public ReferentDto getReferentDto() {
+		return referentDto;
 	}
 
-	public void setReferent(ReferentDto referent) {
-		this.referent = referent;
+	public void setReferentDto(ReferentDto referentDto) {
+		this.referentDto = referentDto;
 	}
 
-	public List<EtudiantDto> getEtudiants() {
-		return etudiants;
+	public List<EtudiantDto> getEtudiantsDto() {
+		return etudiantsDto;
 	}
 
-	public void setEtudiants(List<EtudiantDto> etudiants) {
-		this.etudiants = etudiants;
+	public void setEtudiantsDto(List<EtudiantDto> etudiantsDto) {
+		this.etudiantsDto = etudiantsDto;
 	}
 
-	public List<CoursDto> getCours() {
-		return cours;
+	public List<CoursDto> getCoursDto() {
+		return coursDto;
 	}
 
-	public void setCours(List<CoursDto> cours) {
-		this.cours = cours;
+	public void setCours(List<CoursDto> coursDto) {
+		this.coursDto = coursDto;
 	}
 	
 	

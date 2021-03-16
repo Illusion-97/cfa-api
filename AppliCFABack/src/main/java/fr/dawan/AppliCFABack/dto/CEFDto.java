@@ -4,19 +4,32 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "cef")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CEFDto implements Serializable {
-
+	@XmlElement
 	private long id;
+	@XmlElement
+	private PersonneDto personneDto;
+	@XmlElement
+	private CentreDto centreDto;
 
-	private PersonneDto personne;
+	public CEFDto() {
+		super();
+	}
 
-	private CentreDto centre;
+	public CEFDto(long id, PersonneDto personneDto, CentreDto centreDto) {
+		super();
+		this.id = id;
+		this.personneDto = personneDto;
+		this.centreDto = centreDto;
+	}
 
+	
 	public long getId() {
 		return id;
 	}
@@ -25,21 +38,20 @@ public class CEFDto implements Serializable {
 		this.id = id;
 	}
 
-	public PersonneDto getPersonne() {
-		return personne;
+	public PersonneDto getPersonneDto() {
+		return personneDto;
 	}
 
-	public void setPersonne(PersonneDto personne) {
-		this.personne = personne;
+	public void setPersonneDto(PersonneDto personneDto) {
+		this.personneDto = personneDto;
 	}
 
-	public CentreDto getCentre() {
-		return centre;
+	public CentreDto getCentreDto() {
+		return centreDto;
 	}
 
-	public void setCentre(CentreDto centre) {
-		this.centre = centre;
+	public void setCentreDto(CentreDto centreDto) {
+		this.centreDto = centreDto;
 	}
-	
-	
+
 }

@@ -4,20 +4,33 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "note")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class NoteDto implements Serializable {
-
+	@XmlElement
 	private long id;
-
+	@XmlElement
 	private Double value;
+	@XmlElement
+	private ExamenDto examenDto;
+	@XmlElement
+	private EtudiantDto etudiantDto;
 
-	private ExamenDto examen;
-
-	private EtudiantDto etudiant;
+	public NoteDto() {
+		super();
+	}
+	
+	public NoteDto(long id, Double value, ExamenDto examenDto, EtudiantDto etudiantDto) {
+		super();
+		this.id = id;
+		this.value = value;
+		this.examenDto = examenDto;
+		this.etudiantDto = etudiantDto;
+	}
 
 	public long getId() {
 		return id;
@@ -35,20 +48,21 @@ public class NoteDto implements Serializable {
 		this.value = value;
 	}
 
-	public ExamenDto getExamen() {
-		return examen;
+	public ExamenDto getExamenDto() {
+		return examenDto;
 	}
 
-	public void setExamen(ExamenDto examen) {
-		this.examen = examen;
+	public void setExamenDto(ExamenDto examenDto) {
+		this.examenDto = examenDto;
 	}
 
-	public EtudiantDto getEtudiant() {
-		return etudiant;
+	public EtudiantDto getEtudiantDto() {
+		return etudiantDto;
 	}
 
-	public void setEtudiant(EtudiantDto etudiant) {
-		this.etudiant = etudiant;
+	public void setEtudiantDto(EtudiantDto etudiantDto) {
+		this.etudiantDto = etudiantDto;
 	}
 
+	
 }

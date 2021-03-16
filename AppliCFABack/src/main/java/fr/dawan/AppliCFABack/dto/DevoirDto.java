@@ -5,24 +5,39 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "devoir")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DevoirDto implements Serializable {
-
+	@XmlElement
 	private long id;
-
+	@XmlElement
 	private String nom;
-
+	@XmlElement
 	private String consigne;
-
+	@XmlElement
 	private Date debut;
-
+	@XmlElement
 	private Date fin;
+	@XmlElement
+	private CoursDto coursDto;
 
-	private CoursDto cours;
+	public DevoirDto() {
+		super();
+	}
+	
+	public DevoirDto(long id, String nom, String consigne, Date debut, Date fin, CoursDto coursDto) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.consigne = consigne;
+		this.debut = debut;
+		this.fin = fin;
+		this.coursDto = coursDto;
+	}
 
 	public long getId() {
 		return id;
@@ -64,13 +79,12 @@ public class DevoirDto implements Serializable {
 		this.fin = fin;
 	}
 
-	public CoursDto getCours() {
-		return cours;
+	public CoursDto getCoursDto() {
+		return coursDto;
 	}
 
-	public void setCours(CoursDto cours) {
-		this.cours = cours;
+	public void setCoursDto(CoursDto coursDto) {
+		this.coursDto = coursDto;
 	}
-	
 	
 }

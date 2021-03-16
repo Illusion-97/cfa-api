@@ -33,7 +33,7 @@ public class EtudiantController {
 		return etudiantService.getAll();
 	}
 
-	@GetMapping(value = "{id}", produces = "application/json")
+	@GetMapping(value = "/{id}", produces = "application/json")
 	public EtudiantDto getById(@PathVariable("id") long id) {
 		return etudiantService.getById(id);
 	}
@@ -51,7 +51,7 @@ public class EtudiantController {
 	// # 					DELETE 						#
 	// ##################################################
 
-	@DeleteMapping(value = "{id}", produces = "text/plain")
+	@DeleteMapping(value = "/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		try {
 			etudiantService.deleteById(id);

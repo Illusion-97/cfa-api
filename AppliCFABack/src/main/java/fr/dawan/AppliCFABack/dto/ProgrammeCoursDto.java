@@ -5,22 +5,36 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "programmeCours")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ProgrammeCoursDto implements Serializable {
-
+	@XmlElement
 	private long id;
-
+	@XmlElement
 	private String nom;
-
+	@XmlElement
 	private String description;
-
+	@XmlElement
 	private long dure;
+	@XmlElement
+	private List<CoursDto> coursDto;
 
-	private List<CoursDto> cours;
+	public ProgrammeCoursDto() {
+		super();
+	}
+	
+	public ProgrammeCoursDto(long id, String nom, String description, long dure, List<CoursDto> coursDto) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.description = description;
+		this.dure = dure;
+		this.coursDto = coursDto;
+	}
 
 	public long getId() {
 		return id;
@@ -54,12 +68,12 @@ public class ProgrammeCoursDto implements Serializable {
 		this.dure = dure;
 	}
 
-	public List<CoursDto> getCours() {
-		return cours;
+	public List<CoursDto> getCoursDto() {
+		return coursDto;
 	}
 
-	public void setCours(List<CoursDto> cours) {
-		this.cours = cours;
+	public void setCoursDto(List<CoursDto> coursDto) {
+		this.coursDto = coursDto;
 	}
 
 }

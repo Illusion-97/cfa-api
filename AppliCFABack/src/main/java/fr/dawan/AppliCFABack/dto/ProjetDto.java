@@ -4,27 +4,43 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "projet")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ProjetDto implements Serializable {
-
+	@XmlElement
 	private long id;
-
+	@XmlElement
 	private String nom;
-
+	@XmlElement
 	private String description;
-
-	private GroupeDto groupe;
-
+	@XmlElement
+	private GroupeDto groupeDto;
+	@XmlElement
 	private PersonneDto personneReferent;
-
+	@XmlElement
 	private TypeProjet type;
 
 	enum TypeProjet {
 		ENTREPRISE, PEDAGOGIQUE
+	}
+
+	public ProjetDto() {
+		super();
+	}
+
+	public ProjetDto(long id, String nom, String description, GroupeDto groupeDto, PersonneDto personneReferent,
+			TypeProjet type) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.description = description;
+		this.groupeDto = groupeDto;
+		this.personneReferent = personneReferent;
+		this.type = type;
 	}
 
 	public long getId() {
@@ -51,12 +67,12 @@ public class ProjetDto implements Serializable {
 		this.description = description;
 	}
 
-	public GroupeDto getGroupe() {
-		return groupe;
+	public GroupeDto getGroupeDto() {
+		return groupeDto;
 	}
 
-	public void setGroupe(GroupeDto groupe) {
-		this.groupe = groupe;
+	public void setGroupeDto(GroupeDto groupeDto) {
+		this.groupeDto = groupeDto;
 	}
 
 	public PersonneDto getPersonneReferent() {
