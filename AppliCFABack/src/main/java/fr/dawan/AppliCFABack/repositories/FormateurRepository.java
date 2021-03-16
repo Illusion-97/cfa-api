@@ -7,5 +7,5 @@ import fr.dawan.AppliCFABack.entities.Formateur;
 
 @Repository
 public interface FormateurRepository extends JpaRepository<Formateur, Long> {
-
+	
 }
