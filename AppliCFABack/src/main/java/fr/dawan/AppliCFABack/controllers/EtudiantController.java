@@ -15,10 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CoursDto;
+import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.FormateurDto;
+import fr.dawan.AppliCFABack.dto.GroupeDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PersonneDto;
+import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 
@@ -30,7 +37,7 @@ public class EtudiantController {
 	EtudiantService etudiantService;
 
 	// ##################################################
-	// # 					GET 						#
+	// # 					CRUD 						#
 	// ##################################################
 
 	/*
@@ -47,6 +54,36 @@ public class EtudiantController {
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public EtudiantDto getById(@PathVariable("id") long id) {
 		return etudiantService.getById(id);
+	}
+	
+	/*
+	 * On sauvegarde l'étudiant en paramètre dans la bdd
+	 */
+	@PostMapping(consumes = "application/json", produces = "application/json")
+	public EtudiantDto save(@RequestBody EtudiantDto eDto) {
+		return etudiantService.saveOrUpdate(eDto);
+	}
+	
+	/*
+	 * On supprime l'étudiant avec l'id passé en paramètre
+	 */
+	@DeleteMapping(value = "/{id}", produces = "text/plain")
+	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
+		try {
+			etudiantService.deleteById(id);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
+		}
+
+	}
+	
+	/*
+	 * On update l'étudiant passé en paramètre
+	 */
+	@PutMapping(consumes = "application/json", produces = "application/json")
+	public EtudiantDto update(@RequestBody EtudiantDto eDto) {
+		return etudiantService.saveOrUpdate(eDto);
 	}
 		
 	// ##################################################
@@ -89,7 +126,7 @@ public class EtudiantController {
 	 * On récupère les groupes dont l'étudiant fait parti à partir de son id
 	 */
 	@GetMapping(value = "/{id}/groupes", produces = "application/json")
-	public List<PromotionDto> getGroupesByIdEtudiant(@PathVariable("id") long id){
+	public List<GroupeDto> getGroupesByIdEtudiant(@PathVariable("id") long id){
 		return etudiantService.getGroupesByIdEtudiant(id);
 	}
 	
@@ -97,7 +134,7 @@ public class EtudiantController {
 	 * On récupère les absences de l'étudiant à partir de son id
 	 */
 	@GetMapping(value = "/{id}/absences", produces = "application/json")
-	public List<PromotionDto> getAbsencesByIdEtudiant(@PathVariable("id") long id){
+	public List<AbsenceDto> getAbsencesByIdEtudiant(@PathVariable("id") long id){
 		return etudiantService.getAbsencesByIdEtudiant(id);
 	}
 	
@@ -105,46 +142,57 @@ public class EtudiantController {
 	// # 			 Get : 2eme Niveau 					#
 	// ##################################################
 	
-	
-	// ##################################################
-	// # 					POST 						#
-	// ##################################################
-	
 	/*
-	 * On sauvegarde l'étudiant en paramètre dans la bdd
+	 * On récupère les cours de l'étudiant à parti de son id en passant pas sa promotion
 	 */
-	@PostMapping(consumes = "application/json", produces = "application/json")
-	public EtudiantDto save(@RequestBody EtudiantDto eDto) {
-		return etudiantService.saveOrUpdate(eDto);
+	@GetMapping(value = "/{id}/cours", produces = "application/json")
+	public List<CoursDto> getCoursByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getCoursByIdEtudiant(id);
 	}
-
-	// ##################################################
-	// # 					DELETE 						#
-	// ##################################################
-
+	
 	/*
-	 * On supprime l'étudiant avec l'id passé en paramètre
+	 * On récupère les projets de l'étudiant à parti de son id en passant pas ses groupes
 	 */
-	@DeleteMapping(value = "/{id}", produces = "text/plain")
-	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
-		try {
-			etudiantService.deleteById(id);
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
-		}
-
+	@GetMapping(value = "/{id}/projets", produces = "application/json")
+	public List<ProjetDto> getProjetByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getProjetByIdEtudiant(id);
+	}
+	
+	/*
+	 * On récupère l'adresse de l'étudiant à partir de son id en passant par Personne
+	 */
+	@GetMapping(value = "/{id}/adresse", produces = "application/json")
+	public List<AdresseDto> getAdresseByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getAdresseByIdEtudiant(id);
 	}
 	
 	// ##################################################
-	// # 					PUT 						#
+	// # 			 Get : 3eme Niveau 					#
 	// ##################################################
 	
 	/*
-	 * On update l'étudiant passé en paramètre
+	 * On récupère les formateurs de l'étudiant passant par : etudiant.promotions.cours.formateurs à partir de son id
 	 */
-	@PutMapping(consumes = "application/json", produces = "application/json")
-	public EtudiantDto update(@RequestBody EtudiantDto eDto) {
-		return etudiantService.saveOrUpdate(eDto);
+	@GetMapping(value = "/{id}/formateurs", produces = "application/json")
+	public List<FormateurDto> getFormateursByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getFormateursByIdEtudiant(id);
 	}
+	
+	/*
+	 * On récupère les devoirs de l'étudiant passant par : etudiant.promotions.cours.devoirs à partir de son id
+	 */
+	@GetMapping(value = "/{id}/devoirs", produces = "application/json")
+	public List<DevoirDto> getDevoirsByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getDevoirsByIdEtudiant(id);
+	}
+	
+	/*
+	 * On récupère les examens de l'étudiant passant par : etudiant.promotions.cours.examens à partir de son id
+	 */
+	@GetMapping(value = "/{id}/examens", produces = "application/json")
+	public List<ExamenDto> getExamensByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getExamensByIdEtudiant(id);
+	}
+	
+	
 }
