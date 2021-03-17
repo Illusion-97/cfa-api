@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +24,6 @@ public class Etudiant {
 	@Column(nullable = false, length = 255)
 	private List<File> fiches;
 	*/
-	
 	@OneToOne
 	private Personne personne;
 	
@@ -61,11 +61,11 @@ public class Etudiant {
 		this.groupes = groupes;
 	}
 
-	public long getId() {
+	public long getIdEtudiant() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdEtudiant(long id) {
 		this.id = id;
 	}
 /*

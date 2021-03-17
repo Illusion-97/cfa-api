@@ -39,11 +39,11 @@ public class Note {
 		this.etudiant = etudiant;
 	}
 
-	public long getId() {
+	public long getIdNote() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdNote(long id) {
 		this.id = id;
 	}
 

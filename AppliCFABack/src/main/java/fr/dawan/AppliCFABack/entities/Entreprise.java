@@ -43,11 +43,11 @@ public class Entreprise {
 		this.etudiants = etudiants;
 	}
 
-	public long getId() {
+	public long getIdEntreprise() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdEntreprise(long id) {
 		this.id = id;
 	}
 

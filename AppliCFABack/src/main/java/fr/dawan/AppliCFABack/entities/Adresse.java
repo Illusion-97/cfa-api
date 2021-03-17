@@ -17,7 +17,7 @@ public class Adresse {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long idAdresse;
 	
 	@Column(nullable = false, length = 255)
 	private long numero;
@@ -32,7 +32,7 @@ public class Adresse {
 	private String codePostal;	
 	
 	@OneToMany(mappedBy = "adresse", cascade = CascadeType.ALL)
-	private List<Personne> personne;
+	private List<Personne> personnes;
 	
 	@OneToOne
 	private Centre centre;
@@ -47,25 +47,25 @@ public class Adresse {
 		super();
 	}
 
-	public Adresse(long id, long numero, String rue, String ville, String codePostal, List<Personne> personne, Centre centre,
+	public Adresse(long idAdresse, long numero, String rue, String ville, String codePostal, List<Personne> personnes, Centre centre,
 			Entreprise entreprise) {
 		super();
-		this.id = id;
+		this.idAdresse = idAdresse;
 		this.numero = numero;
 		this.rue = rue;
 		this.ville = ville;
 		this.codePostal = codePostal;
-		this.personne = personne;
+		this.personnes = personnes;
 		this.centre = centre;
 		this.entreprise = entreprise;
 	}
 
-	public long getId() {
-		return id;
+	public long getIdAdresse() {
+		return idAdresse;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setIdAdresse(long idAdresse) {
+		this.idAdresse = idAdresse;
 	}
 
 	public long getNumero() {
@@ -101,11 +101,11 @@ public class Adresse {
 	}
 
 	public List<Personne> getPersonne() {
-		return personne;
+		return personnes;
 	}
 
-	public void setPersonne(List<Personne> personne) {
-		this.personne = personne;
+	public void setPersonne(List<Personne> personnes) {
+		this.personnes = personnes;
 	}
 
 	public Centre getCentre() {

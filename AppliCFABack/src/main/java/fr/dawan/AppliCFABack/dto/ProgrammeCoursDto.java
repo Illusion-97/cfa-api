@@ -21,26 +21,26 @@ public class ProgrammeCoursDto implements Serializable {
 	@XmlElement
 	private long dure;
 	@XmlElement
-	private List<CoursDto> coursDto;
+	private List<CoursDto> cours;
 
 	public ProgrammeCoursDto() {
 		super();
 	}
 	
-	public ProgrammeCoursDto(long id, String nom, String description, long dure, List<CoursDto> coursDto) {
+	public ProgrammeCoursDto(long id, String nom, String description, long dure, List<CoursDto> cours) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.description = description;
 		this.dure = dure;
-		this.coursDto = coursDto;
+		this.cours = cours;
 	}
 
-	public long getId() {
+	public long getIdProgrammeCoursDto() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdProgrammeCoursDto(long id) {
 		this.id = id;
 	}
 
@@ -69,11 +69,11 @@ public class ProgrammeCoursDto implements Serializable {
 	}
 
 	public List<CoursDto> getCoursDto() {
-		return coursDto;
+		return cours;
 	}
 
 	public void setCoursDto(List<CoursDto> coursDto) {
-		this.coursDto = coursDto;
+		this.cours = coursDto;
 	}
 
 }

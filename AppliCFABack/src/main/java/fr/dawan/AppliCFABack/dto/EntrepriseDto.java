@@ -17,27 +17,27 @@ public class EntrepriseDto implements Serializable {
 	@XmlElement
 	private String nom;
 	@XmlElement
-	private AdresseDto adresseDto;
+	private AdresseDto adresse;
 	@XmlElement
-	private List<EtudiantDto> etudiantDto;
+	private List<EtudiantDto> etudiants;
 
 	public EntrepriseDto() {
 		super();
 	}
 
-	public EntrepriseDto(long id, String nom, AdresseDto adresseDto, List<EtudiantDto> etudiantDto) {
+	public EntrepriseDto(long id, String nom, AdresseDto adresse, List<EtudiantDto> etudiants) {
 		super();
 		this.id = id;
 		this.nom = nom;
-		this.adresseDto = adresseDto;
-		this.etudiantDto = etudiantDto;
+		this.adresse = adresse;
+		this.etudiants = etudiants;
 	}
 
-	public long getId() {
+	public long getIdEntrepriseDto() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdEntrepriseDto(long id) {
 		this.id = id;
 	}
 
@@ -50,19 +50,19 @@ public class EntrepriseDto implements Serializable {
 	}
 
 	public AdresseDto getAdresseDto() {
-		return adresseDto;
+		return adresse;
 	}
 
-	public void setAdresseDto(AdresseDto adresseDto) {
-		this.adresseDto = adresseDto;
+	public void setAdresseDto(AdresseDto adresse) {
+		this.adresse = adresse;
 	}
 
 	public List<EtudiantDto> getEtudiantDto() {
-		return etudiantDto;
+		return etudiants;
 	}
 
 	public void setEtudiantDto(List<EtudiantDto> etudiantDto) {
-		this.etudiantDto = etudiantDto;
+		this.etudiants = etudiantDto;
 	}
 	
 }

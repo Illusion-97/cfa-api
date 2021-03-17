@@ -17,27 +17,27 @@ public class GroupeDto implements Serializable {
 	@XmlElement
 	private String nom;
 	@XmlElement
-	private List<EtudiantDto> etudiantDto;
+	private List<EtudiantDto> etudiants;
 	@XmlElement
-	private ProjetDto projetDto;
+	private ProjetDto projet;
 
 	public GroupeDto() {
 		super();
 	}
 	
-	public GroupeDto(long id, String nom, List<EtudiantDto> etudiantDto, ProjetDto projetDto) {
+	public GroupeDto(long id, String nom, List<EtudiantDto> etudiants, ProjetDto projet) {
 		super();
 		this.id = id;
 		this.nom = nom;
-		this.etudiantDto = etudiantDto;
-		this.projetDto = projetDto;
+		this.etudiants = etudiants;
+		this.projet = projet;
 	}
 
-	public long getId() {
+	public long getIdGroupeDto() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdGroupeDto(long id) {
 		this.id = id;
 	}
 
@@ -50,19 +50,19 @@ public class GroupeDto implements Serializable {
 	}
 
 	public List<EtudiantDto> getEtudiantDto() {
-		return etudiantDto;
+		return etudiants;
 	}
 
-	public void setEtudiantDto(List<EtudiantDto> etudiantDto) {
-		this.etudiantDto = etudiantDto;
+	public void setEtudiantDto(List<EtudiantDto> etudiants) {
+		this.etudiants = etudiants;
 	}
 
 	public ProjetDto getProjetDto() {
-		return projetDto;
+		return projet;
 	}
 
-	public void setProjetDto(ProjetDto projetDto) {
-		this.projetDto = projetDto;
+	public void setProjetDto(ProjetDto projet) {
+		this.projet = projet;
 	}
 
 	

@@ -12,7 +12,7 @@ public class Admin {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long idAdmin;
 	
 	@OneToOne
 	private Personne personne;
@@ -25,18 +25,18 @@ public class Admin {
 		super();
 	}
 
-	public Admin(long id, Personne personne) {
+	public Admin(long idAdmin, Personne personne) {
 		super();
-		this.id = id;
+		this.idAdmin = idAdmin;
 		this.personne = personne;
 	}
 
-	public long getId() {
-		return id;
+	public long getIdAdmin() {
+		return idAdmin;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setIdAdmin(long idAdmin) {
+		this.idAdmin = idAdmin;
 	}
 
 	public Personne getPersonne() {

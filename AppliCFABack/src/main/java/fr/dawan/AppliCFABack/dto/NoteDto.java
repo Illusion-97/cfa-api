@@ -16,27 +16,27 @@ public class NoteDto implements Serializable {
 	@XmlElement
 	private Double value;
 	@XmlElement
-	private ExamenDto examenDto;
+	private ExamenDto examen;
 	@XmlElement
-	private EtudiantDto etudiantDto;
+	private EtudiantDto etudiant;
 
 	public NoteDto() {
 		super();
 	}
 	
-	public NoteDto(long id, Double value, ExamenDto examenDto, EtudiantDto etudiantDto) {
+	public NoteDto(long id, Double value, ExamenDto examen, EtudiantDto etudiant) {
 		super();
 		this.id = id;
 		this.value = value;
-		this.examenDto = examenDto;
-		this.etudiantDto = etudiantDto;
+		this.examen = examen;
+		this.etudiant = etudiant;
 	}
 
-	public long getId() {
+	public long getIdNoteDto() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdNoteDto(long id) {
 		this.id = id;
 	}
 
@@ -49,19 +49,19 @@ public class NoteDto implements Serializable {
 	}
 
 	public ExamenDto getExamenDto() {
-		return examenDto;
+		return examen;
 	}
 
-	public void setExamenDto(ExamenDto examenDto) {
-		this.examenDto = examenDto;
+	public void setExamenDto(ExamenDto examen) {
+		this.examen = examen;
 	}
 
 	public EtudiantDto getEtudiantDto() {
-		return etudiantDto;
+		return etudiant;
 	}
 
-	public void setEtudiantDto(EtudiantDto etudiantDto) {
-		this.etudiantDto = etudiantDto;
+	public void setEtudiantDto(EtudiantDto etudiant) {
+		this.etudiant = etudiant;
 	}
 
 	

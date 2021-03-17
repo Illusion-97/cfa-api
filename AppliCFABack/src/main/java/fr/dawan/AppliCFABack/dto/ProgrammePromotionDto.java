@@ -19,25 +19,25 @@ public class ProgrammePromotionDto implements Serializable {
 	@XmlElement
 	private String Description;
 	@XmlElement
-	private List<PromotionDto> promotionDto;
+	private List<PromotionDto> promotions;
 
 	public ProgrammePromotionDto() {
 		super();
 	}
 
-	public ProgrammePromotionDto(long id, String nom, String description, List<PromotionDto> promotionDto) {
+	public ProgrammePromotionDto(long id, String nom, String description, List<PromotionDto> promotions) {
 		super();
 		this.id = id;
 		Nom = nom;
 		Description = description;
-		this.promotionDto = promotionDto;
+		this.promotions = promotions;
 	}
 
-	public long getId() {
+	public long getIdProgrammePromotionDto() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdProgrammePromotionDto(long id) {
 		this.id = id;
 	}
 
@@ -58,11 +58,11 @@ public class ProgrammePromotionDto implements Serializable {
 	}
 
 	public List<PromotionDto> getPromotionDto() {
-		return promotionDto;
+		return promotions;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotionDto) {
-		this.promotionDto = promotionDto;
+	public void setPromotionDto(List<PromotionDto> promotions) {
+		this.promotions = promotions;
 	}
 
 

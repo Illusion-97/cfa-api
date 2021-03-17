@@ -34,11 +34,11 @@ public class CEF {
 		this.centre = centre;
 	}
 
-	public long getId() {
+	public long getIdCEF() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdCEF(long id) {
 		this.id = id;
 	}
 

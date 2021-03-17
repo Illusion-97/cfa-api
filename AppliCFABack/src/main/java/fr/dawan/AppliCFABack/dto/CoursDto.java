@@ -24,15 +24,15 @@ public class CoursDto implements Serializable {
 	@XmlElement
 	private String noteEntraide;
 	@XmlElement
-	private ProgrammeCoursDto programmeCoursDto;
+	private ProgrammeCoursDto programmeCours;
 	@XmlElement
-	private List<ExamenDto> examenDto;
+	private List<ExamenDto> examens;
 	@XmlElement
-	private List<DevoirDto> devoirDto;
+	private List<DevoirDto> devoirs;
 	@XmlElement
-	private List<PromotionDto> promotionDto;
+	private List<PromotionDto> promotions;
 	@XmlElement
-	private List<FormateurDto> formateurDto;
+	private List<FormateurDto> formateurs;
 
 	
 	public CoursDto() {
@@ -40,26 +40,26 @@ public class CoursDto implements Serializable {
 	}
 	
 	public CoursDto(long id, Date dateDebut, Date dateFin, String noteInformation, String noteEntraide,
-			ProgrammeCoursDto programmeCoursDto, List<ExamenDto> examenDto, List<DevoirDto> devoirDto,
-			List<PromotionDto> promotionDto, List<FormateurDto> formateurDto) {
+			ProgrammeCoursDto programmeCours, List<ExamenDto> examens, List<DevoirDto> devoirs,
+			List<PromotionDto> promotions, List<FormateurDto> formateurs) {
 		super();
 		this.id = id;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.noteInformation = noteInformation;
 		this.noteEntraide = noteEntraide;
-		this.programmeCoursDto = programmeCoursDto;
-		this.examenDto = examenDto;
-		this.devoirDto = devoirDto;
-		this.promotionDto = promotionDto;
-		this.formateurDto = formateurDto;
+		this.programmeCours = programmeCours;
+		this.examens = examens;
+		this.devoirs = devoirs;
+		this.promotions = promotions;
+		this.formateurs = formateurs;
 	}
 
-	public long getId() {
+	public long getIdCoursDto() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdCoursDto(long id) {
 		this.id = id;
 	}
 
@@ -96,43 +96,43 @@ public class CoursDto implements Serializable {
 	}
 
 	public ProgrammeCoursDto getProgrammeCoursDto() {
-		return programmeCoursDto;
+		return programmeCours;
 	}
 
-	public void setProgrammeCoursDto(ProgrammeCoursDto programmeCoursDto) {
-		this.programmeCoursDto = programmeCoursDto;
+	public void setProgrammeCoursDto(ProgrammeCoursDto programmeCours) {
+		this.programmeCours = programmeCours;
 	}
 
 	public List<ExamenDto> getExamenDto() {
-		return examenDto;
+		return examens;
 	}
 
-	public void setExamenDto(List<ExamenDto> examenDto) {
-		this.examenDto = examenDto;
+	public void setExamenDto(List<ExamenDto> examens) {
+		this.examens = examens;
 	}
 
 	public List<DevoirDto> getDevoirDto() {
-		return devoirDto;
+		return devoirs;
 	}
 
-	public void setDevoirDto(List<DevoirDto> devoirDto) {
-		this.devoirDto = devoirDto;
+	public void setDevoirDto(List<DevoirDto> devoirs) {
+		this.devoirs = devoirs;
 	}
 
 	public List<PromotionDto> getPromotionDto() {
-		return promotionDto;
+		return promotions;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotionDto) {
-		this.promotionDto = promotionDto;
+	public void setPromotionDto(List<PromotionDto> promotions) {
+		this.promotions = promotions;
 	}
 
 	public List<FormateurDto> getFormateurDto() {
-		return formateurDto;
+		return formateurs;
 	}
 
-	public void setFormateurDto(List<FormateurDto> formateurDto) {
-		this.formateurDto = formateurDto;
+	public void setFormateurDto(List<FormateurDto> formateurs) {
+		this.formateurs = formateurs;
 	}
 
 

@@ -52,11 +52,11 @@ public class Projet {
 		this.type = type;
 	}
 
-	public long getId() {
+	public long getIdProjet() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdProjet(long id) {
 		this.id = id;
 	}
 

@@ -44,11 +44,11 @@ public class Examen {
 		this.cours = cours;
 	}
 
-	public long getId() {
+	public long getIdExamen() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdExamen(long id) {
 		this.id = id;
 	}
 

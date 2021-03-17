@@ -37,11 +37,11 @@ public class Formateur {
 		this.cours = cours;
 	}
 
-	public long getId() {
+	public long getIdFormateur() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdFormateur(long id) {
 		this.id = id;
 	}
 

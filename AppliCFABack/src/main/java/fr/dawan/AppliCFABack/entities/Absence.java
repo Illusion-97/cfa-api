@@ -15,7 +15,7 @@ public class Absence {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long idAbsence;
 	
 	@Column(nullable = false, length = 255)
 	private Date dateDebut;
@@ -36,21 +36,21 @@ public class Absence {
 		super();
 	}
 
-	public Absence(long id, Date dateDebut, Date dateFin, String justificatif, Etudiant etudiant) {
+	public Absence(long idAbsence, Date dateDebut, Date dateFin, String justificatif, Etudiant etudiant) {
 		super();
-		this.id = id;
+		this.idAbsence = idAbsence;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.justificatif = justificatif;
 		this.etudiant = etudiant;
 	}
 
-	public long getId() {
-		return id;
+	public long getIdAbsence() {
+		return idAbsence;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setIdAbsence(long id) {
+		this.idAbsence = id;
 	}
 
 	public Date getDateDebut() {

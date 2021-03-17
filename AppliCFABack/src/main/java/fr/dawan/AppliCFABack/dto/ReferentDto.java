@@ -15,43 +15,43 @@ public class ReferentDto implements Serializable {
 	@XmlElement
 	private long id;
 	@XmlElement
-	private PersonneDto personneDto;
+	private PersonneDto personne;
 	@XmlElement
-	private List<PromotionDto> promotionDto;
+	private List<PromotionDto> promotion;
 
 	public ReferentDto() {
 		super();
 	}
 
-	public ReferentDto(long id, PersonneDto personneDto, List<PromotionDto> promotionDto) {
+	public ReferentDto(long id, PersonneDto personne, List<PromotionDto> promotion) {
 		super();
 		this.id = id;
-		this.personneDto = personneDto;
-		this.promotionDto = promotionDto;
+		this.personne = personne;
+		this.promotion = promotion;
 	}
 
-	public long getId() {
+	public long getIdReferentDto() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdReferentDto(long id) {
 		this.id = id;
 	}
 
 	public PersonneDto getPersonneDto() {
-		return personneDto;
+		return personne;
 	}
 
-	public void setPersonneDto(PersonneDto personneDto) {
-		this.personneDto = personneDto;
+	public void setPersonneDto(PersonneDto personne) {
+		this.personne = personne;
 	}
 
 	public List<PromotionDto> getPromotionDto() {
-		return promotionDto;
+		return promotion;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotionDto) {
-		this.promotionDto = promotionDto;
+	public void setPromotionDto(List<PromotionDto> promotion) {
+		this.promotion = promotion;
 	}
 
 }

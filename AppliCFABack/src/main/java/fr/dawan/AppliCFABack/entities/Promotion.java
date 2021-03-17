@@ -60,11 +60,11 @@ public class Promotion {
 		this.referent = referent;
 	}
 
-	public long getId() {
+	public long getIdPromotion() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdPromotion(long id) {
 		this.id = id;
 	}
 
