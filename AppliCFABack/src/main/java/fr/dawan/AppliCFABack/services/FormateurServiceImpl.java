@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CoursDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
-import fr.dawan.AppliCFABack.dto.PersonneDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Personne;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 
 @Service
@@ -65,7 +63,7 @@ public class FormateurServiceImpl implements FormateurService {
 	}
 
 	@Override
-	public FormateurDto insert(FormateurDto formaDto) {
+	public FormateurDto insertUpdate(FormateurDto formaDto) {
 		Formateur f = DtoTools.convert(formaDto, Formateur.class);
 		formateurRepository.saveAndFlush(f);
 		return DtoTools.convert(f, FormateurDto.class);

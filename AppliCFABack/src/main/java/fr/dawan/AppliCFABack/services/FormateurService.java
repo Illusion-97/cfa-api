@@ -4,7 +4,6 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CoursDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
-import fr.dawan.AppliCFABack.dto.PersonneDto;
 
 public interface FormateurService {
 
@@ -18,7 +17,7 @@ public interface FormateurService {
 
 	FormateurDto findByCours(CoursDto coursDto);
 
-	FormateurDto insert(FormateurDto formateurDto);
+	FormateurDto insertUpdate(FormateurDto formateurDto);
 	
 	void deleteById(long id);
 
