@@ -6,20 +6,33 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "examen")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ExamenDto implements Serializable {
-
+	@XmlElement
 	private long id;
-
+	@XmlElement
 	private Date date;
+	@XmlElement
+	private List<NoteDto> noteDto;
+	@XmlElement
+	private CoursDto coursDto;
 
-	private List<NoteDto> notes;
-
-	private CoursDto cours;
+	public ExamenDto() {
+		super();
+	}
+	
+	public ExamenDto(long id, Date date, List<NoteDto> noteDto, CoursDto coursDto) {
+		super();
+		this.id = id;
+		this.date = date;
+		this.noteDto = noteDto;
+		this.coursDto = coursDto;
+	}
 
 	public long getId() {
 		return id;
@@ -37,21 +50,21 @@ public class ExamenDto implements Serializable {
 		this.date = date;
 	}
 
-	public List<NoteDto> getNotes() {
-		return notes;
+	public List<NoteDto> getNoteDto() {
+		return noteDto;
 	}
 
-	public void setNotes(List<NoteDto> notes) {
-		this.notes = notes;
+	public void setNoteDto(List<NoteDto> noteDto) {
+		this.noteDto = noteDto;
 	}
 
-	public CoursDto getCours() {
-		return cours;
+	public CoursDto getCoursDto() {
+		return coursDto;
 	}
 
-	public void setCours(CoursDto cours) {
-		this.cours = cours;
+	public void setCoursDto(CoursDto coursDto) {
+		this.coursDto = coursDto;
 	}
-	
+
 	
 }

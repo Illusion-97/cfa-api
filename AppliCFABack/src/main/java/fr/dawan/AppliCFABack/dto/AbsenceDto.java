@@ -5,22 +5,38 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "absence")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AbsenceDto implements Serializable {
-
+	@XmlElement
 	private long id;
-
+	@XmlElement
 	private Date dateDebut;
-
+	@XmlElement
 	private Date dateFin;
-
+	@XmlElement
 	private String justificatif;
+	@XmlElement
+	private EtudiantDto etudiantDto;
 
-	private EtudiantDto etudiant;
+	public AbsenceDto() {
+		super();
+	}
+	
+	public AbsenceDto(long id, Date dateDebut, Date dateFin, String justificatif, EtudiantDto etudiantDto) {
+		super();
+		this.id = id;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.justificatif = justificatif;
+		this.etudiantDto = etudiantDto;
+	}
+
+
 
 	public long getId() {
 		return id;
@@ -54,13 +70,12 @@ public class AbsenceDto implements Serializable {
 		this.justificatif = justificatif;
 	}
 
-	public EtudiantDto getEtudiant() {
-		return etudiant;
+	public EtudiantDto getEtudiantDto() {
+		return etudiantDto;
 	}
 
-	public void setEtudiant(EtudiantDto etudiant) {
-		this.etudiant = etudiant;
+	public void setEtudiantDto(EtudiantDto etudiantDto) {
+		this.etudiantDto = etudiantDto;
 	}
-	
-	
+
 }

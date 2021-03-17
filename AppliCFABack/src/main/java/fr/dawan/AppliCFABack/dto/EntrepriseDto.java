@@ -5,20 +5,33 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "entreprise")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EntrepriseDto implements Serializable {
-
+	@XmlElement
 	private long id;
-
+	@XmlElement
 	private String nom;
+	@XmlElement
+	private AdresseDto adresseDto;
+	@XmlElement
+	private List<EtudiantDto> etudiantDto;
 
-	private AdresseDto adresse;
+	public EntrepriseDto() {
+		super();
+	}
 
-	private List<EtudiantDto> etudiants;
+	public EntrepriseDto(long id, String nom, AdresseDto adresseDto, List<EtudiantDto> etudiantDto) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.adresseDto = adresseDto;
+		this.etudiantDto = etudiantDto;
+	}
 
 	public long getId() {
 		return id;
@@ -36,21 +49,20 @@ public class EntrepriseDto implements Serializable {
 		this.nom = nom;
 	}
 
-	public AdresseDto getAdresse() {
-		return adresse;
+	public AdresseDto getAdresseDto() {
+		return adresseDto;
 	}
 
-	public void setAdresse(AdresseDto adresse) {
-		this.adresse = adresse;
+	public void setAdresseDto(AdresseDto adresseDto) {
+		this.adresseDto = adresseDto;
 	}
 
-	public List<EtudiantDto> getEtudiants() {
-		return etudiants;
+	public List<EtudiantDto> getEtudiantDto() {
+		return etudiantDto;
 	}
 
-	public void setEtudiants(List<EtudiantDto> etudiants) {
-		this.etudiants = etudiants;
+	public void setEtudiantDto(List<EtudiantDto> etudiantDto) {
+		this.etudiantDto = etudiantDto;
 	}
-	
 	
 }
