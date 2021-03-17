@@ -11,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CoursDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
+import fr.dawan.AppliCFABack.dto.PersonneDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.Personne;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 
 @Service
@@ -23,7 +26,7 @@ public class FormateurServiceImpl implements FormateurService {
 	private FormateurRepository formateurRepository;
 
 	@Override
-	public List<FormateurDto> getAllContacts() {
+	public List<FormateurDto> getAll() {
 		List<Formateur> formateurs = formateurRepository.findAll();
 		List<FormateurDto> res = new ArrayList<FormateurDto>();
 		for (Formateur f : formateurs) {
@@ -33,7 +36,7 @@ public class FormateurServiceImpl implements FormateurService {
 	}
 
 	@Override
-	public List<FormateurDto> getAllContacts(int page, int max) {
+	public List<FormateurDto> getAll(int page, int max) {
 		List<Formateur> formateurs = formateurRepository.findAll(PageRequest.of(page, max)).get()
 				.collect(Collectors.toList());
 		List<FormateurDto> res = new ArrayList<FormateurDto>();
@@ -49,6 +52,29 @@ public class FormateurServiceImpl implements FormateurService {
 		if (formateurOpt.isPresent())
 			return DtoTools.convert(formateurOpt.get(), FormateurDto.class);
 		return null;
+	}
+
+	@Override
+	public CoursDto findByFormateurId(long id) {
+		return null;
+	}
+
+	@Override
+	public FormateurDto findByCours(CoursDto coursDto) {
+		return null;
+	}
+
+	@Override
+	public FormateurDto insert(FormateurDto formaDto) {
+		Formateur f = DtoTools.convert(formaDto, Formateur.class);
+		formateurRepository.saveAndFlush(f);
+		return DtoTools.convert(f, FormateurDto.class);
+
+	}
+
+	@Override
+	public void deleteById(long id) {
+		formateurRepository.deleteById(id);
 	}
 
 }
