@@ -5,26 +5,46 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "adresse")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AdresseDto implements Serializable {
-
+	@XmlElement
 	private long id;
-
+	@XmlElement
 	private long numero;
-
+	@XmlElement
 	private String rue;
-
+	@XmlElement
 	private String ville;
-
+	@XmlElement
 	private String codePostal;
+	@XmlElement
+	private List<PersonneDto> personneDto;
+	@XmlElement
+	private CentreDto centreDto;
+	@XmlElement
+	private EntrepriseDto entrepriseDto;
 
-	private List<PersonneDto> personne;
+	public AdresseDto() {
+		super();
+	}
 
-	private CentreDto centre;
+	public AdresseDto(long id, long numero, String rue, String ville, String codePostal, List<PersonneDto> personneDto,
+			CentreDto centreDto, EntrepriseDto entrepriseDto) {
+		super();
+		this.id = id;
+		this.numero = numero;
+		this.rue = rue;
+		this.ville = ville;
+		this.codePostal = codePostal;
+		this.personneDto = personneDto;
+		this.centreDto = centreDto;
+		this.entrepriseDto = entrepriseDto;
+	}
 
 	public long getId() {
 		return id;
@@ -66,29 +86,29 @@ public class AdresseDto implements Serializable {
 		this.codePostal = codePostal;
 	}
 
-	public List<PersonneDto> getPersonne() {
-		return personne;
+	public List<PersonneDto> getPersonneDto() {
+		return personneDto;
 	}
 
-	public void setPersonne(List<PersonneDto> personne) {
-		this.personne = personne;
+	public void setPersonneDto(List<PersonneDto> personneDto) {
+		this.personneDto = personneDto;
 	}
 
-	public CentreDto getCentre() {
-		return centre;
+	public CentreDto getCentreDto() {
+		return centreDto;
 	}
 
-	public void setCentre(CentreDto centre) {
-		this.centre = centre;
+	public void setCentreDto(CentreDto centreDto) {
+		this.centreDto = centreDto;
 	}
 
-	public EntrepriseDto getEntreprise() {
-		return entreprise;
+	public EntrepriseDto getEntrepriseDto() {
+		return entrepriseDto;
 	}
 
-	public void setEntreprise(EntrepriseDto entreprise) {
-		this.entreprise = entreprise;
+	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
+		this.entrepriseDto = entrepriseDto;
 	}
 
-	private EntrepriseDto entreprise;
+
 }

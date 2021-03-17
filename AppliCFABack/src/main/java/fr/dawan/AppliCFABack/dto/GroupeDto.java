@@ -5,18 +5,33 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "groupe")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GroupeDto implements Serializable {
-
+	@XmlElement
 	private long id;
-
+	@XmlElement
 	private String nom;
+	@XmlElement
+	private List<EtudiantDto> etudiantDto;
+	@XmlElement
+	private ProjetDto projetDto;
 
-	private List<EtudiantDto> etudiants;
+	public GroupeDto() {
+		super();
+	}
+	
+	public GroupeDto(long id, String nom, List<EtudiantDto> etudiantDto, ProjetDto projetDto) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.etudiantDto = etudiantDto;
+		this.projetDto = projetDto;
+	}
 
 	public long getId() {
 		return id;
@@ -34,21 +49,22 @@ public class GroupeDto implements Serializable {
 		this.nom = nom;
 	}
 
-	public List<EtudiantDto> getEtudiants() {
-		return etudiants;
+	public List<EtudiantDto> getEtudiantDto() {
+		return etudiantDto;
 	}
 
-	public void setEtudiants(List<EtudiantDto> etudiants) {
-		this.etudiants = etudiants;
+	public void setEtudiantDto(List<EtudiantDto> etudiantDto) {
+		this.etudiantDto = etudiantDto;
 	}
 
-	public ProjetDto getProjet() {
-		return projet;
+	public ProjetDto getProjetDto() {
+		return projetDto;
 	}
 
-	public void setProjet(ProjetDto projet) {
-		this.projet = projet;
+	public void setProjetDto(ProjetDto projetDto) {
+		this.projetDto = projetDto;
 	}
 
-	private ProjetDto projet;
+	
+	
 }
