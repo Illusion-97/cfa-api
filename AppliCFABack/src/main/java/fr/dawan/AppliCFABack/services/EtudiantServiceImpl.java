@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.PersonneDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
  
@@ -53,4 +57,41 @@ public class EtudiantServiceImpl implements EtudiantService{
 		etudiantRepository.deleteById(id);
 	}
 
+	// ##################################################
+	// # 			     1er Niveau 					#
+	// ##################################################
+	
+	@Override
+	public List<PromotionDto> getPromotionsByIdEtudiant(long id) {
+		return etudiantRepository.getPromotionsByIdEtudiant(id);
+	}
+
+	@Override
+	public List<EntrepriseDto> getEntrepriseByIdEtudiant(long id) {
+		return etudiantRepository.getEntrepriseByIdEtudiant(id);
+	}
+
+	@Override
+	public List<PersonneDto> getPersonneByIdEtudiant(long id) {
+		return etudiantRepository.getPersonneByIdEtudiant(id);
+	}
+	
+	@Override
+	public List<NoteDto> getNotesByIdEtudiant(long id) {
+		return etudiantRepository.getNotesByIdEtudiant(id);
+	}
+
+	@Override
+	public List<PromotionDto> getGroupesByIdEtudiant(long id) {
+		return etudiantRepository.getGroupesByIdEtudiant(id);
+	}
+
+	@Override
+	public List<PromotionDto> getAbsencesByIdEtudiant(long id) {
+		return etudiantRepository.getAbsencesByIdEtudiant(id);
+	}
+
+	// ##################################################
+	// # 			     2eme Niveau 					#
+	// ##################################################
 }

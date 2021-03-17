@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import fr.dawan.AppliCFABack.controllers.EtudiantController;
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 
 
@@ -53,10 +54,9 @@ public class EtudiantControllerTests {
 	}
 	
 	void initDataBase() {
-		//etudiantRepository.deleteAll();
-		
-		etudiantRepository.save(new Etudiant());
-		etudiantRepository.save(new Etudiant());
-		etudiantRepository.save(new Etudiant());
+//		etudiantRepository.deleteAll();
+//		etudiantRepository.save(new Etudiant());
+//		etudiantRepository.save(new Etudiant());
+//		etudiantRepository.save(new Etudiant());
 	}
 }

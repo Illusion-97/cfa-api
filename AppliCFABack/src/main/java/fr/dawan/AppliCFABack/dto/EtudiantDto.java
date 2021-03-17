@@ -20,7 +20,7 @@ public class EtudiantDto implements Serializable {
 	private PersonneDto personne;
 	 
 	@XmlElement
-	private List<AbsenceDto> abscences;
+	private List<AbsenceDto> absences;
 	
 	@XmlElement
 	private EntrepriseDto entreprise;
@@ -38,12 +38,12 @@ public class EtudiantDto implements Serializable {
 		super();
 	}
 	
-	public EtudiantDto(long id, PersonneDto personne, List<AbsenceDto> abscences, EntrepriseDto entreprise,
+	public EtudiantDto(long id, PersonneDto personne, List<AbsenceDto> absences, EntrepriseDto entreprise,
 			List<NoteDto> notes, List<PromotionDto> promotions, List<GroupeDto> groupes) {
 		super();
 		this.id = id;
 		this.personne = personne;
-		this.abscences = abscences;
+		this.absences = absences;
 		this.entreprise = entreprise;
 		this.notes = notes;
 		this.promotions = promotions;
@@ -67,11 +67,11 @@ public class EtudiantDto implements Serializable {
 	}
 
 	public List<AbsenceDto> getAbsence() {
-		return abscences;
+		return absences;
 	}
 
-	public void setAbsence(List<AbsenceDto> abscences) {
-		this.abscences = abscences;
+	public void setAbsence(List<AbsenceDto> absences) {
+		this.absences = absences;
 	}
 
 	public EntrepriseDto getEntreprise() {

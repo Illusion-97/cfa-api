@@ -3,7 +3,6 @@ package fr.dawan.AppliCFABack.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +27,7 @@ public class Etudiant {
 	private Personne personne;
 	
 	@OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
-	private List<Absence> abscences;
+	private List<Absence> absences;
 	
 	@ManyToOne
 	private Entreprise entreprise;
@@ -49,13 +48,13 @@ public class Etudiant {
 		super();
 	}
 
-	public Etudiant(long id/*, List<File> fiches*/, Personne personne, List<Absence> abscences, Entreprise entreprise,
+	public Etudiant(long id/*, List<File> fiches*/, Personne personne, List<Absence> absences, Entreprise entreprise,
 			List<Promotion> promotions, List<Groupe> groupes) {
 		super();
 		this.id = id;
 //		this.fiches = fiches;
 		this.personne = personne;
-		this.abscences = abscences;
+		this.absences = absences;
 		this.entreprise = entreprise;
 		this.promotions = promotions;
 		this.groupes = groupes;
@@ -86,11 +85,11 @@ public class Etudiant {
 	}
 
 	public List<Absence> getAbscences() {
-		return abscences;
+		return absences;
 	}
 
-	public void setAbscences(List<Absence> abscences) {
-		this.abscences = abscences;
+	public void setAbscences(List<Absence> absences) {
+		this.absences = absences;
 	}
 
 	public Entreprise getEntreprise() {
