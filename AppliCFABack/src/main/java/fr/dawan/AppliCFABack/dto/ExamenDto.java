@@ -18,20 +18,20 @@ public class ExamenDto implements Serializable {
 	@XmlElement
 	private Date date;
 	@XmlElement
-	private List<NoteDto> noteDto;
+	private List<NoteDto> notes;
 	@XmlElement
-	private CoursDto coursDto;
+	private CoursDto cours;
 
 	public ExamenDto() {
 		super();
 	}
 	
-	public ExamenDto(long id, Date date, List<NoteDto> noteDto, CoursDto coursDto) {
+	public ExamenDto(long id, Date date, List<NoteDto> notes, CoursDto cours) {
 		super();
 		this.id = id;
 		this.date = date;
-		this.noteDto = noteDto;
-		this.coursDto = coursDto;
+		this.notes = notes;
+		this.cours = cours;
 	}
 
 	public long getId() {
@@ -50,20 +50,20 @@ public class ExamenDto implements Serializable {
 		this.date = date;
 	}
 
-	public List<NoteDto> getNoteDto() {
-		return noteDto;
+	public List<NoteDto> getNote() {
+		return notes;
 	}
 
-	public void setNoteDto(List<NoteDto> noteDto) {
-		this.noteDto = noteDto;
+	public void setNote(List<NoteDto> notes) {
+		this.notes = notes;
 	}
 
-	public CoursDto getCoursDto() {
-		return coursDto;
+	public CoursDto getCours() {
+		return cours;
 	}
 
-	public void setCoursDto(CoursDto coursDto) {
-		this.coursDto = coursDto;
+	public void setCours(CoursDto cours) {
+		this.cours = cours;
 	}
 
 	

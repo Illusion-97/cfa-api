@@ -53,6 +53,8 @@ public class EtudiantControllerTests {
 	}
 	
 	void initDataBase() {
+		//etudiantRepository.deleteAll();
+		
 		etudiantRepository.save(new Etudiant());
 		etudiantRepository.save(new Etudiant());
 		etudiantRepository.save(new Etudiant());

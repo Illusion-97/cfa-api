@@ -32,7 +32,7 @@ public class Adresse {
 	private String codePostal;	
 	
 	@OneToMany(mappedBy = "adresse", cascade = CascadeType.ALL)
-	private List<Personne> personne;
+	private List<Personne> personnes;
 	
 	@OneToOne
 	private Centre centre;
@@ -47,7 +47,7 @@ public class Adresse {
 		super();
 	}
 
-	public Adresse(long id, long numero, String rue, String ville, String codePostal, List<Personne> personne, Centre centre,
+	public Adresse(long id, long numero, String rue, String ville, String codePostal, List<Personne> personnes, Centre centre,
 			Entreprise entreprise) {
 		super();
 		this.id = id;
@@ -55,7 +55,7 @@ public class Adresse {
 		this.rue = rue;
 		this.ville = ville;
 		this.codePostal = codePostal;
-		this.personne = personne;
+		this.personnes = personnes;
 		this.centre = centre;
 		this.entreprise = entreprise;
 	}
@@ -101,11 +101,11 @@ public class Adresse {
 	}
 
 	public List<Personne> getPersonne() {
-		return personne;
+		return personnes;
 	}
 
-	public void setPersonne(List<Personne> personne) {
-		this.personne = personne;
+	public void setPersonne(List<Personne> personnes) {
+		this.personnes = personnes;
 	}
 
 	public Centre getCentre() {

@@ -14,17 +14,17 @@ public class AdminDto implements Serializable {
 	@XmlElement
 	private long id;
 	@XmlElement
-	private PersonneDto personneDto;
+	private PersonneDto personne;
 
 	
 	public AdminDto() {
 		super();
 	}
 
-	public AdminDto(long id, PersonneDto personneDto) {
+	public AdminDto(long id, PersonneDto personne) {
 		super();
 		this.id = id;
-		this.personneDto = personneDto;
+		this.personne = personne;
 	}
 
 	public long getId() {
@@ -35,12 +35,12 @@ public class AdminDto implements Serializable {
 		this.id = id;
 	}
 
-	public PersonneDto getPersonneDto() {
-		return personneDto;
+	public PersonneDto getPersonne() {
+		return personne;
 	}
 
-	public void setPersonneDto(PersonneDto personneDto) {
-		this.personneDto = personneDto;
+	public void setPersonne(PersonneDto personne) {
+		this.personne = personne;
 	}
 
 	

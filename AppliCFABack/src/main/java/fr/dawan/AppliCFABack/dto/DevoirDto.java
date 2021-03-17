@@ -23,20 +23,20 @@ public class DevoirDto implements Serializable {
 	@XmlElement
 	private Date fin;
 	@XmlElement
-	private CoursDto coursDto;
+	private CoursDto cours;
 
 	public DevoirDto() {
 		super();
 	}
 	
-	public DevoirDto(long id, String nom, String consigne, Date debut, Date fin, CoursDto coursDto) {
+	public DevoirDto(long id, String nom, String consigne, Date debut, Date fin, CoursDto cours) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.consigne = consigne;
 		this.debut = debut;
 		this.fin = fin;
-		this.coursDto = coursDto;
+		this.cours = cours;
 	}
 
 	public long getId() {
@@ -79,12 +79,12 @@ public class DevoirDto implements Serializable {
 		this.fin = fin;
 	}
 
-	public CoursDto getCoursDto() {
-		return coursDto;
+	public CoursDto getCours() {
+		return cours;
 	}
 
-	public void setCoursDto(CoursDto coursDto) {
-		this.coursDto = coursDto;
+	public void setCours(CoursDto cours) {
+		this.cours = cours;
 	}
 	
 }
