@@ -33,11 +33,11 @@ public class ProgrammePromotionDto implements Serializable {
 		this.promotions = promotions;
 	}
 
-	public long getIdProgrammePromotionDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdProgrammePromotionDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -57,11 +57,11 @@ public class ProgrammePromotionDto implements Serializable {
 		Description = description;
 	}
 
-	public List<PromotionDto> getPromotionDto() {
+	public List<PromotionDto> getPromotion() {
 		return promotions;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotions) {
+	public void setPromotion(List<PromotionDto> promotions) {
 		this.promotions = promotions;
 	}
 

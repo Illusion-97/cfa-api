@@ -17,7 +17,7 @@ public class Adresse {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idAdresse;
+	private long id;
 	
 	@Column(nullable = false, length = 255)
 	private long numero;
@@ -47,10 +47,10 @@ public class Adresse {
 		super();
 	}
 
-	public Adresse(long idAdresse, long numero, String rue, String ville, String codePostal, List<Personne> personnes, Centre centre,
+	public Adresse(long id, long numero, String rue, String ville, String codePostal, List<Personne> personnes, Centre centre,
 			Entreprise entreprise) {
 		super();
-		this.idAdresse = idAdresse;
+		this.id = id;
 		this.numero = numero;
 		this.rue = rue;
 		this.ville = ville;
@@ -60,12 +60,12 @@ public class Adresse {
 		this.entreprise = entreprise;
 	}
 
-	public long getIdAdresse() {
-		return idAdresse;
+	public long getId() {
+		return id;
 	}
 
-	public void setIdAdresse(long idAdresse) {
-		this.idAdresse = idAdresse;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public long getNumero() {

@@ -33,11 +33,11 @@ public class EntrepriseDto implements Serializable {
 		this.etudiants = etudiants;
 	}
 
-	public long getIdEntrepriseDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdEntrepriseDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -49,19 +49,19 @@ public class EntrepriseDto implements Serializable {
 		this.nom = nom;
 	}
 
-	public AdresseDto getAdresseDto() {
+	public AdresseDto getAdresse() {
 		return adresse;
 	}
 
-	public void setAdresseDto(AdresseDto adresse) {
+	public void setAdresse(AdresseDto adresse) {
 		this.adresse = adresse;
 	}
 
-	public List<EtudiantDto> getEtudiantDto() {
+	public List<EtudiantDto> getEtudiant() {
 		return etudiants;
 	}
 
-	public void setEtudiantDto(List<EtudiantDto> etudiantDto) {
+	public void setEtudiant(List<EtudiantDto> etudiantDto) {
 		this.etudiants = etudiantDto;
 	}
 	

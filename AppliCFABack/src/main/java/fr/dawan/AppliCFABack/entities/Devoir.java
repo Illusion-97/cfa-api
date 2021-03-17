@@ -49,11 +49,11 @@ public class Devoir {
 		this.cours = cours;
 	}
 
-	public long getIdDevoir() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdDevoir(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

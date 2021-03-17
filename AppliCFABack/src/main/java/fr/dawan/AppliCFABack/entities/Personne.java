@@ -77,11 +77,11 @@ public class Personne {
 		this.projets = projets;
 	}
 
-	public long getIdPersonne() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdPersonne(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

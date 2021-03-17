@@ -50,59 +50,59 @@ public class EtudiantDto implements Serializable {
 		this.groupes = groupes;
 	}
 
-	public long getIdEtudiant() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdEtudiant(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	
-	public PersonneDto getPersonneDto() {
+	public PersonneDto getPersonne() {
 		return personne;
 	}
 
-	public void setPersonneDto(PersonneDto personne) {
+	public void setPersonne(PersonneDto personne) {
 		this.personne = personne;
 	}
 
-	public List<AbsenceDto> getAbsenceDto() {
+	public List<AbsenceDto> getAbsence() {
 		return abscences;
 	}
 
-	public void setAbsenceDto(List<AbsenceDto> abscences) {
+	public void setAbsence(List<AbsenceDto> abscences) {
 		this.abscences = abscences;
 	}
 
-	public EntrepriseDto getEntrepriseDto() {
+	public EntrepriseDto getEntreprise() {
 		return entreprise;
 	}
 
-	public void setEntrepriseDto(EntrepriseDto entreprise) {
+	public void setEntreprise(EntrepriseDto entreprise) {
 		this.entreprise = entreprise;
 	}
 
-	public List<NoteDto> getNoteDto() {
+	public List<NoteDto> getNote() {
 		return notes;
 	}
 
-	public void setNoteDto(List<NoteDto> notes) {
+	public void setNote(List<NoteDto> notes) {
 		this.notes = notes;
 	}
 
-	public List<PromotionDto> getPromotionDto() {
+	public List<PromotionDto> getPromotion() {
 		return promotions;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotions) {
+	public void setPromotion(List<PromotionDto> promotions) {
 		this.promotions = promotions;
 	}
 
-	public List<GroupeDto> getGroupeDto() {
+	public List<GroupeDto> getGroupe() {
 		return groupes;
 	}
 
-	public void setGroupeDto(List<GroupeDto> groupes) {
+	public void setGroupe(List<GroupeDto> groupes) {
 		this.groupes = groupes;
 	}
 

@@ -33,11 +33,11 @@ public class GroupeDto implements Serializable {
 		this.projet = projet;
 	}
 
-	public long getIdGroupeDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdGroupeDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -49,19 +49,19 @@ public class GroupeDto implements Serializable {
 		this.nom = nom;
 	}
 
-	public List<EtudiantDto> getEtudiantDto() {
+	public List<EtudiantDto> getEtudiant() {
 		return etudiants;
 	}
 
-	public void setEtudiantDto(List<EtudiantDto> etudiants) {
+	public void setEtudiant(List<EtudiantDto> etudiants) {
 		this.etudiants = etudiants;
 	}
 
-	public ProjetDto getProjetDto() {
+	public ProjetDto getProjet() {
 		return projet;
 	}
 
-	public void setProjetDto(ProjetDto projet) {
+	public void setProjet(ProjetDto projet) {
 		this.projet = projet;
 	}
 

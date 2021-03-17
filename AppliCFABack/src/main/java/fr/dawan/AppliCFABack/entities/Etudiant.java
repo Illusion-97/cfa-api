@@ -61,11 +61,11 @@ public class Etudiant {
 		this.groupes = groupes;
 	}
 
-	public long getIdEtudiant() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdEtudiant(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 /*

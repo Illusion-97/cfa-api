@@ -76,11 +76,11 @@ public class Cours {
 		this.formateurs = formateurs;
 	}
 
-	public long getIdCours() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdCours(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

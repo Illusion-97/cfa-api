@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AdresseDto implements Serializable {
 	@XmlElement
-	private long idAdresse;
+	private long id;
 	@XmlElement
 	private long numero;
 	@XmlElement
@@ -33,10 +33,10 @@ public class AdresseDto implements Serializable {
 		super();
 	}
 
-	public AdresseDto(long idAdresse, long numero, String rue, String ville, String codePostal, List<PersonneDto> personnes,
+	public AdresseDto(long id, long numero, String rue, String ville, String codePostal, List<PersonneDto> personnes,
 			CentreDto centre, EntrepriseDto entreprise) {
 		super();
-		this.idAdresse = idAdresse;
+		this.id = id;
 		this.numero = numero;
 		this.rue = rue;
 		this.ville = ville;
@@ -46,12 +46,12 @@ public class AdresseDto implements Serializable {
 		this.entreprise = entreprise;
 	}
 
-	public long getIdAdresse() {
-		return idAdresse;
+	public long getId() {
+		return id;
 	}
 
-	public void setIdAdresse(long idAdresse) {
-		this.idAdresse = idAdresse;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public long getNumero() {
@@ -86,27 +86,27 @@ public class AdresseDto implements Serializable {
 		this.codePostal = codePostal;
 	}
 
-	public List<PersonneDto> getPersonneDto() {
+	public List<PersonneDto> getPersonne() {
 		return personnes;
 	}
 
-	public void setPersonneDto(List<PersonneDto> personnes) {
+	public void setPersonne(List<PersonneDto> personnes) {
 		this.personnes = personnes;
 	}
 
-	public CentreDto getCentreDto() {
+	public CentreDto getCentre() {
 		return centre;
 	}
 
-	public void setCentreDto(CentreDto centre) {
+	public void setCentre(CentreDto centre) {
 		this.centre = centre;
 	}
 
-	public EntrepriseDto getEntrepriseDto() {
+	public EntrepriseDto getEntreprise() {
 		return entreprise;
 	}
 
-	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
+	public void setEntreprise(EntrepriseDto entrepriseDto) {
 		this.entreprise = entrepriseDto;
 	}
 

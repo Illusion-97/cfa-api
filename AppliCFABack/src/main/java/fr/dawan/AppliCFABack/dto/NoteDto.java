@@ -32,11 +32,11 @@ public class NoteDto implements Serializable {
 		this.etudiant = etudiant;
 	}
 
-	public long getIdNoteDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdNoteDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -48,19 +48,19 @@ public class NoteDto implements Serializable {
 		this.value = value;
 	}
 
-	public ExamenDto getExamenDto() {
+	public ExamenDto getExamen() {
 		return examen;
 	}
 
-	public void setExamenDto(ExamenDto examen) {
+	public void setExamen(ExamenDto examen) {
 		this.examen = examen;
 	}
 
-	public EtudiantDto getEtudiantDto() {
+	public EtudiantDto getEtudiant() {
 		return etudiant;
 	}
 
-	public void setEtudiantDto(EtudiantDto etudiant) {
+	public void setEtudiant(EtudiantDto etudiant) {
 		this.etudiant = etudiant;
 	}
 

@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AbsenceDto implements Serializable {
 	@XmlElement
-	private long idAbsence;
+	private long id;
 	@XmlElement
 	private Date dateDebut;
 	@XmlElement
@@ -27,9 +27,9 @@ public class AbsenceDto implements Serializable {
 		super();
 	}
 	
-	public AbsenceDto(long idAbsence, Date dateDebut, Date dateFin, String justificatif, EtudiantDto etudiant) {
+	public AbsenceDto(long id, Date dateDebut, Date dateFin, String justificatif, EtudiantDto etudiant) {
 		super();
-		this.idAbsence = idAbsence;
+		this.id = id;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.justificatif = justificatif;
@@ -39,11 +39,11 @@ public class AbsenceDto implements Serializable {
 
 
 	public long getIdAbsence() {
-		return idAbsence;
+		return id;
 	}
 
 	public void setIdAbsence(long idAbsence) {
-		this.idAbsence = idAbsence;
+		this.id = idAbsence;
 	}
 
 	public Date getDateDebut() {
@@ -70,11 +70,11 @@ public class AbsenceDto implements Serializable {
 		this.justificatif = justificatif;
 	}
 
-	public EtudiantDto getEtudiantDto() {
+	public EtudiantDto getEtudiant() {
 		return etudiant;
 	}
 
-	public void setEtudiantDto(EtudiantDto etudiant) {
+	public void setEtudiant(EtudiantDto etudiant) {
 		this.etudiant = etudiant;
 	}
 

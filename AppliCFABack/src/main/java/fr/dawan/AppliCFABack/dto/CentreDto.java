@@ -33,35 +33,35 @@ public class CentreDto implements Serializable {
 		this.promotions = promotions;
 	}
 
-	public long getIdCentreDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdCentreDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public AdresseDto getAdresseDto() {
+	public AdresseDto getAdresse() {
 		return adresse;
 	}
 
-	public void setAdresseDto(AdresseDto adresse) {
+	public void setAdresse(AdresseDto adresse) {
 		this.adresse = adresse;
 	}
 
-	public CEFDto getCEFDto() {
+	public CEFDto getCEF() {
 		return cef;
 	}
 
-	public void setCEFDto(CEFDto cef) {
+	public void setCEF(CEFDto cef) {
 		this.cef = cef;
 	}
 
-	public List<PromotionDto> getPromotionDto() {
+	public List<PromotionDto> getPromotion() {
 		return promotions;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotions) {
+	public void setPromotion(List<PromotionDto> promotions) {
 		this.promotions = promotions;
 	}
 

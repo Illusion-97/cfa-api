@@ -32,27 +32,27 @@ public class FormateurDto implements Serializable{
 	}
 
 
-	public long getIdFormateurDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdFormateurDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public PersonneDto getPersonneDto() {
+	public PersonneDto getPersonne() {
 		return personne;
 	}
 
-	public void setPersonneDto(PersonneDto personne) {
+	public void setPersonne(PersonneDto personne) {
 		this.personne = personne;
 	}
 
-	public List<CoursDto> getCoursDto() {
+	public List<CoursDto> getCours() {
 		return cours;
 	}
 
-	public void setCoursDto(List<CoursDto> cours) {
+	public void setCours(List<CoursDto> cours) {
 		this.cours = cours;
 	}
 

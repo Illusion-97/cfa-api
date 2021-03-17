@@ -46,11 +46,11 @@ public class ProgrammeCours {
 		this.cours = cours;
 	}
 
-	public long getIdProgrammeCours() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdProgrammeCours(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

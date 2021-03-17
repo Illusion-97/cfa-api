@@ -42,11 +42,11 @@ public class Groupe {
 		this.projet = projet;
 	}
 
-	public long getIdGroupe() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdGroupe(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

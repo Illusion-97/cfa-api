@@ -34,11 +34,11 @@ public class ExamenDto implements Serializable {
 		this.cours = cours;
 	}
 
-	public long getIdExamenDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdExamenDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -50,19 +50,19 @@ public class ExamenDto implements Serializable {
 		this.date = date;
 	}
 
-	public List<NoteDto> getNoteDto() {
+	public List<NoteDto> getNote() {
 		return notes;
 	}
 
-	public void setNoteDto(List<NoteDto> notes) {
+	public void setNote(List<NoteDto> notes) {
 		this.notes = notes;
 	}
 
-	public CoursDto getCoursDto() {
+	public CoursDto getCours() {
 		return cours;
 	}
 
-	public void setCoursDto(CoursDto cours) {
+	public void setCours(CoursDto cours) {
 		this.cours = cours;
 	}
 

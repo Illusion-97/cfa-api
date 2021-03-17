@@ -38,11 +38,11 @@ public class Referent {
 		this.promotion = promotion;
 	}
 
-	public long getIdReferent() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdReferent(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -30,27 +30,27 @@ public class CEFDto implements Serializable {
 	}
 
 	
-	public long getIdCEF() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdCEF(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public PersonneDto getPersonneDto() {
+	public PersonneDto getPersonne() {
 		return personne;
 	}
 
-	public void setPersonneDto(PersonneDto personne) {
+	public void setPersonne(PersonneDto personne) {
 		this.personne = personne;
 	}
 
-	public CentreDto getCentreDto() {
+	public CentreDto getCentre() {
 		return centre;
 	}
 
-	public void setCentreDto(CentreDto centre) {
+	public void setCentre(CentreDto centre) {
 		this.centre = centre;
 	}
 

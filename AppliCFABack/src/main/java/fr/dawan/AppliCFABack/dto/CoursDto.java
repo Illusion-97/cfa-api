@@ -55,11 +55,11 @@ public class CoursDto implements Serializable {
 		this.formateurs = formateurs;
 	}
 
-	public long getIdCoursDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdCoursDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -95,43 +95,43 @@ public class CoursDto implements Serializable {
 		this.noteEntraide = noteEntraide;
 	}
 
-	public ProgrammeCoursDto getProgrammeCoursDto() {
+	public ProgrammeCoursDto getProgrammeCours() {
 		return programmeCours;
 	}
 
-	public void setProgrammeCoursDto(ProgrammeCoursDto programmeCours) {
+	public void setProgrammeCours(ProgrammeCoursDto programmeCours) {
 		this.programmeCours = programmeCours;
 	}
 
-	public List<ExamenDto> getExamenDto() {
+	public List<ExamenDto> getExamen() {
 		return examens;
 	}
 
-	public void setExamenDto(List<ExamenDto> examens) {
+	public void setExamen(List<ExamenDto> examens) {
 		this.examens = examens;
 	}
 
-	public List<DevoirDto> getDevoirDto() {
+	public List<DevoirDto> getDevoir() {
 		return devoirs;
 	}
 
-	public void setDevoirDto(List<DevoirDto> devoirs) {
+	public void setDevoir(List<DevoirDto> devoirs) {
 		this.devoirs = devoirs;
 	}
 
-	public List<PromotionDto> getPromotionDto() {
+	public List<PromotionDto> getPromotion() {
 		return promotions;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotions) {
+	public void setPromotion(List<PromotionDto> promotions) {
 		this.promotions = promotions;
 	}
 
-	public List<FormateurDto> getFormateurDto() {
+	public List<FormateurDto> getFormateur() {
 		return formateurs;
 	}
 
-	public void setFormateurDto(List<FormateurDto> formateurs) {
+	public void setFormateur(List<FormateurDto> formateurs) {
 		this.formateurs = formateurs;
 	}
 

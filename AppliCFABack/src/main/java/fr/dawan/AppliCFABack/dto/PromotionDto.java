@@ -48,11 +48,11 @@ public class PromotionDto implements Serializable {
 		this.cours = cours;
 	}
 
-	public long getIdPromotionDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdPromotionDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -80,31 +80,31 @@ public class PromotionDto implements Serializable {
 		this.centre = centre;
 	}
 
-	public ProgrammePromotionDto getProgrammePromotionDto() {
+	public ProgrammePromotionDto getProgrammePromotion() {
 		return programmePromotion;
 	}
 
-	public void setProgrammePromotionDto(ProgrammePromotionDto programmePromotion) {
+	public void setProgrammePromotion(ProgrammePromotionDto programmePromotion) {
 		this.programmePromotion = programmePromotion;
 	}
 
-	public ReferentDto getReferentDto() {
+	public ReferentDto getReferent() {
 		return referent;
 	}
 
-	public void setReferentDto(ReferentDto referent) {
+	public void setReferent(ReferentDto referent) {
 		this.referent = referent;
 	}
 
-	public List<EtudiantDto> getEtudiantsDto() {
+	public List<EtudiantDto> getEtudiants() {
 		return etudiants;
 	}
 
-	public void setEtudiantsDto(List<EtudiantDto> etudiants) {
+	public void setEtudiants(List<EtudiantDto> etudiants) {
 		this.etudiants = etudiants;
 	}
 
-	public List<CoursDto> getCoursDto() {
+	public List<CoursDto> getCours() {
 		return cours;
 	}
 

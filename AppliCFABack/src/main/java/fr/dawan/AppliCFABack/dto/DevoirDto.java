@@ -39,11 +39,11 @@ public class DevoirDto implements Serializable {
 		this.cours = cours;
 	}
 
-	public long getIdDevoirDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdDevoirDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -79,11 +79,11 @@ public class DevoirDto implements Serializable {
 		this.fin = fin;
 	}
 
-	public CoursDto getCoursDto() {
+	public CoursDto getCours() {
 		return cours;
 	}
 
-	public void setCoursDto(CoursDto cours) {
+	public void setCours(CoursDto cours) {
 		this.cours = cours;
 	}
 	

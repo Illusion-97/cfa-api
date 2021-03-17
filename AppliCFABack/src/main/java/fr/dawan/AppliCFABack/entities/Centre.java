@@ -42,11 +42,11 @@ public class Centre {
 		this.promotions = promotions;
 	}
 
-	public long getIdCentre() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdCentre(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

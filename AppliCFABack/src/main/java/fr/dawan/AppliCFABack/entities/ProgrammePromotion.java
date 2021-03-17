@@ -42,11 +42,11 @@ public class ProgrammePromotion {
 		this.promotions = promotions;
 	}
 
-	public long getIdProgrammePromotion() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdProgrammePromotion(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -30,27 +30,27 @@ public class ReferentDto implements Serializable {
 		this.promotion = promotion;
 	}
 
-	public long getIdReferentDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdReferentDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public PersonneDto getPersonneDto() {
+	public PersonneDto getPersonne() {
 		return personne;
 	}
 
-	public void setPersonneDto(PersonneDto personne) {
+	public void setPersonne(PersonneDto personne) {
 		this.personne = personne;
 	}
 
-	public List<PromotionDto> getPromotionDto() {
+	public List<PromotionDto> getPromotion() {
 		return promotion;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotion) {
+	public void setPromotion(List<PromotionDto> promotion) {
 		this.promotion = promotion;
 	}
 

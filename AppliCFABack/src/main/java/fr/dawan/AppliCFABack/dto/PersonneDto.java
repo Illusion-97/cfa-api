@@ -59,11 +59,11 @@ public class PersonneDto implements Serializable {
 		this.projets = projets;
 	}
 
-	public long getIdPersonneDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdPersonneDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -99,59 +99,59 @@ public class PersonneDto implements Serializable {
 		this.nom = nom;
 	}
 
-	public AdresseDto getAdresseDto() {
+	public AdresseDto getAdresse() {
 		return adresse;
 	}
 
-	public void setAdresseDto(AdresseDto adresse) {
+	public void setAdresse(AdresseDto adresse) {
 		this.adresse = adresse;
 	}
 
-	public FormateurDto getFormateurDto() {
+	public FormateurDto getFormateur() {
 		return formateur;
 	}
 
-	public void setFormateurDto(FormateurDto formateur) {
+	public void setFormateur(FormateurDto formateur) {
 		this.formateur = formateur;
 	}
 
-	public EtudiantDto getEtudiantDto() {
+	public EtudiantDto getEtudiant() {
 		return etudiant;
 	}
 
-	public void setEtudiantDto(EtudiantDto etudiant) {
+	public void setEtudiant(EtudiantDto etudiant) {
 		this.etudiant = etudiant;
 	}
 
-	public CEFDto getCEFDto() {
+	public CEFDto getCEF() {
 		return cef;
 	}
 
-	public void setCEFDto(CEFDto cef) {
+	public void setCEF(CEFDto cef) {
 		this.cef = cef;
 	}
 
-	public ReferentDto getReferentDto() {
+	public ReferentDto getReferent() {
 		return referent;
 	}
 
-	public void setReferentDto(ReferentDto referent) {
+	public void setReferent(ReferentDto referent) {
 		this.referent = referent;
 	}
 
-	public AdminDto getAdminDto() {
+	public AdminDto getAdmin() {
 		return admin;
 	}
 
-	public void setAdminDto(AdminDto admin) {
+	public void setAdmin(AdminDto admin) {
 		this.admin = admin;
 	}
 
-	public List<ProjetDto> getProjetDto() {
+	public List<ProjetDto> getProjet() {
 		return projets;
 	}
 
-	public void setProjetDto(List<ProjetDto> projets) {
+	public void setProjet(List<ProjetDto> projets) {
 		this.projets = projets;
 	}
 

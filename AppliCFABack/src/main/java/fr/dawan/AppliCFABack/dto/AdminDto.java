@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AdminDto implements Serializable {
 	@XmlElement
-	private long idAdmin;
+	private long id;
 	@XmlElement
 	private PersonneDto personne;
 
@@ -21,25 +21,25 @@ public class AdminDto implements Serializable {
 		super();
 	}
 
-	public AdminDto(long idAdmin, PersonneDto personne) {
+	public AdminDto(long id, PersonneDto personne) {
 		super();
-		this.idAdmin = idAdmin;
+		this.id = id;
 		this.personne = personne;
 	}
 
-	public long getIdAdmin() {
-		return idAdmin;
+	public long getId() {
+		return id;
 	}
 
-	public void setIdAdmin(long idAdmin) {
-		this.idAdmin = idAdmin;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public PersonneDto getPersonneDto() {
+	public PersonneDto getPersonne() {
 		return personne;
 	}
 
-	public void setPersonneDto(PersonneDto personne) {
+	public void setPersonne(PersonneDto personne) {
 		this.personne = personne;
 	}
 

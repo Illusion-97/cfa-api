@@ -36,11 +36,11 @@ public class ProgrammeCoursDto implements Serializable {
 		this.cours = cours;
 	}
 
-	public long getIdProgrammeCoursDto() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdProgrammeCoursDto(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -68,11 +68,11 @@ public class ProgrammeCoursDto implements Serializable {
 		this.dure = dure;
 	}
 
-	public List<CoursDto> getCoursDto() {
+	public List<CoursDto> getCours() {
 		return cours;
 	}
 
-	public void setCoursDto(List<CoursDto> coursDto) {
+	public void setCours(List<CoursDto> coursDto) {
 		this.cours = coursDto;
 	}
 
