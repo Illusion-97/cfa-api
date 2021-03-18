@@ -42,6 +42,7 @@ public class Centre {
 		this.promotions = promotions;
 	}
 
+
 	public long getId() {
 		return id;
 	}
