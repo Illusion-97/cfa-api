@@ -5,7 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import fr.dawan.AppliCFABack.entities.Cours;
 
+
 @Repository
-public interface CoursRepository extends JpaRepository<Cours, Long> {
+public interface CoursRepository extends JpaRepository<Cours, Long>{
 
 }
