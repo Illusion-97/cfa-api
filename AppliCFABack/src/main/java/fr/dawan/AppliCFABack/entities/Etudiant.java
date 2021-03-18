@@ -60,6 +60,8 @@ public class Etudiant {
 		this.programmePromotions = programmePromotion;
 		this.groupes = groupes;
 	}
+	
+	
 
 	public long getId() {
 		return id;
