@@ -1,7 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -20,7 +20,7 @@ public class ExamenDto implements Serializable {
 	@XmlElement
 	private List<NoteDto> notesDto;
 	@XmlElement
-	private ProgrammeCoursDto programmeCoursDto;
+	private ProgrammeCoursDto programmeCours;
 
 	public ExamenDto() {
 		super();
@@ -30,8 +30,13 @@ public class ExamenDto implements Serializable {
 		super();
 		this.id = id;
 		this.date = date;
+<<<<<<< HEAD
 		this.notesDto = noteDto;
 		this.programmeCoursDto = programmeCoursDto;
+=======
+		this.notes = noteDto;
+		this.programmeCours = programmeCoursDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public long getId() {
@@ -51,19 +56,28 @@ public class ExamenDto implements Serializable {
 	}
 
 	public List<NoteDto> getNoteDto() {
+<<<<<<< HEAD
 		return notesDto;
+=======
+		return notes;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+<<<<<<< HEAD
 	public void setNoteDto(List<NoteDto> notes) {
 		this.notesDto = notes;
+=======
+	public void setNoteDto(List<NoteDto> noteDto) {
+		this.notes = noteDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public ProgrammeCoursDto getProgrammeCoursDto() {
-		return programmeCoursDto;
+		return programmeCours;
 	}
 
 	public void setProgrammeCoursDto(ProgrammeCoursDto programmeCoursDto) {
-		this.programmeCoursDto = programmeCoursDto;
+		this.programmeCours = programmeCoursDto;
 	}
 
 	

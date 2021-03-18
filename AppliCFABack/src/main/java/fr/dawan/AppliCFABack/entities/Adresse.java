@@ -47,7 +47,7 @@ public class Adresse {
 		super();
 	}
 
-	public Adresse(long id, long numero, String rue, String ville, String codePostal, List<Personne> personnes, Centre centre,
+	public Adresse(long id, long numero, String rue, String ville, String codePostal, List<Personne> personne, Centre centre,
 			Entreprise entreprise) {
 		super();
 		this.id = id;
@@ -55,18 +55,9 @@ public class Adresse {
 		this.rue = rue;
 		this.ville = ville;
 		this.codePostal = codePostal;
-		this.personnes = personnes;
+		this.personnes = personne;
 		this.centre = centre;
 		this.entreprise = entreprise;
-	}
-	
-	public Adresse(long id, long numero, String rue, String ville, String codePostal) {
-		super();
-		this.id = id;
-		this.numero = numero;
-		this.rue = rue;
-		this.ville = ville;
-		this.codePostal = codePostal;
 	}
 
 	public long getId() {
@@ -113,8 +104,8 @@ public class Adresse {
 		return personnes;
 	}
 
-	public void setPersonne(List<Personne> personnes) {
-		this.personnes = personnes;
+	public void setPersonne(List<Personne> personne) {
+		this.personnes = personne;
 	}
 
 	public Centre getCentre() {

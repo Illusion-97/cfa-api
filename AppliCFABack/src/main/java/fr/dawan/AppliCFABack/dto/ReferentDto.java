@@ -17,17 +17,22 @@ public class ReferentDto implements Serializable {
 	@XmlElement
 	private PersonneDto personneDto;
 	@XmlElement
-	private List<PromotionDto> promotion;
+	private List<ProgrammePromotionDto> programmePromotions;
 
 	public ReferentDto() {
 		super();
 	}
 
-	public ReferentDto(long id, PersonneDto personne, List<PromotionDto> promotion) {
+	public ReferentDto(long id, PersonneDto personneDto, List<ProgrammePromotionDto> ProgrammePromotionDto) {
 		super();
 		this.id = id;
+<<<<<<< HEAD
 		this.personneDto = personne;
 		this.promotion = promotion;
+=======
+		this.personne = personneDto;
+		this.programmePromotions = ProgrammePromotionDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public long getId() {
@@ -39,19 +44,28 @@ public class ReferentDto implements Serializable {
 	}
 
 	public PersonneDto getPersonneDto() {
+<<<<<<< HEAD
 		return personneDto;
+=======
+		return personne;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+<<<<<<< HEAD
 	public void setPersonneDto(PersonneDto personne) {
 		this.personneDto = personne;
+=======
+	public void setPersonneDto(PersonneDto personneDto) {
+		this.personne = personneDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
-	public List<PromotionDto> getPromotion() {
-		return promotion;
+	public List<ProgrammePromotionDto> getProgrammePromotionDto() {
+		return programmePromotions;
 	}
 
-	public void setPromotion(List<PromotionDto> promotion) {
-		this.promotion = promotion;
+	public void setProgrammePromotionDto(List<ProgrammePromotionDto> ProgrammePromotionDto) {
+		this.programmePromotions = ProgrammePromotionDto;
 	}
 
 }

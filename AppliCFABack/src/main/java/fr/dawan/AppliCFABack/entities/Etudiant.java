@@ -23,11 +23,12 @@ public class Etudiant {
 	@Column(nullable = false, length = 255)
 	private List<File> fiches;
 	*/
+	
 	@OneToOne
 	private Personne personne;
 	
 	@OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
-	private List<Absence> absences;
+	private List<Absence> abscences;
 	
 	@ManyToOne
 	private Entreprise entreprise;
@@ -36,7 +37,7 @@ public class Etudiant {
 	private List<Note> notes;
 	
 	@ManyToMany(mappedBy = "etudiants")
-	private List<Promotion> promotions;
+	private List<ProgrammePromotion> programmePromotions;
 	
 	@ManyToMany(mappedBy = "etudiants")
 	private List<Groupe> groupes;
@@ -48,15 +49,15 @@ public class Etudiant {
 		super();
 	}
 
-	public Etudiant(long id/*, List<File> fiches*/, Personne personne, List<Absence> absences, Entreprise entreprise,
-			List<Promotion> promotions, List<Groupe> groupes) {
+	public Etudiant(long id/*, List<File> fiches*/, Personne personne, List<Absence> abscences, Entreprise entreprise,
+			List<ProgrammePromotion> programmePromotion, List<Groupe> groupes) {
 		super();
 		this.id = id;
 //		this.fiches = fiches;
 		this.personne = personne;
-		this.absences = absences;
+		this.abscences = abscences;
 		this.entreprise = entreprise;
-		this.promotions = promotions;
+		this.programmePromotions = programmePromotion;
 		this.groupes = groupes;
 	}
 
@@ -85,11 +86,11 @@ public class Etudiant {
 	}
 
 	public List<Absence> getAbscences() {
-		return absences;
+		return abscences;
 	}
 
-	public void setAbscences(List<Absence> absences) {
-		this.absences = absences;
+	public void setAbscences(List<Absence> abscences) {
+		this.abscences = abscences;
 	}
 
 	public Entreprise getEntreprise() {
@@ -100,12 +101,12 @@ public class Etudiant {
 		this.entreprise = entreprise;
 	}
 
-	public List<Promotion> getPromotions() {
-		return promotions;
+	public List<ProgrammePromotion> getProgrammePromotion() {
+		return programmePromotions;
 	}
 
-	public void setPromotions(List<Promotion> promotions) {
-		this.promotions = promotions;
+	public void setProgrammePromotion(List<ProgrammePromotion> programmePromotion) {
+		this.programmePromotions = programmePromotion;
 	}
 
 	public List<Groupe> getGroupes() {

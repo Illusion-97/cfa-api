@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,10 +15,11 @@ public class PromotionDto implements Serializable {
 	@XmlElement
 	private long id;
 	@XmlElement
-	private Date dateDebut;
+	private String Nom;
 	@XmlElement
-	private Date dateFin;
+	private String Description;
 	@XmlElement
+<<<<<<< HEAD
 	private CentreDto centreDto;
 	@XmlElement
 	private ProgrammePromotionDto programmePromotionDto;
@@ -29,16 +29,18 @@ public class PromotionDto implements Serializable {
 	private List<EtudiantDto> etudiantsDto;
 	@XmlElement
 	private List<ProgrammeCoursDto> programmeCoursDto;
+=======
+	private List<ProgrammePromotionDto> programmePromotions;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 
 	public PromotionDto() {
 		super();
 	}
 
-	public PromotionDto(long id, Date dateDebut, Date dateFin, CentreDto centre,
-			ProgrammePromotionDto programmePromotionDto, ReferentDto referentDto, List<EtudiantDto> etudiantsDto,
-			List<ProgrammeCoursDto> programmeCoursDto) {
+	public PromotionDto(long id, String nom, String description, List<ProgrammePromotionDto> programmePromotionDto) {
 		super();
 		this.id = id;
+<<<<<<< HEAD
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.centreDto = centre;
@@ -46,6 +48,11 @@ public class PromotionDto implements Serializable {
 		this.referentDto = referentDto;
 		this.etudiantsDto = etudiantsDto;
 		this.programmeCoursDto = programmeCoursDto;
+=======
+		Nom = nom;
+		Description = description;
+		this.programmePromotions = programmePromotionDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public long getId() {
@@ -56,34 +63,48 @@ public class PromotionDto implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDateDebut() {
-		return dateDebut;
+	public String getNom() {
+		return Nom;
 	}
 
-	public void setDateDebut(Date dateDebut) {
-		this.dateDebut = dateDebut;
+	public void setNom(String nom) {
+		Nom = nom;
 	}
 
-	public Date getDateFin() {
-		return dateFin;
+	public String getDescription() {
+		return Description;
 	}
 
-	public void setDateFin(Date dateFin) {
-		this.dateFin = dateFin;
+	public void setDescription(String description) {
+		Description = description;
 	}
 
+<<<<<<< HEAD
 	public CentreDto getCentreDto() {
 		return centreDto;
+=======
+	public List<ProgrammePromotionDto> getProgrammePromotionDto() {
+		return programmePromotions;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+<<<<<<< HEAD
 	public void setCentreDto(CentreDto centre) {
 		this.centreDto = centre;
+=======
+	public void setProgrammePromotionDto(List<ProgrammePromotionDto> programmePromotionDto) {
+		this.programmePromotions = programmePromotionDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+<<<<<<< HEAD
 	public ProgrammePromotionDto getProgrammePromotionDto() {
 		return programmePromotionDto;
 	}
+=======
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 
+<<<<<<< HEAD
 	public void setProgrammePromotionDto(ProgrammePromotionDto programmePromotion) {
 		this.programmePromotionDto = programmePromotion;
 	}
@@ -113,4 +134,6 @@ public class PromotionDto implements Serializable {
 	}
 	
 	
+=======
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 }

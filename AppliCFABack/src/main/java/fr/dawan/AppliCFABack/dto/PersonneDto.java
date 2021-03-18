@@ -29,7 +29,11 @@ public class PersonneDto implements Serializable {
 	@XmlElement
 	private EtudiantDto etudiantDto;
 	@XmlElement
+<<<<<<< HEAD
 	private CEFDto cefDto;
+=======
+	private CEFDto CEF;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	@XmlElement
 	private ReferentDto referentDto;
 	@XmlElement
@@ -41,15 +45,16 @@ public class PersonneDto implements Serializable {
 		super();
 	}
 	
-	public PersonneDto(long id, String login, String password, String prenom, String nom, AdresseDto adresse,
-			FormateurDto formateur, EtudiantDto etudiant, CEFDto cef, ReferentDto referent, AdminDto admin,
-			List<ProjetDto> projets) {
+	public PersonneDto(long id, String login, String password, String prenom, String nom, AdresseDto adresseDto,
+			FormateurDto formateurDto, EtudiantDto etudiantDto, CEFDto CEFDto, ReferentDto referentDto, AdminDto adminDto,
+			List<ProjetDto> projetDto) {
 		super();
 		this.id = id;
 		this.login = login;
 		this.password = password;
 		this.prenom = prenom;
 		this.nom = nom;
+<<<<<<< HEAD
 		this.adresseDto = adresse;
 		this.formateurDto = formateur;
 		this.etudiantDto = etudiant;
@@ -57,6 +62,15 @@ public class PersonneDto implements Serializable {
 		this.referentDto = referent;
 		this.adminDto = admin;
 		this.projetsDto = projets;
+=======
+		this.adresse = adresseDto;
+		this.formateur = formateurDto;
+		this.etudiant = etudiantDto;
+		this.CEF = CEFDto;
+		this.referent = referentDto;
+		this.admin = adminDto;
+		this.projets = projetDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public long getId() {
@@ -100,59 +114,119 @@ public class PersonneDto implements Serializable {
 	}
 
 	public AdresseDto getAdresseDto() {
+<<<<<<< HEAD
 		return adresseDto;
+=======
+		return adresse;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public void setAdresseDto(AdresseDto adresseDto) {
+<<<<<<< HEAD
 		this.adresseDto = adresseDto;
+=======
+		this.adresse = adresseDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public FormateurDto getFormateurDto() {
+<<<<<<< HEAD
 		return formateurDto;
+=======
+		return formateur;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public void setFormateurDto(FormateurDto formateurDto) {
+<<<<<<< HEAD
 		this.formateurDto = formateurDto;
+=======
+		this.formateur = formateurDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public EtudiantDto getEtudiantDto() {
+<<<<<<< HEAD
 		return etudiantDto;
+=======
+		return etudiant;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public void setEtudiantDto(EtudiantDto etudiantDto) {
+<<<<<<< HEAD
 		this.etudiantDto = etudiantDto;
+=======
+		this.etudiant = etudiantDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+<<<<<<< HEAD
 	public CEFDto getCefDto() {
 		return cefDto;
+=======
+	public CEFDto getCEFDto() {
+		return CEF;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+<<<<<<< HEAD
 	public void setCefDto(CEFDto cefDto) {
 		this.cefDto = cefDto;
+=======
+	public void setCEFDto(CEFDto cEFDto) {
+		CEF = cEFDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public ReferentDto getReferentDto() {
+<<<<<<< HEAD
 		return referentDto;
+=======
+		return referent;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public void setReferentDto(ReferentDto referentDto) {
+<<<<<<< HEAD
 		this.referentDto = referentDto;
+=======
+		this.referent = referentDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public AdminDto getAdminDto() {
+<<<<<<< HEAD
 		return adminDto;
+=======
+		return admin;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public void setAdminDto(AdminDto adminDto) {
+<<<<<<< HEAD
 		this.adminDto = adminDto;
+=======
+		this.admin = adminDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+<<<<<<< HEAD
 	public List<ProjetDto> getProjetsDto() {
 		return projetsDto;
+=======
+	public List<ProjetDto> getProjetDto() {
+		return projets;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+<<<<<<< HEAD
 	public void setProjetsDto(List<ProjetDto> projetsDto) {
 		this.projetsDto = projetsDto;
+=======
+	public void setProjetDto(List<ProjetDto> projetDto) {
+		this.projets = projetDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 }

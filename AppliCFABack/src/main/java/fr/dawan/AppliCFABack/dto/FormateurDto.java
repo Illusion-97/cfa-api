@@ -18,7 +18,7 @@ public class FormateurDto implements Serializable{
 	@XmlElement
 	private PersonneDto personneDto;
 	@XmlElement
-	private List<ProgrammeCoursDto> programmeCoursDto;
+	private List<ProgrammeCoursDto> programmeCours;
 
 	public FormateurDto() {
 		super();
@@ -27,8 +27,13 @@ public class FormateurDto implements Serializable{
 	public FormateurDto(long id, PersonneDto personneDto, List<ProgrammeCoursDto> programmeCoursDto) {
 		super();
 		this.id = id;
+<<<<<<< HEAD
 		this.personneDto = personneDto;
 		this.programmeCoursDto = programmeCoursDto;
+=======
+		this.personne = personneDto;
+		this.programmeCours = programmeCoursDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 
@@ -41,19 +46,28 @@ public class FormateurDto implements Serializable{
 	}
 
 	public PersonneDto getPersonneDto() {
+<<<<<<< HEAD
 		return personneDto;
+=======
+		return personne;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+<<<<<<< HEAD
 	public void setPersonneDto(PersonneDto personne) {
 		this.personneDto = personne;
+=======
+	public void setPersonneDto(PersonneDto personneDto) {
+		this.personne = personneDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public List<ProgrammeCoursDto> getProgrammeCoursDto() {
-		return programmeCoursDto;
+		return programmeCours;
 	}
 
 	public void setProgrammeCoursDto(List<ProgrammeCoursDto> programmeCoursDto) {
-		this.programmeCoursDto = programmeCoursDto;
+		this.programmeCours = programmeCoursDto;
 	}
 
 }

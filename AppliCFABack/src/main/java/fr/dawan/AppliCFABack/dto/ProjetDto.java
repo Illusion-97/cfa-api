@@ -32,14 +32,19 @@ public class ProjetDto implements Serializable {
 		super();
 	}
 
-	public ProjetDto(long id, String nom, String description, GroupeDto groupe, PersonneDto personneReferent,
+	public ProjetDto(long id, String nom, String description, GroupeDto groupeDto, PersonneDto personneReferent,
 			TypeProjet type) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.description = description;
+<<<<<<< HEAD
 		this.groupeDto = groupe;
 		this.personneReferentDto = personneReferent;
+=======
+		this.groupe = groupeDto;
+		this.personneReferent = personneReferent;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 		this.type = type;
 	}
 
@@ -68,11 +73,20 @@ public class ProjetDto implements Serializable {
 	}
 
 	public GroupeDto getGroupeDto() {
+<<<<<<< HEAD
 		return groupeDto;
+=======
+		return groupe;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+<<<<<<< HEAD
 	public void setGroupeDto(GroupeDto groupe) {
 		this.groupeDto = groupe;
+=======
+	public void setGroupeDto(GroupeDto groupeDto) {
+		this.groupe = groupeDto;
+>>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public PersonneDto getPersonneReferentDto() {
