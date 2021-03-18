@@ -59,6 +59,16 @@ public class Adresse {
 		this.centre = centre;
 		this.entreprise = entreprise;
 	}
+	
+	public Adresse(long id, long numero, String rue, String ville, String codePostal) {
+		super();
+		this.id = id;
+		this.numero = numero;
+		this.rue = rue;
+		this.ville = ville;
+		this.codePostal = codePostal;
+
+	}
 
 	public long getId() {
 		return id;
