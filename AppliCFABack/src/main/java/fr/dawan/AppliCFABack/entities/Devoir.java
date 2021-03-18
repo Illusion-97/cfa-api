@@ -30,7 +30,7 @@ public class Devoir {
 	private Date fin;
 	
 	@ManyToOne
-	private Cours cours;
+	private ProgrammeCours programmeCours;
 	
 	@Version
 	private int version;
@@ -39,14 +39,14 @@ public class Devoir {
 		super();
 	}
 
-	public Devoir(long id, String nom, String consigne, Date debut, Date fin, Cours cours) {
+	public Devoir(long id, String nom, String consigne, Date debut, Date fin, ProgrammeCours programmeCours) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.consigne = consigne;
 		this.debut = debut;
 		this.fin = fin;
-		this.cours = cours;
+		this.programmeCours = programmeCours;
 	}
 
 	public long getId() {
@@ -89,12 +89,12 @@ public class Devoir {
 		this.fin = fin;
 	}
 
-	public Cours getCours() {
-		return cours;
+	public ProgrammeCours getProgrammeCours() {
+		return programmeCours;
 	}
 
-	public void setCours(Cours cours) {
-		this.cours = cours;
+	public void setProgrammeCours(ProgrammeCours programmeCours) {
+		this.programmeCours = programmeCours;
 	}
 	
 }

@@ -28,24 +28,24 @@ public class PromotionDto implements Serializable {
 	@XmlElement
 	private List<EtudiantDto> etudiants;
 	@XmlElement
-	private List<CoursDto> cours;
+	private List<ProgrammeCoursDto> programmeCoursDto;
 
 	public PromotionDto() {
 		super();
 	}
 
 	public PromotionDto(long id, Date dateDebut, Date dateFin, CentreDto centre,
-			ProgrammePromotionDto programmePromotion, ReferentDto referent, List<EtudiantDto> etudiants,
-			List<CoursDto> cours) {
+			ProgrammePromotionDto programmePromotionDto, ReferentDto referentDto, List<EtudiantDto> etudiantsDto,
+			List<ProgrammeCoursDto> programmeCoursDto) {
 		super();
 		this.id = id;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.centre = centre;
-		this.programmePromotion = programmePromotion;
-		this.referent = referent;
-		this.etudiants = etudiants;
-		this.cours = cours;
+		this.programmePromotionDto = programmePromotionDto;
+		this.referentDto = referentDto;
+		this.etudiantsDto = etudiantsDto;
+		this.programmeCoursDto = programmeCoursDto;
 	}
 
 	public long getId() {
@@ -104,12 +104,12 @@ public class PromotionDto implements Serializable {
 		this.etudiants = etudiants;
 	}
 
-	public List<CoursDto> getCours() {
-		return cours;
+	public List<ProgrammeCoursDto> getProgrammeCoursDto() {
+		return programmeCoursDto;
 	}
 
-	public void setCours(List<CoursDto> cours) {
-		this.cours = cours;
+	public void setProgrammeCoursDto(List<ProgrammeCoursDto> programmeCoursDto) {
+		this.programmeCoursDto = programmeCoursDto;
 	}
 	
 	
