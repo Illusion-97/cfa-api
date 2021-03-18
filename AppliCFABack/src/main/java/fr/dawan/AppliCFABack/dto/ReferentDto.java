@@ -17,22 +17,17 @@ public class ReferentDto implements Serializable {
 	@XmlElement
 	private PersonneDto personneDto;
 	@XmlElement
-	private List<ProgrammePromotionDto> programmePromotions;
+	private List<ProgrammePromotionDto> programmePromotionsDto;
 
 	public ReferentDto() {
 		super();
 	}
 
-	public ReferentDto(long id, PersonneDto personneDto, List<ProgrammePromotionDto> ProgrammePromotionDto) {
+	public ReferentDto(long id, PersonneDto personneDto, List<ProgrammePromotionDto> programmePromotionsDto) {
 		super();
 		this.id = id;
-<<<<<<< HEAD
-		this.personneDto = personne;
-		this.promotion = promotion;
-=======
-		this.personne = personneDto;
-		this.programmePromotions = ProgrammePromotionDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+		this.personneDto = personneDto;
+		this.programmePromotionsDto = programmePromotionsDto;
 	}
 
 	public long getId() {
@@ -44,28 +39,19 @@ public class ReferentDto implements Serializable {
 	}
 
 	public PersonneDto getPersonneDto() {
-<<<<<<< HEAD
 		return personneDto;
-=======
-		return personne;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
-<<<<<<< HEAD
-	public void setPersonneDto(PersonneDto personne) {
-		this.personneDto = personne;
-=======
 	public void setPersonneDto(PersonneDto personneDto) {
-		this.personne = personneDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+		this.personneDto = personneDto;
 	}
 
-	public List<ProgrammePromotionDto> getProgrammePromotionDto() {
-		return programmePromotions;
+	public List<ProgrammePromotionDto> getProgrammePromotionsDto() {
+		return programmePromotionsDto;
 	}
 
-	public void setProgrammePromotionDto(List<ProgrammePromotionDto> ProgrammePromotionDto) {
-		this.programmePromotions = ProgrammePromotionDto;
+	public void setProgrammePromotionsDto(List<ProgrammePromotionDto> programmePromotionsDto) {
+		this.programmePromotionsDto = programmePromotionsDto;
 	}
 
 }

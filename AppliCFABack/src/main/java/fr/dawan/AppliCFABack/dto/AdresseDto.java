@@ -23,11 +23,7 @@ public class AdresseDto implements Serializable {
 	@XmlElement
 	private String codePostal;
 	@XmlElement
-<<<<<<< HEAD
 	private List<PersonneDto> personnesDto;
-=======
-	private List<PersonneDto> personne;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	@XmlElement
 	private CentreDto centreDto;
 	@XmlElement
@@ -37,7 +33,7 @@ public class AdresseDto implements Serializable {
 		super();
 	}
 
-	public AdresseDto(long id, long numero, String rue, String ville, String codePostal, List<PersonneDto> personneDto,
+	public AdresseDto(long id, long numero, String rue, String ville, String codePostal, List<PersonneDto> personnesDto,
 			CentreDto centreDto, EntrepriseDto entrepriseDto) {
 		super();
 		this.id = id;
@@ -45,15 +41,9 @@ public class AdresseDto implements Serializable {
 		this.rue = rue;
 		this.ville = ville;
 		this.codePostal = codePostal;
-<<<<<<< HEAD
-		this.personnesDto = personnes;
-		this.centreDto = centre;
-		this.entrepriseDto = entreprise;
-=======
-		this.personne = personneDto;
-		this.centre = centreDto;
-		this.entreprise = entrepriseDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+		this.personnesDto = personnesDto;
+		this.centreDto = centreDto;
+		this.entrepriseDto = entrepriseDto;
 	}
 
 	public long getId() {
@@ -96,56 +86,29 @@ public class AdresseDto implements Serializable {
 		this.codePostal = codePostal;
 	}
 
-<<<<<<< HEAD
 	public List<PersonneDto> getPersonnesDto() {
 		return personnesDto;
-=======
-	public List<PersonneDto> getPersonneDto() {
-		return personne;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
-<<<<<<< HEAD
 	public void setPersonnesDto(List<PersonneDto> personnesDto) {
 		this.personnesDto = personnesDto;
-=======
-	public void setPersonneDto(List<PersonneDto> personneDto) {
-		this.personne = personneDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public CentreDto getCentreDto() {
-<<<<<<< HEAD
 		return centreDto;
-=======
-		return centre;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public void setCentreDto(CentreDto centreDto) {
-<<<<<<< HEAD
 		this.centreDto = centreDto;
-=======
-		this.centre = centreDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public EntrepriseDto getEntrepriseDto() {
-<<<<<<< HEAD
 		return entrepriseDto;
-=======
-		return entreprise;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
-<<<<<<< HEAD
 		this.entrepriseDto = entrepriseDto;
-=======
-		this.entreprise = entrepriseDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
-
 
 
 }

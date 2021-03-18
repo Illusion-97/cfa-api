@@ -20,24 +20,21 @@ public class ExamenDto implements Serializable {
 	@XmlElement
 	private List<NoteDto> notesDto;
 	@XmlElement
-	private ProgrammeCoursDto programmeCours;
+	private ProgrammeCoursDto programmeCoursDto;
 
 	public ExamenDto() {
 		super();
 	}
 	
-	public ExamenDto(long id, Date date, List<NoteDto> noteDto, ProgrammeCoursDto programmeCoursDto) {
+
+	public ExamenDto(long id, Date date, List<NoteDto> notesDto, ProgrammeCoursDto programmeCoursDto) {
 		super();
 		this.id = id;
 		this.date = date;
-<<<<<<< HEAD
-		this.notesDto = noteDto;
+		this.notesDto = notesDto;
 		this.programmeCoursDto = programmeCoursDto;
-=======
-		this.notes = noteDto;
-		this.programmeCours = programmeCoursDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
+
 
 	public long getId() {
 		return id;
@@ -55,29 +52,23 @@ public class ExamenDto implements Serializable {
 		this.date = date;
 	}
 
-	public List<NoteDto> getNoteDto() {
-<<<<<<< HEAD
+
+	public List<NoteDto> getNotesDto() {
 		return notesDto;
-=======
-		return notes;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
-<<<<<<< HEAD
-	public void setNoteDto(List<NoteDto> notes) {
-		this.notesDto = notes;
-=======
-	public void setNoteDto(List<NoteDto> noteDto) {
-		this.notes = noteDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+
+	public void setNotesDto(List<NoteDto> notesDto) {
+		this.notesDto = notesDto;
 	}
+
 
 	public ProgrammeCoursDto getProgrammeCoursDto() {
-		return programmeCours;
+		return programmeCoursDto;
 	}
 
 	public void setProgrammeCoursDto(ProgrammeCoursDto programmeCoursDto) {
-		this.programmeCours = programmeCoursDto;
+		this.programmeCoursDto = programmeCoursDto;
 	}
 
 	

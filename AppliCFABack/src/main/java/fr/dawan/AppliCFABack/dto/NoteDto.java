@@ -24,18 +24,15 @@ public class NoteDto implements Serializable {
 		super();
 	}
 	
+
 	public NoteDto(long id, Double value, ExamenDto examenDto, EtudiantDto etudiantDto) {
 		super();
 		this.id = id;
 		this.value = value;
-<<<<<<< HEAD
-		this.examenDto = examen;
-		this.etudiantDto = etudiant;
-=======
-		this.examen = examenDto;
-		this.etudiant = etudiantDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+		this.examenDto = examenDto;
+		this.etudiantDto = etudiantDto;
 	}
+
 
 	public long getId() {
 		return id;
@@ -53,36 +50,24 @@ public class NoteDto implements Serializable {
 		this.value = value;
 	}
 
+
 	public ExamenDto getExamenDto() {
-<<<<<<< HEAD
 		return examenDto;
-=======
-		return examen;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
+
 
 	public void setExamenDto(ExamenDto examenDto) {
-<<<<<<< HEAD
 		this.examenDto = examenDto;
-=======
-		this.examen = examenDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
+
 
 	public EtudiantDto getEtudiantDto() {
-<<<<<<< HEAD
 		return etudiantDto;
-=======
-		return etudiant;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+
 	public void setEtudiantDto(EtudiantDto etudiantDto) {
-<<<<<<< HEAD
 		this.etudiantDto = etudiantDto;
-=======
-		this.etudiant = etudiantDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 }

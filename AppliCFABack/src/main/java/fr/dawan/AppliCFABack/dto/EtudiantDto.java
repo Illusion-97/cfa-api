@@ -17,19 +17,10 @@ public class EtudiantDto implements Serializable {
 	private long id;
 	
 	@XmlElement
-<<<<<<< HEAD
 	private PersonneDto personneDto;
-	 
-=======
-	private PersonneDto personne;
 	
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	@XmlElement
-<<<<<<< HEAD
 	private List<AbsenceDto> absencesDto;
-=======
-	private List<AbsenceDto> absence;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	
 	@XmlElement
 	private EntrepriseDto entrepriseDto;
@@ -38,11 +29,7 @@ public class EtudiantDto implements Serializable {
 	private List<NoteDto> notesDto;
 	
 	@XmlElement
-<<<<<<< HEAD
 	private List<PromotionDto> promotionsDto;
-=======
-	private List<ProgrammePromotionDto> programmePromotions;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	
 	@XmlElement
 	private List<GroupeDto> groupesDto;
@@ -50,26 +37,17 @@ public class EtudiantDto implements Serializable {
 	public EtudiantDto() {
 		super();
 	}
-	
-	public EtudiantDto(long id, PersonneDto personneDto, List<AbsenceDto> absenceDto, EntrepriseDto entrepriseDto,
-			List<NoteDto> noteDto, List<ProgrammePromotionDto> programmePromotionDto, List<GroupeDto> groupeDto) {
+
+	public EtudiantDto(long id, PersonneDto personneDto, List<AbsenceDto> absencesDto, EntrepriseDto entrepriseDto,
+			List<NoteDto> notesDto, List<PromotionDto> promotionsDto, List<GroupeDto> groupesDto) {
 		super();
 		this.id = id;
-<<<<<<< HEAD
-		this.personneDto = personne;
-		this.absencesDto = absences;
-		this.entrepriseDto = entreprise;
-		this.notesDto = notes;
-		this.promotionsDto = promotions;
-		this.groupesDto = groupes;
-=======
-		this.personne = personneDto;
-		this.absence = absenceDto;
-		this.entreprise = entrepriseDto;
-		this.notes = noteDto;
-		this.programmePromotions = programmePromotionDto;
-		this.groupes = groupeDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+		this.personneDto = personneDto;
+		this.absencesDto = absencesDto;
+		this.entrepriseDto = entrepriseDto;
+		this.notesDto = notesDto;
+		this.promotionsDto = promotionsDto;
+		this.groupesDto = groupesDto;
 	}
 
 	public long getId() {
@@ -81,7 +59,6 @@ public class EtudiantDto implements Serializable {
 	}
 
 	public PersonneDto getPersonneDto() {
-<<<<<<< HEAD
 		return personneDto;
 	}
 
@@ -128,55 +105,6 @@ public class EtudiantDto implements Serializable {
 	public void setGroupesDto(List<GroupeDto> groupesDto) {
 		this.groupesDto = groupesDto;
 	}
-	
-=======
-		return personne;
-	}
 
-	public void setPersonneDto(PersonneDto personneDto) {
-		this.personne = personneDto;
-	}
-
-	public List<AbsenceDto> getAbsenceDto() {
-		return absence;
-	}
-
-	public void setAbsenceDto(List<AbsenceDto> absenceDto) {
-		this.absence = absenceDto;
-	}
-
-	public EntrepriseDto getEntrepriseDto() {
-		return entreprise;
-	}
-
-	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
-		this.entreprise = entrepriseDto;
-	}
-
-	public List<NoteDto> getNoteDto() {
-		return notes;
-	}
-
-	public void setNoteDto(List<NoteDto> noteDto) {
-		this.notes = noteDto;
-	}
-
-	public List<ProgrammePromotionDto> getProgrammePromotionDto() {
-		return programmePromotions;
-	}
-
-	public void setProgrammePromotionDto(List<ProgrammePromotionDto> programmePromotionDto) {
-		this.programmePromotions = programmePromotionDto;
-	}
-
-	public List<GroupeDto> getGroupeDto() {
-		return groupes;
-	}
-
-	public void setGroupeDto(List<GroupeDto> groupeDto) {
-		this.groupes = groupeDto;
-	}
-
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	
 }

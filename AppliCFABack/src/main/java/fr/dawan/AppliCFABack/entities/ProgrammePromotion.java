@@ -28,8 +28,8 @@ public class ProgrammePromotion {
 	@ManyToOne
 	private Centre centre;
 	
-	@ManyToOne
-	private Promotion promotion;
+//	@ManyToOne
+//	private Promotion promotion;
 	
 	@ManyToOne
 	private Referent referent;
@@ -37,8 +37,8 @@ public class ProgrammePromotion {
 	@ManyToMany
 	private List<Etudiant> etudiants;
 	
-	@ManyToMany(mappedBy = "promotions")
-	private List<ProgrammeCours> programmeCours;
+//	@ManyToMany(mappedBy = "programmePromotions")
+//	private List<ProgrammeCours> programmeCours;
 	
 	@Version
 	private int version;
@@ -54,9 +54,9 @@ public class ProgrammePromotion {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.centre = centre;
-		this.promotion = promotion;
+//		this.promotion = promotion;
 		this.etudiants = etudiants;
-		this.programmeCours = programmeCours;
+//		this.programmeCours = programmeCours;
 		this.referent = referent;
 	}
 
@@ -92,13 +92,13 @@ public class ProgrammePromotion {
 		this.centre = centre;
 	}
 
-	public Promotion getPromotion() {
-		return promotion;
-	}
-
-	public void setPromotion(Promotion promotion) {
-		this.promotion = promotion;
-	}
+//	public Promotion getPromotion() {
+//		return promotion;
+//	}
+//
+//	public void setPromotion(Promotion promotion) {
+//		this.promotion = promotion;
+//	}
 
 	public List<Etudiant> getEtudiants() {
 		return etudiants;
@@ -108,13 +108,13 @@ public class ProgrammePromotion {
 		this.etudiants = etudiants;
 	}
 
-	public List<ProgrammeCours> getProgrammeCours() {
-		return programmeCours;
-	}
-
-	public void setProgrammeCours(List<ProgrammeCours> programmeCours) {
-		this.programmeCours = programmeCours;
-	}
+//	public List<ProgrammeCours> getProgrammeCours() {
+//		return programmeCours;
+//	}
+//
+//	public void setProgrammeCours(List<ProgrammeCours> programmeCours) {
+//		this.programmeCours = programmeCours;
+//	}
 
 	public Referent getReferent() {
 		return referent;

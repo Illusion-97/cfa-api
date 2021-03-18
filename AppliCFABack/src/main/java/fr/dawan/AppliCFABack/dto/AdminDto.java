@@ -21,15 +21,13 @@ public class AdminDto implements Serializable {
 		super();
 	}
 
+
 	public AdminDto(long id, PersonneDto personneDto) {
 		super();
 		this.id = id;
-<<<<<<< HEAD
-		this.personneDto = personne;
-=======
-		this.personne = personneDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+		this.personneDto = personneDto;
 	}
+
 
 	public long getId() {
 		return id;
@@ -39,21 +37,14 @@ public class AdminDto implements Serializable {
 		this.id = id;
 	}
 
+
 	public PersonneDto getPersonneDto() {
-<<<<<<< HEAD
 		return personneDto;
-=======
-		return personne;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
-<<<<<<< HEAD
-	public void setPersonneDto(PersonneDto personne) {
-		this.personneDto = personne;
-=======
+
 	public void setPersonneDto(PersonneDto personneDto) {
-		this.personne = personneDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+		this.personneDto = personneDto;
 	}
 
 	

@@ -71,20 +71,10 @@ public class AbsenceDto implements Serializable {
 	}
 
 	public EtudiantDto getEtudiantDto() {
-<<<<<<< HEAD
 		return etudiantDto;
-=======
-		return etudiant;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
-<<<<<<< HEAD
 	public void setEtudiantDto(EtudiantDto etudiant) {
 		this.etudiantDto = etudiant;
-=======
-	public void setEtudiantDto(EtudiantDto etudiantDto) {
-		this.etudiant = etudiantDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
-
 }

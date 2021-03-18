@@ -4,10 +4,22 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import fr.dawan.AppliCFABack.entities.Centre;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.ProgrammeCours;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Referent;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "programmePromotion")
@@ -16,55 +28,37 @@ public class ProgrammePromotionDto implements Serializable {
 	@XmlElement
 	private long id;
 	@XmlElement
-<<<<<<< HEAD
-	private String nom;
-=======
 	private Date dateDebut;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	@XmlElement
-<<<<<<< HEAD
-	private String description;
-=======
 	private Date dateFin;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	@XmlElement
-<<<<<<< HEAD
-	private List<PromotionDto> promotionsDto;
-=======
-	private CentreDto centre;
+	private CentreDto centreDto;
 	@XmlElement
-	private PromotionDto promotion;
+	private PromotionDto promotionDto;
 	@XmlElement
-	private ReferentDto referent;
+	private ReferentDto referentDto;
 	@XmlElement
-	private List<EtudiantDto> etudiants;
+	private List<EtudiantDto> etudiantsDto;
 	@XmlElement
-	private List<ProgrammeCoursDto> programmeCours;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+	private List<ProgrammeCoursDto> programmeCoursDto;
 
 	public ProgrammePromotionDto() {
 		super();
 	}
 
-	public ProgrammePromotionDto(long id, Date dateDebut, Date dateFin, CentreDto centre,
-			PromotionDto promotionDto, ReferentDto referentDto, List<EtudiantDto> etudiantsDto,
-			List<ProgrammeCoursDto> programmeCoursDto) {
+	public ProgrammePromotionDto(long id, Date dateDebut, Date dateFin, CentreDto centreDto, PromotionDto promotionDto,
+			ReferentDto referentDto, List<EtudiantDto> etudiantsDto, List<ProgrammeCoursDto> programmeCoursDto) {
 		super();
 		this.id = id;
-<<<<<<< HEAD
-		this.nom = nom;
-		this.description = description;
-		this.promotionsDto = promotions;
-=======
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
-		this.centre = centre;
-		this.promotion = promotionDto;
-		this.referent = referentDto;
-		this.etudiants = etudiantsDto;
-		this.programmeCours = programmeCoursDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+		this.centreDto = centreDto;
+		this.promotionDto = promotionDto;
+		this.referentDto = referentDto;
+		this.etudiantsDto = etudiantsDto;
+		this.programmeCoursDto = programmeCoursDto;
 	}
+
 
 	public long getId() {
 		return id;
@@ -74,91 +68,61 @@ public class ProgrammePromotionDto implements Serializable {
 		this.id = id;
 	}
 
-<<<<<<< HEAD
-	public String getNom() {
-		return nom;
-=======
 	public Date getDateDebut() {
 		return dateDebut;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
-<<<<<<< HEAD
-	public void setNom(String nom) {
-		nom = nom;
-=======
 	public void setDateDebut(Date dateDebut) {
 		this.dateDebut = dateDebut;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
-<<<<<<< HEAD
-	public String getDescription() {
-		return description;
-=======
 	public Date getDateFin() {
 		return dateFin;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
-<<<<<<< HEAD
-	public void setDescription(String description) {
-		description = description;
-=======
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
-<<<<<<< HEAD
-	public List<PromotionDto> getPromotionDto() {
-		return promotionsDto;
-=======
-	public CentreDto getCentre() {
-		return centre;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+	public CentreDto getCentreDto() {
+		return centreDto;
 	}
 
-<<<<<<< HEAD
-	public void setPromotionDto(List<PromotionDto> promotions) {
-		this.promotionsDto = promotions;
-=======
-	public void setCentre(CentreDto centre) {
-		this.centre = centre;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+	public void setCentreDto(CentreDto centreDto) {
+		this.centreDto = centreDto;
 	}
 
 	public PromotionDto getPromotionDto() {
-		return promotion;
+		return promotionDto;
 	}
 
 	public void setPromotionDto(PromotionDto promotionDto) {
-		this.promotion = promotionDto;
+		this.promotionDto = promotionDto;
 	}
 
 	public ReferentDto getReferentDto() {
-		return referent;
+		return referentDto;
 	}
 
 	public void setReferentDto(ReferentDto referentDto) {
-		this.referent = referentDto;
+		this.referentDto = referentDto;
 	}
 
 	public List<EtudiantDto> getEtudiantsDto() {
-		return etudiants;
+		return etudiantsDto;
 	}
 
 	public void setEtudiantsDto(List<EtudiantDto> etudiantsDto) {
-		this.etudiants = etudiantsDto;
+		this.etudiantsDto = etudiantsDto;
 	}
 
 	public List<ProgrammeCoursDto> getProgrammeCoursDto() {
-		return programmeCours;
+		return programmeCoursDto;
 	}
 
 	public void setProgrammeCoursDto(List<ProgrammeCoursDto> programmeCoursDto) {
-		this.programmeCours = programmeCoursDto;
+		this.programmeCoursDto = programmeCoursDto;
 	}
-	
-	
+
+
 }

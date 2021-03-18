@@ -46,8 +46,8 @@ public class ProgrammeCours{
 	@OneToMany(mappedBy = "programmeCours", cascade = CascadeType.ALL)
 	private List<Devoir> devoirs;
 		
-	@ManyToMany
-	private List<ProgrammePromotion> programmePromotions;
+//	@ManyToMany
+//	private List<ProgrammePromotion> programmePromotions;
 	
 	@ManyToMany(mappedBy = "programmeCours")
 	private List<Formateur> formateurs;
@@ -59,30 +59,20 @@ public class ProgrammeCours{
 		super();
 	}
 
-	public ProgrammeCours(long id, Date dateDebut, Date dateFin, String noteInformation, String noteEntraide/*,
-			List<File> supportCours*/, Cours cours, List<Examen> examens, List<Devoir> devoirs,
-<<<<<<< HEAD
-			List<Promotion> promotions, List<Formateur> formateurs) {
-=======
-			List<ProgrammePromotion> programmePromotion, List<Formateur> formateur) {
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+	public ProgrammeCours(long id, Date dateDebut, Date dateFin, String noteInformation, String noteEntraide,
+			Cours cours, List<Examen> examens, List<Devoir> devoirs, List<ProgrammePromotion> programmePromotions,
+			List<Formateur> formateurs) {
 		super();
 		this.id = id;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.noteInformation = noteInformation;
 		this.noteEntraide = noteEntraide;
-//		this.supportCours = supportCours;
 		this.cours = cours;
 		this.examens = examens;
 		this.devoirs = devoirs;
-<<<<<<< HEAD
-		this.promotions = promotions;
+//		this.programmePromotions = programmePromotions;
 		this.formateurs = formateurs;
-=======
-		this.programmePromotions = programmePromotion;
-		this.formateurs = formateur;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public long getId() {
@@ -133,6 +123,7 @@ public class ProgrammeCours{
 		this.supportCours = supportCours;
 	}
 */
+
 	public Cours getCours() {
 		return cours;
 	}
@@ -157,25 +148,21 @@ public class ProgrammeCours{
 		this.devoirs = devoirs;
 	}
 
-	public List<ProgrammePromotion> getProgrammePromotion() {
-		return programmePromotions;
-	}
-
-	public void setProgrammePromotion(List<ProgrammePromotion> programmePromotion) {
-		this.programmePromotions = programmePromotion;
-	}
-
-	public List<Formateur> getFormateur() {
+	public List<Formateur> getFormateurs() {
 		return formateurs;
 	}
 
-<<<<<<< HEAD
-	public void setFormateur(List<Formateur> formateurs) {
+	public void setFormateurs(List<Formateur> formateurs) {
 		this.formateurs = formateurs;
-=======
-	public void setFormateur(List<Formateur> formateur) {
-		this.formateurs = formateur;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
 	
 }

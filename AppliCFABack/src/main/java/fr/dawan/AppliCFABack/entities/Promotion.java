@@ -24,8 +24,8 @@ public class Promotion {
 	@Column(nullable = false, length = 255)
 	private String Description;
 	
-	@OneToMany(mappedBy = "programmePromotion", cascade = CascadeType.ALL)
-	private List<ProgrammePromotion> programmePromotions;
+//	@OneToMany(mappedBy = "programmePromotions", cascade = CascadeType.ALL)
+//	private List<ProgrammePromotion> programmePromotions;
 	
 	@Version
 	private int version;
@@ -39,7 +39,7 @@ public class Promotion {
 		this.id = id;
 		Nom = nom;
 		Description = description;
-		this.programmePromotions = programmePromotion;
+//		this.programmePromotions = programmePromotion;
 	}
 
 	public long getId() {
@@ -66,13 +66,13 @@ public class Promotion {
 		Description = description;
 	}
 
-	public List<ProgrammePromotion> getProgrammePromotion() {
-		return programmePromotions;
-	}
-
-	public void setProgrammePromotion(List<ProgrammePromotion> programmePromotion) {
-		this.programmePromotions = programmePromotion;
-	}
+//	public List<ProgrammePromotion> getProgrammePromotion() {
+//		return programmePromotions;
+//	}
+//
+//	public void setProgrammePromotion(List<ProgrammePromotion> programmePromotion) {
+//		this.programmePromotions = programmePromotion;
+//	}
 
 	public int getVersion() {
 		return version;

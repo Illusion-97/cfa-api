@@ -21,20 +21,14 @@ public class CEFDto implements Serializable {
 	public CEFDto() {
 		super();
 	}
-
+	
 	public CEFDto(long id, PersonneDto personneDto, CentreDto centreDto) {
 		super();
 		this.id = id;
-<<<<<<< HEAD
-		this.personneDto = personne;
-		this.centreDto = centre;
-=======
-		this.personne = personneDto;
-		this.centre = centreDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+		this.personneDto = personneDto;
+		this.centreDto = centreDto;
 	}
 
-	
 	public long getId() {
 		return id;
 	}
@@ -44,35 +38,20 @@ public class CEFDto implements Serializable {
 	}
 
 	public PersonneDto getPersonneDto() {
-<<<<<<< HEAD
 		return personneDto;
-=======
-		return personne;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public void setPersonneDto(PersonneDto personneDto) {
-<<<<<<< HEAD
 		this.personneDto = personneDto;
-=======
-		this.personne = personneDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public CentreDto getCentreDto() {
-<<<<<<< HEAD
 		return centreDto;
-=======
-		return centre;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
 	public void setCentreDto(CentreDto centreDto) {
-<<<<<<< HEAD
 		this.centreDto = centreDto;
-=======
-		this.centre = centreDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 	}
 
+	
 }

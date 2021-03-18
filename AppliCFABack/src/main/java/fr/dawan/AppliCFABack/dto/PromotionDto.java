@@ -19,40 +19,18 @@ public class PromotionDto implements Serializable {
 	@XmlElement
 	private String Description;
 	@XmlElement
-<<<<<<< HEAD
-	private CentreDto centreDto;
-	@XmlElement
-	private ProgrammePromotionDto programmePromotionDto;
-	@XmlElement
-	private ReferentDto referentDto;
-	@XmlElement
-	private List<EtudiantDto> etudiantsDto;
-	@XmlElement
-	private List<ProgrammeCoursDto> programmeCoursDto;
-=======
-	private List<ProgrammePromotionDto> programmePromotions;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+	private List<ProgrammePromotionDto> programmePromotionsDto;
 
 	public PromotionDto() {
 		super();
 	}
 
-	public PromotionDto(long id, String nom, String description, List<ProgrammePromotionDto> programmePromotionDto) {
+	public PromotionDto(long id, String nom, String description, List<ProgrammePromotionDto> programmePromotionsDto) {
 		super();
 		this.id = id;
-<<<<<<< HEAD
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
-		this.centreDto = centre;
-		this.programmePromotionDto = programmePromotionDto;
-		this.referentDto = referentDto;
-		this.etudiantsDto = etudiantsDto;
-		this.programmeCoursDto = programmeCoursDto;
-=======
 		Nom = nom;
 		Description = description;
-		this.programmePromotions = programmePromotionDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+		this.programmePromotionsDto = programmePromotionsDto;
 	}
 
 	public long getId() {
@@ -79,61 +57,12 @@ public class PromotionDto implements Serializable {
 		Description = description;
 	}
 
-<<<<<<< HEAD
-	public CentreDto getCentreDto() {
-		return centreDto;
-=======
-	public List<ProgrammePromotionDto> getProgrammePromotionDto() {
-		return programmePromotions;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+	public List<ProgrammePromotionDto> getProgrammePromotionsDto() {
+		return programmePromotionsDto;
 	}
 
-<<<<<<< HEAD
-	public void setCentreDto(CentreDto centre) {
-		this.centreDto = centre;
-=======
-	public void setProgrammePromotionDto(List<ProgrammePromotionDto> programmePromotionDto) {
-		this.programmePromotions = programmePromotionDto;
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
+	public void setProgrammePromotionsDto(List<ProgrammePromotionDto> programmePromotionsDto) {
+		this.programmePromotionsDto = programmePromotionsDto;
 	}
 
-<<<<<<< HEAD
-	public ProgrammePromotionDto getProgrammePromotionDto() {
-		return programmePromotionDto;
-	}
-=======
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
-
-<<<<<<< HEAD
-	public void setProgrammePromotionDto(ProgrammePromotionDto programmePromotion) {
-		this.programmePromotionDto = programmePromotion;
-	}
-
-	public ReferentDto getReferentDto() {
-		return referentDto;
-	}
-
-	public void setReferentDto(ReferentDto referent) {
-		this.referentDto = referent;
-	}
-
-	public List<EtudiantDto> getEtudiantsDto() {
-		return etudiantsDto;
-	}
-
-	public void setEtudiantsDto(List<EtudiantDto> etudiants) {
-		this.etudiantsDto = etudiants;
-	}
-
-	public List<ProgrammeCoursDto> getProgrammeCoursDto() {
-		return programmeCoursDto;
-	}
-
-	public void setProgrammeCoursDto(List<ProgrammeCoursDto> programmeCoursDto) {
-		this.programmeCoursDto = programmeCoursDto;
-	}
-	
-	
-=======
->>>>>>> branch 'main' of https://github.com/Dwena/AppliCFABack
 }
