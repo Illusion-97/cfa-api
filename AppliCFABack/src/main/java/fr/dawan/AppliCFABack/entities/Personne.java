@@ -76,6 +76,16 @@ public class Personne {
 		this.admin = admin;
 		this.projets = projets;
 	}
+	
+	public Personne(long id, String login, String password, String prenom, String nom, Adresse adresse) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.password = password;
+		this.prenom = prenom;
+		this.nom = nom;
+		this.adresse = adresse;
+	}
 
 	public long getId() {
 		return id;

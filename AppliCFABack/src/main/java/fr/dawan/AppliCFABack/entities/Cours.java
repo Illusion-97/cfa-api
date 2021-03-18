@@ -1,6 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -74,6 +74,13 @@ public class Cours {
 		this.devoirs = devoirs;
 		this.promotions = promotions;
 		this.formateurs = formateurs;
+	}
+	
+	public Cours(long id, Date dateDebut, Date dateFin) {
+		super();
+		this.id = id;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
 	}
 
 	public long getId() {
