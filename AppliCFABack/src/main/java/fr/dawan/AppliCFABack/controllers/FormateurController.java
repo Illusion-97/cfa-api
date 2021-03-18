@@ -49,7 +49,7 @@ public class FormateurController {
 
 	// DELETE: /AppliCFABack/formateurs/{id}
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
+	public ResponseEntity<?> deleteById(@PathVariable("id") long id) {
 		formateurService.deleteById(id);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body("Suppression ok");
 	}
