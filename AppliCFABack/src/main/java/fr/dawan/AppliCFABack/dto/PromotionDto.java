@@ -19,7 +19,7 @@ public class PromotionDto implements Serializable {
 	@XmlElement
 	private String Description;
 	@XmlElement
-	private List<ProgrammePromotionDto> programmePromotionDto;
+	private List<ProgrammePromotionDto> programmePromotions;
 
 	public PromotionDto() {
 		super();
@@ -30,7 +30,7 @@ public class PromotionDto implements Serializable {
 		this.id = id;
 		Nom = nom;
 		Description = description;
-		this.programmePromotionDto = programmePromotionDto;
+		this.programmePromotions = programmePromotionDto;
 	}
 
 	public long getId() {
@@ -58,11 +58,11 @@ public class PromotionDto implements Serializable {
 	}
 
 	public List<ProgrammePromotionDto> getProgrammePromotionDto() {
-		return programmePromotionDto;
+		return programmePromotions;
 	}
 
 	public void setProgrammePromotionDto(List<ProgrammePromotionDto> programmePromotionDto) {
-		this.programmePromotionDto = programmePromotionDto;
+		this.programmePromotions = programmePromotionDto;
 	}
 
 

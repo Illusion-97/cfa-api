@@ -16,9 +16,9 @@ public class FormateurDto implements Serializable{
 	@XmlElement
 	private long id;
 	@XmlElement
-	private PersonneDto personneDto;
+	private PersonneDto personne;
 	@XmlElement
-	private List<ProgrammeCoursDto> programmeCoursDto;
+	private List<ProgrammeCoursDto> programmeCours;
 
 	public FormateurDto() {
 		super();
@@ -27,8 +27,8 @@ public class FormateurDto implements Serializable{
 	public FormateurDto(long id, PersonneDto personneDto, List<ProgrammeCoursDto> programmeCoursDto) {
 		super();
 		this.id = id;
-		this.personneDto = personneDto;
-		this.programmeCoursDto = programmeCoursDto;
+		this.personne = personneDto;
+		this.programmeCours = programmeCoursDto;
 	}
 
 
@@ -41,19 +41,19 @@ public class FormateurDto implements Serializable{
 	}
 
 	public PersonneDto getPersonneDto() {
-		return personneDto;
+		return personne;
 	}
 
 	public void setPersonneDto(PersonneDto personneDto) {
-		this.personneDto = personneDto;
+		this.personne = personneDto;
 	}
 
 	public List<ProgrammeCoursDto> getProgrammeCoursDto() {
-		return programmeCoursDto;
+		return programmeCours;
 	}
 
 	public void setProgrammeCoursDto(List<ProgrammeCoursDto> programmeCoursDto) {
-		this.programmeCoursDto = programmeCoursDto;
+		this.programmeCours = programmeCoursDto;
 	}
 
 }

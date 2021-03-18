@@ -14,9 +14,9 @@ public class CEFDto implements Serializable {
 	@XmlElement
 	private long id;
 	@XmlElement
-	private PersonneDto personneDto;
+	private PersonneDto personne;
 	@XmlElement
-	private CentreDto centreDto;
+	private CentreDto centre;
 
 	public CEFDto() {
 		super();
@@ -25,8 +25,8 @@ public class CEFDto implements Serializable {
 	public CEFDto(long id, PersonneDto personneDto, CentreDto centreDto) {
 		super();
 		this.id = id;
-		this.personneDto = personneDto;
-		this.centreDto = centreDto;
+		this.personne = personneDto;
+		this.centre = centreDto;
 	}
 
 	
@@ -39,19 +39,19 @@ public class CEFDto implements Serializable {
 	}
 
 	public PersonneDto getPersonneDto() {
-		return personneDto;
+		return personne;
 	}
 
 	public void setPersonneDto(PersonneDto personneDto) {
-		this.personneDto = personneDto;
+		this.personne = personneDto;
 	}
 
 	public CentreDto getCentreDto() {
-		return centreDto;
+		return centre;
 	}
 
 	public void setCentreDto(CentreDto centreDto) {
-		this.centreDto = centreDto;
+		this.centre = centreDto;
 	}
 
 }

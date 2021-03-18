@@ -22,13 +22,13 @@ public class ProgrammePromotionDto implements Serializable {
 	@XmlElement
 	private CentreDto centre;
 	@XmlElement
-	private PromotionDto promotionDto;
+	private PromotionDto promotion;
 	@XmlElement
-	private ReferentDto referentDto;
+	private ReferentDto referent;
 	@XmlElement
-	private List<EtudiantDto> etudiantsDto;
+	private List<EtudiantDto> etudiants;
 	@XmlElement
-	private List<ProgrammeCoursDto> programmeCoursDto;
+	private List<ProgrammeCoursDto> programmeCours;
 
 	public ProgrammePromotionDto() {
 		super();
@@ -42,10 +42,10 @@ public class ProgrammePromotionDto implements Serializable {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.centre = centre;
-		this.promotionDto = promotionDto;
-		this.referentDto = referentDto;
-		this.etudiantsDto = etudiantsDto;
-		this.programmeCoursDto = programmeCoursDto;
+		this.promotion = promotionDto;
+		this.referent = referentDto;
+		this.etudiants = etudiantsDto;
+		this.programmeCours = programmeCoursDto;
 	}
 
 	public long getId() {
@@ -81,35 +81,35 @@ public class ProgrammePromotionDto implements Serializable {
 	}
 
 	public PromotionDto getPromotionDto() {
-		return promotionDto;
+		return promotion;
 	}
 
 	public void setPromotionDto(PromotionDto promotionDto) {
-		this.promotionDto = promotionDto;
+		this.promotion = promotionDto;
 	}
 
 	public ReferentDto getReferentDto() {
-		return referentDto;
+		return referent;
 	}
 
 	public void setReferentDto(ReferentDto referentDto) {
-		this.referentDto = referentDto;
+		this.referent = referentDto;
 	}
 
 	public List<EtudiantDto> getEtudiantsDto() {
-		return etudiantsDto;
+		return etudiants;
 	}
 
 	public void setEtudiantsDto(List<EtudiantDto> etudiantsDto) {
-		this.etudiantsDto = etudiantsDto;
+		this.etudiants = etudiantsDto;
 	}
 
 	public List<ProgrammeCoursDto> getProgrammeCoursDto() {
-		return programmeCoursDto;
+		return programmeCours;
 	}
 
 	public void setProgrammeCoursDto(List<ProgrammeCoursDto> programmeCoursDto) {
-		this.programmeCoursDto = programmeCoursDto;
+		this.programmeCours = programmeCoursDto;
 	}
 	
 	

@@ -25,7 +25,7 @@ public class Promotion {
 	private String Description;
 	
 	@OneToMany(mappedBy = "programmePromotion", cascade = CascadeType.ALL)
-	private List<ProgrammePromotion> programmePromotion;
+	private List<ProgrammePromotion> programmePromotions;
 	
 	@Version
 	private int version;
@@ -39,7 +39,7 @@ public class Promotion {
 		this.id = id;
 		Nom = nom;
 		Description = description;
-		this.programmePromotion = programmePromotion;
+		this.programmePromotions = programmePromotion;
 	}
 
 	public long getId() {
@@ -67,11 +67,11 @@ public class Promotion {
 	}
 
 	public List<ProgrammePromotion> getProgrammePromotion() {
-		return programmePromotion;
+		return programmePromotions;
 	}
 
 	public void setProgrammePromotion(List<ProgrammePromotion> programmePromotion) {
-		this.programmePromotion = programmePromotion;
+		this.programmePromotions = programmePromotion;
 	}
 
 	public int getVersion() {

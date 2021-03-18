@@ -14,7 +14,7 @@ public class AdminDto implements Serializable {
 	@XmlElement
 	private long id;
 	@XmlElement
-	private PersonneDto personneDto;
+	private PersonneDto personne;
 
 	
 	public AdminDto() {
@@ -24,7 +24,7 @@ public class AdminDto implements Serializable {
 	public AdminDto(long id, PersonneDto personneDto) {
 		super();
 		this.id = id;
-		this.personneDto = personneDto;
+		this.personne = personneDto;
 	}
 
 	public long getId() {
@@ -36,11 +36,11 @@ public class AdminDto implements Serializable {
 	}
 
 	public PersonneDto getPersonneDto() {
-		return personneDto;
+		return personne;
 	}
 
 	public void setPersonneDto(PersonneDto personneDto) {
-		this.personneDto = personneDto;
+		this.personne = personneDto;
 	}
 
 	

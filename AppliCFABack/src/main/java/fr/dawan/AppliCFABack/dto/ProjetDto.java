@@ -18,7 +18,7 @@ public class ProjetDto implements Serializable {
 	@XmlElement
 	private String description;
 	@XmlElement
-	private GroupeDto groupeDto;
+	private GroupeDto groupe;
 	@XmlElement
 	private PersonneDto personneReferent;
 	@XmlElement
@@ -38,7 +38,7 @@ public class ProjetDto implements Serializable {
 		this.id = id;
 		this.nom = nom;
 		this.description = description;
-		this.groupeDto = groupeDto;
+		this.groupe = groupeDto;
 		this.personneReferent = personneReferent;
 		this.type = type;
 	}
@@ -68,11 +68,11 @@ public class ProjetDto implements Serializable {
 	}
 
 	public GroupeDto getGroupeDto() {
-		return groupeDto;
+		return groupe;
 	}
 
 	public void setGroupeDto(GroupeDto groupeDto) {
-		this.groupeDto = groupeDto;
+		this.groupe = groupeDto;
 	}
 
 	public PersonneDto getPersonneReferent() {

@@ -25,7 +25,7 @@ public class Centre {
 	private CEF cef;
 	
 	@OneToMany(mappedBy = "centre", cascade = CascadeType.ALL)
-	private List<ProgrammePromotion> programmePromotion; 
+	private List<ProgrammePromotion> programmePromotions; 
 		
 	@Version
 	private int version;
@@ -39,7 +39,7 @@ public class Centre {
 		this.id = id;
 		this.adresse = adresse;
 		this.cef = cef;
-		this.programmePromotion = programmePromotion;
+		this.programmePromotions = programmePromotion;
 	}
 
 	public long getId() {
@@ -67,11 +67,11 @@ public class Centre {
 	}
 
 	public List<ProgrammePromotion> getProgrammePromotions() {
-		return programmePromotion;
+		return programmePromotions;
 	}
 
 	public void setProgrammePromotions(List<ProgrammePromotion> programmePromotion) {
-		this.programmePromotion = programmePromotion;
+		this.programmePromotions = programmePromotion;
 	}
 
 	public int getVersion() {

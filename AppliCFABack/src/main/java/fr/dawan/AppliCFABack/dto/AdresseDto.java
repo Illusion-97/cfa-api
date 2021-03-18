@@ -23,11 +23,11 @@ public class AdresseDto implements Serializable {
 	@XmlElement
 	private String codePostal;
 	@XmlElement
-	private List<PersonneDto> personneDto;
+	private List<PersonneDto> personne;
 	@XmlElement
-	private CentreDto centreDto;
+	private CentreDto centre;
 	@XmlElement
-	private EntrepriseDto entrepriseDto;
+	private EntrepriseDto entreprise;
 
 	public AdresseDto() {
 		super();
@@ -41,9 +41,9 @@ public class AdresseDto implements Serializable {
 		this.rue = rue;
 		this.ville = ville;
 		this.codePostal = codePostal;
-		this.personneDto = personneDto;
-		this.centreDto = centreDto;
-		this.entrepriseDto = entrepriseDto;
+		this.personne = personneDto;
+		this.centre = centreDto;
+		this.entreprise = entrepriseDto;
 	}
 
 	public long getId() {
@@ -87,27 +87,27 @@ public class AdresseDto implements Serializable {
 	}
 
 	public List<PersonneDto> getPersonneDto() {
-		return personneDto;
+		return personne;
 	}
 
 	public void setPersonneDto(List<PersonneDto> personneDto) {
-		this.personneDto = personneDto;
+		this.personne = personneDto;
 	}
 
 	public CentreDto getCentreDto() {
-		return centreDto;
+		return centre;
 	}
 
 	public void setCentreDto(CentreDto centreDto) {
-		this.centreDto = centreDto;
+		this.centre = centreDto;
 	}
 
 	public EntrepriseDto getEntrepriseDto() {
-		return entrepriseDto;
+		return entreprise;
 	}
 
 	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
-		this.entrepriseDto = entrepriseDto;
+		this.entreprise = entrepriseDto;
 	}
 
 
