@@ -17,17 +17,17 @@ public class ReferentDto implements Serializable {
 	@XmlElement
 	private PersonneDto personneDto;
 	@XmlElement
-	private List<PromotionDto> promotionDto;
+	private List<ProgrammePromotionDto> ProgrammePromotionDto;
 
 	public ReferentDto() {
 		super();
 	}
 
-	public ReferentDto(long id, PersonneDto personneDto, List<PromotionDto> promotionDto) {
+	public ReferentDto(long id, PersonneDto personneDto, List<ProgrammePromotionDto> ProgrammePromotionDto) {
 		super();
 		this.id = id;
 		this.personneDto = personneDto;
-		this.promotionDto = promotionDto;
+		this.ProgrammePromotionDto = ProgrammePromotionDto;
 	}
 
 	public long getId() {
@@ -46,12 +46,12 @@ public class ReferentDto implements Serializable {
 		this.personneDto = personneDto;
 	}
 
-	public List<PromotionDto> getPromotionDto() {
-		return promotionDto;
+	public List<ProgrammePromotionDto> getProgrammePromotionDto() {
+		return ProgrammePromotionDto;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotionDto) {
-		this.promotionDto = promotionDto;
+	public void setProgrammePromotionDto(List<ProgrammePromotionDto> ProgrammePromotionDto) {
+		this.ProgrammePromotionDto = ProgrammePromotionDto;
 	}
 
 }

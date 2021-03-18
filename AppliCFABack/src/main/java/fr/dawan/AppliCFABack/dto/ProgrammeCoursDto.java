@@ -30,7 +30,7 @@ public class ProgrammeCoursDto implements Serializable {
 	@XmlElement
 	private List<DevoirDto> devoirDto;
 	@XmlElement
-	private List<PromotionDto> promotionDto;
+	private List<ProgrammePromotionDto> programmePromotionDto;
 	@XmlElement
 	private List<FormateurDto> formateurDto;
 
@@ -41,7 +41,7 @@ public class ProgrammeCoursDto implements Serializable {
 	
 	public ProgrammeCoursDto(long id, Date dateDebut, Date dateFin, String noteInformation, String noteEntraide,
 			CoursDto CoursDto, List<ExamenDto> examenDto, List<DevoirDto> devoirDto,
-			List<PromotionDto> promotionDto, List<FormateurDto> formateurDto) {
+			List<ProgrammePromotionDto> programmePromotionDto, List<FormateurDto> formateurDto) {
 		super();
 		this.id = id;
 		this.dateDebut = dateDebut;
@@ -51,7 +51,7 @@ public class ProgrammeCoursDto implements Serializable {
 		this.coursDto = CoursDto;
 		this.examenDto = examenDto;
 		this.devoirDto = devoirDto;
-		this.promotionDto = promotionDto;
+		this.programmePromotionDto = programmePromotionDto;
 		this.formateurDto = formateurDto;
 	}
 
@@ -119,12 +119,12 @@ public class ProgrammeCoursDto implements Serializable {
 		this.devoirDto = devoirDto;
 	}
 
-	public List<PromotionDto> getPromotionDto() {
-		return promotionDto;
+	public List<ProgrammePromotionDto> getProgrammePromotionDto() {
+		return programmePromotionDto;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotionDto) {
-		this.promotionDto = promotionDto;
+	public void setProgrammePromotionDto(List<ProgrammePromotionDto> programmePromotionDto) {
+		this.programmePromotionDto = programmePromotionDto;
 	}
 
 	public List<FormateurDto> getFormateurDto() {

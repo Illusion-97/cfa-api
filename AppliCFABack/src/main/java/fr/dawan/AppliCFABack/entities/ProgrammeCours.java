@@ -47,7 +47,7 @@ public class ProgrammeCours{
 	private List<Devoir> devoirs;
 		
 	@ManyToMany
-	private List<Promotion> promotions;
+	private List<ProgrammePromotion> programmePromotion;
 	
 	@ManyToMany(mappedBy = "programmeCours")
 	private List<Formateur> formateur;
@@ -61,7 +61,7 @@ public class ProgrammeCours{
 
 	public ProgrammeCours(long id, Date dateDebut, Date dateFin, String noteInformation, String noteEntraide/*,
 			List<File> supportCours*/, Cours cours, List<Examen> examens, List<Devoir> devoirs,
-			List<Promotion> promotions, List<Formateur> formateur) {
+			List<ProgrammePromotion> programmePromotion, List<Formateur> formateur) {
 		super();
 		this.id = id;
 		this.dateDebut = dateDebut;
@@ -72,7 +72,7 @@ public class ProgrammeCours{
 		this.cours = cours;
 		this.examens = examens;
 		this.devoirs = devoirs;
-		this.promotions = promotions;
+		this.programmePromotion = programmePromotion;
 		this.formateur = formateur;
 	}
 
@@ -148,12 +148,12 @@ public class ProgrammeCours{
 		this.devoirs = devoirs;
 	}
 
-	public List<Promotion> getPromotions() {
-		return promotions;
+	public List<ProgrammePromotion> getProgrammePromotion() {
+		return programmePromotion;
 	}
 
-	public void setPromotions(List<Promotion> promotions) {
-		this.promotions = promotions;
+	public void setProgrammePromotion(List<ProgrammePromotion> programmePromotion) {
+		this.programmePromotion = programmePromotion;
 	}
 
 	public List<Formateur> getFormateur() {

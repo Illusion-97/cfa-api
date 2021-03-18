@@ -29,7 +29,7 @@ public class EtudiantDto implements Serializable {
 	private List<NoteDto> noteDto;
 	
 	@XmlElement
-	private List<PromotionDto> promotionDto;
+	private List<ProgrammePromotionDto> programmePromotionDto;
 	
 	@XmlElement
 	private List<GroupeDto> groupeDto;
@@ -39,14 +39,14 @@ public class EtudiantDto implements Serializable {
 	}
 	
 	public EtudiantDto(long id, PersonneDto personneDto, List<AbsenceDto> absenceDto, EntrepriseDto entrepriseDto,
-			List<NoteDto> noteDto, List<PromotionDto> promotionDto, List<GroupeDto> groupeDto) {
+			List<NoteDto> noteDto, List<ProgrammePromotionDto> programmePromotionDto, List<GroupeDto> groupeDto) {
 		super();
 		this.id = id;
 		this.personneDto = personneDto;
 		this.absenceDto = absenceDto;
 		this.entrepriseDto = entrepriseDto;
 		this.noteDto = noteDto;
-		this.promotionDto = promotionDto;
+		this.programmePromotionDto = programmePromotionDto;
 		this.groupeDto = groupeDto;
 	}
 
@@ -90,12 +90,12 @@ public class EtudiantDto implements Serializable {
 		this.noteDto = noteDto;
 	}
 
-	public List<PromotionDto> getPromotionDto() {
-		return promotionDto;
+	public List<ProgrammePromotionDto> getProgrammePromotionDto() {
+		return programmePromotionDto;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotionDto) {
-		this.promotionDto = promotionDto;
+	public void setProgrammePromotionDto(List<ProgrammePromotionDto> programmePromotionDto) {
+		this.programmePromotionDto = programmePromotionDto;
 	}
 
 	public List<GroupeDto> getGroupeDto() {

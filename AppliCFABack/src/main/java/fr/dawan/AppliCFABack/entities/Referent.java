@@ -22,7 +22,7 @@ public class Referent {
 	private Personne personne;
 	
 	@OneToMany(mappedBy = "referent", cascade = CascadeType.ALL)
-	private List<Promotion> promotion;
+	private List<ProgrammePromotion> programmePromotion;
 	
 	@Version
 	private int version;
@@ -31,11 +31,11 @@ public class Referent {
 		super();
 	}
 
-	public Referent(long id, Personne personne, List<Promotion> promotion) {
+	public Referent(long id, Personne personne, List<ProgrammePromotion> programmePromotion) {
 		super();
 		this.id = id;
 		this.personne = personne;
-		this.promotion = promotion;
+		this.programmePromotion = programmePromotion;
 	}
 
 	public long getId() {
@@ -54,12 +54,12 @@ public class Referent {
 		this.personne = personne;
 	}
 
-	public List<Promotion> getPromotion() {
-		return promotion;
+	public List<ProgrammePromotion> getProgrammePromotion() {
+		return programmePromotion;
 	}
 
-	public void setPromotion(List<Promotion> promotion) {
-		this.promotion = promotion;
+	public void setProgrammePromotion(List<ProgrammePromotion> programmePromotion) {
+		this.programmePromotion = programmePromotion;
 	}
 
 	public int getVersion() {

@@ -37,7 +37,7 @@ public class Etudiant {
 	private List<Note> notes;
 	
 	@ManyToMany(mappedBy = "etudiants")
-	private List<Promotion> promotions;
+	private List<ProgrammePromotion> programmePromotion;
 	
 	@ManyToMany(mappedBy = "etudiants")
 	private List<Groupe> groupes;
@@ -50,14 +50,14 @@ public class Etudiant {
 	}
 
 	public Etudiant(long id/*, List<File> fiches*/, Personne personne, List<Absence> abscences, Entreprise entreprise,
-			List<Promotion> promotions, List<Groupe> groupes) {
+			List<ProgrammePromotion> programmePromotion, List<Groupe> groupes) {
 		super();
 		this.id = id;
 //		this.fiches = fiches;
 		this.personne = personne;
 		this.abscences = abscences;
 		this.entreprise = entreprise;
-		this.promotions = promotions;
+		this.programmePromotion = programmePromotion;
 		this.groupes = groupes;
 	}
 
@@ -101,12 +101,12 @@ public class Etudiant {
 		this.entreprise = entreprise;
 	}
 
-	public List<Promotion> getPromotions() {
-		return promotions;
+	public List<ProgrammePromotion> getProgrammePromotion() {
+		return programmePromotion;
 	}
 
-	public void setPromotions(List<Promotion> promotions) {
-		this.promotions = promotions;
+	public void setProgrammePromotion(List<ProgrammePromotion> programmePromotion) {
+		this.programmePromotion = programmePromotion;
 	}
 
 	public List<Groupe> getGroupes() {
