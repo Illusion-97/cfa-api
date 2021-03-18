@@ -70,12 +70,12 @@ public class AbsenceDto implements Serializable {
 		this.justificatif = justificatif;
 	}
 
-	public EtudiantDto getEtudiant() {
+	public EtudiantDto getEtudiantDto() {
 		return etudiant;
 	}
 
-	public void setEtudiant(EtudiantDto etudiant) {
-		this.etudiant = etudiant;
+	public void setEtudiantDto(EtudiantDto etudiantDto) {
+		this.etudiant = etudiantDto;
 	}
 
 }

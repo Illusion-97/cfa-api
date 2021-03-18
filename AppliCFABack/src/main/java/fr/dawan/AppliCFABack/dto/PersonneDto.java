@@ -29,7 +29,7 @@ public class PersonneDto implements Serializable {
 	@XmlElement
 	private EtudiantDto etudiant;
 	@XmlElement
-	private CEFDto cef;
+	private CEFDto CEF;
 	@XmlElement
 	private ReferentDto referent;
 	@XmlElement
@@ -41,22 +41,22 @@ public class PersonneDto implements Serializable {
 		super();
 	}
 	
-	public PersonneDto(long id, String login, String password, String prenom, String nom, AdresseDto adresse,
-			FormateurDto formateur, EtudiantDto etudiant, CEFDto cef, ReferentDto referent, AdminDto admin,
-			List<ProjetDto> projets) {
+	public PersonneDto(long id, String login, String password, String prenom, String nom, AdresseDto adresseDto,
+			FormateurDto formateurDto, EtudiantDto etudiantDto, CEFDto CEFDto, ReferentDto referentDto, AdminDto adminDto,
+			List<ProjetDto> projetDto) {
 		super();
 		this.id = id;
 		this.login = login;
 		this.password = password;
 		this.prenom = prenom;
 		this.nom = nom;
-		this.adresse = adresse;
-		this.formateur = formateur;
-		this.etudiant = etudiant;
-		this.cef = cef;
-		this.referent = referent;
-		this.admin = admin;
-		this.projets = projets;
+		this.adresse = adresseDto;
+		this.formateur = formateurDto;
+		this.etudiant = etudiantDto;
+		this.CEF = CEFDto;
+		this.referent = referentDto;
+		this.admin = adminDto;
+		this.projets = projetDto;
 	}
 
 	public long getId() {
@@ -99,60 +99,60 @@ public class PersonneDto implements Serializable {
 		this.nom = nom;
 	}
 
-	public AdresseDto getAdresse() {
+	public AdresseDto getAdresseDto() {
 		return adresse;
 	}
 
-	public void setAdresse(AdresseDto adresse) {
-		this.adresse = adresse;
+	public void setAdresseDto(AdresseDto adresseDto) {
+		this.adresse = adresseDto;
 	}
 
-	public FormateurDto getFormateur() {
+	public FormateurDto getFormateurDto() {
 		return formateur;
 	}
 
-	public void setFormateur(FormateurDto formateur) {
-		this.formateur = formateur;
+	public void setFormateurDto(FormateurDto formateurDto) {
+		this.formateur = formateurDto;
 	}
 
-	public EtudiantDto getEtudiant() {
+	public EtudiantDto getEtudiantDto() {
 		return etudiant;
 	}
 
-	public void setEtudiant(EtudiantDto etudiant) {
-		this.etudiant = etudiant;
+	public void setEtudiantDto(EtudiantDto etudiantDto) {
+		this.etudiant = etudiantDto;
 	}
 
-	public CEFDto getCEF() {
-		return cef;
+	public CEFDto getCEFDto() {
+		return CEF;
 	}
 
-	public void setCEF(CEFDto cef) {
-		this.cef = cef;
+	public void setCEFDto(CEFDto cEFDto) {
+		CEF = cEFDto;
 	}
 
-	public ReferentDto getReferent() {
+	public ReferentDto getReferentDto() {
 		return referent;
 	}
 
-	public void setReferent(ReferentDto referent) {
-		this.referent = referent;
+	public void setReferentDto(ReferentDto referentDto) {
+		this.referent = referentDto;
 	}
 
-	public AdminDto getAdmin() {
+	public AdminDto getAdminDto() {
 		return admin;
 	}
 
-	public void setAdmin(AdminDto admin) {
-		this.admin = admin;
+	public void setAdminDto(AdminDto adminDto) {
+		this.admin = adminDto;
 	}
 
-	public List<ProjetDto> getProjet() {
+	public List<ProjetDto> getProjetDto() {
 		return projets;
 	}
 
-	public void setProjet(List<ProjetDto> projets) {
-		this.projets = projets;
+	public void setProjetDto(List<ProjetDto> projetDto) {
+		this.projets = projetDto;
 	}
 
 }

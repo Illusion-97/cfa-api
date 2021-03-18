@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,36 +15,22 @@ public class PromotionDto implements Serializable {
 	@XmlElement
 	private long id;
 	@XmlElement
-	private Date dateDebut;
+	private String Nom;
 	@XmlElement
-	private Date dateFin;
+	private String Description;
 	@XmlElement
-	private CentreDto centre;
-	@XmlElement
-	private ProgrammePromotionDto programmePromotion;
-	@XmlElement
-	private ReferentDto referent;
-	@XmlElement
-	private List<EtudiantDto> etudiants;
-	@XmlElement
-	private List<ProgrammeCoursDto> programmeCoursDto;
+	private List<ProgrammePromotionDto> programmePromotions;
 
 	public PromotionDto() {
 		super();
 	}
 
-	public PromotionDto(long id, Date dateDebut, Date dateFin, CentreDto centre,
-			ProgrammePromotionDto programmePromotionDto, ReferentDto referentDto, List<EtudiantDto> etudiantsDto,
-			List<ProgrammeCoursDto> programmeCoursDto) {
+	public PromotionDto(long id, String nom, String description, List<ProgrammePromotionDto> programmePromotionDto) {
 		super();
 		this.id = id;
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
-		this.centre = centre;
-		this.programmePromotion = programmePromotionDto;
-		this.referent = referentDto;
-		this.etudiants = etudiantsDto;
-		this.programmeCoursDto = programmeCoursDto;
+		Nom = nom;
+		Description = description;
+		this.programmePromotions = programmePromotionDto;
 	}
 
 	public long getId() {
@@ -56,61 +41,29 @@ public class PromotionDto implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDateDebut() {
-		return dateDebut;
+	public String getNom() {
+		return Nom;
 	}
 
-	public void setDateDebut(Date dateDebut) {
-		this.dateDebut = dateDebut;
+	public void setNom(String nom) {
+		Nom = nom;
 	}
 
-	public Date getDateFin() {
-		return dateFin;
+	public String getDescription() {
+		return Description;
 	}
 
-	public void setDateFin(Date dateFin) {
-		this.dateFin = dateFin;
+	public void setDescription(String description) {
+		Description = description;
 	}
 
-	public CentreDto getCentre() {
-		return centre;
+	public List<ProgrammePromotionDto> getProgrammePromotionDto() {
+		return programmePromotions;
 	}
 
-	public void setCentre(CentreDto centre) {
-		this.centre = centre;
+	public void setProgrammePromotionDto(List<ProgrammePromotionDto> programmePromotionDto) {
+		this.programmePromotions = programmePromotionDto;
 	}
 
-	public ProgrammePromotionDto getProgrammePromotion() {
-		return programmePromotion;
-	}
 
-	public void setProgrammePromotion(ProgrammePromotionDto programmePromotion) {
-		this.programmePromotion = programmePromotion;
-	}
-
-	public ReferentDto getReferent() {
-		return referent;
-	}
-
-	public void setReferent(ReferentDto referent) {
-		this.referent = referent;
-	}
-
-	public List<EtudiantDto> getEtudiants() {
-		return etudiants;
-	}
-
-	public void setEtudiants(List<EtudiantDto> etudiants) {
-		this.etudiants = etudiants;
-	}
-
-	public List<ProgrammeCoursDto> getProgrammeCoursDto() {
-		return programmeCoursDto;
-	}
-
-	public void setProgrammeCoursDto(List<ProgrammeCoursDto> programmeCoursDto) {
-		this.programmeCoursDto = programmeCoursDto;
-	}
-	
-	
 }

@@ -32,13 +32,13 @@ public class ProjetDto implements Serializable {
 		super();
 	}
 
-	public ProjetDto(long id, String nom, String description, GroupeDto groupe, PersonneDto personneReferent,
+	public ProjetDto(long id, String nom, String description, GroupeDto groupeDto, PersonneDto personneReferent,
 			TypeProjet type) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.description = description;
-		this.groupe = groupe;
+		this.groupe = groupeDto;
 		this.personneReferent = personneReferent;
 		this.type = type;
 	}
@@ -67,12 +67,12 @@ public class ProjetDto implements Serializable {
 		this.description = description;
 	}
 
-	public GroupeDto getGroupe() {
+	public GroupeDto getGroupeDto() {
 		return groupe;
 	}
 
-	public void setGroupe(GroupeDto groupe) {
-		this.groupe = groupe;
+	public void setGroupeDto(GroupeDto groupeDto) {
+		this.groupe = groupeDto;
 	}
 
 	public PersonneDto getPersonneReferent() {

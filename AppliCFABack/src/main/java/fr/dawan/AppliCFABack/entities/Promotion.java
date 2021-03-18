@@ -1,15 +1,14 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 @Entity
@@ -20,25 +19,13 @@ public class Promotion {
 	private long id;
 	
 	@Column(nullable = false, length = 255)
-	private Date dateDebut;
+	private String Nom;
 	
 	@Column(nullable = false, length = 255)
-	private Date dateFin;
+	private String Description;
 	
-	@ManyToOne
-	private Centre centre;
-	
-	@ManyToOne
-	private ProgrammePromotion programmePromotion;
-	
-	@ManyToOne
-	private Referent referent;
-	
-	@ManyToMany
-	private List<Etudiant> etudiants;
-	
-	@ManyToMany(mappedBy = "promotions")
-	private List<ProgrammeCours> programmeCours;
+	@OneToMany(mappedBy = "programmePromotion", cascade = CascadeType.ALL)
+	private List<ProgrammePromotion> programmePromotions;
 	
 	@Version
 	private int version;
@@ -47,17 +34,12 @@ public class Promotion {
 		super();
 	}
 
-	public Promotion(long id, Date dateDebut, Date dateFin, Centre centre, ProgrammePromotion promotion,
-			List<Etudiant> etudiants, List<ProgrammeCours> programmeCours, Referent referent) {
+	public Promotion(long id, String nom, String description, List<ProgrammePromotion> programmePromotion) {
 		super();
 		this.id = id;
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
-		this.centre = centre;
-		this.programmePromotion = promotion;
-		this.etudiants = etudiants;
-		this.programmeCours = programmeCours;
-		this.referent = referent;
+		Nom = nom;
+		Description = description;
+		this.programmePromotions = programmePromotion;
 	}
 
 	public long getId() {
@@ -68,60 +50,28 @@ public class Promotion {
 		this.id = id;
 	}
 
-	public Date getDateDebut() {
-		return dateDebut;
+	public String getNom() {
+		return Nom;
 	}
 
-	public void setDateDebut(Date dateDebut) {
-		this.dateDebut = dateDebut;
+	public void setNom(String nom) {
+		Nom = nom;
 	}
 
-	public Date getDateFin() {
-		return dateFin;
+	public String getDescription() {
+		return Description;
 	}
 
-	public void setDateFin(Date dateFin) {
-		this.dateFin = dateFin;
+	public void setDescription(String description) {
+		Description = description;
 	}
 
-	public Centre getCentre() {
-		return centre;
+	public List<ProgrammePromotion> getProgrammePromotion() {
+		return programmePromotions;
 	}
 
-	public void setCentre(Centre centre) {
-		this.centre = centre;
-	}
-
-	public ProgrammePromotion getProgrammePromotion() {
-		return programmePromotion;
-	}
-
-	public void setProgrammePromotion(ProgrammePromotion promotion) {
-		this.programmePromotion = promotion;
-	}
-
-	public List<Etudiant> getEtudiants() {
-		return etudiants;
-	}
-
-	public void setEtudiants(List<Etudiant> etudiants) {
-		this.etudiants = etudiants;
-	}
-
-	public List<ProgrammeCours> getProgrammeCours() {
-		return programmeCours;
-	}
-
-	public void setProgrammeCours(List<ProgrammeCours> programmeCours) {
-		this.programmeCours = programmeCours;
-	}
-
-	public Referent getReferent() {
-		return referent;
-	}
-
-	public void setReferent(Referent referent) {
-		this.referent = referent;
+	public void setProgrammePromotion(List<ProgrammePromotion> programmePromotion) {
+		this.programmePromotions = programmePromotion;
 	}
 
 	public int getVersion() {

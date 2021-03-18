@@ -24,12 +24,12 @@ public class NoteDto implements Serializable {
 		super();
 	}
 	
-	public NoteDto(long id, Double value, ExamenDto examen, EtudiantDto etudiant) {
+	public NoteDto(long id, Double value, ExamenDto examenDto, EtudiantDto etudiantDto) {
 		super();
 		this.id = id;
 		this.value = value;
-		this.examen = examen;
-		this.etudiant = etudiant;
+		this.examen = examenDto;
+		this.etudiant = etudiantDto;
 	}
 
 	public long getId() {
@@ -48,20 +48,20 @@ public class NoteDto implements Serializable {
 		this.value = value;
 	}
 
-	public ExamenDto getExamen() {
+	public ExamenDto getExamenDto() {
 		return examen;
 	}
 
-	public void setExamen(ExamenDto examen) {
-		this.examen = examen;
+	public void setExamenDto(ExamenDto examenDto) {
+		this.examen = examenDto;
 	}
 
-	public EtudiantDto getEtudiant() {
+	public EtudiantDto getEtudiantDto() {
 		return etudiant;
 	}
 
-	public void setEtudiant(EtudiantDto etudiant) {
-		this.etudiant = etudiant;
+	public void setEtudiantDto(EtudiantDto etudiantDto) {
+		this.etudiant = etudiantDto;
 	}
 
 	

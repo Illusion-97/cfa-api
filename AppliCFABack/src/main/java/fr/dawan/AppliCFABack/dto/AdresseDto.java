@@ -23,7 +23,7 @@ public class AdresseDto implements Serializable {
 	@XmlElement
 	private String codePostal;
 	@XmlElement
-	private List<PersonneDto> personnes;
+	private List<PersonneDto> personne;
 	@XmlElement
 	private CentreDto centre;
 	@XmlElement
@@ -33,17 +33,17 @@ public class AdresseDto implements Serializable {
 		super();
 	}
 
-	public AdresseDto(long id, long numero, String rue, String ville, String codePostal, List<PersonneDto> personnes,
-			CentreDto centre, EntrepriseDto entreprise) {
+	public AdresseDto(long id, long numero, String rue, String ville, String codePostal, List<PersonneDto> personneDto,
+			CentreDto centreDto, EntrepriseDto entrepriseDto) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.rue = rue;
 		this.ville = ville;
 		this.codePostal = codePostal;
-		this.personnes = personnes;
-		this.centre = centre;
-		this.entreprise = entreprise;
+		this.personne = personneDto;
+		this.centre = centreDto;
+		this.entreprise = entrepriseDto;
 	}
 
 	public long getId() {
@@ -86,27 +86,27 @@ public class AdresseDto implements Serializable {
 		this.codePostal = codePostal;
 	}
 
-	public List<PersonneDto> getPersonne() {
-		return personnes;
+	public List<PersonneDto> getPersonneDto() {
+		return personne;
 	}
 
-	public void setPersonne(List<PersonneDto> personnes) {
-		this.personnes = personnes;
+	public void setPersonneDto(List<PersonneDto> personneDto) {
+		this.personne = personneDto;
 	}
 
-	public CentreDto getCentre() {
+	public CentreDto getCentreDto() {
 		return centre;
 	}
 
-	public void setCentre(CentreDto centre) {
-		this.centre = centre;
+	public void setCentreDto(CentreDto centreDto) {
+		this.centre = centreDto;
 	}
 
-	public EntrepriseDto getEntreprise() {
+	public EntrepriseDto getEntrepriseDto() {
 		return entreprise;
 	}
 
-	public void setEntreprise(EntrepriseDto entrepriseDto) {
+	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
 		this.entreprise = entrepriseDto;
 	}
 

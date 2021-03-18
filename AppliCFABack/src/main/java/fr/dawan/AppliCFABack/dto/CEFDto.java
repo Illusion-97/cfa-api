@@ -22,11 +22,11 @@ public class CEFDto implements Serializable {
 		super();
 	}
 
-	public CEFDto(long id, PersonneDto personne, CentreDto centre) {
+	public CEFDto(long id, PersonneDto personneDto, CentreDto centreDto) {
 		super();
 		this.id = id;
-		this.personne = personne;
-		this.centre = centre;
+		this.personne = personneDto;
+		this.centre = centreDto;
 	}
 
 	
@@ -38,20 +38,20 @@ public class CEFDto implements Serializable {
 		this.id = id;
 	}
 
-	public PersonneDto getPersonne() {
+	public PersonneDto getPersonneDto() {
 		return personne;
 	}
 
-	public void setPersonne(PersonneDto personne) {
-		this.personne = personne;
+	public void setPersonneDto(PersonneDto personneDto) {
+		this.personne = personneDto;
 	}
 
-	public CentreDto getCentre() {
+	public CentreDto getCentreDto() {
 		return centre;
 	}
 
-	public void setCentre(CentreDto centre) {
-		this.centre = centre;
+	public void setCentreDto(CentreDto centreDto) {
+		this.centre = centreDto;
 	}
 
 }

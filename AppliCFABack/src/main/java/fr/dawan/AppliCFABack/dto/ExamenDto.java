@@ -1,7 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -20,7 +20,7 @@ public class ExamenDto implements Serializable {
 	@XmlElement
 	private List<NoteDto> notes;
 	@XmlElement
-	private ProgrammeCoursDto programmeCoursDto;
+	private ProgrammeCoursDto programmeCours;
 
 	public ExamenDto() {
 		super();
@@ -31,7 +31,7 @@ public class ExamenDto implements Serializable {
 		this.id = id;
 		this.date = date;
 		this.notes = noteDto;
-		this.programmeCoursDto = programmeCoursDto;
+		this.programmeCours = programmeCoursDto;
 	}
 
 	public long getId() {
@@ -50,20 +50,20 @@ public class ExamenDto implements Serializable {
 		this.date = date;
 	}
 
-	public List<NoteDto> getNote() {
+	public List<NoteDto> getNoteDto() {
 		return notes;
 	}
 
-	public void setNote(List<NoteDto> notes) {
-		this.notes = notes;
+	public void setNoteDto(List<NoteDto> noteDto) {
+		this.notes = noteDto;
 	}
 
 	public ProgrammeCoursDto getProgrammeCoursDto() {
-		return programmeCoursDto;
+		return programmeCours;
 	}
 
 	public void setProgrammeCoursDto(ProgrammeCoursDto programmeCoursDto) {
-		this.programmeCoursDto = programmeCoursDto;
+		this.programmeCours = programmeCoursDto;
 	}
 
 	

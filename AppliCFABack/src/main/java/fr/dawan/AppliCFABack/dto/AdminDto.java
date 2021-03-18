@@ -21,10 +21,10 @@ public class AdminDto implements Serializable {
 		super();
 	}
 
-	public AdminDto(long id, PersonneDto personne) {
+	public AdminDto(long id, PersonneDto personneDto) {
 		super();
 		this.id = id;
-		this.personne = personne;
+		this.personne = personneDto;
 	}
 
 	public long getId() {
@@ -35,12 +35,12 @@ public class AdminDto implements Serializable {
 		this.id = id;
 	}
 
-	public PersonneDto getPersonne() {
+	public PersonneDto getPersonneDto() {
 		return personne;
 	}
 
-	public void setPersonne(PersonneDto personne) {
-		this.personne = personne;
+	public void setPersonneDto(PersonneDto personneDto) {
+		this.personne = personneDto;
 	}
 
 	

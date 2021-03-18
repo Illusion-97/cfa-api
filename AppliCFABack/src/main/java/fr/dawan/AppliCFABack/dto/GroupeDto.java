@@ -25,12 +25,12 @@ public class GroupeDto implements Serializable {
 		super();
 	}
 	
-	public GroupeDto(long id, String nom, List<EtudiantDto> etudiants, ProjetDto projet) {
+	public GroupeDto(long id, String nom, List<EtudiantDto> etudiantDto, ProjetDto projetDto) {
 		super();
 		this.id = id;
 		this.nom = nom;
-		this.etudiants = etudiants;
-		this.projet = projet;
+		this.etudiants = etudiantDto;
+		this.projet = projetDto;
 	}
 
 	public long getId() {
@@ -49,20 +49,20 @@ public class GroupeDto implements Serializable {
 		this.nom = nom;
 	}
 
-	public List<EtudiantDto> getEtudiant() {
+	public List<EtudiantDto> getEtudiantDto() {
 		return etudiants;
 	}
 
-	public void setEtudiant(List<EtudiantDto> etudiants) {
-		this.etudiants = etudiants;
+	public void setEtudiantDto(List<EtudiantDto> etudiantDto) {
+		this.etudiants = etudiantDto;
 	}
 
-	public ProjetDto getProjet() {
+	public ProjetDto getProjetDto() {
 		return projet;
 	}
 
-	public void setProjet(ProjetDto projet) {
-		this.projet = projet;
+	public void setProjetDto(ProjetDto projetDto) {
+		this.projet = projetDto;
 	}
 
 	
