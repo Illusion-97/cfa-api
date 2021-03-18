@@ -16,8 +16,8 @@ public class DtoTools {
 		// mapper.map(src->src.getEmail(), ContactDto::setEmail);
 		// });
 
-		myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		//myMapper.getConfiguration().setAmbiguityIgnored(true);
+		//myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		myMapper.getConfiguration().setAmbiguityIgnored(true);
 		
 		return myMapper.map(obj, clazz);
 	}

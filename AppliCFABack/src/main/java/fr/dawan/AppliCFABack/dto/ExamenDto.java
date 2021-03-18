@@ -18,7 +18,7 @@ public class ExamenDto implements Serializable {
 	@XmlElement
 	private Date date;
 	@XmlElement
-	private List<NoteDto> notes;
+	private List<NoteDto> notesDto;
 	@XmlElement
 	private ProgrammeCoursDto programmeCoursDto;
 
@@ -30,7 +30,7 @@ public class ExamenDto implements Serializable {
 		super();
 		this.id = id;
 		this.date = date;
-		this.notes = noteDto;
+		this.notesDto = noteDto;
 		this.programmeCoursDto = programmeCoursDto;
 	}
 
@@ -50,12 +50,12 @@ public class ExamenDto implements Serializable {
 		this.date = date;
 	}
 
-	public List<NoteDto> getNote() {
-		return notes;
+	public List<NoteDto> getNoteDto() {
+		return notesDto;
 	}
 
-	public void setNote(List<NoteDto> notes) {
-		this.notes = notes;
+	public void setNoteDto(List<NoteDto> notes) {
+		this.notesDto = notes;
 	}
 
 	public ProgrammeCoursDto getProgrammeCoursDto() {

@@ -29,16 +29,6 @@ public class Cours {
 	private long dure;
 	
 	@OneToMany(mappedBy = "cours", cascade = CascadeType.ALL)
-	private List<Examen> examens;
-	
-	@OneToMany(mappedBy = "cours", cascade = CascadeType.ALL)
-	private List<Devoir> devoirs;
-		
-	@ManyToMany
-	private List<Promotion> promotions;
-	
-	@ManyToMany(mappedBy = "cours")
-	private List<Formateur> formateurs;
 	private List<ProgrammeCours> programmeCours;
 	
 	@Version

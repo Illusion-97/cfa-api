@@ -15,11 +15,11 @@ public class CentreDto implements Serializable {
 	@XmlElement
 	private long id;
 	@XmlElement
-	private AdresseDto adresse;
+	private AdresseDto adresseDto;
 	@XmlElement
-	private CEFDto cef;
+	private CEFDto cefDto;
 	@XmlElement
-	private List<PromotionDto> promotions;
+	private List<PromotionDto> promotionsDto;
 
 	public CentreDto() {
 		super();
@@ -28,9 +28,9 @@ public class CentreDto implements Serializable {
 	public CentreDto(long id, AdresseDto adresse, CEFDto cef, List<PromotionDto> promotions) {
 		super();
 		this.id = id;
-		this.adresse = adresse;
-		this.cef = cef;
-		this.promotions = promotions;
+		this.adresseDto = adresse;
+		this.cefDto = cef;
+		this.promotionsDto = promotions;
 	}
 
 	public long getId() {
@@ -41,28 +41,28 @@ public class CentreDto implements Serializable {
 		this.id = id;
 	}
 
-	public AdresseDto getAdresse() {
-		return adresse;
+	public AdresseDto getAdresseDto() {
+		return adresseDto;
 	}
 
-	public void setAdresse(AdresseDto adresse) {
-		this.adresse = adresse;
+	public void setAdresseDto(AdresseDto adresseDto) {
+		this.adresseDto = adresseDto;
 	}
 
-	public CEFDto getCEF() {
-		return cef;
+	public CEFDto getCefDto() {
+		return cefDto;
 	}
 
-	public void setCEF(CEFDto cef) {
-		this.cef = cef;
+	public void setCefDto(CEFDto cefDto) {
+		this.cefDto = cefDto;
 	}
 
-	public List<PromotionDto> getPromotion() {
-		return promotions;
+	public List<PromotionDto> getPromotionsDto() {
+		return promotionsDto;
 	}
 
-	public void setPromotion(List<PromotionDto> promotions) {
-		this.promotions = promotions;
+	public void setPromotionsDto(List<PromotionDto> promotionsDto) {
+		this.promotionsDto = promotionsDto;
 	}
 
 	

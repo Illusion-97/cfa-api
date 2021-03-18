@@ -21,7 +21,7 @@ public class AbsenceDto implements Serializable {
 	@XmlElement
 	private String justificatif;
 	@XmlElement
-	private EtudiantDto etudiant;
+	private EtudiantDto etudiantDto;
 
 	public AbsenceDto() {
 		super();
@@ -33,7 +33,7 @@ public class AbsenceDto implements Serializable {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.justificatif = justificatif;
-		this.etudiant = etudiant;
+		this.etudiantDto = etudiant;
 	}
 
 
@@ -70,12 +70,12 @@ public class AbsenceDto implements Serializable {
 		this.justificatif = justificatif;
 	}
 
-	public EtudiantDto getEtudiant() {
-		return etudiant;
+	public EtudiantDto getEtudiantDto() {
+		return etudiantDto;
 	}
 
-	public void setEtudiant(EtudiantDto etudiant) {
-		this.etudiant = etudiant;
+	public void setEtudiantDto(EtudiantDto etudiant) {
+		this.etudiantDto = etudiant;
 	}
 
 }

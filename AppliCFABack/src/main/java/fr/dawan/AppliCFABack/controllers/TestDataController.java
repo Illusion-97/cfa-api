@@ -33,7 +33,7 @@ import fr.dawan.AppliCFABack.entities.Referent;
 @Controller
 @RequestMapping("/AppliCFABack/test")
 public class TestDataController {
-
+/*
 	public static void ResetDB() {
 		
 //		try {
@@ -315,5 +315,5 @@ public class TestDataController {
 //		lstReferent.add(ref);
 
 	}
-
+*/
 }

@@ -21,6 +21,7 @@ import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.GroupeDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PersonneDto;
+import fr.dawan.AppliCFABack.dto.ProgrammeCoursDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
@@ -109,8 +110,8 @@ public class EtudiantServiceImpl implements EtudiantService{
 	// ##################################################
 	
 	@Override
-	public List<CoursDto> getCoursByIdEtudiant(long id) {
-		return etudiantRepository.getCoursByIdEtudiant(id);
+	public List<ProgrammeCoursDto> getProgrammeCoursByIdEtudiant(long id) {
+		return etudiantRepository.getProgrammeCoursByIdEtudiant(id); 
 	}
 
 	@Override

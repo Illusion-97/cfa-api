@@ -13,6 +13,7 @@ import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.GroupeDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PersonneDto;
+import fr.dawan.AppliCFABack.dto.ProgrammeCoursDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 
@@ -43,7 +44,7 @@ public interface EtudiantService {
 	// # 			     2eme Niveau 					#
 	// ##################################################
 	
-	List<CoursDto> getCoursByIdEtudiant(long id);
+	List<ProgrammeCoursDto> getProgrammeCoursByIdEtudiant(long id);
 	List<ProjetDto> getProjetByIdEtudiant(long id);
 	List<AdresseDto> getAdresseByIdEtudiant(long id);
 	
