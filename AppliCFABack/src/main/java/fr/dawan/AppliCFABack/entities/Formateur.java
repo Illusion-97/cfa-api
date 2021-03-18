@@ -21,7 +21,7 @@ public class Formateur {
 	private Personne personne;
 	
 	@ManyToMany
-	private List<Cours> cours;
+	private List<ProgrammeCours> programmecours;
 	
 	@Version
 	private int version;
@@ -30,11 +30,11 @@ public class Formateur {
 		super();
 	}
 
-	public Formateur(long id, Personne personne, List<Cours> cours) {
+	public Formateur(long id, Personne personne, List<ProgrammeCours> programmecours) {
 		super();
 		this.id = id;
 		this.personne = personne;
-		this.cours = cours;
+		this.programmecours = programmecours;
 	}
 
 	public long getId() {
@@ -53,12 +53,12 @@ public class Formateur {
 		this.personne = personne;
 	}
 
-	public List<Cours> getCours() {
-		return cours;
+	public List<ProgrammeCours> getProgrammeCours() {
+		return programmecours;
 	}
 
-	public void setCours(List<Cours> cours) {
-		this.cours = cours;
+	public void setProgrammeCours(List<ProgrammeCours> programmecours) {
+		this.programmecours = programmecours;
 	}
 
 	public int getVersion() {

@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.dawan.AppliCFABack.dto.CoursDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.ProgrammeCoursDto;
 import fr.dawan.AppliCFABack.entities.Cours;
 import fr.dawan.AppliCFABack.repositories.CoursRepository;
 
@@ -29,6 +31,15 @@ public class CoursServiceImpl implements CoursService {
 			lstDto.add(DtoTools.convert(cours, CoursDto.class));
 		}
 		return lstDto;
+	}
+
+	@Override
+	public CoursDto getById(long id) {
+		Optional<Cours> c = coursRepo.findById(id);
+		if (c.isPresent())
+		return DtoTools.convert(c.get(), CoursDto.class);
+		return null;
+	
 	}
 
 }

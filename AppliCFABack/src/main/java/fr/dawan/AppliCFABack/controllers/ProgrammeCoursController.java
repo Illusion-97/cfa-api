@@ -8,24 +8,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.dawan.AppliCFABack.dto.CoursDto;
-import fr.dawan.AppliCFABack.entities.Cours;
-import fr.dawan.AppliCFABack.services.CoursService;
+import fr.dawan.AppliCFABack.dto.ProgrammeCoursDto;
+import fr.dawan.AppliCFABack.services.ProgrammeCoursService;
 
 @RestController
-@RequestMapping("/AppliCFABack/cours")
-public class CoursController {
+@RequestMapping("/AppliCFABack/programmecours")
+
+public class ProgrammeCoursController {
 
 	@Autowired
-	CoursService coursService;
+	ProgrammeCoursService pgService;
 	
 	@GetMapping(produces = "application/json")
-	public List<CoursDto> getAll() {
-		return coursService.getAll();
+	public List<ProgrammeCoursDto> getAll() {
+		return pgService.getAll();
 	}
 	@GetMapping(value = "/{id}" ,produces = "application/json")
-	public CoursDto getById(@PathVariable("id") long id) {
-		return coursService.getById(id);
+	public ProgrammeCoursDto getById(@PathVariable("id") long id) {
+		return pgService.getById(id);
 	}
 	
 }

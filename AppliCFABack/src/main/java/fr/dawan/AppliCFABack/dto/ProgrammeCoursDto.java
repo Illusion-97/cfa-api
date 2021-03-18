@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,25 +16,43 @@ public class ProgrammeCoursDto implements Serializable {
 	@XmlElement
 	private long id;
 	@XmlElement
-	private String nom;
+	private Date dateDebut;
 	@XmlElement
-	private String description;
+	private Date dateFin;
 	@XmlElement
-	private long dure;
+	private String noteInformation;
 	@XmlElement
-	private List<CoursDto> coursDto;
+	private String noteEntraide;
+	@XmlElement
+	private CoursDto coursDto;
+	@XmlElement
+	private List<ExamenDto> examenDto;
+	@XmlElement
+	private List<DevoirDto> devoirDto;
+	@XmlElement
+	private List<PromotionDto> promotionDto;
+	@XmlElement
+	private List<FormateurDto> formateurDto;
 
+	
 	public ProgrammeCoursDto() {
 		super();
 	}
 	
-	public ProgrammeCoursDto(long id, String nom, String description, long dure, List<CoursDto> coursDto) {
+	public ProgrammeCoursDto(long id, Date dateDebut, Date dateFin, String noteInformation, String noteEntraide,
+			CoursDto CoursDto, List<ExamenDto> examenDto, List<DevoirDto> devoirDto,
+			List<PromotionDto> promotionDto, List<FormateurDto> formateurDto) {
 		super();
 		this.id = id;
-		this.nom = nom;
-		this.description = description;
-		this.dure = dure;
-		this.coursDto = coursDto;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.noteInformation = noteInformation;
+		this.noteEntraide = noteEntraide;
+		this.coursDto = CoursDto;
+		this.examenDto = examenDto;
+		this.devoirDto = devoirDto;
+		this.promotionDto = promotionDto;
+		this.formateurDto = formateurDto;
 	}
 
 	public long getId() {
@@ -44,36 +63,77 @@ public class ProgrammeCoursDto implements Serializable {
 		this.id = id;
 	}
 
-	public String getNom() {
-		return nom;
+	public Date getDateDebut() {
+		return dateDebut;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setDateDebut(Date dateDebut) {
+		this.dateDebut = dateDebut;
 	}
 
-	public String getDescription() {
-		return description;
+	public Date getDateFin() {
+		return dateFin;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDateFin(Date dateFin) {
+		this.dateFin = dateFin;
 	}
 
-	public long getDure() {
-		return dure;
+	public String getNoteInformation() {
+		return noteInformation;
 	}
 
-	public void setDure(long dure) {
-		this.dure = dure;
+	public void setNoteInformation(String noteInformation) {
+		this.noteInformation = noteInformation;
 	}
 
-	public List<CoursDto> getCoursDto() {
+	public String getNoteEntraide() {
+		return noteEntraide;
+	}
+
+	public void setNoteEntraide(String noteEntraide) {
+		this.noteEntraide = noteEntraide;
+	}
+
+	public CoursDto getCoursDto() {
 		return coursDto;
 	}
 
-	public void setCoursDto(List<CoursDto> coursDto) {
+	public void setCoursDto(CoursDto coursDto) {
 		this.coursDto = coursDto;
 	}
+
+	public List<ExamenDto> getExamenDto() {
+		return examenDto;
+	}
+
+	public void setExamenDto(List<ExamenDto> examenDto) {
+		this.examenDto = examenDto;
+	}
+
+	public List<DevoirDto> getDevoirDto() {
+		return devoirDto;
+	}
+
+	public void setDevoirDto(List<DevoirDto> devoirDto) {
+		this.devoirDto = devoirDto;
+	}
+
+	public List<PromotionDto> getPromotionDto() {
+		return promotionDto;
+	}
+
+	public void setPromotionDto(List<PromotionDto> promotionDto) {
+		this.promotionDto = promotionDto;
+	}
+
+	public List<FormateurDto> getFormateurDto() {
+		return formateurDto;
+	}
+
+	public void setFormateurDto(List<FormateurDto> formateurDto) {
+		this.formateurDto = formateurDto;
+	}
+
 
 }
