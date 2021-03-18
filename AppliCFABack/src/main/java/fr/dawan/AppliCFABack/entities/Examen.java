@@ -1,6 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,7 +27,7 @@ public class Examen {
 	private List<Note> notes;
 	
 	@ManyToOne
-	private Cours cours;
+	private ProgrammeCours programmeCours;
 	
 	@Version
 	private int version;
@@ -36,12 +36,12 @@ public class Examen {
 		super();
 	}
 
-	public Examen(long id, Date date, List<Note> notes, Cours cours) {
+	public Examen(long id, Date date, List<Note> notes, ProgrammeCours programmeCours) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.notes = notes;
-		this.cours = cours;
+		this.programmeCours = programmeCours;
 	}
 
 	public long getId() {
@@ -68,12 +68,12 @@ public class Examen {
 		this.notes = notes;
 	}
 
-	public Cours getCours() {
-		return cours;
+	public ProgrammeCours getProgrammeCours() {
+		return programmeCours;
 	}
 
-	public void setCours(Cours cours) {
-		this.cours = cours;
+	public void setProgrammeCours(ProgrammeCours programmeCours) {
+		this.programmeCours = programmeCours;
 	}
 
 	public int getVersion() {

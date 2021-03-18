@@ -23,27 +23,27 @@ public class AdresseDto implements Serializable {
 	@XmlElement
 	private String codePostal;
 	@XmlElement
-	private List<PersonneDto> personneDto;
+	private List<PersonneDto> personnes;
 	@XmlElement
-	private CentreDto centreDto;
+	private CentreDto centre;
 	@XmlElement
-	private EntrepriseDto entrepriseDto;
+	private EntrepriseDto entreprise;
 
 	public AdresseDto() {
 		super();
 	}
 
-	public AdresseDto(long id, long numero, String rue, String ville, String codePostal, List<PersonneDto> personneDto,
-			CentreDto centreDto, EntrepriseDto entrepriseDto) {
+	public AdresseDto(long id, long numero, String rue, String ville, String codePostal, List<PersonneDto> personnes,
+			CentreDto centre, EntrepriseDto entreprise) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.rue = rue;
 		this.ville = ville;
 		this.codePostal = codePostal;
-		this.personneDto = personneDto;
-		this.centreDto = centreDto;
-		this.entrepriseDto = entrepriseDto;
+		this.personnes = personnes;
+		this.centre = centre;
+		this.entreprise = entreprise;
 	}
 
 	public long getId() {
@@ -86,28 +86,28 @@ public class AdresseDto implements Serializable {
 		this.codePostal = codePostal;
 	}
 
-	public List<PersonneDto> getPersonneDto() {
-		return personneDto;
+	public List<PersonneDto> getPersonne() {
+		return personnes;
 	}
 
-	public void setPersonneDto(List<PersonneDto> personneDto) {
-		this.personneDto = personneDto;
+	public void setPersonne(List<PersonneDto> personnes) {
+		this.personnes = personnes;
 	}
 
-	public CentreDto getCentreDto() {
-		return centreDto;
+	public CentreDto getCentre() {
+		return centre;
 	}
 
-	public void setCentreDto(CentreDto centreDto) {
-		this.centreDto = centreDto;
+	public void setCentre(CentreDto centre) {
+		this.centre = centre;
 	}
 
-	public EntrepriseDto getEntrepriseDto() {
-		return entrepriseDto;
+	public EntrepriseDto getEntreprise() {
+		return entreprise;
 	}
 
-	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
-		this.entrepriseDto = entrepriseDto;
+	public void setEntreprise(EntrepriseDto entrepriseDto) {
+		this.entreprise = entrepriseDto;
 	}
 
 

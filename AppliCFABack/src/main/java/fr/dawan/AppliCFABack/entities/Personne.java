@@ -3,8 +3,12 @@ package fr.dawan.AppliCFABack.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -75,6 +79,16 @@ public class Personne {
 		this.referent = referent;
 		this.admin = admin;
 		this.projets = projets;
+	}
+	
+	public Personne(long id, String login, String password, String prenom, String nom, Adresse adresse) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.password = password;
+		this.prenom = prenom;
+		this.nom = nom;
+		this.adresse = adresse;
 	}
 
 	public long getId() {

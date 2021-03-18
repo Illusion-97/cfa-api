@@ -1,7 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -18,20 +18,20 @@ public class ExamenDto implements Serializable {
 	@XmlElement
 	private Date date;
 	@XmlElement
-	private List<NoteDto> noteDto;
+	private List<NoteDto> notes;
 	@XmlElement
-	private CoursDto coursDto;
+	private ProgrammeCoursDto programmeCoursDto;
 
 	public ExamenDto() {
 		super();
 	}
 	
-	public ExamenDto(long id, Date date, List<NoteDto> noteDto, CoursDto coursDto) {
+	public ExamenDto(long id, Date date, List<NoteDto> noteDto, ProgrammeCoursDto programmeCoursDto) {
 		super();
 		this.id = id;
 		this.date = date;
-		this.noteDto = noteDto;
-		this.coursDto = coursDto;
+		this.notes = noteDto;
+		this.programmeCoursDto = programmeCoursDto;
 	}
 
 	public long getId() {
@@ -50,20 +50,20 @@ public class ExamenDto implements Serializable {
 		this.date = date;
 	}
 
-	public List<NoteDto> getNoteDto() {
-		return noteDto;
+	public List<NoteDto> getNote() {
+		return notes;
 	}
 
-	public void setNoteDto(List<NoteDto> noteDto) {
-		this.noteDto = noteDto;
+	public void setNote(List<NoteDto> notes) {
+		this.notes = notes;
 	}
 
-	public CoursDto getCoursDto() {
-		return coursDto;
+	public ProgrammeCoursDto getProgrammeCoursDto() {
+		return programmeCoursDto;
 	}
 
-	public void setCoursDto(CoursDto coursDto) {
-		this.coursDto = coursDto;
+	public void setProgrammeCoursDto(ProgrammeCoursDto programmeCoursDto) {
+		this.programmeCoursDto = programmeCoursDto;
 	}
 
 	

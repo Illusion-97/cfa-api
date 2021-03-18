@@ -45,11 +45,11 @@ public class Absence {
 		this.etudiant = etudiant;
 	}
 
-	public long getId() {
+	public long getIdAbsence() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setIdAbsence(long id) {
 		this.id = id;
 	}
 

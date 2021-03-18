@@ -38,7 +38,7 @@ public class Promotion {
 	private List<Etudiant> etudiants;
 	
 	@ManyToMany(mappedBy = "promotions")
-	private List<Cours> cours;
+	private List<ProgrammeCours> programmeCours;
 	
 	@Version
 	private int version;
@@ -48,7 +48,7 @@ public class Promotion {
 	}
 
 	public Promotion(long id, Date dateDebut, Date dateFin, Centre centre, ProgrammePromotion promotion,
-			List<Etudiant> etudiants, List<Cours> cours, Referent referent) {
+			List<Etudiant> etudiants, List<ProgrammeCours> programmeCours, Referent referent) {
 		super();
 		this.id = id;
 		this.dateDebut = dateDebut;
@@ -56,7 +56,7 @@ public class Promotion {
 		this.centre = centre;
 		this.programmePromotion = promotion;
 		this.etudiants = etudiants;
-		this.cours = cours;
+		this.programmeCours = programmeCours;
 		this.referent = referent;
 	}
 
@@ -108,12 +108,12 @@ public class Promotion {
 		this.etudiants = etudiants;
 	}
 
-	public List<Cours> getCours() {
-		return cours;
+	public List<ProgrammeCours> getProgrammeCours() {
+		return programmeCours;
 	}
 
-	public void setCours(List<Cours> cours) {
-		this.cours = cours;
+	public void setProgrammeCours(List<ProgrammeCours> programmeCours) {
+		this.programmeCours = programmeCours;
 	}
 
 	public Referent getReferent() {
