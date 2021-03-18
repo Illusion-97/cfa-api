@@ -55,6 +55,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 	@Query("SELECT p FROM Projet p JOIN p.groupe g JOIN g.etudiants e WHERE e.id = :id")
 	List<ProjetDto> getProjetByIdEtudiant(long id);
 
+	//@Query("SELECT a FROM Adresse a JOIN a.personnes p JOIN p.etudiant e WHERE e.id = :id")
 	@Query("SELECT a FROM Adresse a JOIN a.personnes p JOIN p.etudiant e WHERE e.id = :id")
 	List<AdresseDto> getAdresseByIdEtudiant(long id);
 
