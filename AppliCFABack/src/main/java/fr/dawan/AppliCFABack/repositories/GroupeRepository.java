@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import fr.dawan.AppliCFABack.entities.Groupe;
 
 @Repository
-public interface GroupeRepository extends JpaRepository<Groupe, Long> {
+public interface GroupeRepository extends JpaRepository<Groupe, Long>{
 
 }
