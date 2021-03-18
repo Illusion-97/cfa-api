@@ -30,7 +30,7 @@ public class ExamenDto implements Serializable {
 		super();
 		this.id = id;
 		this.date = date;
-		this.noteDto = noteDto;
+		this.notes = noteDto;
 		this.programmeCoursDto = programmeCoursDto;
 	}
 

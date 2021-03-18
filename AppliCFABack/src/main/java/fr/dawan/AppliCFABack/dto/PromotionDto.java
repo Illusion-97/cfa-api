@@ -42,9 +42,9 @@ public class PromotionDto implements Serializable {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.centre = centre;
-		this.programmePromotionDto = programmePromotionDto;
-		this.referentDto = referentDto;
-		this.etudiantsDto = etudiantsDto;
+		this.programmePromotion = programmePromotionDto;
+		this.referent = referentDto;
+		this.etudiants = etudiantsDto;
 		this.programmeCoursDto = programmeCoursDto;
 	}
 

@@ -27,7 +27,7 @@ public class FormateurDto implements Serializable{
 	public FormateurDto(long id, PersonneDto personneDto, List<ProgrammeCoursDto> programmeCoursDto) {
 		super();
 		this.id = id;
-		this.personneDto = personneDto;
+		this.personne = personneDto;
 		this.programmeCoursDto = programmeCoursDto;
 	}
 
