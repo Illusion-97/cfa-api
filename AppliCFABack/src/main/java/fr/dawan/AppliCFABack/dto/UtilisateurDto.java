@@ -6,7 +6,7 @@ public class UtilisateurDto {
 	private String password;
 	private String prenom;
 	private String nom;
-	private AdresseDto adresse;
+	private AdresseDto adresseDto;
 
 	public UtilisateurDto() {
 		super();
@@ -52,12 +52,12 @@ public class UtilisateurDto {
 		this.nom = nom;
 	}
 
-	public AdresseDto getAdresse() {
-		return adresse;
+	public AdresseDto getAdresseDto() {
+		return adresseDto;
 	}
 
-	public void setAdresse(AdresseDto adresse) {
-		this.adresse = adresse;
+	public void setAdresseDto(AdresseDto adresseDto) {
+		this.adresseDto = adresseDto;
 	}
 
 }

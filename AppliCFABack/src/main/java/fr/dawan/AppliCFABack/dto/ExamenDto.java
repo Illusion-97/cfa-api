@@ -3,8 +3,8 @@ package fr.dawan.AppliCFABack.dto;
 public class ExamenDto {
 	private long id;
 	private String enonce;
-	private FormationDto formation;
-	private CursusDto cursus;
+	private FormationDto formationDto;
+	private CursusDto cursusDto;
 
 	public ExamenDto() {
 	}
@@ -25,20 +25,20 @@ public class ExamenDto {
 		this.enonce = enonce;
 	}
 
-	public FormationDto getFormation() {
-		return formation;
+	public FormationDto getFormationDto() {
+		return formationDto;
 	}
 
-	public void setFormation(FormationDto formation) {
-		this.formation = formation;
+	public void setFormationDto(FormationDto formationDto) {
+		this.formationDto = formationDto;
 	}
 
-	public CursusDto getCursus() {
-		return cursus;
+	public CursusDto getCursusDto() {
+		return cursusDto;
 	}
 
-	public void setCursus(CursusDto cursus) {
-		this.cursus = cursus;
+	public void setCursusDto(CursusDto cursusDto) {
+		this.cursusDto = cursusDto;
 	}
 
 }

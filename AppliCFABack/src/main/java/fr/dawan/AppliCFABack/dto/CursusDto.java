@@ -5,7 +5,7 @@ import java.util.List;
 public class CursusDto {
 	private long id;
 	private String titre;
-	private List<FormationDto> formations;
+	private List<FormationDto> formationsDto;
 
 	public CursusDto() {
 		super();
@@ -27,12 +27,12 @@ public class CursusDto {
 		this.titre = titre;
 	}
 
-	public List<FormationDto> getFormations() {
-		return formations;
+	public List<FormationDto> getFormationsDto() {
+		return formationsDto;
 	}
 
-	public void setFormations(List<FormationDto> formations) {
-		this.formations = formations;
+	public void setFormationsDto(List<FormationDto> formationsDto) {
+		this.formationsDto = formationsDto;
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 public class UtilisateurRoleDto {
 	private long id;
 	private String intitule;
-	List<UtilisateurDto> utilisateurs;
+	List<UtilisateurDto> utilisateursDto;
 
 	public UtilisateurRoleDto() {
 		// TODO Auto-generated constructor stub
@@ -27,12 +27,12 @@ public class UtilisateurRoleDto {
 		this.intitule = intitule;
 	}
 
-	public List<UtilisateurDto> getUtilisateurs() {
-		return utilisateurs;
+	public List<UtilisateurDto> getUtilisateursDto() {
+		return utilisateursDto;
 	}
 
-	public void setUtilisateurs(List<UtilisateurDto> utilisateurs) {
-		this.utilisateurs = utilisateurs;
+	public void setUtilisateursDto(List<UtilisateurDto> utilisateursDto) {
+		this.utilisateursDto = utilisateursDto;
 	}
 
 }

@@ -7,7 +7,7 @@ public class AbsenceDto {
 	private Date dateDebut;
 	private Date dateFin;
 	private String justificatif;
-	private EtudiantDto etudiant;
+	private EtudiantDto etudiantDto;
 
 	public AbsenceDto() {
 		super();
@@ -45,12 +45,12 @@ public class AbsenceDto {
 		this.justificatif = justificatif;
 	}
 
-	public EtudiantDto getEtudiant() {
-		return etudiant;
+	public EtudiantDto getEtudiantDto() {
+		return etudiantDto;
 	}
 
-	public void setEtudiant(EtudiantDto etudiant) {
-		this.etudiant = etudiant;
+	public void setEtudiantDto(EtudiantDto etudiantDto) {
+		this.etudiantDto = etudiantDto;
 	}
 
 }

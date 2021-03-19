@@ -3,7 +3,7 @@ package fr.dawan.AppliCFABack.dto;
 public class EntrepriseDto {
 	private long id;
 	private String raisonSociale;
-	private AdresseDto adresseSiege;
+	private AdresseDto adresseSiegeDto;
 
 	public EntrepriseDto() {
 		super();
@@ -25,12 +25,12 @@ public class EntrepriseDto {
 		this.raisonSociale = raisonSociale;
 	}
 
-	public AdresseDto getAdresseSiege() {
-		return adresseSiege;
+	public AdresseDto getAdresseSiegeDto() {
+		return adresseSiegeDto;
 	}
 
-	public void setAdresseSiege(AdresseDto adresseSiege) {
-		this.adresseSiege = adresseSiege;
+	public void setAdresseSiegeDto(AdresseDto adresseSiegeDto) {
+		this.adresseSiegeDto = adresseSiegeDto;
 	}
 
 }

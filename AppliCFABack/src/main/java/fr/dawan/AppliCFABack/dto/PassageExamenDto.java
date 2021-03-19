@@ -9,8 +9,8 @@ public class PassageExamenDto {
 	private long id;
 	private Date dateDebut;
 	private Date dateFin;
-	private Examen examen;
-	private Intervention intervention;
+	private Examen examenDto;
+	private Intervention interventionDto;
 
 	public PassageExamenDto() {
 		// TODO Auto-generated constructor stub
@@ -40,20 +40,20 @@ public class PassageExamenDto {
 		this.dateFin = dateFin;
 	}
 
-	public Examen getExamen() {
-		return examen;
+	public Examen getExamenDto() {
+		return examenDto;
 	}
 
-	public void setExamen(Examen examen) {
-		this.examen = examen;
+	public void setExamenDto(Examen examenDto) {
+		this.examenDto = examenDto;
 	}
 
-	public Intervention getIntervention() {
-		return intervention;
+	public Intervention getInterventionDto() {
+		return interventionDto;
 	}
 
-	public void setIntervention(Intervention intervention) {
-		this.intervention = intervention;
+	public void setInterventionDto(Intervention interventionDto) {
+		this.interventionDto = interventionDto;
 	}
 
 }

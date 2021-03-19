@@ -4,9 +4,9 @@ public class NoteDto {
 	private long id;
 	private int noteObtenu;
 	private String observations;
-	private EtudiantDto etudiant;
-	private PassageExamenDto examen;
-	private DevoirDto devoir;
+	private EtudiantDto etudiantDto;
+	private PassageExamenDto examenDto;
+	private DevoirDto devoirDto;
 
 	public NoteDto() {
 		// TODO Auto-generated constructor stub
@@ -36,28 +36,28 @@ public class NoteDto {
 		this.observations = observations;
 	}
 
-	public EtudiantDto getEtudiant() {
-		return etudiant;
+	public EtudiantDto getEtudiantDto() {
+		return etudiantDto;
 	}
 
-	public void setEtudiant(EtudiantDto etudiant) {
-		this.etudiant = etudiant;
+	public void setEtudiantDto(EtudiantDto etudiantDto) {
+		this.etudiantDto = etudiantDto;
 	}
 
-	public PassageExamenDto getExamen() {
-		return examen;
+	public PassageExamenDto getExamenDto() {
+		return examenDto;
 	}
 
-	public void setExamen(PassageExamenDto examen) {
-		this.examen = examen;
+	public void setExamenDto(PassageExamenDto examenDto) {
+		this.examenDto = examenDto;
 	}
 
-	public DevoirDto getDevoir() {
-		return devoir;
+	public DevoirDto getDevoirDto() {
+		return devoirDto;
 	}
 
-	public void setDevoir(DevoirDto devoir) {
-		this.devoir = devoir;
+	public void setDevoirDto(DevoirDto devoirDto) {
+		this.devoirDto = devoirDto;
 	}
 
 }

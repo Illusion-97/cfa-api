@@ -7,7 +7,7 @@ public class DevoirDto {
 	String enonce;
 	private Date dateDebut;
 	private Date dateFin;
-	private InterventionDto intervention;
+	private InterventionDto interventionDto;
 
 	public DevoirDto() {
 		// TODO Auto-generated constructor stub
@@ -45,12 +45,12 @@ public class DevoirDto {
 		this.dateFin = dateFin;
 	}
 
-	public InterventionDto getIntervention() {
-		return intervention;
+	public InterventionDto getInterventionDto() {
+		return interventionDto;
 	}
 
-	public void setIntervention(InterventionDto intervention) {
-		this.intervention = intervention;
+	public void setInterventionDto(InterventionDto interventionDto) {
+		this.interventionDto = interventionDto;
 	}
 
 }

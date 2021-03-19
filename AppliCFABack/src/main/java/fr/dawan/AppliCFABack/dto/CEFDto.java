@@ -2,7 +2,7 @@ package fr.dawan.AppliCFABack.dto;
 
 public class CEFDto {
 	private long id;
-	private CentreFormationDto centreFormation;
+	private CentreFormationDto centreFormationDto;
 
 	public CEFDto() {
 		super();
@@ -16,12 +16,12 @@ public class CEFDto {
 		this.id = id;
 	}
 
-	public CentreFormationDto getCentreFormation() {
-		return centreFormation;
+	public CentreFormationDto getCentreFormationDto() {
+		return centreFormationDto;
 	}
 
-	public void setCentreFormation(CentreFormationDto centreFormation) {
-		this.centreFormation = centreFormation;
+	public void setCentreFormationDto(CentreFormationDto centreFormationDto) {
+		this.centreFormationDto = centreFormationDto;
 	}
 
 }

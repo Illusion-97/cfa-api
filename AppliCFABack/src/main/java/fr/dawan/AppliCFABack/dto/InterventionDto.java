@@ -6,9 +6,9 @@ public class InterventionDto {
 	private long id;
 	private Date dateDebut; // 12/03
 	private Date dateFin; // 18/03
-	private FormationDto formation; // Java init
-	private InterventionDto interventionMere; // Java init+appro
-	private PromotionDto promotion; // CDA 2021
+	private FormationDto formationDto; // Java init
+	private InterventionDto interventionMereDto; // Java init+appro
+	private PromotionDto promotionDto; // CDA 2021
 
 	public InterventionDto() {
 		// TODO Auto-generated constructor stub
@@ -38,28 +38,28 @@ public class InterventionDto {
 		this.dateFin = dateFin;
 	}
 
-	public FormationDto getFormation() {
-		return formation;
+	public FormationDto getFormationDto() {
+		return formationDto;
 	}
 
-	public void setFormation(FormationDto formation) {
-		this.formation = formation;
+	public void setFormationDto(FormationDto formationDto) {
+		this.formationDto = formationDto;
 	}
 
-	public InterventionDto getInterventionMere() {
-		return interventionMere;
+	public InterventionDto getInterventionMereDto() {
+		return interventionMereDto;
 	}
 
-	public void setInterventionMere(InterventionDto interventionMere) {
-		this.interventionMere = interventionMere;
+	public void setInterventionMereDto(InterventionDto interventionMereDto) {
+		this.interventionMereDto = interventionMereDto;
 	}
 
-	public PromotionDto getPromotion() {
-		return promotion;
+	public PromotionDto getPromotionDto() {
+		return promotionDto;
 	}
 
-	public void setPromotion(PromotionDto promotion) {
-		this.promotion = promotion;
+	public void setPromotionDto(PromotionDto promotionDto) {
+		this.promotionDto = promotionDto;
 	}
 
 }

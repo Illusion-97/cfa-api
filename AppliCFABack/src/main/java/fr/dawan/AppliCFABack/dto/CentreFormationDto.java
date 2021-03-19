@@ -2,8 +2,8 @@ package fr.dawan.AppliCFABack.dto;
 
 public class CentreFormationDto {
 	private long id;
-	private AdresseDto adresse;
-	private EntrepriseDto entreprise;
+	private AdresseDto adresseDto;
+	private EntrepriseDto entrepriseDto;
 
 	public CentreFormationDto() {
 		super();
@@ -17,20 +17,20 @@ public class CentreFormationDto {
 		this.id = id;
 	}
 
-	public AdresseDto getAdresse() {
-		return adresse;
+	public AdresseDto getAdresseDto() {
+		return adresseDto;
 	}
 
-	public void setAdresse(AdresseDto adresse) {
-		this.adresse = adresse;
+	public void setAdresseDto(AdresseDto adresseDto) {
+		this.adresseDto = adresseDto;
 	}
 
-	public EntrepriseDto getEntreprise() {
-		return entreprise;
+	public EntrepriseDto getEntrepriseDto() {
+		return entrepriseDto;
 	}
 
-	public void setEntreprise(EntrepriseDto entreprise) {
-		this.entreprise = entreprise;
+	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
+		this.entrepriseDto = entrepriseDto;
 	}
 
 }

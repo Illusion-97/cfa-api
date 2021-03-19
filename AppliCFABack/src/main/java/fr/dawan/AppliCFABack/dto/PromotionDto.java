@@ -8,11 +8,11 @@ public class PromotionDto {
 	private String nom;
 	private Date dateDebut;
 	private Date dateFin;
-	private UtilisateurDto cef;
-	private List<EtudiantDto> etudiants;
-	private CentreFormationDto centreFormation;
-	private UtilisateurDto referentPedagogique;
-	private CursusDto cursus;
+	private UtilisateurDto cefDto;
+	private List<EtudiantDto> etudiantsDto;
+	private CentreFormationDto centreFormationDto;
+	private UtilisateurDto referentPedagogiqueDto;
+	private CursusDto cursusDto;
 
 	public PromotionDto() {
 		super();
@@ -50,44 +50,44 @@ public class PromotionDto {
 		this.dateFin = dateFin;
 	}
 
-	public UtilisateurDto getCef() {
-		return cef;
+	public UtilisateurDto getCefDto() {
+		return cefDto;
 	}
 
-	public void setCef(UtilisateurDto cef) {
-		this.cef = cef;
+	public void setCefDto(UtilisateurDto cefDto) {
+		this.cefDto = cefDto;
 	}
 
-	public List<EtudiantDto> getEtudiants() {
-		return etudiants;
+	public List<EtudiantDto> getEtudiantsDto() {
+		return etudiantsDto;
 	}
 
-	public void setEtudiants(List<EtudiantDto> etudiants) {
-		this.etudiants = etudiants;
+	public void setEtudiantsDto(List<EtudiantDto> etudiantsDto) {
+		this.etudiantsDto = etudiantsDto;
 	}
 
-	public CentreFormationDto getCentreFormation() {
-		return centreFormation;
+	public CentreFormationDto getCentreFormationDto() {
+		return centreFormationDto;
 	}
 
-	public void setCentreFormation(CentreFormationDto centreFormation) {
-		this.centreFormation = centreFormation;
+	public void setCentreFormationDto(CentreFormationDto centreFormationDto) {
+		this.centreFormationDto = centreFormationDto;
 	}
 
-	public UtilisateurDto getReferentPedagogique() {
-		return referentPedagogique;
+	public UtilisateurDto getReferentPedagogiqueDto() {
+		return referentPedagogiqueDto;
 	}
 
-	public void setReferentPedagogique(UtilisateurDto referentPedagogique) {
-		this.referentPedagogique = referentPedagogique;
+	public void setReferentPedagogiqueDto(UtilisateurDto referentPedagogiqueDto) {
+		this.referentPedagogiqueDto = referentPedagogiqueDto;
 	}
 
-	public CursusDto getCursus() {
-		return cursus;
+	public CursusDto getCursusDto() {
+		return cursusDto;
 	}
 
-	public void setCursus(CursusDto cursus) {
-		this.cursus = cursus;
+	public void setCursusDto(CursusDto cursusDto) {
+		this.cursusDto = cursusDto;
 	}
 
 }

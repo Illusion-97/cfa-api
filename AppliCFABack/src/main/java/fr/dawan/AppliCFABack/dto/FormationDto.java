@@ -6,7 +6,7 @@ public class FormationDto {
 	private long id;
 	private String titre;
 	private String contenu;
-	private List<CursusDto> cursusLst;
+	private List<CursusDto> cursusLstDto;
 
 	public FormationDto() {
 		super();
@@ -36,12 +36,12 @@ public class FormationDto {
 		this.contenu = contenu;
 	}
 
-	public List<CursusDto> getCursusLst() {
-		return cursusLst;
+	public List<CursusDto> getCursusLstDto() {
+		return cursusLstDto;
 	}
 
-	public void setCursusLst(List<CursusDto> cursusLst) {
-		this.cursusLst = cursusLst;
+	public void setCursusLstDto(List<CursusDto> cursusLstDto) {
+		this.cursusLstDto = cursusLstDto;
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 public class GroupeEtudiantDto {
 	private long id;
 	private String nom;
-	private List<EtudiantDto> etudiants;
+	private List<EtudiantDto> etudiantsDto;
 
 	public GroupeEtudiantDto() {
 		super();
@@ -27,12 +27,12 @@ public class GroupeEtudiantDto {
 		this.nom = nom;
 	}
 
-	public List<EtudiantDto> getEtudiants() {
-		return etudiants;
+	public List<EtudiantDto> getEtudiantsDto() {
+		return etudiantsDto;
 	}
 
-	public void setEtudiants(List<EtudiantDto> etudiants) {
-		this.etudiants = etudiants;
+	public void setEtudiants(List<EtudiantDto> etudiantsDto) {
+		this.etudiantsDto = etudiantsDto;
 	}
 
 }

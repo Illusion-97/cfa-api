@@ -5,7 +5,7 @@ public class ProjetDto {
 	private String nom;
 	private String description;
 	private String pjCahierDesCharges;
-	private GroupeEtudiantDto groupe;
+	private GroupeEtudiantDto groupeDto;
 
 	public ProjetDto() {
 		// TODO Auto-generated constructor stub
@@ -43,12 +43,12 @@ public class ProjetDto {
 		this.pjCahierDesCharges = pjCahierDesCharges;
 	}
 
-	public GroupeEtudiantDto getGroupe() {
-		return groupe;
+	public GroupeEtudiantDto getGroupeDto() {
+		return groupeDto;
 	}
 
-	public void setGroupe(GroupeEtudiantDto groupe) {
-		this.groupe = groupe;
+	public void setGroupe(GroupeEtudiantDto groupeDto) {
+		this.groupeDto = groupeDto;
 	}
 
 }

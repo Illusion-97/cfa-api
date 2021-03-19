@@ -4,8 +4,8 @@ import java.util.List;
 
 public class EtudiantDto {
 	private long id;
-	private List<PromotionDto> promotions;
-	private List<GroupeEtudiantDto> groupes;
+	private List<PromotionDto> promotionsDto;
+	private List<GroupeEtudiantDto> groupesDto;
 
 	public EtudiantDto() {
 		super();
@@ -19,20 +19,20 @@ public class EtudiantDto {
 		this.id = id;
 	}
 
-	public List<PromotionDto> getPromotions() {
-		return promotions;
+	public List<PromotionDto> getPromotionsDto() {
+		return promotionsDto;
 	}
 
-	public void setPromotions(List<PromotionDto> promotions) {
-		this.promotions = promotions;
+	public void setPromotionsDto(List<PromotionDto> promotionsDto) {
+		this.promotionsDto = promotionsDto;
 	}
 
-	public List<GroupeEtudiantDto> getGroupes() {
-		return groupes;
+	public List<GroupeEtudiantDto> getGroupesDto() {
+		return groupesDto;
 	}
 
-	public void setGroupes(List<GroupeEtudiantDto> groupes) {
-		this.groupes = groupes;
+	public void setGroupesDto(List<GroupeEtudiantDto> groupesDto) {
+		this.groupesDto = groupesDto;
 	}
 
 }
