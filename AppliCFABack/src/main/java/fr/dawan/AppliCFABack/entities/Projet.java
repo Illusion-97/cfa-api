@@ -6,8 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Version;
 
 @Entity
 public class Projet {
@@ -15,41 +13,28 @@ public class Projet {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(nullable = false, length = 255)
 	private String nom;
-	
+
 	@Column(nullable = false, length = 255)
 	private String description;
-	
-	@OneToOne
-	private Groupe groupe;
-	
-	@ManyToOne
-	private Personne personneReferent;
-	
+
 	@Column(nullable = false, length = 255)
-	private TypeProjet type;
-	
-	enum TypeProjet{
-		ENTREPRISE, PEDAGOGIQUE
-	}
-	
-	@Version
-	private int version;
+	private String pjCahierDesCharges;
+
+	@ManyToOne
+	private GroupeEtudiant groupe;
+
+//	@Column(nullable = false, length = 255)
+//	private TypeProjet type;
+//	
+//	enum TypeProjet{
+//		ENTREPRISE, PEDAGOGIQUE
+//	}
 
 	public Projet() {
 		super();
-	}
-
-	public Projet(long id, String nom, String description, Groupe groupe, Personne personneReferent, TypeProjet type) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.description = description;
-		this.groupe = groupe;
-		this.personneReferent = personneReferent;
-		this.type = type;
 	}
 
 	public long getId() {
@@ -76,36 +61,22 @@ public class Projet {
 		this.description = description;
 	}
 
-	public Groupe getGroupe() {
+	public String getPjCahierDesCharges() {
+		return pjCahierDesCharges;
+	}
+
+	public void setPjCahierDesCharges(String pjCahierDesCharges) {
+		this.pjCahierDesCharges = pjCahierDesCharges;
+	}
+
+	public GroupeEtudiant getGroupe() {
 		return groupe;
 	}
 
-	public void setGroupe(Groupe groupe) {
+	public void setGroupe(GroupeEtudiant groupe) {
 		this.groupe = groupe;
 	}
-
-	public Personne getUserReferent() {
-		return personneReferent;
-	}
-
-	public void setUserReferent(Personne personneReferent) {
-		this.personneReferent = personneReferent;
-	}
-
-	public TypeProjet getType() {
-		return type;
-	}
-
-	public void setType(TypeProjet type) {
-		this.type = type;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
 	
+	
+
 }

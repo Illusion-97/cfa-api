@@ -1,6 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,48 +8,37 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Version;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Absence {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@Column(nullable = false, length = 255)
+
+	@Temporal(value = TemporalType.DATE)
 	private Date dateDebut;
-	
-	@Column(nullable = false, length = 255)
+
+	@Temporal(value = TemporalType.DATE)
 	private Date dateFin;
-	
+
 	@Column(nullable = false, length = 255)
 	private String justificatif;
-	
+
 	@ManyToOne
 	private Etudiant etudiant;
-	
-	@Version
-	private int version;
 
 	public Absence() {
 		super();
 	}
 
-	public Absence(long id, Date dateDebut, Date dateFin, String justificatif, Etudiant etudiant) {
-		super();
-		this.id = id;
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
-		this.justificatif = justificatif;
-		this.etudiant = etudiant;
-	}
-
-	public long getIdAbsence() {
+	public long getId() {
 		return id;
 	}
 
-	public void setIdAbsence(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -85,12 +74,4 @@ public class Absence {
 		this.etudiant = etudiant;
 	}
 
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
 }

@@ -1,35 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import fr.dawan.AppliCFABack.entities.Absence;
-import fr.dawan.AppliCFABack.entities.Admin;
-import fr.dawan.AppliCFABack.entities.Adresse;
-import fr.dawan.AppliCFABack.entities.CEF;
-import fr.dawan.AppliCFABack.entities.Centre;
-import fr.dawan.AppliCFABack.entities.Cours;
-import fr.dawan.AppliCFABack.entities.Devoir;
-import fr.dawan.AppliCFABack.entities.Entreprise;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Examen;
-import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Groupe;
-import fr.dawan.AppliCFABack.entities.Note;
-import fr.dawan.AppliCFABack.entities.Personne;
-import fr.dawan.AppliCFABack.entities.ProgrammeCours;
-import fr.dawan.AppliCFABack.entities.ProgrammePromotion;
-import fr.dawan.AppliCFABack.entities.Projet;
-import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Referent;
 
 @Controller
 @RequestMapping("/AppliCFABack/test")

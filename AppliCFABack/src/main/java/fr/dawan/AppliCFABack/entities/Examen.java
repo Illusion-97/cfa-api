@@ -1,47 +1,30 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.sql.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Version;
 
 @Entity
-public class Examen {
+public class Examen { // examen Java
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(nullable = false, length = 255)
-	private Date date;
-	
-	@OneToMany(mappedBy = "examen", cascade = CascadeType.ALL)
-	private List<Note> notes;
-	
+	private String enonce;
+
 	@ManyToOne
-	private ProgrammeCours programmeCours;
-	
-	@Version
-	private int version;
+	private Formation formation;
+
+	@ManyToOne
+	private Cursus cursus;
 
 	public Examen() {
 		super();
-	}
-
-	public Examen(long id, Date date, List<Note> notes, ProgrammeCours programmeCours) {
-		super();
-		this.id = id;
-		this.date = date;
-		this.notes = notes;
-		this.programmeCours = programmeCours;
 	}
 
 	public long getId() {
@@ -52,36 +35,28 @@ public class Examen {
 		this.id = id;
 	}
 
-	public Date getDate() {
-		return date;
+	public String getEnonce() {
+		return enonce;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setEnonce(String enonce) {
+		this.enonce = enonce;
 	}
 
-	public List<Note> getNotes() {
-		return notes;
+	public Formation getFormation() {
+		return formation;
 	}
 
-	public void setNotes(List<Note> notes) {
-		this.notes = notes;
+	public void setFormation(Formation formation) {
+		this.formation = formation;
 	}
 
-	public ProgrammeCours getProgrammeCours() {
-		return programmeCours;
+	public Cursus getCursus() {
+		return cursus;
 	}
 
-	public void setProgrammeCours(ProgrammeCours programmeCours) {
-		this.programmeCours = programmeCours;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
+	public void setCursus(Cursus cursus) {
+		this.cursus = cursus;
 	}
 
 }
