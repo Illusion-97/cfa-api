@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
-import fr.dawan.AppliCFABack.dto.CoursDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
@@ -25,6 +24,7 @@ import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.GroupeDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PersonneDto;
+import fr.dawan.AppliCFABack.dto.ProgrammeCoursDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.EtudiantService;
@@ -146,8 +146,8 @@ public class EtudiantController {
 	 * On récupère les cours de l'étudiant à parti de son id en passant pas sa promotion
 	 */
 	@GetMapping(value = "/{id}/cours", produces = "application/json")
-	public List<CoursDto> getCoursByIdEtudiant(@PathVariable("id") long id){
-		return etudiantService.getCoursByIdEtudiant(id);
+	public List<ProgrammeCoursDto> getProgrammeCoursByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getProgrammeCoursByIdEtudiant(id);
 	}
 	
 	/*

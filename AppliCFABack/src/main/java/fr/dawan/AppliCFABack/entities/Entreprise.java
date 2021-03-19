@@ -1,16 +1,11 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Version;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Entreprise {
@@ -18,29 +13,15 @@ public class Entreprise {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(nullable = false, length = 255)
-	private String nom;
-	
-	@OneToOne
-	private Adresse adresse;
-	
-	@OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL)
-	private List<Etudiant> etudiants;
-	
-	@Version
-	private int version;
+	private String raisonSociale;
+
+	@ManyToOne
+	private Adresse adresseSiege;
 
 	public Entreprise() {
 		super();
-	}
-
-	public Entreprise(long id, String nom, Adresse adresse, List<Etudiant> etudiants) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.adresse = adresse;
-		this.etudiants = etudiants;
 	}
 
 	public long getId() {
@@ -51,36 +32,20 @@ public class Entreprise {
 		this.id = id;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getRaisonSociale() {
+		return raisonSociale;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setRaisonSociale(String raisonSociale) {
+		this.raisonSociale = raisonSociale;
 	}
 
-	public Adresse getAdresse() {
-		return adresse;
+	public Adresse getAdresseSiege() {
+		return adresseSiege;
 	}
 
-	public void setAdresse(Adresse adresse) {
-		this.adresse = adresse;
-	}
-
-	public List<Etudiant> getEtudiants() {
-		return etudiants;
-	}
-
-	public void setEtudiants(List<Etudiant> etudiants) {
-		this.etudiants = etudiants;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
+	public void setAdresseSiege(Adresse adresseSiege) {
+		this.adresseSiege = adresseSiege;
 	}
 	
 }

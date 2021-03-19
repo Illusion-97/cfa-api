@@ -1,39 +1,12 @@
 package fr.dawan.AppliCFABack.controllers;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import fr.dawan.AppliCFABack.entities.Absence;
-import fr.dawan.AppliCFABack.entities.Admin;
-import fr.dawan.AppliCFABack.entities.Adresse;
-import fr.dawan.AppliCFABack.entities.CEF;
-import fr.dawan.AppliCFABack.entities.Centre;
-import fr.dawan.AppliCFABack.entities.Cours;
-import fr.dawan.AppliCFABack.entities.Devoir;
-import fr.dawan.AppliCFABack.entities.Entreprise;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Examen;
-import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Groupe;
-import fr.dawan.AppliCFABack.entities.Note;
-import fr.dawan.AppliCFABack.entities.Personne;
-import fr.dawan.AppliCFABack.entities.ProgrammePromotion;
-import fr.dawan.AppliCFABack.entities.Projet;
-import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Referent;
 
 @Controller
 @RequestMapping("/AppliCFABack/test")
 public class TestDataController {
-
+/*
 	public static void ResetDB() {
 		
 //		try {
@@ -61,9 +34,11 @@ public class TestDataController {
 		Entreprise entreprise = new Entreprise();
 		ProgrammePromotion programmePromotion = new ProgrammePromotion();
 		Absence absence = new Absence();
+		ProgrammeCours programmeCours = new ProgrammeCours();
 
 		List<Absence> lstAbsence = new ArrayList<Absence>();
-		List<Promotion> lstPromotion = new ArrayList<Promotion>();
+		List<ProgrammePromotion> lstProgrammePromotion = new ArrayList<ProgrammePromotion>();
+		List<Promotion> lstPromo = new ArrayList<Promotion>();
 		List<Etudiant> lstEtudiant = new ArrayList<Etudiant>();
 		List<Formateur> lstFormateur = new ArrayList<Formateur>();
 		List<Adresse> lstAdresse = new ArrayList<Adresse>();
@@ -78,6 +53,7 @@ public class TestDataController {
 		List<Examen> lstExamen = new ArrayList<Examen>();
 		List<Devoir> lstDevoir = new ArrayList<Devoir>();
 		List<Entreprise> lstEntreprise = new ArrayList<Entreprise>();
+		List<ProgrammeCours> lstprogrammeCours = new ArrayList<ProgrammeCours>();
 
 		adresse.setNumero(3);
 		adresse.setRue("12");
@@ -90,25 +66,25 @@ public class TestDataController {
 		
 		centre.setCef(cef);
 		
-		cours.setNoteEntraide("8");
-		cours.setNoteInformation("note d'information");
+		cours.setDescription("description du cours");
+		cours.setDure(5);
 		
 		groupe.setProjet(projet);
 		
 		note.setEtudiant(etudiant); 
 		
-		promo.setCentre(centre);
+		promo.setNom("Paris");
 		
 		projet.setGroupe(groupe);
 		projet.setNom("NameProject");
 		
 		
-		exam.setCours(cours); 
+		//exam.setCours(cours); 
 		
 		devoir.setConsigne("Consigne du devoir numero ##"); 
 		
 		
-		programmePromotion.setDescription("Java, SQL, UML"); 
+		//programmePromotion.setDescription("Java, SQL, UML"); 
 		
 		absence.setEtudiant(etudiant); 
 
@@ -126,17 +102,19 @@ public class TestDataController {
 		lstGroupe.add(groupe);
 		lstNote.add(note);
 		lstProjet.add(projet);
-		lstPromotion.add(promo);
+		lstProgrammePromotion.add(programmePromotion);
+		lstPromo.add(promo);
 		lstReferent.add(ref);
+		lstprogrammeCours.add(programmeCours);
 		
-		ref.setPromotion(lstPromotion); 
+		 
 		
 		entreprise.setEtudiants(lstEtudiant); 
 		
 		groupe.setEtudiants(lstEtudiant);
 		
-		centre.setPromotions(lstPromotion);
-		centre.setPromotions(lstPromotion);
+		centre.setProgrammePromotions(null);
+		//centre
 		
 
 		// Personne
@@ -193,18 +171,18 @@ public class TestDataController {
 		
 
 		// Etudiant
-		Etudiant etudiant1 = new Etudiant(1, pEtudiant, lstAbsence, entreprise1, lstPromotion, lstGroupe);
-		Etudiant etudiant2 = new Etudiant(2, pEtudiant2, lstAbsence, entreprise2, lstPromotion, lstGroupe);
-		Etudiant etudiant3 = new Etudiant(3, pEtudiant3, lstAbsence, entreprise3, lstPromotion, lstGroupe);
+		Etudiant etudiant1 = new Etudiant(1, pEtudiant, lstAbsence, entreprise1, lstProgrammePromotion, lstGroupe);
+		Etudiant etudiant2 = new Etudiant(2, pEtudiant2, lstAbsence, entreprise2, lstProgrammePromotion, lstGroupe);
+		Etudiant etudiant3 = new Etudiant(3, pEtudiant3, lstAbsence, entreprise3, lstProgrammePromotion, lstGroupe);
 		
 		lstEtudiant.add(etudiant1);
 		lstEtudiant.add(etudiant2);
 		lstEtudiant.add(etudiant3);
 
 		// Formateur
-		Formateur formateur1 = new Formateur(1, pFormateur, lstCours);
-		Formateur formateur2 = new Formateur(2, pFormateur2, lstCours);
-		Formateur formateur3 = new Formateur(3, pFormateur3, lstCours);
+		Formateur formateur1 = new Formateur(1, pFormateur, lstprogrammeCours);
+		Formateur formateur2 = new Formateur(2, pFormateur2, lstprogrammeCours);
+		Formateur formateur3 = new Formateur(3, pFormateur3, lstprogrammeCours);
 		
 		lstFormateur.add(formateur1);
 		lstFormateur.add(formateur2);
@@ -218,7 +196,7 @@ public class TestDataController {
 		lstAdmin.add(admin2);
 
 		// Centre
-		Centre centre1 = new Centre(1, adresse1, cef, lstPromotion);
+		Centre centre1 = new Centre(1, adresse1, cef, lstProgrammePromotion);
 		
 		lstCentre.add(centre1);
 
@@ -228,10 +206,10 @@ public class TestDataController {
 		lstCef.add(cef1);
 
 		// Cours
-		Cours cours1 = new Cours(1, d, d);
-		Cours cours2 = new Cours(2, d, d);
-		Cours cours3 = new Cours(3, d, d);
-		
+		Cours cours1 = new Cours(1, "Java", "Cours de java", 5, lstprogrammeCours);
+		Cours cours2 = new Cours(2, "SQL", "Cours de SQL", 5, lstprogrammeCours);
+		Cours cours3 = new Cours(3, "PostGres", "Cours de PostGres", 5, lstprogrammeCours);
+
 		lstCours.add(cours1);
 		lstCours.add(cours2);
 		lstCours.add(cours3);
@@ -251,18 +229,18 @@ public class TestDataController {
 		lstNote.add(note1);
 
 		// Promotion
-		Promotion promo1 = new Promotion(1, d, d, centre1, programmePromotion, lstEtudiant, lstCours, ref);
-		Promotion promo2 = new Promotion(2, d, d, centre1, programmePromotion, lstEtudiant, lstCours, ref);
-		Promotion promo3 = new Promotion(3, d, d, centre1, programmePromotion, lstEtudiant, lstCours, ref);
+		Promotion promo1 = new Promotion(1, "Marseille2021", "promo de Marseille", lstProgrammePromotion);
+		Promotion promo2 = new Promotion(2, "Paris2021", "promo de Paris", lstProgrammePromotion);
+		Promotion promo3 = new Promotion(3, "Nantes2021", "promo de Nantes", lstProgrammePromotion);
 
-		lstPromotion.add(promo1);
-		lstPromotion.add(promo2);
-		lstPromotion.add(promo3);
+		lstPromo.add(promo1);
+		lstPromo.add(promo2);
+		lstPromo.add(promo3);
 
 		// Referent
-		Referent ref1 = new Referent(1, pReferent, lstPromotion);
-		Referent ref2 = new Referent(2, pReferent2, lstPromotion);
-		Referent ref3 = new Referent(3, pReferent3, lstPromotion);
+		Referent ref1 = new Referent(1, pReferent, lstProgrammePromotion);
+		Referent ref2 = new Referent(2, pReferent2, lstProgrammePromotion);
+		Referent ref3 = new Referent(3, pReferent3, lstProgrammePromotion);
 
 		lstReferent.add(ref1);
 		lstReferent.add(ref2);
@@ -278,18 +256,18 @@ public class TestDataController {
 		lstProjet.add(projetPlanning);
 
 		// Examen
-		Examen exam1 = new Examen(1, d, lstNote, cours1);
-		Examen exam2 = new Examen(2, d, lstNote, cours2);
-		Examen exam3 = new Examen(3, d, lstNote, cours3);
+		Examen exam1 = new Examen(1, d, lstNote, programmeCours);
+		Examen exam2 = new Examen(2, d, lstNote, programmeCours);
+		Examen exam3 = new Examen(3, d, lstNote, programmeCours);
 
 		lstExamen.add(exam1);
 		lstExamen.add(exam2);
 		lstExamen.add(exam3);
 
 		// Devoir
-		Devoir devoir1 = new Devoir(1, "DevoirJava", "Créer des classes", d, d, cours1);
-		Devoir devoir2 = new Devoir(1, "DevoirC#", "Créer des méthodes", d, d, cours2);
-		Devoir devoir3 = new Devoir(1, "DevoirSql", "Exo Requete", d, d, cours3);
+		Devoir devoir1 = new Devoir(1, "DevoirJava", "Créer des classes", d, d, programmeCours);
+		Devoir devoir2 = new Devoir(1, "DevoirC#", "Créer des méthodes", d, d, programmeCours);
+		Devoir devoir3 = new Devoir(1, "DevoirSql", "Exo Requete", d, d, programmeCours);
 
 		lstDevoir.add(devoir1);
 		lstDevoir.add(devoir2);
@@ -315,5 +293,5 @@ public class TestDataController {
 //		lstReferent.add(ref);
 
 	}
-
+*/
 }

@@ -15,39 +15,39 @@ public class EtudiantDto implements Serializable {
 	
 	@XmlElement
 	private long id;
-		
-	@XmlElement
-	private PersonneDto personne;
-	 
-	@XmlElement
-	private List<AbsenceDto> absences;
 	
 	@XmlElement
-	private EntrepriseDto entreprise;
+	private PersonneDto personneDto;
 	
 	@XmlElement
-	private List<NoteDto> notes;
+	private List<AbsenceDto> absencesDto;
 	
 	@XmlElement
-	private List<PromotionDto> promotions;
+	private EntrepriseDto entrepriseDto;
 	
 	@XmlElement
-	private List<GroupeDto> groupes;
+	private List<NoteDto> notesDto;
+	
+	@XmlElement
+	private List<PromotionDto> promotionsDto;
+	
+	@XmlElement
+	private List<GroupeDto> groupesDto;
 
 	public EtudiantDto() {
 		super();
 	}
-	
-	public EtudiantDto(long id, PersonneDto personne, List<AbsenceDto> absences, EntrepriseDto entreprise,
-			List<NoteDto> notes, List<PromotionDto> promotions, List<GroupeDto> groupes) {
+
+	public EtudiantDto(long id, PersonneDto personneDto, List<AbsenceDto> absencesDto, EntrepriseDto entrepriseDto,
+			List<NoteDto> notesDto, List<PromotionDto> promotionsDto, List<GroupeDto> groupesDto) {
 		super();
 		this.id = id;
-		this.personne = personne;
-		this.absences = absences;
-		this.entreprise = entreprise;
-		this.notes = notes;
-		this.promotions = promotions;
-		this.groupes = groupes;
+		this.personneDto = personneDto;
+		this.absencesDto = absencesDto;
+		this.entrepriseDto = entrepriseDto;
+		this.notesDto = notesDto;
+		this.promotionsDto = promotionsDto;
+		this.groupesDto = groupesDto;
 	}
 
 	public long getId() {
@@ -57,53 +57,53 @@ public class EtudiantDto implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	public PersonneDto getPersonne() {
-		return personne;
+
+	public PersonneDto getPersonneDto() {
+		return personneDto;
 	}
 
-	public void setPersonne(PersonneDto personne) {
-		this.personne = personne;
+	public void setPersonneDto(PersonneDto personneDto) {
+		this.personneDto = personneDto;
 	}
 
-	public List<AbsenceDto> getAbsence() {
-		return absences;
+	public List<AbsenceDto> getAbsencesDto() {
+		return absencesDto;
 	}
 
-	public void setAbsence(List<AbsenceDto> absences) {
-		this.absences = absences;
+	public void setAbsencesDto(List<AbsenceDto> absencesDto) {
+		this.absencesDto = absencesDto;
 	}
 
-	public EntrepriseDto getEntreprise() {
-		return entreprise;
+	public EntrepriseDto getEntrepriseDto() {
+		return entrepriseDto;
 	}
 
-	public void setEntreprise(EntrepriseDto entreprise) {
-		this.entreprise = entreprise;
+	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
+		this.entrepriseDto = entrepriseDto;
 	}
 
-	public List<NoteDto> getNote() {
-		return notes;
+	public List<NoteDto> getNotesDto() {
+		return notesDto;
 	}
 
-	public void setNote(List<NoteDto> notes) {
-		this.notes = notes;
+	public void setNotesDto(List<NoteDto> notesDto) {
+		this.notesDto = notesDto;
 	}
 
-	public List<PromotionDto> getPromotion() {
-		return promotions;
+	public List<PromotionDto> getPromotionsDto() {
+		return promotionsDto;
 	}
 
-	public void setPromotion(List<PromotionDto> promotions) {
-		this.promotions = promotions;
+	public void setPromotionsDto(List<PromotionDto> promotionsDto) {
+		this.promotionsDto = promotionsDto;
 	}
 
-	public List<GroupeDto> getGroupe() {
-		return groupes;
+	public List<GroupeDto> getGroupesDto() {
+		return groupesDto;
 	}
 
-	public void setGroupe(List<GroupeDto> groupes) {
-		this.groupes = groupes;
+	public void setGroupesDto(List<GroupeDto> groupesDto) {
+		this.groupesDto = groupesDto;
 	}
 
 	

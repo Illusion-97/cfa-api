@@ -1,6 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,54 +10,42 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Version;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-public class Promotion {
+public class Promotion { // CDA2021
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(nullable = false, length = 255)
-	private Date dateDebut;
-	
-	@Column(nullable = false, length = 255)
-	private Date dateFin;
-	
+	private String nom;
+
+	@Temporal(value = TemporalType.DATE)
+	private Date dateDebut; // 01/01/2021
+
+	@Temporal(value = TemporalType.DATE)
+	private Date dateFin; // 31/12/2021
+
 	@ManyToOne
-	private Centre centre;
-	
-	@ManyToOne
-	private ProgrammePromotion programmePromotion;
-	
-	@ManyToOne
-	private Referent referent;
-	
-	@ManyToMany
-	private List<Etudiant> etudiants;
-	
+	private Utilisateur cef;
+
 	@ManyToMany(mappedBy = "promotions")
-	private List<ProgrammeCours> programmeCours;
-	
-	@Version
-	private int version;
+	private List<Etudiant> etudiants;
+
+	@ManyToOne
+	private CentreFormation centreFormation; // lieuFormation
+
+	@ManyToOne
+	private Utilisateur referentPedagogique;
+
+	@ManyToOne
+	private Cursus cursus; // Dev Full Stack
 
 	public Promotion() {
 		super();
-	}
-
-	public Promotion(long id, Date dateDebut, Date dateFin, Centre centre, ProgrammePromotion promotion,
-			List<Etudiant> etudiants, List<ProgrammeCours> programmeCours, Referent referent) {
-		super();
-		this.id = id;
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
-		this.centre = centre;
-		this.programmePromotion = promotion;
-		this.etudiants = etudiants;
-		this.programmeCours = programmeCours;
-		this.referent = referent;
 	}
 
 	public long getId() {
@@ -66,6 +54,14 @@ public class Promotion {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
 	public Date getDateDebut() {
@@ -84,20 +80,12 @@ public class Promotion {
 		this.dateFin = dateFin;
 	}
 
-	public Centre getCentre() {
-		return centre;
+	public Utilisateur getCef() {
+		return cef;
 	}
 
-	public void setCentre(Centre centre) {
-		this.centre = centre;
-	}
-
-	public ProgrammePromotion getProgrammePromotion() {
-		return programmePromotion;
-	}
-
-	public void setProgrammePromotion(ProgrammePromotion promotion) {
-		this.programmePromotion = promotion;
+	public void setCef(Utilisateur cef) {
+		this.cef = cef;
 	}
 
 	public List<Etudiant> getEtudiants() {
@@ -108,28 +96,28 @@ public class Promotion {
 		this.etudiants = etudiants;
 	}
 
-	public List<ProgrammeCours> getProgrammeCours() {
-		return programmeCours;
+	public CentreFormation getCentreFormation() {
+		return centreFormation;
 	}
 
-	public void setProgrammeCours(List<ProgrammeCours> programmeCours) {
-		this.programmeCours = programmeCours;
+	public void setCentreFormation(CentreFormation centreFormation) {
+		this.centreFormation = centreFormation;
 	}
 
-	public Referent getReferent() {
-		return referent;
+	public Utilisateur getReferentPedagogique() {
+		return referentPedagogique;
 	}
 
-	public void setReferent(Referent referent) {
-		this.referent = referent;
+	public void setReferentPedagogique(Utilisateur referentPedagogique) {
+		this.referentPedagogique = referentPedagogique;
 	}
 
-	public int getVersion() {
-		return version;
+	public Cursus getCursus() {
+		return cursus;
 	}
 
-	public void setVersion(int version) {
-		this.version = version;
+	public void setCursus(Cursus cursus) {
+		this.cursus = cursus;
 	}
-	
+
 }
