@@ -7,14 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import fr.dawan.AppliCFABack.entities.Absence;
-import fr.dawan.AppliCFABack.entities.Note;
-
+import fr.dawan.AppliCFABack.entities.Intervention;
 
 @Repository
-public interface NoteRepository extends JpaRepository<Note, Long>{
+public interface InterventionRepository extends JpaRepository<Intervention, Long>{
 
-	@Query("SELECT n FROM Note n WHERE n.etudiant.id = :id")
-	List<Note> getNotesByIdEtudiant(@Param("id") long id);
+	@Query("SELECT i FROM Intervention i WHERE i.promotion.id = :id")
+	List<Intervention> getInterventionsByIdPromotion(@Param("id") long id);
 
 }

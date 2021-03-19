@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.util.List;
+
 public class UtilisateurDto {
 	private long id;
 	private String login;
@@ -7,6 +9,8 @@ public class UtilisateurDto {
 	private String prenom;
 	private String nom;
 	private AdresseDto adresseDto;
+	private EntrepriseDto entrepriseDto;
+	private List<UtilisateurRoleDto> rolesDto;
 
 	public UtilisateurDto() {
 		super();
@@ -58,6 +62,22 @@ public class UtilisateurDto {
 
 	public void setAdresseDto(AdresseDto adresseDto) {
 		this.adresseDto = adresseDto;
+	}
+
+	public EntrepriseDto getEntrepriseDto() {
+		return entrepriseDto;
+	}
+
+	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
+		this.entrepriseDto = entrepriseDto;
+	}
+
+	public List<UtilisateurRoleDto> getRolesDto() {
+		return rolesDto;
+	}
+
+	public void setRolesDto(List<UtilisateurRoleDto> rolesDto) {
+		this.rolesDto = rolesDto;
 	}
 
 }
