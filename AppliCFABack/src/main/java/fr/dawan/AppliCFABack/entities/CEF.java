@@ -4,34 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Version;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class CEF {
+public class CEF extends Utilisateur {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@OneToOne
-	private Personne personne;
-	
-	@OneToOne
-	private Centre centre;
-	
-	@Version
-	private int version;
+
+	@ManyToOne
+	private CentreFormation centreFormation;
 
 	public CEF() {
 		super();
-	}
-
-	public CEF(long id, Personne personne, Centre centre) {
-		super();
-		this.id = id;
-		this.personne = personne;
-		this.centre = centre;
 	}
 
 	public long getId() {
@@ -42,28 +28,12 @@ public class CEF {
 		this.id = id;
 	}
 
-	public Personne getPersonne() {
-		return personne;
+	public CentreFormation getCentreFormation() {
+		return centreFormation;
 	}
 
-	public void setPersonne(Personne personne) {
-		this.personne = personne;
+	public void setCentreFormation(CentreFormation centreFormation) {
+		this.centreFormation = centreFormation;
 	}
 
-	public Centre getCentre() {
-		return centre;
-	}
-
-	public void setCentre(Centre centre) {
-		this.centre = centre;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
 }

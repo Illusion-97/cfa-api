@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Version;
 
 @Entity
 public class Note {
@@ -14,29 +13,24 @@ public class Note {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(nullable = false, length = 255)
-	private Double value;
-	
-	@ManyToOne
-	private Examen examen;
-	
+	private int noteObtenu;
+
+	@Column(nullable = false, length = 255)
+	private String observations;
+
 	@ManyToOne
 	private Etudiant etudiant;
-	
-	@Version
-	private int version;
+
+	@ManyToOne
+	private PassageExamen examen;
+
+	@ManyToOne
+	private Devoir devoir;
 
 	public Note() {
 		super();
-	}
-
-	public Note(long id, Double value, Examen examen, Etudiant etudiant) {
-		super();
-		this.id = id;
-		this.value = value;
-		this.examen = examen;
-		this.etudiant = etudiant;
 	}
 
 	public long getId() {
@@ -47,20 +41,20 @@ public class Note {
 		this.id = id;
 	}
 
-	public Double getValue() {
-		return value;
+	public int getNoteObtenu() {
+		return noteObtenu;
 	}
 
-	public void setValue(Double value) {
-		this.value = value;
+	public void setNoteObtenu(int noteObtenu) {
+		this.noteObtenu = noteObtenu;
 	}
 
-	public Examen getExamen() {
-		return examen;
+	public String getObservations() {
+		return observations;
 	}
 
-	public void setExamen(Examen examen) {
-		this.examen = examen;
+	public void setObservations(String observations) {
+		this.observations = observations;
 	}
 
 	public Etudiant getEtudiant() {
@@ -71,12 +65,20 @@ public class Note {
 		this.etudiant = etudiant;
 	}
 
-	public int getVersion() {
-		return version;
+	public PassageExamen getExamen() {
+		return examen;
 	}
 
-	public void setVersion(int version) {
-		this.version = version;
+	public void setExamen(PassageExamen examen) {
+		this.examen = examen;
 	}
-	
+
+	public Devoir getDevoir() {
+		return devoir;
+	}
+
+	public void setDevoir(Devoir devoir) {
+		this.devoir = devoir;
+	}
+
 }
