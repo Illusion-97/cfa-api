@@ -9,15 +9,27 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
+import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.NoteRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 
 @Service
 @Transactional
@@ -27,8 +39,17 @@ public class EtudiantServiceImpl implements EtudiantService {
 	EtudiantRepository etudiantRepository;
 	
 	@Autowired
-	PromotionRepository promotionRepository;
-
+	UtilisateurRepository utilisateurRepository;
+	
+	@Autowired
+	NoteRepository noteRepository;
+	
+	@Autowired
+	AbsenceRepository absenceRepository;
+	
+	@Autowired 
+	InterventionRepository interventionRepository;
+	
 	// ##################################################
 	// # 					CRUD 						#
 	// ##################################################
@@ -36,19 +57,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public List<EtudiantDto> getAll() {
 		List<Etudiant> lst = etudiantRepository.findAll();
-
 		List<EtudiantDto> res = new ArrayList<EtudiantDto>();
 
-		for (Etudiant c : lst) {
-
-			EtudiantDto etuDto = DtoTools.convert(c, EtudiantDto.class);
-
-//			etuDto.setEntrepriseDto(DtoTools.convert(c.getEntreprise(), EntrepriseDto.class));
-//			etuDto.setGroupesDto(getGroupesDto(c));
-
-			res.add(etuDto);
-		}
-
+		for (Etudiant e : lst) 
+			res.add(DtoTools.convert(e, EtudiantDto.class));
+		
 		return res;
 	}
 
@@ -56,16 +69,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public EtudiantDto getById(long id) {
 		Optional<Etudiant> e = etudiantRepository.findById(id);
 
-		if (e.isPresent()) {
-			EtudiantDto etuDto = DtoTools.convert(e.get(), EtudiantDto.class);
-
-//			etuDto.setEntrepriseDto(DtoTools.convert(e.get().getEntreprise(), EntrepriseDto.class));
-//			etuDto.setGroupesDto(getGroupesEtudiantDto(e.get()));
-			
-			return etuDto;
-		}
-			
-
+		if (e.isPresent()) 
+			return DtoTools.convert(e.get(), EtudiantDto.class);
+		
 		return null;
 	}
 
@@ -86,96 +92,94 @@ public class EtudiantServiceImpl implements EtudiantService {
 	
 	@Override
 	public List<PromotionDto> getPromotionsByIdEtudiant(long id) {
+		List<Promotion> lst = getEtudiantById(id).getPromotions();
+		List<PromotionDto> lstDto = new ArrayList<PromotionDto>();
+		for (Promotion g : lst) 
+			lstDto.add(DtoTools.convert(g, PromotionDto.class));
 		
-		List<Promotion> lst = promotionRepository.findAll();
-		List<PromotionDto> res = new ArrayList<PromotionDto>();
-		
-		for(Promotion p : lst) 
-			for(Etudiant e : p.getEtudiants()) 
-				if(e.getId() == id) 
-					res.add(DtoTools.convert(p, PromotionDto.class));
-		
-		return res;
+		return lstDto;
 	}
-
-//	@Override
-//	public List<EntrepriseDto> getEntrepriseByIdEtudiant(long id) {
-//		return null;
-//	}
-
-//	@Override
-//	public List<PersonneDto> getPersonneByIdEtudiant(long id) {
-//		return null;
-//	}
-	
-//	@Override
-//	public List<NoteDto> getNotesByIdEtudiant(long id) {
-//		return null;
-//	}
 
 	@Override
 	public List<GroupeEtudiantDto> getGroupesByIdEtudiant(long id) {
-		Optional<Etudiant> e = etudiantRepository.findById(id);
-		
-		if (!e.isPresent())
-			return null;
-		
-		return getGroupesEtudiantDto(e.get());
-	}
-
-//	@Override
-//	public List<AbsenceDto> getAbsencesByIdEtudiant(long id) {
-//		return null;
-//	}
-
-	// ##################################################
-	// # 			     2eme Niveau 					#
-	// ##################################################
-	
-//	@Override
-//	public List<ProgrammeCoursDto> getProgrammeCoursByIdEtudiant(long id) {
-//		return null;
-//	}
-
-//	@Override
-//	public List<ProjetDto> getProjetByIdEtudiant(long id) {
-//		return null;
-//	}
-
-//	@Override
-//	public List<AdresseDto> getAdresseByIdEtudiant(long id) {
-//		return null;
-//	}
-
-	// ##################################################
-	// # 			     3eme Niveau 					#
-	// ##################################################
-	
-//	@Override
-//	public List<FormateurDto> getFormateursByIdEtudiant(long id) {
-//		return null;
-//	}
-
-//	@Override
-//	public List<DevoirDto> getDevoirsByIdEtudiant(long id) {
-//		return null;
-//	}
-
-//	@Override
-//	public List<ExamenDto> getExamensByIdEtudiant(long id) {
-//		return null;
-//	}
-	
-	// ##################################################
-	// # 					UTILE 						#
-	// ##################################################
-
-	private List<GroupeEtudiantDto> getGroupesEtudiantDto(Etudiant e) {
-		List<GroupeEtudiant> lst = e.getGroupes();
+		List<GroupeEtudiant> lst = getEtudiantById(id).getGroupes();
 		List<GroupeEtudiantDto> lstDto = new ArrayList<GroupeEtudiantDto>();
 		for (GroupeEtudiant g : lst) 
 			lstDto.add(DtoTools.convert(g, GroupeEtudiantDto.class));
 		
 		return lstDto;
+	}
+	
+	@Override
+	public EntrepriseDto getEntrepriseByIdEtudiant(long id) {
+		return DtoTools.convert(getEtudiantById(id).getEntreprise(), EntrepriseDto.class);
+	}
+	
+	@Override
+	public AdresseDto getAdresseByIdEtudiant(long id) {
+		return DtoTools.convert(getEtudiantById(id).getAdresse(), AdresseDto.class);
+	}
+	
+	// ##################################################
+	// # 				2eme Niveau 					#
+	// ##################################################
+	
+	@Override
+	public List<NoteDto> getNotesByIdEtudiant(long id) {
+		List<Note> lst = noteRepository.getNotesByIdEtudiant(id);
+		List<NoteDto> res = new ArrayList<NoteDto>();
+		
+		for(Note n : lst)
+			res.add(DtoTools.convert(n, NoteDto.class));
+		
+		return res;
+	}
+
+
+	@Override
+	public List<AbsenceDto> getAbsencesByIdEtudiant(long id) {
+		List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id);
+		List<AbsenceDto> res = new ArrayList<AbsenceDto>();
+		
+		for(Absence n : lst)
+			res.add(DtoTools.convert(n, AbsenceDto.class));
+		
+		return res;
+	}
+
+	// ##################################################
+	// # 			     3eme Niveau 					#
+	// ##################################################
+	
+	@Override
+	public List<InterventionDto> getIntervenionByIdEtudiant(long id) {	
+		List<Intervention> interventions = new ArrayList<Intervention>();
+		List<InterventionDto> res = new ArrayList<InterventionDto>();
+		
+		for(Promotion p : getEtudiantById(id).getPromotions())
+			interventions.addAll(interventionRepository.getInterventionsByIdPromotion(p.getId()));
+		
+		for(Intervention i : interventions)
+			res.add(DtoTools.convert(i, InterventionDto.class));
+		
+		return res;
+	}
+	
+	@Override
+	public List<UtilisateurDto> getFormateursByIdEtudiant(long id) {
+		return null;
+	}
+	
+	// ##################################################
+	// # 					UTILE 						#
+	// ##################################################
+	
+	private Etudiant getEtudiantById(long id) {
+		Optional<Etudiant> e = etudiantRepository.findById(id);
+
+		if (e.isPresent())
+			return e.get();
+		
+		return null;
 	}
 }

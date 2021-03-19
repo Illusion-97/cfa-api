@@ -2,9 +2,15 @@ package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 
 public interface EtudiantService {
 	
@@ -22,25 +28,24 @@ public interface EtudiantService {
 	// ##################################################
 	
 	List<PromotionDto> getPromotionsByIdEtudiant(long id);
-//	List<EntrepriseDto> getEntrepriseByIdEtudiant(long id);
-//	List<PersonneDto> getPersonneByIdEtudiant(long id);
-//	List<NoteDto> getNotesByIdEtudiant(long id);
 	List<GroupeEtudiantDto> getGroupesByIdEtudiant(long id);
-//	List<AbsenceDto> getAbsencesByIdEtudiant(long id);
+	EntrepriseDto getEntrepriseByIdEtudiant(long id);
+	AdresseDto getAdresseByIdEtudiant(long id);
+	
 	
 	// ##################################################
 	// # 			     2eme Niveau 					#
 	// ##################################################
 	
-//	List<ProgrammeCoursDto> getProgrammeCoursByIdEtudiant(long id);
-//	List<ProjetDto> getProjetByIdEtudiant(long id);
-//	List<AdresseDto> getAdresseByIdEtudiant(long id);
+	List<NoteDto> getNotesByIdEtudiant(long id);
+	List<AbsenceDto> getAbsencesByIdEtudiant(long id);
+
 	
 	// ##################################################
 	// # 			     3eme Niveau 					#
 	// ##################################################
 	
-//	List<FormateurDto> getFormateursByIdEtudiant(long id);
-//	List<DevoirDto> getDevoirsByIdEtudiant(long id);
-//	List<ExamenDto> getExamensByIdEtudiant(long id);
+	List<InterventionDto> getIntervenionByIdEtudiant(long id);
+	
+	List<UtilisateurDto> getFormateursByIdEtudiant(long id);
 }

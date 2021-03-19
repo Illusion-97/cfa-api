@@ -36,7 +36,7 @@ public class Utilisateur {
 	private Adresse adresse;
 	
 	@ManyToMany
-	private List<Utilisateur> roles;
+	private List<UtilisateurRole> roles;
 	
 	@ManyToOne
 	private Entreprise entreprise;
@@ -93,11 +93,11 @@ public class Utilisateur {
 		this.adresse = adresse;
 	}
 
-	public List<Utilisateur> getRoles() {
+	public List<UtilisateurRole> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Utilisateur> roles) {
+	public void setRoles(List<UtilisateurRole> roles) {
 		this.roles = roles;
 	}
 

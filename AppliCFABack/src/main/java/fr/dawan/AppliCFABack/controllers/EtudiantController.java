@@ -14,8 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 
 @RestController
@@ -79,37 +86,22 @@ public class EtudiantController {
 	// # 			  Get : 1er Niveau 					#
 	// ##################################################
 	
-//	/*
-//	 * On récupère les informations personnelles de l'étudiant : nom etc à partir de son id
-//	 */
-//	@GetMapping(value = "/{id}/personne", produces = "application/json")
-//	public List<PersonneDto> getPersonneByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getPersonneByIdEtudiant(id);
-//	}
-//	
-//	/*
-//	 * On récupère l'entreprise de l'étudiant à partir de son id
-//	 */
-//	@GetMapping(value = "/{id}/entreprise", produces = "application/json")
-//	public List<EntrepriseDto> getEntrepriseByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getEntrepriseByIdEtudiant(id);
-//	}
-//	
-//	/*
-//	 * On récupère toutes les promotions auxquelles l'étudiant est inscrit à partir de son id
-//	 */
-//	@GetMapping(value = "/{id}/promotions", produces = "application/json")
-//	public List<PromotionDto> getPromotionsByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getPromotionsByIdEtudiant(id);
-//	}
-//	
-//	/*
-//	 * On récupère les notes de l'étudiants à partir de son id
-//	 */
-//	@GetMapping(value = "/{id}/notes", produces = "application/json")
-//	public List<NoteDto> getNotesByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getNotesByIdEtudiant(id);
-//	}
+	
+	/*
+	 * On récupère l'entreprise de l'étudiant à partir de son id
+	 */
+	@GetMapping(value = "/{id}/entreprise", produces = "application/json")
+	public EntrepriseDto getEntrepriseByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getEntrepriseByIdEtudiant(id);
+	}
+	
+	/*
+	 * On récupère toutes les promotions auxquelles l'étudiant est inscrit à partir de son id
+	 */
+	@GetMapping(value = "/{id}/promotions", produces = "application/json")
+	public List<PromotionDto> getPromotionsByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getPromotionsByIdEtudiant(id);
+	}
 	
 	/*
 	 * On récupère les groupes dont l'étudiant fait parti à partir de son id
@@ -119,69 +111,54 @@ public class EtudiantController {
 		return etudiantService.getGroupesByIdEtudiant(id);
 	}
 	
-//	/*
-//	 * On récupère les absences de l'étudiant à partir de son id
-//	 */
-//	@GetMapping(value = "/{id}/absences", produces = "application/json")
-//	public List<AbsenceDto> getAbsencesByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getAbsencesByIdEtudiant(id);
-//	}
-//	
-//	// ##################################################
-//	// # 			 Get : 2eme Niveau 					#
-//	// ##################################################
-//	
-//	/*
-//	 * On récupère les cours de l'étudiant à parti de son id en passant pas sa promotion
-//	 */
-//	@GetMapping(value = "/{id}/cours", produces = "application/json")
-//	public List<ProgrammeCoursDto> getProgrammeCoursByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getProgrammeCoursByIdEtudiant(id);
-//	}
-//	
-//	/*
-//	 * On récupère les projets de l'étudiant à parti de son id en passant pas ses groupes
-//	 */
-//	@GetMapping(value = "/{id}/projets", produces = "application/json")
-//	public List<ProjetDto> getProjetByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getProjetByIdEtudiant(id);
-//	}
-//	
-//	/*
-//	 * On récupère l'adresse de l'étudiant à partir de son id en passant par Personne
-//	 */
-//	@GetMapping(value = "/{id}/adresse", produces = "application/json")
-//	public List<AdresseDto> getAdresseByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getAdresseByIdEtudiant(id);
-//	}
-//	
-//	// ##################################################
-//	// # 			 Get : 3eme Niveau 					#
-//	// ##################################################
-//	
-//	/*
-//	 * On récupère les formateurs de l'étudiant passant par : etudiant.promotions.cours.formateurs à partir de son id
-//	 */
-//	@GetMapping(value = "/{id}/formateurs", produces = "application/json")
-//	public List<FormateurDto> getFormateursByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getFormateursByIdEtudiant(id);
-//	}
-//	
-//	/*
-//	 * On récupère les devoirs de l'étudiant passant par : etudiant.promotions.cours.devoirs à partir de son id
-//	 */
-//	@GetMapping(value = "/{id}/devoirs", produces = "application/json")
-//	public List<DevoirDto> getDevoirsByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getDevoirsByIdEtudiant(id);
-//	}
-//	
-//	/*
-//	 * On récupère les examens de l'étudiant passant par : etudiant.promotions.cours.examens à partir de son id
-//	 */
-//	@GetMapping(value = "/{id}/examens", produces = "application/json")
-//	public List<ExamenDto> getExamensByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getExamensByIdEtudiant(id);
-//	}
-//	
+	/*
+	 * On récupère l'adresse de l'étudiant à partir de son id en passant par Personne
+	 */
+	@GetMapping(value = "/{id}/adresse", produces = "application/json")
+	public AdresseDto getAdresseByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getAdresseByIdEtudiant(id);
+	}
 	
+	// ##################################################
+	// # 			 Get : 2eme Niveau 					#
+	// ##################################################
+	
+	/*
+	 * On récupère les notes de l'étudiants à partir de son id
+	 */
+	@GetMapping(value = "/{id}/notes", produces = "application/json")
+	public List<NoteDto> getNotesByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getNotesByIdEtudiant(id);
+	}
+	
+	/*
+	 * On récupère les absences de l'étudiant à partir de son id
+	 */
+	@GetMapping(value = "/{id}/absences", produces = "application/json")
+	public List<AbsenceDto> getAbsencesByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getAbsencesByIdEtudiant(id);
+	}
+		
+	
+	// ##################################################
+	// # 			 Get : 3eme Niveau 					#
+	// ##################################################
+	
+	/*
+	 * On récupère les cours de l'étudiant à parti de son id en passant pas sa promotion
+	 */
+	@GetMapping(value = "/{id}/intervention", produces = "application/json")
+	public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getIntervenionByIdEtudiant(id);
+	}
+	
+	
+	/*
+	 * On récupère les formateurs de l'étudiant passant par : etudiant.promotions.cours.formateurs à partir de son id
+	 */
+	@GetMapping(value = "/{id}/formateurs", produces = "application/json")
+	public List<UtilisateurDto> getFormateursByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getFormateursByIdEtudiant(id); 
+	}
+
 }
