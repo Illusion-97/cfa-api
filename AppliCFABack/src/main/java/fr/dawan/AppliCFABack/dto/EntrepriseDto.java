@@ -1,8 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
 public class EntrepriseDto {
-<<<<<<< HEAD
-=======
 	private long id;
 	private String raisonSociale;
 	private AdresseDto adresseSiege;
@@ -34,6 +32,5 @@ public class EntrepriseDto {
 	public void setAdresseSiege(AdresseDto adresseSiege) {
 		this.adresseSiege = adresseSiege;
 	}
->>>>>>> refs/heads/main
 
 }

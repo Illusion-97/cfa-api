@@ -1,8 +1,5 @@
 package fr.dawan.AppliCFABack.dto;
 
-<<<<<<< HEAD
-public class EtudiantDto {
-=======
 import java.util.List;
 
 public class EtudiantDto {
@@ -37,6 +34,5 @@ public class EtudiantDto {
 	public void setGroupes(List<GroupeEtudiantDto> groupes) {
 		this.groupes = groupes;
 	}
->>>>>>> refs/heads/main
 
 }

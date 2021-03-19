@@ -1,8 +1,5 @@
 package fr.dawan.AppliCFABack.dto;
 
-<<<<<<< HEAD
-public class PromotionDto {
-=======
 import java.util.Date;
 import java.util.List;
 
@@ -92,6 +89,5 @@ public class PromotionDto {
 	public void setCursus(CursusDto cursus) {
 		this.cursus = cursus;
 	}
->>>>>>> refs/heads/main
 
 }
