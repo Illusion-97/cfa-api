@@ -18,6 +18,7 @@ import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
@@ -152,13 +153,5 @@ public class EtudiantController {
 		return etudiantService.getIntervenionByIdEtudiant(id);
 	}
 	
-	
-	/*
-	 * On récupère les formateurs de l'étudiant passant par : etudiant.promotions.cours.formateurs à partir de son id
-	 */
-	@GetMapping(value = "/{id}/formateurs", produces = "application/json")
-	public List<UtilisateurDto> getFormateursByIdEtudiant(@PathVariable("id") long id){
-		return etudiantService.getFormateursByIdEtudiant(id); 
-	}
 
 }
