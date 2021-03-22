@@ -24,6 +24,12 @@ public class Entreprise {
 		super();
 	}
 
+	public Entreprise(String raisonSociale, Adresse adresseSiege) {
+		super();
+		this.raisonSociale = raisonSociale;
+		this.adresseSiege = adresseSiege;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -47,5 +53,5 @@ public class Entreprise {
 	public void setAdresseSiege(Adresse adresseSiege) {
 		this.adresseSiege = adresseSiege;
 	}
-	
+
 }

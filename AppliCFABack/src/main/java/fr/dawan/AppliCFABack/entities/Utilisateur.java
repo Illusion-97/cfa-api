@@ -34,15 +34,27 @@ public class Utilisateur {
 
 	@ManyToOne
 	private Adresse adresse;
-	
+
 	@ManyToMany
 	private List<Utilisateur> roles;
-	
+
 	@ManyToOne
 	private Entreprise entreprise;
 
 	public Utilisateur() {
 		super();
+	}
+
+	public Utilisateur(String login, String password, String prenom, String nom, Adresse adresse,
+			List<Utilisateur> roles, Entreprise entreprise) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.prenom = prenom;
+		this.nom = nom;
+		this.adresse = adresse;
+		this.roles = roles;
+		this.entreprise = entreprise;
 	}
 
 	public long getId() {
@@ -108,6 +120,5 @@ public class Utilisateur {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
-	
 
 }

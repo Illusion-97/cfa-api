@@ -33,6 +33,14 @@ public class PassageExamen {
 		super();
 	}
 
+	public PassageExamen(Date dateDebut, Date dateFin, Examen examen, Intervention intervention) {
+		super();
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.examen = examen;
+		this.intervention = intervention;
+	}
+
 	public long getId() {
 		return id;
 	}

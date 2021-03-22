@@ -20,6 +20,11 @@ public class CEF extends Utilisateur {
 		super();
 	}
 
+	public CEF(CentreFormation centreFormation) {
+		super();
+		this.centreFormation = centreFormation;
+	}
+
 	public long getId() {
 		return id;
 	}

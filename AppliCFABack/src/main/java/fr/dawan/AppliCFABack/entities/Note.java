@@ -32,6 +32,17 @@ public class Note {
 	public Note() {
 		super();
 	}
+	
+	
+
+	public Note(int noteObtenu, String observations, Etudiant etudiant, PassageExamen examen, Devoir devoir) {
+		super();
+		this.noteObtenu = noteObtenu;
+		this.observations = observations;
+		this.etudiant = etudiant;
+		this.examen = examen;
+		this.devoir = devoir;
+	}
 
 	public long getId() {
 		return id;
