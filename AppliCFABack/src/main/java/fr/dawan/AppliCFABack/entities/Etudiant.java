@@ -23,6 +23,12 @@ public class Etudiant extends Utilisateur {
 		super();
 	}
 
+	public Etudiant(List<Promotion> promotions, List<GroupeEtudiant> groupes) {
+		super();
+		this.promotions = promotions;
+		this.groupes = groupes;
+	}
+
 	public long getId() {
 		return id;
 	}

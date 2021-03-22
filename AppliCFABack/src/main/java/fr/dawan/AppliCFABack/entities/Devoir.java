@@ -34,6 +34,14 @@ public class Devoir {
 		super();
 	}
 
+	public Devoir(String enonce, Date dateDebut, Date dateFin, Intervention intervention) {
+		super();
+		this.enonce = enonce;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.intervention = intervention;
+	}
+
 	public long getId() {
 		return id;
 	}

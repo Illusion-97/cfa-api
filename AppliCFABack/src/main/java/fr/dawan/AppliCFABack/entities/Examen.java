@@ -27,6 +27,13 @@ public class Examen { // examen Java
 		super();
 	}
 
+	public Examen(String enonce, Formation formation, Cursus cursus) {
+		super();
+		this.enonce = enonce;
+		this.formation = formation;
+		this.cursus = cursus;
+	}
+
 	public long getId() {
 		return id;
 	}

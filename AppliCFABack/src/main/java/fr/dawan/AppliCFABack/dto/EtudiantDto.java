@@ -2,7 +2,7 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.util.List;
 
-public class EtudiantDto {
+public class EtudiantDto{
 	private long id;
 	private List<PromotionDto> promotionsDto;
 	private List<GroupeEtudiantDto> groupesDto;

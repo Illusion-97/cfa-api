@@ -11,19 +11,25 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class UtilisateurRole {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id; 
-	
+	private long id;
+
 	@Column(nullable = false, length = 255)
-    private String intitule;
-    
-    @ManyToMany(mappedBy="roles") 
-    List<Utilisateur> utilisateurs;
+	private String intitule;
+
+	@ManyToMany(mappedBy = "roles")
+	List<Utilisateur> utilisateurs;
 
 	public UtilisateurRole() {
 		super();
+	}
+
+	public UtilisateurRole(String intitule, List<Utilisateur> utilisateurs) {
+		super();
+		this.intitule = intitule;
+		this.utilisateurs = utilisateurs;
 	}
 
 	public long getId() {
@@ -50,5 +56,4 @@ public class UtilisateurRole {
 		this.utilisateurs = utilisateurs;
 	}
 
-    
 }

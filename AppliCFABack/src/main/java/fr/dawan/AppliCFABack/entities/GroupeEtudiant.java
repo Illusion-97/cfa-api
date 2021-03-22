@@ -15,7 +15,7 @@ public class GroupeEtudiant {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(nullable = false, length = 255)
 	private String nom;
 
@@ -24,6 +24,12 @@ public class GroupeEtudiant {
 
 	public GroupeEtudiant() {
 		super();
+	}
+
+	public GroupeEtudiant(String nom, List<Etudiant> etudiants) {
+		super();
+		this.nom = nom;
+		this.etudiants = etudiants;
 	}
 
 	public long getId() {

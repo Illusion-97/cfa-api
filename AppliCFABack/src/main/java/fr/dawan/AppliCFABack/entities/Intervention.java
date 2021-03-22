@@ -36,6 +36,16 @@ public class Intervention { // intervention prévue
 		super();
 	}
 
+	public Intervention(Date dateDebut, Date dateFin, Formation formation, Intervention interventionMere,
+			Promotion promotion) {
+		super();
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.formation = formation;
+		this.interventionMere = interventionMere;
+		this.promotion = promotion;
+	}
+
 	public long getId() {
 		return id;
 	}

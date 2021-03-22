@@ -29,6 +29,13 @@ public class Formation {
 		super();
 	}
 
+	public Formation(String titre, String contenu, List<Cursus> cursusLst) {
+		super();
+		this.titre = titre;
+		this.contenu = contenu;
+		this.cursusLst = cursusLst;
+	}
+
 	public long getId() {
 		return id;
 	}

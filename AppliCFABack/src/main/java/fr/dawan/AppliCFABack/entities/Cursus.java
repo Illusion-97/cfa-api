@@ -26,6 +26,12 @@ public class Cursus { // cursus du catalogue Dev Full Stack
 		super();
 	}
 
+	public Cursus(String titre, List<Formation> formations) {
+		super();
+		this.titre = titre;
+		this.formations = formations;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -49,6 +55,5 @@ public class Cursus { // cursus du catalogue Dev Full Stack
 	public void setFormations(List<Formation> formations) {
 		this.formations = formations;
 	}
-	
 
 }
