@@ -14,6 +14,7 @@ import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
@@ -21,14 +22,18 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.repositories.NoteRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 
 @Service
@@ -49,6 +54,15 @@ public class EtudiantServiceImpl implements EtudiantService {
 	
 	@Autowired 
 	InterventionRepository interventionRepository;
+	
+	@Autowired
+	GroupeEtudiantRepository groupeEtudiantRepository;
+	
+	@Autowired
+	PromotionRepository promotionRepository;
+	
+	@Autowired
+	FormateurRepository formateurRepository;
 	
 	// ##################################################
 	// # 					CRUD 						#
@@ -83,7 +97,75 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Override
 	public void deleteById(long id) {
-		etudiantRepository.deleteById(id);
+		
+		Etudiant etudiant = getEtudiantById(id);
+		
+		if(etudiant == null)
+			return;
+		
+		//Etudiant
+		//	@ManyToMany Promotion promotions
+		//	@ManyToMany GroupeEtudiant groupes
+		
+		//On récupère ces objets, et on supprime les liens :
+		
+		List<Promotion> promotions = etudiant.getPromotions();
+		List<GroupeEtudiant> groupes = etudiant.getGroupes();
+		etudiant.setGroupes(null);
+		etudiant.setPromotions(null);
+		
+		etudiantRepository.save(etudiant);
+		
+		Etudiant toDelete = new Etudiant();
+		
+		for(Promotion p : promotions) {
+			for(Etudiant e : p.getEtudiants()) 
+				if(e.getId() == etudiant.getId()) {
+					toDelete = e;
+					break;
+				}
+			p.getEtudiants().remove(toDelete);
+			promotionRepository.save(p);
+		}
+			
+		
+		for(GroupeEtudiant g : groupes) {
+			for(Etudiant e : g.getEtudiants()) 
+				if(e.getId() == etudiant.getId()){
+					toDelete = e;
+					break;
+				}
+			g.getEtudiants().remove(toDelete);
+			groupeEtudiantRepository.save(g);
+		}
+			
+		
+		//Note 
+		//	@ManyToOne Etudiant etudiant
+		
+		//Absence 
+		//	@ManyToOne Etudiant etudiant
+		
+		//On récupère ces objets, et on supprime les liens :
+		
+		List<Note> notes = noteRepository.getNotesByIdEtudiant(id);
+		List<Absence> absences = absenceRepository.getAbsencesByIdEtudiant(id);
+		
+		for(Note n : notes) {
+			n.setEtudiant(null);
+			noteRepository.save(n);
+			noteRepository.delete(n);
+		}
+		
+		for(Absence a : absences) {
+			a.setEtudiant(null);
+			absenceRepository.save(a);
+			absenceRepository.delete(a);
+		}
+		
+		//Les liens sont tous supprimés : on peut supprimé l'étudiant
+		
+		etudiantRepository.delete(etudiant);
 	}
 
 	// ##################################################
@@ -165,10 +247,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return res;
 	}
 	
-	@Override
-	public List<UtilisateurDto> getFormateursByIdEtudiant(long id) {
-		return null;
-	}
 	
 	// ##################################################
 	// # 					UTILE 						#
