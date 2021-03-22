@@ -8,7 +8,7 @@ public class ProjetDto {
 	private GroupeEtudiantDto groupeDto;
 
 	public ProjetDto() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public long getId() {
