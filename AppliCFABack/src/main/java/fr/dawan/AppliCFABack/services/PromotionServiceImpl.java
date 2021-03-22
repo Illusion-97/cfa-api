@@ -47,4 +47,10 @@ public class PromotionServiceImpl implements PromotionService {
 		return DtoTools.convert(p, PromotionDto.class);
 	}
 
+	@Override
+	public void deleteById(long id) {
+		// TODO Auto-generated method stub
+		promoRepo.deleteById(id);
+	}
+
 }
