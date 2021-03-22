@@ -12,21 +12,29 @@ public class Adresse {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(nullable = false, length = 255)
 	private int numero;
-	
+
 	@Column(nullable = false, length = 255)
 	private String ligne;
-	
+
 	@Column(nullable = false, length = 255)
 	private String ville;
-	
+
 	@Column(nullable = false, length = 255)
-	private String codePostal;	
+	private String codePostal;
 
 	public Adresse() {
 		super();
+	}
+
+	public Adresse(int numero, String ligne, String ville, String codePostal) {
+		super();
+		this.numero = numero;
+		this.ligne = ligne;
+		this.ville = ville;
+		this.codePostal = codePostal;
 	}
 
 	public long getId() {

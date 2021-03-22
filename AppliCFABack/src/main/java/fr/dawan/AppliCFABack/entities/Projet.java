@@ -37,6 +37,14 @@ public class Projet {
 		super();
 	}
 
+	public Projet(String nom, String description, String pjCahierDesCharges, GroupeEtudiant groupe) {
+		super();
+		this.nom = nom;
+		this.description = description;
+		this.pjCahierDesCharges = pjCahierDesCharges;
+		this.groupe = groupe;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -76,7 +84,5 @@ public class Projet {
 	public void setGroupe(GroupeEtudiant groupe) {
 		this.groupe = groupe;
 	}
-	
-	
 
 }

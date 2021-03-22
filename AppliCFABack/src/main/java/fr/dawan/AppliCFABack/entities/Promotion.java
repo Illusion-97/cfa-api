@@ -48,6 +48,19 @@ public class Promotion { // CDA2021
 		super();
 	}
 
+	public Promotion(String nom, Date dateDebut, Date dateFin, Utilisateur cef, List<Etudiant> etudiants,
+			CentreFormation centreFormation, Utilisateur referentPedagogique, Cursus cursus) {
+		super();
+		this.nom = nom;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.cef = cef;
+		this.etudiants = etudiants;
+		this.centreFormation = centreFormation;
+		this.referentPedagogique = referentPedagogique;
+		this.cursus = cursus;
+	}
+
 	public long getId() {
 		return id;
 	}
