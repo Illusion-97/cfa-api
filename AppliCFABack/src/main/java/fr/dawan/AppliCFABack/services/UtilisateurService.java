@@ -8,4 +8,16 @@ public interface UtilisateurService {
 	List<UtilisateurDto> getAll();
 
 	List<UtilisateurDto> getAll(int page, int size);
+
+	UtilisateurDto getById(long id);
+
+	UtilisateurDto getName(String name);
+
+	UtilisateurDto insertUpdate(UtilisateurDto uDto);
+
+	void deleteById(long id);
+
+	List<UtilisateurDto> findByAdresse(String ville);
+
+	List<UtilisateurDto> findByEntreprise(long idEntreprise);
 }
