@@ -10,7 +10,7 @@ public class UtilisateurDto {
 	private String nom;
 	private AdresseDto adresseDto;
 	private EntrepriseDto entrepriseDto;
-	private List<UtilisateurRoleDto> rolesDto;
+	private List<UtilisateurRoleDto> roleDtos;
 
 	public UtilisateurDto() {
 		super();
@@ -72,12 +72,12 @@ public class UtilisateurDto {
 		this.entrepriseDto = entrepriseDto;
 	}
 
-	public List<UtilisateurRoleDto> getRolesDto() {
-		return rolesDto;
+	public List<UtilisateurRoleDto> getRoleDtos() {
+		return roleDtos;
 	}
 
-	public void setRolesDto(List<UtilisateurRoleDto> rolesDto) {
-		this.rolesDto = rolesDto;
+	public void setRoleDtos(List<UtilisateurRoleDto> roleDtos) {
+		this.roleDtos = roleDtos;
 	}
 
 }
