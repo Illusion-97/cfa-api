@@ -283,6 +283,10 @@ public class InitDataBase {
 		groupe.setEtudiants(lstEtudiant);
 
 		promotion.setEtudiants(lstEtudiant);
+		promotion.setCef(cef);
+		promotion.setCentreFormation(centre);
+		promotion.setCursus(cursus);
+		promotion.setReferentPedagogique(formateur);
 
 		etudiant.setGroupes(lstGroupe);
 		etudiant.setPromotions(lstPromotion);
