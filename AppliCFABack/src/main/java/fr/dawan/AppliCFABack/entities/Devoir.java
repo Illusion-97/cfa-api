@@ -1,6 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class Devoir {
@@ -21,11 +19,9 @@ public class Devoir {
 	@Column(nullable = false, length = 255)
 	String enonce;
 
-	@Temporal(value = TemporalType.DATE)
-	private Date dateDebut;
+	private LocalDate dateDebut;
 
-	@Temporal(value = TemporalType.DATE)
-	private Date dateFin;
+	private LocalDate dateFin;
 
 	@ManyToOne
 	private Intervention intervention;
@@ -34,7 +30,7 @@ public class Devoir {
 		super();
 	}
 
-	public Devoir(String enonce, Date dateDebut, Date dateFin, Intervention intervention) {
+	public Devoir(String enonce, LocalDate dateDebut, LocalDate dateFin, Intervention intervention) {
 		super();
 		this.enonce = enonce;
 		this.dateDebut = dateDebut;
@@ -58,19 +54,19 @@ public class Devoir {
 		this.enonce = enonce;
 	}
 
-	public Date getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public Date getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 

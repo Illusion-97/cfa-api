@@ -9,10 +9,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class CEF extends Utilisateur {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-
 	@ManyToOne
 	private CentreFormation centreFormation;
 
@@ -23,14 +19,6 @@ public class CEF extends Utilisateur {
 	public CEF(CentreFormation centreFormation) {
 		super();
 		this.centreFormation = centreFormation;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public CentreFormation getCentreFormation() {

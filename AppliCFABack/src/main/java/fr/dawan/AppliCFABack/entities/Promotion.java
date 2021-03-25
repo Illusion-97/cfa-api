@@ -1,6 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -23,11 +23,9 @@ public class Promotion { // CDA2021
 	@Column(nullable = false, length = 255)
 	private String nom;
 
-	@Temporal(value = TemporalType.DATE)
-	private Date dateDebut; // 01/01/2021
+	private LocalDate dateDebut; // 01/01/2021
 
-	@Temporal(value = TemporalType.DATE)
-	private Date dateFin; // 31/12/2021
+	private LocalDate dateFin; // 31/12/2021
 
 	@ManyToOne
 	private Utilisateur cef;
@@ -48,7 +46,7 @@ public class Promotion { // CDA2021
 		super();
 	}
 
-	public Promotion(String nom, Date dateDebut, Date dateFin, Utilisateur cef, List<Etudiant> etudiants,
+	public Promotion(String nom, LocalDate dateDebut, LocalDate dateFin, Utilisateur cef, List<Etudiant> etudiants,
 			CentreFormation centreFormation, Utilisateur referentPedagogique, Cursus cursus) {
 		super();
 		this.nom = nom;
@@ -77,19 +75,19 @@ public class Promotion { // CDA2021
 		this.nom = nom;
 	}
 
-	public Date getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public Date getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 

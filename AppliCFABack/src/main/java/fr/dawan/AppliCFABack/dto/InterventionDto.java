@@ -1,11 +1,11 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class InterventionDto {
 	private long id;
-	private Date dateDebut; // 12/03
-	private Date dateFin; // 18/03
+	private LocalDate dateDebut; // 12/03
+	private LocalDate dateFin; // 18/03
 	private FormationDto formationDto; // Java init
 	private InterventionDto interventionMereDto; // Java init+appro
 	private PromotionDto promotionDto; // CDA 2021
@@ -22,19 +22,19 @@ public class InterventionDto {
 		this.id = id;
 	}
 
-	public Date getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public Date getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 

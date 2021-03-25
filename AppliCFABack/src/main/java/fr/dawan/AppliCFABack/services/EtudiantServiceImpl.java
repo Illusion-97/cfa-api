@@ -17,6 +17,7 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
@@ -63,6 +64,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 	
 	@Autowired
 	FormateurRepository formateurRepository;
+	
+	@Autowired
+	JourneePlanningService journeePlanningService;
 	
 	// ##################################################
 	// # 					CRUD 						#
@@ -259,5 +263,26 @@ public class EtudiantServiceImpl implements EtudiantService {
 			return e.get();
 		
 		return null;
+	}
+
+	@Override
+	public List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id) {
+		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
+		
+		List<Intervention> interventions = new ArrayList<Intervention>();
+		
+		Etudiant e = getEtudiantById(id);
+		
+		List<Promotion> promotions = e.getPromotions();
+		
+		int size = promotions.size();
+		
+		for(Promotion p : promotions)
+			interventions.addAll(interventionRepository.getInterventionsByIdPromotion(p.getId()));
+		
+		for(Intervention i : interventions) 
+			result.addAll(journeePlanningService.getJourneePlanningFromIntervention(i));
+				
+		return result;
 	}
 }

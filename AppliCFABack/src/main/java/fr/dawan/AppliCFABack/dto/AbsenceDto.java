@@ -1,11 +1,11 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class AbsenceDto {
 	private long id;
-	private Date dateDebut;
-	private Date dateFin;
+	private LocalDate dateDebut;
+	private LocalDate dateFin;
 	private String justificatif;
 	private EtudiantDto etudiantDto;
 
@@ -21,19 +21,19 @@ public class AbsenceDto {
 		this.id = id;
 	}
 
-	public Date getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public Date getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 
