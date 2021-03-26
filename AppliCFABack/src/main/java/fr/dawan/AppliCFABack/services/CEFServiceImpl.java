@@ -33,7 +33,7 @@ public class CEFServiceImpl implements CEFService {
 		for (CEF c : lst) {
 			lstDto.add(DtoTools.convert(c, CEFDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 
 	@Override

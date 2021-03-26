@@ -31,7 +31,7 @@ public class NoteServiceImpl implements NoteService {
 		for (Note n : lst) {
 			lstDto.add(DtoTools.convert(n, NoteDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 
 	@Override

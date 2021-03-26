@@ -31,7 +31,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		for (PassageExamen pe : lst) {
 			lstDto.add(DtoTools.convert(pe, PassageExamenDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 
 	@Override

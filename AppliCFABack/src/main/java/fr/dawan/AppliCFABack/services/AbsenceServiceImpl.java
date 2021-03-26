@@ -33,7 +33,7 @@ public class AbsenceServiceImpl implements AbsenceService{
 		for (Absence a : lst) {
 			lstDto.add(DtoTools.convert(a, AbsenceDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 
 	@Override

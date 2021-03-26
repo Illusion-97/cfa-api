@@ -31,7 +31,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		for (CentreFormation cf : lst) {
 			lstDto.add(DtoTools.convert(cf, CentreFormationDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 
 	@Override

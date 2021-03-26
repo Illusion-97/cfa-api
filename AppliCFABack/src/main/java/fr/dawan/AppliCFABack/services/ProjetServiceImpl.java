@@ -31,7 +31,7 @@ public class ProjetServiceImpl implements ProjetService {
 		for (Projet p : lst) {
 			lstDto.add(DtoTools.convert(p, ProjetDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 
 	@Override

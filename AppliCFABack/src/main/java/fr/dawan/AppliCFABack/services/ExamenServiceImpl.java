@@ -31,7 +31,7 @@ public class ExamenServiceImpl implements ExamenService {
 		for (Examen e : lst) {
 			lstDto.add(DtoTools.convert(e, ExamenDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 
 	@Override

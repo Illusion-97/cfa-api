@@ -31,7 +31,7 @@ public class DevoirServiceImpl implements DevoirService {
 		for (Devoir d : lst) {
 			lstDto.add(DtoTools.convert(d, DevoirDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 
 	@Override
