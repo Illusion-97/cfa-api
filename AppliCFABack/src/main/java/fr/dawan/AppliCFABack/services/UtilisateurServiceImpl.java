@@ -12,8 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 
 @Service
@@ -22,6 +24,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
 
+	@Autowired
+	EtudiantService etudiantService;
+	
 	@Override
 	public List<UtilisateurDto> getAll() {
 		List<Utilisateur> users = utilisateurRepository.findAll();
@@ -89,6 +94,33 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			res.add(DtoTools.convert(u, UtilisateurDto.class));
 		}
 		return res;
+	}
+
+	@Override
+	public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id) {
+		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
+		
+		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
+		if (!userOpt.isPresent())
+			return null;
+			
+		for(UtilisateurRole role : userOpt.get().getRoles()) {
+			switch(role.getIntitule()) {
+			case "ETUDIANT":
+			default:
+				result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(id));
+				break;
+			case "FORMATEUR":
+				break;
+			case "ADMIN":
+				break;
+			case "CEF":
+				break;
+				
+			}
+		}
+		
+		return result;
 	}
 
 }

@@ -148,10 +148,25 @@ public class EtudiantController {
 	/*
 	 * On récupère les cours de l'étudiant à parti de son id en passant pas sa promotion
 	 */
-	@GetMapping(value = "/{id}/intervention", produces = "application/json")
+	@GetMapping(value = "/{id}/interventions", produces = "application/json")
 	public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id){
 		return etudiantService.getIntervenionByIdEtudiant(id);
 	}
 	
+	
+//	@GetMapping(value = "/{id}/formateurReferent", produces = "application/json")
+//	public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id){
+//		return etudiantService.getIntervenionByIdEtudiant(id);
+//	}
+//	
+//	@GetMapping(value = "/{id}/promotionReferent", produces = "application/json")
+//	public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id){
+//		return etudiantService.getIntervenionByIdEtudiant(id);
+//	}
+//	
+//	@GetMapping(value = "/{id}/manager", produces = "application/json")
+//	public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id){
+//		return etudiantService.getIntervenionByIdEtudiant(id);
+//	}
 
 }

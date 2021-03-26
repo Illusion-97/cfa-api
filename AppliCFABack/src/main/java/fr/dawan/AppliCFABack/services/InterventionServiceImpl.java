@@ -31,7 +31,7 @@ public class InterventionServiceImpl implements InterventionService {
 		for (Intervention i : lst) {
 			lstDto.add(DtoTools.convert(i, InterventionDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 
 	@Override

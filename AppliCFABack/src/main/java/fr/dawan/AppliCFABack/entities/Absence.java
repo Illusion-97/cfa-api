@@ -1,6 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,11 +18,9 @@ public class Absence {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Temporal(value = TemporalType.DATE)
-	private Date dateDebut;
+	private LocalDate dateDebut;
 
-	@Temporal(value = TemporalType.DATE)
-	private Date dateFin;
+	private LocalDate dateFin;
 
 	@Column(nullable = false, length = 255)
 	private String justificatif;
@@ -42,19 +40,19 @@ public class Absence {
 		this.id = id;
 	}
 
-	public Date getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public Date getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 

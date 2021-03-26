@@ -1,12 +1,12 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class DevoirDto {
 	private long id;
 	String enonce;
-	private Date dateDebut;
-	private Date dateFin;
+	private LocalDate dateDebut;
+	private LocalDate dateFin;
 	private InterventionDto interventionDto;
 
 	public DevoirDto() {
@@ -29,19 +29,19 @@ public class DevoirDto {
 		this.enonce = enonce;
 	}
 
-	public Date getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public Date getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 

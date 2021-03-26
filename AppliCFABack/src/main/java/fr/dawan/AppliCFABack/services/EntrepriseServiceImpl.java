@@ -31,7 +31,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		for (Entreprise e : lst) {
 			lstDto.add(DtoTools.convert(e, EntrepriseDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 
 	@Override

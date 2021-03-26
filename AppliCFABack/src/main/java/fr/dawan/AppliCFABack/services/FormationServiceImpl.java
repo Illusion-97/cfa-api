@@ -31,7 +31,7 @@ public class FormationServiceImpl implements FormationService {
 		for (Formation f : lst) {
 			lstDto.add(DtoTools.convert(f, FormationDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 
 	@Override

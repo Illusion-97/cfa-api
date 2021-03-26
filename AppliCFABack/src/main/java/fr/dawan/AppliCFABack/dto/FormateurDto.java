@@ -2,7 +2,7 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.util.List;
 
-public class FormateurDto {
+public class FormateurDto extends UtilisateurDto{
 	private long id;
 	private List<InterventionDto> interventionsDto;
 	

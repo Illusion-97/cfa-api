@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.UtilisateurService;
 
@@ -69,5 +70,10 @@ public class UtilisateurController {
 	@GetMapping(value = "/entreprise", produces = "application/json")
 	public List<UtilisateurDto> findByEntreprise(@RequestParam("id") long id) {
 		return utilisateurService.findByEntreprise(id);
+	}
+	
+	@GetMapping(value = "/{id}/planning", produces = "application/json")
+	public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(@PathVariable("id") long id) {
+		return utilisateurService.getAllJourneePlanningByIdUtilisateur(id);
 	}
 }

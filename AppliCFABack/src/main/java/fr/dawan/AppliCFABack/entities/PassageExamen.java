@@ -1,14 +1,12 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class PassageExamen {
@@ -17,11 +15,9 @@ public class PassageExamen {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Temporal(value = TemporalType.DATE)
-	private Date dateDebut;
+	private LocalDate dateDebut;
 
-	@Temporal(value = TemporalType.DATE)
-	private Date dateFin;
+	private LocalDate dateFin;
 
 	@ManyToOne
 	private Examen examen;
@@ -33,7 +29,7 @@ public class PassageExamen {
 		super();
 	}
 
-	public PassageExamen(Date dateDebut, Date dateFin, Examen examen, Intervention intervention) {
+	public PassageExamen(LocalDate dateDebut, LocalDate dateFin, Examen examen, Intervention intervention) {
 		super();
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
@@ -49,19 +45,19 @@ public class PassageExamen {
 		this.id = id;
 	}
 
-	public Date getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public Date getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 

@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 
 public interface UtilisateurService {
@@ -20,4 +21,6 @@ public interface UtilisateurService {
 	List<UtilisateurDto> findByAdresse(String ville);
 
 	List<UtilisateurDto> findByEntreprise(long idEntreprise);
+
+	List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id);
 }

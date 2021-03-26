@@ -31,7 +31,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		for (GroupeEtudiant g : lst) {
 			lstDto.add(DtoTools.convert(g, GroupeEtudiantDto.class));
 		}
-		return null;
+		return lstDto;
 	}
 	
 	@Override

@@ -1,14 +1,14 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.Intervention;
 
 public class PassageExamenDto {
 	private long id;
-	private Date dateDebut;
-	private Date dateFin;
+	private LocalDate dateDebut;
+	private LocalDate dateFin;
 	private Examen examenDto;
 	private Intervention interventionDto;
 
@@ -24,19 +24,19 @@ public class PassageExamenDto {
 		this.id = id;
 	}
 
-	public Date getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public Date getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 

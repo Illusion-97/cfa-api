@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +20,11 @@ public class Intervention { // intervention prévue
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Temporal(value = TemporalType.DATE)
-	private Date dateDebut; // 12/03
+//	@Temporal(value = TemporalType.DATE)
+	private LocalDate dateDebut; // 12/03
 
-	@Temporal(value = TemporalType.DATE)
-	private Date dateFin; // 18/03
+//	@Temporal(value = TemporalType.DATE)
+	private LocalDate dateFin; // 18/03
 
 	@ManyToOne
 	private Formation formation; // Java init
@@ -41,7 +42,7 @@ public class Intervention { // intervention prévue
 		super();
 	}
 
-	public Intervention(Date dateDebut, Date dateFin, Formation formation, Intervention interventionMere,
+	public Intervention(LocalDate dateDebut, LocalDate dateFin, Formation formation, Intervention interventionMere,
 			Promotion promotion) {
 		super();
 		this.dateDebut = dateDebut;
@@ -59,19 +60,19 @@ public class Intervention { // intervention prévue
 		this.id = id;
 	}
 
-	public Date getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public Date getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 
