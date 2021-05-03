@@ -1,0 +1,111 @@
+package fr.dawan.AppliCFABack.entities;
+
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+public class Intervention { // intervention prévue
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
+//	@Temporal(value = TemporalType.DATE)
+	private LocalDate dateDebut; // 12/03
+
+//	@Temporal(value = TemporalType.DATE)
+	private LocalDate dateFin; // 18/03
+
+	@ManyToOne
+	private Formation formation; // Java init
+
+	@ManyToOne
+	private Intervention interventionMere; // Java init+appro
+
+	@ManyToOne
+	private Promotion promotion; // CDA 2021
+
+	@ManyToMany(mappedBy = "interventions")
+	private List<Formateur> formateurs;
+	
+	public Intervention() {
+		super();
+	}
+
+	public Intervention(LocalDate dateDebut, LocalDate dateFin, Formation formation, Intervention interventionMere,
+			Promotion promotion) {
+		super();
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.formation = formation;
+		this.interventionMere = interventionMere;
+		this.promotion = promotion;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public LocalDate getDateDebut() {
+		return dateDebut;
+	}
+
+	public void setDateDebut(LocalDate dateDebut) {
+		this.dateDebut = dateDebut;
+	}
+
+	public LocalDate getDateFin() {
+		return dateFin;
+	}
+
+	public void setDateFin(LocalDate dateFin) {
+		this.dateFin = dateFin;
+	}
+
+	public Formation getFormation() {
+		return formation;
+	}
+
+	public void setFormation(Formation formation) {
+		this.formation = formation;
+	}
+
+	public Intervention getInterventionMere() {
+		return interventionMere;
+	}
+
+	public void setInterventionMere(Intervention interventionMere) {
+		this.interventionMere = interventionMere;
+	}
+
+	public Promotion getPromotion() {
+		return promotion;
+	}
+
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
+
+	public List<Formateur> getFormateurs() {
+		return formateurs;
+	}
+
+	public void setFormateurs(List<Formateur> formateurs) {
+		this.formateurs = formateurs;
+	}
+
+}
