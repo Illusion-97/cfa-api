@@ -1,3 +1,4 @@
+package fr.dawan.AppliCFABack;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,9 +146,19 @@ public class InitDataBase {
 		etudiant.setPassword("pwd 1");
 
 		Promotion promotion = new Promotion();
-		promotion.setNom("promotion 1");
+		promotion.setNom("CDA NANTES 2021");
 		promotion.setDateDebut(LocalDate.now());
-		promotion.setDateFin(LocalDate.now());
+		promotion.setDateFin(LocalDate.now().plusYears(1));
+
+		Promotion promotion2 = new Promotion();
+		promotion2.setNom("CDA PARIS 2021");
+		promotion2.setDateDebut(LocalDate.now());
+		promotion2.setDateFin(LocalDate.now().plusYears(1));
+		
+		Promotion promotion3 = new Promotion();
+		promotion3.setNom("CDA AMIENS 2021");
+		promotion3.setDateDebut(LocalDate.now());
+		promotion3.setDateFin(LocalDate.now().plusYears(1));
 
 		GroupeEtudiant groupe = new GroupeEtudiant();
 		groupe.setNom("groupe 1");
@@ -161,20 +172,32 @@ public class InitDataBase {
 		entreprise.setRaisonSociale("raisone sociale");
 
 		Adresse adresse = new Adresse();
-		adresse.setNumero(0);
-		adresse.setLigne("ligne");
-		adresse.setVille("ville");
-		adresse.setCodePostal("code postal");
+		adresse.setNumero(12);
+		adresse.setRue("rue Gaetan Rondeau");
+		adresse.setVille("Nantes");
+		adresse.setCodePostal("44200");
+		
+		Adresse adresse2 = new Adresse();
+		adresse2.setNumero(11);
+		adresse2.setRue("rue Antoine Bourdelle");
+		adresse2.setVille("Paris");
+		adresse2.setCodePostal("75015");
 
 		Absence absence = new Absence();
 		absence.setDateDebut(LocalDate.now());
 		absence.setDateFin(LocalDate.now());
 		absence.setJustificatif("justificatif");
-
+		
+		// Formation
+		Formation formation = new Formation();
+		formation.setTitre("titre formation");
+		formation.setContenu("formation contenu");
+		
 		Intervention intervention = new Intervention();
 		intervention.setDateDebut(LocalDate.now());
-		intervention.setDateFin(LocalDate.now());
-
+		intervention.setDateFin(LocalDate.now().plusDays(7));
+//		intervention.setFormation(formation);
+		
 		// CEF
 		CEF cef = new CEF();
 		cef.setPrenom("prenom cef");
@@ -206,10 +229,7 @@ public class InitDataBase {
 		formateur.setLogin("login f");
 		formateur.setPassword("pwd f");
 
-		// Formation
-		Formation formation = new Formation();
-		formation.setTitre("titre formation");
-		formation.setContenu("formation contenu");
+
 
 		// PassageExamen
 		PassageExamen passageExamen = new PassageExamen();
@@ -225,6 +245,8 @@ public class InitDataBase {
 		etudiantRepository.save(etudiant);
 		groupeEtudiantRepository.save(groupe);
 		promotionRepository.save(promotion);
+		promotionRepository.save(promotion2);
+		promotionRepository.save(promotion3);
 		noteRepository.save(note);
 		entrepriseRepository.save(entreprise);
 		adresseRepository.save(adresse);
@@ -263,6 +285,8 @@ public class InitDataBase {
 
 		lstEtudiant.add(etudiant);
 		lstPromotion.add(promotion);
+		lstPromotion.add(promotion2);
+		lstPromotion.add(promotion3);
 		lstGroupe.add(groupe);
 		lstRoleEtudiant.add(roleEtudiant);
 		lstRoleFormateur.add(roleformateur);
@@ -287,6 +311,18 @@ public class InitDataBase {
 		promotion.setCentreFormation(centre);
 		promotion.setCursus(cursus);
 		promotion.setReferentPedagogique(formateur);
+		
+		promotion2.setEtudiants(lstEtudiant);
+		promotion2.setCef(cef);
+		promotion2.setCentreFormation(centre);
+		promotion2.setCursus(cursus);
+		promotion2.setReferentPedagogique(formateur);
+		
+		promotion3.setEtudiants(lstEtudiant);
+		promotion3.setCef(cef);
+		promotion3.setCentreFormation(centre);
+		promotion3.setCursus(cursus);
+		promotion3.setReferentPedagogique(formateur);
 
 		etudiant.setGroupes(lstGroupe);
 		etudiant.setPromotions(lstPromotion);
@@ -297,7 +333,9 @@ public class InitDataBase {
 		absence.setEtudiant(etudiant);
 
 		intervention.setPromotion(promotion);
-		intervention.setFormation(formation);
+		intervention.setPromotion(promotion2);
+		intervention.setPromotion(promotion3);
+		intervention.setFormation(formation); 
 		intervention.setFormateurs(lstFormateur);
 
 		cursus.setFormations(lstFormation);
@@ -327,6 +365,8 @@ public class InitDataBase {
 		etudiantRepository.save(etudiant);
 		groupeEtudiantRepository.save(groupe);
 		promotionRepository.save(promotion);
+		promotionRepository.save(promotion2);
+		promotionRepository.save(promotion3);
 		noteRepository.save(note);
 		entrepriseRepository.save(entreprise);
 		adresseRepository.save(adresse);
