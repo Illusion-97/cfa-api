@@ -250,6 +250,7 @@ public class InitDataBase {
 		noteRepository.save(note);
 		entrepriseRepository.save(entreprise);
 		adresseRepository.save(adresse);
+		adresseRepository.save(adresse2);
 		absenceRepository.save(absence);
 		interventionRepository.save(intervention);
 		utilisateurRoleRepository.save(roleEtudiant);
