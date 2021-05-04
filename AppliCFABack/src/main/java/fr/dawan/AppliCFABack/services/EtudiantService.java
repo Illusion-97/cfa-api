@@ -49,5 +49,11 @@ public interface EtudiantService {
 	
 	List<InterventionDto> getIntervenionByIdEtudiant(long id);
 	
+	// ##################################################
+	// # 			    	Utile	 					#
+	// ##################################################
+	
 	List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id);
+	UtilisateurDto getFormateurReferentByIdEtudiant(long id);
+	UtilisateurDto getManagerByIdEtudiant(long id);
 }

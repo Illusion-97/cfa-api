@@ -52,8 +52,7 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Override
 	public UtilisateurDto getReferentById(long id) {
-		Promotion promo = promoRepo.getOne(id);
-		return DtoTools.convert(promo.getReferentPedagogique(), UtilisateurDto.class);
+		return DtoTools.convert(promoRepo.getOne(id).getReferentPedagogique(), UtilisateurDto.class);
 	}
 
 }

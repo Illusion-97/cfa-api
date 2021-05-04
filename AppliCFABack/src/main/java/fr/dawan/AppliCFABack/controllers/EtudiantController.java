@@ -153,20 +153,14 @@ public class EtudiantController {
 		return etudiantService.getIntervenionByIdEtudiant(id);
 	}
 	
+	@GetMapping(value = "/{id}/formateurReferent", produces = "application/json")
+	public UtilisateurDto getFormateurReferentByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getFormateurReferentByIdEtudiant(id);
+	}
 	
-//	@GetMapping(value = "/{id}/formateurReferent", produces = "application/json")
-//	public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getIntervenionByIdEtudiant(id);
-//	}
-//	
-//	@GetMapping(value = "/{id}/promotionReferent", produces = "application/json")
-//	public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getIntervenionByIdEtudiant(id);
-//	}
-//	
-//	@GetMapping(value = "/{id}/manager", produces = "application/json")
-//	public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getIntervenionByIdEtudiant(id);
-//	}
+	@GetMapping(value = "/{id}/manager", produces = "application/json")
+	public UtilisateurDto getManagerByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getManagerByIdEtudiant(id);
+	}
 
 }

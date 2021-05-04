@@ -285,4 +285,15 @@ public class EtudiantServiceImpl implements EtudiantService {
 				
 		return result;
 	}
+
+	@Override
+	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
+		return DtoTools.convert(getEtudiantById(id).getFormateurReferent(), UtilisateurDto.class);
+	}
+
+	@Override
+	public UtilisateurDto getManagerByIdEtudiant(long id) {
+		return DtoTools.convert(getEtudiantById(id).getManager(), UtilisateurDto.class);
+	}
+
 }

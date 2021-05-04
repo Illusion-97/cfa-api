@@ -6,6 +6,8 @@ public class EtudiantDto extends UtilisateurDto{
 	private long id;
 	private List<PromotionDto> promotionsDto;
 	private List<GroupeEtudiantDto> groupesDto;
+	private UtilisateurDto formateurReferentDto;
+	private UtilisateurDto manageurDto;
 
 	public EtudiantDto() {
 		super();
@@ -35,4 +37,20 @@ public class EtudiantDto extends UtilisateurDto{
 		this.groupesDto = groupesDto;
 	}
 
+	public UtilisateurDto getFormateurReferentDto() {
+		return formateurReferentDto;
+	}
+
+	public void setFormateurReferentDto(UtilisateurDto formateurReferentDto) {
+		this.formateurReferentDto = formateurReferentDto;
+	}
+
+	public UtilisateurDto getManageurDto() {
+		return manageurDto;
+	}
+
+	public void setManageurDto(UtilisateurDto manageurDto) {
+		this.manageurDto = manageurDto;
+	}
+	
 }

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Etudiant extends Utilisateur {
@@ -14,6 +15,10 @@ public class Etudiant extends Utilisateur {
 	private List<Promotion> promotions;
 	@ManyToMany
 	private List<GroupeEtudiant> groupes;
+	@ManyToOne
+	private Utilisateur formateurReferent;
+	@ManyToOne
+	private Utilisateur manager;
 
 	public Etudiant() {
 		super();
@@ -41,4 +46,21 @@ public class Etudiant extends Utilisateur {
 		this.groupes = groupes;
 	}
 
+	public Utilisateur getFormateurReferent() {
+		return formateurReferent;
+	}
+
+	public void setFormateurReferent(Utilisateur formateurReferent) {
+		this.formateurReferent = formateurReferent;
+	}
+
+	public Utilisateur getManager() {
+		return manager;
+	}
+
+	public void setManager(Utilisateur manager) {
+		this.manager = manager;
+	}
+
+	
 }
