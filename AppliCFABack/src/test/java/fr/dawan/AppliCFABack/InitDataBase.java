@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -193,10 +194,37 @@ public class InitDataBase {
 		formation.setTitre("titre formation");
 		formation.setContenu("formation contenu");
 		
+		Formation formation2 = new Formation();
+		formation2.setTitre("Usine logicielle");
+		formation2.setContenu("Initiation gitlab / ligne de commande bash linux");
+		
+		Formation formation3 = new Formation();
+		formation3.setTitre("Postgres SQL");
+		formation3.setContenu("Administration Postgres");
+		
+		Formation formation4 = new Formation();
+		formation4.setTitre("Spring MVC");
+		formation4.setContenu("");
+		
+		Random random = new Random();
+		LocalDate date = LocalDate.now().plusDays(random.nextInt());
+		
 		Intervention intervention = new Intervention();
-		intervention.setDateDebut(LocalDate.now());
-		intervention.setDateFin(LocalDate.now().plusDays(7));
-//		intervention.setFormation(formation);
+		intervention.setDateDebut(date);
+		intervention.setDateFin(date.plusDays(7));
+		
+		Intervention intervention2 = new Intervention();
+		intervention2.setDateDebut(date);
+		intervention2.setDateFin(date.plusDays(7));
+		
+		Intervention intervention3 = new Intervention();
+		intervention3.setDateDebut(date);
+		intervention3.setDateFin(date.plusDays(7));
+		
+		Intervention intervention4 = new Intervention();
+		intervention4.setDateDebut(date);
+		intervention4.setDateFin(date.plusDays(7));
+		
 		
 		// CEF
 		CEF cef = new CEF();
@@ -253,6 +281,9 @@ public class InitDataBase {
 		adresseRepository.save(adresse2);
 		absenceRepository.save(absence);
 		interventionRepository.save(intervention);
+		interventionRepository.save(intervention2);
+		interventionRepository.save(intervention3);
+		interventionRepository.save(intervention4);
 		utilisateurRoleRepository.save(roleEtudiant);
 		utilisateurRoleRepository.save(roleformateur);
 		utilisateurRoleRepository.save(roleadmin);
@@ -263,6 +294,9 @@ public class InitDataBase {
 		examenRepository.save(exam);
 		formateurRepository.save(formateur);
 		formationRepository.save(formation);
+		formationRepository.save(formation2);
+		formationRepository.save(formation3);
+		formationRepository.save(formation4);
 		passageExamenRepository.save(passageExamen);
 		projetRepository.save(projet);
 		centreFormationRepository.save(centre);
@@ -292,8 +326,14 @@ public class InitDataBase {
 		lstRoleEtudiant.add(roleEtudiant);
 		lstRoleFormateur.add(roleformateur);
 		lstInterventions.add(intervention);
+		lstInterventions.add(intervention2);
+		lstInterventions.add(intervention3);
+		lstInterventions.add(intervention4);
 
 		lstFormation.add(formation);
+		lstFormation.add(formation2);
+		lstFormation.add(formation3);
+		lstFormation.add(formation4);
 		lstDevoir.add(devoir);
 		lstCEF.add(cef);
 		lstCentre.add(centre);
@@ -336,7 +376,11 @@ public class InitDataBase {
 		intervention.setPromotion(promotion);
 		intervention.setPromotion(promotion2);
 		intervention.setPromotion(promotion3);
-		intervention.setFormation(formation); 
+		intervention.setFormation(formation);
+		intervention2.setFormation(formation2);
+		intervention3.setFormation(formation3);
+		intervention4.setFormation(formation4);
+		
 		intervention.setFormateurs(lstFormateur);
 
 		cursus.setFormations(lstFormation);
@@ -347,6 +391,9 @@ public class InitDataBase {
 		centre.setEntreprise(entreprise);
 
 		devoir.setIntervention(intervention);
+		devoir.setIntervention(intervention2);
+		devoir.setIntervention(intervention3);
+		devoir.setIntervention(intervention4);
 
 		exam.setCursus(cursus);
 		exam.setFormation(formation);
@@ -373,6 +420,9 @@ public class InitDataBase {
 		adresseRepository.save(adresse);
 		absenceRepository.save(absence);
 		interventionRepository.save(intervention);
+		interventionRepository.save(intervention2);
+		interventionRepository.save(intervention3);
+		interventionRepository.save(intervention4);
 		utilisateurRoleRepository.save(roleEtudiant);
 		utilisateurRoleRepository.save(roleformateur);
 		utilisateurRoleRepository.save(roleadmin);
@@ -382,7 +432,9 @@ public class InitDataBase {
 		devoirRepository.save(devoir);
 		examenRepository.save(exam);
 		formateurRepository.save(formateur);
-		formationRepository.save(formation);
+		formationRepository.save(formation2);
+		formationRepository.save(formation3);
+		formationRepository.save(formation4);
 		passageExamenRepository.save(passageExamen);
 		projetRepository.save(projet);
 		centreFormationRepository.save(centre);
