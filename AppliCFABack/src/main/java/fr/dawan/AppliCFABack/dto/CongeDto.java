@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.time.LocalDate;
 
+import fr.dawan.AppliCFABack.entities.StatusConge;
 import fr.dawan.AppliCFABack.entities.TypeConge;
 
 public class CongeDto {
@@ -11,6 +12,7 @@ public class CongeDto {
 	private String motif;
 	private TypeConge type;
 	private UtilisateurDto utilisateurDto;
+	private StatusConge status;
 	
 	public CongeDto() {
 		super();
@@ -62,6 +64,14 @@ public class CongeDto {
 
 	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
 		this.utilisateurDto = utilisateurDto;
+	}
+
+	public StatusConge getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusConge status) {
+		this.status = status;
 	}
 	
 	

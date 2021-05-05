@@ -25,6 +25,8 @@ public class Conge {
 	
 	private TypeConge type;
 	
+	private StatusConge status;
+	
 	@ManyToOne
 	private Utilisateur utilisateur;
 	
@@ -78,6 +80,14 @@ public class Conge {
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+
+	public StatusConge getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusConge status) {
+		this.status = status;
 	}
 
 	
