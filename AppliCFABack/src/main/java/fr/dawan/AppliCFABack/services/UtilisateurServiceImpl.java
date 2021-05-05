@@ -11,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.repositories.CongeRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 
 @Service
@@ -26,6 +29,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired
 	EtudiantService etudiantService;
+	
+	@Autowired
+	CongeRepository congeRepository;
 	
 	@Override
 	public List<UtilisateurDto> getAll() {
@@ -118,6 +124,19 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				break;
 				
 			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<CongeDto> getAllCongesByIdUtilisateur(long id) {
+		List<CongeDto> result = new ArrayList<CongeDto>();
+		
+		List<Conge> conges = congeRepository.findByIdUtilisateur(id);
+		
+		for(Conge c : conges) {
+			result.add(DtoTools.convert(c, CongeDto.class));
 		}
 		
 		return result;
