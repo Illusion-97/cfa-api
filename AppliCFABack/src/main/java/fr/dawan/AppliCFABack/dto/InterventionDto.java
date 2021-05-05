@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class InterventionDto {
 	private long id;
@@ -8,7 +9,7 @@ public class InterventionDto {
 	private LocalDate dateFin; // 18/03
 	private FormationDto formationDto; // Java init
 	private InterventionDto interventionMereDto; // Java init+appro
-	private PromotionDto promotionDto; // CDA 2021
+	private List<PromotionDto> promotionsDto; // CDA 2021
 
 	public InterventionDto() {
 		// TODO Auto-generated constructor stub
@@ -54,12 +55,12 @@ public class InterventionDto {
 		this.interventionMereDto = interventionMereDto;
 	}
 
-	public PromotionDto getPromotionDto() {
-		return promotionDto;
+	public List<PromotionDto> getPromotionDto() {
+		return promotionsDto;
 	}
 
-	public void setPromotionDto(PromotionDto promotionDto) {
-		this.promotionDto = promotionDto;
+	public void setPromotionDto(List<PromotionDto> promotionsDto) {
+		this.promotionsDto = promotionsDto;
 	}
 
 }

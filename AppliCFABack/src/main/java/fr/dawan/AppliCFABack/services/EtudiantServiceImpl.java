@@ -180,8 +180,19 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public List<PromotionDto> getPromotionsByIdEtudiant(long id) {
 		List<Promotion> lst = getEtudiantById(id).getPromotions();
 		List<PromotionDto> lstDto = new ArrayList<PromotionDto>();
-		for (Promotion g : lst) 
-			lstDto.add(DtoTools.convert(g, PromotionDto.class));
+		
+		for (Promotion p : lst) {
+			//Quand on convertit en Dto, on perd les objets contenu
+			//On récupère le referent pedagogiue que l'on redonne a promotionDto
+			
+			UtilisateurDto referentPedagogique = DtoTools.convert(p.getReferentPedagogique(), UtilisateurDto.class);
+			PromotionDto promotion = DtoTools.convert(p, PromotionDto.class);
+			
+			promotion.setReferentPedagogiqueDto(referentPedagogique);
+			
+			lstDto.add(promotion);
+		}
+			
 		
 		return lstDto;
 	}

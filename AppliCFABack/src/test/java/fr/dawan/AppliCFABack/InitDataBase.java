@@ -142,10 +142,10 @@ public class InitDataBase {
 		rolecef.setIntitule("CEF");
 
 		Etudiant etudiant = new Etudiant();
-		etudiant.setPrenom("prenom 1");
-		etudiant.setNom("nom 1");
-		etudiant.setLogin("login 1");
-		etudiant.setPassword("pwd 1");
+		etudiant.setPrenom("Tanguy");
+		etudiant.setNom("Billon");
+		etudiant.setLogin("tbillon@dawan.fr");
+		etudiant.setPassword("pwd");
 
 		Promotion promotion = new Promotion();
 		promotion.setNom("CDA NANTES 2021");
@@ -192,9 +192,10 @@ public class InitDataBase {
 
 		// Formation
 		Formation formation = new Formation();
-		formation.setTitre("titre formation");
-		formation.setContenu("formation contenu");
 
+		formation.setTitre("JAVA");
+		formation.setContenu("La formation : Java Initiation + Approfondissement représente le point de départ de votre apprentissage. Elle s'adresse à des développeurs ayant déjà des bases d'algorithmique et des connaissances sur un langage de programmation.");
+		
 		Formation formation2 = new Formation();
 		formation2.setTitre("Usine logicielle");
 		formation2.setContenu("Initiation gitlab / ligne de commande bash linux");
@@ -230,10 +231,10 @@ public class InitDataBase {
 
 		// CEF
 		CEF cef = new CEF();
-		cef.setPrenom("prenom cef");
-		cef.setNom("nom cef");
-		cef.setLogin("login cef");
-		cef.setPassword("pwd cef");
+		cef.setPrenom("Laurence");
+		cef.setNom("Baron Gomez");
+		cef.setLogin("lbarongomez@dawan.fr");
+		cef.setPassword("pwd");
 
 		// Centre Formation
 		CentreFormation centre = new CentreFormation();
@@ -254,10 +255,10 @@ public class InitDataBase {
 
 		// Formateur
 		Formateur formateur = new Formateur();
-		formateur.setPrenom("prenom f");
-		formateur.setNom("nom f");
-		formateur.setLogin("login f");
-		formateur.setPassword("pwd f");
+		formateur.setPrenom("Stéphane");
+		formateur.setNom("Menut");
+		formateur.setLogin("smenut@dawan.fr");
+		formateur.setPassword("pwd");
 
 		// PassageExamen
 		PassageExamen passageExamen = new PassageExamen();
@@ -307,6 +308,8 @@ public class InitDataBase {
 		List<UtilisateurRole> lstRoleEtudiant = new ArrayList<UtilisateurRole>();
 		List<UtilisateurRole> lstRoleFormateur = new ArrayList<UtilisateurRole>();
 		List<Intervention> lstInterventions = new ArrayList<Intervention>();
+		
+		List<Intervention> lstInterventions1 = new ArrayList<Intervention>();
 
 		List<Formation> lstFormation = new ArrayList<Formation>();
 		List<Devoir> lstDevoir = new ArrayList<Devoir>();
@@ -329,6 +332,8 @@ public class InitDataBase {
 		lstInterventions.add(intervention2);
 		lstInterventions.add(intervention3);
 		lstInterventions.add(intervention4);
+		
+		lstInterventions1.add(intervention);
 
 		lstFormation.add(formation);
 		lstFormation.add(formation2);
@@ -352,33 +357,36 @@ public class InitDataBase {
 		promotion.setCentreFormation(centre);
 		promotion.setCursus(cursus);
 		promotion.setReferentPedagogique(formateur);
+		promotion.setInterventions(lstInterventions1);
 
+		promotion2.setInterventions(lstInterventions1);
 		promotion2.setEtudiants(lstEtudiant);
 		promotion2.setCef(cef);
 		promotion2.setCentreFormation(centre);
 		promotion2.setCursus(cursus);
 		promotion2.setReferentPedagogique(formateur);
+		
 
 		promotion3.setEtudiants(lstEtudiant);
 		promotion3.setCef(cef);
 		promotion3.setCentreFormation(centre);
 		promotion3.setCursus(cursus);
 		promotion3.setReferentPedagogique(formateur);
+		promotion3.setInterventions(lstInterventions1);
 
 		etudiant.setGroupes(lstGroupe);
 		etudiant.setPromotions(lstPromotion);
 		etudiant.setEntreprise(entreprise);
 		etudiant.setAdresse(adresse);
 		etudiant.setRoles(lstRoleEtudiant);
+		etudiant.setManager(cef);
+		etudiant.setFormateurReferent(formateur);
 
 		absence.setEtudiant(etudiant);
 
-		intervention.setPromotion(promotion);
-		intervention.setInterventionMere(intervention);
-//		intervention.setPromotion(promotion2);
-//		intervention.setPromotion(promotion3);
+		intervention.setPromotion(lstPromotion);
 		
-		intervention.setFormation(formation);		
+		intervention.setFormation(formation);
 		intervention2.setFormation(formation2);
 		intervention4.setFormation(formation4);
 		intervention3.setFormation(formation3);
