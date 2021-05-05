@@ -20,6 +20,7 @@ import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
+import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.Entreprise;
@@ -33,11 +34,13 @@ import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.TypeConge;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
+import fr.dawan.AppliCFABack.repositories.CongeRepository;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
 import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
@@ -94,6 +97,8 @@ public class InitDataBase {
 	private ProjetRepository projetRepository;
 	@Autowired
 	private CentreFormationRepository centreFormationRepository;
+	@Autowired
+	private CongeRepository congeRepository;
 
 	private long idEtudiant;
 
@@ -270,6 +275,13 @@ public class InitDataBase {
 		projet.setDescription("Description");
 		projet.setPjCahierDesCharges("CDA");
 
+		//Conge
+		Conge conge = new Conge();
+		conge.setDateDebut(LocalDate.now());
+		conge.setDateFin(LocalDate.now().plusDays(14));
+		conge.setMotif("Covid-19");
+		conge.setType(TypeConge.MALADIE);
+		
 		etudiantRepository.save(etudiant);
 		groupeEtudiantRepository.save(groupe);
 		promotionRepository.save(promotion);
@@ -300,6 +312,7 @@ public class InitDataBase {
 		passageExamenRepository.save(passageExamen);
 		projetRepository.save(projet);
 		centreFormationRepository.save(centre);
+		congeRepository.save(conge);
 
 		List<Etudiant> lstEtudiant = new ArrayList<Etudiant>();
 		List<Promotion> lstPromotion = new ArrayList<Promotion>();
@@ -416,6 +429,8 @@ public class InitDataBase {
 		passageExamen.setIntervention(intervention);
 
 		projet.setGroupe(groupe);
+		
+		conge.setUtilisateur(etudiant);
 
 		etudiantRepository.save(etudiant);
 		groupeEtudiantRepository.save(groupe);
@@ -445,6 +460,7 @@ public class InitDataBase {
 		passageExamenRepository.save(passageExamen);
 		projetRepository.save(projet);
 		centreFormationRepository.save(centre);
+		congeRepository.save(conge);
 
 		this.idEtudiant = etudiant.getId();
 	}
