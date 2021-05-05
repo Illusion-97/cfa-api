@@ -32,8 +32,8 @@ public class Intervention { // intervention prévue
 	@ManyToOne
 	private Intervention interventionMere; // Java init+appro
 
-	@ManyToOne
-	private Promotion promotion; // CDA 2021
+	@ManyToMany
+	private List<Promotion> promotions; // CDA 2021
 
 	@ManyToMany(mappedBy = "interventions")
 	private List<Formateur> formateurs;
@@ -43,13 +43,13 @@ public class Intervention { // intervention prévue
 	}
 
 	public Intervention(LocalDate dateDebut, LocalDate dateFin, Formation formation, Intervention interventionMere,
-			Promotion promotion) {
+			List<Promotion> promotions) {
 		super();
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.formation = formation;
 		this.interventionMere = interventionMere;
-		this.promotion = promotion;
+		this.promotions = promotions;
 	}
 
 	public long getId() {
@@ -92,12 +92,12 @@ public class Intervention { // intervention prévue
 		this.interventionMere = interventionMere;
 	}
 
-	public Promotion getPromotion() {
-		return promotion;
+	public List<Promotion> getPromotion() {
+		return promotions;
 	}
 
-	public void setPromotion(Promotion promotion) {
-		this.promotion = promotion;
+	public void setPromotion(List<Promotion> promotions) {
+		this.promotions = promotions;
 	}
 
 	public List<Formateur> getFormateurs() {

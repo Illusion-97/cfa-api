@@ -307,6 +307,8 @@ public class InitDataBase {
 		List<UtilisateurRole> lstRoleEtudiant = new ArrayList<UtilisateurRole>();
 		List<UtilisateurRole> lstRoleFormateur = new ArrayList<UtilisateurRole>();
 		List<Intervention> lstInterventions = new ArrayList<Intervention>();
+		
+		List<Intervention> lstInterventions1 = new ArrayList<Intervention>();
 
 		List<Formation> lstFormation = new ArrayList<Formation>();
 		List<Devoir> lstDevoir = new ArrayList<Devoir>();
@@ -329,6 +331,8 @@ public class InitDataBase {
 		lstInterventions.add(intervention2);
 		lstInterventions.add(intervention3);
 		lstInterventions.add(intervention4);
+		
+		lstInterventions1.add(intervention);
 
 		lstFormation.add(formation);
 		lstFormation.add(formation2);
@@ -352,18 +356,21 @@ public class InitDataBase {
 		promotion.setCentreFormation(centre);
 		promotion.setCursus(cursus);
 		promotion.setReferentPedagogique(formateur);
+		promotion.setInterventions(lstInterventions1);
 		
 		promotion2.setEtudiants(lstEtudiant);
 		promotion2.setCef(cef);
 		promotion2.setCentreFormation(centre);
 		promotion2.setCursus(cursus);
 		promotion2.setReferentPedagogique(formateur);
+		promotion2.setInterventions(lstInterventions1);
 		
 		promotion3.setEtudiants(lstEtudiant);
 		promotion3.setCef(cef);
 		promotion3.setCentreFormation(centre);
 		promotion3.setCursus(cursus);
 		promotion3.setReferentPedagogique(formateur);
+		promotion3.setInterventions(lstInterventions1);
 
 		etudiant.setGroupes(lstGroupe);
 		etudiant.setPromotions(lstPromotion);
@@ -375,9 +382,7 @@ public class InitDataBase {
 
 		absence.setEtudiant(etudiant);
 
-		intervention.setPromotion(promotion);
-		intervention.setPromotion(promotion2);
-		intervention.setPromotion(promotion3);
+		intervention.setPromotion(lstPromotion);
 		intervention.setFormation(formation);
 		intervention2.setFormation(formation2);
 		intervention3.setFormation(formation3);

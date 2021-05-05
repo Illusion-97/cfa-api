@@ -10,6 +10,7 @@ public class PromotionDto {
 	private LocalDate dateFin;
 	private UtilisateurDto cefDto;
 	private List<EtudiantDto> etudiantsDto;
+	private List<InterventionDto> interventionsDto;
 	private CentreFormationDto centreFormationDto;
 	private UtilisateurDto referentPedagogiqueDto;
 	private CursusDto cursusDto;
@@ -88,6 +89,14 @@ public class PromotionDto {
 
 	public void setCursusDto(CursusDto cursusDto) {
 		this.cursusDto = cursusDto;
+	}
+
+	public List<InterventionDto> getInterventionsDto() {
+		return interventionsDto;
+	}
+
+	public void setInterventionsDto(List<InterventionDto> interventionsDto) {
+		this.interventionsDto = interventionsDto;
 	}
 
 }
