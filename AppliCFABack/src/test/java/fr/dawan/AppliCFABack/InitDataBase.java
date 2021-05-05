@@ -392,18 +392,18 @@ public class InitDataBase {
 		intervention3.setFormation(formation3);
 		
 //		intervention2.setPromotion(promotion);
-		intervention2.setPromotion(promotion2);
+//		intervention2.setPromotion(promotion2);
 //		intervention2.setPromotion(promotion3);
 		
 		
 //		intervention3.setPromotion(promotion);
 //		intervention3.setPromotion(promotion2);
-		intervention3.setPromotion(promotion3);
+//		intervention3.setPromotion(promotion3);
 		
 		
 //		intervention4.setPromotion(promotion);
 //		intervention4.setPromotion(promotion2);
-		intervention4.setPromotion(promotion3);
+//		intervention4.setPromotion(promotion3);
 		
 		intervention.setFormateurs(lstFormateur);
 
