@@ -141,10 +141,10 @@ public class InitDataBase {
 		rolecef.setIntitule("CEF");
 
 		Etudiant etudiant = new Etudiant();
-		etudiant.setPrenom("prenom 1");
-		etudiant.setNom("nom 1");
-		etudiant.setLogin("login 1");
-		etudiant.setPassword("pwd 1");
+		etudiant.setPrenom("Tanguy");
+		etudiant.setNom("Billon");
+		etudiant.setLogin("tbillon@dawan.fr");
+		etudiant.setPassword("pwd");
 
 		Promotion promotion = new Promotion();
 		promotion.setNom("CDA NANTES 2021");
@@ -191,8 +191,8 @@ public class InitDataBase {
 		
 		// Formation
 		Formation formation = new Formation();
-		formation.setTitre("titre formation");
-		formation.setContenu("formation contenu");
+		formation.setTitre("JAVA");
+		formation.setContenu("La formation : Java Initiation + Approfondissement représente le point de départ de votre apprentissage. Elle s'adresse à des développeurs ayant déjà des bases d'algorithmique et des connaissances sur un langage de programmation.");
 		
 		Formation formation2 = new Formation();
 		formation2.setTitre("Usine logicielle");
@@ -228,10 +228,10 @@ public class InitDataBase {
 		
 		// CEF
 		CEF cef = new CEF();
-		cef.setPrenom("prenom cef");
-		cef.setNom("nom cef");
-		cef.setLogin("login cef");
-		cef.setPassword("pwd cef");
+		cef.setPrenom("Laurence");
+		cef.setNom("Baron Gomez");
+		cef.setLogin("lbarongomez@dawan.fr");
+		cef.setPassword("pwd");
 
 		// Centre Formation
 		CentreFormation centre = new CentreFormation();
@@ -252,10 +252,10 @@ public class InitDataBase {
 
 		// Formateur
 		Formateur formateur = new Formateur();
-		formateur.setPrenom("prenom f");
-		formateur.setNom("nom f");
-		formateur.setLogin("login f");
-		formateur.setPassword("pwd f");
+		formateur.setPrenom("Stéphane");
+		formateur.setNom("Menut");
+		formateur.setLogin("smenut@dawan.fr");
+		formateur.setPassword("pwd");
 
 
 
@@ -370,6 +370,8 @@ public class InitDataBase {
 		etudiant.setEntreprise(entreprise);
 		etudiant.setAdresse(adresse);
 		etudiant.setRoles(lstRoleEtudiant);
+		etudiant.setManager(cef);
+		etudiant.setFormateurReferent(formateur);
 
 		absence.setEtudiant(etudiant);
 
