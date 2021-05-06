@@ -1,5 +1,9 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +21,6 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
@@ -76,6 +79,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public UtilisateurDto insertUpdate(UtilisateurDto uDto) {
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
 		utilisateurRepository.saveAndFlush(user);
+		
+		Path path = Paths.get("./src/main/resources/Files/Utilisateurs" + user.getId());
+		
+		try {
+			Files.createDirectories(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		return DtoTools.convert(user, UtilisateurDto.class);
 	}
 

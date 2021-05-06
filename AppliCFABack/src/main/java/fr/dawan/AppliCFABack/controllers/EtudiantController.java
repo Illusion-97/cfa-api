@@ -18,7 +18,6 @@ import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
@@ -163,4 +162,13 @@ public class EtudiantController {
 		return etudiantService.getManagerByIdEtudiant(id);
 	}
 
+	
+	// ##################################################
+	// # 			 		Files		 				#
+	// ##################################################
+	
+	@GetMapping(value = "/{id}/documents-administratifs", produces = "application/json")
+	public List<String> getDocumentsAdministratifsByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getDocumentsAdministratifsByIdEtudiant(id);
+	}
 }

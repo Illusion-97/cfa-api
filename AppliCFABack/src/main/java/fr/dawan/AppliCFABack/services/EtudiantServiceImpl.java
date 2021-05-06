@@ -1,5 +1,10 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +19,6 @@ import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
@@ -23,7 +27,6 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Note;
@@ -96,6 +99,15 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public EtudiantDto saveOrUpdate(EtudiantDto e) {
 		Etudiant etudiant = etudiantRepository.saveAndFlush(DtoTools.convert(e, Etudiant.class));
+		
+		Path path = Paths.get("./src/main/resources/Files/Utilisateurs/" + etudiant.getId());
+		
+		try {
+			Files.createDirectories(path);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
 		return DtoTools.convert(etudiant, EtudiantDto.class);
 	}
 
@@ -305,6 +317,19 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public UtilisateurDto getManagerByIdEtudiant(long id) {
 		return DtoTools.convert(getEtudiantById(id).getManager(), UtilisateurDto.class);
+	}
+
+	@Override
+	public List<String> getDocumentsAdministratifsByIdEtudiant(long id) {
+		List<String> result = new ArrayList<String>();
+				
+		File workingDirectoryFile = new File("./src/main/resources/Files/Utilisateurs/" + id);
+						
+		for(String s : workingDirectoryFile.list()) {
+			result.add(s);
+		}
+			
+		return result;
 	}
 
 }

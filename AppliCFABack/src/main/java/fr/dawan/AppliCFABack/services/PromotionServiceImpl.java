@@ -1,5 +1,9 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +46,15 @@ public class PromotionServiceImpl implements PromotionService {
 	public PromotionDto saveOrUpdate(PromotionDto pDto) {
 		Promotion p = DtoTools.convert(pDto, Promotion.class);
 		promoRepo.saveAndFlush(p);
+		
+		Path path = Paths.get("./src/main/resources/Files/Promotions/" + p.getId());
+		
+		try {
+			Files.createDirectories(path);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
 		return DtoTools.convert(p, PromotionDto.class);
 	}
 
