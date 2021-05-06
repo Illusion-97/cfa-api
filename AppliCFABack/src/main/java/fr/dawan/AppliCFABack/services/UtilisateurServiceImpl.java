@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
@@ -142,4 +144,21 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return result;
 	}
 
+	@Override
+	public AdresseDto getAdresseByIdUtilisateur(long id) {
+		return DtoTools.convert(getUtilisateurById(id).getAdresse(), AdresseDto.class);
+	}
+	
+	// ##################################################
+	// # 					UTILE 						#
+	// ##################################################
+	
+	private Utilisateur getUtilisateurById(long id) {
+		Optional<Utilisateur> e = utilisateurRepository.findById(id);
+
+		if (e.isPresent())
+			return e.get();
+		
+		return null;
+	}
 }

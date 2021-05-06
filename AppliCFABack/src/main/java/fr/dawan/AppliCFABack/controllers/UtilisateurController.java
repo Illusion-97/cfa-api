@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
@@ -81,5 +82,13 @@ public class UtilisateurController {
 	@GetMapping(value = "/{id}/conges", produces = "application/json")
 	public List<CongeDto> getAllCongesByIdUtilisateur(@PathVariable("id") long id) {
 		return utilisateurService.getAllCongesByIdUtilisateur(id);
+	}
+	
+	/*
+	 * On récupère l'adresse de l'étudiant à partir de son id en passant par Personne
+	 */
+	@GetMapping(value = "/{id}/adresse", produces = "application/json")
+	public AdresseDto getAdresseByIdUtilisateur(@PathVariable("id") long id){
+		return utilisateurService.getAdresseByIdUtilisateur(id);
 	}
 }
