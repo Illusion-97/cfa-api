@@ -100,6 +100,11 @@ public class InterventionServiceImpl implements InterventionService {
 			// Les convertion en Dto faite => on ajoute la formationDto à l'interventionDto
 			interventionDto.setFormationDto(formationDto);
 
+			InterventionDto interventionMereDto = DtoTools.convert(intervention.getInterventionMere(),InterventionDto.class);
+			System.out.println("intervention mere :" + interventionMereDto);
+			interventionDto.setInterventionMereDto(interventionMereDto);
+			
+			
 			// On affiche une liste de promotions de type List<Promotion>
 			List<Promotion> lstPromo = intervention.getPromotion();
 			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
