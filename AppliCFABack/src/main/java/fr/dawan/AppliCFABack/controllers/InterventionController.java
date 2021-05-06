@@ -34,6 +34,11 @@ public class InterventionController {
 		return interventionService.getAllIntervention();
 	}
 
+	@GetMapping(produces = "application/json", value = "/with-object")
+	public List<InterventionDto> getAllWithObject() {
+		return interventionService.getAllInterventionWithObject();
+	}
+
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public InterventionDto getById(@PathVariable("id") long id) {
 		return interventionService.getById(id);

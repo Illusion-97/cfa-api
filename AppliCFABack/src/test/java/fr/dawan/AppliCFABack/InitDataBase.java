@@ -1,8 +1,8 @@
 package fr.dawan.AppliCFABack;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -11,11 +11,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import fr.dawan.AppliCFABack.controllers.EtudiantController;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
@@ -152,17 +148,17 @@ public class InitDataBase {
 		etudiant.setPassword("pwd");
 
 		Promotion promotion = new Promotion();
-		promotion.setNom("CDA NANTES 2021");
+		promotion.setNom("Concepteur Developpeur d'Applications NANTES 2021");
 		promotion.setDateDebut(LocalDate.now());
 		promotion.setDateFin(LocalDate.now().plusYears(1));
 
 		Promotion promotion2 = new Promotion();
-		promotion2.setNom("CDA PARIS 2021");
+		promotion2.setNom("Concepteur Developpeur d'Applications PARIS 2021");
 		promotion2.setDateDebut(LocalDate.now());
 		promotion2.setDateFin(LocalDate.now().plusYears(1));
-		
+
 		Promotion promotion3 = new Promotion();
-		promotion3.setNom("CDA AMIENS 2021");
+		promotion3.setNom("Concepteur Developpeur d'Applications AMIENS 2021");
 		promotion3.setDateDebut(LocalDate.now());
 		promotion3.setDateFin(LocalDate.now().plusYears(1));
 
@@ -182,7 +178,7 @@ public class InitDataBase {
 		adresse.setRue("rue Gaetan Rondeau");
 		adresse.setVille("Nantes");
 		adresse.setCodePostal("44200");
-		
+
 		Adresse adresse2 = new Adresse();
 		adresse2.setNumero(11);
 		adresse2.setRue("rue Antoine Bourdelle");
@@ -193,44 +189,47 @@ public class InitDataBase {
 		absence.setDateDebut(LocalDate.now());
 		absence.setDateFin(LocalDate.now());
 		absence.setJustificatif("justificatif");
-		
+
 		// Formation
 		Formation formation = new Formation();
+
 		formation.setTitre("JAVA");
-		formation.setContenu("La formation : Java Initiation + Approfondissement représente le point de départ de votre apprentissage. Elle s'adresse à des développeurs ayant déjà des bases d'algorithmique et des connaissances sur un langage de programmation.");
-		
+		formation.setContenu(
+				"La formation : Java Initiation + Approfondissement représente le point de départ de votre apprentissage. Elle s'adresse à des développeurs ayant déjà des bases d'algorithmique et des connaissances sur un langage de programmation.");
+
 		Formation formation2 = new Formation();
 		formation2.setTitre("Usine logicielle");
 		formation2.setContenu("Initiation gitlab / ligne de commande bash linux");
-		
+
 		Formation formation3 = new Formation();
 		formation3.setTitre("Postgres SQL");
 		formation3.setContenu("Administration Postgres");
-		
+
 		Formation formation4 = new Formation();
 		formation4.setTitre("Spring MVC");
 		formation4.setContenu("");
-		
-		Random random = new Random();
-		LocalDate date = LocalDate.now().plusDays(random.nextInt());
-		
+
+		LocalDate date = LocalDate.now();
+		LocalDate date2 = date.plusDays(7);
+		LocalDate date3 = date2.plusDays(7);
+		LocalDate date4 = date3.plusDays(7);
+
 		Intervention intervention = new Intervention();
 		intervention.setDateDebut(date);
 		intervention.setDateFin(date.plusDays(7));
-		
+
 		Intervention intervention2 = new Intervention();
-		intervention2.setDateDebut(date);
-		intervention2.setDateFin(date.plusDays(7));
-		
+		intervention2.setDateDebut(date2.plusDays(2));
+		intervention2.setDateFin(date2.plusDays(7));
+
 		Intervention intervention3 = new Intervention();
-		intervention3.setDateDebut(date);
-		intervention3.setDateFin(date.plusDays(7));
-		
+		intervention3.setDateDebut(date3.plusDays(2));
+		intervention3.setDateFin(date3.plusDays(7));
+
 		Intervention intervention4 = new Intervention();
-		intervention4.setDateDebut(date);
-		intervention4.setDateFin(date.plusDays(7));
-		
-		
+		intervention4.setDateDebut(date4.plusDays(2));
+		intervention4.setDateFin(date4.plusDays(7));
+
 		// CEF
 		CEF cef = new CEF();
 		cef.setPrenom("Laurence");
@@ -261,8 +260,6 @@ public class InitDataBase {
 		formateur.setNom("Menut");
 		formateur.setLogin("smenut@dawan.fr");
 		formateur.setPassword("pwd");
-
-
 
 		// PassageExamen
 		PassageExamen passageExamen = new PassageExamen();
@@ -320,7 +317,7 @@ public class InitDataBase {
 		List<UtilisateurRole> lstRoleEtudiant = new ArrayList<UtilisateurRole>();
 		List<UtilisateurRole> lstRoleFormateur = new ArrayList<UtilisateurRole>();
 		List<Intervention> lstInterventions = new ArrayList<Intervention>();
-		
+
 		List<Intervention> lstInterventions1 = new ArrayList<Intervention>();
 
 		List<Formation> lstFormation = new ArrayList<Formation>();
@@ -344,7 +341,7 @@ public class InitDataBase {
 		lstInterventions.add(intervention2);
 		lstInterventions.add(intervention3);
 		lstInterventions.add(intervention4);
-		
+
 		lstInterventions1.add(intervention);
 
 		lstFormation.add(formation);
@@ -370,14 +367,14 @@ public class InitDataBase {
 		promotion.setCursus(cursus);
 		promotion.setReferentPedagogique(formateur);
 		promotion.setInterventions(lstInterventions1);
-		
+
+		promotion2.setInterventions(lstInterventions1);
 		promotion2.setEtudiants(lstEtudiant);
 		promotion2.setCef(cef);
 		promotion2.setCentreFormation(centre);
 		promotion2.setCursus(cursus);
 		promotion2.setReferentPedagogique(formateur);
-		promotion2.setInterventions(lstInterventions1);
-		
+
 		promotion3.setEtudiants(lstEtudiant);
 		promotion3.setCef(cef);
 		promotion3.setCentreFormation(centre);
@@ -395,12 +392,30 @@ public class InitDataBase {
 
 		absence.setEtudiant(etudiant);
 
-		intervention.setPromotion(lstPromotion);
 		intervention.setFormation(formation);
+		intervention.setPromotion(lstPromotion);
+
 		intervention2.setFormation(formation2);
+		intervention2.setPromotion(lstPromotion);
+
 		intervention3.setFormation(formation3);
+		intervention3.setPromotion(lstPromotion);
+
 		intervention4.setFormation(formation4);
-		
+		intervention4.setPromotion(lstPromotion);
+
+//		intervention2.setPromotion(promotion);
+//		intervention2.setPromotion(promotion2);
+//		intervention2.setPromotion(promotion3);
+
+//		intervention3.setPromotion(promotion);
+//		intervention3.setPromotion(promotion2);
+//		intervention3.setPromotion(promotion3);
+
+//		intervention4.setPromotion(promotion);
+//		intervention4.setPromotion(promotion2);
+//		intervention4.setPromotion(promotion3);
+
 		intervention.setFormateurs(lstFormateur);
 
 		cursus.setFormations(lstFormation);
