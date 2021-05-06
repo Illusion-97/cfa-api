@@ -76,7 +76,6 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Override
 	public List<InterventionDto> getAllInterventionWithObject() {
-		// On recuperent d'abord les interventions
 		// En passant par les Dto on perd les relation Objet entre les differentes
 		// classes
 		/**
@@ -84,19 +83,20 @@ public class InterventionServiceImpl implements InterventionService {
 		 * relation Objet avec les autre classe qu'il contienne en passant par les Dto
 		 **/
 
+		// On recuperent d'abord les interventions
 		List<Intervention> lstIn = interventionRepository.findAll();
 		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
 
 		for (Intervention intervention : lstIn) {
 			/**
-			 * on recup une formation de type Formation que l'on convertis en FormationDto
-			 **/
-			FormationDto formationDto = DtoTools.convert(intervention.getFormation(), FormationDto.class);
-			/**
 			 * on recup une intervention de type Intervention que l'on convertis en
 			 * InterventionDto
 			 **/
 			InterventionDto interventionDto = DtoTools.convert(intervention, InterventionDto.class);
+			/**
+			 * on recup une formation de type Formation que l'on convertis en FormationDto
+			 **/
+			FormationDto formationDto = DtoTools.convert(intervention.getFormation(), FormationDto.class);
 			// Les convertion en Dto faite => on ajoute la formationDto à l'interventionDto
 			interventionDto.setFormationDto(formationDto);
 
