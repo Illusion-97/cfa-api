@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,6 +15,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,10 +51,8 @@ public class FilesController {
 			 HttpServletResponse resonse,
              @PathVariable("directory") String directory, 
              @PathVariable("id") long id, 
-             @PathVariable("fileName") String fileName) throws IOException {
-				
-		System.out.println("################# on entre");
-		
+             @PathVariable("fileName") String fileName) {
+						
 		if(!directory.equals("promotions") && !directory.equals("utilisateurs"))
 			return null;
 		
@@ -60,10 +60,13 @@ public class FilesController {
 		MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
 				
 		Path path = Paths.get(PARENT_DIRECTORY + workingDirectory + fileName);
-        byte[] data = Files.readAllBytes(path);
+        byte[] data = null;
         
-        System.out.println("data length = " + data.length);
-        
+		try {
+			data = Files.readAllBytes(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         
         ByteArrayResource resource = new ByteArrayResource(data);
  
@@ -76,6 +79,16 @@ public class FilesController {
                 .contentLength(data.length) //
                 .body(resource);
                 
-        
+	}
+	
+	@DeleteMapping(value = "/{directory}/{id}/{fileName}")
+	public String deleteFileByDirectoryAndId(
+			@PathVariable("directory") String directory, 
+            @PathVariable("id") long id, 
+            @PathVariable("fileName") String fileName) {
+		
+		String filePath = directory + "/" + id + "/" + fileName;	
+		
+		return filesService.deleteFileByDirectoryAndId(filePath);
 	}
 }

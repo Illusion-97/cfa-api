@@ -4,4 +4,6 @@ public interface FilesService {
 
 	String[] getAllNamesByDirectoryAndId(String directory, long id);
 
+	String deleteFileByDirectoryAndId(String filePath);
+
 }
