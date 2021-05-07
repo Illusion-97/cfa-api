@@ -105,9 +105,6 @@ public class InterventionServiceImpl implements InterventionService {
 			InterventionDto interventionMereDto = DtoTools.convert(inter,InterventionDto.class);
 			interventionDto.setInterventionMereDto(interventionMereDto);
 			
-			
-			
-			
 			// On affiche une liste de promotions de type List<Promotion>
 			List<Promotion> lstPromo = intervention.getPromotion();
 			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
