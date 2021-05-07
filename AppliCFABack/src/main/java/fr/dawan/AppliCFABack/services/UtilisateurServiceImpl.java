@@ -1,6 +1,5 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,6 +20,7 @@ import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
@@ -43,8 +43,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public List<UtilisateurDto> getAll() {
 		List<Utilisateur> users = utilisateurRepository.findAll();
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
+				
 		for (Utilisateur u : users) {
-			res.add(DtoTools.convert(u, UtilisateurDto.class));
+			
+			List<UtilisateurRoleDto> test = new ArrayList<UtilisateurRoleDto>();
+			for(UtilisateurRole r : u.getRoles()) {
+				test.add(DtoTools.convert(r, UtilisateurRoleDto.class));
+			}
+			
+			UtilisateurDto user = DtoTools.convert(u, UtilisateurDto.class);
+			user.setRolesDto(test);
+			res.add(user);
 		}
 		return res;
 	}
@@ -79,9 +88,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public UtilisateurDto insertUpdate(UtilisateurDto uDto) {
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
+		
 		utilisateurRepository.saveAndFlush(user);
 		
-		Path path = Paths.get("./src/main/resources/files/utilisateurs" + user.getId());
+		Path path = Paths.get("./src/main/resources/files/utilisateurs/" + user.getId());
 		
 		try {
 			Files.createDirectories(path);
