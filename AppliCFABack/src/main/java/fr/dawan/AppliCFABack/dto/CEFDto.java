@@ -1,6 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class CEFDto {
+public class CEFDto extends UtilisateurDto {
 	private long id;
 	private CentreFormationDto centreFormationDto;
 
