@@ -180,6 +180,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<String> result = new ArrayList<String>();
 		
 		File workingDirectoryFile = new File("./src/main/resources/Files/Utilisateurs/" + id);
+		
+		if(!workingDirectoryFile.exists())
+			return null;
 						
 		for(String s : workingDirectoryFile.list()) {
 			result.add(s);
