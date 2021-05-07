@@ -28,16 +28,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import fr.dawan.AppliCFABack.services.FilesService;
 import fr.dawan.AppliCFABack.tools.MediaTypeUtils;
 
 @MultipartConfig
 @RestController
 @RequestMapping("/AppliCFABack/files")
 public class FilesController {
-
-	@Autowired
-	FilesService filesService;
 
 	@Autowired
 	private ServletContext servletContext;
@@ -52,7 +48,12 @@ public class FilesController {
 		if (!directory.equals("promotions") && !directory.equals("utilisateurs"))
 			return null;
 
-		return filesService.getAllNamesByDirectoryAndId(directory, id);
+		File workingDirectoryFile = new File(PARENT_DIRECTORY + directory + "/" + id);
+
+		if (!workingDirectoryFile.exists())
+			return null;
+
+		return workingDirectoryFile.list();
 	}
 
 	@GetMapping(value = "/{directory}/{id}/{fileName}")
@@ -89,12 +90,12 @@ public class FilesController {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(value = "/save-file", produces = "text/plain", consumes = "multipart/form-data")
+	@PostMapping(value = "/{directory}/{id}", consumes = "multipart/form-data")
 	public String postFileByDirectoryAndId(@PathVariable("directory") String directory, @PathVariable("id") long id,
 			@RequestParam("file") MultipartFile file) {
 
 		String filePath = directory + "/" + id + "/";
-		
+
 		try {
 			File f = new File(PARENT_DIRECTORY + filePath + file.getOriginalFilename());
 			try (BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(f))) {
@@ -115,6 +116,12 @@ public class FilesController {
 
 		String filePath = directory + "/" + id + "/" + fileName;
 
-		return filesService.deleteFileByDirectoryAndId(filePath);
+		File file = new File(PARENT_DIRECTORY + filePath);
+
+		if (file.delete())
+			return "supression effectuée";
+		else
+			return "supression échouée";
+
 	}
 }
