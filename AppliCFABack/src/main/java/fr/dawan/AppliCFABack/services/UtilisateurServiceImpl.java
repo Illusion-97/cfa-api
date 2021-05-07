@@ -81,7 +81,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
 		utilisateurRepository.saveAndFlush(user);
 		
-		Path path = Paths.get("./src/main/resources/Files/Utilisateurs" + user.getId());
+		Path path = Paths.get("./src/main/resources/files/utilisateurs" + user.getId());
 		
 		try {
 			Files.createDirectories(path);
@@ -173,21 +173,5 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			return e.get();
 		
 		return null;
-	}
-
-	@Override
-	public List<String> getDocumentsAdministratifsByIdUtilisateur(long id) {
-		List<String> result = new ArrayList<String>();
-		
-		File workingDirectoryFile = new File("./src/main/resources/Files/Utilisateurs/" + id);
-		
-		if(!workingDirectoryFile.exists())
-			return null;
-						
-		for(String s : workingDirectoryFile.list()) {
-			result.add(s);
-		}
-			
-		return result;
 	}
 }
