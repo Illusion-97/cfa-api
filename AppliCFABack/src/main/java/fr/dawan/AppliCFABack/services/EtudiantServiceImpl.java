@@ -1,5 +1,10 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -94,6 +99,15 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public EtudiantDto saveOrUpdate(EtudiantDto e) {
 		Etudiant etudiant = etudiantRepository.saveAndFlush(DtoTools.convert(e, Etudiant.class));
+		
+		Path path = Paths.get("./src/main/resources/Files/Utilisateurs/" + etudiant.getId());
+		
+		try {
+			Files.createDirectories(path);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
 		return DtoTools.convert(etudiant, EtudiantDto.class);
 	}
 
@@ -303,6 +317,19 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public UtilisateurDto getManagerByIdEtudiant(long id) {
 		return DtoTools.convert(getEtudiantById(id).getManager(), UtilisateurDto.class);
+	}
+
+	@Override
+	public List<String> getDocumentsAdministratifsByIdEtudiant(long id) {
+		List<String> result = new ArrayList<String>();
+				
+		File workingDirectoryFile = new File("./src/main/resources/Files/Utilisateurs/" + id);
+						
+		for(String s : workingDirectoryFile.list()) {
+			result.add(s);
+		}
+			
+		return result;
 	}
 
 }
