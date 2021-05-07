@@ -1,18 +1,16 @@
 package fr.dawan.AppliCFABack.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +32,8 @@ public class FilesController {
 	@Autowired
     private ServletContext servletContext;
 	
-	private static final String PARENT_DIRECTORY = "./src/main/resources/files/";
+	@Value("${app.storagefolder}")
+	private String PARENT_DIRECTORY;
 	
 	@GetMapping(value = "/{directory}/{id}", produces = "application/json")
 	public String[] getAllNamesByDirectoryAndId(@PathVariable("directory") String directory, @PathVariable("id") long id) {
