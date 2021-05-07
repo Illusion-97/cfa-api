@@ -12,6 +12,8 @@ public interface UtilisateurService {
 
 	List<UtilisateurDto> getAll(int page, int size);
 
+	List<UtilisateurDto> getAllWithObject();
+
 	UtilisateurDto getById(long id);
 
 	UtilisateurDto getName(String name);

@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
@@ -30,10 +32,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired
 	EtudiantService etudiantService;
-	
+
 	@Autowired
 	CongeRepository congeRepository;
-	
+
 	@Override
 	public List<UtilisateurDto> getAll() {
 		List<Utilisateur> users = utilisateurRepository.findAll();
@@ -106,13 +108,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id) {
 		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
-		
+
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (!userOpt.isPresent())
 			return null;
-			
-		for(UtilisateurRole role : userOpt.get().getRoles()) {
-			switch(role.getIntitule()) {
+
+		for (UtilisateurRole role : userOpt.get().getRoles()) {
+			switch (role.getIntitule()) {
 			case "ETUDIANT":
 			default:
 				result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(id));
@@ -123,23 +125,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				break;
 			case "CEF":
 				break;
-				
+
 			}
 		}
-		
+
 		return result;
 	}
 
 	@Override
 	public List<CongeDto> getAllCongesByIdUtilisateur(long id) {
 		List<CongeDto> result = new ArrayList<CongeDto>();
-		
+
 		List<Conge> conges = congeRepository.findByIdUtilisateur(id);
-		
-		for(Conge c : conges) {
+
+		for (Conge c : conges) {
 			result.add(DtoTools.convert(c, CongeDto.class));
 		}
-		
+
 		return result;
 	}
 
@@ -147,17 +149,45 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public AdresseDto getAdresseByIdUtilisateur(long id) {
 		return DtoTools.convert(getUtilisateurById(id).getAdresse(), AdresseDto.class);
 	}
-	
+
 	// ##################################################
-	// # 					UTILE 						#
+	// # UTILE #
 	// ##################################################
-	
+
 	private Utilisateur getUtilisateurById(long id) {
 		Optional<Utilisateur> e = utilisateurRepository.findById(id);
 
 		if (e.isPresent())
 			return e.get();
-		
+
 		return null;
+	}
+
+	@Override
+	public List<UtilisateurDto> getAllWithObject() {
+		List<Utilisateur> lstUsr = utilisateurRepository.findAll();
+		List<UtilisateurDto> lstUsrDto = new ArrayList<UtilisateurDto>();
+
+		for (Utilisateur utilisateur : lstUsr) {
+			UtilisateurDto utilisateurDto = DtoTools.convert(utilisateur, UtilisateurDto.class);
+
+			AdresseDto adresseDto = DtoTools.convert(utilisateur.getAdresse(), AdresseDto.class);
+			utilisateurDto.setAdresseDto(adresseDto);
+
+			EntrepriseDto entrepriseDto = DtoTools.convert(utilisateur.getEntreprise(), EntrepriseDto.class);
+			utilisateurDto.setEntrepriseDto(entrepriseDto);
+
+			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
+			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
+			for (UtilisateurRole utilisateurRole : lstUsrRole) {
+				if (utilisateurRole != null)
+					lstUsrRoleDto.add(DtoTools.convert(utilisateurRole, UtilisateurRoleDto.class));
+			}
+			utilisateurDto.setRolesDto(lstUsrRoleDto);
+
+			lstUsrDto.add(utilisateurDto);
+		}
+
+		return lstUsrDto;
 	}
 }
