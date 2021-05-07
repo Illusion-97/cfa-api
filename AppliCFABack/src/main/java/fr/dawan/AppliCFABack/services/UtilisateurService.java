@@ -29,4 +29,6 @@ public interface UtilisateurService {
 	List<CongeDto> getAllCongesByIdUtilisateur(long id);
 
 	AdresseDto getAdresseByIdUtilisateur(long id);
+
+	List<String> getDocumentsAdministratifsByIdUtilisateur(long id);
 }

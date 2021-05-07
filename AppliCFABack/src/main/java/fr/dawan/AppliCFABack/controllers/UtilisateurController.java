@@ -91,4 +91,13 @@ public class UtilisateurController {
 	public AdresseDto getAdresseByIdUtilisateur(@PathVariable("id") long id){
 		return utilisateurService.getAdresseByIdUtilisateur(id);
 	}
+	
+	// ##################################################
+	// # 			 		Files		 				#
+	// ##################################################
+	
+	@GetMapping(value = "/{id}/documents-administratifs", produces = "application/json")
+	public List<String> getDocumentsAdministratifsByIdUtilisateur(@PathVariable("id") long id){
+		return utilisateurService.getDocumentsAdministratifsByIdUtilisateur(id);
+	}
 }

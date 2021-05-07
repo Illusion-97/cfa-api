@@ -319,17 +319,4 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return DtoTools.convert(getEtudiantById(id).getManager(), UtilisateurDto.class);
 	}
 
-	@Override
-	public List<String> getDocumentsAdministratifsByIdEtudiant(long id) {
-		List<String> result = new ArrayList<String>();
-				
-		File workingDirectoryFile = new File("./src/main/resources/Files/Utilisateurs/" + id);
-						
-		for(String s : workingDirectoryFile.list()) {
-			result.add(s);
-		}
-			
-		return result;
-	}
-
 }

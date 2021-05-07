@@ -55,6 +55,4 @@ public interface EtudiantService {
 	List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id);
 	UtilisateurDto getFormateurReferentByIdEtudiant(long id);
 	UtilisateurDto getManagerByIdEtudiant(long id);
-	
-	List<String> getDocumentsAdministratifsByIdEtudiant(long id);
 }

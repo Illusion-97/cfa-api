@@ -163,12 +163,5 @@ public class EtudiantController {
 	}
 
 	
-	// ##################################################
-	// # 			 		Files		 				#
-	// ##################################################
 	
-	@GetMapping(value = "/{id}/documents-administratifs", produces = "application/json")
-	public List<String> getDocumentsAdministratifsByIdEtudiant(@PathVariable("id") long id){
-		return etudiantService.getDocumentsAdministratifsByIdEtudiant(id);
-	}
 }

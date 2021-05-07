@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -172,5 +173,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			return e.get();
 		
 		return null;
+	}
+
+	@Override
+	public List<String> getDocumentsAdministratifsByIdUtilisateur(long id) {
+		List<String> result = new ArrayList<String>();
+		
+		File workingDirectoryFile = new File("./src/main/resources/Files/Utilisateurs/" + id);
+						
+		for(String s : workingDirectoryFile.list()) {
+			result.add(s);
+		}
+			
+		return result;
 	}
 }
