@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
+import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 
@@ -85,6 +87,29 @@ public class FormateurServiceImpl implements FormateurService {
 			lstDto.add(formateurDto);
 		}
 		return lstDto;
+	}
+
+	// Recupere les interventions par rapport a l'id du formateur
+	@Override
+	public FormateurDto getByIdWithObject(long id) {
+		Optional<Formateur> i = formateurRepository.findById(id);
+		if (i.isPresent()) {
+			FormateurDto formateurDto = DtoTools.convert(i.get(), FormateurDto.class);
+			
+			List<Intervention> lstInt = i.get().getInterventions();
+			List<InterventionDto> lstIntDto = new ArrayList<InterventionDto>();
+			for (Intervention inter : lstInt) {
+				if (inter != null) 
+					lstIntDto.add(DtoTools.convert(inter, InterventionDto.class));
+				
+			}
+			
+			
+			formateurDto.setInterventionsDto(lstIntDto);
+			return formateurDto;
+		}
+
+		return null;
 	}
 
 }

@@ -13,6 +13,8 @@ public interface FormateurService {
 
 	FormateurDto getById(long id);
 
+	FormateurDto getByIdWithObject(long id);
+
 	FormateurDto saveOrUpdate(FormateurDto fDto);
 
 	void deleteById(long id);
