@@ -318,6 +318,7 @@ public class InitDataBase {
 		List<GroupeEtudiant> lstGroupe = new ArrayList<GroupeEtudiant>();
 		List<UtilisateurRole> lstRoleEtudiant = new ArrayList<UtilisateurRole>();
 		List<UtilisateurRole> lstRoleFormateur = new ArrayList<UtilisateurRole>();
+		List<UtilisateurRole> lstRoleCef = new ArrayList<UtilisateurRole>();
 		List<Intervention> lstInterventions = new ArrayList<Intervention>();
 
 		List<Intervention> lstInterventions1 = new ArrayList<Intervention>();
@@ -339,6 +340,8 @@ public class InitDataBase {
 		lstGroupe.add(groupe);
 		lstRoleEtudiant.add(roleEtudiant);
 		lstRoleFormateur.add(roleformateur);
+		lstRoleCef.add(rolecef);
+
 		lstInterventions.add(intervention);
 		lstInterventions.add(intervention2);
 		lstInterventions.add(intervention3);
@@ -423,7 +426,8 @@ public class InitDataBase {
 		cursus.setFormations(lstFormation);
 
 		cef.setCentreFormation(centre);
-
+		cef.setRoles(lstRoleCef);
+		
 		centre.setAdresse(adresse);
 		centre.setEntreprise(entreprise);
 
