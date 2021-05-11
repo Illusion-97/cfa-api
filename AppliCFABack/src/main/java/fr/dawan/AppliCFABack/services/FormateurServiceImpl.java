@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
+import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 
@@ -85,6 +87,46 @@ public class FormateurServiceImpl implements FormateurService {
 			lstDto.add(formateurDto);
 		}
 		return lstDto;
+	}
+
+	// Recupere les interventions par rapport a l'id du formateur
+	@Override
+	public FormateurDto getInterventionByIdFormateur(long id) {
+		// methode findById dans le repository
+		Optional<Formateur> i = formateurRepository.findById(id);
+		if (i.isPresent()) {
+			// On convertis un Optional<Formateur> en Formateur
+			FormateurDto formateurDto = DtoTools.convert(i.get(), FormateurDto.class);
+
+			// ici je recupere les intervention par rapport au formateur
+			List<Intervention> lstInt = i.get().getInterventions();
+			/**
+			 * les interventions sont de type Intervention. Comme on passe par les Dto on
+			 * doit convertir lstInt qui est de type Intervention en InterventionDto
+			 **/
+			List<InterventionDto> lstIntDto = new ArrayList<InterventionDto>();
+			for (Intervention inter : lstInt) {
+				/**
+				 * La boucle va me permettre de recup les interventionDto du formateur. J'ai
+				 * besoin aussi de recup les formation lier aux intervention du formateur.
+				 * Pareil que par rapport aux intervention, je convertis la Formation en
+				 * FormationDto
+				 * 
+				 */
+				if (inter != null) {
+					Formation formation = inter.getFormation();
+					FormationDto formationDto = DtoTools.convert(formation, FormationDto.class);
+					InterventionDto interDto = DtoTools.convert(inter, InterventionDto.class);
+					interDto.setFormationDto(formationDto);
+					lstIntDto.add(interDto);
+				}
+			}
+
+			formateurDto.setInterventionsDto(lstIntDto);
+			return formateurDto;
+		}
+
+		return null;
 	}
 
 }
