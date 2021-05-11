@@ -41,7 +41,7 @@ public class PromotionController {
 		return promoService.saveOrUpdate(pDto);
 	}
 	
-	@DeleteMapping(value = "/delete/{id}", produces = "text/plain")
+	@DeleteMapping(value = "/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		try {
 			promoService.deleteById(id);
