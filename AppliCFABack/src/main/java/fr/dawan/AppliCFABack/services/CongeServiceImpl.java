@@ -107,6 +107,9 @@ public class CongeServiceImpl implements CongeService {
 		for(PromotionDto p : promos) {
 			LocalDate date = LocalDate.now();
 			
+			//On enleve 1 jours car on a pas cotisé le jours courant
+			date.plusDays(-1);
+			
 			//date.now < date debut => pas de calcul
 			if(date.compareTo(p.getDateDebut()) < 0)
 				continue;
