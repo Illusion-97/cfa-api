@@ -18,6 +18,9 @@ public class DtoTools {
 		//myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		//myMapper.getConfiguration().setAmbiguityIgnored(true);
 		
+		if(obj == null)
+			return null;
+		
 		return myMapper.map(obj, clazz);
 	}
 }

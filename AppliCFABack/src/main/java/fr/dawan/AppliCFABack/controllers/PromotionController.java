@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.PromotionService;
 
 @RestController
@@ -40,8 +41,7 @@ public class PromotionController {
 		return promoService.saveOrUpdate(pDto);
 	}
 	
-	
-	@DeleteMapping(value = "/delete/{id}", produces = "text/plain")
+	@DeleteMapping(value = "/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		try {
 			promoService.deleteById(id);
@@ -49,13 +49,16 @@ public class PromotionController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
 		}
-
 	}
-	
 	
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public PromotionDto update(@RequestBody PromotionDto pDto) {
 		return promoService.saveOrUpdate(pDto);
 	}
 	
+	
+	@GetMapping(value = "/{id}/referent",produces = "application/json")
+	public UtilisateurDto getReferentById(@PathVariable("id") long id) {
+		return promoService.getReferentById(id);
+	}
 }

@@ -17,7 +17,7 @@ public class Adresse {
 	private int numero;
 
 	@Column(nullable = false, length = 255)
-	private String ligne;
+	private String rue;
 
 	@Column(nullable = false, length = 255)
 	private String ville;
@@ -27,14 +27,6 @@ public class Adresse {
 
 	public Adresse() {
 		super();
-	}
-
-	public Adresse(int numero, String ligne, String ville, String codePostal) {
-		super();
-		this.numero = numero;
-		this.ligne = ligne;
-		this.ville = ville;
-		this.codePostal = codePostal;
 	}
 
 	public long getId() {
@@ -53,12 +45,12 @@ public class Adresse {
 		this.numero = numero;
 	}
 
-	public String getLigne() {
-		return ligne;
+	public String getRue() {
+		return rue;
 	}
 
-	public void setLigne(String ligne) {
-		this.ligne = ligne;
+	public void setRue(String rue) {
+		this.rue = rue;
 	}
 
 	public String getVille() {

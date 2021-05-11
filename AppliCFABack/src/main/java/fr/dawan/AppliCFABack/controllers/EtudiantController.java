@@ -18,7 +18,6 @@ import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
@@ -153,20 +152,16 @@ public class EtudiantController {
 		return etudiantService.getIntervenionByIdEtudiant(id);
 	}
 	
+	@GetMapping(value = "/{id}/formateurReferent", produces = "application/json")
+	public UtilisateurDto getFormateurReferentByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getFormateurReferentByIdEtudiant(id);
+	}
 	
-//	@GetMapping(value = "/{id}/formateurReferent", produces = "application/json")
-//	public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getIntervenionByIdEtudiant(id);
-//	}
-//	
-//	@GetMapping(value = "/{id}/promotionReferent", produces = "application/json")
-//	public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getIntervenionByIdEtudiant(id);
-//	}
-//	
-//	@GetMapping(value = "/{id}/manager", produces = "application/json")
-//	public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id){
-//		return etudiantService.getIntervenionByIdEtudiant(id);
-//	}
+	@GetMapping(value = "/{id}/manager", produces = "application/json")
+	public UtilisateurDto getManagerByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getManagerByIdEtudiant(id);
+	}
 
+	
+	
 }

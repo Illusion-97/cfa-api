@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 import fr.dawan.AppliCFABack.entities.Intervention;
 
 @Repository
-public interface InterventionRepository extends JpaRepository<Intervention, Long>{
+public interface InterventionRepository extends JpaRepository<Intervention, Long> {
 
-	@Query("SELECT i FROM Intervention i WHERE i.promotion.id = :id")
+	@Query("SELECT i FROM Intervention i JOIN i.promotions promotion WHERE promotion.id=:id ")
 	List<Intervention> getInterventionsByIdPromotion(@Param("id") long id);
 
 }

@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class Promotion { // CDA2021
@@ -32,6 +30,9 @@ public class Promotion { // CDA2021
 
 	@ManyToMany(mappedBy = "promotions")
 	private List<Etudiant> etudiants;
+	
+	@ManyToMany(mappedBy = "promotions")
+	private List<Intervention> interventions;
 
 	@ManyToOne
 	private CentreFormation centreFormation; // lieuFormation
@@ -46,14 +47,17 @@ public class Promotion { // CDA2021
 		super();
 	}
 
-	public Promotion(String nom, LocalDate dateDebut, LocalDate dateFin, Utilisateur cef, List<Etudiant> etudiants,
-			CentreFormation centreFormation, Utilisateur referentPedagogique, Cursus cursus) {
+	public Promotion(long id, String nom, LocalDate dateDebut, LocalDate dateFin, Utilisateur cef,
+			List<Etudiant> etudiants, List<Intervention> interventions, CentreFormation centreFormation,
+			Utilisateur referentPedagogique, Cursus cursus) {
 		super();
+		this.id = id;
 		this.nom = nom;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.cef = cef;
 		this.etudiants = etudiants;
+		this.interventions = interventions;
 		this.centreFormation = centreFormation;
 		this.referentPedagogique = referentPedagogique;
 		this.cursus = cursus;
@@ -131,4 +135,13 @@ public class Promotion { // CDA2021
 		this.cursus = cursus;
 	}
 
+	public List<Intervention> getInterventions() {
+		return interventions;
+	}
+
+	public void setInterventions(List<Intervention> interventions) {
+		this.interventions = interventions;
+	}
+
+	
 }

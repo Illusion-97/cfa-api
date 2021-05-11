@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 
@@ -19,10 +20,12 @@ public class PromotionServiceImpl implements PromotionService {
 	
 	@Autowired
 	private PromotionRepository promoRepo;
+	
+	@Autowired
+	FilesService filesService;
 
 	@Override
 	public List<PromotionDto> getAll() {
-		// TODO Auto-generated method stub
 		List<Promotion> lst = promoRepo.findAll();
 		List<PromotionDto> lstDto = new ArrayList<PromotionDto>();
 		for (Promotion promo : lst) {
@@ -33,7 +36,6 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Override
 	public PromotionDto getById(long id) {
-		// TODO Auto-generated method stub
 		Promotion promo = promoRepo.getOne(id);
 		
 		return DtoTools.convert(promo, PromotionDto.class);
@@ -41,16 +43,23 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Override
 	public PromotionDto saveOrUpdate(PromotionDto pDto) {
-		// TODO Auto-generated method stub
 		Promotion p = DtoTools.convert(pDto, Promotion.class);
 		promoRepo.saveAndFlush(p);
+		
+		filesService.createDirectory("promotions/" + p.getId());
+		
 		return DtoTools.convert(p, PromotionDto.class);
 	}
 
 	@Override
 	public void deleteById(long id) {
-		// TODO Auto-generated method stub
 		promoRepo.deleteById(id);
+//		filesService.deleteDirectoryWithContent("promotions/"+id);
+	}
+
+	@Override
+	public UtilisateurDto getReferentById(long id) {
+		return DtoTools.convert(promoRepo.getOne(id).getReferentPedagogique(), UtilisateurDto.class);
 	}
 
 }

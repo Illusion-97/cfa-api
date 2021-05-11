@@ -6,7 +6,6 @@ import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
@@ -49,5 +48,11 @@ public interface EtudiantService {
 	
 	List<InterventionDto> getIntervenionByIdEtudiant(long id);
 	
+	// ##################################################
+	// # 			    	Utile	 					#
+	// ##################################################
+	
 	List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id);
+	UtilisateurDto getFormateurReferentByIdEtudiant(long id);
+	UtilisateurDto getManagerByIdEtudiant(long id);
 }

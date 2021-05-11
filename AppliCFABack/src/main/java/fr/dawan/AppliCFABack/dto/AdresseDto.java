@@ -3,7 +3,7 @@ package fr.dawan.AppliCFABack.dto;
 public class AdresseDto {
 	private long id;
 	private int numero;
-	private String ligne;
+	private String rue;
 	private String ville;
 	private String codePostal;
 
@@ -27,12 +27,12 @@ public class AdresseDto {
 		this.numero = numero;
 	}
 
-	public String getLigne() {
-		return ligne;
+	public String getRue() {
+		return rue;
 	}
 
-	public void setLigne(String ligne) {
-		this.ligne = ligne;
+	public void setRue(String rue) {
+		this.rue = rue;
 	}
 
 	public String getVille() {
