@@ -16,4 +16,6 @@ public interface CongeService {
 
 	void deleteById(long id);
 
+	double[] getAcquisDisponiblesRestantsByIdUtilisateur(long id);
+
 }

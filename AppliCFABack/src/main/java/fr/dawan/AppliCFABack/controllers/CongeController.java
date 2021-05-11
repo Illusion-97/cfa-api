@@ -40,11 +40,16 @@ public class CongeController {
 		return congeService.getById(id);
 	}
 
-	// /AppliCFABack/groupeEtudiants/{page}/{size}
+	
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<CongeDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		return congeService.getAllConge(page, size);
+	}
+	
+	@GetMapping(value = "/acquis-disponibles-restants/{id}", produces = "application/json")
+	public @ResponseBody double[] getAcquisDisponiblesRestantsByIdUtilisateur(@PathVariable("id") long id) {
+		return congeService.getAcquisDisponiblesRestantsByIdUtilisateur(id);
 	}
 
 	// ##################################################
