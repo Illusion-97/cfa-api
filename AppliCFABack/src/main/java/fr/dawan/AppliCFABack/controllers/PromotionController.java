@@ -49,7 +49,6 @@ public class PromotionController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
 		}
-
 	}
 	
 	@PutMapping(consumes = "application/json", produces = "application/json")

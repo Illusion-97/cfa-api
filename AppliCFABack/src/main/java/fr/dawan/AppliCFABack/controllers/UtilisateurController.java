@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,17 @@ public class UtilisateurController {
 	@Autowired
 	private UtilisateurService utilisateurService;
 
+	@DeleteMapping(value = "/{id}", produces = "text/plain")
+	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
+		try {
+			utilisateurService.deleteById(id);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
+		}
+
+	}
+	
 	// GET: /AppliCFABack/utilisateurs
 	@GetMapping(produces = { "application/json", "application/xml" })
 	public List<UtilisateurDto> getAll() {

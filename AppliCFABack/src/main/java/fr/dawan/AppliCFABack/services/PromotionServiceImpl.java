@@ -1,16 +1,11 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.DtoTools;
@@ -26,8 +21,8 @@ public class PromotionServiceImpl implements PromotionService {
 	@Autowired
 	private PromotionRepository promoRepo;
 	
-	@Value("${app.storagefolder}")
-	private String PARENT_DIRECTORY;
+	@Autowired
+	FilesService filesService;
 
 	@Override
 	public List<PromotionDto> getAll() {
@@ -51,13 +46,7 @@ public class PromotionServiceImpl implements PromotionService {
 		Promotion p = DtoTools.convert(pDto, Promotion.class);
 		promoRepo.saveAndFlush(p);
 		
-		Path path = Paths.get(PARENT_DIRECTORY + "promotions/" + p.getId());
-		
-		try {
-			Files.createDirectories(path);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+		filesService.createDirectory("promotions/" + p.getId());
 		
 		return DtoTools.convert(p, PromotionDto.class);
 	}
@@ -65,6 +54,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public void deleteById(long id) {
 		promoRepo.deleteById(id);
+//		filesService.deleteDirectoryWithContent("promotions/"+id);
 	}
 
 	@Override

@@ -1,9 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +9,6 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +37,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	CongeRepository congeRepository;
 	
-	@Value("${app.storagefolder}")
-	private String PARENT_DIRECTORY;
+	@Autowired
+	FilesService filesService;
 	
 	@Override
 	public List<UtilisateurDto> getAll() {
@@ -96,20 +92,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		utilisateurRepository.saveAndFlush(user);
 		
-		Path path = Paths.get(PARENT_DIRECTORY + "utilisateurs/" + user.getId());
-		
-		try {
-			Files.createDirectories(path);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		filesService.createDirectory("utilisateurs/" + user.getId());
+				
 		return DtoTools.convert(user, UtilisateurDto.class);
 	}
 
 	@Override
 	public void deleteById(long id) {
-		utilisateurRepository.deleteById(id);
+		utilisateurRepository.deleteById(id);		
+		filesService.deleteDirectoryWithContent("utilisateurs/"+id);
 	}
 
 	@Override
