@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	@Autowired
 	CongeRepository congeRepository;
+	
+	@Value("${app.storagefolder}")
+	private String PARENT_DIRECTORY;
 	
 	@Override
 	public List<UtilisateurDto> getAll() {
@@ -91,7 +95,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		utilisateurRepository.saveAndFlush(user);
 		
-		Path path = Paths.get("./src/main/resources/files/utilisateurs/" + user.getId());
+		Path path = Paths.get(PARENT_DIRECTORY + "utilisateurs/" + user.getId());
 		
 		try {
 			Files.createDirectories(path);
@@ -182,6 +186,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		if (e.isPresent())
 			return e.get();
 		
+		return null;
+	}
+
+	@Override
+	public List<UtilisateurDto> getAllWithObject() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }
