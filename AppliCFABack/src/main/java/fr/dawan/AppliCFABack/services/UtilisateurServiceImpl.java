@@ -1,6 +1,5 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
@@ -37,16 +35,25 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired
 	EtudiantService etudiantService;
-
+	
 	@Autowired
 	CongeRepository congeRepository;
-
+	
 	@Override
 	public List<UtilisateurDto> getAll() {
 		List<Utilisateur> users = utilisateurRepository.findAll();
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
+				
 		for (Utilisateur u : users) {
-			res.add(DtoTools.convert(u, UtilisateurDto.class));
+			
+			List<UtilisateurRoleDto> test = new ArrayList<UtilisateurRoleDto>();
+			for(UtilisateurRole r : u.getRoles()) {
+				test.add(DtoTools.convert(r, UtilisateurRoleDto.class));
+			}
+			
+			UtilisateurDto user = DtoTools.convert(u, UtilisateurDto.class);
+			user.setRolesDto(test);
+			res.add(user);
 		}
 		return res;
 	}
@@ -81,16 +88,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public UtilisateurDto insertUpdate(UtilisateurDto uDto) {
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
+		
 		utilisateurRepository.saveAndFlush(user);
-
-		Path path = Paths.get("./src/main/resources/Files/Utilisateurs" + user.getId());
-
+		
+		Path path = Paths.get("./src/main/resources/files/utilisateurs/" + user.getId());
+		
 		try {
 			Files.createDirectories(path);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		return DtoTools.convert(user, UtilisateurDto.class);
 	}
 
@@ -122,13 +130,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id) {
 		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
-
+		
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (!userOpt.isPresent())
 			return null;
-
-		for (UtilisateurRole role : userOpt.get().getRoles()) {
-			switch (role.getIntitule()) {
+			
+		for(UtilisateurRole role : userOpt.get().getRoles()) {
+			switch(role.getIntitule()) {
 			case "ETUDIANT":
 			default:
 				result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(id));
@@ -139,23 +147,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				break;
 			case "CEF":
 				break;
-
+				
 			}
 		}
-
+		
 		return result;
 	}
 
 	@Override
 	public List<CongeDto> getAllCongesByIdUtilisateur(long id) {
 		List<CongeDto> result = new ArrayList<CongeDto>();
-
+		
 		List<Conge> conges = congeRepository.findByIdUtilisateur(id);
-
-		for (Conge c : conges) {
+		
+		for(Conge c : conges) {
 			result.add(DtoTools.convert(c, CongeDto.class));
 		}
-
+		
 		return result;
 	}
 
@@ -163,62 +171,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public AdresseDto getAdresseByIdUtilisateur(long id) {
 		return DtoTools.convert(getUtilisateurById(id).getAdresse(), AdresseDto.class);
 	}
-
+	
 	// ##################################################
-	// # UTILE #
+	// # 					UTILE 						#
 	// ##################################################
-
+	
 	private Utilisateur getUtilisateurById(long id) {
 		Optional<Utilisateur> e = utilisateurRepository.findById(id);
 
 		if (e.isPresent())
 			return e.get();
-
+		
 		return null;
-	}
-
-	@Override
-	public List<String> getDocumentsAdministratifsByIdUtilisateur(long id) {
-		List<String> result = new ArrayList<String>();
-
-		File workingDirectoryFile = new File("./src/main/resources/Files/Utilisateurs/" + id);
-
-		if (!workingDirectoryFile.exists())
-			return null;
-
-		for (String s : workingDirectoryFile.list()) {
-			result.add(s);
-		}
-
-		return result;
-	}
-
-	@Override
-	public List<UtilisateurDto> getAllWithObject() {
-		List<Utilisateur> lstUsr = utilisateurRepository.findAll();
-		List<UtilisateurDto> lstUsrDto = new ArrayList<UtilisateurDto>();
-
-		for (Utilisateur utilisateur : lstUsr) {
-			UtilisateurDto utilisateurDto = DtoTools.convert(utilisateur, UtilisateurDto.class);
-
-			AdresseDto adresseDto = DtoTools.convert(utilisateur.getAdresse(), AdresseDto.class);
-			utilisateurDto.setAdresseDto(adresseDto);
-
-			EntrepriseDto entrepriseDto = DtoTools.convert(utilisateur.getEntreprise(), EntrepriseDto.class);
-			utilisateurDto.setEntrepriseDto(entrepriseDto);
-
-			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
-			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
-			for (UtilisateurRole utilisateurRole : lstUsrRole) {
-				if (utilisateurRole != null)
-					lstUsrRoleDto.add(DtoTools.convert(utilisateurRole, UtilisateurRoleDto.class));
-			}
-			utilisateurDto.setRolesDto(lstUsrRoleDto);
-
-			lstUsrDto.add(utilisateurDto);
-		}
-
-		return lstUsrDto;
-
 	}
 }

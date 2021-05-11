@@ -47,7 +47,7 @@ public class PromotionServiceImpl implements PromotionService {
 		Promotion p = DtoTools.convert(pDto, Promotion.class);
 		promoRepo.saveAndFlush(p);
 		
-		Path path = Paths.get("./src/main/resources/Files/Promotions/" + p.getId());
+		Path path = Paths.get("./src/main/resources/files/promotions/" + p.getId());
 		
 		try {
 			Files.createDirectories(path);

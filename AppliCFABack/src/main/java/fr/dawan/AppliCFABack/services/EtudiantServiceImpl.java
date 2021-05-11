@@ -100,7 +100,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public EtudiantDto saveOrUpdate(EtudiantDto e) {
 		Etudiant etudiant = etudiantRepository.saveAndFlush(DtoTools.convert(e, Etudiant.class));
 		
-		Path path = Paths.get("./src/main/resources/Files/Utilisateurs/" + etudiant.getId());
+		Path path = Paths.get("./src/main/resources/files/utilisateurs/" + etudiant.getId());
 		
 		try {
 			Files.createDirectories(path);
