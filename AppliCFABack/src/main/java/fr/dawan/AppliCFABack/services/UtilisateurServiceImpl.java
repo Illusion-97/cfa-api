@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
@@ -191,7 +192,31 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public List<UtilisateurDto> getAllWithObject() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Utilisateur> lstUsr = utilisateurRepository.findAll();
+		List<UtilisateurDto> lstUsrDto = new ArrayList<UtilisateurDto>();
+
+		for (Utilisateur utilisateur : lstUsr) {
+			UtilisateurDto utilisateurDto = DtoTools.convert(utilisateur, UtilisateurDto.class);
+
+			AdresseDto adresseDto = DtoTools.convert(utilisateur.getAdresse(), AdresseDto.class);
+			utilisateurDto.setAdresseDto(adresseDto);
+
+			EntrepriseDto entrepriseDto = DtoTools.convert(utilisateur.getEntreprise(), EntrepriseDto.class);
+			utilisateurDto.setEntrepriseDto(entrepriseDto);
+
+			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
+			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
+			for (UtilisateurRole utilisateurRole : lstUsrRole) {
+				if (utilisateurRole != null)
+					lstUsrRoleDto.add(DtoTools.convert(utilisateurRole, UtilisateurRoleDto.class));
+			}
+			utilisateurDto.setRolesDto(lstUsrRoleDto);
+
+			lstUsrDto.add(utilisateurDto);
+		}
+
+		return lstUsrDto;
+
 	}
+
 }
