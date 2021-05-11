@@ -95,31 +95,7 @@ public class CongeServiceImpl implements CongeService {
 		return result;
 	}
 
-	private double getAcquis(long id) {
-		//ACQUIS
-		
-		//Si étudiant
-		//	->liste promo
-		//	-> pour chaque promo :
-		//		->dateDebut dateFin
-		// date.now < date debut => pas de calcul
-		// date.now > date fin => [dateDebut,dateFin]
-		// dateDebut < date.now < dateFin => [dateDebut,date.now]
-		
-		//mois entier = 2.08
-		
-		//ATTENTION : month-of-year, from 1 to 12
-		// acquis = (fin.month-debut.month + 1) * 2.08		
-		
-		//	si debut.day != first day of month ie si le premier mois n'est pas complet
-		//		acquis -= 2.08
-		//		acquis += (2.08/nbJoursDansMois)*(dernierjours-datedebut)
-		//			-> distinction jours ouvrés ??
-		
-		//	si fin.day != lastday of month
-		//		acquis -= 2.08
-		//		acquis += (2.08/nbJoursDansMois)*dateFin
-		
+	private double getAcquis(long id) {		
 		
 		List<PromotionDto> promos = etudiantService.getPromotionsByIdEtudiant(id);
 		
@@ -130,18 +106,31 @@ public class CongeServiceImpl implements CongeService {
 		
 		for(PromotionDto p : promos) {
 			LocalDate date = LocalDate.now();
+			
+			//date.now < date debut => pas de calcul
 			if(date.compareTo(p.getDateDebut()) < 0)
 				continue;
 			
+			// date fin < date.now => [dateDebut,dateFin]
+			// dateDebut < date.now < dateFin => [dateDebut,date.now]
 			if(date.compareTo(p.getDateFin()) > 0)
 				date = p.getDateFin();
 			
+				
+			//ATTENTION : month-of-year, from 1 to 12
+			// acquis = (fin.month-debut.month + 1) * 2.08	
 			result += (date.getMonthValue()-p.getDateDebut().getMonthValue() + 1 ) * 2.08;
 						
+			//si debut.day != first day of month ie si le premier mois n'est pas complet
+			//		acquis -= 2.08	on enleve 1 mois du result
+			//		acquis += (2.08/nbJoursDansMois)*(dernierjours-datedebut)	on ajoute les jours cotisé
+			//			-> distinction jours ouvrés ??
 			if(p.getDateDebut().getDayOfMonth() != 1) 
 				result -= 2.08 - (2.08/YearMonth.of(p.getDateDebut().getYear(), p.getDateDebut().getMonthValue()).lengthOfMonth()) * (YearMonth.of(p.getDateDebut().getYear(), p.getDateDebut().getMonthValue()).lengthOfMonth()-p.getDateDebut().getDayOfMonth());
 			
-			
+			//si fin.day != lastday of month	le dernier mois n'est pas complet
+			//		acquis -= 2.08	on enleve 1 mois
+			//		acquis += (2.08/nbJoursDansMois)*dateFin	on ajoute les jours cotisé
 			if(date.getDayOfMonth() != YearMonth.of(date.getYear(), date.getMonthValue()).lengthOfMonth()) 
 				result -= 2.08 - (2.08/YearMonth.of(date.getYear(), date.getMonthValue()).lengthOfMonth())*date.getDayOfMonth();			
 			
@@ -152,17 +141,6 @@ public class CongeServiceImpl implements CongeService {
 	}
 
 	private double getPris(long id) {
-		//PRIS
-				
-		//On regarde la list des congé associé
-		//for(Conge c : conges){
-		//	if !confirme
-		//			continue; 
-		//	dateTempo = dateDebuy
-		//	while dateTempo < dateFin
-		//		if(dateTempo est jours ouvré)
-		//			pris ++
-		//		dateTempo.plusDays(1)
 		
 		List<CongeDto> conges = utilisateurService.getAllCongesByIdUtilisateur(id);
 		
