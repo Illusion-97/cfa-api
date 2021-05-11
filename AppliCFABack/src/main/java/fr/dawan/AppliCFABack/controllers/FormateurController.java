@@ -38,7 +38,7 @@ public class FormateurController {
 	// GET : /AppliCFABack/formateurs/{id}/interventions
 	@GetMapping(produces = "application/json", value = "/{id}/interventions")
 	public FormateurDto getByIdWithObject(@PathVariable("id") long id) {
-		return formateurService.getByIdWithObject(id);
+		return formateurService.getInterventionByIdFormateur(id);
 	}
 
 	// GET : /AppliCFABack/formateurs/{page}/{size}
