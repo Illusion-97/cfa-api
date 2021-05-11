@@ -168,7 +168,7 @@ public class CongeServiceImpl implements CongeService {
 		
 		if(conges == null)
 			return 0;
-		
+				
 		double result = 0;
 		
 		for(CongeDto c : conges) {
@@ -177,7 +177,7 @@ public class CongeServiceImpl implements CongeService {
 			
 			LocalDate temp = c.getDateDebut();
 			
-			while(temp.compareTo(c.getDateFin()) < 0) {
+			while(temp.compareTo(c.getDateFin()) <= 0) {
 				if(journeePlanningService.EstJoursOuvrable(temp))
 					result++;
 				temp = temp.plusDays(1);
