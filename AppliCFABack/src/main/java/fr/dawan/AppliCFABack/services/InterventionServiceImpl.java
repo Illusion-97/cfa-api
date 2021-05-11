@@ -15,6 +15,7 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
@@ -53,8 +54,15 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public InterventionDto getById(long id) {
 		Optional<Intervention> i = interventionRepository.findById(id);
-		if (i.isPresent())
-			return DtoTools.convert(i.get(), InterventionDto.class);
+		if (i.isPresent()) {
+			InterventionDto interventionDto = DtoTools.convert(i.get(), InterventionDto.class);
+			// Recupere les formations par rapport à l'id de l'intervention
+			// Convertion de l'entitie Formation en FormationDto
+			Formation formation = i.get().getFormation();
+			FormationDto formationDto = DtoTools.convert(formation, FormationDto.class);
+			interventionDto.setFormationDto(formationDto);
+			return interventionDto;
+		}
 
 		return null;
 	}
@@ -101,19 +109,19 @@ public class InterventionServiceImpl implements InterventionService {
 			interventionDto.setFormationDto(formationDto);
 
 			Intervention inter = intervention.getInterventionMere();
-			
-			InterventionDto interventionMereDto = DtoTools.convert(inter,InterventionDto.class);
+
+			InterventionDto interventionMereDto = DtoTools.convert(inter, InterventionDto.class);
 			interventionDto.setInterventionMereDto(interventionMereDto);
-			
+
 			// On affiche une liste de promotions de type List<Promotion>
 			List<Promotion> lstPromo = intervention.getPromotion();
 			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
 			for (Promotion promotion : lstPromo) {
 				/** On convertis List<Promotion> en List<PromotionDto> **/
-				if(promotion != null)
+				if (promotion != null)
 					lstPromoDto.add(DtoTools.convert(promotion, PromotionDto.class));
 			}
-						
+
 			// On ajoute la liste de promotion a l'intervention
 			interventionDto.setPromotionDto(lstPromoDto);
 			// On ajoute l'intervention a la liste d'intervention
