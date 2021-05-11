@@ -47,8 +47,9 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 	}
 	
 	
-	//Pour déterminer sila date donnée en argulent est un jours ouvrable
-	private boolean EstJoursOuvrable(LocalDate date)
+	//Pour déterminer si la date donnée en argulent est un jours ouvrable
+	@Override
+	public boolean EstJoursOuvrable(LocalDate date)
     {
         return !(EstFerie(date) || EstWeekEnd(date));
     }

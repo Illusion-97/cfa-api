@@ -1,22 +1,11 @@
 package fr.dawan.AppliCFABack.controllers;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import javax.servlet.ServletContext;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import fr.dawan.AppliCFABack.tools.MediaTypeUtils;
+import fr.dawan.AppliCFABack.services.FilesService;
 
 @MultipartConfig
 @RestController
 @RequestMapping("/AppliCFABack/files")
-public class FilesController {
-
+public class FilesController {	
+	
 	@Autowired
-	private ServletContext servletContext;
+	FilesService fileService;
 
 	@Value("${app.storagefolder}")
 	private String PARENT_DIRECTORY;
@@ -47,13 +36,8 @@ public class FilesController {
 
 		if (!directory.equals("promotions") && !directory.equals("utilisateurs"))
 			return null;
-
-		File workingDirectoryFile = new File(PARENT_DIRECTORY + directory + "/" + id);
-
-		if (!workingDirectoryFile.exists())
-			return null;
-
-		return workingDirectoryFile.list();
+		
+		return fileService.getAllNamesByDirectory(directory + "/" + id);	
 	}
 
 	@GetMapping(value = "/{directory}/{id}/{fileName}")
@@ -65,27 +49,8 @@ public class FilesController {
 			return null;
 
 		String workingDirectory = directory + "/" + id + "/";
-		MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
-
-		Path path = Paths.get(PARENT_DIRECTORY + workingDirectory + fileName);
-		byte[] data = null;
-
-		try {
-			data = Files.readAllBytes(path);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		ByteArrayResource resource = new ByteArrayResource(data);
-
-		return ResponseEntity.ok()
-				// Content-Disposition
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
-				// Content-Type
-				.contentType(mediaType) //
-				// Content-Lengh
-				.contentLength(data.length) //
-				.body(resource);
+		
+		return fileService.getFile(workingDirectory, fileName);	
 
 	}
 
@@ -95,18 +60,11 @@ public class FilesController {
 			@RequestParam("file") MultipartFile file) {
 
 		String filePath = directory + "/" + id + "/";
-
-		try {
-			File f = new File(PARENT_DIRECTORY + filePath + file.getOriginalFilename());
-			try (BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(f))) {
-				bw.write(file.getBytes());
-			}
+		
+		if(fileService.postFile(filePath, file))
 			return "OK";
-		} catch (Exception e) {
-			e.printStackTrace();
+		else
 			return "KO";
-		}
-
 	}
 
 	@CrossOrigin(origins = "*")
@@ -116,9 +74,7 @@ public class FilesController {
 
 		String filePath = directory + "/" + id + "/" + fileName;
 
-		File file = new File(PARENT_DIRECTORY + filePath);
-
-		if (file.delete())
+		if (fileService.deleteDirectoryWithContent(filePath))
 			return "supression effectuée";
 		else
 			return "supression échouée";
