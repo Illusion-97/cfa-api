@@ -20,6 +20,9 @@ public class PromotionServiceImpl implements PromotionService {
 	
 	@Autowired
 	private PromotionRepository promoRepo;
+	
+	@Autowired
+	FilesService filesService;
 
 	@Override
 	public List<PromotionDto> getAll() {
@@ -42,12 +45,16 @@ public class PromotionServiceImpl implements PromotionService {
 	public PromotionDto saveOrUpdate(PromotionDto pDto) {
 		Promotion p = DtoTools.convert(pDto, Promotion.class);
 		promoRepo.saveAndFlush(p);
+		
+		filesService.createDirectory("promotions/" + p.getId());
+		
 		return DtoTools.convert(p, PromotionDto.class);
 	}
 
 	@Override
 	public void deleteById(long id) {
 		promoRepo.deleteById(id);
+//		filesService.deleteDirectoryWithContent("promotions/"+id);
 	}
 
 	@Override

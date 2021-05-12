@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,11 @@ public class InterventionController {
 		return interventionService.getAllIntervention();
 	}
 
+	@GetMapping(produces = "application/json", value = "/with-object")
+	public List<InterventionDto> getAllWithObject() {
+		return interventionService.getAllInterventionWithObject();
+	}
+
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public InterventionDto getById(@PathVariable("id") long id) {
 		return interventionService.getById(id);
@@ -49,7 +55,7 @@ public class InterventionController {
 	// ##################################################
 	// # POST #
 	// ##################################################
-
+	@CrossOrigin(origins = "*")
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public InterventionDto save(@RequestBody InterventionDto iDto) {
 		return interventionService.saveOrUpdate(iDto);

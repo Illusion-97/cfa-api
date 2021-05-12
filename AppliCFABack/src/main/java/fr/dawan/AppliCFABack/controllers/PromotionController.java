@@ -41,7 +41,7 @@ public class PromotionController {
 		return promoService.saveOrUpdate(pDto);
 	}
 	
-	@DeleteMapping(value = "/delete/{id}", produces = "text/plain")
+	@DeleteMapping(value = "/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		try {
 			promoService.deleteById(id);
@@ -49,7 +49,6 @@ public class PromotionController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
 		}
-
 	}
 	
 	@PutMapping(consumes = "application/json", produces = "application/json")

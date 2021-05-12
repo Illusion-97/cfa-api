@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,11 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.repositories.CongeRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 
 @Service
@@ -27,12 +34,27 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	EtudiantService etudiantService;
 	
+	@Autowired
+	CongeRepository congeRepository;
+	
+	@Autowired
+	FilesService filesService;
+	
 	@Override
 	public List<UtilisateurDto> getAll() {
 		List<Utilisateur> users = utilisateurRepository.findAll();
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
+				
 		for (Utilisateur u : users) {
-			res.add(DtoTools.convert(u, UtilisateurDto.class));
+			
+			List<UtilisateurRoleDto> test = new ArrayList<UtilisateurRoleDto>();
+			for(UtilisateurRole r : u.getRoles()) {
+				test.add(DtoTools.convert(r, UtilisateurRoleDto.class));
+			}
+			
+			UtilisateurDto user = DtoTools.convert(u, UtilisateurDto.class);
+			user.setRolesDto(test);
+			res.add(user);
 		}
 		return res;
 	}
@@ -67,13 +89,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public UtilisateurDto insertUpdate(UtilisateurDto uDto) {
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
+		
 		utilisateurRepository.saveAndFlush(user);
+		
+		filesService.createDirectory("utilisateurs/" + user.getId());
+				
 		return DtoTools.convert(user, UtilisateurDto.class);
 	}
 
 	@Override
 	public void deleteById(long id) {
-		utilisateurRepository.deleteById(id);
+		utilisateurRepository.deleteById(id);		
+		filesService.deleteDirectoryWithContent("utilisateurs/"+id);
 	}
 
 	@Override
@@ -121,6 +148,66 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<CongeDto> getAllCongesByIdUtilisateur(long id) {
+		List<CongeDto> result = new ArrayList<CongeDto>();
+		
+		List<Conge> conges = congeRepository.findByIdUtilisateur(id);
+		
+		for(Conge c : conges) {
+			result.add(DtoTools.convert(c, CongeDto.class));
+		}
+		
+		return result;
+	}
+
+	@Override
+	public AdresseDto getAdresseByIdUtilisateur(long id) {
+		return DtoTools.convert(getUtilisateurById(id).getAdresse(), AdresseDto.class);
+	}
+	
+	// ##################################################
+	// # 					UTILE 						#
+	// ##################################################
+	
+	private Utilisateur getUtilisateurById(long id) {
+		Optional<Utilisateur> e = utilisateurRepository.findById(id);
+
+		if (e.isPresent())
+			return e.get();
+		
+		return null;
+	}
+
+	@Override
+	public List<UtilisateurDto> getAllWithObject() {
+		List<Utilisateur> lstUsr = utilisateurRepository.findAll();
+		List<UtilisateurDto> lstUsrDto = new ArrayList<UtilisateurDto>();
+
+		for (Utilisateur utilisateur : lstUsr) {
+			UtilisateurDto utilisateurDto = DtoTools.convert(utilisateur, UtilisateurDto.class);
+
+			AdresseDto adresseDto = DtoTools.convert(utilisateur.getAdresse(), AdresseDto.class);
+			utilisateurDto.setAdresseDto(adresseDto);
+
+			EntrepriseDto entrepriseDto = DtoTools.convert(utilisateur.getEntreprise(), EntrepriseDto.class);
+			utilisateurDto.setEntrepriseDto(entrepriseDto);
+
+			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
+			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
+			for (UtilisateurRole utilisateurRole : lstUsrRole) {
+				if (utilisateurRole != null)
+					lstUsrRoleDto.add(DtoTools.convert(utilisateurRole, UtilisateurRoleDto.class));
+			}
+			utilisateurDto.setRolesDto(lstUsrRoleDto);
+
+			lstUsrDto.add(utilisateurDto);
+		}
+
+		return lstUsrDto;
+
 	}
 
 }
