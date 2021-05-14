@@ -15,9 +15,11 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 
 @Service
@@ -122,6 +124,13 @@ public class FormateurServiceImpl implements FormateurService {
 				}
 			}
 
+			List<UtilisateurRole> lstRole = i.get().getRoles();
+			List<UtilisateurRoleDto> lstRoleDto = new ArrayList<UtilisateurRoleDto>();
+			for (UtilisateurRole role : lstRole) {
+				if (role != null)
+					lstRoleDto.add(DtoTools.convert(role, UtilisateurRoleDto.class));
+			}
+			formateurDto.setRolesDto(lstRoleDto);
 			formateurDto.setInterventionsDto(lstIntDto);
 			return formateurDto;
 		}
