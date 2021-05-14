@@ -45,6 +45,11 @@ public class InterventionController {
 		return interventionService.getById(id);
 	}
 
+	@GetMapping(value = "/{id}/formation", produces = "application/json")
+	public InterventionDto getFormationByInterventionId(@PathVariable("id") long id) {
+		return interventionService.getFormationByIdIntervention(id);
+	}
+
 	// /AppliCFABack/groupeEtudiants/{page}/{size}
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
@@ -71,7 +76,7 @@ public class InterventionController {
 			interventionService.deleteById(id);
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
 		}
 
 	}
