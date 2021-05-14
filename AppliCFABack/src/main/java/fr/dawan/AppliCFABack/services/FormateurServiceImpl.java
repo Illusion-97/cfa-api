@@ -21,12 +21,15 @@ import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 
 @Service
 @Transactional
 public class FormateurServiceImpl implements FormateurService {
 	@Autowired
 	private FormateurRepository formateurRepository;
+	@Autowired
+	InterventionRepository interventionRepository;
 
 	@Override
 	public List<FormateurDto> getAll() {
@@ -67,7 +70,19 @@ public class FormateurServiceImpl implements FormateurService {
 
 	@Override
 	public void deleteById(long id) {
+		Optional<Formateur> formateur = formateurRepository.findById(id);
+		List<Intervention> lstInterventions = formateur.get().getInterventions();
+
+		if (formateur.isPresent())
+			for (Intervention interv : lstInterventions) {
+				for (Formateur form : interv.getFormateurs()) {
+					if (form.getId() == formateur.get().getId()) {
+						
+					}
+				}
+			}
 		formateurRepository.deleteById(id);
+
 	}
 
 	@Override
