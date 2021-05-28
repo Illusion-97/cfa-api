@@ -147,20 +147,22 @@ public class InitDataBase {
 		etudiant.setLogin("tbillon@dawan.fr");
 		etudiant.setPassword("pwd");
 
+		LocalDate promoDate = LocalDate.of(2021, 1, 1);
+
 		Promotion promotion = new Promotion();
 		promotion.setNom("Concepteur Developpeur d'Applications NANTES 2021");
-		promotion.setDateDebut(LocalDate.now());
-		promotion.setDateFin(LocalDate.now().plusYears(1));
+		promotion.setDateDebut(promoDate);
+		promotion.setDateFin(promoDate.plusYears(1).minusDays(1));
 
 		Promotion promotion2 = new Promotion();
 		promotion2.setNom("Concepteur Developpeur d'Applications PARIS 2021");
-		promotion2.setDateDebut(LocalDate.now());
-		promotion2.setDateFin(LocalDate.now().plusYears(1));
+		promotion2.setDateDebut(promoDate);
+		promotion2.setDateFin(promoDate.plusYears(1).minusDays(1));
 
 		Promotion promotion3 = new Promotion();
 		promotion3.setNom("Concepteur Developpeur d'Applications AMIENS 2021");
-		promotion3.setDateDebut(LocalDate.now());
-		promotion3.setDateFin(LocalDate.now().plusYears(1));
+		promotion3.setDateDebut(promoDate);
+		promotion3.setDateFin(promoDate.plusYears(1).minusDays(1));
 
 		GroupeEtudiant groupe = new GroupeEtudiant();
 		groupe.setNom("groupe 1");
@@ -171,7 +173,7 @@ public class InitDataBase {
 		note.setEtudiant(etudiant);
 
 		Entreprise entreprise = new Entreprise();
-		entreprise.setRaisonSociale("raisone sociale");
+		entreprise.setRaisonSociale("raison sociale");
 
 		Adresse adresse = new Adresse();
 		adresse.setNumero(12);
@@ -216,19 +218,19 @@ public class InitDataBase {
 
 		Intervention intervention = new Intervention();
 		intervention.setDateDebut(date);
-		intervention.setDateFin(date.plusDays(7));
+		intervention.setDateFin(date.plusDays(4));
 
 		Intervention intervention2 = new Intervention();
 		intervention2.setDateDebut(date2.plusDays(2));
-		intervention2.setDateFin(date2.plusDays(7));
+		intervention2.setDateFin(date2.plusDays(4));
 
 		Intervention intervention3 = new Intervention();
 		intervention3.setDateDebut(date3.plusDays(2));
-		intervention3.setDateFin(date3.plusDays(7));
+		intervention3.setDateFin(date3.plusDays(4));
 
 		Intervention intervention4 = new Intervention();
 		intervention4.setDateDebut(date4.plusDays(2));
-		intervention4.setDateFin(date4.plusDays(7));
+		intervention4.setDateFin(date4.plusDays(4));
 
 		// CEF
 		CEF cef = new CEF();
@@ -272,13 +274,13 @@ public class InitDataBase {
 		projet.setDescription("Description");
 		projet.setPjCahierDesCharges("CDA");
 
-		//Conge
+		// Conge
 		Conge conge = new Conge();
 		conge.setDateDebut(LocalDate.now());
 		conge.setDateFin(LocalDate.now().plusDays(14));
 		conge.setMotif("Covid-19");
 		conge.setType(TypeConge.MALADIE);
-		
+
 		etudiantRepository.save(etudiant);
 		groupeEtudiantRepository.save(groupe);
 		promotionRepository.save(promotion);
@@ -316,6 +318,7 @@ public class InitDataBase {
 		List<GroupeEtudiant> lstGroupe = new ArrayList<GroupeEtudiant>();
 		List<UtilisateurRole> lstRoleEtudiant = new ArrayList<UtilisateurRole>();
 		List<UtilisateurRole> lstRoleFormateur = new ArrayList<UtilisateurRole>();
+		List<UtilisateurRole> lstRoleCef = new ArrayList<UtilisateurRole>();
 		List<Intervention> lstInterventions = new ArrayList<Intervention>();
 
 		List<Intervention> lstInterventions1 = new ArrayList<Intervention>();
@@ -337,6 +340,8 @@ public class InitDataBase {
 		lstGroupe.add(groupe);
 		lstRoleEtudiant.add(roleEtudiant);
 		lstRoleFormateur.add(roleformateur);
+		lstRoleCef.add(rolecef);
+
 		lstInterventions.add(intervention);
 		lstInterventions.add(intervention2);
 		lstInterventions.add(intervention3);
@@ -421,7 +426,8 @@ public class InitDataBase {
 		cursus.setFormations(lstFormation);
 
 		cef.setCentreFormation(centre);
-
+		cef.setRoles(lstRoleCef);
+		
 		centre.setAdresse(adresse);
 		centre.setEntreprise(entreprise);
 
@@ -444,7 +450,7 @@ public class InitDataBase {
 		passageExamen.setIntervention(intervention);
 
 		projet.setGroupe(groupe);
-		
+
 		conge.setUtilisateur(etudiant);
 
 		etudiantRepository.save(etudiant);
