@@ -61,6 +61,12 @@ public class UtilisateurController {
 	public UtilisateurDto getById(@PathVariable("id") long id) {
 		return utilisateurService.getById(id);
 	}
+	
+	// GET: /AppliCFABack/utilisateurs/with-object
+		@GetMapping( value = "/{id}/with-object", produces = { "application/json", "application/xml" })
+		public UtilisateurDto getByIdWithObject(@PathVariable("id") long id) {
+			return utilisateurService.getByIdWithObject(id);
+		}
 
 	// GET: /AppliCFABack/utilisateurs/user?name=XXXX
 	@GetMapping(value = "/user", produces = "application/json")

@@ -31,4 +31,6 @@ public interface UtilisateurService {
 	List<CongeDto> getAllCongesByIdUtilisateur(long id);
 
 	AdresseDto getAdresseByIdUtilisateur(long id);
+
+	UtilisateurDto getByIdWithObject(long id);
 }

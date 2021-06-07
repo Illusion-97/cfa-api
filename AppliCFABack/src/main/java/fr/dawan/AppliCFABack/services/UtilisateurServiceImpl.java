@@ -210,4 +210,31 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	}
 
+	@Override
+	public UtilisateurDto getByIdWithObject(long id) {
+		Utilisateur utilisateur = getUtilisateurById(id);
+		
+		if (utilisateur != null) {
+			UtilisateurDto utilisateurDto = DtoTools.convert(utilisateur, UtilisateurDto.class);
+
+			AdresseDto adresseDto = DtoTools.convert(utilisateur.getAdresse(), AdresseDto.class);
+			utilisateurDto.setAdresseDto(adresseDto);
+
+			EntrepriseDto entrepriseDto = DtoTools.convert(utilisateur.getEntreprise(), EntrepriseDto.class);
+			utilisateurDto.setEntrepriseDto(entrepriseDto);
+
+			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
+			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
+			for (UtilisateurRole utilisateurRole : lstUsrRole) {
+				if (utilisateurRole != null)
+					lstUsrRoleDto.add(DtoTools.convert(utilisateurRole, UtilisateurRoleDto.class));
+			}
+			utilisateurDto.setRolesDto(lstUsrRoleDto);
+			
+			return utilisateurDto;
+		}
+		
+		return null;
+	}
+
 }
