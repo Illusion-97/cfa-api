@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,28 +26,28 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.dawan.AppliCFABack.controllers.AdresseController;
-import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.controllers.FormationController;
+import fr.dawan.AppliCFABack.dto.FormationDto;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class AdresseControllerTests {
-
+public class FormationControllerTests {
+	
 	@Autowired
 	private MockMvc mockMvc;
 
 	@Autowired
-	private AdresseController adresseController;
+	private FormationController formationController;
 	
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private long idAdresse;
+	private long idFormation;
 	
 	@BeforeAll
 	void init() {
-		assertThat(adresseController).isNotNull();
+		assertThat(formationController).isNotNull();
 //		initDataBase();
 	}
 	
@@ -55,12 +56,13 @@ public class AdresseControllerTests {
 //		testDelete();
 //		deleteDatabase();
 	}
+
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/adresses").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/AppliCFABack/formations").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
-
+					
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -69,12 +71,10 @@ public class AdresseControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/adresses/" + idAdresse).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/AppliCFABack/formations/" + idFormation).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
-					.andExpect(jsonPath("$.numero", is("3")))
-					.andExpect(jsonPath("$.rue", is("rue de la poissoniere")))
-					.andExpect(jsonPath("$.ville", is("Lille")))
-					.andExpect(jsonPath("$.codePostal", is("59000")));
+					.andExpect(jsonPath("$.titre", is("titre 1")))
+					.andExpect(jsonPath("$.contenu", is("contenu 1")));
 
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -84,22 +84,20 @@ public class AdresseControllerTests {
 	@Test
 	void testSave() {
 		try {
-			AdresseDto eToInsert = new AdresseDto();
-			eToInsert.setNumero(3);
-			eToInsert.setRue("rue save");
-			eToInsert.setVille("ville save");
-			eToInsert.setCodePostal("code postal save");
+			FormationDto eToInsert = new FormationDto();
+			eToInsert.setTitre("titre save");
+			eToInsert.setContenu("contenu save");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/adresses")
+			String jsonReponse = mockMvc.perform(post("/AppliCFABack/formations")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-			AdresseDto eDto = objectMapper.readValue(jsonReponse, AdresseDto.class);
-			assertTrue(eDto.getId() != 0);
+			FormationDto fDto = objectMapper.readValue(jsonReponse, FormationDto.class);
+			assertTrue(fDto.getId() != 0);
 
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -109,39 +107,34 @@ public class AdresseControllerTests {
 	@Test
 	void testUpdate() {
 
-		/*try {
-			AdresseDto eDto = adresseController.getById(idAdresse+1);
-			eDto.setNumero(4);
-			eDto.setRue("rue update");
-			eDto.setVille("ville update");
-			eDto.setCodePostal("code postal update");
+		try {
+			FormationDto fDto = formationController.getById(idFormation+1);
+			fDto.setTitre("titre update");
+			fDto.setContenu("contenu update");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-			String jsonReq = objectMapper.writeValueAsString(eDto);
+			String jsonReq = objectMapper.writeValueAsString(fDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/adresses") 
+			String jsonReponse = mockMvc.perform(put("/AppliCFABack/formations") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-			AdresseDto res = objectMapper.readValue(jsonReponse, AdresseDto.class);
-			assertEquals(res.getId(), eDto.getId());
-			assertEquals(res.getNumero(), eDto.getNumero());
-			assertEquals(res.getRue(), eDto.getRue());
-			assertEquals(res.getVille(), eDto.getVille());
-			assertEquals(res.getCodePostal(), eDto.getCodePostal());
-			
+			FormationDto res = objectMapper.readValue(jsonReponse, FormationDto.class);
+			assertEquals(res.getId(), fDto.getId());
+			assertEquals(res.getTitre(),fDto.getTitre());
+			assertEquals(res.getContenu(),fDto.getContenu());
+
 		} catch (Exception e) {
 			fail(e.getMessage());
-		}*/
+		}
 
 	}
 	
-	@Test
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/adresses/"+idAdresse) 
+			String rep = mockMvc.perform(delete("/AppliCFABack/formations/"+idFormation) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);
@@ -150,4 +143,5 @@ public class AdresseControllerTests {
 			fail(e.getMessage());
 		}
 	}
+
 }

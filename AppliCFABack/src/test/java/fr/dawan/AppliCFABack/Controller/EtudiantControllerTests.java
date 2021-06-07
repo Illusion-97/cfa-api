@@ -227,6 +227,31 @@ public class EtudiantControllerTests {
 		}
 	}
 	
+	@Test
+	void testGetFormateurReferentByIdEtudiant() {
+		try {
+			mockMvc.perform(get("/AppliCFABack/etudiants/"+idEtudiant+"/formateurReferent").accept(MediaType.APPLICATION_JSON))
+					.andExpect(status().isOk());
+			
+
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	void testGetFormateurManagerByIdEtudiant() {
+		try {
+			mockMvc.perform(get("/AppliCFABack/etudiants/"+idEtudiant+"/manager").accept(MediaType.APPLICATION_JSON))
+					.andExpect(status().isOk());
+			
+
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	
 	void testDelete() {
 
 		try {

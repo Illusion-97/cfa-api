@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,28 +26,31 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.dawan.AppliCFABack.controllers.AdresseController;
-import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.controllers.CongeController;
+import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.entities.StatusConge;
+import fr.dawan.AppliCFABack.entities.TypeConge;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class AdresseControllerTests {
+public class CongeControllerTests {
 
 	@Autowired
 	private MockMvc mockMvc;
 
 	@Autowired
-	private AdresseController adresseController;
+	private CongeController congeController;
 	
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private long idAdresse;
+	private long idConge;
+	
 	
 	@BeforeAll
 	void init() {
-		assertThat(adresseController).isNotNull();
+		assertThat(congeController).isNotNull();
 //		initDataBase();
 	}
 	
@@ -58,7 +62,7 @@ public class AdresseControllerTests {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/adresses").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/AppliCFABack/conges").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 
 		} catch (Exception e) {
@@ -69,12 +73,11 @@ public class AdresseControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/adresses/" + idAdresse).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/AppliCFABack/conges/" + idConge).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
-					.andExpect(jsonPath("$.numero", is("3")))
-					.andExpect(jsonPath("$.rue", is("rue de la poissoniere")))
-					.andExpect(jsonPath("$.ville", is("Lille")))
-					.andExpect(jsonPath("$.codePostal", is("59000")));
+					.andExpect(jsonPath("$.motif", is("motif conge")))
+					.andExpect(jsonPath("$.type", is("MALADIE")))
+					.andExpect(jsonPath("$.status", is("CONFIRME")));
 
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -84,21 +87,20 @@ public class AdresseControllerTests {
 	@Test
 	void testSave() {
 		try {
-			AdresseDto eToInsert = new AdresseDto();
-			eToInsert.setNumero(3);
-			eToInsert.setRue("rue save");
-			eToInsert.setVille("ville save");
-			eToInsert.setCodePostal("code postal save");
+			CongeDto eToInsert = new CongeDto();
+			eToInsert.setMotif("motif save");
+			eToInsert.setStatus(StatusConge.EN_ATTENTE);
+			eToInsert.setType(TypeConge.PAYE);
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/adresses")
+			String jsonReponse = mockMvc.perform(post("/AppliCFABack/conges")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-			AdresseDto eDto = objectMapper.readValue(jsonReponse, AdresseDto.class);
+			CongeDto eDto = objectMapper.readValue(jsonReponse, CongeDto.class);
 			assertTrue(eDto.getId() != 0);
 
 		} catch (Exception e) {
@@ -109,31 +111,29 @@ public class AdresseControllerTests {
 	@Test
 	void testUpdate() {
 
-		/*try {
-			AdresseDto eDto = adresseController.getById(idAdresse+1);
-			eDto.setNumero(4);
-			eDto.setRue("rue update");
-			eDto.setVille("ville update");
-			eDto.setCodePostal("code postal update");
+		try {
+			CongeDto eDto = congeController.getById(idConge+1);
+			eDto.setMotif("motif update");
+			eDto.setStatus(StatusConge.REFUSE);
+			eDto.setType(TypeConge.SANS_SOLDE);
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/adresses") 
+			String jsonReponse = mockMvc.perform(put("/AppliCFABack/conges") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-			AdresseDto res = objectMapper.readValue(jsonReponse, AdresseDto.class);
+			CongeDto res = objectMapper.readValue(jsonReponse, CongeDto.class);
 			assertEquals(res.getId(), eDto.getId());
-			assertEquals(res.getNumero(), eDto.getNumero());
-			assertEquals(res.getRue(), eDto.getRue());
-			assertEquals(res.getVille(), eDto.getVille());
-			assertEquals(res.getCodePostal(), eDto.getCodePostal());
+			assertEquals(res.getMotif(), eDto.getMotif());
+			assertEquals(res.getStatus(), eDto.getStatus());
+			assertEquals(res.getType(), eDto.getType());
 			
 		} catch (Exception e) {
 			fail(e.getMessage());
-		}*/
+		}
 
 	}
 	
@@ -141,7 +141,7 @@ public class AdresseControllerTests {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/adresses/"+idAdresse) 
+			String rep = mockMvc.perform(delete("/AppliCFABack/conges/"+idConge) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);
