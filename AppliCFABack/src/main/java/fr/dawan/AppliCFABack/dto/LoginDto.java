@@ -1,6 +1,14 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class LoginDto {
+import java.io.Serializable;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+
+@SuppressWarnings("serial")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class LoginDto  implements Serializable{
 	private String login;
 	private String password;	
 	

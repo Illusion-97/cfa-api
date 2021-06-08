@@ -77,6 +77,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			return DtoTools.convert(userOpt.get(), UtilisateurDto.class);
 		return null;
 	}
+	
+
+	@Override
+	public UtilisateurDto findByEmail(String email) {
+		Utilisateur user = utilisateurRepository.findByEmail(email);
+		if (user != null)
+			return DtoTools.convert(user, UtilisateurDto.class);
+		return null;
+	}
+
 
 	@Override
 	public UtilisateurDto getName(String name) {
@@ -205,11 +215,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			lstUsrDto.add(utilisateurDto);
 		}
-
+		
+		
 		return lstUsrDto;
 
 	}
-
+	
 	@Override
 	public UtilisateurDto getByIdWithObject(long id) {
 		Utilisateur utilisateur = getUtilisateurById(id);

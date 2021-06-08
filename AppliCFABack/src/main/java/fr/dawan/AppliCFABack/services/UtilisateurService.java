@@ -15,6 +15,8 @@ public interface UtilisateurService {
 	List<UtilisateurDto> getAllWithObject();
 
 	UtilisateurDto getById(long id);
+	
+	UtilisateurDto findByEmail(String email);
 
 	UtilisateurDto getName(String name);
 
