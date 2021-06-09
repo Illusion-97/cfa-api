@@ -7,6 +7,7 @@ import javax.servlet.annotation.MultipartConfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ public class LoginController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
+	@CrossOrigin(origins = "*")
 	@PostMapping(value="/authenticate", consumes = "application/json")
     public ResponseEntity<?> checkLogin(@RequestBody LoginDto loginObj) throws Exception{
         				
@@ -37,6 +39,12 @@ public class LoginController {
         
         //TODO Cryptage du password
         String password = loginObj.getPassword();
+        
+        System.out.println("login : " + loginObj.getLogin());
+        System.out.println("password : " + loginObj.getPassword());
+        
+        System.out.println("uDto login : " + uDto.getLogin());
+        System.out.println("uDto password : " + uDto.getPassword());
         
         if(uDto !=null && uDto.getPassword().contentEquals(password)) {
             
@@ -48,7 +56,7 @@ public class LoginController {
             String token = jwtTokenUtil.doGenerateToken(claims, loginObj.getLogin());
             TokenSaver.tokensByEmail.put(loginObj.getLogin(), token);
             
-            return ResponseEntity.ok(new LoginResponseDto(token));
+            return ResponseEntity.ok(new LoginResponseDto(utilisateurService.getByIdWithObject(uDto.getId()),token));
         }else
             throw new Exception("Erreur : identifiants incorrects !");
         
