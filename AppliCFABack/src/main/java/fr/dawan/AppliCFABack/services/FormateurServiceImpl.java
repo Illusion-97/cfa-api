@@ -77,7 +77,7 @@ public class FormateurServiceImpl implements FormateurService {
 			for (Intervention interv : lstInterventions) {
 				for (Formateur form : interv.getFormateurs()) {
 					if (form.getId() == formateur.get().getId()) {
-						
+
 					}
 				}
 			}
@@ -125,9 +125,8 @@ public class FormateurServiceImpl implements FormateurService {
 			for (Intervention inter : lstInt) {
 				/**
 				 * La boucle va me permettre de recup les interventionDto du formateur. J'ai
-				 * besoin aussi de recup les formation lier aux intervention du formateur.
-				 * Pareil que par rapport aux intervention, je convertis la Formation en
-				 * FormationDto
+				 * besoin aussi de recup les formation lié aux intervention du formateur. Pareil
+				 * que par rapport aux intervention, je convertis la Formation en FormationDto
 				 * 
 				 */
 				if (inter != null) {
