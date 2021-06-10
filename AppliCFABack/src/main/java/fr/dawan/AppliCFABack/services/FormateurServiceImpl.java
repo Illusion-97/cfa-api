@@ -15,16 +15,21 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 
 @Service
 @Transactional
 public class FormateurServiceImpl implements FormateurService {
 	@Autowired
 	private FormateurRepository formateurRepository;
+	@Autowired
+	InterventionRepository interventionRepository;
 
 	@Override
 	public List<FormateurDto> getAll() {
@@ -65,7 +70,19 @@ public class FormateurServiceImpl implements FormateurService {
 
 	@Override
 	public void deleteById(long id) {
+		Optional<Formateur> formateur = formateurRepository.findById(id);
+		List<Intervention> lstInterventions = formateur.get().getInterventions();
+
+		if (formateur.isPresent())
+			for (Intervention interv : lstInterventions) {
+				for (Formateur form : interv.getFormateurs()) {
+					if (form.getId() == formateur.get().getId()) {
+
+					}
+				}
+			}
 		formateurRepository.deleteById(id);
+
 	}
 
 	@Override
@@ -108,9 +125,8 @@ public class FormateurServiceImpl implements FormateurService {
 			for (Intervention inter : lstInt) {
 				/**
 				 * La boucle va me permettre de recup les interventionDto du formateur. J'ai
-				 * besoin aussi de recup les formation lier aux intervention du formateur.
-				 * Pareil que par rapport aux intervention, je convertis la Formation en
-				 * FormationDto
+				 * besoin aussi de recup les formation lié aux intervention du formateur. Pareil
+				 * que par rapport aux intervention, je convertis la Formation en FormationDto
 				 * 
 				 */
 				if (inter != null) {
@@ -122,6 +138,13 @@ public class FormateurServiceImpl implements FormateurService {
 				}
 			}
 
+			List<UtilisateurRole> lstRole = i.get().getRoles();
+			List<UtilisateurRoleDto> lstRoleDto = new ArrayList<UtilisateurRoleDto>();
+			for (UtilisateurRole role : lstRole) {
+				if (role != null)
+					lstRoleDto.add(DtoTools.convert(role, UtilisateurRoleDto.class));
+			}
+			formateurDto.setRolesDto(lstRoleDto);
 			formateurDto.setInterventionsDto(lstIntDto);
 			return formateurDto;
 		}

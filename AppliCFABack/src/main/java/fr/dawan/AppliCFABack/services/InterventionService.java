@@ -11,7 +11,9 @@ public interface InterventionService {
 	List<InterventionDto> getAllIntervention(int page, int size);
 
 	List<InterventionDto> getAllInterventionWithObject();
-	
+
+	List<InterventionDto> getAllInterventionWithObject(int page, int size);
+
 	InterventionDto getById(long id);
 
 	InterventionDto saveOrUpdate(InterventionDto iDto);

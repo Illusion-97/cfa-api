@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,15 @@ public class InterventionController {
 		return interventionService.getAllInterventionWithObject();
 	}
 
+	@GetMapping(produces = "application/json", value = "/with-object/{page}/{size}")
+	public List<InterventionDto> getAllWithObject(@PathVariable("page") Optional<Integer> page,
+			@PathVariable("size") Optional<Integer> size) {
+		if (size.isPresent() && page.isPresent())
+			return interventionService.getAllInterventionWithObject(page.get(), size.get());
+		else
+			return interventionService.getAllInterventionWithObject();
+	}
+
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public InterventionDto getById(@PathVariable("id") long id) {
 		return interventionService.getById(id);
@@ -71,7 +81,7 @@ public class InterventionController {
 			interventionService.deleteById(id);
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
 		}
 
 	}
