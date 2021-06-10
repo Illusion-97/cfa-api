@@ -12,9 +12,9 @@ public interface InterventionService {
 
 	List<InterventionDto> getAllInterventionWithObject();
 
-	InterventionDto getById(long id);
+	List<InterventionDto> getAllInterventionWithObject(int page, int size);
 
-	InterventionDto getFormationByIdIntervention(long id);
+	InterventionDto getById(long id);
 
 	InterventionDto saveOrUpdate(InterventionDto iDto);
 

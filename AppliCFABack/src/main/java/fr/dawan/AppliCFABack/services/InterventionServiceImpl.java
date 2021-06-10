@@ -67,8 +67,16 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public InterventionDto getById(long id) {
 		Optional<Intervention> i = interventionRepository.findById(id);
-		if (i.isPresent())
-			return DtoTools.convert(i.get(), InterventionDto.class);
+		if (i.isPresent()) {
+			InterventionDto interventionDto = DtoTools.convert(i.get(), InterventionDto.class);
+			// Recupere les formations par rapport à l'id de l'intervention
+			// Convertion de l'entitie Formation en FormationDto
+			Formation formation = i.get().getFormation();
+			FormationDto formationDto = DtoTools.convert(formation, FormationDto.class);
+			interventionDto.setFormationDto(formationDto);
+			return interventionDto;
+		}
+
 		return null;
 	}
 
@@ -184,19 +192,22 @@ public class InterventionServiceImpl implements InterventionService {
 	}
 
 	@Override
-	public InterventionDto getFormationByIdIntervention(long id) {
-		Optional<Intervention> i = interventionRepository.findById(id);
-		if (i.isPresent()) {
-			InterventionDto interventionDto = DtoTools.convert(i.get(), InterventionDto.class);
-			// Recupere les formations par rapport à l'id de l'intervention
-			// Convertion de l'entitie Formation en FormationDto
-			Formation formation = i.get().getFormation();
-			FormationDto formationDto = DtoTools.convert(formation, FormationDto.class);
-			interventionDto.setFormationDto(formationDto);
-			return interventionDto;
-		}
+	public List<InterventionDto> getAllInterventionWithObject(int page, int size) {
+		List<Intervention> lst = interventionRepository.findAll(PageRequest.of(page, size)).get()
+				.collect(Collectors.toList());
+		// conversion vers Dto
+		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
 
-		return null;
+		for (Intervention i : lst) {
+			InterventionDto interventionDto = DtoTools.convert(i, InterventionDto.class);
+			FormationDto formationDto = DtoTools.convert(i.getFormation(), FormationDto.class);
+			interventionDto.setFormationDto(formationDto);
+			
+			lstDto.add(interventionDto);
+		}
+		return lstDto;
 	}
+
+
 
 }
