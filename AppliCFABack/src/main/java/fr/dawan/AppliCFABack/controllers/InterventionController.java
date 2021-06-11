@@ -55,7 +55,6 @@ public class InterventionController {
 	// ##################################################
 	// # POST #
 	// ##################################################
-	@CrossOrigin(origins = "*")
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public InterventionDto save(@RequestBody InterventionDto iDto) {
 		return interventionService.saveOrUpdate(iDto);
