@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.entities.Conge;
@@ -166,5 +167,10 @@ public class CongeServiceImpl implements CongeService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public CountDto count(String search) {
+		return new CountDto(congeRepository.countByFirstnameContainingOrLastnameContainingOrEmailContaining(search, search, search));
 	}
 }
