@@ -77,6 +77,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			return DtoTools.convert(userOpt.get(), UtilisateurDto.class);
 		return null;
 	}
+	
+
+	@Override
+	public UtilisateurDto findByEmail(String email) {
+		Utilisateur user = utilisateurRepository.findByEmail(email);
+		if (user != null)
+			return DtoTools.convert(user, UtilisateurDto.class);
+		return null;
+	}
+
 
 	@Override
 	public UtilisateurDto getName(String name) {
@@ -205,9 +215,37 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			lstUsrDto.add(utilisateurDto);
 		}
-
+		
+		
 		return lstUsrDto;
 
+	}
+	
+	@Override
+	public UtilisateurDto getByIdWithObject(long id) {
+		Utilisateur utilisateur = getUtilisateurById(id);
+		
+		if (utilisateur != null) {
+			UtilisateurDto utilisateurDto = DtoTools.convert(utilisateur, UtilisateurDto.class);
+
+			AdresseDto adresseDto = DtoTools.convert(utilisateur.getAdresse(), AdresseDto.class);
+			utilisateurDto.setAdresseDto(adresseDto);
+
+			EntrepriseDto entrepriseDto = DtoTools.convert(utilisateur.getEntreprise(), EntrepriseDto.class);
+			utilisateurDto.setEntrepriseDto(entrepriseDto);
+
+			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
+			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
+			for (UtilisateurRole utilisateurRole : lstUsrRole) {
+				if (utilisateurRole != null)
+					lstUsrRoleDto.add(DtoTools.convert(utilisateurRole, UtilisateurRoleDto.class));
+			}
+			utilisateurDto.setRolesDto(lstUsrRoleDto);
+			
+			return utilisateurDto;
+		}
+		
+		return null;
 	}
 
 }

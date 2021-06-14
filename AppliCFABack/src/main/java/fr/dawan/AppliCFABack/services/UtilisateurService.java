@@ -15,6 +15,8 @@ public interface UtilisateurService {
 	List<UtilisateurDto> getAllWithObject();
 
 	UtilisateurDto getById(long id);
+	
+	UtilisateurDto findByEmail(String email);
 
 	UtilisateurDto getName(String name);
 
@@ -31,4 +33,6 @@ public interface UtilisateurService {
 	List<CongeDto> getAllCongesByIdUtilisateur(long id);
 
 	AdresseDto getAdresseByIdUtilisateur(long id);
+
+	UtilisateurDto getByIdWithObject(long id);
 }

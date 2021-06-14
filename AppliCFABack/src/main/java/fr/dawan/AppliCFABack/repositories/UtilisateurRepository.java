@@ -13,10 +13,15 @@ import fr.dawan.AppliCFABack.entities.Utilisateur;
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> {
 	@Query("FROM Utilisateur u WHERE u.nom=:user OR u.prenom=:user")
 	Utilisateur findByName(@Param("user") String name);
+	
+	@Query("FROM Utilisateur u WHERE u.login=:email")
+	Utilisateur findByEmail(String email);
 
 	@Query("FROM Utilisateur u WHERE u.adresse.ville=:ville")
 	List<Utilisateur> findByAdresse(@Param("ville") String ville);
 
 	@Query("FROM Utilisateur u WHERE u.entreprise.id=:entrepriseId")
 	List<Utilisateur> findByEntreprise(@Param("entrepriseId") long entrepriseId);
+
+	
 }

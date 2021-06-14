@@ -54,7 +54,6 @@ public class FilesController {
 
 	}
 
-	@CrossOrigin(origins = "*")
 	@PostMapping(value = "/{directory}/{id}", consumes = "multipart/form-data")
 	public String postFileByDirectoryAndId(@PathVariable("directory") String directory, @PathVariable("id") long id,
 			@RequestParam("file") MultipartFile file) {
@@ -67,7 +66,6 @@ public class FilesController {
 			return "KO";
 	}
 
-	@CrossOrigin(origins = "*")
 	@DeleteMapping(value = "/{directory}/{id}/{fileName}")
 	public String deleteFileByDirectoryAndId(@PathVariable("directory") String directory, @PathVariable("id") long id,
 			@PathVariable("fileName") String fileName) {
