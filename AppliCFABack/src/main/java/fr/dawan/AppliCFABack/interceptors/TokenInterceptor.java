@@ -23,7 +23,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 		System.out.println("URI =" + request.getRequestURI());
 		System.out.println("Header (authorization) :" + request.getHeader("Authorization"));
 		if (!request.getMethod().equals("OPTIONS")) {
-			if (!request.getRequestURI().equals("/authenticate")
+			if (!request.getRequestURI().equals("/AppliCFABack/authenticate")
 					&& !request.getRequestURI().equals("/insert-example")) {
 				String headerAuth = request.getHeader("Authorization");
 				if (headerAuth == null || headerAuth.trim().equals("") || headerAuth.length() < 7) {
