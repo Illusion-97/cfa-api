@@ -52,10 +52,15 @@ public class CongeServiceImpl implements CongeService {
 	@Override
 	public CongeDto getById(long id) {
 		Optional<Conge> f = congeRepository.findById(id);
-		if (f.isPresent())
-			return DtoTools.convert(f.get(), CongeDto.class);
+		if (f.isPresent()) {
+			CongeDto cDto = DtoTools.convert(f.get(), CongeDto.class);
+			cDto.setUtilisateurDto(DtoTools.convert(f.get().getUtilisateur(), UtilisateurDto.class));
+			return cDto;
+		}
 
 		return null;
+		
+		
 	}
 
 	@Override
