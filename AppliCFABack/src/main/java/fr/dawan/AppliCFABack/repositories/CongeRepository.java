@@ -2,6 +2,8 @@ package fr.dawan.AppliCFABack.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +16,9 @@ public interface CongeRepository extends JpaRepository<Conge, Long>{
 
 	@Query("Select c FROM Conge c WHERE c.utilisateur.id = :id")
 	List<Conge> findByIdUtilisateur(@Param("id") long id);
+	
+	Page<Conge> findAllByUtilisateurPrenomContainingOrUtilisateurNomContaining(String prenom, String nom, Pageable pageable );
+
+	long countByUtilisateurPrenomContainingOrUtilisateurNomContaining(String prenom, String nom);
+
 }

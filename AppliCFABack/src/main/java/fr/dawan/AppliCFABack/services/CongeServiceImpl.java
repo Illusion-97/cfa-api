@@ -14,8 +14,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.StatusConge;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
@@ -57,13 +59,16 @@ public class CongeServiceImpl implements CongeService {
 	}
 
 	@Override
-	public List<CongeDto> getAllConge(int page, int size) {
-		List<Conge> lst = congeRepository.findAll(PageRequest.of(page, size)).get().collect(Collectors.toList());
+	public List<CongeDto> getAllByPage(int page, int size, String search) {
+		List<Conge> lst = congeRepository.findAllByUtilisateurPrenomContainingOrUtilisateurNomContaining(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<CongeDto> lstDto = new ArrayList<CongeDto>();
 		for (Conge c : lst) {
-			lstDto.add(DtoTools.convert(c, CongeDto.class));
+			CongeDto cDto = DtoTools.convert(c, CongeDto.class);
+			UtilisateurDto uDto = DtoTools.convert(c.getUtilisateur(), UtilisateurDto.class);
+			cDto.setUtilisateurDto(uDto);
+			lstDto.add(cDto);
 		}
 		return lstDto;
 	}
@@ -79,6 +84,16 @@ public class CongeServiceImpl implements CongeService {
 
 	@Override
 	public void deleteById(long id) {
+		//n récupère le conge
+		Optional<Conge> c = congeRepository.findById(id);		
+		if (!c.isPresent()) return;
+		Conge conge = c.get();
+		
+		//on supprime le lien
+		conge.setUtilisateur(null);
+		congeRepository.save(conge);
+		
+		//on delete
 		congeRepository.deleteById(id);
 		
 	}
@@ -166,5 +181,10 @@ public class CongeServiceImpl implements CongeService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public CountDto count(String search) {
+		return new CountDto(congeRepository.countByUtilisateurPrenomContainingOrUtilisateurNomContaining(search, search));
 	}
 }
