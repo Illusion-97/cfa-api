@@ -1,10 +1,12 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,15 +43,18 @@ public class FormationController {
 
 	// /AppliCFABack/groupeEtudiants/{page}/{size}
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
-	public @ResponseBody List<FormationDto> getAllByPage(@PathVariable("page") int page,
-			@PathVariable(value = "size") int size) {
-		return formationService.getAllFormation(page, size);
+	public @ResponseBody List<FormationDto> getAllByPage(@PathVariable("page") Optional<Integer> page,
+			@PathVariable(value = "size") Optional<Integer> size) {
+		if(page.isPresent() && size.isPresent())
+			return formationService.getAllFormation(page.get(), size.get());
+		else 
+			return formationService.getAllFormation();
 	}
 
 	// ##################################################
 	// # POST #
 	// ##################################################
-
+	@CrossOrigin(origins = "*")
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public FormationDto save(@RequestBody FormationDto fDto) {
 		return formationService.saveOrUpdate(fDto);
