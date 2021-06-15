@@ -32,15 +32,15 @@ public class FormationServiceImpl implements FormationService {
 		List<FormationDto> lstDto = new ArrayList<FormationDto>();
 		for (Formation f : lst) {
 			FormationDto formationDto = DtoTools.convert(f, FormationDto.class);
-			
+
 			List<Cursus> lstCursus = f.getCursusLst();
 			List<CursusDto> lstCursusDto = new ArrayList<CursusDto>();
-			
+
 			for (Cursus cursus : lstCursus) {
 				if (cursus != null)
 					lstCursusDto.add(DtoTools.convert(cursus, CursusDto.class));
 			}
-			
+
 			formationDto.setCursusLstDto(lstCursusDto);
 			lstDto.add(formationDto);
 		}
@@ -55,7 +55,18 @@ public class FormationServiceImpl implements FormationService {
 		// conversion vers Dto
 		List<FormationDto> lstDto = new ArrayList<FormationDto>();
 		for (Formation f : lst) {
-			lstDto.add(DtoTools.convert(f, FormationDto.class));
+			FormationDto formationDto = DtoTools.convert(f, FormationDto.class);
+
+			List<Cursus> lstCursus = f.getCursusLst();
+			List<CursusDto> lstCursusDto = new ArrayList<CursusDto>();
+
+			for (Cursus cursus : lstCursus) {
+				if (cursus != null)
+					lstCursusDto.add(DtoTools.convert(cursus, CursusDto.class));
+			}
+
+			formationDto.setCursusLstDto(lstCursusDto);
+			lstDto.add(formationDto);
 		}
 		return lstDto;
 	}
@@ -63,8 +74,19 @@ public class FormationServiceImpl implements FormationService {
 	@Override
 	public FormationDto getById(long id) {
 		Optional<Formation> f = formationRepository.findById(id);
-		if (f.isPresent())
-			return DtoTools.convert(f.get(), FormationDto.class);
+		if (f.isPresent()) {
+			FormationDto formationDto = DtoTools.convert(f.get(), FormationDto.class);
+			List<Cursus> lstCursus = f.get().getCursusLst();
+			List<CursusDto> lstCursusDto = new ArrayList<CursusDto>();
+
+			for (Cursus cursus : lstCursus) {
+				if (cursus != null)
+					lstCursusDto.add(DtoTools.convert(cursus, CursusDto.class));
+			}
+
+			formationDto.setCursusLstDto(lstCursusDto);
+			return formationDto;
+		}
 
 		return null;
 	}
