@@ -45,9 +45,19 @@ public class CongeController {
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<CongeDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
-		return congeService.getAllConge(page, size);
+		return congeService.getAllByPage(page, size, "");
 	}
 	
+	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
+ 	public @ResponseBody List<CongeDto> getAllByPage(@PathVariable("page") int page,
+ 			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
+ 		if(search.isPresent())
+ 			return congeService.getAllByPage(page, size, search.get());
+ 		else
+ 			return congeService.getAllByPage(page, size, "");
+ 	}
+
+		
 	@GetMapping(value = "/count", produces = "application/json")
 	public CountDto count() {
 		return congeService.count("");

@@ -11,7 +11,7 @@ public interface CongeService {
 
 	CongeDto getById(long id);
 
-	List<CongeDto> getAllConge(int page, int size);
+	List<CongeDto> getAllByPage(int page, int size, String search);
 
 	CongeDto saveOrUpdate(CongeDto cDto);
 
