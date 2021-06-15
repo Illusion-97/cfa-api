@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
@@ -59,9 +60,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public List<UtilisateurDto> getAll(int page, int size) {
-		List<Utilisateur> users = utilisateurRepository.findAll(PageRequest.of(page, size)).get()
-				.collect(Collectors.toList());
+	public List<UtilisateurDto> getAllUtilisateurs(int page, int size, String search) {
+		
+		List<Utilisateur> users = utilisateurRepository.findAllByPrenomContainingOrNomContainingOrLoginContaining(search,search,search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
 			res.add(DtoTools.convert(u, UtilisateurDto.class));
@@ -69,6 +70,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return res;
 	}
 
+
+	@Override
+	public CountDto count(String search) {
+		return new CountDto(utilisateurRepository.countByPrenomContainingOrNomContainingOrLoginContaining(search, search, search));
+	}
+	
 	@Override
 	public UtilisateurDto getById(long id) {
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
@@ -246,5 +253,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		return null;
 	}
+
 
 }

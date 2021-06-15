@@ -4,13 +4,14 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 
 public interface UtilisateurService {
 	List<UtilisateurDto> getAll();
-
-	List<UtilisateurDto> getAll(int page, int size);
+	
+	List<UtilisateurDto> getAllUtilisateurs(int page, int size, String string);
 
 	List<UtilisateurDto> getAllWithObject();
 
@@ -35,4 +36,8 @@ public interface UtilisateurService {
 	AdresseDto getAdresseByIdUtilisateur(long id);
 
 	UtilisateurDto getByIdWithObject(long id);
+
+	CountDto count(String string);
+
+	
 }
