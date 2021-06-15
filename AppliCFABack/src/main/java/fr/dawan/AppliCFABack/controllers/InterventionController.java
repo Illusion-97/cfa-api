@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.services.InterventionService;
 
@@ -89,9 +90,14 @@ public class InterventionController {
 	// ##################################################
 	// # PUT #
 	// ##################################################
-
+	@CrossOrigin(origins = "*")
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public InterventionDto update(@RequestBody InterventionDto iDto) {
 		return interventionService.saveOrUpdate(iDto);
+	}
+
+	@GetMapping(produces = "application/json", value = "/count")
+	public CountDto count() {
+		return interventionService.count();
 	}
 }

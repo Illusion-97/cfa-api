@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
@@ -73,6 +74,15 @@ public class InterventionServiceImpl implements InterventionService {
 			// Convertion de l'entitie Formation en FormationDto
 			Formation formation = i.get().getFormation();
 			FormationDto formationDto = DtoTools.convert(formation, FormationDto.class);
+
+			List<Promotion> lstPromo = i.get().getPromotion();
+			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
+			for (Promotion promo : lstPromo) {
+				if (promo != null)
+					lstPromoDto.add(DtoTools.convert(promo, PromotionDto.class));
+			}
+
+			interventionDto.setPromotionDto(lstPromoDto);
 			interventionDto.setFormationDto(formationDto);
 			return interventionDto;
 		}
@@ -202,12 +212,15 @@ public class InterventionServiceImpl implements InterventionService {
 			InterventionDto interventionDto = DtoTools.convert(i, InterventionDto.class);
 			FormationDto formationDto = DtoTools.convert(i.getFormation(), FormationDto.class);
 			interventionDto.setFormationDto(formationDto);
-			
+
 			lstDto.add(interventionDto);
 		}
 		return lstDto;
 	}
 
-
+	@Override
+	public CountDto count() {
+		return new CountDto(interventionRepository.count());
+	}
 
 }
