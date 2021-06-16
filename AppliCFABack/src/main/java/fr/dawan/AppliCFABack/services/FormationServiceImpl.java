@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.repositories.FormationRepository;
 
@@ -35,23 +38,40 @@ public class FormationServiceImpl implements FormationService {
 	}
 
 	@Override
-	public List<FormationDto> getAllFormation(int page, int size) {
-		List<Formation> lst = formationRepository.findAll(PageRequest.of(page, size)).get().collect(Collectors.toList());
+	public List<FormationDto> getAllByPage(int page, int size, String search) {
+		List<Formation> lst = formationRepository.findAllByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<FormationDto> lstDto = new ArrayList<FormationDto>();
-		for (Formation f : lst) {
-			lstDto.add(DtoTools.convert(f, FormationDto.class));
+		for (Formation c : lst) {
+			FormationDto cDto = DtoTools.convert(c, FormationDto.class);
+			List<CursusDto> cursusLstDto = new ArrayList<CursusDto>();
+			for(Cursus cursus: c.getCursusLst()) {
+				cursusLstDto.add(DtoTools.convert(cursus, CursusDto.class));
+			}
+			cDto.setCursusLstDto(cursusLstDto);
+			lstDto.add(cDto);
 		}
 		return lstDto;
 	}
 
 	@Override
+	public CountDto count(String search) {
+		return new CountDto(formationRepository.countByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(search, search));
+	}
+
+	@Override
 	public FormationDto getById(long id) {
 		Optional<Formation> f = formationRepository.findById(id);
-		if (f.isPresent())
-			return DtoTools.convert(f.get(), FormationDto.class);
-
+		if (f.isPresent()) {
+			FormationDto fDto = DtoTools.convert(f.get(), FormationDto.class);
+			List<CursusDto> lst = new ArrayList<CursusDto>();
+			for(Cursus c : f.get().getCursusLst()) {
+				lst.add(DtoTools.convert(c, CursusDto.class));
+			}
+			fDto.setCursusLstDto(lst);
+			return fDto;
+		}
 		return null;
 	}
 
@@ -69,5 +89,7 @@ public class FormationServiceImpl implements FormationService {
 		formationRepository.deleteById(id);
 
 	}
+
+	
 
 }

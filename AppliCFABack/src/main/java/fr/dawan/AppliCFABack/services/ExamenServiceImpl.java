@@ -11,15 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Examen;
+import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
 
 @Service
@@ -42,7 +40,7 @@ public class ExamenServiceImpl implements ExamenService {
 
 	@Override
 	public List<ExamenDto> getAllByPage(int page, int size, String search) {
-		List<Examen> lst = examenRepository.findAllByEnonceContainingOrFormationTitreContainingOrCursusTitreContaining(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Examen> lst = examenRepository.findAllByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<ExamenDto> lstDto = new ArrayList<ExamenDto>();
@@ -57,14 +55,20 @@ public class ExamenServiceImpl implements ExamenService {
 
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(examenRepository.countByEnonceContainingOrFormationTitreContainingOrCursusTitreContaining(search, search, search));
+		return new CountDto(examenRepository.countByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(search, search, search));
 	}
 
 	@Override
 	public ExamenDto getById(long id) {
 		Optional<Examen> e = examenRepository.findById(id);
-		if (e.isPresent())
-			return DtoTools.convert(e.get(), ExamenDto.class);
+		if (e.isPresent()) {
+			ExamenDto eDto = DtoTools.convert(e.get(), ExamenDto.class);
+						
+			eDto.setCursusDto(DtoTools.convert(e.get().getCursus(), CursusDto.class));
+			eDto.setFormationDto(DtoTools.convert(e.get().getFormation(), FormationDto.class));
+			
+			return eDto;
+		}			
 
 		return null;
 	}
