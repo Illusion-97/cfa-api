@@ -50,14 +50,17 @@ public class FormationServiceImpl implements FormationService {
 
 	@Override
 	public List<FormationDto> getAllByPage(int page, int size, String search) {
-		List<Formation> lst = formationRepository.findAllByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Formation> lst = formationRepository
+				.findAllByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(search, search,
+						PageRequest.of(page, size))
+				.get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<FormationDto> lstDto = new ArrayList<FormationDto>();
 		for (Formation c : lst) {
 			FormationDto cDto = DtoTools.convert(c, FormationDto.class);
 			List<CursusDto> cursusLstDto = new ArrayList<CursusDto>();
-			for(Cursus cursus: c.getCursusLst()) {
+			for (Cursus cursus : c.getCursusLst()) {
 				cursusLstDto.add(DtoTools.convert(cursus, CursusDto.class));
 			}
 			cDto.setCursusLstDto(cursusLstDto);
@@ -68,7 +71,8 @@ public class FormationServiceImpl implements FormationService {
 
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(formationRepository.countByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(search, search));
+		return new CountDto(
+				formationRepository.countByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(search, search));
 	}
 
 	@Override
@@ -105,15 +109,5 @@ public class FormationServiceImpl implements FormationService {
 		formationRepository.deleteById(id);
 
 	}
-
-<<<<<<< Updated upstream
-	
-=======
-	@Override
-	public CountDto count() {
-		// TODO Auto-generated method stub
-		return new CountDto(formationRepository.count());
-	}
->>>>>>> Stashed changes
 
 }

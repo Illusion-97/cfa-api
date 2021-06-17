@@ -47,29 +47,29 @@ public class FormationController {
 			@PathVariable(value = "size") int size) {
 		return formationService.getAllByPage(page, size, "");
 	}
-	
-	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
- 	public @ResponseBody List<FormationDto> getAllByPage(@PathVariable("page") int page,
- 			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
- 		if(search.isPresent())
- 			return formationService.getAllByPage(page, size, search.get());
- 		else
- 			return formationService.getAllByPage(page, size, "");
- 	}
 
-		
+	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
+	public @ResponseBody List<FormationDto> getAllByPage(@PathVariable("page") int page,
+			@PathVariable(value = "size") int size,
+			@PathVariable(value = "search", required = false) Optional<String> search) {
+		if (search.isPresent())
+			return formationService.getAllByPage(page, size, search.get());
+		else
+			return formationService.getAllByPage(page, size, "");
+	}
+
 	@GetMapping(value = "/count", produces = "application/json")
 	public CountDto count() {
 		return formationService.count("");
 	}
-    
-    @GetMapping(value = "/count/{search}", produces = "application/json")
+
+	@GetMapping(value = "/count/{search}", produces = "application/json")
 	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
 		if(search.isPresent())
 			return formationService.count(search.get());
 		else
 			return formationService.count("");
-	}
+		}
 
 	// ##################################################
 	// # POST #
@@ -103,5 +103,4 @@ public class FormationController {
 	public FormationDto update(@RequestBody FormationDto fDto) {
 		return formationService.saveOrUpdate(fDto);
 	}
-
 }
