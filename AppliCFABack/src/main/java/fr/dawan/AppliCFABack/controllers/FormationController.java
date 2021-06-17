@@ -43,6 +43,7 @@ public class FormationController {
 	}
 
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
+<<<<<<< Updated upstream
 	public @ResponseBody List<FormationDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		return formationService.getAllByPage(page, size, "");
@@ -69,6 +70,14 @@ public class FormationController {
 			return formationService.count(search.get());
 		else
 			return formationService.count("");
+=======
+	public @ResponseBody List<FormationDto> getAllByPage(@PathVariable("page") Optional<Integer> page,
+			@PathVariable(value = "size") Optional<Integer> size) {
+		if (page.isPresent() && size.isPresent())
+			return formationService.getAllFormation(page.get(), size.get());
+		else
+			return formationService.getAllFormation();
+>>>>>>> Stashed changes
 	}
 
 	// ##################################################
@@ -102,5 +111,10 @@ public class FormationController {
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public FormationDto update(@RequestBody FormationDto fDto) {
 		return formationService.saveOrUpdate(fDto);
+	}
+
+	@GetMapping(value = "/count", produces = "application/json")
+	public CountDto count() {
+		return formationService.count();
 	}
 }
