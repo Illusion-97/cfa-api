@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
@@ -60,6 +61,11 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public UtilisateurDto getReferentById(long id) {
 		return DtoTools.convert(promoRepo.getOne(id).getReferentPedagogique(), UtilisateurDto.class);
+	}
+
+	@Override
+	public CountDto count(String search) {
+		return new CountDto(promoRepo.countByNomContaining(search));
 	}
 
 }

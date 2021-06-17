@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.PromotionService;
@@ -34,6 +36,19 @@ public class PromotionController {
 	@GetMapping(value = "/{id}",produces = "application/json")
 	public PromotionDto getById(@PathVariable("id") long id) {
 		return promoService.getById(id);
+	}
+	
+	@GetMapping(value = "/count", produces = "application/json")
+	public CountDto count() {
+		return promoService.count("");
+	}
+	
+	@GetMapping(value = "/count/{search}", produces = "application/json")
+	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
+		if(search.isPresent())
+			return promoService.count(search.get());
+		else
+			return promoService.count("");
 	}
 	
 	@PostMapping(consumes = "application/json", produces = "application/json")
