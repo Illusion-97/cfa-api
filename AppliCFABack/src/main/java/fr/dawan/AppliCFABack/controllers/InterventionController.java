@@ -111,14 +111,9 @@ public class InterventionController {
 	// ##################################################
 	// # PUT #
 	// ##################################################
-	@CrossOrigin(origins = "*")
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public InterventionDto update(@RequestBody InterventionDto iDto) {
 		return interventionService.saveOrUpdate(iDto);
 	}
 
-	@GetMapping(produces = "application/json", value = "/count")
-	public CountDto count() {
-		return interventionService.count();
-	}
 }
