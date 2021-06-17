@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 
 public interface InterventionService {
@@ -19,5 +20,11 @@ public interface InterventionService {
 	InterventionDto saveOrUpdate(InterventionDto iDto);
 
 	void deleteById(long id);
+
+	
+
+	List<InterventionDto> getAllByPage(int page, int size, String string);
+	
+	CountDto count(String string);
 
 }

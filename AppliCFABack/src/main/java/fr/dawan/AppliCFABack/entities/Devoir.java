@@ -30,8 +30,9 @@ public class Devoir {
 		super();
 	}
 
-	public Devoir(String enonce, LocalDate dateDebut, LocalDate dateFin, Intervention intervention) {
+	public Devoir(long id, String enonce, LocalDate dateDebut, LocalDate dateFin, Intervention intervention) {
 		super();
+		this.id = id;
 		this.enonce = enonce;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;

@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
 
@@ -47,10 +50,36 @@ public class DevoirServiceImpl implements DevoirService {
 	}
 
 	@Override
+	public List<DevoirDto> getAllByPage(int page, int size, String search) {
+		List<Devoir> lst = devoirRepository.findAllByEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+
+		// conversion vers Dto
+		List<DevoirDto> lstDto = new ArrayList<DevoirDto>();
+		for (Devoir d : lst) {
+			DevoirDto dDto = DtoTools.convert(d, DevoirDto.class);
+			dDto.setInterventionDto(DtoTools.convert(d.getIntervention(), InterventionDto.class));
+			dDto.getInterventionDto().setFormationDto(DtoTools.convert(d.getIntervention().getFormation(), FormationDto.class));
+			lstDto.add(dDto);
+		}
+		return lstDto;
+	}
+
+	@Override
+	public CountDto count(String search) {
+		return new CountDto(devoirRepository.countByEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search));
+	}
+
+	
+	@Override
 	public DevoirDto getById(long id) {
 		Optional<Devoir> d = devoirRepository.findById(id);
-		if (d.isPresent())
-			return DtoTools.convert(d.get(), DevoirDto.class);
+		if (d.isPresent()) {
+			DevoirDto dDto = DtoTools.convert(d.get(), DevoirDto.class);
+			dDto.setInterventionDto(DtoTools.convert(d.get().getIntervention(), InterventionDto.class));
+			dDto.getInterventionDto().setFormationDto(DtoTools.convert(d.get().getIntervention().getFormation(), FormationDto.class));
+			return dDto;
+		}
+			
 
 		return null;
 	}
@@ -66,8 +95,16 @@ public class DevoirServiceImpl implements DevoirService {
 
 	@Override
 	public void deleteById(long id) {
-		devoirRepository.deleteById(id);
+		Optional<Devoir> d = devoirRepository.findById(id);
+		
+		if (!d.isPresent())
+			return;
+		
+		d.get().setIntervention(null);
+		devoirRepository.save(d.get());		
+		devoirRepository.deleteById(id);	
 
 	}
 
+	
 }

@@ -17,7 +17,6 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.entities.Examen;
-import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
 
 @Service

@@ -11,10 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
@@ -64,6 +67,35 @@ public class InterventionServiceImpl implements InterventionService {
 		return lstDto;
 	}
 
+	@Override
+	public List<InterventionDto> getAllByPage(int page, int size, String search) {
+		List<Intervention> lst = interventionRepository.findAllByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+
+		// conversion vers Dto
+		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
+		for (Intervention i : lst) {
+			
+			InterventionDto iDto = DtoTools.convert(i, InterventionDto.class);
+			iDto.setFormationDto(DtoTools.convert(i.getFormation(), FormationDto.class));
+			
+			List<PromotionDto> proLst = new ArrayList<PromotionDto>();
+			for(Promotion p : i.getPromotion()) {
+				proLst.add(DtoTools.convert(p, PromotionDto.class));
+			}
+			iDto.setPromotionDto(proLst);
+			
+			lstDto.add(iDto);
+		}
+		return lstDto;
+	}
+
+	@Override
+	public CountDto count(String search) {
+		return new CountDto(interventionRepository.countByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search, search));
+	}
+
+	
+	
 	@Override
 	public InterventionDto getById(long id) {
 		Optional<Intervention> i = interventionRepository.findById(id);
@@ -207,7 +239,5 @@ public class InterventionServiceImpl implements InterventionService {
 		}
 		return lstDto;
 	}
-
-
 
 }
