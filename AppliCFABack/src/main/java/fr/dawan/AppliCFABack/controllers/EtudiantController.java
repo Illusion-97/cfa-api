@@ -132,11 +132,11 @@ public class EtudiantController {
 		return etudiantService.getNotesByIdEtudiant(id,page, size);
 	}
 	
-	@GetMapping(value = "/{id}/devoirs/{page}/{size}", produces = "application/json")
-	public List<DevoirDto> getDevoirsByIdEtudiant(@PathVariable("id") long id ,@PathVariable("page") int page, @PathVariable(value = "size") int size){
-		return etudiantService.getDevoirsByIdEtudiant(id,page, size);
-	}
-	
+//	@GetMapping(value = "/{id}/devoirs/{page}/{size}", produces = "application/json")
+//	public List<DevoirDto> getDevoirsByIdEtudiant(@PathVariable("id") long id ,@PathVariable("page") int page, @PathVariable(value = "size") int size){
+//		return etudiantService.getDevoirsByIdEtudiant(id,page, size);
+//	}
+//	
 	/*
 	 * On récupère les absences de l'étudiant à partir de son id
 	 */
