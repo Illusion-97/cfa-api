@@ -8,4 +8,6 @@ import fr.dawan.AppliCFABack.entities.Promotion;
 @Repository
 public interface PromotionRepository extends JpaRepository<Promotion, Long>{
 
+	long countByNomContaining(String nom);
+
 }
