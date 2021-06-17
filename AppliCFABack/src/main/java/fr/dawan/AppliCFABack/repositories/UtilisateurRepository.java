@@ -1,7 +1,11 @@
 package fr.dawan.AppliCFABack.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +26,11 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 
 	@Query("FROM Utilisateur u WHERE u.entreprise.id=:entrepriseId")
 	List<Utilisateur> findByEntreprise(@Param("entrepriseId") long entrepriseId);
+
+	Page<Utilisateur> findAllByPrenomContainingOrNomContainingOrLoginContaining(String prenom, String nom,
+			String login, Pageable pageable );
+
+	long countByPrenomContainingOrNomContainingOrLoginContaining(String prenom, String nom, String login);
 
 	
 }

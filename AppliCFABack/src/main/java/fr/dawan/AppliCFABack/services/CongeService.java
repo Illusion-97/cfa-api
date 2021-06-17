@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 
 public interface CongeService {
 
@@ -10,12 +11,14 @@ public interface CongeService {
 
 	CongeDto getById(long id);
 
-	List<CongeDto> getAllConge(int page, int size);
+	List<CongeDto> getAllByPage(int page, int size, String search);
 
 	CongeDto saveOrUpdate(CongeDto cDto);
 
 	void deleteById(long id);
 
 	double[] getAcquisDisponiblesRestantsByIdUtilisateur(long id);
+
+	CountDto count(String string);
 
 }

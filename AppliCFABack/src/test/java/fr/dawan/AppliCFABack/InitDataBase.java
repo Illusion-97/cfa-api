@@ -315,6 +315,7 @@ public class InitDataBase {
 
 		List<Etudiant> lstEtudiant = new ArrayList<Etudiant>();
 		List<Promotion> lstPromotion = new ArrayList<Promotion>();
+		List<Promotion> lstPromotion1 = new ArrayList<Promotion>();
 		List<GroupeEtudiant> lstGroupe = new ArrayList<GroupeEtudiant>();
 		List<UtilisateurRole> lstRoleEtudiant = new ArrayList<UtilisateurRole>();
 		List<UtilisateurRole> lstRoleFormateur = new ArrayList<UtilisateurRole>();
@@ -337,6 +338,7 @@ public class InitDataBase {
 		lstPromotion.add(promotion);
 		lstPromotion.add(promotion2);
 		lstPromotion.add(promotion3);
+		lstPromotion1.add(promotion);
 		lstGroupe.add(groupe);
 		lstRoleEtudiant.add(roleEtudiant);
 		lstRoleFormateur.add(roleformateur);
@@ -371,9 +373,9 @@ public class InitDataBase {
 		promotion.setCentreFormation(centre);
 		promotion.setCursus(cursus);
 		promotion.setReferentPedagogique(formateur);
-		promotion.setInterventions(lstInterventions1);
+		//promotion.setInterventions(lstInterventions);
 
-		promotion2.setInterventions(lstInterventions1);
+		//promotion2.setInterventions(lstInterventions1);
 		promotion2.setEtudiants(lstEtudiant);
 		promotion2.setCef(cef);
 		promotion2.setCentreFormation(centre);
@@ -385,7 +387,7 @@ public class InitDataBase {
 		promotion3.setCentreFormation(centre);
 		promotion3.setCursus(cursus);
 		promotion3.setReferentPedagogique(formateur);
-		promotion3.setInterventions(lstInterventions1);
+		//promotion3.setInterventions(lstInterventions1);
 
 		etudiant.setGroupes(lstGroupe);
 		etudiant.setPromotions(lstPromotion);
@@ -398,16 +400,16 @@ public class InitDataBase {
 		absence.setEtudiant(etudiant);
 
 		intervention.setFormation(formation);
-		intervention.setPromotion(lstPromotion);
+		intervention.setPromotion(lstPromotion1);
 
 		intervention2.setFormation(formation2);
-		intervention2.setPromotion(lstPromotion);
+		intervention2.setPromotion(lstPromotion1);
 
 		intervention3.setFormation(formation3);
-		intervention3.setPromotion(lstPromotion);
+		intervention3.setPromotion(lstPromotion1);
 
 		intervention4.setFormation(formation4);
-		intervention4.setPromotion(lstPromotion);
+		intervention4.setPromotion(lstPromotion1);
 
 //		intervention2.setPromotion(promotion);
 //		intervention2.setPromotion(promotion2);

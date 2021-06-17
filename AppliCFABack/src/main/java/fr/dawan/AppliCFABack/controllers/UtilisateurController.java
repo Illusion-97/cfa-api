@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.UtilisateurService;
@@ -44,10 +47,31 @@ public class UtilisateurController {
 		return utilisateurService.getAll();
 	}
 
-	// GET: /AppliCFABack/utilisateurs/{page}/{size}
-	@GetMapping(value = "/{page}/{size}")
-	public List<UtilisateurDto> getAll(@PathVariable("page") int page, @PathVariable("size") int size) {
-		return utilisateurService.getAll(page, size);
+	@GetMapping(value = "/{page}/{size}", produces = "application/json")
+ 	public @ResponseBody List<UtilisateurDto> getAllByPage(@PathVariable("page") int page, @PathVariable(value = "size") int size) {
+ 		return utilisateurService.getAllUtilisateurs(page, size, "");
+ 	}
+ 	
+ 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
+ 	public @ResponseBody List<UtilisateurDto> getAllByPage(@PathVariable("page") int page,
+ 			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
+ 		if(search.isPresent())
+ 			return utilisateurService.getAllUtilisateurs(page, size, search.get());
+ 		else
+ 			return utilisateurService.getAllUtilisateurs(page, size, "");
+ 	}
+ 	
+ 	@GetMapping(value = "/count", produces = "application/json")
+	public CountDto count() {
+		return utilisateurService.count("");
+	}
+    
+    @GetMapping(value = "/count/{search}", produces = "application/json")
+	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
+		if(search.isPresent())
+			return utilisateurService.count(search.get());
+		else
+			return utilisateurService.count("");
 	}
 
 	// GET: /AppliCFABack/utilisateurs/with-object

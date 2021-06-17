@@ -32,18 +32,15 @@ public class LoginController {
 
 	@PostMapping(value="/authenticate", consumes = "application/json")
     public ResponseEntity<?> checkLogin(@RequestBody LoginDto loginObj) throws Exception{
-        				
         UtilisateurDto uDto = utilisateurService.findByEmail(loginObj.getLogin());
-        
         //TODO Cryptage du password
         String password = loginObj.getPassword();
-                
         if(uDto !=null && uDto.getPassword().contentEquals(password)) {
-            
             //Fabrication du token en utilisant jjwt (librairie incluse dans le pom)
             Map<String, Object> claims = new HashMap<String, Object>();
             claims.put("user_id", uDto.getId());
             claims.put("user_email", uDto.getLogin());
+            
             //ajouter les données que l'on souhaite
             String token = jwtTokenUtil.doGenerateToken(claims, loginObj.getLogin());
             TokenSaver.tokensByEmail.put(loginObj.getLogin(), token);
