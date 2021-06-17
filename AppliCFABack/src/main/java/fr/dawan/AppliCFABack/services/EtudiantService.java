@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
@@ -20,6 +21,8 @@ public interface EtudiantService {
 	// ##################################################
 
 	List<EtudiantDto> getAll();
+	List<EtudiantDto> getAllByPage(int page, int size, String string);
+	CountDto count(String string);
 	EtudiantDto getById(long id);
 	EtudiantDto saveOrUpdate(EtudiantDto e);
 	void deleteById(long id);
@@ -55,4 +58,5 @@ public interface EtudiantService {
 	List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id);
 	UtilisateurDto getFormateurReferentByIdEtudiant(long id);
 	UtilisateurDto getManagerByIdEtudiant(long id);
+	
 }

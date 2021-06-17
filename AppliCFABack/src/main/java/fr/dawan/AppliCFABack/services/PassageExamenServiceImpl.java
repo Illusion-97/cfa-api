@@ -11,8 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PassageExamenDto;
+import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.repositories.PassageExamenRepository;
 
@@ -35,16 +41,24 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 	}
 
 	@Override
-	public List<PassageExamenDto> getAllPassageExamen(int page, int size) {
-		List<PassageExamen> lst = passageExamenRepository.findAll(PageRequest.of(page, size)).get()
-				.collect(Collectors.toList());
+	public List<PassageExamenDto> getAllByPage(int page, int size, String search) {
+		List<PassageExamen> lst = passageExamenRepository.findAllByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search,search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<PassageExamenDto> lstDto = new ArrayList<PassageExamenDto>();
-		for (PassageExamen pe : lst) {
-			lstDto.add(DtoTools.convert(pe, PassageExamenDto.class));
+		for (PassageExamen p : lst) {
+			PassageExamenDto pDto = DtoTools.convert(p, PassageExamenDto.class);
+			pDto.setExamenDto(DtoTools.convert(p.getExamen(), ExamenDto.class));
+			pDto.setInterventionDto(DtoTools.convert(p.getIntervention(), InterventionDto.class));
+			pDto.getInterventionDto().setFormationDto(DtoTools.convert(p.getIntervention().getFormation(), FormationDto.class));
+			lstDto.add(pDto);
 		}
 		return lstDto;
+	}
+
+	@Override
+	public CountDto count(String search) {
+		return new CountDto(passageExamenRepository.countByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search));
 	}
 
 	@Override
@@ -70,5 +84,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		passageExamenRepository.deleteById(id);
 
 	}
+
+	
 
 }
