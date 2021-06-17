@@ -12,12 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
@@ -73,31 +71,49 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Override
 	public List<InterventionDto> getAllByPage(int page, int size, String search) {
-		List<Intervention> lst = interventionRepository.findAllByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Intervention> lstIn = interventionRepository
+				.findAllByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search, search,
+						PageRequest.of(page, size))
+				.get().collect(Collectors.toList());
 
-		// conversion vers Dto
 		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
-		for (Intervention i : lst) {
-			
-			InterventionDto iDto = DtoTools.convert(i, InterventionDto.class);
-			iDto.setFormationDto(DtoTools.convert(i.getFormation(), FormationDto.class));
-			
-			List<PromotionDto> proLst = new ArrayList<PromotionDto>();
-			for(Promotion p : i.getPromotion()) {
-				proLst.add(DtoTools.convert(p, PromotionDto.class));
+
+		for (Intervention intervention : lstIn) {
+			/**
+			 * on recup une intervention de type Intervention que l'on convertis en
+			 * InterventionDto
+			 **/
+			InterventionDto interventionDto = DtoTools.convert(intervention, InterventionDto.class);
+			/**
+			 * on recup une formation de type Formation que l'on convertis en FormationDto
+			 **/
+			FormationDto formationDto = DtoTools.convert(intervention.getFormation(), FormationDto.class);
+			// Les convertion en Dto faite => on ajoute la formationDto à l'interventionDto
+			interventionDto.setFormationDto(formationDto);
+
+			Intervention inter = intervention.getInterventionMere();
+
+			InterventionDto interventionMereDto = DtoTools.convert(inter, InterventionDto.class);
+			interventionDto.setInterventionMereDto(interventionMereDto);
+
+			// On affiche une liste de promotions de type List<Promotion>
+			List<Promotion> lstPromo = intervention.getPromotion();
+			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
+			for (Promotion promotion : lstPromo) {
+				/** On convertis List<Promotion> en List<PromotionDto> **/
+				if (promotion != null)
+					lstPromoDto.add(DtoTools.convert(promotion, PromotionDto.class));
 			}
-			iDto.setPromotionDto(proLst);
-			
-			lstDto.add(iDto);
+
+			// On ajoute la liste de promotion a l'intervention
+			interventionDto.setPromotionDto(lstPromoDto);
+			// On ajoute l'intervention a la liste d'intervention
+			lstDto.add(interventionDto);
+
 		}
 		return lstDto;
 	}
 
-	@Override
-	public CountDto count(String search) {
-		return new CountDto(interventionRepository.countByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search, search));
-	}	
-	
 	@Override
 	public InterventionDto getById(long id) {
 		Optional<Intervention> i = interventionRepository.findById(id);
@@ -234,72 +250,10 @@ public class InterventionServiceImpl implements InterventionService {
 		return lstDto;
 	}
 
-//	@Override
-//	public List<InterventionDto> getAllInterventionWithObject(int page, int size) {
-//		List<Intervention> lst = interventionRepository.findAll(PageRequest.of(page, size)).get()
-//				.collect(Collectors.toList());
-//		// conversion vers Dto
-//		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
-//
-//		for (Intervention i : lst) {
-//			InterventionDto interventionDto = DtoTools.convert(i, InterventionDto.class);
-//			FormationDto formationDto = DtoTools.convert(i.getFormation(), FormationDto.class);
-//			interventionDto.setFormationDto(formationDto);
-//
-//			lstDto.add(interventionDto);
-//		}
-//		return lstDto;
-//	}
-
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(interventionRepository
 				.countByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search, search));
-	}
-
-	@Override
-	public List<InterventionDto> getAllByKeyword(String keyword, int page, int size) {
-		List<Intervention> lstIn = interventionRepository
-				.findAllByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(keyword, keyword,
-						PageRequest.of(page, size))
-				.get().collect(Collectors.toList());
-
-		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
-
-		for (Intervention intervention : lstIn) {
-			/**
-			 * on recup une intervention de type Intervention que l'on convertis en
-			 * InterventionDto
-			 **/
-			InterventionDto interventionDto = DtoTools.convert(intervention, InterventionDto.class);
-			/**
-			 * on recup une formation de type Formation que l'on convertis en FormationDto
-			 **/
-			FormationDto formationDto = DtoTools.convert(intervention.getFormation(), FormationDto.class);
-			// Les convertion en Dto faite => on ajoute la formationDto à l'interventionDto
-			interventionDto.setFormationDto(formationDto);
-
-			Intervention inter = intervention.getInterventionMere();
-
-			InterventionDto interventionMereDto = DtoTools.convert(inter, InterventionDto.class);
-			interventionDto.setInterventionMereDto(interventionMereDto);
-
-			// On affiche une liste de promotions de type List<Promotion>
-			List<Promotion> lstPromo = intervention.getPromotion();
-			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
-			for (Promotion promotion : lstPromo) {
-				/** On convertis List<Promotion> en List<PromotionDto> **/
-				if (promotion != null)
-					lstPromoDto.add(DtoTools.convert(promotion, PromotionDto.class));
-			}
-
-			// On ajoute la liste de promotion a l'intervention
-			interventionDto.setPromotionDto(lstPromoDto);
-			// On ajoute l'intervention a la liste d'intervention
-			lstDto.add(interventionDto);
-
-		}
-		return lstDto;
 	}
 
 }

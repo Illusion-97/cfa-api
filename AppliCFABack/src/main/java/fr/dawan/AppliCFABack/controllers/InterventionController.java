@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.services.InterventionService;
 
@@ -42,56 +41,48 @@ public class InterventionController {
 		return interventionService.getAllInterventionWithObject();
 	}
 
-<<<<<<< Updated upstream
 	@GetMapping(produces = "application/json", value = "/with-object/{page}/{size}")
 	public List<InterventionDto> getAllWithObject(@PathVariable("page") Optional<Integer> page,
 			@PathVariable("size") Optional<Integer> size) {
 		if (size.isPresent() && page.isPresent())
-			return interventionService.getAllInterventionWithObject(page.get(), size.get());
+			return interventionService.getAllIntervention(page.get(), size.get());
 		else
 			return interventionService.getAllInterventionWithObject();
 	}
 
-=======
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public InterventionDto getById(@PathVariable("id") long id) {
 		return interventionService.getById(id);
 	}
 
 	// /AppliCFABack/groupeEtudiants/{page}/{size}
->>>>>>> Stashed changes
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		return interventionService.getAllByPage(page, size, "");
 	}
-	
-	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
- 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
- 			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
- 		if(search.isPresent())
- 			return interventionService.getAllByPage(page, size, search.get());
- 		else
- 			return interventionService.getAllByPage(page, size, "");
- 	}
 
-		
+	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
+	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
+			@PathVariable(value = "size") int size,
+			@PathVariable(value = "search", required = false) Optional<String> search) {
+		if (search.isPresent())
+			return interventionService.getAllByPage(page, size, search.get());
+		else
+			return interventionService.getAllByPage(page, size, "");
+	}
+
 	@GetMapping(value = "/count", produces = "application/json")
 	public CountDto count() {
 		return interventionService.count("");
 	}
-    
-    @GetMapping(value = "/count/{search}", produces = "application/json")
+
+	@GetMapping(value = "/count/{search}", produces = "application/json")
 	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
-		if(search.isPresent())
+		if (search.isPresent())
 			return interventionService.count(search.get());
 		else
 			return interventionService.count("");
-	}
-	
-	@GetMapping(value = "/{id}", produces = "application/json")
-	public InterventionDto getById(@PathVariable("id") long id) {
-		return interventionService.getById(id);
 	}
 
 	@GetMapping(value = "/{page}/{size}/{keyword}", produces = "application/json")
@@ -99,7 +90,7 @@ public class InterventionController {
 			@PathVariable(value = "keyword", required = false) Optional<String> keyword, @PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		if (keyword.isPresent())
-			return interventionService.getAllByKeyword(keyword.get(), page, size);
+			return interventionService.getAllByPage(page, size, keyword.get());
 		else
 			return interventionService.getAllIntervention(page, size);
 	}
@@ -135,20 +126,4 @@ public class InterventionController {
 		return interventionService.saveOrUpdate(iDto);
 	}
 
-<<<<<<< Updated upstream
-=======
-	@GetMapping(produces = "application/json", value = "/count/{search}")
-	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> keyword) {
-		if (keyword.isPresent())
-			return interventionService.count(keyword.get());
-		else
-			return interventionService.count("");
-	}
-
-	@GetMapping(value = "/count", produces = "application/json")
-	public CountDto count() {
-		return interventionService.count("");
-	}
-
->>>>>>> Stashed changes
 }
