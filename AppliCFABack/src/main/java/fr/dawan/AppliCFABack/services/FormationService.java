@@ -19,6 +19,10 @@ public interface FormationService {
 
 	void deleteById(long id);
 
+<<<<<<< Updated upstream
 	
+=======
+	CountDto count();
+>>>>>>> Stashed changes
 
 }

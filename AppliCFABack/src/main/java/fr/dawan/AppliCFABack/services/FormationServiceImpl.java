@@ -106,6 +106,14 @@ public class FormationServiceImpl implements FormationService {
 
 	}
 
+<<<<<<< Updated upstream
 	
+=======
+	@Override
+	public CountDto count() {
+		// TODO Auto-generated method stub
+		return new CountDto(formationRepository.count());
+	}
+>>>>>>> Stashed changes
 
 }

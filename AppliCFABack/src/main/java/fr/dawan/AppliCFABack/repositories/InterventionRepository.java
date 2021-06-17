@@ -17,9 +17,13 @@ public interface InterventionRepository extends JpaRepository<Intervention, Long
 	@Query("SELECT i FROM Intervention i JOIN i.promotions promotion WHERE promotion.id=:id ")
 	List<Intervention> getInterventionsByIdPromotion(@Param("id") long id);
 
-	Page<Intervention> findAllByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(
-			String search, String search2, Pageable pageable);
+	@Query(value = "SELECT itv FROM Intervention itv JOIN itv.promotions p WHERE LOWER(itv.formation.titre) LIKE %:keyword% OR LOWER(p.nom) LIKE %:keyword% OR DATE(itv.dateDebut)=:keyword")
+	Page<Intervention> getAllByKeyword(@Param("keyword") String keyword, Pageable p);
 
-	long countByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(String search, String search2);
+	Page<Intervention> findAllByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(
+			String formationTitre, String promotionNom, Pageable p);
+
+	long countByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(String formationTitre,
+			String promotionNom);
 
 }

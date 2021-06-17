@@ -42,6 +42,7 @@ public class InterventionController {
 		return interventionService.getAllInterventionWithObject();
 	}
 
+<<<<<<< Updated upstream
 	@GetMapping(produces = "application/json", value = "/with-object/{page}/{size}")
 	public List<InterventionDto> getAllWithObject(@PathVariable("page") Optional<Integer> page,
 			@PathVariable("size") Optional<Integer> size) {
@@ -51,6 +52,14 @@ public class InterventionController {
 			return interventionService.getAllInterventionWithObject();
 	}
 
+=======
+	@GetMapping(value = "/{id}", produces = "application/json")
+	public InterventionDto getById(@PathVariable("id") long id) {
+		return interventionService.getById(id);
+	}
+
+	// /AppliCFABack/groupeEtudiants/{page}/{size}
+>>>>>>> Stashed changes
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
@@ -85,6 +94,16 @@ public class InterventionController {
 		return interventionService.getById(id);
 	}
 
+	@GetMapping(value = "/{page}/{size}/{keyword}", produces = "application/json")
+	public @ResponseBody List<InterventionDto> getByKeyword(
+			@PathVariable(value = "keyword", required = false) Optional<String> keyword, @PathVariable("page") int page,
+			@PathVariable(value = "size") int size) {
+		if (keyword.isPresent())
+			return interventionService.getAllByKeyword(keyword.get(), page, size);
+		else
+			return interventionService.getAllIntervention(page, size);
+	}
+
 	// ##################################################
 	// # POST #
 	// ##################################################
@@ -116,4 +135,20 @@ public class InterventionController {
 		return interventionService.saveOrUpdate(iDto);
 	}
 
+<<<<<<< Updated upstream
+=======
+	@GetMapping(produces = "application/json", value = "/count/{search}")
+	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> keyword) {
+		if (keyword.isPresent())
+			return interventionService.count(keyword.get());
+		else
+			return interventionService.count("");
+	}
+
+	@GetMapping(value = "/count", produces = "application/json")
+	public CountDto count() {
+		return interventionService.count("");
+	}
+
+>>>>>>> Stashed changes
 }

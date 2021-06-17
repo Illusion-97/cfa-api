@@ -13,16 +13,22 @@ public interface InterventionService {
 
 	List<InterventionDto> getAllInterventionWithObject();
 
-	List<InterventionDto> getAllInterventionWithObject(int page, int size);
+	List<InterventionDto> getAllByKeyword(String keyword, int page, int size);
 
 	InterventionDto getById(long id);
 
 	InterventionDto saveOrUpdate(InterventionDto iDto);
 
+<<<<<<< Updated upstream
 	void deleteById(long id);	
 
 	List<InterventionDto> getAllByPage(int page, int size, String string);
 	
 	CountDto count(String string);
+=======
+	void deleteById(long id);
+
+	CountDto count(String search);
+>>>>>>> Stashed changes
 
 }
