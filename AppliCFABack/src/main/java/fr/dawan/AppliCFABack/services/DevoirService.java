@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 
 public interface DevoirService {
@@ -15,5 +16,7 @@ public interface DevoirService {
 	List<DevoirDto> getAllDevoir(int page, int size);
 
 	void deleteById(long id);
+
+	CountDto count();
 
 }

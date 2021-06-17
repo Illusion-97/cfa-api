@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
@@ -126,9 +127,14 @@ public class EtudiantController {
 	/*
 	 * On récupère les notes de l'étudiants à partir de son id
 	 */
-	@GetMapping(value = "/{id}/notes", produces = "application/json")
-	public List<NoteDto> getNotesByIdEtudiant(@PathVariable("id") long id){
-		return etudiantService.getNotesByIdEtudiant(id);
+	@GetMapping(value = "/{id}/notes/{page}/{size}", produces = "application/json")
+	public List<NoteDto> getNotesByIdEtudiant(@PathVariable("id") long id ,@PathVariable("page") int page, @PathVariable(value = "size") int size){
+		return etudiantService.getNotesByIdEtudiant(id,page, size);
+	}
+	
+	@GetMapping(value = "/{id}/devoirs/{page}/{size}", produces = "application/json")
+	public List<DevoirDto> getDevoirsByIdEtudiant(@PathVariable("id") long id ,@PathVariable("page") int page, @PathVariable(value = "size") int size){
+		return etudiantService.getDevoirsByIdEtudiant(id,page, size);
 	}
 	
 	/*

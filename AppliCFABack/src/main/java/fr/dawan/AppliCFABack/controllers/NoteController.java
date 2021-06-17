@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.services.NoteService;
 
@@ -44,6 +46,11 @@ public class NoteController {
 	public @ResponseBody List<NoteDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		return noteService.getAllNote(page, size);
+	}
+	
+	@GetMapping(value = "/count", produces = "application/json")
+	public CountDto count() {
+			return noteService.count();
 	}
 
 	// ##################################################

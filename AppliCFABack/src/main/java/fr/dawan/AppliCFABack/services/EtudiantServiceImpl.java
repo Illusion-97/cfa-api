@@ -7,14 +7,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
@@ -25,12 +28,14 @@ import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
+import fr.dawan.AppliCFABack.repositories.DevoirRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
@@ -69,6 +74,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 	
 	@Autowired
 	JourneePlanningService journeePlanningService;
+	
+	@Autowired
+	DevoirRepository devoirRepository;
 	
 	// ##################################################
 	// # 					CRUD 						#
@@ -233,6 +241,15 @@ public class EtudiantServiceImpl implements EtudiantService {
 	// ##################################################
 	
 	@Override
+	public List<NoteDto> getNotesByIdEtudiant(long id,int page, int size) {
+		List<Note> lst = noteRepository.getNotesByIdEtudiant(id, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<NoteDto> res = new ArrayList<NoteDto>();
+		
+		for(Note n : lst)
+			res.add(DtoTools.convert(n, NoteDto.class));
+		
+		return res;
+	}
 	public List<NoteDto> getNotesByIdEtudiant(long id) {
 		List<Note> lst = noteRepository.getNotesByIdEtudiant(id);
 		List<NoteDto> res = new ArrayList<NoteDto>();
@@ -316,6 +333,17 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public UtilisateurDto getManagerByIdEtudiant(long id) {
 		return DtoTools.convert(getEtudiantById(id).getManager(), UtilisateurDto.class);
+	}
+
+	@Override
+	public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
+		List<Devoir> lst = devoirRepository.getDevoirsByIdEtudiant(id,  PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<DevoirDto> res = new ArrayList<DevoirDto>();
+		
+		for(Devoir n : lst)
+			res.add(DtoTools.convert(n, DevoirDto.class));
+		
+		return res;
 	}
 
 }

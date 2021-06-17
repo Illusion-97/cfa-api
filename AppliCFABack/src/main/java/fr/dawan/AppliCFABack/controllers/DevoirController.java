@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.services.DevoirService;
 
@@ -44,6 +45,11 @@ public class DevoirController {
 	public @ResponseBody List<DevoirDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		return devoirService.getAllDevoir(page, size);
+	}
+	
+	@GetMapping(value = "/count", produces = "application/json")
+	public CountDto count() {
+			return devoirService.count();
 	}
 
 	// ##################################################

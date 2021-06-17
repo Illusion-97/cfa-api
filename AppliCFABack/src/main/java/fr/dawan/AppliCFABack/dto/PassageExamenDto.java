@@ -9,7 +9,7 @@ public class PassageExamenDto {
 	private long id;
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
-	private Examen examenDto;
+	private ExamenDto examenDto;
 	private Intervention interventionDto;
 
 	public PassageExamenDto() {
@@ -40,11 +40,11 @@ public class PassageExamenDto {
 		this.dateFin = dateFin;
 	}
 
-	public Examen getExamenDto() {
+	public ExamenDto getExamenDto() {
 		return examenDto;
 	}
 
-	public void setExamenDto(Examen examenDto) {
+	public void setExamenDto(ExamenDto examenDto) {
 		this.examenDto = examenDto;
 	}
 

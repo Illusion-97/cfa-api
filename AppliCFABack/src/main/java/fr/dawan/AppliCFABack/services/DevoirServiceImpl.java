@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.Devoir;
@@ -68,6 +69,12 @@ public class DevoirServiceImpl implements DevoirService {
 	public void deleteById(long id) {
 		devoirRepository.deleteById(id);
 
+	}
+
+	@Override
+	public CountDto count() {
+		// TODO Auto-generated method stub
+		return new CountDto(devoirRepository.count());
 	}
 
 }

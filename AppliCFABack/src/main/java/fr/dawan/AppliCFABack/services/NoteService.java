@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 
 public interface NoteService {
@@ -12,6 +13,8 @@ public interface NoteService {
 
 	NoteDto getById(long id);
 
+	CountDto count();
+	
 	NoteDto saveOrUpdate(NoteDto nDto);
 
 	void deleteById(long id);
