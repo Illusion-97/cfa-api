@@ -106,5 +106,10 @@ public class DevoirServiceImpl implements DevoirService {
 
 	}
 
-	
+	@Override
+	public CountDto count() {
+		// TODO Auto-generated method stub
+		return new CountDto(devoirRepository.count());
+	}
+
 }

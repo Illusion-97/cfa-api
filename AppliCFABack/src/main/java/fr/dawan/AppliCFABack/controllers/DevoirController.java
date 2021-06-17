@@ -56,11 +56,6 @@ public class DevoirController {
  			return devoirService.getAllByPage(page, size, "");
  	}
 
-		
-	@GetMapping(value = "/count", produces = "application/json")
-	public CountDto count() {
-		return devoirService.count("");
-	}
     
     @GetMapping(value = "/count/{search}", produces = "application/json")
 	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
@@ -68,6 +63,11 @@ public class DevoirController {
 			return devoirService.count(search.get());
 		else
 			return devoirService.count("");
+	}
+	
+	@GetMapping(value = "/count", produces = "application/json")
+	public CountDto count() {
+			return devoirService.count();
 	}
 
 	// ##################################################

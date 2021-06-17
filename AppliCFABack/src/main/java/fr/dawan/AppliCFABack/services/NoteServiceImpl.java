@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.entities.Note;
@@ -64,6 +65,10 @@ public class NoteServiceImpl implements NoteService {
 		return DtoTools.convert(n, NoteDto.class);
 	}
 
+	@Override
+	public CountDto count() {
+		return new CountDto(noteRepository.count());
+	}
 	@Override
 	public void deleteById(long id) {
 		noteRepository.deleteById(id);

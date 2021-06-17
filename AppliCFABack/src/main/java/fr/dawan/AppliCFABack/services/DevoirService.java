@@ -21,6 +21,7 @@ public interface DevoirService {
 
 	void deleteById(long id);
 
-	
+	CountDto count();
+
 
 }

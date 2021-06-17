@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
@@ -38,7 +39,7 @@ public interface EtudiantService {
 	// # 			     2eme Niveau 					#
 	// ##################################################
 	
-	List<NoteDto> getNotesByIdEtudiant(long id);
+	List<NoteDto> getNotesByIdEtudiant(long id,int page,int size);
 	List<AbsenceDto> getAbsencesByIdEtudiant(long id);
 
 	
@@ -55,4 +56,5 @@ public interface EtudiantService {
 	List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id);
 	UtilisateurDto getFormateurReferentByIdEtudiant(long id);
 	UtilisateurDto getManagerByIdEtudiant(long id);
+	List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size);
 }
