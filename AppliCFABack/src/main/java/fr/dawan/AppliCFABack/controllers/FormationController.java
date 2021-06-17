@@ -69,14 +69,6 @@ public class FormationController {
 			return formationService.count(search.get());
 		else
 			return formationService.count("");
-
-	public @ResponseBody List<FormationDto> getAllByPage(@PathVariable("page") Optional<Integer> page,
-			@PathVariable(value = "size") Optional<Integer> size) {
-		if (page.isPresent() && size.isPresent())
-			return formationService.getAllFormation(page.get(), size.get());
-		else
-			return formationService.getAllFormation();
-
 	}
 
 	// ##################################################
@@ -112,8 +104,4 @@ public class FormationController {
 		return formationService.saveOrUpdate(fDto);
 	}
 
-	@GetMapping(value = "/count", produces = "application/json")
-	public CountDto count() {
-		return formationService.count();
-	}
 }
