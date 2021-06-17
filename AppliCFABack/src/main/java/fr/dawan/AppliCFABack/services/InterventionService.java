@@ -19,11 +19,7 @@ public interface InterventionService {
 
 	InterventionDto saveOrUpdate(InterventionDto iDto);
 
-	void deleteById(long id);
-	
-	CountDto count();
-
-	
+	void deleteById(long id);	
 
 	List<InterventionDto> getAllByPage(int page, int size, String string);
 	
