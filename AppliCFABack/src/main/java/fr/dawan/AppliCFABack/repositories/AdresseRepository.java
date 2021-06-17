@@ -16,4 +16,6 @@ public interface AdresseRepository extends JpaRepository<Adresse, Long>{
 
 	Page<Adresse> findAllByVille(String ville, Pageable pageable);
 
+	long countByRueContainingOrVilleContaining(String rue, String ville);
+
 }

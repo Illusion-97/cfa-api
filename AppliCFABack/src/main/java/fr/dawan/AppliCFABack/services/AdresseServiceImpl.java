@@ -72,9 +72,9 @@ public class AdresseServiceImpl implements AdresseService{
 	}
 
 	@Override
-	public CountDto count(String string) {
-		// TODO Auto-generated method stub
-		return null;
+	public CountDto count(String search) {
+		
+		return new CountDto(adresseRepository.countByRueContainingOrVilleContaining(search, search));
 	}
 
 }
