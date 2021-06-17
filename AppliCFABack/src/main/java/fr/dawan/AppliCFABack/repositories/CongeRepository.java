@@ -17,8 +17,8 @@ public interface CongeRepository extends JpaRepository<Conge, Long>{
 	@Query("Select c FROM Conge c WHERE c.utilisateur.id = :id")
 	List<Conge> findByIdUtilisateur(@Param("id") long id);
 	
-	Page<Conge> findAllByUtilisateurPrenomContainingOrUtilisateurNomContaining(String prenom, String nom, Pageable pageable );
+	Page<Conge> findAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(String prenom, String nom, Pageable pageable );
 
-	long countByUtilisateurPrenomContainingOrUtilisateurNomContaining(String prenom, String nom);
+	long countByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(String prenom, String nom);
 
 }

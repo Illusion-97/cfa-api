@@ -23,4 +23,10 @@ public interface InterventionService {
 	
 	CountDto count();
 
+	
+
+	List<InterventionDto> getAllByPage(int page, int size, String string);
+	
+	CountDto count(String string);
+
 }

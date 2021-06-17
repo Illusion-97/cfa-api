@@ -65,7 +65,7 @@ public class CongeServiceImpl implements CongeService {
 
 	@Override
 	public List<CongeDto> getAllByPage(int page, int size, String search) {
-		List<Conge> lst = congeRepository.findAllByUtilisateurPrenomContainingOrUtilisateurNomContaining(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Conge> lst = congeRepository.findAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<CongeDto> lstDto = new ArrayList<CongeDto>();
@@ -190,6 +190,6 @@ public class CongeServiceImpl implements CongeService {
 
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(congeRepository.countByUtilisateurPrenomContainingOrUtilisateurNomContaining(search, search));
+		return new CountDto(congeRepository.countByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(search, search));
 	}
 }
