@@ -45,7 +45,7 @@ public class AdresseServiceImpl implements AdresseService{
 
 	@Override
 	public List<AdresseDto> getAllByPage(int page, int size, String search) {
-		List<Adresse> lst = adresseRepository.findAllByVille(search,PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Adresse> lst = adresseRepository.findAllByRueContainingOrVilleContaining(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<AdresseDto> lstDto = new ArrayList<AdresseDto>();
@@ -75,6 +75,16 @@ public class AdresseServiceImpl implements AdresseService{
 	public CountDto count(String search) {
 		
 		return new CountDto(adresseRepository.countByRueContainingOrVilleContaining(search, search));
+	}
+
+	@Override
+	public List<AdresseDto> getAllAdresses(int page, int size, String search) {
+		List<Adresse> adresses = adresseRepository.findAllByRueContainingOrVilleContaining(search, search,PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<AdresseDto> res = new ArrayList<AdresseDto>();
+		for (Adresse a : adresses) {
+			res.add(DtoTools.convert(a, AdresseDto.class));
+		}
+		return res;
 	}
 
 }

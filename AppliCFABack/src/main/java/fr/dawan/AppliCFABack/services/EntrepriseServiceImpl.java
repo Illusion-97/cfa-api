@@ -77,4 +77,14 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		return new CountDto(entrepriseRepository.countByRaisonSocialeContaining(search));
 	}
 
+	@Override
+	public List<EntrepriseDto> getAllEntreprises(int page, int size, String search) {
+		List<Entreprise> entreprises = entrepriseRepository.findAllByRaisonSocialeContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<EntrepriseDto> res = new ArrayList<EntrepriseDto>();
+		for (Entreprise e : entreprises) {
+			res.add(DtoTools.convert(e, EntrepriseDto.class));
+		}
+		return res;
+	}
+
 }
