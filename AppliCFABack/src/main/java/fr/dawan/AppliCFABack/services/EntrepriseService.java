@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 
 public interface EntrepriseService {
 
@@ -18,5 +19,7 @@ public interface EntrepriseService {
 	void deleteById(long id);
 	
 	CountDto count(String string);
+
+	List<EntrepriseDto> getAllEntreprises(int page, int size, String string);
 
 }
