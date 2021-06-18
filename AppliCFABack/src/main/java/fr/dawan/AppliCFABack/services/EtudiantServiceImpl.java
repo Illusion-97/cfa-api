@@ -335,8 +335,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return DtoTools.convert(getEtudiantById(id).getManager(), UtilisateurDto.class);
 	}
 
-//	@Override
-//	public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
+	@Override
+	public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
+		
+		return null;
 //		List<Devoir> lst = devoirRepository.getDevoirsByIdEtudiant(id,  PageRequest.of(page, size)).get().collect(Collectors.toList());
 //		List<DevoirDto> res = new ArrayList<DevoirDto>();
 //		
@@ -344,6 +346,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 //			res.add(DtoTools.convert(n, DevoirDto.class));
 //		
 //		return res;
-//	}
+	}
 
 }

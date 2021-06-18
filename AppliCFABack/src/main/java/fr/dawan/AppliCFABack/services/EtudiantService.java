@@ -56,5 +56,5 @@ public interface EtudiantService {
 	List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id);
 	UtilisateurDto getFormateurReferentByIdEtudiant(long id);
 	UtilisateurDto getManagerByIdEtudiant(long id);
-//	List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size);
+	List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size);
 }

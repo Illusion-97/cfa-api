@@ -24,7 +24,5 @@ public interface DevoirRepository extends JpaRepository<Devoir, Long>{
 	Page<Note> getNotesByIdEtudiant(@Param("id") long id, Pageable pageRequest);
 	
 
-	@Query(value = "SELECT n FROM Devoir n WHERE n.etudiant.id = :id")
-	Page<Devoir> getDevoirsByIdEtudiant(@Param("id") long id,Pageable pageRequest);
 
 }
