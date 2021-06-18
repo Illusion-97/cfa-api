@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.services.AbsenceService;
 
 @RestController
@@ -44,6 +45,11 @@ public class AbsenceController {
 	public @ResponseBody List<AbsenceDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		return absenceService.getAllAbsence(page, size);
+	}
+	
+	@GetMapping(value = "/count", produces = "application/json")
+	public CountDto count() {
+			return absenceService.count();
 	}
 
 	// ##################################################
