@@ -66,10 +66,15 @@ public class NoteServiceImpl implements NoteService {
 	@Override
 	public NoteDto getById(long id) {
 		Optional<Note> n = noteRepository.findById(id);
-		if (n.isPresent())
-			return DtoTools.convert(n.get(), NoteDto.class);
-
-		return null;
+		if (!n.isPresent())
+			return null;
+		
+		NoteDto nDto = DtoTools.convert(n.get(), NoteDto.class);
+		nDto.setDevoirDto(DtoTools.convert(n.get().getDevoir(), DevoirDto.class));
+		nDto.setEtudiantDto(DtoTools.convert(n.get().getEtudiant(), EtudiantDto.class));
+		nDto.setExamenDto(DtoTools.convert(n.get().getExamen(), PassageExamenDto.class));
+		nDto.getExamenDto().setExamenDto(DtoTools.convert(n.get().getExamen().getExamen(), ExamenDto.class));
+		return nDto;
 	}
 
 	@Override

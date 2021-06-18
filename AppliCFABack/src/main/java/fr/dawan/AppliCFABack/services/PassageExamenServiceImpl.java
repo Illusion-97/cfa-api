@@ -64,10 +64,15 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 	@Override
 	public PassageExamenDto getById(long id) {
 		Optional<PassageExamen> pe = passageExamenRepository.findById(id);
-		if (pe.isPresent())
-			return DtoTools.convert(pe.get(), PassageExamenDto.class);
-
-		return null;
+		if (!pe.isPresent())
+			return null;
+		
+		PassageExamenDto pDto =  DtoTools.convert(pe.get(), PassageExamenDto.class);
+		pDto.setExamenDto(DtoTools.convert(pe.get().getExamen(), ExamenDto.class));
+		pDto.setInterventionDto(DtoTools.convert(pe.get().getIntervention(), InterventionDto.class));
+		pDto.getInterventionDto().setFormationDto(DtoTools.convert(pe.get().getIntervention().getFormation(), FormationDto.class));
+		
+		return pDto;
 	}
 
 	@Override
