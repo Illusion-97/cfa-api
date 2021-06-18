@@ -28,7 +28,6 @@ import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Absence;
-import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
@@ -264,6 +263,16 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public List<AbsenceDto> getAbsencesByIdEtudiant(long id) {
 		List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id);
+		List<AbsenceDto> res = new ArrayList<AbsenceDto>();
+		
+		for(Absence n : lst)
+			res.add(DtoTools.convert(n, AbsenceDto.class));
+		
+		return res;
+	}
+	@Override
+	public List<AbsenceDto> getAbsencesByIdEtudiant(long id,int page, int size) {
+		List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<AbsenceDto> res = new ArrayList<AbsenceDto>();
 		
 		for(Absence n : lst)

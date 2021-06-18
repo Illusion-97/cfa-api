@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.entities.Absence;
@@ -70,6 +71,12 @@ public class AbsenceServiceImpl implements AbsenceService{
 	public void deleteById(long id) {
 		absenceRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public CountDto count() {
+		// TODO Auto-generated method stub
+		return new CountDto(absenceRepository.count());
 	}
 
 }
