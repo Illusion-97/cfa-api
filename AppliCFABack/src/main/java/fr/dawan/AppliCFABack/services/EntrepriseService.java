@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 
 public interface EntrepriseService {
@@ -15,5 +16,7 @@ public interface EntrepriseService {
 	EntrepriseDto saveOrUpdate(EntrepriseDto eDto);
 
 	void deleteById(long id);
+	
+	CountDto count(String string);
 
 }

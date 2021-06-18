@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.entities.Entreprise;
@@ -69,6 +70,11 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	public void deleteById(long id) {
 		entrepriseRepository.deleteById(id);
 
+	}
+
+	@Override
+	public CountDto count(String search) {
+		return new CountDto(entrepriseRepository.countByRaisonSocialeContaining(search));
 	}
 
 }
