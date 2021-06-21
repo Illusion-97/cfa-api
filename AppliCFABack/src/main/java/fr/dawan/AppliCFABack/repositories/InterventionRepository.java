@@ -17,13 +17,24 @@ public interface InterventionRepository extends JpaRepository<Intervention, Long
 	@Query("SELECT i FROM Intervention i JOIN i.promotions promotion WHERE promotion.id=:id ")
 	List<Intervention> getInterventionsByIdPromotion(@Param("id") long id);
 
-	@Query(value = "SELECT itv FROM Intervention itv JOIN itv.promotions p WHERE LOWER(itv.formation.titre) LIKE %:keyword% OR LOWER(p.nom) LIKE %:keyword% OR DATE(itv.dateDebut)=:keyword")
-	Page<Intervention> getAllByKeyword(@Param("keyword") String keyword, Pageable p);
+//	List<Intervention> findAllByPromotionsId(long id);
+
+//	@Query(value = "SELECT itv FROM Intervention itv JOIN itv.promotions p WHERE LOWER(itv.formation.titre) LIKE %:keyword% OR LOWER(p.nom) LIKE %:keyword% OR DATE(itv.dateDebut)=:keyword")
+//	Page<Intervention> getAllByKeyword(@Param("keyword") String keyword, Pageable p);
 
 	Page<Intervention> findAllByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(
 			String formationTitre, String promotionNom, Pageable p);
 
 	long countByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(String formationTitre,
 			String promotionNom);
+	
+	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++**/
+	Page<Intervention> findAllByFormateursId(long id, Pageable p); // Interventions du formateur
 
+	// Interventions du formateur + recherche par mot clé
+	Page<Intervention> findByFormateursIdAndFormationTitreContainingAllIgnoreCase(long id, String titre, Pageable p);
+
+	long countByFormateursIdAndFormationTitreAllIgnoreCase(long id, String search);
+
+	long countByFormateursId(long id);
 }
