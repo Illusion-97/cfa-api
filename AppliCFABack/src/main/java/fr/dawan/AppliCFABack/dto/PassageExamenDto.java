@@ -10,7 +10,7 @@ public class PassageExamenDto {
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	private ExamenDto examenDto;
-	private Intervention interventionDto;
+	private InterventionDto interventionDto;
 
 	public PassageExamenDto() {
 		// TODO Auto-generated constructor stub

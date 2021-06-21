@@ -56,7 +56,6 @@ public class NoteController {
  		else
  			return noteService.getAllByPage(page, size, "");
  	}
-
 		
 	@GetMapping(value = "/count", produces = "application/json")
 	public CountDto count() {
@@ -71,11 +70,6 @@ public class NoteController {
 			return noteService.count("");
 	}
 	
-	@GetMapping(value = "/count", produces = "application/json")
-	public CountDto count() {
-			return noteService.count();
-	}
-
 	// ##################################################
 	// # POST #
 	// ##################################################
