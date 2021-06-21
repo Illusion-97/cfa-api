@@ -22,9 +22,8 @@ public interface EtudiantService {
 	// ##################################################
 
 	List<EtudiantDto> getAll();
-
 	List<EtudiantDto> getAllByPage(int page, int size, String search);
-
+	CountDto count(String string);
 	EtudiantDto getById(long id);
 
 	EtudiantDto saveOrUpdate(EtudiantDto e);

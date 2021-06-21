@@ -9,7 +9,9 @@ public interface NoteService {
 
 	List<NoteDto> getAllNote();
 
-	List<NoteDto> getAllNote(int page, int size);
+	List<NoteDto> getAllByPage(int page, int size, String string);
+
+	CountDto count(String string);
 
 	NoteDto getById(long id);
 
@@ -18,5 +20,7 @@ public interface NoteService {
 	NoteDto saveOrUpdate(NoteDto nDto);
 
 	void deleteById(long id);
+
+	
 
 }
