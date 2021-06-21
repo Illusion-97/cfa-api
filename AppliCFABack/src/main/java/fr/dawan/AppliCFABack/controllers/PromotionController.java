@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -32,6 +33,20 @@ public class PromotionController {
 	public List<PromotionDto> getAll() {
 		return promoService.getAll();
 	}
+	
+	@GetMapping(value = "/{page}/{size}", produces = "application/json")
+ 	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable("page") int page, @PathVariable(value = "size") int size) {
+ 		return promoService.getAllPromotions(page, size, "");
+ 	}
+ 	
+ 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
+ 	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable("page") int page,
+ 			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
+ 		if(search.isPresent())
+ 			return promoService.getAllPromotions(page, size, search.get());
+ 		else
+ 			return promoService.getAllPromotions(page, size, "");
+ 	}
 	
 	@GetMapping(value = "/{id}",produces = "application/json")
 	public PromotionDto getById(@PathVariable("id") long id) {

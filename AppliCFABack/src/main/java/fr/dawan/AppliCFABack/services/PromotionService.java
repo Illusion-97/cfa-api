@@ -20,4 +20,6 @@ public interface PromotionService {
 
 	CountDto count(String string);
 
+	List<PromotionDto> getAllPromotions(int page, int size, String string);
+
 }

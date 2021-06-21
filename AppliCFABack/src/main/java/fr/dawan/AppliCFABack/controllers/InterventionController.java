@@ -85,16 +85,6 @@ public class InterventionController {
 			return interventionService.count("");
 	}
 
-	@GetMapping(value = "/{page}/{size}/{keyword}", produces = "application/json")
-	public @ResponseBody List<InterventionDto> getByKeyword(
-			@PathVariable(value = "keyword", required = false) Optional<String> keyword, @PathVariable("page") int page,
-			@PathVariable(value = "size") int size) {
-		if (keyword.isPresent())
-			return interventionService.getAllByPage(page, size, keyword.get());
-		else
-			return interventionService.getAllIntervention(page, size);
-	}
-
 	// ##################################################
 	// # POST #
 	// ##################################################
