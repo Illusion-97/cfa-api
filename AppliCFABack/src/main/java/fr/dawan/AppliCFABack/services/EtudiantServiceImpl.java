@@ -26,7 +26,6 @@ import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Absence;
@@ -88,8 +87,36 @@ public class EtudiantServiceImpl implements EtudiantService {
 		List<Etudiant> lst = etudiantRepository.findAll();
 		List<EtudiantDto> res = new ArrayList<EtudiantDto>();
 
-		for (Etudiant e : lst)
-			res.add(DtoTools.convert(e, EtudiantDto.class));
+		for (Etudiant e : lst) {
+			EtudiantDto etuDto = DtoTools.convert(e, EtudiantDto.class);
+			AdresseDto addrDto = DtoTools.convert(e.getAdresse(), AdresseDto.class);
+			EntrepriseDto entDto = DtoTools.convert(e.getEntreprise(), EntrepriseDto.class);
+
+			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
+			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<GroupeEtudiantDto>();
+			for (GroupeEtudiant grp : lstGrpEtu) {
+				if (grp != null)
+					lstGrpEtuDto.add(DtoTools.convert(grp, GroupeEtudiantDto.class));
+			}
+
+			List<Promotion> lstPromo = e.getPromotions();
+			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
+			for (Promotion promotion : lstPromo) {
+				/** On convertis List<Promotion> en List<PromotionDto> **/
+				if (promotion != null)
+					lstPromoDto.add(DtoTools.convert(promotion, PromotionDto.class));
+			}
+
+			UtilisateurDto refDto = DtoTools.convert(e.getFormateurReferent(), UtilisateurDto.class);
+
+			etuDto.setAdresseDto(addrDto);
+			etuDto.setGroupesDto(lstGrpEtuDto);
+			etuDto.setEntrepriseDto(entDto);
+			etuDto.setPromotionsDto(lstPromoDto);
+			etuDto.setFormateurReferentDto(refDto);
+
+			res.add(etuDto);
+		}
 
 		return res;
 	}
@@ -117,13 +144,17 @@ public class EtudiantServiceImpl implements EtudiantService {
 //	public CountDto count(String search) {
 //		return new CountDto(etudiantRepository.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search, search, search));
 //	}
-	
+
 	@Override
 	public EtudiantDto getById(long id) {
 		Optional<Etudiant> e = etudiantRepository.findById(id);
 
-		if (e.isPresent())
-			return DtoTools.convert(e.get(), EtudiantDto.class);
+		if (e.isPresent()) {
+			EtudiantDto etuDto = DtoTools.convert(e.get(), EtudiantDto.class);
+			AdresseDto addrDto = DtoTools.convert(e.get().getAdresse(), AdresseDto.class);
+			etuDto.setAdresseDto(addrDto);
+			return etuDto;
+		}
 
 		return null;
 	}
@@ -367,7 +398,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public UtilisateurDto getManagerByIdEtudiant(long id) {
 		return DtoTools.convert(getEtudiantById(id).getManager(), UtilisateurDto.class);
-	}	
+	}
 
 	@Override
 	public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
@@ -386,20 +417,48 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public CountDto count(String search) {
 		// TODO Auto-generated method stub
 		return new CountDto(etudiantRepository
-				.countDistinctByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrPromotionsNomContainingIgnoringCaseOrGroupesNomContainingIgnoringCase(
-						search, search, search, search));
+				.countDistinctByPrenomContainingIgnoringCaseOrNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
+						search, search, search, search, search, search));
 	}
 
 	@Override
 	public List<EtudiantDto> getAllByPage(int page, int size, String search) {
 		List<Etudiant> lstStud = etudiantRepository
-				.findDistinctAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrPromotionsNomContainingIgnoringCaseOrGroupesNomContainingIgnoringCase(
-						search, search, search, search, PageRequest.of(page, size))
+				.findDistinctAllByPrenomContainingIgnoringCaseOrNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
+						search, search, search, search, search, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
 		List<EtudiantDto> res = new ArrayList<EtudiantDto>();
 
-		for (Etudiant e : lstStud)
-			res.add(DtoTools.convert(e, EtudiantDto.class));
+		for (Etudiant e : lstStud) {
+			EtudiantDto etuDto = DtoTools.convert(e, EtudiantDto.class);
+			AdresseDto addrDto = DtoTools.convert(e.getAdresse(), AdresseDto.class);
+			EntrepriseDto entDto = DtoTools.convert(e.getEntreprise(), EntrepriseDto.class);
+			UtilisateurDto refDto = DtoTools.convert(e.getFormateurReferent(), UtilisateurDto.class);
+			UtilisateurDto managDto = DtoTools.convert(e.getManager(), UtilisateurDto.class);
+
+			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
+			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<GroupeEtudiantDto>();
+			for (GroupeEtudiant grp : lstGrpEtu) {
+				if (grp != null)
+					lstGrpEtuDto.add(DtoTools.convert(grp, GroupeEtudiantDto.class));
+			}
+
+			List<Promotion> lstPromo = e.getPromotions();
+			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
+			for (Promotion promotion : lstPromo) {
+				/** On convertis List<Promotion> en List<PromotionDto> **/
+				if (promotion != null)
+					lstPromoDto.add(DtoTools.convert(promotion, PromotionDto.class));
+			}
+
+			etuDto.setAdresseDto(addrDto);
+			etuDto.setGroupesDto(lstGrpEtuDto);
+			etuDto.setEntrepriseDto(entDto);
+			etuDto.setPromotionsDto(lstPromoDto);
+			etuDto.setFormateurReferentDto(refDto);
+			etuDto.setManagerDto(managDto);
+			res.add(etuDto);
+		}
 
 		return res;
 	}

@@ -9,17 +9,17 @@ import fr.dawan.AppliCFABack.entities.Etudiant;
 
 @Repository
 public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
-	Page<Etudiant> findDistinctAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrPromotionsNomContainingIgnoringCaseOrGroupesNomContainingIgnoringCase(
-			String prenom, String nom, String promotionsNom, String groupesNom, Pageable p);
+	Page<Etudiant> findDistinctAllByPrenomContainingIgnoringCaseOrNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
+			String prenom, String nom, String promotionsNom, String groupesNom, String refNom, String refPrenom,
+			Pageable p);
 
-	long countDistinctByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrPromotionsNomContainingIgnoringCaseOrGroupesNomContainingIgnoringCase(
-			String prenom, String nom, String promotionsNom, String groupesNom);
-	
+	long countDistinctByPrenomContainingIgnoringCaseOrNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
+			String prenom, String nom, String promotionsNom, String groupesNom, String refNom, String refPrenom);
+
 	Page<Etudiant> findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(
 			String search, String search2, String search3, Pageable pageable);
 
-	long countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(
-			String search, String search2, String search3);	
+	long countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(String search,
+			String search2, String search3);
 
-	
 }
