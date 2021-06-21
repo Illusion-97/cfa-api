@@ -11,15 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 
@@ -47,6 +45,19 @@ public class FormateurServiceImpl implements FormateurService {
 				.collect(Collectors.toList());
 		List<FormateurDto> lstDto = new ArrayList<FormateurDto>();
 		for (Formateur f : lst) {
+			lstDto.add(DtoTools.convert(f, FormateurDto.class));
+		}
+		return lstDto;
+	}
+
+	@Override
+	public List<FormateurDto> getAllByPageWithKeyword(int page, int size, String search) {
+		List<Formateur> lstFor = formateurRepository
+				.findAllByPrenomContainingOrNomContainingAllIgnoreCase(search, search, PageRequest.of(page, size)).get()
+				.collect(Collectors.toList());
+		List<FormateurDto> lstDto = new ArrayList<FormateurDto>();
+
+		for (Formateur f : lstFor) {
 			lstDto.add(DtoTools.convert(f, FormateurDto.class));
 		}
 		return lstDto;
@@ -106,50 +117,105 @@ public class FormateurServiceImpl implements FormateurService {
 		return lstDto;
 	}
 
-	// Recupere les interventions par rapport a l'id du formateur
-	@Override
-	public FormateurDto getInterventionByIdFormateur(long id) {
-		// methode findById dans le repository
-		Optional<Formateur> i = formateurRepository.findById(id);
-		if (i.isPresent()) {
-			// On convertis un Optional<Formateur> en Formateur
-			FormateurDto formateurDto = DtoTools.convert(i.get(), FormateurDto.class);
+	@Override // nb de formateur
+	public CountDto count(String search) {
+		return new CountDto(formateurRepository.countByPrenomContainingOrNomContainingAllIgnoreCase(search, search));
+	}
 
-			// ici je recupere les intervention par rapport au formateur
-			List<Intervention> lstInt = i.get().getInterventions();
-			/**
-			 * les interventions sont de type Intervention. Comme on passe par les Dto on
-			 * doit convertir lstInt qui est de type Intervention en InterventionDto
-			 **/
-			List<InterventionDto> lstIntDto = new ArrayList<InterventionDto>();
-			for (Intervention inter : lstInt) {
-				/**
-				 * La boucle va me permettre de recup les interventionDto du formateur. J'ai
-				 * besoin aussi de recup les formation lié aux intervention du formateur. Pareil
-				 * que par rapport aux intervention, je convertis la Formation en FormationDto
-				 * 
-				 */
-				if (inter != null) {
-					Formation formation = inter.getFormation();
-					FormationDto formationDto = DtoTools.convert(formation, FormationDto.class);
-					InterventionDto interDto = DtoTools.convert(inter, InterventionDto.class);
-					interDto.setFormationDto(formationDto);
-					lstIntDto.add(interDto);
-				}
-			}
+//	// Recupere les interventions par rapport a l'id du formateur
+//	@Override
+//	public FormateurDto getInterventionByIdFormateur(long id) {
+//		// methode findById dans le repository
+//		Optional<Formateur> i = formateurRepository.findById(id);
+//		if (i.isPresent()) {
+//			// On convertis un Optional<Formateur> en Formateur
+//			FormateurDto formateurDto = DtoTools.convert(i.get(), FormateurDto.class);
+//
+//			// ici je recupere les intervention par rapport au formateur
+//			List<Intervention> lstInt = i.get().getInterventions();
+//			/**
+//			 * les interventions sont de type Intervention. Comme on passe par les Dto on
+//			 * doit convertir lstInt qui est de type Intervention en InterventionDto
+//			 **/
+//			List<InterventionDto> lstIntDto = new ArrayList<InterventionDto>();
+//			for (Intervention inter : lstInt) {
+//				/**
+//				 * La boucle va me permettre de recup les interventionDto du formateur. J'ai
+//				 * besoin aussi de recup les formation lié aux intervention du formateur. Pareil
+//				 * que par rapport aux intervention, je convertis la Formation en FormationDto
+//				 * 
+//				 */
+//				if (inter != null) {
+//					Formation formation = inter.getFormation();
+//					FormationDto formationDto = DtoTools.convert(formation, FormationDto.class);
+//					InterventionDto interDto = DtoTools.convert(inter, InterventionDto.class);
+//					interDto.setFormationDto(formationDto);
+//					lstIntDto.add(interDto);
+//				}
+//			}
+//
+//			List<UtilisateurRole> lstRole = i.get().getRoles();
+//			List<UtilisateurRoleDto> lstRoleDto = new ArrayList<UtilisateurRoleDto>();
+//			for (UtilisateurRole role : lstRole) {
+//				if (role != null)
+//					lstRoleDto.add(DtoTools.convert(role, UtilisateurRoleDto.class));
+//			}
+//			formateurDto.setRolesDto(lstRoleDto);
+//			formateurDto.setInterventionsDto(lstIntDto);
+//			return formateurDto;
+//		}
+//
+//		return null;
+//	}
 
-			List<UtilisateurRole> lstRole = i.get().getRoles();
-			List<UtilisateurRoleDto> lstRoleDto = new ArrayList<UtilisateurRoleDto>();
-			for (UtilisateurRole role : lstRole) {
-				if (role != null)
-					lstRoleDto.add(DtoTools.convert(role, UtilisateurRoleDto.class));
+	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++ **/
+	@Override // affiche toute les interventions du formateur
+	public List<InterventionDto> getAllInterventionsByFormateurIdPerPage(long id, int page, int size) {
+		List<Intervention> lstIn = interventionRepository.findAllByFormateursId(id, PageRequest.of(page, size)).get()
+				.collect(Collectors.toList());
+		List<InterventionDto> lstInDto = new ArrayList<InterventionDto>();
+		for (Intervention intervention : lstIn) {
+			if (intervention != null) {
+				InterventionDto interDto = DtoTools.convert(intervention, InterventionDto.class);
+
+				FormationDto formDto = DtoTools.convert(intervention.getFormation(), FormationDto.class);
+
+				interDto.setFormationDto(formDto);
+				lstInDto.add(interDto);
 			}
-			formateurDto.setRolesDto(lstRoleDto);
-			formateurDto.setInterventionsDto(lstIntDto);
-			return formateurDto;
 		}
+		return lstInDto;
+	}
 
-		return null;
+	@Override // affiche toute les interventions du formateur + recherche par mot clé
+	public List<InterventionDto> getAllInterventionsByFormateurIdPerPageByKeyword(long id, int page, int size,
+			String search) {
+		List<Intervention> lstIn = interventionRepository
+				.findByFormateursIdAndFormationTitreContainingAllIgnoreCase(id, search, PageRequest.of(page, size))
+				.get().collect(Collectors.toList());
+		List<InterventionDto> lstInDto = new ArrayList<InterventionDto>();
+		for (Intervention intervention : lstIn) {
+			if (intervention != null) {
+				InterventionDto interDto = DtoTools.convert(intervention, InterventionDto.class);
+
+				FormationDto formDto = DtoTools.convert(intervention.getFormation(), FormationDto.class);
+
+				interDto.setFormationDto(formDto);
+				lstInDto.add(interDto);
+			}
+		}
+		return lstInDto;
+	}
+
+	@Override // nb d'intervention du formateur avec recherche par mot clé
+	public CountDto countInterventionById(long id, String search) {
+		return new CountDto(
+				formateurRepository.countByIdAndInterventionsFormationTitreContainingAllIgnoreCase(id, search));
+	}
+
+	@Override // nb interventions du formateur
+	public CountDto countInterventionById(long id) {
+		return new CountDto(interventionRepository.countByFormateursId(id));
 	}
 
 }
