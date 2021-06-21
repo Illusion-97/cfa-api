@@ -22,16 +22,13 @@ public interface EtudiantService {
 	// ##################################################
 
 	List<EtudiantDto> getAll();
-
 	List<EtudiantDto> getAllByPage(int page, int size, String search);
-
+	CountDto count(String search);
 	EtudiantDto getById(long id);
 
 	EtudiantDto saveOrUpdate(EtudiantDto e);
 
 	void deleteById(long id);
-
-	CountDto count(String search);
 	// ##################################################
 	// # 1er Niveau #
 	// ##################################################

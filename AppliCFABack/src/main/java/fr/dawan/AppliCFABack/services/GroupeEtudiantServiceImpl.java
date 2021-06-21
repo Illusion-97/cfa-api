@@ -11,9 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.ProjetDto;
+import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
+import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
 
 @Service
@@ -35,15 +40,26 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	}
 	
 	@Override
-	public List<GroupeEtudiantDto> getAllGroupeEtudiant(int page, int max) {
-		List<GroupeEtudiant> lst = groupeEtudiantRepository.findAll(PageRequest.of(page, max)).get().collect(Collectors.toList());
+	public List<GroupeEtudiantDto> getAllByPage(int page, int size, String search) {
+		List<GroupeEtudiant> lst = groupeEtudiantRepository.findAllByNomContainingIgnoringCaseOrEtudiantsNomContainingIgnoringCaseOrEtudiantsPrenomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<GroupeEtudiantDto> lstDto = new ArrayList<GroupeEtudiantDto>();
 		for (GroupeEtudiant g : lst) {
-			lstDto.add(DtoTools.convert(g, GroupeEtudiantDto.class));
+			GroupeEtudiantDto gDto = DtoTools.convert(g, GroupeEtudiantDto.class);
+			List<EtudiantDto> etudiantsDto = new ArrayList<EtudiantDto>();
+			for(Etudiant e : g.getEtudiants()) {
+				etudiantsDto.add(DtoTools.convert(e, EtudiantDto.class));
+			}
+			gDto.setEtudiants(etudiantsDto);
+			lstDto.add(gDto);
 		}
 		return lstDto;
+	}
+
+	@Override
+	public CountDto count(String search) {
+		return new CountDto(groupeEtudiantRepository.countByNomContainingIgnoringCaseOrEtudiantsNomContainingIgnoringCaseOrEtudiantsPrenomContainingIgnoringCase(search, search, search));
 	}
 
 	@Override
@@ -68,5 +84,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		groupeEtudiantRepository.deleteById(id);
 		
 	}
+
+	
 
 }

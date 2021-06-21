@@ -10,11 +10,23 @@ public class PassageExamenDto {
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	private ExamenDto examenDto;
-	private Intervention interventionDto;
+	private InterventionDto interventionDto;
 
 	public PassageExamenDto() {
 		// TODO Auto-generated constructor stub
 	}
+
+	public PassageExamenDto(long id, LocalDate dateDebut, LocalDate dateFin, ExamenDto examenDto,
+			InterventionDto interventionDto) {
+		super();
+		this.id = id;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.examenDto = examenDto;
+		this.interventionDto = interventionDto;
+	}
+
+
 
 	public long getId() {
 		return id;
@@ -48,12 +60,13 @@ public class PassageExamenDto {
 		this.examenDto = examenDto;
 	}
 
-	public Intervention getInterventionDto() {
+	public InterventionDto getInterventionDto() {
 		return interventionDto;
 	}
 
-	public void setInterventionDto(Intervention interventionDto) {
+	public void setInterventionDto(InterventionDto interventionDto) {
 		this.interventionDto = interventionDto;
 	}
 
+	
 }

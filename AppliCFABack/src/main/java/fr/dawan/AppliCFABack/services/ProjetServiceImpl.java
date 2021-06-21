@@ -11,8 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
+import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.repositories.ProjetRepository;
 
@@ -22,6 +28,9 @@ public class ProjetServiceImpl implements ProjetService {
 
 	@Autowired
 	private ProjetRepository projetRepository;
+	
+	@Autowired
+	FilesService filesService;
 
 	@Override
 	public List<ProjetDto> getAllProjet() {
@@ -35,15 +44,22 @@ public class ProjetServiceImpl implements ProjetService {
 	}
 
 	@Override
-	public List<ProjetDto> getAllProjet(int page, int size) {
-		List<Projet> lst = projetRepository.findAll(PageRequest.of(page, size)).get().collect(Collectors.toList());
+	public List<ProjetDto> getAllByPage(int page, int size, String search) {
+		List<Projet> lst = projetRepository.findAllByNomContainingIgnoringCaseOrDescriptionContainingIgnoringCaseOrGroupeNomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<ProjetDto> lstDto = new ArrayList<ProjetDto>();
 		for (Projet p : lst) {
-			lstDto.add(DtoTools.convert(p, ProjetDto.class));
+			ProjetDto pDto = DtoTools.convert(p, ProjetDto.class);
+			pDto.setGroupe(DtoTools.convert(p.getGroupe(), GroupeEtudiantDto.class));
+			lstDto.add(pDto);
 		}
 		return lstDto;
+	}
+
+	@Override
+	public CountDto count(String search) {
+		return new CountDto(projetRepository.countByNomContainingIgnoringCaseOrDescriptionContainingIgnoringCaseOrGroupeNomContainingIgnoringCase(search, search, search));
 	}
 
 	@Override
@@ -60,6 +76,8 @@ public class ProjetServiceImpl implements ProjetService {
 		Projet p = DtoTools.convert(pDto, Projet.class);
 
 		p = projetRepository.saveAndFlush(p);
+		
+		filesService.createDirectory("projets/" + p.getId());
 
 		return DtoTools.convert(p, ProjetDto.class);
 	}
@@ -67,7 +85,7 @@ public class ProjetServiceImpl implements ProjetService {
 	@Override
 	public void deleteById(long id) {
 		projetRepository.deleteById(id);
-
-	}
+		filesService.deleteDirectoryWithContent("projets/"+id);
+	}	
 
 }

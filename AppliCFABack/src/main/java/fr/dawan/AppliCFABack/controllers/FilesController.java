@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +33,7 @@ public class FilesController {
 	public String[] getAllNamesByDirectoryAndId(@PathVariable("directory") String directory,
 			@PathVariable("id") long id) {
 
-		if (!directory.equals("promotions") && !directory.equals("utilisateurs"))
+		if (!directory.equals("promotions") && !directory.equals("utilisateurs") && !directory.equals("projets"))
 			return null;
 		
 		return fileService.getAllNamesByDirectory(directory + "/" + id);	
@@ -45,7 +44,7 @@ public class FilesController {
 			@PathVariable("directory") String directory, @PathVariable("id") long id,
 			@PathVariable("fileName") String fileName) {
 
-		if (!directory.equals("promotions") && !directory.equals("utilisateurs"))
+		if (!directory.equals("promotions") && !directory.equals("utilisateurs") && !directory.equals("projets"))
 			return null;
 
 		String workingDirectory = directory + "/" + id + "/";

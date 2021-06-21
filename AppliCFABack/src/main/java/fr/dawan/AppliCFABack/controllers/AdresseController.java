@@ -46,6 +46,16 @@ public class AdresseController {
 			return adresseService.getAllByPage(page, size, "");
 		}
 		
+		@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
+	 	public @ResponseBody List<AdresseDto> getAllByPage(@PathVariable("page") int page,
+	 			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
+	 		if(search.isPresent())
+	 			return adresseService.getAllAdresses(page, size, search.get());
+	 		else
+	 			return adresseService.getAllAdresses(page, size, "");
+		}
+	 	
+		
 		@GetMapping(value = "/count", produces = "application/json")
 		public CountDto count() {
 			return adresseService.count("");

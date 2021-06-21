@@ -2,10 +2,12 @@ package fr.dawan.AppliCFABack.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -55,7 +57,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public void deleteById(long id) {
 		promoRepo.deleteById(id);
-//		filesService.deleteDirectoryWithContent("promotions/"+id);
+		filesService.deleteDirectoryWithContent("promotions/"+id);
 	}
 
 	@Override
@@ -66,6 +68,16 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(promoRepo.countByNomContaining(search));
+	}
+
+	@Override
+	public List<PromotionDto> getAllPromotions(int page, int size, String search) {
+		List<Promotion> promo = promoRepo.findAllByNomContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<PromotionDto> res = new ArrayList<PromotionDto>();
+		for (Promotion p : promo) {
+			res.add(DtoTools.convert(p, PromotionDto.class));
+		}
+		return res;
 	}
 
 }
