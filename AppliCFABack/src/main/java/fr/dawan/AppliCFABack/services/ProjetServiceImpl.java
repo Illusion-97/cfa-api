@@ -28,6 +28,9 @@ public class ProjetServiceImpl implements ProjetService {
 
 	@Autowired
 	private ProjetRepository projetRepository;
+	
+	@Autowired
+	FilesService filesService;
 
 	@Override
 	public List<ProjetDto> getAllProjet() {
@@ -73,6 +76,8 @@ public class ProjetServiceImpl implements ProjetService {
 		Projet p = DtoTools.convert(pDto, Projet.class);
 
 		p = projetRepository.saveAndFlush(p);
+		
+		filesService.createDirectory("projets/" + p.getId());
 
 		return DtoTools.convert(p, ProjetDto.class);
 	}
@@ -80,7 +85,7 @@ public class ProjetServiceImpl implements ProjetService {
 	@Override
 	public void deleteById(long id) {
 		projetRepository.deleteById(id);
-
+		filesService.deleteDirectoryWithContent("projets/"+id);
 	}	
 
 }

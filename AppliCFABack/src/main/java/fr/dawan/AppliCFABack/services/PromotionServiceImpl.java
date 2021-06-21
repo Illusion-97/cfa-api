@@ -55,7 +55,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public void deleteById(long id) {
 		promoRepo.deleteById(id);
-//		filesService.deleteDirectoryWithContent("promotions/"+id);
+		filesService.deleteDirectoryWithContent("promotions/"+id);
 	}
 
 	@Override
