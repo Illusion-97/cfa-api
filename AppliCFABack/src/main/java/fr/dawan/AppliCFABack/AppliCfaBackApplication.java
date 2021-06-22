@@ -18,31 +18,31 @@ public class AppliCfaBackApplication {
 	}
 
 	@Autowired
-    private TokenInterceptor tokenInterceptor;
-    
-    @Bean
-    public WebMvcConfigurer myMvcConfigurer() {
+	private TokenInterceptor tokenInterceptor;
 
-        return new WebMvcConfigurer() {
+	@Bean
+	public WebMvcConfigurer myMvcConfigurer() {
 
-            // CROSS ORIGIN
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                // registry.addMapping("/api/contacts").allowedMethods("GET").allowedOrigins("*");
-                // registry.addMapping("/api/contacts").allowedMethods("POST","PUT").allowedOrigins("jehann.fr");
-                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*")
-                .allowedHeaders("*")
-                .exposedHeaders("Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Origin", "Authorization", "X-Requested-With", "requestId", "Correlation-Id")
-                .allowCredentials(true).maxAge(3600);
-            }
-            
-            // Intercepteurs
-            @Override
-            public void addInterceptors(InterceptorRegistry registry) {
-                registry.addInterceptor(tokenInterceptor);
-           }
+		return new WebMvcConfigurer() {
 
-        };
-    }
+			// CROSS ORIGIN
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/AppliCFABack").allowedMethods("GET").allowedOrigins("*");
+				registry.addMapping("/AppliCFABack").allowedMethods("POST", "PUT").allowedOrigins("*");
+				registry.addMapping("/**").allowedOrigins("*").allowedMethods("*").allowedHeaders("*")
+						.exposedHeaders("Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
+								"Origin", "Authorization", "X-Requested-With", "requestId", "Correlation-Id")
+						.allowCredentials(true).maxAge(3600);
+			}
+
+			// Intercepteurs
+			@Override
+			public void addInterceptors(InterceptorRegistry registry) {
+//                registry.addInterceptor(tokenInterceptor);
+			}
+
+		};
+	}
 
 }
