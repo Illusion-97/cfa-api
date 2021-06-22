@@ -272,7 +272,6 @@ public class InitDataBase {
 		Projet projet = new Projet();
 		projet.setNom("Projet Nom");
 		projet.setDescription("Description");
-		projet.setPjCahierDesCharges("CDA");
 
 		// Conge
 		Conge conge = new Conge();

@@ -16,9 +16,11 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Projet;
+import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
 
 @Service
@@ -82,6 +84,27 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	@Override
 	public void deleteById(long id) {
 		groupeEtudiantRepository.deleteById(id);
+		
+	}
+
+	@Override
+	public List<EtudiantDto> getEtudiantsByGroupeId(long id) {
+		Optional<GroupeEtudiant> g = groupeEtudiantRepository.findById(id);
+		if(!g.isPresent())
+			return null;
+		
+		List<EtudiantDto> result = new ArrayList<EtudiantDto>();
+		for(Etudiant e : g.get().getEtudiants()) {
+			EtudiantDto eDto = DtoTools.convert(e, EtudiantDto.class);
+			List<PromotionDto> pDtos = new ArrayList<PromotionDto>();
+			for(Promotion p : e.getPromotions()) {
+				pDtos.add(DtoTools.convert(p, PromotionDto.class));
+			}
+			eDto.setPromotionsDto(pDtos);
+			result.add(eDto);
+		}		
+		
+		return result;
 		
 	}
 

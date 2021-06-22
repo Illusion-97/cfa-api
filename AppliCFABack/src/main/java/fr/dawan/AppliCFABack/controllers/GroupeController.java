@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.services.GroupeEtudiantService;
@@ -69,6 +70,11 @@ public class GroupeController {
 			return groupeEtudiantService.count(search.get());
 		else
 			return groupeEtudiantService.count("");
+	}
+    
+    @GetMapping(value = "/{id}/etudiants", produces = "application/json")
+	public List<EtudiantDto> getEtudiantsByGroupeId(@PathVariable("id") long id) {
+		return groupeEtudiantService.getEtudiantsByGroupeId(id);
 	}
 
 	// ##################################################

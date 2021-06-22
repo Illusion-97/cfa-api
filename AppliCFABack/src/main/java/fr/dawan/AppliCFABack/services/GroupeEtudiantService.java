@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 
 public interface GroupeEtudiantService {
@@ -18,6 +19,8 @@ public interface GroupeEtudiantService {
 	GroupeEtudiantDto saveOrUpdate(GroupeEtudiantDto gDto);
 
 	void deleteById(long id);
+
+	List<EtudiantDto> getEtudiantsByGroupeId(long id);
 
 	
 

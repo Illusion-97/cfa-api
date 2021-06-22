@@ -4,7 +4,6 @@ public class ProjetDto {
 	private long id;
 	private String nom;
 	private String description;
-	private String pjCahierDesCharges;
 	private GroupeEtudiantDto groupeDto;
 
 	public ProjetDto() {
@@ -33,14 +32,6 @@ public class ProjetDto {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getPjCahierDesCharges() {
-		return pjCahierDesCharges;
-	}
-
-	public void setPjCahierDesCharges(String pjCahierDesCharges) {
-		this.pjCahierDesCharges = pjCahierDesCharges;
 	}
 
 	public GroupeEtudiantDto getGroupeDto() {

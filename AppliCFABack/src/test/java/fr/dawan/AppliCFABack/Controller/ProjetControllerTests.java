@@ -87,7 +87,6 @@ public class ProjetControllerTests {
 			ProjetDto eToInsert = new ProjetDto();
 			eToInsert.setNom("nom projet save");
 			eToInsert.setDescription("description projet save");
-			eToInsert.setPjCahierDesCharges("pjCahierDesCharges save");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
@@ -112,7 +111,6 @@ public class ProjetControllerTests {
 			ProjetDto eDto = projetController.getById(idProjet+1);
 			eDto.setNom("nom projet update");
 			eDto.setDescription("description projet update");
-			eDto.setPjCahierDesCharges("pjCahierDesCharges update");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eDto);
@@ -126,7 +124,6 @@ public class ProjetControllerTests {
 			assertEquals(res.getId(), eDto.getId());
 			assertEquals(res.getNom(), eDto.getNom());
 			assertEquals(res.getDescription(), eDto.getDescription());
-			assertEquals(res.getPjCahierDesCharges(), eDto.getPjCahierDesCharges());
 			
 		} catch (Exception e) {
 			fail(e.getMessage());

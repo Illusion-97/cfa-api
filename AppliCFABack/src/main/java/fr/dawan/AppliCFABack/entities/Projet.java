@@ -20,9 +20,6 @@ public class Projet {
 	@Column(nullable = false, length = 255)
 	private String description;
 
-	@Column(nullable = false, length = 255)
-	private String pjCahierDesCharges;
-
 	@ManyToOne
 	private GroupeEtudiant groupe;
 
@@ -37,11 +34,10 @@ public class Projet {
 		super();
 	}
 
-	public Projet(String nom, String description, String pjCahierDesCharges, GroupeEtudiant groupe) {
+	public Projet(String nom, String description, GroupeEtudiant groupe) {
 		super();
 		this.nom = nom;
 		this.description = description;
-		this.pjCahierDesCharges = pjCahierDesCharges;
 		this.groupe = groupe;
 	}
 
@@ -67,14 +63,6 @@ public class Projet {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getPjCahierDesCharges() {
-		return pjCahierDesCharges;
-	}
-
-	public void setPjCahierDesCharges(String pjCahierDesCharges) {
-		this.pjCahierDesCharges = pjCahierDesCharges;
 	}
 
 	public GroupeEtudiant getGroupe() {
