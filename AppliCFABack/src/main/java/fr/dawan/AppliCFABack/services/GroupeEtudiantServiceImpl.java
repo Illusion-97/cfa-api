@@ -51,7 +51,13 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 			GroupeEtudiantDto gDto = DtoTools.convert(g, GroupeEtudiantDto.class);
 			List<EtudiantDto> etudiantsDto = new ArrayList<EtudiantDto>();
 			for(Etudiant e : g.getEtudiants()) {
-				etudiantsDto.add(DtoTools.convert(e, EtudiantDto.class));
+				EtudiantDto eDto = DtoTools.convert(e, EtudiantDto.class);
+				List<PromotionDto> pDtos = new ArrayList<PromotionDto>();
+				for(Promotion p : e.getPromotions()) {
+					pDtos.add(DtoTools.convert(p, PromotionDto.class));
+				}
+				eDto.setPromotionsDto(pDtos);
+				etudiantsDto.add(eDto);
 			}
 			gDto.setEtudiants(etudiantsDto);
 			lstDto.add(gDto);
@@ -67,10 +73,23 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	@Override
 	public GroupeEtudiantDto getById(long id) {
 		Optional<GroupeEtudiant> g = groupeEtudiantRepository.findById(id);
-		if(g.isPresent())
-			return DtoTools.convert(g.get(), GroupeEtudiantDto.class);
 		
-		return null;
+		if(!g.isPresent()) return null;
+		
+		GroupeEtudiantDto gDto = DtoTools.convert(g.get(), GroupeEtudiantDto.class);
+		List<EtudiantDto> etudiantsDto = new ArrayList<EtudiantDto>();
+		for(Etudiant e : g.get().getEtudiants()) {
+			EtudiantDto eDto = DtoTools.convert(e, EtudiantDto.class);
+			List<PromotionDto> pDtos = new ArrayList<PromotionDto>();
+			for(Promotion p : e.getPromotions()) {
+				pDtos.add(DtoTools.convert(p, PromotionDto.class));
+			}
+			eDto.setPromotionsDto(pDtos);
+			etudiantsDto.add(eDto);
+		}
+		gDto.setEtudiants(etudiantsDto);
+		
+		return gDto;
 	}
 
 	@Override
