@@ -35,6 +35,7 @@ public class GroupeController {
 
 	@GetMapping(produces = "application/json")
 	public List<GroupeEtudiantDto> getAll() {
+		System.out.println("Controller getAll");
 		return groupeEtudiantService.getAllGroupeEtudiant();
 	}
 
@@ -83,6 +84,7 @@ public class GroupeController {
 
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public GroupeEtudiantDto save(@RequestBody GroupeEtudiantDto gDto) {
+		System.out.println("Controller @PostMapping");
 		return groupeEtudiantService.saveOrUpdate(gDto);
 	}
 
@@ -107,6 +109,7 @@ public class GroupeController {
 
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public GroupeEtudiantDto update(@RequestBody GroupeEtudiantDto eDto) {
+		System.out.println("Controller @PutMapping");
 		return groupeEtudiantService.saveOrUpdate(eDto);
 	}
 

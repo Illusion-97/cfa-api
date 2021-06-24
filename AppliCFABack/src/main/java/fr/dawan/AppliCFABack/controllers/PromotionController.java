@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.PromotionService;
@@ -75,5 +76,10 @@ public class PromotionController {
 	@GetMapping(value = "/{id}/referent",produces = "application/json")
 	public UtilisateurDto getReferentById(@PathVariable("id") long id) {
 		return promoService.getReferentById(id);
+	}
+	
+	@GetMapping(value = "/{id}/etudiants",produces = "application/json")
+	public List<EtudiantDto> getEtudiantsById(@PathVariable("id") long id) {
+		return promoService.getEtudiantsById(id);
 	}
 }

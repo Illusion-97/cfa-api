@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 
@@ -19,5 +20,7 @@ public interface PromotionService {
 	UtilisateurDto getReferentById(long id);
 
 	CountDto count(String string);
+
+	List<EtudiantDto> getEtudiantsById(long id);
 
 }

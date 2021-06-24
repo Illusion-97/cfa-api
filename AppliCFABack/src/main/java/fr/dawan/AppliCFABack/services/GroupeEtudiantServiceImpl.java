@@ -94,9 +94,8 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 
 	@Override
 	public GroupeEtudiantDto saveOrUpdate(GroupeEtudiantDto gDto) {
-		GroupeEtudiant g = DtoTools.convert(gDto, GroupeEtudiant.class);
-		
-		g = groupeEtudiantRepository.saveAndFlush(g);
+		System.out.println("GroupeEtudiantDto saveOrUpdate");
+		GroupeEtudiant g = groupeEtudiantRepository.saveAndFlush(DtoTools.convert(gDto, GroupeEtudiant.class));
 		return DtoTools.convert(g, GroupeEtudiantDto.class);
 	}
 
