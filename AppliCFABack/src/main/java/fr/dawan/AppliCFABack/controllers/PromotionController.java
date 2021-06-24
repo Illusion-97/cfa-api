@@ -19,58 +19,62 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.services.AbsenceService;
 import fr.dawan.AppliCFABack.services.PromotionService;
 
 @RestController
 @RequestMapping("/AppliCFABack/promotions")
 public class PromotionController {
 
-	
 	@Autowired
 	private PromotionService promoService;
-	
+	@Autowired
+	AbsenceService absenceService;
+
 	@GetMapping(produces = "application/json")
 	public List<PromotionDto> getAll() {
 		return promoService.getAll();
 	}
-	
+
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
- 	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable("page") int page, @PathVariable(value = "size") int size) {
- 		return promoService.getAllPromotions(page, size, "");
- 	}
- 	
- 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
- 	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable("page") int page,
- 			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
- 		if(search.isPresent())
- 			return promoService.getAllPromotions(page, size, search.get());
- 		else
- 			return promoService.getAllPromotions(page, size, "");
- 	}
-	
-	@GetMapping(value = "/{id}",produces = "application/json")
+	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable("page") int page,
+			@PathVariable(value = "size") int size) {
+		return promoService.getAllPromotions(page, size, "");
+	}
+
+	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
+	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable("page") int page,
+			@PathVariable(value = "size") int size,
+			@PathVariable(value = "search", required = false) Optional<String> search) {
+		if (search.isPresent())
+			return promoService.getAllPromotions(page, size, search.get());
+		else
+			return promoService.getAllPromotions(page, size, "");
+	}
+
+	@GetMapping(value = "/{id}", produces = "application/json")
 	public PromotionDto getById(@PathVariable("id") long id) {
 		return promoService.getById(id);
 	}
-	
+
 	@GetMapping(value = "/count", produces = "application/json")
 	public CountDto count() {
 		return promoService.count("");
 	}
-	
+
 	@GetMapping(value = "/count/{search}", produces = "application/json")
 	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
-		if(search.isPresent())
+		if (search.isPresent())
 			return promoService.count(search.get());
 		else
 			return promoService.count("");
 	}
-	
+
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public PromotionDto save(@RequestBody PromotionDto pDto) {
 		return promoService.saveOrUpdate(pDto);
 	}
-	
+
 	@DeleteMapping(value = "/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		try {
@@ -80,15 +84,15 @@ public class PromotionController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
 		}
 	}
-	
+
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public PromotionDto update(@RequestBody PromotionDto pDto) {
 		return promoService.saveOrUpdate(pDto);
 	}
-	
-	
-	@GetMapping(value = "/{id}/referent",produces = "application/json")
+
+	@GetMapping(value = "/{id}/referent", produces = "application/json")
 	public UtilisateurDto getReferentById(@PathVariable("id") long id) {
 		return promoService.getReferentById(id);
 	}
+
 }

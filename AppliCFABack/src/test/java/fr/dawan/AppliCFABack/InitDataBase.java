@@ -140,7 +140,9 @@ public class InitDataBase {
 		roleadmin.setIntitule("ADMIN");
 		UtilisateurRole rolecef = new UtilisateurRole();
 		rolecef.setIntitule("CEF");
-
+		UtilisateurRole roleRef = new UtilisateurRole();
+		roleRef.setIntitule("REFERENT");
+		
 		Etudiant etudiant = new Etudiant();
 		etudiant.setPrenom("Tanguy");
 		etudiant.setNom("Billon");

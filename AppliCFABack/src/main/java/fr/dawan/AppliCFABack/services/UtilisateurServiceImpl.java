@@ -11,17 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 
@@ -33,25 +37,28 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired
 	EtudiantService etudiantService;
-	
+
 	@Autowired
 	CongeRepository congeRepository;
-	
+
 	@Autowired
 	FilesService filesService;
-	
+
+	@Autowired
+	AbsenceRepository absenceRepository;
+
 	@Override
 	public List<UtilisateurDto> getAll() {
 		List<Utilisateur> users = utilisateurRepository.findAll();
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
-				
+
 		for (Utilisateur u : users) {
-			
+
 			List<UtilisateurRoleDto> test = new ArrayList<UtilisateurRoleDto>();
-			for(UtilisateurRole r : u.getRoles()) {
+			for (UtilisateurRole r : u.getRoles()) {
 				test.add(DtoTools.convert(r, UtilisateurRoleDto.class));
 			}
-			
+
 			UtilisateurDto user = DtoTools.convert(u, UtilisateurDto.class);
 			user.setRolesDto(test);
 			res.add(user);
@@ -61,8 +68,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public List<UtilisateurDto> getAllUtilisateurs(int page, int size, String search) {
-		
-		List<Utilisateur> users = utilisateurRepository.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search,search,search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+
+		List<Utilisateur> users = utilisateurRepository
+				.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search,
+						search, search, PageRequest.of(page, size))
+				.get().collect(Collectors.toList());
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
 			res.add(DtoTools.convert(u, UtilisateurDto.class));
@@ -70,12 +80,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return res;
 	}
 
-
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(utilisateurRepository.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search, search, search));
+		return new CountDto(utilisateurRepository
+				.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search,
+						search, search));
 	}
-	
+
 	@Override
 	public UtilisateurDto getById(long id) {
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
@@ -83,7 +94,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			return DtoTools.convert(userOpt.get(), UtilisateurDto.class);
 		return null;
 	}
-	
 
 	@Override
 	public UtilisateurDto findByEmail(String email) {
@@ -92,7 +102,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			return DtoTools.convert(user, UtilisateurDto.class);
 		return null;
 	}
-
 
 	@Override
 	public UtilisateurDto getName(String name) {
@@ -105,18 +114,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public UtilisateurDto insertUpdate(UtilisateurDto uDto) {
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
-		
+
 		utilisateurRepository.saveAndFlush(user);
-		
+
 		filesService.createDirectory("utilisateurs/" + user.getId());
-				
+
 		return DtoTools.convert(user, UtilisateurDto.class);
 	}
 
 	@Override
 	public void deleteById(long id) {
-		utilisateurRepository.deleteById(id);		
-		filesService.deleteDirectoryWithContent("utilisateurs/"+id);
+		utilisateurRepository.deleteById(id);
+		filesService.deleteDirectoryWithContent("utilisateurs/" + id);
 	}
 
 	@Override
@@ -142,13 +151,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id) {
 		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
-		
+
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (!userOpt.isPresent())
 			return null;
-			
-		for(UtilisateurRole role : userOpt.get().getRoles()) {
-			switch(role.getIntitule()) {
+
+		for (UtilisateurRole role : userOpt.get().getRoles()) {
+			switch (role.getIntitule()) {
 			case "ETUDIANT":
 			default:
 				result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(id));
@@ -159,23 +168,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				break;
 			case "CEF":
 				break;
-				
+
 			}
 		}
-		
+
 		return result;
 	}
 
 	@Override
 	public List<CongeDto> getAllCongesByIdUtilisateur(long id) {
 		List<CongeDto> result = new ArrayList<CongeDto>();
-		
+
 		List<Conge> conges = congeRepository.findByIdUtilisateur(id);
-		
-		for(Conge c : conges) {
+
+		for (Conge c : conges) {
 			result.add(DtoTools.convert(c, CongeDto.class));
 		}
-		
+
 		return result;
 	}
 
@@ -183,17 +192,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public AdresseDto getAdresseByIdUtilisateur(long id) {
 		return DtoTools.convert(getUtilisateurById(id).getAdresse(), AdresseDto.class);
 	}
-	
+
 	// ##################################################
-	// # 					UTILE 						#
+	// # UTILE #
 	// ##################################################
-	
+
 	private Utilisateur getUtilisateurById(long id) {
 		Optional<Utilisateur> e = utilisateurRepository.findById(id);
 
 		if (e.isPresent())
 			return e.get();
-		
+
 		return null;
 	}
 
@@ -221,16 +230,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			lstUsrDto.add(utilisateurDto);
 		}
-		
-		
+
 		return lstUsrDto;
 
 	}
-	
+
 	@Override
 	public UtilisateurDto getByIdWithObject(long id) {
 		Utilisateur utilisateur = getUtilisateurById(id);
-		
+
 		if (utilisateur != null) {
 			UtilisateurDto utilisateurDto = DtoTools.convert(utilisateur, UtilisateurDto.class);
 
@@ -247,12 +255,30 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					lstUsrRoleDto.add(DtoTools.convert(utilisateurRole, UtilisateurRoleDto.class));
 			}
 			utilisateurDto.setRolesDto(lstUsrRoleDto);
-			
+
 			return utilisateurDto;
 		}
-		
+
 		return null;
 	}
 
+	@Override
+	public List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long id) {
+		List<Absence> lstAbs = absenceRepository.findDistinctByEtudiantPromotionsReferentPedagogiqueId(id);
+		List<AbsenceDto> lstAbsDto = new ArrayList<AbsenceDto>();
+		for (Absence abs : lstAbs) {
+			AbsenceDto absDto = DtoTools.convert(abs, AbsenceDto.class);
+			EtudiantDto etuDto = DtoTools.convert(abs.getEtudiant(), EtudiantDto.class);
+			absDto.setEtudiantDto(etuDto);
+			lstAbsDto.add(absDto);
+			return lstAbsDto;
+		}
+		return null;
+	}
+
+	@Override
+	public CountDto countEtudiantPromotionsReferentPedagogiqueId(long id) {
+		return new CountDto(absenceRepository.countDistinctByEtudiantPromotionsReferentPedagogiqueId(id));
+	}
 
 }

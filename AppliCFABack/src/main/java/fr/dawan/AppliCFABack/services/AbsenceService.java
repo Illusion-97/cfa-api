@@ -9,7 +9,9 @@ public interface AbsenceService {
 
 	List<AbsenceDto> getAllAbsence();
 
-	List<AbsenceDto> getAllAbsence(int page, int size);
+	List<AbsenceDto> getAllAbsence(int page, int size, String search);
+
+	List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long idRef);
 
 	AbsenceDto getById(long id);
 
@@ -17,7 +19,6 @@ public interface AbsenceService {
 
 	void deleteById(long id);
 
-	CountDto count();
-
+	CountDto count(String search);
 
 }
