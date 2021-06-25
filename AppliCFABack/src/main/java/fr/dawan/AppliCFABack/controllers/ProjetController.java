@@ -71,6 +71,12 @@ public class ProjetController {
 			return projetService.count("");
 	}
     
+    
+    @GetMapping(value = "/groupes/{id}", produces = "application/json")
+	public List<ProjetDto> getByGroupeId(@PathVariable("id") long id) {
+    	return projetService.getByGroupeId(id);
+	}
+    
 	// ##################################################
 	// # POST #
 	// ##################################################

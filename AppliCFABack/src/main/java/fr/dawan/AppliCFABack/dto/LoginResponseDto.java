@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class LoginResponseDto implements Serializable{
 
-	private UtilisateurDto utilisateurDto;
+//	private UtilisateurDto utilisateurDto;
 	private String token;	
 
 	public LoginResponseDto() {
@@ -19,16 +19,16 @@ public class LoginResponseDto implements Serializable{
 	}
 	
 	
-//	public LoginResponseDto(String token) {
-//		super();
-//		this.token = token;
-//	}
-
-	public LoginResponseDto( UtilisateurDto utilisateurDto, String token) {
+	public LoginResponseDto(String token) {
 		super();
 		this.token = token;
-		this.utilisateurDto = utilisateurDto;
 	}
+
+//	public LoginResponseDto( UtilisateurDto utilisateurDto, String token) {
+//		super();
+//		this.token = token;
+//		this.utilisateurDto = utilisateurDto;
+//	}
 
 
 	public String getToken() {
@@ -40,14 +40,14 @@ public class LoginResponseDto implements Serializable{
 	}
 
 
-	public UtilisateurDto getUtilisateurDto() {
-		return utilisateurDto;
-	}
-
-
-	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
-		this.utilisateurDto = utilisateurDto;
-	}
+//	public UtilisateurDto getUtilisateurDto() {
+//		return utilisateurDto;
+//	}
+//
+//
+//	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
+//		this.utilisateurDto = utilisateurDto;
+//	}
 		
 	
 }

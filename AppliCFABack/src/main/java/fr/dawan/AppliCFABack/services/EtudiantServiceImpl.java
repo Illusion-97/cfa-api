@@ -118,10 +118,18 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public EtudiantDto getById(long id) {
 		Optional<Etudiant> e = etudiantRepository.findById(id);
 
-		if (e.isPresent()) 
-			return DtoTools.convert(e.get(), EtudiantDto.class);
+		if (!e.isPresent()) return null;
 		
-		return null;
+		EtudiantDto eDto = DtoTools.convert(e.get(), EtudiantDto.class);
+		
+		List<GroupeEtudiantDto> lst = new ArrayList<GroupeEtudiantDto>();
+		for(GroupeEtudiant g : e.get().getGroupes()) {
+			lst.add(DtoTools.convert(g, GroupeEtudiantDto.class));
+		}
+		
+		eDto.setGroupesDto(lst);
+		
+		return eDto;
 	}
 
 	@Override

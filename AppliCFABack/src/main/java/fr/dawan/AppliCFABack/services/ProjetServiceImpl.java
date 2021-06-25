@@ -86,6 +86,18 @@ public class ProjetServiceImpl implements ProjetService {
 	public void deleteById(long id) {
 		projetRepository.deleteById(id);
 		filesService.deleteDirectoryWithContent("projets/"+id);
+	}
+
+	@Override
+	public List<ProjetDto> getByGroupeId(long id) {
+		List<Projet> projets = projetRepository.findAllByGroupeId(id);	
+		
+		List<ProjetDto> result = new ArrayList<ProjetDto>();
+		for(Projet p : projets) {
+			result.add(DtoTools.convert(p, ProjetDto.class));
+		}
+		
+		return result;
 	}	
 
 }

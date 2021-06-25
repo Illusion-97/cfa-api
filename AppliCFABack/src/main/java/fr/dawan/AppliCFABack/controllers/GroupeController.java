@@ -75,6 +75,7 @@ public class GroupeController {
     
     @GetMapping(value = "/{id}/etudiants", produces = "application/json")
 	public List<EtudiantDto> getEtudiantsByGroupeId(@PathVariable("id") long id) {
+    	System.out.println("getEtudiantsByGroupeId : " + id);
 		return groupeEtudiantService.getEtudiantsByGroupeId(id);
 	}
 

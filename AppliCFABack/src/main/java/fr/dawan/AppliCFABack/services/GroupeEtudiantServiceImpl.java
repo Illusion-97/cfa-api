@@ -22,6 +22,7 @@ import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.ProjetRepository;
 
 @Service
 @Transactional
@@ -29,6 +30,9 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 
 	@Autowired
 	private GroupeEtudiantRepository groupeEtudiantRepository;
+	
+	@Autowired
+	private ProjetRepository projetRepository;
 	
 	@Override
 	public List<GroupeEtudiantDto> getAllGroupeEtudiant() {
@@ -101,13 +105,27 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 
 	@Override
 	public void deleteById(long id) {
-		groupeEtudiantRepository.deleteById(id);
 		
+		//La relation ManyToMany avec etudiants est mappé par le groupe
+		//Donc pas besoin de s'en occuper
+		
+		//Mais Projet a un groupe => il faut supprimer le lien
+		List<Projet> projets = projetRepository.findAllByGroupeId(id);
+		
+		for(Projet p : projets) {
+			p.setGroupe(null);
+			projetRepository.saveAndFlush(p);
+		}
+		
+		groupeEtudiantRepository.deleteById(id);		
 	}
 
 	@Override
 	public List<EtudiantDto> getEtudiantsByGroupeId(long id) {
 		Optional<GroupeEtudiant> g = groupeEtudiantRepository.findById(id);
+		
+		
+		
 		if(!g.isPresent())
 			return null;
 		
