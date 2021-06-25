@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.services.GroupeEtudiantService;
@@ -34,6 +35,7 @@ public class GroupeController {
 
 	@GetMapping(produces = "application/json")
 	public List<GroupeEtudiantDto> getAll() {
+		System.out.println("Controller getAll");
 		return groupeEtudiantService.getAllGroupeEtudiant();
 	}
 
@@ -70,6 +72,12 @@ public class GroupeController {
 		else
 			return groupeEtudiantService.count("");
 	}
+    
+    @GetMapping(value = "/{id}/etudiants", produces = "application/json")
+	public List<EtudiantDto> getEtudiantsByGroupeId(@PathVariable("id") long id) {
+    	System.out.println("getEtudiantsByGroupeId : " + id);
+		return groupeEtudiantService.getEtudiantsByGroupeId(id);
+	}
 
 	// ##################################################
 	// # POST #
@@ -77,6 +85,7 @@ public class GroupeController {
 
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public GroupeEtudiantDto save(@RequestBody GroupeEtudiantDto gDto) {
+		System.out.println("Controller @PostMapping");
 		return groupeEtudiantService.saveOrUpdate(gDto);
 	}
 
@@ -101,6 +110,7 @@ public class GroupeController {
 
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public GroupeEtudiantDto update(@RequestBody GroupeEtudiantDto eDto) {
+		System.out.println("Controller @PutMapping");
 		return groupeEtudiantService.saveOrUpdate(eDto);
 	}
 

@@ -149,14 +149,19 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public EtudiantDto getById(long id) {
 		Optional<Etudiant> e = etudiantRepository.findById(id);
 
-		if (e.isPresent()) {
-			EtudiantDto etuDto = DtoTools.convert(e.get(), EtudiantDto.class);
-			AdresseDto addrDto = DtoTools.convert(e.get().getAdresse(), AdresseDto.class);
-			etuDto.setAdresseDto(addrDto);
-			return etuDto;
+		if (!e.isPresent()) return null;
+		
+		EtudiantDto eDto = DtoTools.convert(e.get(), EtudiantDto.class);
+		AdresseDto addrDto = DtoTools.convert(e.get().getAdresse(), AdresseDto.class);		
+		List<GroupeEtudiantDto> lst = new ArrayList<GroupeEtudiantDto>();
+		for(GroupeEtudiant g : e.get().getGroupes()) {
+			lst.add(DtoTools.convert(g, GroupeEtudiantDto.class));
 		}
+		
+		eDto.setGroupesDto(lst);
+		etuDto.setAdresseDto(addrDto);
 
-		return null;
+		return eDto;
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class LoginController {
             String token = jwtTokenUtil.doGenerateToken(claims, loginObj.getLogin());
             TokenSaver.tokensByEmail.put(loginObj.getLogin(), token);
             
-            return ResponseEntity.ok(new LoginResponseDto(utilisateurService.getByIdWithObject(uDto.getId()),token));
+            return ResponseEntity.ok(new LoginResponseDto(/*utilisateurService.getByIdWithObject(uDto.getId()),*/token));
         }else
             throw new Exception("Erreur : identifiants incorrects !");
         

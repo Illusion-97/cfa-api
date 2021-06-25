@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 
@@ -78,6 +80,21 @@ public class PromotionServiceImpl implements PromotionService {
 			res.add(DtoTools.convert(p, PromotionDto.class));
 		}
 		return res;
+
+	@Override
+	public List<EtudiantDto> getEtudiantsById(long id) {
+		List<Etudiant> lst = promoRepo.getOne(id).getEtudiants();
+		List<EtudiantDto> lstDto = new ArrayList<EtudiantDto>();
+		for (Etudiant e : lst) {
+			List<PromotionDto> promoList = new ArrayList<PromotionDto>();
+			for(Promotion p : e.getPromotions()) {
+				promoList.add(DtoTools.convert(p, PromotionDto.class));
+			}
+			EtudiantDto eDto = DtoTools.convert(e, EtudiantDto.class);
+			eDto.setPromotionsDto(promoList);
+			lstDto.add(eDto);
+		}
+		return lstDto;
 	}
 
 }

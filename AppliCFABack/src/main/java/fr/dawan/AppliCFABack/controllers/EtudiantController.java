@@ -76,6 +76,7 @@ public class EtudiantController {
 	 */
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public EtudiantDto save(@RequestBody EtudiantDto eDto) {
+		System.out.println("Controller @@PostMapping");
 		return etudiantService.saveOrUpdate(eDto);
 	}
 
@@ -111,6 +112,7 @@ public class EtudiantController {
 	 */
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public EtudiantDto update(@RequestBody EtudiantDto eDto) {
+		System.out.println("Controller @PutMapping");
 		return etudiantService.saveOrUpdate(eDto);
 	}
 

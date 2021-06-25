@@ -73,7 +73,7 @@ public class NoteServiceImpl implements NoteService {
 		nDto.setDevoirDto(DtoTools.convert(n.get().getDevoir(), DevoirDto.class));
 		nDto.setEtudiantDto(DtoTools.convert(n.get().getEtudiant(), EtudiantDto.class));
 		nDto.setExamenDto(DtoTools.convert(n.get().getExamen(), PassageExamenDto.class));
-		nDto.getExamenDto().setExamenDto(DtoTools.convert(n.get().getExamen().getExamen(), ExamenDto.class));
+		//nDto.getExamenDto().setExamenDto(DtoTools.convert(n.get().getExamen().getExamen(), ExamenDto.class));
 		return nDto;
 	}
 

@@ -19,7 +19,7 @@ public class GroupeEtudiant {
 	@Column(nullable = false, length = 255)
 	private String nom;
 
-	@ManyToMany(mappedBy = "groupes")
+	@ManyToMany
 	private List<Etudiant> etudiants;
 
 	public GroupeEtudiant() {

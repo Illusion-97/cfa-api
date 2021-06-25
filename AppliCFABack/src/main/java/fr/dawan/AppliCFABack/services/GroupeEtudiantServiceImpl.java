@@ -16,10 +16,13 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Projet;
+import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.ProjetRepository;
 
 @Service
 @Transactional
@@ -27,6 +30,9 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 
 	@Autowired
 	private GroupeEtudiantRepository groupeEtudiantRepository;
+	
+	@Autowired
+	private ProjetRepository projetRepository;
 	
 	@Override
 	public List<GroupeEtudiantDto> getAllGroupeEtudiant() {
@@ -49,7 +55,13 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 			GroupeEtudiantDto gDto = DtoTools.convert(g, GroupeEtudiantDto.class);
 			List<EtudiantDto> etudiantsDto = new ArrayList<EtudiantDto>();
 			for(Etudiant e : g.getEtudiants()) {
-				etudiantsDto.add(DtoTools.convert(e, EtudiantDto.class));
+				EtudiantDto eDto = DtoTools.convert(e, EtudiantDto.class);
+				List<PromotionDto> pDtos = new ArrayList<PromotionDto>();
+				for(Promotion p : e.getPromotions()) {
+					pDtos.add(DtoTools.convert(p, PromotionDto.class));
+				}
+				eDto.setPromotionsDto(pDtos);
+				etudiantsDto.add(eDto);
 			}
 			gDto.setEtudiants(etudiantsDto);
 			lstDto.add(gDto);
@@ -65,23 +77,70 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	@Override
 	public GroupeEtudiantDto getById(long id) {
 		Optional<GroupeEtudiant> g = groupeEtudiantRepository.findById(id);
-		if(g.isPresent())
-			return DtoTools.convert(g.get(), GroupeEtudiantDto.class);
 		
-		return null;
+		if(!g.isPresent()) return null;
+		
+		GroupeEtudiantDto gDto = DtoTools.convert(g.get(), GroupeEtudiantDto.class);
+		List<EtudiantDto> etudiantsDto = new ArrayList<EtudiantDto>();
+		for(Etudiant e : g.get().getEtudiants()) {
+			EtudiantDto eDto = DtoTools.convert(e, EtudiantDto.class);
+			List<PromotionDto> pDtos = new ArrayList<PromotionDto>();
+			for(Promotion p : e.getPromotions()) {
+				pDtos.add(DtoTools.convert(p, PromotionDto.class));
+			}
+			eDto.setPromotionsDto(pDtos);
+			etudiantsDto.add(eDto);
+		}
+		gDto.setEtudiants(etudiantsDto);
+		
+		return gDto;
 	}
 
 	@Override
 	public GroupeEtudiantDto saveOrUpdate(GroupeEtudiantDto gDto) {
-		GroupeEtudiant g = DtoTools.convert(gDto, GroupeEtudiant.class);
-		
-		g = groupeEtudiantRepository.saveAndFlush(g);
+		System.out.println("GroupeEtudiantDto saveOrUpdate");
+		GroupeEtudiant g = groupeEtudiantRepository.saveAndFlush(DtoTools.convert(gDto, GroupeEtudiant.class));
 		return DtoTools.convert(g, GroupeEtudiantDto.class);
 	}
 
 	@Override
 	public void deleteById(long id) {
-		groupeEtudiantRepository.deleteById(id);
+		
+		//La relation ManyToMany avec etudiants est mappé par le groupe
+		//Donc pas besoin de s'en occuper
+		
+		//Mais Projet a un groupe => il faut supprimer le lien
+		List<Projet> projets = projetRepository.findAllByGroupeId(id);
+		
+		for(Projet p : projets) {
+			p.setGroupe(null);
+			projetRepository.saveAndFlush(p);
+		}
+		
+		groupeEtudiantRepository.deleteById(id);		
+	}
+
+	@Override
+	public List<EtudiantDto> getEtudiantsByGroupeId(long id) {
+		Optional<GroupeEtudiant> g = groupeEtudiantRepository.findById(id);
+		
+		
+		
+		if(!g.isPresent())
+			return null;
+		
+		List<EtudiantDto> result = new ArrayList<EtudiantDto>();
+		for(Etudiant e : g.get().getEtudiants()) {
+			EtudiantDto eDto = DtoTools.convert(e, EtudiantDto.class);
+			List<PromotionDto> pDtos = new ArrayList<PromotionDto>();
+			for(Promotion p : e.getPromotions()) {
+				pDtos.add(DtoTools.convert(p, PromotionDto.class));
+			}
+			eDto.setPromotionsDto(pDtos);
+			result.add(eDto);
+		}		
+		
+		return result;
 		
 	}
 

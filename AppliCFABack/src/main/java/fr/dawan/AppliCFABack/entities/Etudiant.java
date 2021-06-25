@@ -10,10 +10,13 @@ import javax.persistence.ManyToOne;
 public class Etudiant extends Utilisateur {
 	@ManyToMany
 	private List<Promotion> promotions;
-	@ManyToMany
+	
+	@ManyToMany(mappedBy = "etudiants")
 	private List<GroupeEtudiant> groupes;
+	
 	@ManyToOne
 	private Utilisateur formateurReferent;
+	
 	@ManyToOne
 	private Utilisateur manager;
 

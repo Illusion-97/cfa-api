@@ -18,6 +18,8 @@ public interface ProjetService {
 	ProjetDto saveOrUpdate(ProjetDto pDto);
 
 	void deleteById(long id);
+	
+	List<ProjetDto> getByGroupeId(long id);
 
 
 	
