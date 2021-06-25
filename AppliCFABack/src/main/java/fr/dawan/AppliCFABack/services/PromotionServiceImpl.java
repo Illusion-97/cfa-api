@@ -80,6 +80,7 @@ public class PromotionServiceImpl implements PromotionService {
 			res.add(DtoTools.convert(p, PromotionDto.class));
 		}
 		return res;
+	}
 
 	@Override
 	public List<EtudiantDto> getEtudiantsById(long id) {

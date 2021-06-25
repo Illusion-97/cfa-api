@@ -159,7 +159,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		}
 		
 		eDto.setGroupesDto(lst);
-		etuDto.setAdresseDto(addrDto);
+		eDto.setAdresseDto(addrDto);
 
 		return eDto;
 	}
