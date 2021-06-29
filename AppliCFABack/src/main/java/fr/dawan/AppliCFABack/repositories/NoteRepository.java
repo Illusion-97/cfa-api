@@ -29,4 +29,6 @@ public interface NoteRepository extends JpaRepository<Note, Long>{
 	long countByEtudiantPrenomContainingIgnoringCaseOrEtudiantNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(
 			String search, String search2, String search3, String search4);
 
+	List<Note> findAllByEtudiantId(long id);
+
 }

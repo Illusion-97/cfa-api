@@ -20,4 +20,6 @@ public interface AbsenceRepository extends JpaRepository<Absence, Long>{
 	@Query("SELECT a FROM Absence a WHERE a.etudiant.id = :id")
 	Page<Absence> getAbsencesByIdEtudiant(@Param("id") long id, Pageable pageable);
 
+	List<Absence> findAllByEtudiantId(long id);
+
 }

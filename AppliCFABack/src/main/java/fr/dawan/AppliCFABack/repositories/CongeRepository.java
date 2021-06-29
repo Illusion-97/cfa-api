@@ -21,4 +21,6 @@ public interface CongeRepository extends JpaRepository<Conge, Long>{
 
 	long countByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(String prenom, String nom);
 
+	List<Conge> findAllByUtilisateurId(long id);
+
 }

@@ -16,9 +16,12 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.StatusConge;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
 
@@ -191,5 +194,15 @@ public class CongeServiceImpl implements CongeService {
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(congeRepository.countByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(search, search));
+	}
+
+	@Override
+	public List<CongeDto> getAllByIdUtilisateur(long id) {
+		List<CongeDto> result = new ArrayList<CongeDto>();
+		List<Conge> list = congeRepository.findAllByUtilisateurId(id);
+		for(Conge c : list) {
+			result.add(DtoTools.convert(c, CongeDto.class));
+		}
+		return result;
 	}
 }

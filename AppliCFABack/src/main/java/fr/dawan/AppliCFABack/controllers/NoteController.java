@@ -70,6 +70,11 @@ public class NoteController {
 			return noteService.count("");
 	}
 	
+    @GetMapping(value = "/etudiant/{id}", produces = "application/json")
+	public @ResponseBody List<NoteDto> getAllByIdEtudiant(@PathVariable("id") long id) {
+		return noteService.getAllByIdEtudiant(id);
+	}
+    
 	// ##################################################
 	// # POST #
 	// ##################################################
