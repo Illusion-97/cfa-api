@@ -24,12 +24,16 @@ import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 
 @Service
 @Transactional
 public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
+	
+	@Autowired
+	UtilisateurRoleRepository utilisateurRoleRepository;
 
 	@Autowired
 	EtudiantService etudiantService;
@@ -271,6 +275,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<UtilisateurDto> findByRole(long idRole) {
+		List<UtilisateurDto> res = getAll();
+		List<UtilisateurDto> resfinal = new ArrayList<UtilisateurDto>();
+		Optional<UtilisateurRole> userRole = utilisateurRoleRepository.findById(idRole);
+		UtilisateurRoleDto Role = null;
+		if (userRole.isPresent())
+			 Role = DtoTools.convert(userRole.get(), UtilisateurRoleDto.class);
+		for (UtilisateurDto u : res) {
+			if (u.getRolesDto().contains(Role)) {
+				resfinal.add(u);
+			}
+			
+		}
+		return resfinal;
 	}
 
 }
