@@ -142,6 +142,5 @@ public class Promotion { // CDA2021
 	public void setInterventions(List<Intervention> interventions) {
 		this.interventions = interventions;
 	}
-
 	
 }

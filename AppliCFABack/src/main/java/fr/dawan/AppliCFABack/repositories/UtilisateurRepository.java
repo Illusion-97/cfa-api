@@ -30,5 +30,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 
 	long countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(String prenom, String nom, String login);
 
+
+
 	
 }
