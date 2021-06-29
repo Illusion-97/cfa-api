@@ -39,6 +39,8 @@ public interface UtilisateurService {
 
 	CountDto count(String string);
 
+	List<UtilisateurDto> findByRole(long idRole);
+
 
 	
 }

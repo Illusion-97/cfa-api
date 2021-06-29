@@ -129,6 +129,10 @@ public class UtilisateurController {
 	public List<UtilisateurDto> findByEntreprise(@RequestParam("id") long id) {
 		return utilisateurService.findByEntreprise(id);
 	}
+	@GetMapping(value = "/roles/{idRole}", produces = "application/json")
+	public List<UtilisateurDto> findByRole(@PathVariable("idRole") long idRole) {
+		return utilisateurService.findByRole(idRole);
+	}
 
 	@GetMapping(value = "/{id}/planning", produces = "application/json")
 	public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(@PathVariable("id") long id) {
