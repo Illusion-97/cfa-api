@@ -10,8 +10,8 @@ import fr.dawan.AppliCFABack.entities.Cursus;
 @Repository
 public interface CursusRepository extends JpaRepository<Cursus, Long> {
 
-	Page<Cursus> findAllByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(String search, String search2, Pageable pageable);
+	Page<Cursus> findDistinctByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(String search, String search2, Pageable pageable);
 
-	long countByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(String search, String search2);
+	long countDistinctByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(String search, String search2);
 
 }
