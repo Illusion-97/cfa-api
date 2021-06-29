@@ -22,7 +22,7 @@ public class Formation {
 	@Column(length = 1024)
 	private String contenu;
 
-	@ManyToMany
+	@ManyToMany(mappedBy = "formations")
 	private List<Cursus> cursusLst;
 
 	public Formation() {
