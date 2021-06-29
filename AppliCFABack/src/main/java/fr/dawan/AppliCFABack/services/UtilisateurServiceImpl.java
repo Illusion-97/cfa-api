@@ -281,16 +281,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public List<UtilisateurDto> findByRole(long idRole) {
 		List<UtilisateurDto> res = getAll();
 		List<UtilisateurDto> resfinal = new ArrayList<UtilisateurDto>();
-		Optional<UtilisateurRole> userRole = utilisateurRoleRepository.findById(idRole);
-		UtilisateurRoleDto Role = null;
-		if (userRole.isPresent())
-			 Role = DtoTools.convert(userRole.get(), UtilisateurRoleDto.class);
+		
 		for (UtilisateurDto u : res) {
-			if (u.getRolesDto().contains(Role)) {
-				resfinal.add(u);
+			List<UtilisateurRoleDto> userRole = u.getRolesDto();
+			
+			for (UtilisateurRoleDto ur : userRole) {
+				if (ur.getId() == idRole) {
+					resfinal.add(u);
+				}
 			}
 			
 		}
+		
 		return resfinal;
 	}
 
