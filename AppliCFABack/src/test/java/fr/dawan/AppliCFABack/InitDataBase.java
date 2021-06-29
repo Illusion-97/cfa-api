@@ -170,7 +170,6 @@ public class InitDataBase {
 		Note note = new Note();
 		note.setNoteObtenu(20);
 		note.setObservations("parfait");
-		note.setEtudiant(etudiant);
 
 		Entreprise entreprise = new Entreprise();
 		entreprise.setRaisonSociale("raison sociale");
@@ -439,16 +438,20 @@ public class InitDataBase {
 
 		exam.setCursus(cursus);
 		exam.setFormation(formation);
+		
+		passageExamen.setExamen(exam);
+		passageExamen.setIntervention(intervention);
+		
+		note.setEtudiant(etudiant);
+		note.setExamen(passageExamen);
+		note.setDevoir(devoir);
 
 		formateur.setAdresse(adresse);
 		formateur.setEntreprise(entreprise);
 		formateur.setInterventions(lstInterventions);
 		formateur.setRoles(lstRoleFormateur);
 
-		formation.setCursusLst(lstCursus);
-
-		passageExamen.setExamen(exam);
-		passageExamen.setIntervention(intervention);
+		formation.setCursusLst(lstCursus);		
 
 		projet.setGroupe(groupe);
 

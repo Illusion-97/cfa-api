@@ -73,7 +73,7 @@ public class NoteServiceImpl implements NoteService {
 		nDto.setDevoirDto(DtoTools.convert(n.get().getDevoir(), DevoirDto.class));
 		nDto.setEtudiantDto(DtoTools.convert(n.get().getEtudiant(), EtudiantDto.class));
 		nDto.setExamenDto(DtoTools.convert(n.get().getExamen(), PassageExamenDto.class));
-		//nDto.getExamenDto().setExamenDto(DtoTools.convert(n.get().getExamen().getExamen(), ExamenDto.class));
+		if(n.get().getExamen() != null) nDto.getExamenDto().setExamenDto(DtoTools.convert(n.get().getExamen().getExamen(), ExamenDto.class));
 		return nDto;
 	}
 
@@ -103,6 +103,7 @@ public class NoteServiceImpl implements NoteService {
 		for(Note n : list) {
 			NoteDto nDto = DtoTools.convert(n, NoteDto.class);
 			nDto.setExamenDto(DtoTools.convert(n.getExamen(), PassageExamenDto.class));
+			if(n.getExamen() != null) nDto.getExamenDto().setExamenDto(DtoTools.convert(n.getExamen().getExamen(), ExamenDto.class));
 			result.add(nDto);
 		}
 		return result;
