@@ -102,6 +102,7 @@ public class NoteServiceImpl implements NoteService {
 		List<Note> list = noteRepository.findAllByEtudiantId(id);
 		for(Note n : list) {
 			NoteDto nDto = DtoTools.convert(n, NoteDto.class);
+			nDto.setDevoirDto(DtoTools.convert(n.getDevoir(), DevoirDto.class));
 			nDto.setExamenDto(DtoTools.convert(n.getExamen(), PassageExamenDto.class));
 			if(n.getExamen() != null) nDto.getExamenDto().setExamenDto(DtoTools.convert(n.getExamen().getExamen(), ExamenDto.class));
 			result.add(nDto);
