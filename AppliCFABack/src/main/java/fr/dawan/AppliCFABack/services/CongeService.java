@@ -21,4 +21,6 @@ public interface CongeService {
 
 	CountDto count(String string);
 
+	List<CongeDto> getAllByIdUtilisateur(long id);
+
 }

@@ -21,6 +21,8 @@ public interface NoteService {
 
 	void deleteById(long id);
 
+	List<NoteDto> getAllByIdEtudiant(long id);
+
 	
 
 }

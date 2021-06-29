@@ -19,5 +19,7 @@ public interface AbsenceService {
 
 	CountDto count();
 
+	List<AbsenceDto> getAllByIdEtudiant(long id);
+
 
 }

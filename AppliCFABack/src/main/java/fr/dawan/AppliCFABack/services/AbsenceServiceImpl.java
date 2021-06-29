@@ -15,6 +15,7 @@ import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
@@ -77,6 +78,16 @@ public class AbsenceServiceImpl implements AbsenceService{
 	public CountDto count() {
 		// TODO Auto-generated method stub
 		return new CountDto(absenceRepository.count());
+	}
+
+	@Override
+	public List<AbsenceDto> getAllByIdEtudiant(long id) {
+		List<AbsenceDto> result = new ArrayList<AbsenceDto>();
+		List<Absence> list = absenceRepository.findAllByEtudiantId(id);
+		for(Absence a : list) {
+			result.add(DtoTools.convert(a, AbsenceDto.class));
+		}
+		return result;
 	}
 
 }

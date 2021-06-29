@@ -152,14 +152,22 @@ public class EtudiantServiceImpl implements EtudiantService {
 		if (!e.isPresent()) return null;
 		
 		EtudiantDto eDto = DtoTools.convert(e.get(), EtudiantDto.class);
-		AdresseDto addrDto = DtoTools.convert(e.get().getAdresse(), AdresseDto.class);		
-		List<GroupeEtudiantDto> lst = new ArrayList<GroupeEtudiantDto>();
-		for(GroupeEtudiant g : e.get().getGroupes()) {
-			lst.add(DtoTools.convert(g, GroupeEtudiantDto.class));
-		}
 		
-		eDto.setGroupesDto(lst);
-		eDto.setAdresseDto(addrDto);
+		eDto.setAdresseDto(DtoTools.convert(e.get().getAdresse(), AdresseDto.class));
+		eDto.setFormateurReferentDto(DtoTools.convert(e.get().getFormateurReferent(), UtilisateurDto.class));
+		eDto.setManagerDto(DtoTools.convert(e.get().getManager(), UtilisateurDto.class));
+
+		List<GroupeEtudiantDto> groupes = new ArrayList<GroupeEtudiantDto>();
+		for(GroupeEtudiant g : e.get().getGroupes()) {
+			groupes.add(DtoTools.convert(g, GroupeEtudiantDto.class));
+		}		
+		eDto.setGroupesDto(groupes);
+		
+		List<PromotionDto> promotions = new ArrayList<PromotionDto>();
+		for(Promotion p : e.get().getPromotions()) {
+			promotions.add(DtoTools.convert(p, PromotionDto.class));
+		}
+		eDto.setPromotionsDto(promotions);
 
 		return eDto;
 	}

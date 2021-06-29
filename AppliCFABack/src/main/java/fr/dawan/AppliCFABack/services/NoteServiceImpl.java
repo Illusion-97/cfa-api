@@ -96,4 +96,16 @@ public class NoteServiceImpl implements NoteService {
 
 	}
 
+	@Override
+	public List<NoteDto> getAllByIdEtudiant(long id) {
+		List<NoteDto> result = new ArrayList<NoteDto>();
+		List<Note> list = noteRepository.findAllByEtudiantId(id);
+		for(Note n : list) {
+			NoteDto nDto = DtoTools.convert(n, NoteDto.class);
+			nDto.setExamenDto(DtoTools.convert(n.getExamen(), PassageExamenDto.class));
+			result.add(nDto);
+		}
+		return result;
+	}
+
 }

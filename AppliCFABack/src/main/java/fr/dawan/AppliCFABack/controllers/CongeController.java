@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.services.CongeService;
 
 @RestController
@@ -75,6 +76,11 @@ public class CongeController {
 	@GetMapping(value = "/acquis-disponibles-restants/{id}", produces = "application/json")
 	public @ResponseBody double[] getAcquisDisponiblesRestantsByIdUtilisateur(@PathVariable("id") long id) {
 		return congeService.getAcquisDisponiblesRestantsByIdUtilisateur(id);
+	}
+	
+	@GetMapping(value = "/utilisateur/{id}", produces = "application/json")
+	public @ResponseBody List<CongeDto> getAllByIdUtilisateur(@PathVariable("id") long id) {
+		return congeService.getAllByIdUtilisateur(id);
 	}
 
 	// ##################################################
