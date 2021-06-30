@@ -74,7 +74,7 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Override
 	public List<PromotionDto> getAllPromotions(int page, int size, String search) {
-		List<Promotion> promo = promoRepo.findAllByNomContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Promotion> promo = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<PromotionDto>();
 		for (Promotion p : promo) {
 			res.add(DtoTools.convert(p, PromotionDto.class));

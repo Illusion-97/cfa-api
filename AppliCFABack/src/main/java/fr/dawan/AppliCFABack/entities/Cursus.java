@@ -19,7 +19,7 @@ public class Cursus { // cursus du catalogue Dev Full Stack
 	@Column(nullable = false, length = 255)
 	private String titre;
 
-	@ManyToMany(mappedBy = "cursusLst")
+	@ManyToMany
 	private List<Formation> formations;
 
 	public Cursus() {

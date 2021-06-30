@@ -11,17 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
@@ -44,6 +48,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	FilesService filesService;
 
+
+	@Autowired
+	AbsenceRepository absenceRepository;
 	@Override
 	public List<UtilisateurDto> getAll() {
 		List<Utilisateur> users = utilisateurRepository.findAll();
@@ -117,7 +124,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return utilisateurDto;
 	}
-
 	@Override
 	public UtilisateurDto getName(String name) {
 		Utilisateur user = utilisateurRepository.findByName(name);
@@ -294,6 +300,25 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 		
 		return resfinal;
+	}
+	
+	@Override
+	public List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long id) {
+		List<Absence> lstAbs = absenceRepository.findDistinctByEtudiantPromotionsReferentPedagogiqueId(id);
+		List<AbsenceDto> lstAbsDto = new ArrayList<AbsenceDto>();
+		for (Absence abs : lstAbs) {
+			AbsenceDto absDto = DtoTools.convert(abs, AbsenceDto.class);
+			EtudiantDto etuDto = DtoTools.convert(abs.getEtudiant(), EtudiantDto.class);
+			absDto.setEtudiantDto(etuDto);
+			lstAbsDto.add(absDto);
+			return lstAbsDto;
+		}
+		return null;
+	}
+
+	@Override
+	public CountDto countEtudiantPromotionsReferentPedagogiqueId(long id) {
+		return new CountDto(absenceRepository.countDistinctByEtudiantPromotionsReferentPedagogiqueId(id));
 	}
 
 }

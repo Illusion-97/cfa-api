@@ -18,35 +18,26 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.entities.Absence;
-import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 
 @Service
 @Transactional
-public class AbsenceServiceImpl implements AbsenceService{
+public class AbsenceServiceImpl implements AbsenceService {
 
 	@Autowired
 	AbsenceRepository absenceRepository;
-	
+
 	@Override
 	public List<AbsenceDto> getAllAbsence() {
 		List<Absence> lst = absenceRepository.findAll();
 
 		List<AbsenceDto> lstDto = new ArrayList<AbsenceDto>();
 		for (Absence a : lst) {
-			lstDto.add(DtoTools.convert(a, AbsenceDto.class));
-		}
-		return lstDto;
-	}
+			AbsenceDto absDto = DtoTools.convert(a, AbsenceDto.class);
+			EtudiantDto etuDto = DtoTools.convert(a.getEtudiant(), EtudiantDto.class);
+			absDto.setEtudiantDto(etuDto);
+			lstDto.add(absDto);
 
-	@Override
-	public List<AbsenceDto> getAllAbsence(int page, int size) {
-		List<Absence> lst = absenceRepository.findAll(PageRequest.of(page, size)).get().collect(Collectors.toList());
-
-		// conversion vers Dto
-		List<AbsenceDto> lstDto = new ArrayList<AbsenceDto>();
-		for (Absence a : lst) {
-			lstDto.add(DtoTools.convert(a, AbsenceDto.class));
 		}
 		return lstDto;
 	}
@@ -54,14 +45,12 @@ public class AbsenceServiceImpl implements AbsenceService{
 	@Override
 	public AbsenceDto getById(long id) {
 		Optional<Absence> a = absenceRepository.findById(id);
-		
 		if (!a.isPresent()) return null;
 		
 		AbsenceDto aDto = DtoTools.convert(a.get(), AbsenceDto.class);
 		aDto.setEtudiantDto(DtoTools.convert(a.get().getEtudiant(), EtudiantDto.class));
 		
 		return aDto;
-
 	}
 
 	@Override
@@ -76,13 +65,51 @@ public class AbsenceServiceImpl implements AbsenceService{
 	@Override
 	public void deleteById(long id) {
 		absenceRepository.deleteById(id);
-		
+
 	}
 
 	@Override
-	public CountDto count() {
-		// TODO Auto-generated method stub
-		return new CountDto(absenceRepository.count());
+	public CountDto count(String search) {
+		return new CountDto(
+				absenceRepository.countByEtudiantNomContainingOrEtudiantPrenomContainingAllIgnoreCase(search, search));
+	}
+
+	@Override
+	public List<AbsenceDto> getAllAbsence(int page, int size, String search) {
+		List<Absence> lst = absenceRepository.findByEtudiantNomContainingOrEtudiantPrenomContainingAllIgnoreCase(search,
+				search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<AbsenceDto> lstDto = new ArrayList<AbsenceDto>();
+		for (Absence a : lst) {
+			AbsenceDto absDto = DtoTools.convert(a, AbsenceDto.class);
+			EtudiantDto etuDto = DtoTools.convert(a.getEtudiant(), EtudiantDto.class);
+////			UtilisateurDto ref = DtoTools.convert(a.getEtudiant().getFormateurReferent(), UtilisateurDto.class);
+////			etuDto.setFormateurReferentDto(ref);
+//			List<Promotion> lsPromotions = a.getEtudiant().getPromotions();
+//			List<PromotionDto> lstPromotionDtos = new ArrayList<PromotionDto>();
+//			for (Promotion p : lsPromotions) {
+//				PromotionDto promoDto = DtoTools.convert(p, PromotionDto.class);
+//				lstPromotionDtos.add(promoDto);
+//				etuDto.setPromotionsDto(lstPromotionDtos);
+//			}
+
+			absDto.setEtudiantDto(etuDto);
+			lstDto.add(absDto);
+		}
+		return lstDto;
+	}
+
+	@Override
+	public List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long id) {
+		List<Absence> lstAbs = absenceRepository.findByRefId(id);
+		List<AbsenceDto> lstAbsDto = new ArrayList<AbsenceDto>();
+		for (Absence abs : lstAbs) {
+			AbsenceDto absDto = DtoTools.convert(abs, AbsenceDto.class);
+			EtudiantDto etuDto = DtoTools.convert(abs.getEtudiant(), EtudiantDto.class);
+			absDto.setEtudiantDto(etuDto);
+			lstAbsDto.add(absDto);
+			return lstAbsDto;
+		}
+		return null;
 	}
 
 	@Override

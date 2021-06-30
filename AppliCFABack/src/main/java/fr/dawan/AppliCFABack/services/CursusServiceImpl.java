@@ -34,15 +34,25 @@ public class CursusServiceImpl implements CursusService {
 		}
 		return lstDto;
 	}
-	
+
 	@Override
 	public List<CursusDto> getAllByPage(int page, int size, String search) {
-		List<Cursus> lst = cursusRepo.findAllByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Cursus> lst = cursusRepo
+				.findDistinctByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(search, search,
+						PageRequest.of(page, size))
+				.get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<CursusDto> lstDto = new ArrayList<CursusDto>();
 		for (Cursus c : lst) {
 			CursusDto cDto = DtoTools.convert(c, CursusDto.class);
+			List<Formation> lstForm = c.getFormations();
+			List<FormationDto> lstFormDto = new ArrayList<FormationDto>();
+			for (Formation form : lstForm) {
+				if (form != null)
+					lstFormDto.add(DtoTools.convert(form, FormationDto.class));
+			}
+			cDto.setFormationsDto(lstFormDto);
 			lstDto.add(cDto);
 		}
 		return lstDto;
@@ -50,41 +60,38 @@ public class CursusServiceImpl implements CursusService {
 
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(cursusRepo.countByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(search, search));
+		return new CountDto(
+				cursusRepo.countDistinctByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(search, search));
 	}
 
 	@Override
 	public CursusDto saveOrUpdate(CursusDto cDto) {
-		// TODO Auto-generated method stub
 		Cursus c = DtoTools.convert(cDto, Cursus.class);
 		cursusRepo.saveAndFlush(c);
-		return DtoTools.convert(c, CursusDto.class) ;
+		return DtoTools.convert(c, CursusDto.class);
 	}
 
 	@Override
 	public void deleteById(long id) {
-		// TODO Auto-generated method stub
 		cursusRepo.deleteById(id);
-		
+
 	}
 
 	@Override
 	public CursusDto getById(long id) {
-		// TODO Auto-generated method stub
 		Optional<Cursus> c = cursusRepo.findById(id);
 		if (c.isPresent()) {
 
 			CursusDto cDto = DtoTools.convert(c.get(), CursusDto.class);
 			List<FormationDto> lst = new ArrayList<FormationDto>();
-			for(Formation f : c.get().getFormations()) {
+			for (Formation f : c.get().getFormations()) {
 				lst.add(DtoTools.convert(f, FormationDto.class));
 			}
 			cDto.setFormationsDto(lst);
 			return cDto;
 		}
 		return null;
-		
-		
-	}	
+
+	}
 
 }

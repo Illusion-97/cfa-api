@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -10,13 +11,13 @@ import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 
 public interface UtilisateurService {
 	List<UtilisateurDto> getAll();
-	
+
 	List<UtilisateurDto> getAllUtilisateurs(int page, int size, String string);
 
 	List<UtilisateurDto> getAllWithObject();
 
 	UtilisateurDto getById(long id);
-	
+
 	UtilisateurDto findByEmail(String email);
 
 	UtilisateurDto getName(String name);
@@ -39,8 +40,11 @@ public interface UtilisateurService {
 
 	CountDto count(String string);
 
+
 	List<UtilisateurDto> findByRole(long idRole);
 
+	List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long id);
 
-	
+	CountDto countEtudiantPromotionsReferentPedagogiqueId(long id);
+
 }
