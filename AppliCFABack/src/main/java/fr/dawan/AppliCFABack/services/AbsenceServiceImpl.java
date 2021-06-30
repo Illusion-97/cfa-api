@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.entities.Absence;
@@ -53,10 +54,14 @@ public class AbsenceServiceImpl implements AbsenceService{
 	@Override
 	public AbsenceDto getById(long id) {
 		Optional<Absence> a = absenceRepository.findById(id);
-		if (a.isPresent())
-			return DtoTools.convert(a.get(), AbsenceDto.class);
+		
+		if (!a.isPresent()) return null;
+		
+		AbsenceDto aDto = DtoTools.convert(a.get(), AbsenceDto.class);
+		aDto.setEtudiantDto(DtoTools.convert(a.get().getEtudiant(), EtudiantDto.class));
+		
+		return aDto;
 
-		return null;
 	}
 
 	@Override
