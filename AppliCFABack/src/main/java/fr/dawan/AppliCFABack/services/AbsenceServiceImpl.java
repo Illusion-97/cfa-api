@@ -15,8 +15,6 @@ import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 
@@ -96,20 +94,6 @@ public class AbsenceServiceImpl implements AbsenceService {
 			lstDto.add(absDto);
 		}
 		return lstDto;
-	}
-
-	@Override
-	public List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long id) {
-		List<Absence> lstAbs = absenceRepository.findByRefId(id);
-		List<AbsenceDto> lstAbsDto = new ArrayList<AbsenceDto>();
-		for (Absence abs : lstAbs) {
-			AbsenceDto absDto = DtoTools.convert(abs, AbsenceDto.class);
-			EtudiantDto etuDto = DtoTools.convert(abs.getEtudiant(), EtudiantDto.class);
-			absDto.setEtudiantDto(etuDto);
-			lstAbsDto.add(absDto);
-			return lstAbsDto;
-		}
-		return null;
 	}
 
 	@Override
