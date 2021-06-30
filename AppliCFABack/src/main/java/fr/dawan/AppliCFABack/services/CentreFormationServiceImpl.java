@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
@@ -50,10 +51,13 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	@Override
 	public CentreFormationDto getById(long id) {
 		Optional<CentreFormation> cf = centreFormationRepository.findById(id);
-		if (cf.isPresent())
-			return DtoTools.convert(cf.get(), CentreFormationDto.class);
-
-		return null;
+		if (!cf.isPresent()) return null;
+		
+		CentreFormationDto cDto = DtoTools.convert(cf.get(), CentreFormationDto.class);
+		
+		cDto.setAdresseDto(DtoTools.convert(cf.get().getAdresse(), AdresseDto.class));
+		
+		return cDto;
 	}
 
 	@Override
