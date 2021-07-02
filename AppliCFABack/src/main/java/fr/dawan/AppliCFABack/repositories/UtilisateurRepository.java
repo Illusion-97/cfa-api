@@ -25,10 +25,10 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	@Query("FROM Utilisateur u WHERE u.entreprise.id=:entrepriseId")
 	List<Utilisateur> findByEntreprise(@Param("entrepriseId") long entrepriseId);
 
-	Page<Utilisateur> findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(String prenom, String nom,
-			String login, Pageable pageable );
+	Page<Utilisateur> findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(String prenom, String nom,
+			String login, String adresseRue, String entrepriseRaisonSociale, Pageable pageable );
 
-	long countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(String prenom, String nom, String login);
+	long countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(String prenom, String nom, String login, String search, String search2);
 
 
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
@@ -43,7 +44,10 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		// conversion vers Dto
 		List<EntrepriseDto> lstDto = new ArrayList<EntrepriseDto>();
 		for (Entreprise e : lst) {
-			lstDto.add(DtoTools.convert(e, EntrepriseDto.class));
+			EntrepriseDto eDto = DtoTools.convert(e, EntrepriseDto.class);
+			eDto.setAdresseSiegeDto(DtoTools.convert(e.getAdresseSiege(), AdresseDto.class));
+			//lstDto.add(DtoTools.convert(e, EntrepriseDto.class));
+			lstDto.add(eDto);
 		}
 		return lstDto;
 	}
@@ -51,9 +55,12 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	@Override
 	public EntrepriseDto getById(long id) {
 		Optional<Entreprise> e = entrepriseRepository.findById(id);
-		if (e.isPresent())
-			return DtoTools.convert(e.get(), EntrepriseDto.class);
-
+		if (e.isPresent()){
+			EntrepriseDto eDto = DtoTools.convert(e.get(), EntrepriseDto.class);
+			eDto.setAdresseSiegeDto(DtoTools.convert(e.get().getAdresseSiege(), AdresseDto.class));
+			return eDto;
+		}
+		
 		return null;
 	}
 
