@@ -76,7 +76,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			UtilisateurDto uDto = DtoTools.convert(u, UtilisateurDto.class);
 			uDto.setAdresseDto(DtoTools.convert(u.getAdresse(), AdresseDto.class));
 			uDto.setEntrepriseDto(DtoTools.convert(u.getEntreprise(), EntrepriseDto.class));
-			//res.add(DtoTools.convert(u, UtilisateurDto.class));
+			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
+			for(UtilisateurRole ur : u.getRoles()) {
+				utilisateurRoleDto.add(DtoTools.convert(ur, UtilisateurRoleDto.class));
+			}
+			uDto.setRolesDto(utilisateurRoleDto);
+			
 			res.add(uDto);
 			
 		}
@@ -97,6 +102,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			UtilisateurDto uDto = DtoTools.convert(userOpt.get(), UtilisateurDto.class);
 			uDto.setAdresseDto(DtoTools.convert(userOpt.get().getAdresse(), AdresseDto.class));
 			uDto.setEntrepriseDto(DtoTools.convert(userOpt.get().getEntreprise(), EntrepriseDto.class));
+			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
+			for(UtilisateurRole ur : userOpt.get().getRoles()) {
+				utilisateurRoleDto.add(DtoTools.convert(ur, UtilisateurRoleDto.class));
+			}
+			uDto.setRolesDto(utilisateurRoleDto);
 			
 			return uDto;
 		}
