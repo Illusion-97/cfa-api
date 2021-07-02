@@ -32,7 +32,10 @@ public class ExamenServiceImpl implements ExamenService {
 
 		List<ExamenDto> lstDto = new ArrayList<ExamenDto>();
 		for (Examen e : lst) {
-			lstDto.add(DtoTools.convert(e, ExamenDto.class));
+			ExamenDto eDto = DtoTools.convert(e, ExamenDto.class);
+		eDto.setCursusDto(DtoTools.convert(e.getCursus(), CursusDto.class));
+		eDto.setFormationDto(DtoTools.convert(e.getFormation(), FormationDto.class));
+		lstDto.add(eDto);
 		}
 		return lstDto;
 	}

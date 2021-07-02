@@ -427,6 +427,8 @@ public class InitDataBase {
 
 		cef.setCentreFormation(centre);
 		cef.setRoles(lstRoleCef);
+		cef.setAdresse(adresse);
+		cef.setEntreprise(entreprise);
 		
 		centre.setAdresse(adresse);
 		centre.setEntreprise(entreprise);

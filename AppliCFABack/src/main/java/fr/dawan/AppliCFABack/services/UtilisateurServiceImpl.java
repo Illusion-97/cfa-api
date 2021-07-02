@@ -67,12 +67,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public List<UtilisateurDto> getAllUtilisateurs(int page, int size, String search) {
 
 		List<Utilisateur> users = utilisateurRepository
-				.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search,
-						search, search, PageRequest.of(page, size))
+				.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(search,
+						search, search, search, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
+		
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
-			res.add(DtoTools.convert(u, UtilisateurDto.class));
+			UtilisateurDto uDto = DtoTools.convert(u, UtilisateurDto.class);
+			uDto.setAdresseDto(DtoTools.convert(u.getAdresse(), AdresseDto.class));
+			uDto.setEntrepriseDto(DtoTools.convert(u.getEntreprise(), EntrepriseDto.class));
+			//res.add(DtoTools.convert(u, UtilisateurDto.class));
+			res.add(uDto);
+			
 		}
 		return res;
 	}
@@ -80,15 +86,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(utilisateurRepository
-				.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search,
-						search, search));
+				.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(search,
+						search, search, search, search));
 	}
 
 	@Override
 	public UtilisateurDto getById(long id) {
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
-		if (userOpt.isPresent())
-			return DtoTools.convert(userOpt.get(), UtilisateurDto.class);
+		if (userOpt.isPresent()) {
+			UtilisateurDto uDto = DtoTools.convert(userOpt.get(), UtilisateurDto.class);
+			uDto.setAdresseDto(DtoTools.convert(userOpt.get().getAdresse(), AdresseDto.class));
+			uDto.setEntrepriseDto(DtoTools.convert(userOpt.get().getEntreprise(), EntrepriseDto.class));
+			
+			return uDto;
+		}
+			
+			
 		return null;
 	}
 
