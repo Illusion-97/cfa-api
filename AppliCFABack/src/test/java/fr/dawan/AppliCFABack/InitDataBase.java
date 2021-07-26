@@ -364,6 +364,7 @@ public class InitDataBase {
 
 		roleEtudiant.setUtilisateurs(lstEtudiant.stream().collect(Collectors.toList()));
 
+		entreprise.setAdresseSiege(adresse2);
 		groupe.setEtudiants(lstEtudiant);
 
 		promotion.setEtudiants(lstEtudiant);
