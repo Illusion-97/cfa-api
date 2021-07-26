@@ -130,8 +130,29 @@ public class UtilisateurController {
 		return utilisateurService.findByEntreprise(id);
 	}
 	@GetMapping(value = "/roles/{idRole}", produces = "application/json")
-	public List<UtilisateurDto> findByRole(@PathVariable("idRole") long idRole) {
+	public List<UtilisateurDto> findByRole(@PathVariable("role") long idRole) {
 		return utilisateurService.findByRole(idRole);
+	}
+	
+	@GetMapping(value = "/{page}/{size}", produces = "application/json")
+	public List<UtilisateurDto> findByRoleByPage(@RequestParam("role") long role, @PathVariable("page") int page, @PathVariable(value = "size") int size) {
+		return utilisateurService.findByRoleByPage(role,page,size,"");
+	}
+	
+	@GetMapping(value = "/{page}/{size}?role={role}&search={search}", produces = "application/json")
+	public List<UtilisateurDto> findByRoleByPage(@PathVariable("role") long role, @PathVariable("page") int page, @PathVariable(value = "size") int size,
+			@PathVariable(value = "search") String search) {
+		return utilisateurService.findByRoleByPage(role,page,size,search);
+	}
+	
+	@GetMapping(value = "/count?role={role}", produces = "application/json")
+	public CountDto count(@PathVariable("role") String role) {
+		return utilisateurService.countByRole(role, "");
+	}
+	
+	@GetMapping(value = "/count?role={role}&search={search}", produces = "application/json")
+	public CountDto count(@PathVariable("role") String role, @PathVariable(value = "search") String search) {
+		return utilisateurService.countByRole(role, search);
 	}
 
 	@GetMapping(value = "/{id}/planning", produces = "application/json")
