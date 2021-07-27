@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.FormationService;
+import fr.dawan.AppliCFABack.services.PromotionService;
 
 @RestController
 @RequestMapping("/AppliCFABack/formations")
@@ -27,6 +31,9 @@ public class FormationController {
 
 	@Autowired
 	FormationService formationService;
+	
+	@Autowired
+	PromotionService promotionService;
 
 	// ##################################################
 	// # GET #
@@ -70,6 +77,19 @@ public class FormationController {
 		else
 			return formationService.count("");
 		}
+	@GetMapping(value = "/getFormationByPromoId/{id}", produces = "application/json")
+	public List<FormationDto> getFormationByEtudidantId(@PathVariable(value = "id") long id){
+		
+		PromotionDto promotion = promotionService.getById(id);
+		List<InterventionDto> lstintervention = promotion.getInterventionsDto();
+		List<FormationDto> lstFormation = new ArrayList<FormationDto>();
+		for (InterventionDto i : lstintervention) {
+			lstFormation.add(i.getFormationDto());
+		}
+		return lstFormation;
+		
+	}
+
 
 	// ##################################################
 	// # POST #
