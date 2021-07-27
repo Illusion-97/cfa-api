@@ -13,6 +13,12 @@ public interface UtilisateurService {
 	List<UtilisateurDto> getAll();
 	
 	List<UtilisateurDto> getAllUtilisateurs(int page, int size, String string);
+	
+	CountDto count(String string);
+	
+	List<UtilisateurDto> findAllByRoleByPage(int page, int size,String role, String search);
+
+	CountDto countByRole(String role, String string);
 
 	List<UtilisateurDto> getAllWithObject();
 
@@ -38,14 +44,7 @@ public interface UtilisateurService {
 
 	UtilisateurDto getByIdWithObject(long id);
 
-	CountDto count(String string);
-
 	List<UtilisateurDto> findByRole(long idRole);	
-
-	List<UtilisateurDto> findByRoleByPage(long role, int page, int size, String search);
-
-	CountDto countByRole(String role, String string);
-
 
 	
 }

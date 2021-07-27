@@ -48,32 +48,25 @@ public class UtilisateurController {
 	}
 
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
-	public @ResponseBody List<UtilisateurDto> getAllByPage(@PathVariable("page") int page,
-			@PathVariable(value = "size") int size) {
-		return utilisateurService.getAllUtilisateurs(page, size, "");
-	}
-
-	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
-	public @ResponseBody List<UtilisateurDto> getAllByPage(@PathVariable("page") int page,
+	public @ResponseBody List<UtilisateurDto> getAllByPage(
+			@PathVariable("page") int page,
 			@PathVariable(value = "size") int size,
-			@PathVariable(value = "search", required = false) Optional<String> search) {
-		if (search.isPresent())
-			return utilisateurService.getAllUtilisateurs(page, size, search.get());
-		else
-			return utilisateurService.getAllUtilisateurs(page, size, "");
-	}
+			@RequestParam(required = false) Optional<String> role,
+			@RequestParam(defaultValue = "", required = false) Optional<String> search) {
+		
+		if(role.isPresent()) 
+			return utilisateurService.findAllByRoleByPage(page, size, role.get().toString(), search.get().toString());
+		else 
+			return utilisateurService.getAllUtilisateurs(page, size, search.get().toString());
+	}	
 
 	@GetMapping(value = "/count", produces = "application/json")
-	public CountDto count() {
-		return utilisateurService.count("");
-	}
-
-	@GetMapping(value = "/count/{search}", produces = "application/json")
-	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
-		if (search.isPresent())
-			return utilisateurService.count(search.get());
+	public CountDto count(@RequestParam(required = false) Optional<String> role,
+						@RequestParam(defaultValue = "", required = false) Optional<String> search) {
+		if(role.isPresent())
+			return utilisateurService.countByRole(role.get().toString(), search.get().toString());
 		else
-			return utilisateurService.count("");
+			return utilisateurService.count(search.get().toString());
 	}
 
 	// GET: /AppliCFABack/utilisateurs/with-object
@@ -134,26 +127,7 @@ public class UtilisateurController {
 		return utilisateurService.findByRole(idRole);
 	}
 	
-	@GetMapping(value = "/{page}/{size}", produces = "application/json")
-	public List<UtilisateurDto> findByRoleByPage(@RequestParam("role") long role, @PathVariable("page") int page, @PathVariable(value = "size") int size) {
-		return utilisateurService.findByRoleByPage(role,page,size,"");
-	}
 	
-	@GetMapping(value = "/{page}/{size}?role={role}&search={search}", produces = "application/json")
-	public List<UtilisateurDto> findByRoleByPage(@PathVariable("role") long role, @PathVariable("page") int page, @PathVariable(value = "size") int size,
-			@PathVariable(value = "search") String search) {
-		return utilisateurService.findByRoleByPage(role,page,size,search);
-	}
-	
-	@GetMapping(value = "/count?role={role}", produces = "application/json")
-	public CountDto count(@PathVariable("role") String role) {
-		return utilisateurService.countByRole(role, "");
-	}
-	
-	@GetMapping(value = "/count?role={role}&search={search}", produces = "application/json")
-	public CountDto count(@PathVariable("role") String role, @PathVariable(value = "search") String search) {
-		return utilisateurService.countByRole(role, search);
-	}
 
 	@GetMapping(value = "/{id}/planning", produces = "application/json")
 	public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(@PathVariable("id") long id) {

@@ -32,15 +32,12 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 
 	long countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(String prenom, String nom, String login);
 
-	Page<Utilisateur> findAllByRolesIdOrPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(
-			long role, String search, String search2, String search3, Pageable pageable);
 
-	long countByRolesIntituleContainingIgnoringCaseOrPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(
-			String role, String search, String search2, String search3);
+	
+	Page<Utilisateur> findAllByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
+			String role1, String prenom, String role2, String nom, String role3, String login, Pageable pageable);
 
-	Page<Utilisateur> findAllByRolesId(long role, Pageable of);
-
-
-
+	long countByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
+			String role1, String prenom, String role2, String nom, String role3, String login);
 	
 }
