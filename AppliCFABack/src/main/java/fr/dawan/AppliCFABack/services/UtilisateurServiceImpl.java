@@ -312,11 +312,31 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				if (ur.getId() == idRole) {
 					resfinal.add(u);
 				}
-			}
-			
+			}			
 		}
 		
 		return resfinal;
+	}
+
+	@Override
+	public List<UtilisateurDto> findAllByRoleByPage(int page, int size,String role, String search) {
+		List<Utilisateur> users = utilisateurRepository
+				.findAllByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
+						role, search, role, search, role, search, PageRequest.of(page, size))
+				.get().collect(Collectors.toList());
+				
+		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
+		for (Utilisateur u : users) {
+			res.add(DtoTools.convert(u, UtilisateurDto.class));
+		}
+		return res;
+	}
+
+	@Override
+	public CountDto countByRole(String role, String search) {
+		return new CountDto(utilisateurRepository
+				.countByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
+						role, search, role, search, role, search));
 	}
 
 }

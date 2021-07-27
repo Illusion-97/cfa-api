@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
@@ -12,6 +13,12 @@ public interface UtilisateurService {
 	List<UtilisateurDto> getAll();
 	
 	List<UtilisateurDto> getAllUtilisateurs(int page, int size, String string);
+	
+	CountDto count(String string);
+	
+	List<UtilisateurDto> findAllByRoleByPage(int page, int size,String role, String search);
+
+	CountDto countByRole(String role, String string);
 
 	List<UtilisateurDto> getAllWithObject();
 
@@ -37,10 +44,7 @@ public interface UtilisateurService {
 
 	UtilisateurDto getByIdWithObject(long id);
 
-	CountDto count(String string);
-
-	List<UtilisateurDto> findByRole(long idRole);
-
+	List<UtilisateurDto> findByRole(long idRole);	
 
 	
 }

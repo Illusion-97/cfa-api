@@ -3,10 +3,12 @@ package fr.dawan.AppliCFABack.repositories;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
 import fr.dawan.AppliCFABack.entities.Utilisateur;
@@ -31,6 +33,11 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	long countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(String prenom, String nom, String login, String search, String search2);
 
 
+	
+	Page<Utilisateur> findAllByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
+			String role1, String prenom, String role2, String nom, String role3, String login, Pageable pageable);
 
+	long countByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
+			String role1, String prenom, String role2, String nom, String role3, String login);
 	
 }
