@@ -10,7 +10,9 @@ public class InterventionDto {
 	private FormationDto formationDto; // Java init
 	private InterventionDto interventionMereDto; // Java init+appro
 	private List<PromotionDto> promotionsDto; // CDA 2021
-
+	private List<FormateurDto> formateursDto;
+	private String noteInfoPersonnel;
+	
 	public InterventionDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -55,12 +57,28 @@ public class InterventionDto {
 		this.interventionMereDto = interventionMereDto;
 	}
 
-	public List<PromotionDto> getPromotionDto() {
+	public List<PromotionDto> getPromotionsDto() {
 		return promotionsDto;
 	}
 
-	public void setPromotionDto(List<PromotionDto> promotionsDto) {
+	public void setPromotionsDto(List<PromotionDto> promotionsDto) {
 		this.promotionsDto = promotionsDto;
+	}
+
+	public List<FormateurDto> getFormateursDto() {
+		return formateursDto;
+	}
+
+	public void setFormateursDto(List<FormateurDto> formateursDto) {
+		this.formateursDto = formateursDto;
+	}
+
+	public String getNoteInfoPersonnel() {
+		return noteInfoPersonnel;
+	}
+
+	public void setNoteInfoPersonnel(String noteInfoPersonnel) {
+		this.noteInfoPersonnel = noteInfoPersonnel;
 	}
 
 }
