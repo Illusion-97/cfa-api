@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.services.FormationService;
+import fr.dawan.AppliCFABack.services.InterventionService;
 
 @RestController
 @RequestMapping("/AppliCFABack/formations")
@@ -27,6 +29,8 @@ public class FormationController {
 
 	@Autowired
 	FormationService formationService;
+	@Autowired
+	InterventionService interventionService;
 
 	// ##################################################
 	// # GET #
@@ -65,11 +69,11 @@ public class FormationController {
 
 	@GetMapping(value = "/count/{search}", produces = "application/json")
 	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
-		if(search.isPresent())
+		if (search.isPresent())
 			return formationService.count(search.get());
 		else
 			return formationService.count("");
-		}
+	}
 
 	// ##################################################
 	// # POST #
@@ -102,5 +106,10 @@ public class FormationController {
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public FormationDto update(@RequestBody FormationDto fDto) {
 		return formationService.saveOrUpdate(fDto);
+	}
+
+	@GetMapping(value = "/{id}/interventions", produces = "application/json")
+	public List<InterventionDto> findAllByFormateurId(@PathVariable("id") long id) {
+		return formationService.findAllByFormationId(id);
 	}
 }
