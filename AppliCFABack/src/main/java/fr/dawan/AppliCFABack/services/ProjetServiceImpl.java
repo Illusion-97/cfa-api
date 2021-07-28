@@ -12,13 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.ExamenDto;
-import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
-import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.repositories.ProjetRepository;
 

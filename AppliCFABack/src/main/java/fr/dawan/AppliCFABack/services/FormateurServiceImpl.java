@@ -218,4 +218,5 @@ public class FormateurServiceImpl implements FormateurService {
 		return new CountDto(interventionRepository.countByFormateursId(id));
 	}
 
+
 }

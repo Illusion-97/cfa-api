@@ -27,8 +27,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.controllers.UtilisateurController;
-import fr.dawan.AppliCFABack.dto.AdresseDto;
-import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 
 @SpringBootTest

@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.entities.CEF;
-import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
 
 @Service
