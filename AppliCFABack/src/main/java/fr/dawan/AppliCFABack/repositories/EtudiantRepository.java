@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,5 +23,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 
 	long countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(String search,
 			String search2, String search3);
+	
+	List<Etudiant> findAllDistinctByPromotionsInterventionsId(long id);
 
 }
