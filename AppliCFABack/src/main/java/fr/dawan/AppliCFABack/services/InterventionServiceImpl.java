@@ -12,14 +12,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.entities.Devoir;
+import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.repositories.DevoirRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.FormationRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
@@ -40,6 +47,12 @@ public class InterventionServiceImpl implements InterventionService {
 	FormationRepository formationRepository;
 	@Autowired
 	PassageExamenRepository passageExamRepository;
+	@Autowired
+	EtudiantRepository etudiantRepository;
+	@Autowired
+	DevoirRepository devoirRepository;
+	@Autowired
+	PassageExamenRepository passageExamenRepository;
 
 	@Override
 	public List<InterventionDto> getAllIntervention() {
@@ -91,13 +104,13 @@ public class InterventionServiceImpl implements InterventionService {
 			// Les convertion en Dto faite => on ajoute la formationDto à l'interventionDto
 			interventionDto.setFormationDto(formationDto);
 
-			Intervention inter = intervention.getInterventionMere();
-
-			InterventionDto interventionMereDto = DtoTools.convert(inter, InterventionDto.class);
-			interventionDto.setInterventionMereDto(interventionMereDto);
+//			Intervention inter = intervention.getInterventionMere();
+//
+//			InterventionDto interventionMereDto = DtoTools.convert(inter, InterventionDto.class);
+//			interventionDto.setInterventionMereDto(interventionMereDto);
 
 			// On affiche une liste de promotions de type List<Promotion>
-			List<Promotion> lstPromo = intervention.getPromotion();
+			List<Promotion> lstPromo = intervention.getPromotions();
 			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
 			for (Promotion promotion : lstPromo) {
 				/** On convertis List<Promotion> en List<PromotionDto> **/
@@ -105,8 +118,16 @@ public class InterventionServiceImpl implements InterventionService {
 					lstPromoDto.add(DtoTools.convert(promotion, PromotionDto.class));
 			}
 
-			// On ajoute la liste de promotion a l'intervention
-			interventionDto.setPromotionDto(lstPromoDto);
+//			List<FormateurDto> lstFormDto = new ArrayList<FormateurDto>();
+//			for (Formateur formateur : intervention.getFormateurs()) {
+//				if (formateur != null)
+//					lstFormDto.add(DtoTools.convert(formateur, FormateurDto.class));
+//			}
+//
+//			// On ajoute la liste des formateurs a l'intervention
+//			interventionDto.setFormateursDto(lstFormDto);
+			// On ajoute la liste de promotions a l'intervention
+			interventionDto.setPromotionsDto(lstPromoDto);
 			// On ajoute l'intervention a la liste d'intervention
 			lstDto.add(interventionDto);
 
@@ -121,17 +142,22 @@ public class InterventionServiceImpl implements InterventionService {
 			InterventionDto interventionDto = DtoTools.convert(i.get(), InterventionDto.class);
 			// Recupere les formations par rapport à l'id de l'intervention
 			// Convertion de l'entitie Formation en FormationDto
-			Formation formation = i.get().getFormation();
-			FormationDto formationDto = DtoTools.convert(formation, FormationDto.class);
+			FormationDto formationDto = DtoTools.convert(i.get().getFormation(), FormationDto.class);
 
-			List<Promotion> lstPromo = i.get().getPromotion();
 			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
-			for (Promotion promo : lstPromo) {
+			for (Promotion promo : i.get().getPromotions()) {
 				if (promo != null)
 					lstPromoDto.add(DtoTools.convert(promo, PromotionDto.class));
 			}
 
-			interventionDto.setPromotionDto(lstPromoDto);
+			List<FormateurDto> lstFormaDto = new ArrayList<FormateurDto>();
+			for (Formateur formateur : i.get().getFormateurs()) {
+				if (formateur != null)
+					lstFormaDto.add(DtoTools.convert(formateur, FormateurDto.class));
+			}
+
+			interventionDto.setFormateursDto(lstFormaDto);
+			interventionDto.setPromotionsDto(lstPromoDto);
 			interventionDto.setFormationDto(formationDto);
 			return interventionDto;
 		}
@@ -150,110 +176,128 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Override
 	public void deleteById(long id) {
-		InterventionDto interventionDto = getById(id);
-		Intervention intervention = DtoTools.convert(interventionDto, Intervention.class);
-
-		if (intervention == null) {
-			return;
-		}
-
-		// TODO List<Promotion> lstPromo => @ManyToMany
-		// TODO List<Formateur> lstFormateur => @ManyToMany
-		List<Promotion> lstPromotions = intervention.getPromotion();
-		List<Formateur> lstFormateurs = intervention.getFormateurs();
-		intervention.setPromotion(null);
-		intervention.setFormateurs(null);
-		interventionRepository.save(intervention);
-
-		Intervention interventionToDelete = new Intervention();
-
-		for (Promotion promotion : lstPromotions) {
-			for (Intervention interv : promotion.getInterventions()) {
-				if (interv.getId() == intervention.getId()) {
-					interventionToDelete = interv;
-					break;
-				}
-				promotion.getInterventions().remove(interventionToDelete);
-				promoRepository.save(promotion);
-				System.out.println("DELETE promo OK");
-			}
-		}
-
-		for (Formateur formateur : lstFormateurs) {
-			for (Intervention interv : formateur.getInterventions()) {
-				if (interv.getId() == intervention.getId()) {
-					interventionToDelete = interv;
-					break;
-				}
-				formateur.getInterventions().remove(interventionToDelete);
-				formateurRepository.save(formateur);
-				System.out.println("DELETE Formateur OK");
-			}
-		}
-		// TODO Formation formation => @ManyToOne
-		Formation formation = intervention.getFormation();
-		intervention.setFormation(null);
-		formationRepository.save(formation);
-		formationRepository.delete(formation);
-		System.out.println("DELETE formation OK");
-		interventionRepository.delete(interventionToDelete);
-
-		System.out.println("DELETE FAILED");
+		// On regarde si un devoir est lié à une intervention
+		Devoir dev = devoirRepository.findByInterventionId(id);
+		// Si c'est le cas : on enleve sa liaison en rendant l'intervention à null
+		if (dev != null)
+			dev.setIntervention(null);
+		// Meme chose : on regarde si un passage d'examen est lié une intervention
+		PassageExamen passExam = passageExamenRepository.findByInterventionId(id);
+		// Si c'est le cas : on enleve sa liaison en rendant l'intervention à null
+		if (passExam != null)
+			passExam.setIntervention(null);
+		// Une fois les liaisions enlevées on peux supprimer l'intervention
+		interventionRepository.deleteById(id);
 	}
 
-	@Override
-	public List<InterventionDto> getAllInterventionWithObject() {
-		// En passant par les Dto on perd les relation Objet entre les differentes
-		// classes
-		/**
-		 * Le principe est de pouvoir recuperer les infos de la classe ainsi que leur
-		 * relation Objet avec les autre classe qu'il contienne en passant par les Dto
-		 **/
-
-		// On recuperent d'abord les interventions
-		List<Intervention> lstIn = interventionRepository.findAll();
-		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
-
-		for (Intervention intervention : lstIn) {
-			/**
-			 * on recup une intervention de type Intervention que l'on convertis en
-			 * InterventionDto
-			 **/
-			InterventionDto interventionDto = DtoTools.convert(intervention, InterventionDto.class);
-			/**
-			 * on recup une formation de type Formation que l'on convertis en FormationDto
-			 **/
-			FormationDto formationDto = DtoTools.convert(intervention.getFormation(), FormationDto.class);
-			// Les convertion en Dto faite => on ajoute la formationDto à l'interventionDto
-			interventionDto.setFormationDto(formationDto);
-
-			Intervention inter = intervention.getInterventionMere();
-
-			InterventionDto interventionMereDto = DtoTools.convert(inter, InterventionDto.class);
-			interventionDto.setInterventionMereDto(interventionMereDto);
-
-			// On affiche une liste de promotions de type List<Promotion>
-			List<Promotion> lstPromo = intervention.getPromotion();
-			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
-			for (Promotion promotion : lstPromo) {
-				/** On convertis List<Promotion> en List<PromotionDto> **/
-				if (promotion != null)
-					lstPromoDto.add(DtoTools.convert(promotion, PromotionDto.class));
-			}
-
-			// On ajoute la liste de promotion a l'intervention
-			interventionDto.setPromotionDto(lstPromoDto);
-			// On ajoute l'intervention a la liste d'intervention
-			lstDto.add(interventionDto);
-
-		}
-		return lstDto;
-	}
+//	@Override
+//	public List<InterventionDto> getAllInterventionWithObject() {
+//		// En passant par les Dto on perd les relation Objet entre les differentes
+//		// classes
+//		/**
+//		 * Le principe est de pouvoir recuperer les infos de la classe ainsi que leur
+//		 * relation Objet avec les autre classe qu'il contienne en passant par les Dto
+//		 **/
+//
+//		// On recuperent d'abord les interventions
+//		List<Intervention> lstIn = interventionRepository.findAll();
+//		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
+//
+//		for (Intervention intervention : lstIn) {
+//			/**
+//			 * on recup une intervention de type Intervention que l'on convertis en
+//			 * InterventionDto
+//			 **/
+//			InterventionDto interventionDto = DtoTools.convert(intervention, InterventionDto.class);
+//			/**
+//			 * on recup une formation de type Formation que l'on convertis en FormationDto
+//			 **/
+//			FormationDto formationDto = DtoTools.convert(intervention.getFormation(), FormationDto.class);
+//			// Les convertion en Dto faite => on ajoute la formationDto à l'interventionDto
+//			interventionDto.setFormationDto(formationDto);
+//
+//			Intervention inter = intervention.getInterventionMere();
+//
+//			InterventionDto interventionMereDto = DtoTools.convert(inter, InterventionDto.class);
+//			interventionDto.setInterventionMereDto(interventionMereDto);
+//
+//			// On affiche une liste de promotions de type List<Promotion>
+//			List<Promotion> lstPromo = intervention.getPromotions();
+//			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
+//			for (Promotion promotion : lstPromo) {
+//				/** On convertis List<Promotion> en List<PromotionDto> **/
+//				if (promotion != null)
+//					lstPromoDto.add(DtoTools.convert(promotion, PromotionDto.class));
+//			}
+//
+//			List<FormateurDto> lstFormaDto = new ArrayList<FormateurDto>();
+//			for (Formateur formateur : intervention.getFormateurs()) {
+//				if (formateur != null)
+//					lstFormaDto.add(DtoTools.convert(formateur, FormateurDto.class));
+//			}
+//
+//			interventionDto.setFormateursDto(lstFormaDto);
+//			// On ajoute la liste de promotion a l'intervention
+//			interventionDto.setPromotionsDto(lstPromoDto);
+//			// On ajoute l'intervention a la liste d'intervention
+//			lstDto.add(interventionDto);
+//
+//		}
+//		return lstDto;
+//	}
 
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(interventionRepository
 				.countByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search, search));
+	}
+
+	// Liste des etudiants des promotions par l'id de l'intervention
+	@Override
+	public List<EtudiantDto> findAllByPromotionInterventionsId(long id) {
+		List<Etudiant> lstEtu = etudiantRepository.findAllDistinctByPromotionsInterventionsId(id);
+		List<EtudiantDto> lstEtuDto = new ArrayList<EtudiantDto>();
+		for (Etudiant etu : lstEtu) {
+			if (etu != null)
+				lstEtuDto.add(DtoTools.convert(etu, EtudiantDto.class));
+		}
+		return lstEtuDto;
+	}
+
+	// Liste des promotions par l'id de l'intervention
+	@Override
+	public List<PromotionDto> findPromotionsByInterventionId(long id) {
+		List<Promotion> lstProm = promoRepository.findAllByInterventionsId(id);
+		List<PromotionDto> lstPromDto = new ArrayList<PromotionDto>();
+		for (Promotion prom : lstProm) {
+			if (prom != null)
+				lstPromDto.add(DtoTools.convert(prom, PromotionDto.class));
+		}
+		return lstPromDto;
+	}
+
+	// Liste des devoirs par l'id de l'intervention
+	@Override
+	public List<DevoirDto> findDevoirsByInterventionId(long id) {
+		List<Devoir> lsDev = devoirRepository.findAllByInterventionId(id);
+		List<DevoirDto> lsDevDto = new ArrayList<DevoirDto>();
+
+		for (Devoir dev : lsDev) {
+			if (dev != null)
+				lsDevDto.add(DtoTools.convert(dev, DevoirDto.class));
+		}
+		return lsDevDto;
+	}
+
+	@Override
+	public List<FormateurDto> findFormateursByInterventionsId(long id) {
+		List<Formateur> lstForm = formateurRepository.findByInterventionsId(id);
+		List<FormateurDto> lstFormDto = new ArrayList<FormateurDto>();
+		for (Formateur form : lstForm) {
+			if (form != null)
+				lstFormDto.add(DtoTools.convert(form, FormateurDto.class));
+		}
+		return lstFormDto;
 	}
 
 }

@@ -17,7 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DevoirDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.InterventionService;
 
 @RestController
@@ -26,6 +31,8 @@ public class InterventionController {
 
 	@Autowired
 	InterventionService interventionService;
+	@Autowired
+	EtudiantService etudiantService;
 
 	// ##################################################
 	// # GET #
@@ -36,32 +43,28 @@ public class InterventionController {
 		return interventionService.getAllIntervention();
 	}
 
-	@GetMapping(produces = "application/json", value = "/with-object")
-	public List<InterventionDto> getAllWithObject() {
-		return interventionService.getAllInterventionWithObject();
-	}
-
-	@GetMapping(produces = "application/json", value = "/with-object/{page}/{size}")
-	public List<InterventionDto> getAllWithObject(@PathVariable("page") Optional<Integer> page,
-			@PathVariable("size") Optional<Integer> size) {
-		if (size.isPresent() && page.isPresent())
-			return interventionService.getAllIntervention(page.get(), size.get());
-		else
-			return interventionService.getAllInterventionWithObject();
-	}
-
+//	@GetMapping(value = "/{id}", produces = "application/json")
+//	public InterventionDto getById(@PathVariable("id") long id) {
+//		return interventionService.getById(id);
+//	}
+	
+	// GET : /AppliCFABack/interventions/{id}
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public InterventionDto getById(@PathVariable("id") long id) {
-		return interventionService.getById(id);
+	public ResponseEntity<?> getById(@PathVariable("id") long id) {
+		HttpStatus status = ResponseEntity.status(HttpStatus.OK).build().getStatusCode();
+		ResponseEntity<?> response = ResponseEntity.status(status).header("Status", status.toString())
+				.body(interventionService.getById(id));
+		return response;
 	}
 
-	// /AppliCFABack/groupeEtudiants/{page}/{size}
+	// GET : /AppliCFABack/interventions/{page}/{size}
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		return interventionService.getAllByPage(page, size, "");
 	}
-
+	
+	// GET : /AppliCFABack/interventions/{page}/{size}/{search}
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size,
@@ -101,7 +104,10 @@ public class InterventionController {
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		try {
 			interventionService.deleteById(id);
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
+//			int status = ResponseEntity.status(HttpStatus.ACCEPTED).build().getStatusCodeValue();
+			HttpStatus status = ResponseEntity.status(HttpStatus.ACCEPTED).build().getStatusCode();
+			ResponseEntity<?> response = ResponseEntity.status(status).header("Status", status.toString()).build();
+			return response;
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
 		}
@@ -114,6 +120,26 @@ public class InterventionController {
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public InterventionDto update(@RequestBody InterventionDto iDto) {
 		return interventionService.saveOrUpdate(iDto);
+	}
+
+	@GetMapping(value = "/{id}/etudiants-promotion", produces = "application/json")
+	public List<EtudiantDto> findAllByPromotionInterventionsId(@PathVariable("id") long id) {
+		return interventionService.findAllByPromotionInterventionsId(id);
+	}
+
+	@GetMapping(value = "/{id}/promotions", produces = "application/json")
+	public List<PromotionDto> findAllPromotionsByInterventionId(@PathVariable("id") long id) {
+		return interventionService.findPromotionsByInterventionId(id);
+	}
+
+	@GetMapping(value = "/{id}/devoirs", produces = "application/json")
+	public List<DevoirDto> findAllDevoirsByInterventionId(@PathVariable("id") long id) {
+		return interventionService.findDevoirsByInterventionId(id);
+	}
+
+	@GetMapping(value = "/{id}/formateurs", produces = "application/json")
+	public List<FormateurDto> findAllFormateursByInterventionId(@PathVariable("id") long id) {
+		return interventionService.findFormateursByInterventionsId(id);
 	}
 
 }
