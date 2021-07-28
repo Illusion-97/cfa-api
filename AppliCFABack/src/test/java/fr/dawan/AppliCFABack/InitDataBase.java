@@ -119,7 +119,7 @@ public class InitDataBase {
 
 		List<Intervention> interventions = interventionRepository.findAll();
 		Intervention inter = interventions.get(interventions.size() - 1);
-		inter.setPromotion(null);
+		inter.setPromotions(null);
 		interventionRepository.delete(inter);
 
 		List<Promotion> promotions = promotionRepository.findAll();
@@ -400,16 +400,16 @@ public class InitDataBase {
 		absence.setEtudiant(etudiant);
 
 		intervention.setFormation(formation);
-		intervention.setPromotion(lstPromotion1);
+		intervention.setPromotions(lstPromotion1);
 
 		intervention2.setFormation(formation2);
-		intervention2.setPromotion(lstPromotion1);
+		intervention2.setPromotions(lstPromotion1);
 
 		intervention3.setFormation(formation3);
-		intervention3.setPromotion(lstPromotion1);
+		intervention3.setPromotions(lstPromotion1);
 
 		intervention4.setFormation(formation4);
-		intervention4.setPromotion(lstPromotion1);
+		intervention4.setPromotions(lstPromotion1);
 
 //		intervention2.setPromotion(promotion);
 //		intervention2.setPromotion(promotion2);
