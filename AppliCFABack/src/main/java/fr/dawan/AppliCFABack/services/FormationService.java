@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
 
 public interface FormationService {
 
@@ -18,5 +19,7 @@ public interface FormationService {
 	FormationDto saveOrUpdate(FormationDto fDto);
 
 	void deleteById(long id);
+
+	List<InterventionDto> findAllByFormationId(long id);
 
 }
