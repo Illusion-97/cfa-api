@@ -30,7 +30,9 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 
 		List<CentreFormationDto> lstDto = new ArrayList<CentreFormationDto>();
 		for (CentreFormation cf : lst) {
-			lstDto.add(DtoTools.convert(cf, CentreFormationDto.class));
+			CentreFormationDto cDto = DtoTools.convert(cf, CentreFormationDto.class);
+			cDto.setAdresseDto(DtoTools.convert(cf.getAdresse(), AdresseDto.class));
+			lstDto.add(cDto);
 		}
 		return lstDto;
 	}
