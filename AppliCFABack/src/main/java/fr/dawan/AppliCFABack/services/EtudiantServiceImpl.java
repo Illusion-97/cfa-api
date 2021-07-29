@@ -22,10 +22,12 @@ import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Absence;
@@ -312,8 +314,16 @@ public class EtudiantServiceImpl implements EtudiantService {
 				.collect(Collectors.toList());
 		List<NoteDto> res = new ArrayList<NoteDto>();
 
-		for (Note n : lst)
-			res.add(DtoTools.convert(n, NoteDto.class));
+		for (Note n : lst) {
+			NoteDto nDto = DtoTools.convert(n, NoteDto.class);
+			nDto.setDevoirDto(DtoTools.convert(n.getDevoir(), DevoirDto.class));
+			nDto.setExamenDto(DtoTools.convert(n.getExamen(), PassageExamenDto.class));
+			nDto.getExamenDto().setExamenDto(DtoTools.convert(n.getExamen().getExamen(), ExamenDto.class));
+			
+			
+			res.add(nDto);
+		}
+		
 
 		return res;
 	}
