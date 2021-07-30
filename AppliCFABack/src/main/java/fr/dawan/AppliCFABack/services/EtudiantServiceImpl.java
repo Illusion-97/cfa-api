@@ -23,6 +23,7 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
@@ -441,7 +442,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 			for (PromotionDto pDto : eDto.getPromotionsDto()) {
 				for (InterventionDto iDto : pDto.getInterventionsDto()) {
 					if (devoir.getIntervention().getId() == iDto.getId()) {
-						lstdDto.add(DtoTools.convert(devoir, DevoirDto.class));
+						DevoirDto dDto = DtoTools.convert(devoir, DevoirDto.class);
+						dDto.setInterventionDto(iDto);
+						dDto.getInterventionDto().setFormationDto(DtoTools.convert(devoir.getIntervention().getFormation(), FormationDto.class));
+						lstdDto.add(dDto);
 					}
 				}
 			}
