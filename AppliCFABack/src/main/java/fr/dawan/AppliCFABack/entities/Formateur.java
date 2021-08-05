@@ -7,7 +7,7 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Formateur extends Utilisateur {
-	@ManyToMany
+	@ManyToMany(mappedBy = "formateurs")
 	private List<Intervention> interventions;
 
 	public Formateur() {

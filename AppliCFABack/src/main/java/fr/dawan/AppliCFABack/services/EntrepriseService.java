@@ -4,7 +4,6 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 
 public interface EntrepriseService {
 

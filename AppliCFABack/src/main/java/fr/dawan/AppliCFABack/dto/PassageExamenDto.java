@@ -2,9 +2,6 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.time.LocalDate;
 
-import fr.dawan.AppliCFABack.entities.Examen;
-import fr.dawan.AppliCFABack.entities.Intervention;
-
 public class PassageExamenDto {
 	private long id;
 	private LocalDate dateDebut;

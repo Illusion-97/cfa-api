@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,9 +33,12 @@ public class Intervention { // intervention prévue
 	@ManyToMany
 	private List<Promotion> promotions; // CDA 2021
 
-	@ManyToMany(mappedBy = "interventions")
+	@ManyToMany
 	private List<Formateur> formateurs;
-	
+
+	@Column
+	private String noteInfoPersonnel;
+
 	public Intervention() {
 		super();
 	}
@@ -89,11 +93,11 @@ public class Intervention { // intervention prévue
 		this.interventionMere = interventionMere;
 	}
 
-	public List<Promotion> getPromotion() {
+	public List<Promotion> getPromotions() {
 		return promotions;
 	}
 
-	public void setPromotion(List<Promotion> promotions) {
+	public void setPromotions(List<Promotion> promotions) {
 		this.promotions = promotions;
 	}
 
@@ -103,6 +107,14 @@ public class Intervention { // intervention prévue
 
 	public void setFormateurs(List<Formateur> formateurs) {
 		this.formateurs = formateurs;
+	}
+
+	public String getNoteInfoPersonnel() {
+		return noteInfoPersonnel;
+	}
+
+	public void setNoteInfoPersonnel(String noteInfoPersonnel) {
+		this.noteInfoPersonnel = noteInfoPersonnel;
 	}
 
 }

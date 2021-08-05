@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.services.CongeService;
 
 @RestController

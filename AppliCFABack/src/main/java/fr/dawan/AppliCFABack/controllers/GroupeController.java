@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
-import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.services.GroupeEtudiantService;
 
 @RestController

@@ -28,7 +28,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.controllers.CEFController;
 import fr.dawan.AppliCFABack.dto.CEFDto;
-import fr.dawan.AppliCFABack.dto.FormationDto;
 
 @SpringBootTest
 @AutoConfigureMockMvc

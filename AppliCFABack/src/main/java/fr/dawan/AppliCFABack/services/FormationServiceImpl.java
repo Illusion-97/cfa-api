@@ -15,9 +15,12 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Formation;
+import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.repositories.FormationRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 
 @Service
 @Transactional
@@ -25,6 +28,8 @@ public class FormationServiceImpl implements FormationService {
 
 	@Autowired
 	FormationRepository formationRepository;
+	@Autowired
+	InterventionRepository interventionRepository;
 
 	@Override
 	public List<FormationDto> getAllFormation() {
@@ -108,6 +113,18 @@ public class FormationServiceImpl implements FormationService {
 	public void deleteById(long id) {
 		formationRepository.deleteById(id);
 
+	}
+
+	@Override
+	public List<InterventionDto> findAllByFormationId(long id) {
+
+		List<Intervention> lstInt = interventionRepository.findAllByFormationId(id);
+		List<InterventionDto> lstIntDto = new ArrayList<InterventionDto>();
+		for (Intervention itv : lstInt) {
+			if (itv != null)
+				lstIntDto.add(DtoTools.convert(itv, InterventionDto.class));
+		}
+		return lstIntDto;
 	}
 
 }

@@ -14,21 +14,18 @@ import fr.dawan.AppliCFABack.entities.Intervention;
 @Repository
 public interface InterventionRepository extends JpaRepository<Intervention, Long> {
 
+
+	Page<Intervention> findAllDistinctByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(
+			String formationTitre, String promotionNom, Pageable p);
+
+	long countDistinctByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(String formationTitre,
+			String promotionNom);
+
+	/** ++++++++++++++ INTERVENTION PROMOTION ++++++++++++++ **/
 	@Query("SELECT i FROM Intervention i JOIN i.promotions promotion WHERE promotion.id=:id ")
 	List<Intervention> getInterventionsByIdPromotion(@Param("id") long id);
 
-//	List<Intervention> findAllByPromotionsId(long id);
-
-//	@Query(value = "SELECT itv FROM Intervention itv JOIN itv.promotions p WHERE LOWER(itv.formation.titre) LIKE %:keyword% OR LOWER(p.nom) LIKE %:keyword% OR DATE(itv.dateDebut)=:keyword")
-//	Page<Intervention> getAllByKeyword(@Param("keyword") String keyword, Pageable p);
-
-	Page<Intervention> findAllByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(
-			String formationTitre, String promotionNom, Pageable p);
-
-	long countByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(String formationTitre,
-			String promotionNom);
-	
-	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++**/
+	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++ **/
 	Page<Intervention> findAllByFormateursId(long id, Pageable p); // Interventions du formateur
 
 	// Interventions du formateur + recherche par mot clé
@@ -37,4 +34,7 @@ public interface InterventionRepository extends JpaRepository<Intervention, Long
 	long countByFormateursIdAndFormationTitreAllIgnoreCase(long id, String search);
 
 	long countByFormateursId(long id);
+
+	/** ++++++++++++++ INTERVENTION FORMATION ++++++++++++++ **/
+	List<Intervention> findAllByFormationId(long id);
 }
