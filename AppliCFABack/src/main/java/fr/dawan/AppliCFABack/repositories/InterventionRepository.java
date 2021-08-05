@@ -15,10 +15,10 @@ import fr.dawan.AppliCFABack.entities.Intervention;
 public interface InterventionRepository extends JpaRepository<Intervention, Long> {
 
 
-	Page<Intervention> findAllByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(
+	Page<Intervention> findAllDistinctByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(
 			String formationTitre, String promotionNom, Pageable p);
 
-	long countByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(String formationTitre,
+	long countDistinctByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(String formationTitre,
 			String promotionNom);
 
 	/** ++++++++++++++ INTERVENTION PROMOTION ++++++++++++++ **/

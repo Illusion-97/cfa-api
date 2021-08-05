@@ -85,8 +85,8 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public List<InterventionDto> getAllByPage(int page, int size, String search) {
 		List<Intervention> lstIn = interventionRepository
-				.findAllByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search, search,
-						PageRequest.of(page, size))
+				.findAllDistinctByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search,
+						search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
 
 		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
@@ -140,8 +140,8 @@ public class InterventionServiceImpl implements InterventionService {
 		Optional<Intervention> i = interventionRepository.findById(id);
 		if (i.isPresent()) {
 			InterventionDto interventionDto = DtoTools.convert(i.get(), InterventionDto.class);
-			// Recupere les formations par rapport à l'id de l'intervention
-			// Convertion de l'entitie Formation en FormationDto
+//			// Recupere les formations par rapport à l'id de l'intervention
+//			// Convertion de l'entitie Formation en FormationDto
 			FormationDto formationDto = DtoTools.convert(i.get().getFormation(), FormationDto.class);
 
 			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
@@ -190,66 +190,11 @@ public class InterventionServiceImpl implements InterventionService {
 		interventionRepository.deleteById(id);
 	}
 
-//	@Override
-//	public List<InterventionDto> getAllInterventionWithObject() {
-//		// En passant par les Dto on perd les relation Objet entre les differentes
-//		// classes
-//		/**
-//		 * Le principe est de pouvoir recuperer les infos de la classe ainsi que leur
-//		 * relation Objet avec les autre classe qu'il contienne en passant par les Dto
-//		 **/
-//
-//		// On recuperent d'abord les interventions
-//		List<Intervention> lstIn = interventionRepository.findAll();
-//		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
-//
-//		for (Intervention intervention : lstIn) {
-//			/**
-//			 * on recup une intervention de type Intervention que l'on convertis en
-//			 * InterventionDto
-//			 **/
-//			InterventionDto interventionDto = DtoTools.convert(intervention, InterventionDto.class);
-//			/**
-//			 * on recup une formation de type Formation que l'on convertis en FormationDto
-//			 **/
-//			FormationDto formationDto = DtoTools.convert(intervention.getFormation(), FormationDto.class);
-//			// Les convertion en Dto faite => on ajoute la formationDto à l'interventionDto
-//			interventionDto.setFormationDto(formationDto);
-//
-//			Intervention inter = intervention.getInterventionMere();
-//
-//			InterventionDto interventionMereDto = DtoTools.convert(inter, InterventionDto.class);
-//			interventionDto.setInterventionMereDto(interventionMereDto);
-//
-//			// On affiche une liste de promotions de type List<Promotion>
-//			List<Promotion> lstPromo = intervention.getPromotions();
-//			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
-//			for (Promotion promotion : lstPromo) {
-//				/** On convertis List<Promotion> en List<PromotionDto> **/
-//				if (promotion != null)
-//					lstPromoDto.add(DtoTools.convert(promotion, PromotionDto.class));
-//			}
-//
-//			List<FormateurDto> lstFormaDto = new ArrayList<FormateurDto>();
-//			for (Formateur formateur : intervention.getFormateurs()) {
-//				if (formateur != null)
-//					lstFormaDto.add(DtoTools.convert(formateur, FormateurDto.class));
-//			}
-//
-//			interventionDto.setFormateursDto(lstFormaDto);
-//			// On ajoute la liste de promotion a l'intervention
-//			interventionDto.setPromotionsDto(lstPromoDto);
-//			// On ajoute l'intervention a la liste d'intervention
-//			lstDto.add(interventionDto);
-//
-//		}
-//		return lstDto;
-//	}
-
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(interventionRepository
-				.countByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search, search));
+				.countDistinctByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search,
+						search));
 	}
 
 	// Liste des etudiants des promotions par l'id de l'intervention
