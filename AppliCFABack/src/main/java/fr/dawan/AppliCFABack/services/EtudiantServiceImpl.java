@@ -22,13 +22,17 @@ import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
@@ -165,7 +169,14 @@ public class EtudiantServiceImpl implements EtudiantService {
 		
 		List<PromotionDto> promotions = new ArrayList<PromotionDto>();
 		for(Promotion p : e.get().getPromotions()) {
-			promotions.add(DtoTools.convert(p, PromotionDto.class));
+			PromotionDto pDto = DtoTools.convert(p, PromotionDto.class);
+			List<InterventionDto> lstIDto = new ArrayList<>();
+			for (Intervention i : p.getInterventions()) {
+				InterventionDto iDto = DtoTools.convert(i, InterventionDto.class);
+				lstIDto.add(iDto);
+			}
+			pDto.setInterventionsDto(lstIDto);
+			promotions.add(pDto);
 		}
 		eDto.setPromotionsDto(promotions);
 
@@ -312,8 +323,16 @@ public class EtudiantServiceImpl implements EtudiantService {
 				.collect(Collectors.toList());
 		List<NoteDto> res = new ArrayList<NoteDto>();
 
-		for (Note n : lst)
-			res.add(DtoTools.convert(n, NoteDto.class));
+		for (Note n : lst) {
+			NoteDto nDto = DtoTools.convert(n, NoteDto.class);
+			nDto.setDevoirDto(DtoTools.convert(n.getDevoir(), DevoirDto.class));
+			nDto.setExamenDto(DtoTools.convert(n.getExamen(), PassageExamenDto.class));
+			nDto.getExamenDto().setExamenDto(DtoTools.convert(n.getExamen().getExamen(), ExamenDto.class));
+			
+			
+			res.add(nDto);
+		}
+		
 
 		return res;
 	}
@@ -416,7 +435,24 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
 
-		return null;
+		List<DevoirDto> lstdDto =  new ArrayList<DevoirDto>();
+		EtudiantDto eDto = getById(id);
+		List<Devoir> lstD = devoirRepository.findAll();
+		for (Devoir devoir : lstD) {
+			for (PromotionDto pDto : eDto.getPromotionsDto()) {
+				for (InterventionDto iDto : pDto.getInterventionsDto()) {
+					if (devoir.getIntervention().getId() == iDto.getId()) {
+						DevoirDto dDto = DtoTools.convert(devoir, DevoirDto.class);
+						dDto.setInterventionDto(iDto);
+						dDto.getInterventionDto().setFormationDto(DtoTools.convert(devoir.getIntervention().getFormation(), FormationDto.class));
+						lstdDto.add(dDto);
+					}
+				}
+			}
+			
+		}
+		
+		return lstdDto;
 //		List<Devoir> lst = devoirRepository.getDevoirsByIdEtudiant(id,  PageRequest.of(page, size)).get().collect(Collectors.toList());
 //		List<DevoirDto> res = new ArrayList<DevoirDto>();
 //		

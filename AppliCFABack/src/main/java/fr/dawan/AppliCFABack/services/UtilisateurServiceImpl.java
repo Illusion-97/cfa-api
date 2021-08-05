@@ -74,12 +74,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public List<UtilisateurDto> getAllUtilisateurs(int page, int size, String search) {
 
 		List<Utilisateur> users = utilisateurRepository
-				.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search,
-						search, search, PageRequest.of(page, size))
+				.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(search,
+						search, search, search, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
+		
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
-			res.add(DtoTools.convert(u, UtilisateurDto.class));
+			UtilisateurDto uDto = DtoTools.convert(u, UtilisateurDto.class);
+			uDto.setAdresseDto(DtoTools.convert(u.getAdresse(), AdresseDto.class));
+			uDto.setEntrepriseDto(DtoTools.convert(u.getEntreprise(), EntrepriseDto.class));
+			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
+			for(UtilisateurRole ur : u.getRoles()) {
+				utilisateurRoleDto.add(DtoTools.convert(ur, UtilisateurRoleDto.class));
+			}
+			uDto.setRolesDto(utilisateurRoleDto);
+			
+			res.add(uDto);
+			
 		}
 		return res;
 	}
@@ -87,15 +98,27 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(utilisateurRepository
-				.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search,
-						search, search));
+				.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(search,
+						search, search, search, search));
 	}
 
 	@Override
 	public UtilisateurDto getById(long id) {
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
-		if (userOpt.isPresent())
-			return DtoTools.convert(userOpt.get(), UtilisateurDto.class);
+		if (userOpt.isPresent()) {
+			UtilisateurDto uDto = DtoTools.convert(userOpt.get(), UtilisateurDto.class);
+			uDto.setAdresseDto(DtoTools.convert(userOpt.get().getAdresse(), AdresseDto.class));
+			uDto.setEntrepriseDto(DtoTools.convert(userOpt.get().getEntreprise(), EntrepriseDto.class));
+			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
+			for(UtilisateurRole ur : userOpt.get().getRoles()) {
+				utilisateurRoleDto.add(DtoTools.convert(ur, UtilisateurRoleDto.class));
+			}
+			uDto.setRolesDto(utilisateurRoleDto);
+			
+			return uDto;
+		}
+			
+			
 		return null;
 	}
 
@@ -295,8 +318,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				if (ur.getId() == idRole) {
 					resfinal.add(u);
 				}
-			}
-			
+			}			
 		}
 		
 		return resfinal;
@@ -319,6 +341,27 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public CountDto countEtudiantPromotionsReferentPedagogiqueId(long id) {
 		return new CountDto(absenceRepository.countDistinctByEtudiantPromotionsReferentPedagogiqueId(id));
+	}
+
+	@Override
+	public List<UtilisateurDto> findAllByRoleByPage(int page, int size,String role, String search) {
+		List<Utilisateur> users = utilisateurRepository
+				.findAllByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
+						role, search, role, search, role, search, PageRequest.of(page, size))
+				.get().collect(Collectors.toList());
+				
+		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
+		for (Utilisateur u : users) {
+			res.add(DtoTools.convert(u, UtilisateurDto.class));
+		}
+		return res;
+	}
+
+	@Override
+	public CountDto countByRole(String role, String search) {
+		return new CountDto(utilisateurRepository
+				.countByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
+						role, search, role, search, role, search));
 	}
 
 }

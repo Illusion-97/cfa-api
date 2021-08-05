@@ -10,12 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
+import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 
@@ -42,8 +49,37 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public PromotionDto getById(long id) {
 		Promotion promo = promoRepo.getOne(id);
+		PromotionDto pDto = DtoTools.convert(promo, PromotionDto.class);
+				
+		pDto.setCursusDto(DtoTools.convert(promo.getCursus(), CursusDto.class));
+		pDto.setCentreFormationDto(DtoTools.convert(promo.getCentreFormation(), CentreFormationDto.class));
+		pDto.setReferentPedagogiqueDto(DtoTools.convert(promo.getReferentPedagogique(), UtilisateurDto.class));
+		pDto.setCefDto(DtoTools.convert(promo.getCef(), UtilisateurDto.class));		
 		
-		return DtoTools.convert(promo, PromotionDto.class);
+		List<Etudiant> etudiants = promo.getEtudiants();
+		List<EtudiantDto> eDtos = new ArrayList<EtudiantDto>();	
+		for(Etudiant e : etudiants) {
+			EtudiantDto eDto = DtoTools.convert(e, EtudiantDto.class);
+			List<GroupeEtudiantDto> gDtos = new ArrayList<GroupeEtudiantDto>();
+			for(GroupeEtudiant g : e.getGroupes()) {
+				gDtos.add(DtoTools.convert(g, GroupeEtudiantDto.class));
+			}
+			eDto.setGroupesDto(gDtos);
+			eDtos.add(eDto);
+		}
+		pDto.setEtudiantsDto(eDtos);
+		
+		List<Intervention> interventions = promo.getInterventions();
+		List<InterventionDto> iDtos = new ArrayList<InterventionDto>();	
+		for(Intervention i : interventions) {
+			InterventionDto iDto = DtoTools.convert(i, InterventionDto.class);
+			iDto.setFormationDto(DtoTools.convert(i.getFormation(), FormationDto.class));
+			iDtos.add(iDto);
+		}
+		pDto.setInterventionsDto(iDtos);
+		
+		
+		return pDto;
 	}
 
 	@Override

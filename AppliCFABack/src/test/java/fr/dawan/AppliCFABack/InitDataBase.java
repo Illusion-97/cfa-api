@@ -366,6 +366,7 @@ public class InitDataBase {
 
 		roleEtudiant.setUtilisateurs(lstEtudiant.stream().collect(Collectors.toList()));
 
+		entreprise.setAdresseSiege(adresse2);
 		groupe.setEtudiants(lstEtudiant);
 
 		promotion.setEtudiants(lstEtudiant);
@@ -429,6 +430,8 @@ public class InitDataBase {
 
 		cef.setCentreFormation(centre);
 		cef.setRoles(lstRoleCef);
+		cef.setAdresse(adresse);
+		cef.setEntreprise(entreprise);
 		
 		centre.setAdresse(adresse);
 		centre.setEntreprise(entreprise);
