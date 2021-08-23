@@ -28,7 +28,7 @@ public class Promotion { // CDA2021
 	@ManyToOne
 	private Utilisateur cef;
 
-	@ManyToMany(mappedBy = "promotions")
+	@ManyToMany
 	private List<Etudiant> etudiants;
 	
 	@ManyToMany(mappedBy = "promotions")
