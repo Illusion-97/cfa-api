@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Etudiant extends Utilisateur {
-	@ManyToMany
+	@ManyToMany(mappedBy = "etudiants")
 	private List<Promotion> promotions;
 	
 	@ManyToMany(mappedBy = "etudiants")
