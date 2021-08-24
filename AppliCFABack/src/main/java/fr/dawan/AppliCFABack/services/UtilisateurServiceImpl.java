@@ -22,10 +22,12 @@ import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
+import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
@@ -39,6 +41,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	UtilisateurRoleRepository utilisateurRoleRepository;
 
+	@Autowired
+	AdresseRepository adresseRepository;
+	
 	@Autowired
 	EtudiantService etudiantService;
 
@@ -157,8 +162,20 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public UtilisateurDto insertUpdate(UtilisateurDto uDto) {
+		System.out.println("uDto : " + uDto.toString());
+		System.out.println("uDto.getAdresseDto() : " + uDto.getAdresseDto().toString());
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
+		
+		if(uDto.getAdresseDto() != null) {
+			Adresse adresse = DtoTools.convert(uDto.getAdresseDto(), Adresse.class);
+			System.out.println("adresse : " + adresse.toString());
+			adresseRepository.saveAndFlush(adresse);
+			System.out.println("adresse : " + adresse.toString());
+			user.setAdresse(adresse);
+		}				
 
+		System.out.println("user : " + user.toString());
+		
 		utilisateurRepository.saveAndFlush(user);
 
 		filesService.createDirectory("utilisateurs/" + user.getId());
