@@ -170,8 +170,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			Adresse adresse = DtoTools.convert(uDto.getAdresseDto(), Adresse.class);
 			System.out.println("adresse : " + adresse.toString());
 			adresseRepository.saveAndFlush(adresse);
-			System.out.println("adresse : " + adresse.toString());
-			user.setAdresse(adresse);
+			
+			Adresse adresseRepop = adresseRepository.getOne(adresse.getId());
+			System.out.println("adresseRepop : " + adresseRepop.toString());
+			user.setAdresse(adresseRepop);
 		}				
 
 		System.out.println("user : " + user.toString());
