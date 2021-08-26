@@ -29,7 +29,7 @@ public interface UtilisateurService {
 
 	UtilisateurDto getName(String name);
 
-	UtilisateurDto insertUpdate(UtilisateurDto uDto);
+	UtilisateurDto insertUpdate(UtilisateurDto uDto) throws Exception;
 
 	void deleteById(long id);
 

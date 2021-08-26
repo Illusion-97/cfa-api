@@ -161,28 +161,32 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public UtilisateurDto insertUpdate(UtilisateurDto uDto) {
-		System.out.println("uDto : " + uDto.toString());
-		System.out.println("uDto.getAdresseDto() : " + uDto.getAdresseDto().toString());
+	public UtilisateurDto insertUpdate(UtilisateurDto uDto) throws Exception {
+		
+		//refus d'insertion :
+		//Si uDto n'est pas déjà en base (getId() == 0) => creation
+		//Si un utilisateur a la même adresse mail => throw Exception
+		if(uDto.getId() == 0 && findByEmail(uDto.getLogin()) != null) {
+			throw new Exception("Un utilisateur utilise déjà cette adresse mail");
+		}
+		
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
 		
 		if(uDto.getAdresseDto() != null) {
 			Adresse adresse = DtoTools.convert(uDto.getAdresseDto(), Adresse.class);
-			System.out.println("adresse : " + adresse.toString());
 			adresseRepository.saveAndFlush(adresse);
 			
 			Adresse adresseRepop = adresseRepository.getOne(adresse.getId());
-			System.out.println("adresseRepop : " + adresseRepop.toString());
 			user.setAdresse(adresseRepop);
 		}				
-
-		System.out.println("user : " + user.toString());
 		
 		utilisateurRepository.saveAndFlush(user);
 
 		filesService.createDirectory("utilisateurs/" + user.getId());
 
-		return DtoTools.convert(user, UtilisateurDto.class);
+		UtilisateurDto result = DtoTools.convert(utilisateurRepository.getOne(user.getId()), UtilisateurDto.class);
+		
+		return result;
 	}
 
 	@Override

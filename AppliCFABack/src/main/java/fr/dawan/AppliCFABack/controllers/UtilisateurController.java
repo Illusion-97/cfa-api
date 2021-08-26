@@ -102,13 +102,13 @@ public class UtilisateurController {
 
 	// POST: /AppliCFABack/utilisateurs
 	@PostMapping(consumes = "application/json", produces = "application/json")
-	public UtilisateurDto insert(@RequestBody UtilisateurDto uDto) {
+	public UtilisateurDto insert(@RequestBody UtilisateurDto uDto) throws Exception {
 		return utilisateurService.insertUpdate(uDto);
 	}
 
 	// PUT: /AppliCFABack/utilisateurs
 	@PutMapping(consumes = "application/json", produces = "application/json")
-	public UtilisateurDto update(@RequestBody UtilisateurDto uDto) {
+	public UtilisateurDto update(@RequestBody UtilisateurDto uDto) throws Exception {
 		return utilisateurService.insertUpdate(uDto);
 	}
 
