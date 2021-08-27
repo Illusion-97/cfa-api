@@ -102,8 +102,14 @@ public class UtilisateurController {
 
 	// POST: /AppliCFABack/utilisateurs
 	@PostMapping(consumes = "application/json", produces = "application/json")
-	public UtilisateurDto insert(@RequestBody UtilisateurDto uDto) throws Exception {
-		return utilisateurService.insertUpdate(uDto);
+	//public ResponseEntity<UtilisateurDto> insert(@RequestBody UtilisateurDto uDto){
+	public ResponseEntity<?> insert(@RequestBody UtilisateurDto uDto){
+		try {
+			return ResponseEntity.ok(utilisateurService.insertUpdate(uDto));
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
 	}
 
 	// PUT: /AppliCFABack/utilisateurs
