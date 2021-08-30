@@ -24,11 +24,13 @@ import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 
@@ -43,6 +45,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired
 	AdresseRepository adresseRepository;
+	
+	@Autowired
+	EntrepriseRepository entrepriseRepository;
 	
 	@Autowired
 	EtudiantService etudiantService;
@@ -172,13 +177,33 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
 		
+		//On save l'addresse avant de save l'utilisateur
 		if(uDto.getAdresseDto() != null) {
 			Adresse adresse = DtoTools.convert(uDto.getAdresseDto(), Adresse.class);
 			adresseRepository.saveAndFlush(adresse);
 			
 			Adresse adresseRepop = adresseRepository.getOne(adresse.getId());
 			user.setAdresse(adresseRepop);
-		}				
+		}		
+		
+		//On save l'entreprise avant de save l'utilisateur
+		if(uDto.getEntrepriseDto() != null) {
+			Entreprise entreprise = DtoTools.convert(uDto.getEntrepriseDto(), Entreprise.class);
+			entrepriseRepository.saveAndFlush(entreprise);
+						
+			//On save l'adresse avant de save l'entreprise
+			if(uDto.getEntrepriseDto().getAdresseSiegeDto() != null) {
+				Adresse adresse = DtoTools.convert(uDto.getEntrepriseDto().getAdresseSiegeDto(), Adresse.class);
+				adresseRepository.saveAndFlush(adresse);
+				
+				Adresse adresseRepo = adresseRepository.getOne(adresse.getId());
+				entreprise.setAdresseSiege(adresseRepo);
+			}	
+			
+			Entreprise entrepriseRepo = entrepriseRepository.getOne(entreprise.getId());
+			user.setEntreprise(entrepriseRepo);
+		}
+		
 		
 		utilisateurRepository.saveAndFlush(user);
 
