@@ -27,17 +27,17 @@ public class TokenInterceptor implements HandlerInterceptor {
 					&& !request.getRequestURI().equals("/insert-example")) {
 				String headerAuth = request.getHeader("Authorization");
 				if (headerAuth == null || headerAuth.trim().equals("") || headerAuth.length() < 7) {
-					throw new Exception("Erreur : jeton absent ou invalide !");
+					throw new TokenException("Erreur : jeton absent ou invalide !");
 				}
 
 				String token = headerAuth.substring(7);
 				// validation le token et extraire les infos
 				if (jwtTokenUtil.isTokenExpired(token))
-					throw new Exception("Erreur : jeton expiré !");
+					throw new TokenException("Erreur : jeton expiré !");
 
 				String email = jwtTokenUtil.getUsernameFromToken(token);
 				if (!TokenSaver.tokensByEmail.containsKey(email) || !TokenSaver.tokensByEmail.get(email).equals(token))
-					throw new Exception("Erreur : jeton non reconnu !");
+					throw new TokenException("Erreur : jeton non reconnu !");
 
 				// TODO autres extractions du jeton ou autres traitements
 

@@ -20,8 +20,25 @@ import fr.dawan.AppliCFABack.dto.APIError;
 @ControllerAdvice
 public class MyExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(value = { Exception.class })
-	protected ResponseEntity<?> handleConflict(Exception ex, WebRequest request) {
+	@ExceptionHandler(value = { TokenException.class })
+	protected ResponseEntity<?> handleTokenException(Exception ex, WebRequest request) {
+		HttpHeaders headers = new HttpHeaders();
+		// .. ajouter des entêtes dans la rponse si besoin
+
+		// On crée notre propre objet de réponse
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		ex.printStackTrace(pw);
+		pw.close();
+		Logger.getAnonymousLogger().log(Level.SEVERE, sw.toString());
+		
+		APIError myError = new APIError(HttpStatus.UNAUTHORIZED, ex.getMessage());
+		//On peut remplacer l'objet myError par une Map<String,Object>
+		return handleExceptionInternal(ex, myError, headers, HttpStatus.UNAUTHORIZED, request);
+	}
+	
+	@ExceptionHandler(value = { IOException.class })
+	protected ResponseEntity<?> handleIOException(Exception ex, WebRequest request) {
 		HttpHeaders headers = new HttpHeaders();
 		// .. ajouter des entêtes dans la rponse si besoin
 
@@ -37,8 +54,8 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, myError, headers, HttpStatus.INTERNAL_SERVER_ERROR, request);
 	}
 	
-	@ExceptionHandler(value = { IOException.class })
-	protected ResponseEntity<?> handleIOException(Exception ex, WebRequest request) {
+	@ExceptionHandler(value = { Exception.class })
+	protected ResponseEntity<?> handleConflict(Exception ex, WebRequest request) {
 		HttpHeaders headers = new HttpHeaders();
 		// .. ajouter des entêtes dans la rponse si besoin
 
