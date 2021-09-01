@@ -1,5 +1,6 @@
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\controllers\LoginController.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\dto\NoteDto.java
+C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\controllers\UtilisateurRoleController.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\repositories\UtilisateurRoleRepository.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\dto\UtilisateurRoleDto.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\AdresseService.java
@@ -19,7 +20,9 @@ C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-por
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\entities\Projet.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\entities\Cursus.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\ProjetServiceImpl.java
+C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\interceptors\TokenException.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\DevoirServiceImpl.java
+C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\UtilisateurRoleServiceImpl.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\dto\UtilisateurDto.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\CongeService.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\dto\CongeDto.java
@@ -58,6 +61,7 @@ C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-por
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\controllers\CongeController.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\controllers\AbsenceController.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\entities\Adresse.java
+C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\UtilisateurRoleService.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\entities\Absence.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\dto\APIError.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\repositories\CongeRepository.java
@@ -77,6 +81,7 @@ C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-por
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\controllers\CursusController.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\entities\Examen.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\controllers\EtudiantController.java
+C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\EmailServiceImpl.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\dto\GroupeEtudiantDto.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\EntrepriseServiceImpl.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\DevoirService.java
@@ -107,6 +112,7 @@ C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-por
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\repositories\CEFRepository.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\AbsenceServiceImpl.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\repositories\CursusRepository.java
+C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\EmailService.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\dto\FormateurDto.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\dto\FormationDto.java
 C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\Projet_CFA\AppliCFABack\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\CursusServiceImpl.java

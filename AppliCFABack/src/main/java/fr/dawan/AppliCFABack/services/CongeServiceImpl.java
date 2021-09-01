@@ -22,6 +22,7 @@ import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.StatusConge;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
 
+
 @Service
 @Transactional
 public class CongeServiceImpl implements CongeService {
@@ -37,6 +38,9 @@ public class CongeServiceImpl implements CongeService {
 
 	@Autowired 
 	JourneePlanningService journeePlanningService;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@Override
 	public List<CongeDto> getAllConge() {
@@ -57,10 +61,7 @@ public class CongeServiceImpl implements CongeService {
 			cDto.setUtilisateurDto(DtoTools.convert(f.get().getUtilisateur(), UtilisateurDto.class));
 			return cDto;
 		}
-
-		return null;
-		
-		
+		return null;		
 	}
 
 	@Override
@@ -81,6 +82,11 @@ public class CongeServiceImpl implements CongeService {
 	@Override
 	public CongeDto saveOrUpdate(CongeDto cDto) {
 		Conge c = DtoTools.convert(cDto, Conge.class);
+		
+		//Si on créer le congé et que le status est en attente
+		if(c.getId() == 0 && ( c.getStatus() == null || c.getStatus() == StatusConge.EN_ATTENTE)) {
+			emailService.alertDemandeCongetoReferent(c);			
+		}
 		
 		c = congeRepository.saveAndFlush(c);
 		
