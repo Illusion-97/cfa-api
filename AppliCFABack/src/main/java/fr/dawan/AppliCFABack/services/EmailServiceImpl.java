@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,9 @@ public class EmailServiceImpl implements EmailService{
 			//Cas particulier d'un changement de promotion en cours de formation
 			//=> les deux promotions sont courantes => on choisit la dernière promotion de la liste (à priori ranger par id)
 			//A voir pour trouver une meilleur solution ?
-			if(p.getDateDebut().isBefore(LocalDate.now()) && p.getDateFin().isAfter(LocalDate.now())) {
+			if( ( p.getDateDebut().isBefore(LocalDate.now()) && p.getDateFin().isAfter(LocalDate.now()) )
+					|| p.getDateDebut().isEqual(LocalDate.now()) 
+					|| p.getDateFin().isEqual(LocalDate.now())) {
 				referentPedagogique = p.getReferentPedagogiqueDto();
 				pSelected = p;
 			}
