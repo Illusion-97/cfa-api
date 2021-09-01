@@ -84,9 +84,10 @@ public class CongeServiceImpl implements CongeService {
 		Conge c = DtoTools.convert(cDto, Conge.class);
 		
 		//Si on créer le congé et que le status est en attente
+		//On envoir un mail au référent pour qu'il gère cette demande
 		if(c.getId() == 0 && ( c.getStatus() == null || c.getStatus() == StatusConge.EN_ATTENTE)) {
 			emailService.alertDemandeCongetoReferent(c);			
-		}
+		}		
 		
 		c = congeRepository.saveAndFlush(c);
 		

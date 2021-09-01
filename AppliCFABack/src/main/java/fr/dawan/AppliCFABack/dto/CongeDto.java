@@ -13,6 +13,7 @@ public class CongeDto {
 	private TypeConge type;
 	private UtilisateurDto utilisateurDto;
 	private StatusConge status;
+	private String justificatif;
 	
 	public CongeDto() {
 		super();
@@ -73,6 +74,13 @@ public class CongeDto {
 	public void setStatus(StatusConge status) {
 		this.status = status;
 	}
-	
+
+	public String getJustificatif() {
+		return justificatif;
+	}
+
+	public void setJustificatif(String justificatif) {
+		this.justificatif = justificatif;
+	}
 	
 }
