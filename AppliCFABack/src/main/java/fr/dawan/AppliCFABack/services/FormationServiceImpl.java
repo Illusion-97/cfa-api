@@ -111,6 +111,10 @@ public class FormationServiceImpl implements FormationService {
 
 	@Override
 	public void deleteById(long id) {
+		List<Intervention> lstInt = interventionRepository.findAllByFormationId(id);
+		for (Intervention intervention : lstInt) {
+			intervention.setFormation(null);
+		}
 		formationRepository.deleteById(id);
 
 	}
