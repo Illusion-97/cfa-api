@@ -2,6 +2,7 @@ fr\dawan\AppliCFABack\services\DevoirServiceImpl.class
 fr\dawan\AppliCFABack\controllers\CongeController.class
 fr\dawan\AppliCFABack\controllers\UtilisateurController.class
 fr\dawan\AppliCFABack\entities\Absence.class
+fr\dawan\AppliCFABack\services\EmailServiceImpl.class
 fr\dawan\AppliCFABack\entities\Devoir.class
 fr\dawan\AppliCFABack\repositories\ExamenRepository.class
 fr\dawan\AppliCFABack\entities\GroupeEtudiant.class
@@ -13,6 +14,7 @@ fr\dawan\AppliCFABack\dto\LoginDto.class
 fr\dawan\AppliCFABack\repositories\GroupeEtudiantRepository.class
 fr\dawan\AppliCFABack\dto\APIError.class
 fr\dawan\AppliCFABack\entities\Cursus.class
+fr\dawan\AppliCFABack\dto\CountDto.class
 fr\dawan\AppliCFABack\services\AbsenceServiceImpl.class
 fr\dawan\AppliCFABack\services\CEFServiceImpl.class
 fr\dawan\AppliCFABack\services\JourneePlanningServiceImpl.class
@@ -33,12 +35,16 @@ fr\dawan\AppliCFABack\services\ExamenService.class
 fr\dawan\AppliCFABack\controllers\CEFController.class
 fr\dawan\AppliCFABack\dto\PassageExamenDto.class
 fr\dawan\AppliCFABack\repositories\AdresseRepository.class
+fr\dawan\AppliCFABack\interceptors\MyExceptionHandler.class
 fr\dawan\AppliCFABack\dto\UtilisateurDto.class
+fr\dawan\AppliCFABack\AppliCfaBackApplication$1.class
 fr\dawan\AppliCFABack\dto\NoteDto.class
 fr\dawan\AppliCFABack\repositories\UtilisateurRoleRepository.class
 fr\dawan\AppliCFABack\dto\ExamenDto.class
 fr\dawan\AppliCFABack\repositories\CEFRepository.class
+fr\dawan\AppliCFABack\services\AdresseService.class
 fr\dawan\AppliCFABack\controllers\EntrepriseController.class
+fr\dawan\AppliCFABack\controllers\UtilisateurRoleController.class
 fr\dawan\AppliCFABack\repositories\CursusRepository.class
 fr\dawan\AppliCFABack\dto\UtilisateurRoleDto.class
 fr\dawan\AppliCFABack\entities\Note.class
@@ -58,6 +64,7 @@ fr\dawan\AppliCFABack\repositories\NoteRepository.class
 fr\dawan\AppliCFABack\services\FilesServiceImpl.class
 fr\dawan\AppliCFABack\dto\FormateurDto.class
 fr\dawan\AppliCFABack\repositories\InterventionRepository.class
+fr\dawan\AppliCFABack\services\UtilisateurRoleService.class
 fr\dawan\AppliCFABack\entities\Promotion.class
 fr\dawan\AppliCFABack\services\CentreFormationService.class
 fr\dawan\AppliCFABack\controllers\ExamenController.class
@@ -71,6 +78,7 @@ fr\dawan\AppliCFABack\entities\Utilisateur.class
 fr\dawan\AppliCFABack\services\CursusServiceImpl.class
 fr\dawan\AppliCFABack\controllers\AbsenceController.class
 fr\dawan\AppliCFABack\repositories\UtilisateurRepository.class
+fr\dawan\AppliCFABack\services\UtilisateurRoleServiceImpl.class
 fr\dawan\AppliCFABack\dto\PromotionDto.class
 fr\dawan\AppliCFABack\controllers\InterventionController.class
 fr\dawan\AppliCFABack\controllers\PromotionController.class
@@ -113,12 +121,14 @@ fr\dawan\AppliCFABack\entities\Formateur.class
 fr\dawan\AppliCFABack\repositories\AbsenceRepository.class
 fr\dawan\AppliCFABack\services\JourneePlanningService.class
 fr\dawan\AppliCFABack\entities\Conge.class
+fr\dawan\AppliCFABack\interceptors\TokenException.class
 fr\dawan\AppliCFABack\interceptors\TokenSaver.class
 fr\dawan\AppliCFABack\entities\Formation.class
 fr\dawan\AppliCFABack\dto\CEFDto.class
 fr\dawan\AppliCFABack\services\PassageExamenServiceImpl.class
 fr\dawan\AppliCFABack\entities\Examen.class
 fr\dawan\AppliCFABack\tools\MediaTypeUtils.class
+fr\dawan\AppliCFABack\services\AdresseServiceImpl.class
 fr\dawan\AppliCFABack\dto\LoginResponseDto.class
 fr\dawan\AppliCFABack\dto\CentreFormationDto.class
 fr\dawan\AppliCFABack\services\NoteService.class
@@ -128,6 +138,7 @@ fr\dawan\AppliCFABack\repositories\EtudiantRepository.class
 fr\dawan\AppliCFABack\dto\AdresseDto.class
 fr\dawan\AppliCFABack\services\CongeService.class
 fr\dawan\AppliCFABack\interceptors\TokenInterceptor.class
+fr\dawan\AppliCFABack\services\EmailService.class
 fr\dawan\AppliCFABack\services\EntrepriseService.class
 fr\dawan\AppliCFABack\repositories\PassageExamenRepository.class
 fr\dawan\AppliCFABack\services\GroupeEtudiantServiceImpl.class

@@ -27,6 +27,8 @@ public class Conge {
 	
 	private StatusConge status;
 	
+	private String justificatif;
+	
 	@ManyToOne
 	private Utilisateur utilisateur;
 	
@@ -90,5 +92,12 @@ public class Conge {
 		this.status = status;
 	}
 
+	public String getJustificatif() {
+		return justificatif;
+	}
+
+	public void setJustificatif(String justificatif) {
+		this.justificatif = justificatif;
+	}
 	
 }
