@@ -19,4 +19,6 @@ public interface CursusService {
 
 	CountDto count(String string);
 
+	CursusDto getByIdPromotion(long id);
+
 }
