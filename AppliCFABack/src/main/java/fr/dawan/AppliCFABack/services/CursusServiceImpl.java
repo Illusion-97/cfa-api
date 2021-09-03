@@ -14,8 +14,10 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Formation;
+import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
 
 @Transactional
@@ -24,6 +26,9 @@ public class CursusServiceImpl implements CursusService {
 
 	@Autowired
 	CursusRepository cursusRepo;
+	
+	@Autowired
+	PromotionService promoService;
 
 	@Override
 	public List<CursusDto> getAll() {
@@ -92,6 +97,14 @@ public class CursusServiceImpl implements CursusService {
 		}
 		return null;
 
+	}
+
+	@Override
+	public CursusDto getByIdPromotion(long id) {
+		// TODO Auto-generated method stub
+		PromotionDto pDto = promoService.getById(id);
+		CursusDto cDto = getById(pDto.getCursusDto().getId());
+		return cDto;
 	}
 
 }

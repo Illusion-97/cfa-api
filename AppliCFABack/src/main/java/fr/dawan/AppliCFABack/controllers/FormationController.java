@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.FormationService;
 import fr.dawan.AppliCFABack.services.InterventionService;
 import fr.dawan.AppliCFABack.services.PromotionService;
@@ -35,6 +37,9 @@ public class FormationController {
 
 	@Autowired
 	PromotionService promotionService;
+	
+	@Autowired
+	CursusService cursusService;
 
 	// ##################################################
 	// # GET #
@@ -93,6 +98,19 @@ public class FormationController {
 		List<FormationDto> lstFormation = new ArrayList<FormationDto>();
 		for (InterventionDto i : lstintervention) {
 			lstFormation.add(i.getFormationDto());
+		}
+		return lstFormation;
+
+	}
+	
+	@GetMapping(value = "/getFormationByCursusId/{id}", produces = "application/json")
+	public List<FormationDto> getFormationByCursusId(@PathVariable(value = "id") long id) {
+
+		CursusDto cDto = cursusService.getById(id);
+		List<FormationDto> lstFormation = new ArrayList<FormationDto>();
+
+		for (FormationDto formationDto : cDto.getFormationsDto()) {
+			lstFormation.add(formationDto);
 		}
 		return lstFormation;
 
