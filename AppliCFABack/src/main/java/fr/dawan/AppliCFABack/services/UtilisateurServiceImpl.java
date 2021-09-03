@@ -117,8 +117,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (userOpt.isPresent()) {
 			UtilisateurDto uDto = DtoTools.convert(userOpt.get(), UtilisateurDto.class);
-			uDto.setAdresseDto(DtoTools.convert(userOpt.get().getAdresse(), AdresseDto.class));
+			uDto.setAdresseDto(DtoTools.convert(userOpt.get().getAdresse(), AdresseDto.class));			
 			uDto.setEntrepriseDto(DtoTools.convert(userOpt.get().getEntreprise(), EntrepriseDto.class));
+			uDto.getEntrepriseDto().setAdresseSiegeDto(DtoTools.convert(userOpt.get().getEntreprise().getAdresseSiege(), AdresseDto.class));
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
 			for(UtilisateurRole ur : userOpt.get().getRoles()) {
 				utilisateurRoleDto.add(DtoTools.convert(ur, UtilisateurRoleDto.class));
@@ -193,11 +194,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						
 			//On save l'adresse avant de save l'entreprise
 			if(uDto.getEntrepriseDto().getAdresseSiegeDto() != null) {
-				Adresse adresse = DtoTools.convert(uDto.getEntrepriseDto().getAdresseSiegeDto(), Adresse.class);
-				adresseRepository.saveAndFlush(adresse);
+				Adresse adresseEntreprise = DtoTools.convert(uDto.getEntrepriseDto().getAdresseSiegeDto(), Adresse.class);
+				adresseRepository.saveAndFlush(adresseEntreprise);
 				
-				Adresse adresseRepo = adresseRepository.getOne(adresse.getId());
-				entreprise.setAdresseSiege(adresseRepo);
+				Adresse adresseEntrepriseRepo = adresseRepository.getOne(adresseEntreprise.getId());
+				entreprise.setAdresseSiege(adresseEntrepriseRepo);
 			}	
 			
 			Entreprise entrepriseRepo = entrepriseRepository.getOne(entreprise.getId());
