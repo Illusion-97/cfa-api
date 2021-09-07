@@ -20,6 +20,8 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.StatusConge;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
 
 
@@ -41,14 +43,16 @@ public class CongeServiceImpl implements CongeService {
 	
 	@Autowired
 	EmailService emailService;
-	
+
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
 	@Override
 	public List<CongeDto> getAllConge() {
 		List<Conge> lst = congeRepository.findAll();
 
 		List<CongeDto> lstDto = new ArrayList<CongeDto>();
 		for (Conge c : lst) {
-			lstDto.add(DtoTools.convert(c, CongeDto.class));
+			lstDto.add(mapper.CongeToCongeDto(c));
 		}
 		return lstDto;
 	}
@@ -57,8 +61,8 @@ public class CongeServiceImpl implements CongeService {
 	public CongeDto getById(long id) {
 		Optional<Conge> f = congeRepository.findById(id);
 		if (f.isPresent()) {
-			CongeDto cDto = DtoTools.convert(f.get(), CongeDto.class);
-			cDto.setUtilisateurDto(DtoTools.convert(f.get().getUtilisateur(), UtilisateurDto.class));
+			CongeDto cDto = mapper.CongeToCongeDto(f.get());
+			cDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(f.get().getUtilisateur()));
 			return cDto;
 		}
 		return null;		
@@ -71,8 +75,8 @@ public class CongeServiceImpl implements CongeService {
 		// conversion vers Dto
 		List<CongeDto> lstDto = new ArrayList<CongeDto>();
 		for (Conge c : lst) {
-			CongeDto cDto = DtoTools.convert(c, CongeDto.class);
-			UtilisateurDto uDto = DtoTools.convert(c.getUtilisateur(), UtilisateurDto.class);
+			CongeDto cDto = mapper.CongeToCongeDto(c);
+			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(c.getUtilisateur());
 			cDto.setUtilisateurDto(uDto);
 			lstDto.add(cDto);
 		}
@@ -91,7 +95,7 @@ public class CongeServiceImpl implements CongeService {
 		
 		c = congeRepository.saveAndFlush(c);
 		
-		return DtoTools.convert(c, CongeDto.class);
+		return mapper.CongeToCongeDto(c);
 	}
 
 	@Override
@@ -205,7 +209,7 @@ public class CongeServiceImpl implements CongeService {
 		List<CongeDto> result = new ArrayList<CongeDto>();
 		List<Conge> list = congeRepository.findAllByUtilisateurId(id);
 		for(Conge c : list) {
-			result.add(DtoTools.convert(c, CongeDto.class));
+			result.add(mapper.CongeToCongeDto(c));
 		}
 		return result;
 	}

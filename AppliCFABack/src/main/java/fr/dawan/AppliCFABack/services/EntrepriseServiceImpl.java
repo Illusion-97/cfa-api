@@ -11,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.entities.Entreprise;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
 
 @Service
@@ -25,13 +26,16 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	@Autowired
 	EntrepriseRepository entrepriseRepository;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<EntrepriseDto> getAllEntreprise() {
 		List<Entreprise> lst = entrepriseRepository.findAll();
 
 		List<EntrepriseDto> lstDto = new ArrayList<EntrepriseDto>();
 		for (Entreprise e : lst) {
-			lstDto.add(DtoTools.convert(e, EntrepriseDto.class));
+			lstDto.add(mapper.EntrepriseToEntrepriseDto(e));
 		}
 		return lstDto;
 	}
@@ -44,8 +48,8 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		// conversion vers Dto
 		List<EntrepriseDto> lstDto = new ArrayList<EntrepriseDto>();
 		for (Entreprise e : lst) {
-			EntrepriseDto eDto = DtoTools.convert(e, EntrepriseDto.class);
-			eDto.setAdresseSiegeDto(DtoTools.convert(e.getAdresseSiege(), AdresseDto.class));
+			EntrepriseDto eDto = mapper.EntrepriseToEntrepriseDto(e);
+			eDto.setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.getAdresseSiege()));
 			//lstDto.add(DtoTools.convert(e, EntrepriseDto.class));
 			lstDto.add(eDto);
 		}
@@ -56,8 +60,8 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	public EntrepriseDto getById(long id) {
 		Optional<Entreprise> e = entrepriseRepository.findById(id);
 		if (e.isPresent()){
-			EntrepriseDto eDto = DtoTools.convert(e.get(), EntrepriseDto.class);
-			eDto.setAdresseSiegeDto(DtoTools.convert(e.get().getAdresseSiege(), AdresseDto.class));
+			EntrepriseDto eDto = mapper.EntrepriseToEntrepriseDto(e.get());
+			eDto.setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.get().getAdresseSiege()));
 			return eDto;
 		}
 		
@@ -70,7 +74,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 
 		e = entrepriseRepository.saveAndFlush(e);
 
-		return DtoTools.convert(e, EntrepriseDto.class);
+		return mapper.EntrepriseToEntrepriseDto(e);
 	}
 
 	@Override
@@ -89,7 +93,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		List<Entreprise> entreprises = entrepriseRepository.findAllByRaisonSocialeContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<EntrepriseDto> res = new ArrayList<EntrepriseDto>();
 		for (Entreprise e : entreprises) {
-			res.add(DtoTools.convert(e, EntrepriseDto.class));
+			res.add(mapper.EntrepriseToEntrepriseDto(e));
 		}
 		return res;
 	}

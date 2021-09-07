@@ -12,11 +12,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
-import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.entities.Examen;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
 
 @Service
@@ -26,15 +26,18 @@ public class ExamenServiceImpl implements ExamenService {
 	@Autowired
 	ExamenRepository examenRepository;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<ExamenDto> getAllExamen() {
 		List<Examen> lst = examenRepository.findAll();
 
 		List<ExamenDto> lstDto = new ArrayList<ExamenDto>();
 		for (Examen e : lst) {
-			ExamenDto eDto = DtoTools.convert(e, ExamenDto.class);
-		eDto.setCursusDto(DtoTools.convert(e.getCursus(), CursusDto.class));
-		eDto.setFormationDto(DtoTools.convert(e.getFormation(), FormationDto.class));
+			ExamenDto eDto = mapper.ExamenToExamenDto(e);
+		eDto.setCursusDto(mapper.CursusToCursusDto(e.getCursus()));
+		eDto.setFormationDto(mapper.FormationToFormationDto(e.getFormation()));
 		lstDto.add(eDto);
 		}
 		return lstDto;
@@ -47,9 +50,9 @@ public class ExamenServiceImpl implements ExamenService {
 		// conversion vers Dto
 		List<ExamenDto> lstDto = new ArrayList<ExamenDto>();
 		for (Examen e : lst) {
-			ExamenDto eDto = DtoTools.convert(e, ExamenDto.class);
-			eDto.setCursusDto(DtoTools.convert(e.getCursus(), CursusDto.class));
-			eDto.setFormationDto(DtoTools.convert(e.getFormation(), FormationDto.class));
+			ExamenDto eDto = mapper.ExamenToExamenDto(e);
+			eDto.setCursusDto(mapper.CursusToCursusDto(e.getCursus()));
+			eDto.setFormationDto(mapper.FormationToFormationDto(e.getFormation()));
 			lstDto.add(eDto);
 		}
 		return lstDto;
@@ -64,10 +67,10 @@ public class ExamenServiceImpl implements ExamenService {
 	public ExamenDto getById(long id) {
 		Optional<Examen> e = examenRepository.findById(id);
 		if (e.isPresent()) {
-			ExamenDto eDto = DtoTools.convert(e.get(), ExamenDto.class);
+			ExamenDto eDto = mapper.ExamenToExamenDto(e.get());
 						
-			eDto.setCursusDto(DtoTools.convert(e.get().getCursus(), CursusDto.class));
-			eDto.setFormationDto(DtoTools.convert(e.get().getFormation(), FormationDto.class));
+			eDto.setCursusDto(mapper.CursusToCursusDto(e.get().getCursus()));
+			eDto.setFormationDto(mapper.FormationToFormationDto(e.get().getFormation()));
 			
 			return eDto;
 		}			
@@ -81,7 +84,7 @@ public class ExamenServiceImpl implements ExamenService {
 
 		e = examenRepository.saveAndFlush(e);
 
-		return DtoTools.convert(e, ExamenDto.class);
+		return mapper.ExamenToExamenDto(e);
 	}
 
 	@Override

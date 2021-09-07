@@ -10,12 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
@@ -24,6 +21,8 @@ import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 
 @Service
@@ -36,12 +35,15 @@ public class PromotionServiceImpl implements PromotionService {
 	@Autowired
 	FilesService filesService;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<PromotionDto> getAll() {
 		List<Promotion> lst = promoRepo.findAll();
 		List<PromotionDto> lstDto = new ArrayList<PromotionDto>();
 		for (Promotion promo : lst) {
-			lstDto.add(DtoTools.convert(promo, PromotionDto.class));
+			lstDto.add(mapper.PromotionToPromotionDto(promo));
 		}
 		return lstDto;
 	}
@@ -49,20 +51,20 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public PromotionDto getById(long id) {
 		Promotion promo = promoRepo.getOne(id);
-		PromotionDto pDto = DtoTools.convert(promo, PromotionDto.class);
+		PromotionDto pDto = mapper.PromotionToPromotionDto(promo);
 				
-		pDto.setCursusDto(DtoTools.convert(promo.getCursus(), CursusDto.class));
-		pDto.setCentreFormationDto(DtoTools.convert(promo.getCentreFormation(), CentreFormationDto.class));
-		pDto.setReferentPedagogiqueDto(DtoTools.convert(promo.getReferentPedagogique(), UtilisateurDto.class));
-		pDto.setCefDto(DtoTools.convert(promo.getCef(), UtilisateurDto.class));		
+		pDto.setCursusDto(mapper.CursusToCursusDto(promo.getCursus()));
+		pDto.setCentreFormationDto(mapper.CentreFormationToCentreFormationDto(promo.getCentreFormation()));
+		pDto.setReferentPedagogiqueDto(mapper.UtilisateurToUtilisateurDto(promo.getReferentPedagogique()));
+		pDto.setCefDto(mapper.UtilisateurToUtilisateurDto(promo.getCef()));		
 		
 		List<Etudiant> etudiants = promo.getEtudiants();
 		List<EtudiantDto> eDtos = new ArrayList<EtudiantDto>();	
 		for(Etudiant e : etudiants) {
-			EtudiantDto eDto = DtoTools.convert(e, EtudiantDto.class);
+			EtudiantDto eDto =mapper.EtudiantToEtudiantDto(e);
 			List<GroupeEtudiantDto> gDtos = new ArrayList<GroupeEtudiantDto>();
 			for(GroupeEtudiant g : e.getGroupes()) {
-				gDtos.add(DtoTools.convert(g, GroupeEtudiantDto.class));
+				gDtos.add(mapper.GroupeEtudiantToGroupEtudiantDto(g));
 			}
 			eDto.setGroupesDto(gDtos);
 			eDtos.add(eDto);
@@ -72,8 +74,8 @@ public class PromotionServiceImpl implements PromotionService {
 		List<Intervention> interventions = promo.getInterventions();
 		List<InterventionDto> iDtos = new ArrayList<InterventionDto>();	
 		for(Intervention i : interventions) {
-			InterventionDto iDto = DtoTools.convert(i, InterventionDto.class);
-			iDto.setFormationDto(DtoTools.convert(i.getFormation(), FormationDto.class));
+			InterventionDto iDto =mapper.InterventionToInterventionDto(i);
+			iDto.setFormationDto(mapper.FormationToFormationDto(i.getFormation()));
 			iDtos.add(iDto);
 		}
 		pDto.setInterventionsDto(iDtos);
@@ -89,7 +91,7 @@ public class PromotionServiceImpl implements PromotionService {
 		
 		filesService.createDirectory("promotions/" + p.getId());
 		
-		return DtoTools.convert(p, PromotionDto.class);
+		return mapper.PromotionToPromotionDto(p);
 	}
 
 	@Override
@@ -100,7 +102,7 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Override
 	public UtilisateurDto getReferentById(long id) {
-		return DtoTools.convert(promoRepo.getOne(id).getReferentPedagogique(), UtilisateurDto.class);
+		return mapper.UtilisateurToUtilisateurDto(promoRepo.getOne(id).getReferentPedagogique());
 	}
 
 	@Override
@@ -113,7 +115,7 @@ public class PromotionServiceImpl implements PromotionService {
 		List<Promotion> promo = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<PromotionDto>();
 		for (Promotion p : promo) {
-			res.add(DtoTools.convert(p, PromotionDto.class));
+			res.add(mapper.PromotionToPromotionDto(p));
 		}
 		return res;
 	}
@@ -125,9 +127,9 @@ public class PromotionServiceImpl implements PromotionService {
 		for (Etudiant e : lst) {
 			List<PromotionDto> promoList = new ArrayList<PromotionDto>();
 			for(Promotion p : e.getPromotions()) {
-				promoList.add(DtoTools.convert(p, PromotionDto.class));
+				promoList.add(mapper.PromotionToPromotionDto(p));
 			}
-			EtudiantDto eDto = DtoTools.convert(e, EtudiantDto.class);
+			EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
 			eDto.setPromotionsDto(promoList);
 			lstDto.add(eDto);
 		}
