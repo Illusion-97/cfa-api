@@ -68,11 +68,15 @@ public class CursusController {
 	public List<CursusDto> getByIdEtudiant(@PathVariable("id") long id) {
 		List<PromotionDto> lstpDto = etudiantService.getPromotionsByIdEtudiant(id);
 		List<CursusDto> lstCursus = new ArrayList<CursusDto>();
+		List<CursusDto> lstCursusMostRecent = new ArrayList<CursusDto>();
 		for (PromotionDto pDto : lstpDto) {
 			CursusDto cdto = cursusService.getByIdPromotion(pDto.getId());
 			lstCursus.add(cdto);
 		}
-		return lstCursus;
+		for( int i=lstCursus.size()-1;i>=0;i--) {
+			lstCursusMostRecent.add(lstCursus.get(i));
+		}
+		return lstCursusMostRecent;
 	}
 
 		
