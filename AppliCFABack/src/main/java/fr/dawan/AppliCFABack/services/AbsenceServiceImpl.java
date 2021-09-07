@@ -16,6 +16,8 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 
 @Service
@@ -25,14 +27,17 @@ public class AbsenceServiceImpl implements AbsenceService {
 	@Autowired
 	AbsenceRepository absenceRepository;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<AbsenceDto> getAllAbsence() {
 		List<Absence> lst = absenceRepository.findAll();
 
 		List<AbsenceDto> lstDto = new ArrayList<AbsenceDto>();
 		for (Absence a : lst) {
-			AbsenceDto absDto = DtoTools.convert(a, AbsenceDto.class);
-			EtudiantDto etuDto = DtoTools.convert(a.getEtudiant(), EtudiantDto.class);
+			AbsenceDto absDto = mapper.AbsenceToAbsenceDto(a);
+			EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(a.getEtudiant());
 			absDto.setEtudiantDto(etuDto);
 			lstDto.add(absDto);
 
@@ -45,8 +50,8 @@ public class AbsenceServiceImpl implements AbsenceService {
 		Optional<Absence> a = absenceRepository.findById(id);
 		if (!a.isPresent()) return null;
 		
-		AbsenceDto aDto = DtoTools.convert(a.get(), AbsenceDto.class);
-		aDto.setEtudiantDto(DtoTools.convert(a.get().getEtudiant(), EtudiantDto.class));
+		AbsenceDto aDto =mapper.AbsenceToAbsenceDto(a.get());
+		aDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(a.get().getEtudiant()));
 		
 		return aDto;
 	}
@@ -57,7 +62,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 
 		a = absenceRepository.saveAndFlush(a);
 
-		return DtoTools.convert(a, AbsenceDto.class);
+		return mapper.AbsenceToAbsenceDto(a);
 	}
 
 	@Override
@@ -78,8 +83,8 @@ public class AbsenceServiceImpl implements AbsenceService {
 				search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<AbsenceDto> lstDto = new ArrayList<AbsenceDto>();
 		for (Absence a : lst) {
-			AbsenceDto absDto = DtoTools.convert(a, AbsenceDto.class);
-			EtudiantDto etuDto = DtoTools.convert(a.getEtudiant(), EtudiantDto.class);
+			AbsenceDto absDto = mapper.AbsenceToAbsenceDto(a);
+			EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(a.getEtudiant());
 ////			UtilisateurDto ref = DtoTools.convert(a.getEtudiant().getFormateurReferent(), UtilisateurDto.class);
 ////			etuDto.setFormateurReferentDto(ref);
 //			List<Promotion> lsPromotions = a.getEtudiant().getPromotions();
@@ -101,7 +106,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 		List<AbsenceDto> result = new ArrayList<AbsenceDto>();
 		List<Absence> list = absenceRepository.findAllByEtudiantId(id);
 		for(Absence a : list) {
-			result.add(DtoTools.convert(a, AbsenceDto.class));
+			result.add(mapper.AbsenceToAbsenceDto(a));
 		}
 		return result;
 	}

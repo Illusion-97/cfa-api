@@ -11,10 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
 
 @Service
@@ -24,14 +25,17 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	@Autowired
 	CentreFormationRepository centreFormationRepository;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<CentreFormationDto> getAllCentreFormation() {
 		List<CentreFormation> lst = centreFormationRepository.findAll();
 
 		List<CentreFormationDto> lstDto = new ArrayList<CentreFormationDto>();
 		for (CentreFormation cf : lst) {
-			CentreFormationDto cDto = DtoTools.convert(cf, CentreFormationDto.class);
-			cDto.setAdresseDto(DtoTools.convert(cf.getAdresse(), AdresseDto.class));
+			CentreFormationDto cDto = mapper.CentreFormationToCentreFormationDto(cf);
+			cDto.setAdresseDto(mapper.AdresseToAdresseDto(cf.getAdresse()));
 			lstDto.add(cDto);
 		}
 		return lstDto;
@@ -45,7 +49,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		// conversion vers Dto
 		List<CentreFormationDto> lstDto = new ArrayList<CentreFormationDto>();
 		for (CentreFormation cf : lst) {
-			lstDto.add(DtoTools.convert(cf, CentreFormationDto.class));
+			lstDto.add(mapper.CentreFormationToCentreFormationDto(cf));
 		}
 		return lstDto;
 	}
@@ -55,9 +59,9 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		Optional<CentreFormation> cf = centreFormationRepository.findById(id);
 		if (!cf.isPresent()) return null;
 		
-		CentreFormationDto cDto = DtoTools.convert(cf.get(), CentreFormationDto.class);
+		CentreFormationDto cDto = mapper.CentreFormationToCentreFormationDto(cf.get());
 		
-		cDto.setAdresseDto(DtoTools.convert(cf.get().getAdresse(), AdresseDto.class));
+		cDto.setAdresseDto(mapper.AdresseToAdresseDto(cf.get().getAdresse()));
 		
 		return cDto;
 	}
@@ -68,7 +72,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 
 		cf = centreFormationRepository.saveAndFlush(cf);
 
-		return DtoTools.convert(cf, CentreFormationDto.class);
+		return mapper.CentreFormationToCentreFormationDto(cf);
 	}
 
 	@Override

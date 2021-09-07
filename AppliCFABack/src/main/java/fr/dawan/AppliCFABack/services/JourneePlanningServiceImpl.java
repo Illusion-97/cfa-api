@@ -4,18 +4,23 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 
 @Service
 public class JourneePlanningServiceImpl implements JourneePlanningService{
+
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
 
 	@Override
 	public List<JourneePlanningDto> getJourneePlanningFromIntervention(Intervention i) {
@@ -28,11 +33,11 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 				
 				List<FormateurDto> formateurs = new ArrayList<FormateurDto>();
 				for(Formateur f : i.getFormateurs()) 
-					formateurs.add(DtoTools.convert(f, FormateurDto.class));
+					formateurs.add(mapper.FormateurToFormateurDto(f));
 				
 				Formation f = i.getFormation();
 				
-				FormationDto fDto = DtoTools.convert(f, FormationDto.class);
+				FormationDto fDto = mapper.FormationToFormationDto(f);
 				
 				JourneePlanningDto journee = new JourneePlanningDto(compteur, fDto, formateurs);
 				

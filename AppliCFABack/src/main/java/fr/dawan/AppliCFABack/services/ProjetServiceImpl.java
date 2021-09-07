@@ -13,9 +13,10 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.entities.Projet;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.ProjetRepository;
 
 @Service
@@ -28,13 +29,16 @@ public class ProjetServiceImpl implements ProjetService {
 	@Autowired
 	FilesService filesService;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<ProjetDto> getAllProjet() {
 		List<Projet> lst = projetRepository.findAll();
 
 		List<ProjetDto> lstDto = new ArrayList<ProjetDto>();
 		for (Projet p : lst) {
-			lstDto.add(DtoTools.convert(p, ProjetDto.class));
+			lstDto.add(mapper.ProjetToProjetDto(p));
 		}
 		return lstDto;
 	}
@@ -46,8 +50,8 @@ public class ProjetServiceImpl implements ProjetService {
 		// conversion vers Dto
 		List<ProjetDto> lstDto = new ArrayList<ProjetDto>();
 		for (Projet p : lst) {
-			ProjetDto pDto = DtoTools.convert(p, ProjetDto.class);
-			pDto.setGroupe(DtoTools.convert(p.getGroupe(), GroupeEtudiantDto.class));
+			ProjetDto pDto = mapper.ProjetToProjetDto(p);
+			pDto.setGroupe(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
 			lstDto.add(pDto);
 		}
 		return lstDto;
@@ -62,7 +66,7 @@ public class ProjetServiceImpl implements ProjetService {
 	public ProjetDto getById(long id) {
 		Optional<Projet> p = projetRepository.findById(id);
 		if (p.isPresent())
-			return DtoTools.convert(p.get(), ProjetDto.class);
+			return mapper.ProjetToProjetDto(p.get());
 
 		return null;
 	}
@@ -75,7 +79,7 @@ public class ProjetServiceImpl implements ProjetService {
 		
 		filesService.createDirectory("projets/" + p.getId());
 
-		return DtoTools.convert(p, ProjetDto.class);
+		return mapper.ProjetToProjetDto(p);
 	}
 
 	@Override
@@ -90,7 +94,7 @@ public class ProjetServiceImpl implements ProjetService {
 		
 		List<ProjetDto> result = new ArrayList<ProjetDto>();
 		for(Projet p : projets) {
-			result.add(DtoTools.convert(p, ProjetDto.class));
+			result.add(mapper.ProjetToProjetDto(p));
 		}
 		
 		return result;

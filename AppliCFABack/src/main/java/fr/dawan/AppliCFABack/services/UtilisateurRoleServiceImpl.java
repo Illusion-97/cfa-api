@@ -15,6 +15,8 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 
 @Service
@@ -23,6 +25,9 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService{
 
 	@Autowired
 	UtilisateurRoleRepository utilisateurRoleRepository;
+
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
 	
 	@Override
 	public List<UtilisateurRoleDto> getAllUtilisateurRole() {
@@ -30,7 +35,7 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService{
 
 		List<UtilisateurRoleDto> lstDto = new ArrayList<UtilisateurRoleDto>();
 		for (UtilisateurRole n : lst) {
-			lstDto.add(DtoTools.convert(n, UtilisateurRoleDto.class));
+			lstDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(n));
 		}
 		return lstDto;
 	}
@@ -42,7 +47,7 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService{
 		// conversion vers Dto
 		List<UtilisateurRoleDto> lstDto = new ArrayList<UtilisateurRoleDto>();
 		for (UtilisateurRole c : lst) {
-			UtilisateurRoleDto uDto = DtoTools.convert(c, UtilisateurRoleDto.class);
+			UtilisateurRoleDto uDto =mapper.UtilisateurRoleToUtilisateurRoleDto(c);
 			lstDto.add(uDto);
 		}
 		return lstDto;
@@ -57,7 +62,7 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService{
 	public UtilisateurRoleDto getById(long id) {
 		Optional<UtilisateurRole> e = utilisateurRoleRepository.findById(id);
 		if (e.isPresent()) {
-			UtilisateurRoleDto uDto = DtoTools.convert(e.get(), UtilisateurRoleDto.class);
+			UtilisateurRoleDto uDto = mapper.UtilisateurRoleToUtilisateurRoleDto(e.get());
 						
 			return uDto;
 		}			
@@ -71,7 +76,7 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService{
 		
 		u = utilisateurRoleRepository.saveAndFlush(u);
 		
-		return DtoTools.convert(u, UtilisateurRoleDto.class);
+		return mapper.UtilisateurRoleToUtilisateurRoleDto(u);
 	}
 
 	@Override

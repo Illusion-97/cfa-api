@@ -17,7 +17,8 @@ import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Formation;
-import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
 
 @Transactional
@@ -30,12 +31,15 @@ public class CursusServiceImpl implements CursusService {
 	@Autowired
 	PromotionService promoService;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<CursusDto> getAll() {
 		List<Cursus> lst = cursusRepo.findAll();
 		List<CursusDto> lstDto = new ArrayList<CursusDto>();
 		for (Cursus c : lst) {
-			lstDto.add(DtoTools.convert(c, CursusDto.class));
+			lstDto.add(mapper.CursusToCursusDto(c));
 		}
 		return lstDto;
 	}
@@ -50,12 +54,12 @@ public class CursusServiceImpl implements CursusService {
 		// conversion vers Dto
 		List<CursusDto> lstDto = new ArrayList<CursusDto>();
 		for (Cursus c : lst) {
-			CursusDto cDto = DtoTools.convert(c, CursusDto.class);
+			CursusDto cDto = mapper.CursusToCursusDto(c);
 			List<Formation> lstForm = c.getFormations();
 			List<FormationDto> lstFormDto = new ArrayList<FormationDto>();
 			for (Formation form : lstForm) {
 				if (form != null)
-					lstFormDto.add(DtoTools.convert(form, FormationDto.class));
+					lstFormDto.add(mapper.FormationToFormationDto(form));
 			}
 			cDto.setFormationsDto(lstFormDto);
 			lstDto.add(cDto);
@@ -73,7 +77,7 @@ public class CursusServiceImpl implements CursusService {
 	public CursusDto saveOrUpdate(CursusDto cDto) {
 		Cursus c = DtoTools.convert(cDto, Cursus.class);
 		cursusRepo.saveAndFlush(c);
-		return DtoTools.convert(c, CursusDto.class);
+		return mapper.CursusToCursusDto(c);
 	}
 
 	@Override
@@ -87,10 +91,10 @@ public class CursusServiceImpl implements CursusService {
 		Optional<Cursus> c = cursusRepo.findById(id);
 		if (c.isPresent()) {
 
-			CursusDto cDto = DtoTools.convert(c.get(), CursusDto.class);
+			CursusDto cDto = mapper.CursusToCursusDto(c.get());
 			List<FormationDto> lst = new ArrayList<FormationDto>();
 			for (Formation f : c.get().getFormations()) {
-				lst.add(DtoTools.convert(f, FormationDto.class));
+				lst.add(mapper.FormationToFormationDto(f));
 			}
 			cDto.setFormationsDto(lst);
 			return cDto;

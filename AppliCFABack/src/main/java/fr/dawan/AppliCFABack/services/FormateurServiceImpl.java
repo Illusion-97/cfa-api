@@ -18,6 +18,8 @@ import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 
@@ -29,12 +31,15 @@ public class FormateurServiceImpl implements FormateurService {
 	@Autowired
 	InterventionRepository interventionRepository;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<FormateurDto> getAll() {
 		List<Formateur> lst = formateurRepository.findAll();
 		List<FormateurDto> lstDto = new ArrayList<FormateurDto>();
 		for (Formateur f : lst) {
-			lstDto.add(DtoTools.convert(f, FormateurDto.class));
+			lstDto.add(mapper.FormateurToFormateurDto(f));
 		}
 		return lstDto;
 	}
@@ -45,7 +50,7 @@ public class FormateurServiceImpl implements FormateurService {
 				.collect(Collectors.toList());
 		List<FormateurDto> lstDto = new ArrayList<FormateurDto>();
 		for (Formateur f : lst) {
-			lstDto.add(DtoTools.convert(f, FormateurDto.class));
+			lstDto.add(mapper.FormateurToFormateurDto(f));
 		}
 		return lstDto;
 	}
@@ -58,7 +63,7 @@ public class FormateurServiceImpl implements FormateurService {
 		List<FormateurDto> lstDto = new ArrayList<FormateurDto>();
 
 		for (Formateur f : lstFor) {
-			lstDto.add(DtoTools.convert(f, FormateurDto.class));
+			lstDto.add(mapper.FormateurToFormateurDto(f));
 		}
 		return lstDto;
 	}
@@ -67,7 +72,7 @@ public class FormateurServiceImpl implements FormateurService {
 	public FormateurDto getById(long id) {
 		Optional<Formateur> i = formateurRepository.findById(id);
 		if (i.isPresent())
-			return DtoTools.convert(i.get(), FormateurDto.class);
+			return mapper.FormateurToFormateurDto(i.get());
 
 		return null;
 	}
@@ -76,7 +81,7 @@ public class FormateurServiceImpl implements FormateurService {
 	public FormateurDto saveOrUpdate(FormateurDto fDto) {
 		Formateur formateur = DtoTools.convert(fDto, Formateur.class);
 		formateur = formateurRepository.saveAndFlush(formateur);
-		return DtoTools.convert(formateur, FormateurDto.class);
+		return mapper.FormateurToFormateurDto(formateur);
 	}
 
 	@Override
@@ -103,13 +108,13 @@ public class FormateurServiceImpl implements FormateurService {
 
 		for (Formateur formateur : lstFor) {
 
-			FormateurDto formateurDto = DtoTools.convert(formateur, FormateurDto.class);
+			FormateurDto formateurDto = mapper.FormateurToFormateurDto(formateur);
 
 			List<Intervention> lstInter = formateur.getInterventions();
 			List<InterventionDto> lstInterDto = new ArrayList<InterventionDto>();
 			for (Intervention intervention : lstInter) {
 				if (intervention != null)
-					lstInterDto.add(DtoTools.convert(intervention, InterventionDto.class));
+					lstInterDto.add(mapper.InterventionToInterventionDto(intervention));
 			}
 			formateurDto.setInterventionsDto(lstInterDto);
 			lstDto.add(formateurDto);
@@ -176,9 +181,9 @@ public class FormateurServiceImpl implements FormateurService {
 		List<InterventionDto> lstInDto = new ArrayList<InterventionDto>();
 		for (Intervention intervention : lstIn) {
 			if (intervention != null) {
-				InterventionDto interDto = DtoTools.convert(intervention, InterventionDto.class);
+				InterventionDto interDto = mapper.InterventionToInterventionDto(intervention);
 
-				FormationDto formDto = DtoTools.convert(intervention.getFormation(), FormationDto.class);
+				FormationDto formDto = mapper.FormationToFormationDto(intervention.getFormation());
 
 				interDto.setFormationDto(formDto);
 				lstInDto.add(interDto);
@@ -196,9 +201,9 @@ public class FormateurServiceImpl implements FormateurService {
 		List<InterventionDto> lstInDto = new ArrayList<InterventionDto>();
 		for (Intervention intervention : lstIn) {
 			if (intervention != null) {
-				InterventionDto interDto = DtoTools.convert(intervention, InterventionDto.class);
+				InterventionDto interDto = mapper.InterventionToInterventionDto(intervention);
 
-				FormationDto formDto = DtoTools.convert(intervention.getFormation(), FormationDto.class);
+				FormationDto formDto = mapper.FormationToFormationDto(intervention.getFormation());
 
 				interDto.setFormationDto(formDto);
 				lstInDto.add(interDto);

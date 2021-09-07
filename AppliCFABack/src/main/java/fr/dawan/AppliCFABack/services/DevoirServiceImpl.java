@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.FormationDto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.entities.Devoir;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
 
 @Service
@@ -26,13 +26,16 @@ public class DevoirServiceImpl implements DevoirService {
 	@Autowired
 	private DevoirRepository devoirRepository;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<DevoirDto> getAllDevoir() {
 		List<Devoir> lst = devoirRepository.findAll();
 
 		List<DevoirDto> lstDto = new ArrayList<DevoirDto>();
 		for (Devoir d : lst) {
-			lstDto.add(DtoTools.convert(d, DevoirDto.class));
+			lstDto.add(mapper.DevoirToDevoirDto(d));
 		}
 		return lstDto;
 	}
@@ -44,7 +47,7 @@ public class DevoirServiceImpl implements DevoirService {
 		// conversion vers Dto
 		List<DevoirDto> lstDto = new ArrayList<DevoirDto>();
 		for (Devoir d : lst) {
-			lstDto.add(DtoTools.convert(d, DevoirDto.class));
+			lstDto.add(mapper.DevoirToDevoirDto(d));
 		}
 		return lstDto;
 	}
@@ -56,9 +59,9 @@ public class DevoirServiceImpl implements DevoirService {
 		// conversion vers Dto
 		List<DevoirDto> lstDto = new ArrayList<DevoirDto>();
 		for (Devoir d : lst) {
-			DevoirDto dDto = DtoTools.convert(d, DevoirDto.class);
-			dDto.setInterventionDto(DtoTools.convert(d.getIntervention(), InterventionDto.class));
-			dDto.getInterventionDto().setFormationDto(DtoTools.convert(d.getIntervention().getFormation(), FormationDto.class));
+			DevoirDto dDto = mapper.DevoirToDevoirDto(d);
+			dDto.setInterventionDto(mapper.InterventionToInterventionDto(d.getIntervention()));
+			dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(d.getIntervention().getFormation()));
 			lstDto.add(dDto);
 		}
 		return lstDto;
@@ -74,9 +77,9 @@ public class DevoirServiceImpl implements DevoirService {
 	public DevoirDto getById(long id) {
 		Optional<Devoir> d = devoirRepository.findById(id);
 		if (d.isPresent()) {
-			DevoirDto dDto = DtoTools.convert(d.get(), DevoirDto.class);
-			dDto.setInterventionDto(DtoTools.convert(d.get().getIntervention(), InterventionDto.class));
-			dDto.getInterventionDto().setFormationDto(DtoTools.convert(d.get().getIntervention().getFormation(), FormationDto.class));
+			DevoirDto dDto = mapper.DevoirToDevoirDto(d.get());
+			dDto.setInterventionDto(mapper.InterventionToInterventionDto(d.get().getIntervention()));
+			dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(d.get().getIntervention().getFormation()));
 			return dDto;
 		}
 			
@@ -90,7 +93,7 @@ public class DevoirServiceImpl implements DevoirService {
 
 		d = devoirRepository.saveAndFlush(d);
 
-		return DtoTools.convert(d, DevoirDto.class);
+		return mapper.DevoirToDevoirDto(d);
 	}
 
 	@Override
