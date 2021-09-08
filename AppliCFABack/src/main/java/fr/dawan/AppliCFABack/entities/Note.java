@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import org.springframework.beans.factory.annotation.Required;
 
 @Entity
 public class Note {
@@ -23,10 +26,11 @@ public class Note {
 	@ManyToOne
 	private Etudiant etudiant;
 
-	@ManyToOne
+
+	@OneToOne
 	private PassageExamen examen;
 
-	@ManyToOne
+	@OneToOne
 	private Devoir devoir;
 
 	public Note() {
@@ -80,6 +84,7 @@ public class Note {
 		return examen;
 	}
 
+	
 	public void setExamen(PassageExamen examen) {
 		this.examen = examen;
 	}
