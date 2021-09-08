@@ -172,6 +172,12 @@ public class InitDataBase {
 		Note note = new Note();
 		note.setNoteObtenu(20);
 		note.setObservations("parfait");
+		Note note2 = new Note();
+		note2.setNoteObtenu(13);
+		note2.setObservations("moyen , revoir le cours");
+		Note note3 = new Note();
+		note3.setNoteObtenu(15);
+		note3.setObservations("correct");
 
 		Entreprise entreprise = new Entreprise();
 		entreprise.setRaisonSociale("raison sociale");
@@ -244,14 +250,22 @@ public class InitDataBase {
 		CentreFormation centre = new CentreFormation();
 
 		// CUrsus
-		Cursus cursus = new Cursus();
-		cursus.setTitre("titre cursus");
+		Cursus cursus0 = new Cursus();
+		cursus0.setTitre("titre cursus 0");
+		Cursus cursus1 = new Cursus();
+		cursus1.setTitre("titre cursus 1");
+		Cursus cursus2 = new Cursus();
+		cursus2.setTitre("titre cursus 2");
 
 		// DEvoir
 		Devoir devoir = new Devoir();
-		devoir.setEnonce("Enonce du devoir numero ##");
+		devoir.setEnonce("Enonce du devoir numero ##1");
 		devoir.setDateDebut(LocalDate.now());
 		devoir.setDateFin(LocalDate.now());
+		Devoir devoir1 = new Devoir();
+		devoir1.setEnonce("Enonce du devoir numero ##2");
+		devoir1.setDateDebut(LocalDate.now());
+		devoir1.setDateFin(LocalDate.now());
 
 		// Examen
 		Examen exam = new Examen();
@@ -287,6 +301,8 @@ public class InitDataBase {
 		promotionRepository.save(promotion2);
 		promotionRepository.save(promotion3);
 		noteRepository.save(note);
+		noteRepository.save(note2);
+		noteRepository.save(note3);
 		entrepriseRepository.save(entreprise);
 		adresseRepository.save(adresse);
 		adresseRepository.save(adresse2);
@@ -300,8 +316,11 @@ public class InitDataBase {
 		utilisateurRoleRepository.save(roleadmin);
 		utilisateurRoleRepository.save(rolecef);
 		cefRepository.save(cef);
-		cursusRepository.save(cursus);
+		cursusRepository.save(cursus0);
+		cursusRepository.save(cursus1);
+		cursusRepository.save(cursus2);
 		devoirRepository.save(devoir);
+		devoirRepository.save(devoir1);
 		examenRepository.save(exam);
 		formateurRepository.save(formateur);
 		formationRepository.save(formation);
@@ -358,7 +377,9 @@ public class InitDataBase {
 		lstDevoir.add(devoir);
 		lstCEF.add(cef);
 		lstCentre.add(centre);
-		lstCursus.add(cursus);
+		lstCursus.add(cursus0);
+		lstCursus.add(cursus1);
+		lstCursus.add(cursus2);
 		lstExamen.add(exam);
 		lstFormateur.add(formateur);
 		lstPassageExamen.add(passageExamen);
@@ -372,7 +393,7 @@ public class InitDataBase {
 		promotion.setEtudiants(lstEtudiant);
 		promotion.setCef(cef);
 		promotion.setCentreFormation(centre);
-		promotion.setCursus(cursus);
+		promotion.setCursus(cursus0);
 		promotion.setReferentPedagogique(formateur);
 		//promotion.setInterventions(lstInterventions);
 
@@ -380,13 +401,13 @@ public class InitDataBase {
 		promotion2.setEtudiants(lstEtudiant);
 		promotion2.setCef(cef);
 		promotion2.setCentreFormation(centre);
-		promotion2.setCursus(cursus);
+		promotion2.setCursus(cursus1);
 		promotion2.setReferentPedagogique(formateur);
 
 		promotion3.setEtudiants(lstEtudiant);
 		promotion3.setCef(cef);
 		promotion3.setCentreFormation(centre);
-		promotion3.setCursus(cursus);
+		promotion3.setCursus(cursus2);
 		promotion3.setReferentPedagogique(formateur);
 		//promotion3.setInterventions(lstInterventions1);
 
@@ -426,7 +447,7 @@ public class InitDataBase {
 
 		intervention.setFormateurs(lstFormateur);
 
-		cursus.setFormations(lstFormation);
+		cursus0.setFormations(lstFormation);
 
 		cef.setCentreFormation(centre);
 		cef.setRoles(lstRoleCef);
@@ -441,7 +462,7 @@ public class InitDataBase {
 		devoir.setIntervention(intervention3);
 		devoir.setIntervention(intervention4);
 
-		exam.setCursus(cursus);
+		exam.setCursus(cursus0);
 		exam.setFormation(formation);
 		
 		passageExamen.setExamen(exam);
@@ -449,7 +470,10 @@ public class InitDataBase {
 		
 		note.setEtudiant(etudiant);
 		note.setExamen(passageExamen);
-		note.setDevoir(devoir);
+		note2.setEtudiant(etudiant);
+		note2.setDevoir(devoir);
+		note3.setEtudiant(etudiant);
+		note3.setDevoir(devoir1);
 
 		formateur.setAdresse(adresse);
 		formateur.setEntreprise(entreprise);
@@ -468,6 +492,8 @@ public class InitDataBase {
 		promotionRepository.save(promotion2);
 		promotionRepository.save(promotion3);
 		noteRepository.save(note);
+		noteRepository.save(note2);
+		noteRepository.save(note3);
 		entrepriseRepository.save(entreprise);
 		adresseRepository.save(adresse);
 		absenceRepository.save(absence);
@@ -480,8 +506,11 @@ public class InitDataBase {
 		utilisateurRoleRepository.save(roleadmin);
 		utilisateurRoleRepository.save(rolecef);
 		cefRepository.save(cef);
-		cursusRepository.save(cursus);
+		cursusRepository.save(cursus0);
+		cursusRepository.save(cursus1);
+		cursusRepository.save(cursus2);
 		devoirRepository.save(devoir);
+		devoirRepository.save(devoir1);
 		examenRepository.save(exam);
 		formateurRepository.save(formateur);
 		formationRepository.save(formation2);
