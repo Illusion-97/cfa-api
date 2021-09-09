@@ -1,8 +1,8 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,7 +31,15 @@ public class Utilisateur {
 
 	@Column(nullable = false, length = 255)
 	private String nom;
+	
+	@Column(nullable = false, length = 255)
+	private String civilite;
+	
+	private LocalDate dateDeNaissance;
 
+	@Column(nullable = false, length = 255)
+	private String telephone;
+	
 	@ManyToOne
 	private Adresse adresse;
 
@@ -107,6 +115,30 @@ public class Utilisateur {
 
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
+	}
+
+	public String getCivilite() {
+		return civilite;
+	}
+
+	public void setCivilite(String civilite) {
+		this.civilite = civilite;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+	
+	public LocalDate getDateDeNaissance() {
+		return dateDeNaissance;
+	}
+
+	public void setDateDeNaissance(LocalDate dateDeNaissance) {
+		this.dateDeNaissance = dateDeNaissance;
 	}
 
 }
