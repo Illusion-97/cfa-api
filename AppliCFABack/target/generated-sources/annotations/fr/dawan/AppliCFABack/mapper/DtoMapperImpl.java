@@ -7,6 +7,8 @@ import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
@@ -27,6 +29,8 @@ import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Devoir;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
@@ -46,7 +50,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-09-09T10:22:35+0200",
+    date = "2021-09-09T16:59:28+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.2 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -374,6 +378,36 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateurRoleDto.setIntitule( utilisateurRole.getIntitule() );
 
         return utilisateurRoleDto;
+    }
+
+    @Override
+    public DossierProfessionnelDto DossierProfessionnelToDossierProfessionnelDto(DossierProfessionnel dossierProfessionnel) {
+        if ( dossierProfessionnel == null ) {
+            return null;
+        }
+
+        DossierProfessionnelDto dossierProfessionnelDto = new DossierProfessionnelDto();
+
+        dossierProfessionnelDto.setId( dossierProfessionnel.getId() );
+        dossierProfessionnelDto.setNom( dossierProfessionnel.getNom() );
+        dossierProfessionnelDto.setCursus( CursusToCursusDto( dossierProfessionnel.getCursus() ) );
+
+        return dossierProfessionnelDto;
+    }
+
+    @Override
+    public DossierProjetDto DossierProjetToDossierProjetDto(DossierProjet dossierProjet) {
+        if ( dossierProjet == null ) {
+            return null;
+        }
+
+        DossierProjetDto dossierProjetDto = new DossierProjetDto();
+
+        dossierProjetDto.setId( dossierProjet.getId() );
+        dossierProjetDto.setNom( dossierProjet.getNom() );
+        dossierProjetDto.setProjet( ProjetToProjetDto( dossierProjet.getProjet() ) );
+
+        return dossierProjetDto;
     }
 
     protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
