@@ -1,11 +1,52 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.EtudiantControllerTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.059 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.EtudiantControllerTests
-fr.dawan.AppliCFABack.Controller.EtudiantControllerTests  Time elapsed: 1.059 s  <<< ERROR!
-java.lang.IllegalStateException: Failed to load ApplicationContext
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'congeController': Unsatisfied dependency expressed through field 'congeService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'congeServiceImpl': Unsatisfied dependency expressed through field 'emailService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'emailServiceImpl': Unsatisfied dependency expressed through field 'javaMailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'congeServiceImpl': Unsatisfied dependency expressed through field 'emailService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'emailServiceImpl': Unsatisfied dependency expressed through field 'javaMailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'emailServiceImpl': Unsatisfied dependency expressed through field 'javaMailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+Tests run: 13, Failures: 11, Errors: 0, Skipped: 0, Time elapsed: 0.481 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.EtudiantControllerTests
+testGetIntervenionByIdEtudiant  Time elapsed: 0.01 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<400>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetIntervenionByIdEtudiant(EtudiantControllerTests.java:222)
+
+testGetAdresseByIdEtudiant  Time elapsed: 0.025 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetAdresseByIdEtudiant(EtudiantControllerTests.java:182)
+
+testGetEntrepriseByIdEtudiant  Time elapsed: 0.018 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetEntrepriseByIdEtudiant(EtudiantControllerTests.java:146)
+
+testSave  Time elapsed: 0.049 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testSave(EtudiantControllerTests.java:103)
+
+testGetPromotionsByIdEtudiant  Time elapsed: 0.017 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetPromotionsByIdEtudiant(EtudiantControllerTests.java:158)
+
+testGetFormateurReferentByIdEtudiant  Time elapsed: 0.015 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetFormateurReferentByIdEtudiant(EtudiantControllerTests.java:234)
+
+testGetAbsencesByIdEtudiant  Time elapsed: 0.034 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$[0].justificatif"
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetAbsencesByIdEtudiant(EtudiantControllerTests.java:211)
+Caused by: com.jayway.jsonpath.PathNotFoundException: No results for path: $[0]['justificatif']
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetAbsencesByIdEtudiant(EtudiantControllerTests.java:211)
+
+testGetGroupesByIdEtudiant  Time elapsed: 0.016 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetGroupesByIdEtudiant(EtudiantControllerTests.java:170)
+
+testFindById  Time elapsed: 0.012 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.nom"
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testFindById(EtudiantControllerTests.java:78)
+Caused by: java.lang.IllegalArgumentException: json can not be null or empty
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testFindById(EtudiantControllerTests.java:78)
+
+testGetNotesByIdEtudiant  Time elapsed: 0.007 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<400>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetNotesByIdEtudiant(EtudiantControllerTests.java:197)
+
+testGetFormateurManagerByIdEtudiant  Time elapsed: 0.017 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetFormateurManagerByIdEtudiant(EtudiantControllerTests.java:246)
 

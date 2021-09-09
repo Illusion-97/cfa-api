@@ -10,6 +10,7 @@ import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
@@ -30,6 +31,7 @@ import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
+import fr.dawan.AppliCFABack.entities.FichePoste;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
@@ -46,8 +48,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-09-09T10:22:35+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.2 (Oracle Corporation)"
+    date = "2021-09-09T14:55:49+0200",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_271 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -374,6 +376,24 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateurRoleDto.setIntitule( utilisateurRole.getIntitule() );
 
         return utilisateurRoleDto;
+    }
+
+    @Override
+    public FichePosteDto FichePosteToFichePosteDto(FichePoste fichePoste) {
+        if ( fichePoste == null ) {
+            return null;
+        }
+
+        FichePosteDto fichePosteDto = new FichePosteDto();
+
+        fichePosteDto.setId( fichePoste.getId() );
+        fichePosteDto.setIntitule( fichePoste.getIntitule() );
+        fichePosteDto.setNature( fichePoste.getNature() );
+        fichePosteDto.setMission( fichePoste.getMission() );
+        fichePosteDto.setCompositionService( fichePoste.getCompositionService() );
+        fichePosteDto.setPositionnement( fichePoste.getPositionnement() );
+
+        return fichePosteDto;
     }
 
     protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
