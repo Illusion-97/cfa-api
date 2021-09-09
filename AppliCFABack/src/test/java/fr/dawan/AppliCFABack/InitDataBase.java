@@ -147,6 +147,9 @@ public class InitDataBase {
 		etudiant.setNom("Billon");
 		etudiant.setLogin("tbillon@dawan.fr");
 		etudiant.setPassword("pwd");
+		etudiant.setCivilite("Mr");
+		etudiant.setDateDeNaissance(LocalDate.now());
+		etudiant.setTelephone("06.12.80.45.99");
 
 		LocalDate promoDate = LocalDate.of(2021, 1, 1);
 
@@ -238,6 +241,10 @@ public class InitDataBase {
 		cef.setNom("Baron Gomez");
 		cef.setLogin("lbarongomez@dawan.fr");
 		cef.setPassword("pwd");
+		cef.setCivilite("Mme");
+		cef.setDateDeNaissance(date);
+		cef.setTelephone("06.12.80.45.96");
+		
 
 		// Centre Formation
 		CentreFormation centre = new CentreFormation();
@@ -266,6 +273,9 @@ public class InitDataBase {
 		formateur.setNom("Menut");
 		formateur.setLogin("smenut@dawan.fr");
 		formateur.setPassword("pwd");
+		formateur.setCivilite("Mr");
+		formateur.setDateDeNaissance(date);
+		formateur.setTelephone("06.12.80.45.95");
 
 		// PassageExamen
 		PassageExamen passageExamen = new PassageExamen();
