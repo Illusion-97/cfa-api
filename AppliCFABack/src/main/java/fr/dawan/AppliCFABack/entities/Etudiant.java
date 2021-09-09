@@ -21,8 +21,8 @@ public class Etudiant extends Utilisateur {
 	@ManyToOne
 	private Utilisateur manager;
 	
-	//@OneToOne
-	//private FichePoste fichePoste;
+	@OneToOne
+	private FichePoste fichePoste;
 
 	public Etudiant() {
 		super();
@@ -66,14 +66,14 @@ public class Etudiant extends Utilisateur {
 		this.manager = manager;
 	}
 
-	/*public FichePoste getFichePoste() {
+	public FichePoste getFichePoste() {
 		return fichePoste;
 	}
 
 	public void setFichePoste(FichePoste fichePoste) {
 		this.fichePoste = fichePoste;
 	}
-	*/
+	
 	
 
 	
