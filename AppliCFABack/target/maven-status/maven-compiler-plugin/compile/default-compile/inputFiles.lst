@@ -148,4 +148,6 @@ C:\Users\Admin-Stagiaire\Back-Projet-Entreprise\cfa-portal-api\AppliCFABack\src\
 C:\Users\Admin-Stagiaire\Back-Projet-Entreprise\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\services\FormateurServiceImpl.java
 C:\Users\Admin-Stagiaire\Back-Projet-Entreprise\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\repositories\UtilisateurRoleRepository.java
 C:\Users\Admin-Stagiaire\Back-Projet-Entreprise\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\dto\LoginDto.java
+C:\Users\Admin-Stagiaire\Back-Projet-Entreprise\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\entities\DossierProfessionnel.java
+C:\Users\Admin-Stagiaire\Back-Projet-Entreprise\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\entities\DossierProjet.java
 C:\Users\Admin-Stagiaire\Back-Projet-Entreprise\cfa-portal-api\AppliCFABack\src\main\java\fr\dawan\AppliCFABack\repositories\FichePosteRepository.java

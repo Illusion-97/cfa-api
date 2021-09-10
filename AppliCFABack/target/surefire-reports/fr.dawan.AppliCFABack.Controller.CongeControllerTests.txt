@@ -1,12 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.CongeControllerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.185 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CongeControllerTests
-testSave  Time elapsed: 0.031 s  <<< FAILURE!
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.148 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CongeControllerTests
+testSave  Time elapsed: 0.024 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<500>
 	at fr.dawan.AppliCFABack.Controller.CongeControllerTests.testSave(CongeControllerTests.java:101)
 
-testFindById  Time elapsed: 0.021 s  <<< FAILURE!
+testFindById  Time elapsed: 0.016 s  <<< FAILURE!
 java.lang.AssertionError: No value at JSON path "$.motif"
 	at fr.dawan.AppliCFABack.Controller.CongeControllerTests.testFindById(CongeControllerTests.java:78)
 Caused by: java.lang.IllegalArgumentException: json can not be null or empty
