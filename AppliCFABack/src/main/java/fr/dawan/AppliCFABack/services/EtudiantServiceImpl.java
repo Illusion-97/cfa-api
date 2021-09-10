@@ -162,7 +162,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 		eDto.setAdresseDto(mapper.AdresseToAdresseDto(e.get().getAdresse()));
 		eDto.setFormateurReferentDto(mapper.UtilisateurToUtilisateurDto(e.get().getFormateurReferent()));
 		eDto.setManagerDto(mapper.UtilisateurToUtilisateurDto(e.get().getManager()));
-		eDto.setFichePosteDto(mapper.FichePosteToFichePosteDto(e.get().getFichePoste()));
 
 		List<GroupeEtudiantDto> groupes = new ArrayList<GroupeEtudiantDto>();
 		for(GroupeEtudiant g : e.get().getGroupes()) {

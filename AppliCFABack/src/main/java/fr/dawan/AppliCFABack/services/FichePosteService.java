@@ -18,4 +18,6 @@ public interface FichePosteService {
 	FichePosteDto saveOrUpdate(FichePosteDto fDto);
 
 	void deleteById(long id);
+
+	FichePosteDto getByIdEtudiant(long id);
 }
