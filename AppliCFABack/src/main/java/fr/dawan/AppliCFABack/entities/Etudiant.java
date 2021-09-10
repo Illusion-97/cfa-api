@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Etudiant extends Utilisateur {
@@ -20,9 +19,7 @@ public class Etudiant extends Utilisateur {
 	
 	@ManyToOne
 	private Utilisateur manager;
-	
-	@OneToOne
-	private FichePoste fichePoste;
+
 
 	public Etudiant() {
 		super();
@@ -65,15 +62,6 @@ public class Etudiant extends Utilisateur {
 	public void setManager(Utilisateur manager) {
 		this.manager = manager;
 	}
-
-	public FichePoste getFichePoste() {
-		return fichePoste;
-	}
-
-	public void setFichePoste(FichePoste fichePoste) {
-		this.fichePoste = fichePoste;
-	}
-	
 	
 
 	

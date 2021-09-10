@@ -1,18 +1,18 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.096 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests
-testFindById  Time elapsed: 0.013 s  <<< FAILURE!
+Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.078 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests
+testFindById  Time elapsed: 0.011 s  <<< FAILURE!
 java.lang.AssertionError: No value at JSON path "$.entreprise"
 	at fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests.testFindById(CentreFormationControllerTests.java:75)
 Caused by: java.lang.IllegalArgumentException: json can not be null or empty
 	at fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests.testFindById(CentreFormationControllerTests.java:75)
 
-testDelete  Time elapsed: 0.015 s  <<< FAILURE!
+testDelete  Time elapsed: 0.01 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<202> but was:<404>
 	at fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests.testDelete(CentreFormationControllerTests.java:134)
 
-testUpdate  Time elapsed: 0.023 s  <<< FAILURE!
+testUpdate  Time elapsed: 0.021 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <3> but was: <0>
 	at fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests.testUpdate(CentreFormationControllerTests.java:120)
 

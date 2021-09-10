@@ -1,18 +1,18 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.CEFControllerTests
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.122 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CEFControllerTests
-testSave  Time elapsed: 0.05 s  <<< FAILURE!
+Tests run: 4, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.111 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CEFControllerTests
+testSave  Time elapsed: 0.047 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<500>
 	at fr.dawan.AppliCFABack.Controller.CEFControllerTests.testSave(CEFControllerTests.java:97)
 
-testFindById  Time elapsed: 0.013 s  <<< FAILURE!
+testFindById  Time elapsed: 0.012 s  <<< FAILURE!
 java.lang.AssertionError: No value at JSON path "$.nom"
 	at fr.dawan.AppliCFABack.Controller.CEFControllerTests.testFindById(CEFControllerTests.java:76)
 Caused by: java.lang.IllegalArgumentException: json can not be null or empty
 	at fr.dawan.AppliCFABack.Controller.CEFControllerTests.testFindById(CEFControllerTests.java:76)
 
-testUpdate  Time elapsed: 0.012 s  <<< FAILURE!
+testUpdate  Time elapsed: 0.009 s  <<< FAILURE!
 java.lang.AssertionError: null
 	at fr.dawan.AppliCFABack.Controller.CEFControllerTests.testUpdate(CEFControllerTests.java:129)
 
