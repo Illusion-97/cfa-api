@@ -36,6 +36,10 @@ public class DossierProjetController {
 	public DossierProjetDto getById(@PathVariable("id") long id) {
 		return dossierProService.getById(id);
 	}
+	@GetMapping(value = "/etudiant/{id}",produces = "application/json")
+	public List<DossierProjetDto> getByIdEtudiant(@PathVariable("id") long id) {
+		return dossierProService.getByIdEtudiant(id);
+	}
 	
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<DossierProjetDto> getAllByPage(@PathVariable("page") int page,

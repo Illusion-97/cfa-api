@@ -20,11 +20,7 @@ public class DossierProjet {
 	@OneToOne
 	private Projet projet;
 	
-	public DossierProjet() {
-		// TODO Auto-generated constructor stub
-	}
 	public DossierProjet(String nom) {
-		// TODO Auto-generated constructor stub
 		this.nom=nom;
 	}
 	

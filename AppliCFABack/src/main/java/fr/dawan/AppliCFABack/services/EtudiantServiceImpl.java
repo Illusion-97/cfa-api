@@ -19,6 +19,8 @@ import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
@@ -30,6 +32,8 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Devoir;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
@@ -112,6 +116,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 				if (promotion != null)
 					lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
 			}
+				
 
 			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 
@@ -181,7 +186,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 			promotions.add(pDto);
 		}
 		eDto.setPromotionsDto(promotions);
-
+		
+		
 		return eDto;
 	}
 
@@ -501,6 +507,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 				if (promotion != null)
 					lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
 			}
+			
 
 			etuDto.setAdresseDto(addrDto);
 			etuDto.setGroupesDto(lstGrpEtuDto);

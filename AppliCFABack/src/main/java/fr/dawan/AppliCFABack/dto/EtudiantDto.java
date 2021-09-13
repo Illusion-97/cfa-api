@@ -8,6 +8,9 @@ public class EtudiantDto extends UtilisateurDto {
 	private List<GroupeEtudiantDto> groupesDto;
 	private UtilisateurDto formateurReferentDto;
 	private UtilisateurDto managerDto;
+	private List<DossierProfessionnelDto>dossierProfessionnel;
+	private List<DossierProjetDto> dossierProjet;
+
 
 	public EtudiantDto() {
 		super();
@@ -52,5 +55,23 @@ public class EtudiantDto extends UtilisateurDto {
 	public void setManagerDto(UtilisateurDto managerDto) {
 		this.managerDto = managerDto;
 	}
+
+	public List<DossierProfessionnelDto> getDossierProfessionnel() {
+		return dossierProfessionnel;
+	}
+
+	public void setDossierProfessionnel(List<DossierProfessionnelDto> dossierProfessionnel) {
+		this.dossierProfessionnel = dossierProfessionnel;
+	}
+
+	public List<DossierProjetDto> getDossierProjet() {
+		return dossierProjet;
+	}
+
+	public void setDossierProjet(List<DossierProjetDto> dossierProjet) {
+		this.dossierProjet = dossierProjet;
+	}
+
+	
 
 }
