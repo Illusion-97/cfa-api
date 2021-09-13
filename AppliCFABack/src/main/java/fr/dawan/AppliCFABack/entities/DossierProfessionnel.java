@@ -20,9 +20,6 @@ public class DossierProfessionnel {
 	@OneToOne
 	private Cursus cursus;
 	
-	public DossierProfessionnel(String nom) {
-		this.nom=nom;
-	}
 	
 	public long getId() {
 		return id;

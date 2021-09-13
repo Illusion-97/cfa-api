@@ -128,7 +128,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
 			for(DossierProfessionnel dp : lstDossierProfessionnel) {
 				DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-				dpDto.setCursus(mapper.CursusToCursusDto(dp.getCursus()));
+				dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
 				lstDossierProfessionnelDto.add(dpDto);
 			}
 				
@@ -214,7 +214,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
 		for(DossierProfessionnel dp : lstDossierProfessionnel) {
 			DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-			dpDto.setCursus(mapper.CursusToCursusDto(dp.getCursus()));
+			dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
 			lstDossierProfessionnelDto.add(dpDto);
 		}
 		eDto.setDossierProfessionnel(lstDossierProfessionnelDto);
@@ -552,7 +552,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
 			for(DossierProfessionnel dp : lstDossierProfessionnel) {
 				DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-				dpDto.setCursus(mapper.CursusToCursusDto(dp.getCursus()));
+				dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
 				lstDossierProfessionnelDto.add(dpDto);
 			}
 			
