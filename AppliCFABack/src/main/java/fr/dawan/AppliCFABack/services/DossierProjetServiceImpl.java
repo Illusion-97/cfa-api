@@ -11,13 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.FormationDto;
-import fr.dawan.AppliCFABack.entities.Cursus;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
-import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
@@ -28,6 +25,9 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	
 	@Autowired
 	DossierProjetRepository dossierProRepo;
+	
+	@Autowired
+	EtudiantService etudiantService;
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
@@ -89,6 +89,21 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		// TODO Auto-generated method stub
 		dossierProRepo.deleteById(id);
 		
+	}
+
+	@Override
+	public List<DossierProjetDto> getByIdEtudiant(long id) {
+		// TODO Auto-generated method stub
+//		List<DossierProjet> lstDp =dossierProRepo.findByIdEtudiant(id);
+//		List<DossierProjetDto> lstdpDto = new ArrayList<DossierProjetDto>();
+//		for (DossierProjet dp : lstDp) {
+//			DossierProjetDto dpDto = mapper.DossierProjetToDossierProjetDto(dp);
+//			dpDto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
+//			lstdpDto.add(dpDto);
+//			
+//		}
+//		return lstdpDto;
+		return null;
 	}
 
 }

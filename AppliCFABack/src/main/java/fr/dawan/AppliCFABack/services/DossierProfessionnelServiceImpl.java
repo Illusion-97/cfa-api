@@ -88,5 +88,19 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 		dossierProRepo.deleteById(id);
 		
 	}
+	@Override
+	public List<DossierProfessionnelDto> getByIdEtudiant(long id) {
+		// TODO Auto-generated method stub
+//		List<DossierProfessionnel> lstDp =dossierProRepo.findByIdEtudiant(id);
+//		List<DossierProfessionnelDto> lstdpDto = new ArrayList<DossierProfessionnelDto>();
+//		for (DossierProfessionnel dp : lstDp) {
+//			DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
+//			dpDto.setCursus(mapper.CursusToCursusDto(dp.getCursus()));
+//			lstdpDto.add(dpDto);
+//			
+//		}
+//		return lstdpDto;
+		return null;
+	}
 
 }

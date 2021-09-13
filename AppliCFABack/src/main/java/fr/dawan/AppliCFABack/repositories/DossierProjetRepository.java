@@ -12,4 +12,7 @@ public interface DossierProjetRepository extends JpaRepository<DossierProjet, Lo
 
 	Page<DossierProjet> findByNomContaining(String string, PageRequest of);
 
+//	@Query("SELECT dp FROM DossierProjet dp WHERE dp.etudiant.id = :id")
+//	List<DossierProjet> findByIdEtudiant(long id);
+
 }

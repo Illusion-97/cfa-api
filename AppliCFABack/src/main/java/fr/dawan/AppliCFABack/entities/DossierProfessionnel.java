@@ -20,11 +20,7 @@ public class DossierProfessionnel {
 	@OneToOne
 	private Cursus cursus;
 	
-	public DossierProfessionnel() {
-		// TODO Auto-generated constructor stub
-	}
 	public DossierProfessionnel(String nom) {
-		// TODO Auto-generated constructor stub
 		this.nom=nom;
 	}
 	

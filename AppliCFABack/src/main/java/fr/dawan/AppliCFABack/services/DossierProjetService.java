@@ -15,6 +15,8 @@ public interface DossierProjetService {
 	DossierProjetDto saveOrUpdate(DossierProjetDto dpDto);
 
 	void deleteById(long id);
+
+	List<DossierProjetDto> getByIdEtudiant(long id);
 	
 
 }
