@@ -25,7 +25,6 @@ import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.FormationService;
-import fr.dawan.AppliCFABack.services.InterventionService;
 import fr.dawan.AppliCFABack.services.PromotionService;
 
 @RestController
