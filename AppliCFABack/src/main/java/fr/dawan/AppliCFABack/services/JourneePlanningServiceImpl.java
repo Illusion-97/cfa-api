@@ -41,6 +41,8 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 				
 				JourneePlanningDto journee = new JourneePlanningDto(compteur, fDto, formateurs);
 				
+				journee.setIdIntervention(i.getId());
+				
 				result.add(journee);
 			}
 				
