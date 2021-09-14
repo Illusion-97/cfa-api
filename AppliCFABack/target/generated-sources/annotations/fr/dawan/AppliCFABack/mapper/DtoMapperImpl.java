@@ -12,6 +12,7 @@ import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
 import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
@@ -35,6 +36,7 @@ import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
+import fr.dawan.AppliCFABack.entities.FicheEntreprise;
 import fr.dawan.AppliCFABack.entities.FichePoste;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
@@ -52,8 +54,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-09-13T16:34:58+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.2 (Oracle Corporation)"
+    date = "2021-09-14T15:28:00+0200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -201,9 +203,9 @@ public class DtoMapperImpl implements DtoMapper {
         etudiantDto.setPassword( etudiant.getPassword() );
         etudiantDto.setPrenom( etudiant.getPrenom() );
         etudiantDto.setTelephone( etudiant.getTelephone() );
-        etudiantDto.setId( etudiant.getId() );
         etudiantDto.setDossierProfessionnel( dossierProfessionnelListToDossierProfessionnelDtoList( etudiant.getDossierProfessionnel() ) );
         etudiantDto.setDossierProjet( dossierProjetListToDossierProjetDtoList( etudiant.getDossierProjet() ) );
+        etudiantDto.setId( etudiant.getId() );
 
         return etudiantDto;
     }
@@ -430,6 +432,29 @@ public class DtoMapperImpl implements DtoMapper {
         dossierProjetDto.setProjet( ProjetToProjetDto( dossierProjet.getProjet() ) );
 
         return dossierProjetDto;
+    }
+
+    @Override
+    public FicheEntrepriseDto FicheEntrepriseToFicheEntrepriseDto(FicheEntreprise FicheEntreprise) {
+        if ( FicheEntreprise == null ) {
+            return null;
+        }
+
+        FicheEntrepriseDto ficheEntrepriseDto = new FicheEntrepriseDto();
+
+        ficheEntrepriseDto.setId( FicheEntreprise.getId() );
+        ficheEntrepriseDto.setHistorique( FicheEntreprise.getHistorique() );
+        ficheEntrepriseDto.setNomDirigeant( FicheEntreprise.getNomDirigeant() );
+        ficheEntrepriseDto.setSecteurActivite( FicheEntreprise.getSecteurActivite() );
+        ficheEntrepriseDto.setOrganisationType( FicheEntreprise.getOrganisationType() );
+        ficheEntrepriseDto.setNbSalarie( FicheEntreprise.getNbSalarie() );
+        ficheEntrepriseDto.setChiffreAffaireAnnuel( FicheEntreprise.getChiffreAffaireAnnuel() );
+        ficheEntrepriseDto.setActiviteDescription( FicheEntreprise.getActiviteDescription() );
+        ficheEntrepriseDto.setClientType( FicheEntreprise.getClientType() );
+        ficheEntrepriseDto.setFormationProfil( FicheEntreprise.getFormationProfil() );
+        ficheEntrepriseDto.setMetiersExerces( FicheEntreprise.getMetiersExerces() );
+
+        return ficheEntrepriseDto;
     }
 
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {

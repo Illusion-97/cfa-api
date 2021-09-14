@@ -35,7 +35,9 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 
 		List<EntrepriseDto> lstDto = new ArrayList<EntrepriseDto>();
 		for (Entreprise e : lst) {
-			lstDto.add(mapper.EntrepriseToEntrepriseDto(e));
+			EntrepriseDto eDto = mapper.EntrepriseToEntrepriseDto(e);
+			eDto.setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.getAdresseSiege()));
+			lstDto.add(eDto);
 		}
 		return lstDto;
 	}
