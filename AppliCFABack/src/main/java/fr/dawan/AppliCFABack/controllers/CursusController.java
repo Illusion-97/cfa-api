@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.CursusService;
+import fr.dawan.AppliCFABack.services.EtudiantService;
 
 @RestController
 @RequestMapping("/AppliCFABack/cursus")
@@ -27,6 +30,9 @@ public class CursusController {
 	
 	@Autowired
 	private CursusService cursusService;
+	
+	@Autowired
+	private EtudiantService etudiantService;
 	
 	@GetMapping(produces = "application/json")
 	public List<CursusDto> getAll() {
@@ -52,6 +58,31 @@ public class CursusController {
  		else
  			return cursusService.getAllByPage(page, size, "");
  	}
+	
+	@GetMapping(value = "/promotion/{id}",produces = "application/json")
+	public CursusDto getByIdPromotion(@PathVariable("id") long id) {
+		return cursusService.getByIdPromotion(id);
+	}
+	@GetMapping(value = "/etudiant/{id}",produces = "application/json")
+	public List<CursusDto> getByIdEtudiant(@PathVariable("id") long id) {
+		List<PromotionDto> lstpDto = etudiantService.getPromotionsByIdEtudiant(id);
+		List<CursusDto> lstCursus = new ArrayList<CursusDto>();
+		List<CursusDto> lstCursusMostRecent = new ArrayList<CursusDto>();
+		for (PromotionDto pDto : lstpDto) {
+			CursusDto cdto = cursusService.getByIdPromotion(pDto.getId());
+			lstCursus.add(cdto);
+		}
+		for( int i=lstCursus.size()-1;i>=0;i--) {
+			lstCursusMostRecent.add(lstCursus.get(i));
+		}
+		return lstCursusMostRecent;
+	}
+	@GetMapping(value = "/CurrentCursus/{id}",produces = "application/json")
+	public CursusDto getCurrentCursusByIdEtudiant(@PathVariable("id") long id) {
+		List<CursusDto> lstCursusDto = getByIdEtudiant(id);
+		CursusDto cdto = lstCursusDto.get(0);
+		return cdto;
+	}
 
 		
 	@GetMapping(value = "/count", produces = "application/json")

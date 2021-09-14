@@ -12,13 +12,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.entities.Note;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.NoteRepository;
 
 @Service
@@ -28,13 +26,16 @@ public class NoteServiceImpl implements NoteService {
 	@Autowired
 	NoteRepository noteRepository;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<NoteDto> getAllNote() {
 		List<Note> lst = noteRepository.findAll();
 
 		List<NoteDto> lstDto = new ArrayList<NoteDto>();
 		for (Note n : lst) {
-			lstDto.add(DtoTools.convert(n, NoteDto.class));
+			lstDto.add(mapper.NoteToNoteDto(n));
 		}
 		return lstDto;
 	}
@@ -46,10 +47,10 @@ public class NoteServiceImpl implements NoteService {
 		// conversion vers Dto
 		List<NoteDto> lstDto = new ArrayList<NoteDto>();
 		for (Note n : lst) {
-			NoteDto nDto = DtoTools.convert(n, NoteDto.class);
-			nDto.setDevoirDto(DtoTools.convert(n.getDevoir(), DevoirDto.class));
-			nDto.setEtudiantDto(DtoTools.convert(n.getEtudiant(), EtudiantDto.class));
-			nDto.setExamenDto(DtoTools.convert(n.getExamen(), PassageExamenDto.class));
+			NoteDto nDto = mapper.NoteToNoteDto(n);
+			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
+			nDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.getEtudiant()));
+			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
 			lstDto.add(nDto);
 		}
 		return lstDto;
@@ -66,11 +67,11 @@ public class NoteServiceImpl implements NoteService {
 		if (!n.isPresent())
 			return null;
 		
-		NoteDto nDto = DtoTools.convert(n.get(), NoteDto.class);
-		nDto.setDevoirDto(DtoTools.convert(n.get().getDevoir(), DevoirDto.class));
-		nDto.setEtudiantDto(DtoTools.convert(n.get().getEtudiant(), EtudiantDto.class));
-		nDto.setExamenDto(DtoTools.convert(n.get().getExamen(), PassageExamenDto.class));
-		if(n.get().getExamen() != null) nDto.getExamenDto().setExamenDto(DtoTools.convert(n.get().getExamen().getExamen(), ExamenDto.class));
+		NoteDto nDto = mapper.NoteToNoteDto(n.get());
+		nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.get().getDevoir()));
+		nDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.get().getEtudiant()));
+		nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.get().getExamen()));
+		if(n.get().getExamen() != null) nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.get().getExamen().getExamen()));
 		return nDto;
 	}
 
@@ -80,7 +81,7 @@ public class NoteServiceImpl implements NoteService {
 
 		n = noteRepository.saveAndFlush(n);
 
-		return DtoTools.convert(n, NoteDto.class);
+		return mapper.NoteToNoteDto(n);
 	}
 
 	@Override
@@ -98,10 +99,10 @@ public class NoteServiceImpl implements NoteService {
 		List<NoteDto> result = new ArrayList<NoteDto>();
 		List<Note> list = noteRepository.findAllByEtudiantId(id);
 		for(Note n : list) {
-			NoteDto nDto = DtoTools.convert(n, NoteDto.class);
-			nDto.setDevoirDto(DtoTools.convert(n.getDevoir(), DevoirDto.class));
-			nDto.setExamenDto(DtoTools.convert(n.getExamen(), PassageExamenDto.class));
-			if(n.getExamen() != null) nDto.getExamenDto().setExamenDto(DtoTools.convert(n.getExamen().getExamen(), ExamenDto.class));
+			NoteDto nDto = mapper.NoteToNoteDto(n);
+			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
+			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
+			if(n.getExamen() != null) nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.getExamen().getExamen()));
 			result.add(nDto);
 		}
 		return result;

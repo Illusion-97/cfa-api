@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class UtilisateurDto {
@@ -8,6 +9,9 @@ public class UtilisateurDto {
 	private String password;
 	private String prenom;
 	private String nom;
+	private String civilite;
+	private LocalDate dateDeNaissance;
+	private String telephone;
 	private AdresseDto adresseDto;
 	private EntrepriseDto entrepriseDto;
 	private List<UtilisateurRoleDto> rolesDto;
@@ -55,6 +59,30 @@ public class UtilisateurDto {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+	
+	public String getCivilite() {
+		return civilite;
+	}
+
+	public void setCivilite(String civilite) {
+		this.civilite = civilite;
+	}
+
+	public LocalDate getDateDeNaissance() {
+		return dateDeNaissance;
+	}
+
+	public void setDateDeNaissance(LocalDate dateDeNaissance) {
+		this.dateDeNaissance = dateDeNaissance;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 
 	public AdresseDto getAdresseDto() {
 		return adresseDto;
@@ -80,6 +108,8 @@ public class UtilisateurDto {
 		this.rolesDto = rolesDto;
 	}
 
+
+	
 	
 
 }

@@ -11,7 +11,7 @@ public class JourneePlanningDto {
 	
 	public JourneePlanningDto() {
 		super();
-	}
+	}	
 	
 	public JourneePlanningDto(LocalDate date, FormationDto formationDto, List<FormateurDto> formateurDto) {
 		super();

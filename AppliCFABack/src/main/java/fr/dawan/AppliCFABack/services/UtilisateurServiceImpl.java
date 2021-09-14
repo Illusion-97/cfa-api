@@ -27,6 +27,8 @@ import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
@@ -61,6 +63,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired
 	AbsenceRepository absenceRepository;
+	
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+	
 	@Override
 	public List<UtilisateurDto> getAll() {
 		List<Utilisateur> users = utilisateurRepository.findAll();
@@ -70,10 +76,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			List<UtilisateurRoleDto> test = new ArrayList<UtilisateurRoleDto>();
 			for (UtilisateurRole r : u.getRoles()) {
-				test.add(DtoTools.convert(r, UtilisateurRoleDto.class));
+				test.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
 			}
 
-			UtilisateurDto user = DtoTools.convert(u, UtilisateurDto.class);
+			UtilisateurDto user = mapper.UtilisateurToUtilisateurDto(u);
 			user.setRolesDto(test);
 			res.add(user);
 		}
@@ -90,12 +96,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
-			UtilisateurDto uDto = DtoTools.convert(u, UtilisateurDto.class);
-			uDto.setAdresseDto(DtoTools.convert(u.getAdresse(), AdresseDto.class));
-			uDto.setEntrepriseDto(DtoTools.convert(u.getEntreprise(), EntrepriseDto.class));
+			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(u);
+			uDto.setAdresseDto(mapper.AdresseToAdresseDto(u.getAdresse()));
+			uDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(u.getEntreprise()));
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
 			for(UtilisateurRole ur : u.getRoles()) {
-				utilisateurRoleDto.add(DtoTools.convert(ur, UtilisateurRoleDto.class));
+				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
 			}
 			uDto.setRolesDto(utilisateurRoleDto);
 			
@@ -116,13 +122,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public UtilisateurDto getById(long id) {
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (userOpt.isPresent()) {
-			UtilisateurDto uDto = DtoTools.convert(userOpt.get(), UtilisateurDto.class);
-			uDto.setAdresseDto(DtoTools.convert(userOpt.get().getAdresse(), AdresseDto.class));			
-			uDto.setEntrepriseDto(DtoTools.convert(userOpt.get().getEntreprise(), EntrepriseDto.class));
-			uDto.getEntrepriseDto().setAdresseSiegeDto(DtoTools.convert(userOpt.get().getEntreprise().getAdresseSiege(), AdresseDto.class));
+			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(userOpt.get());
+			uDto.setAdresseDto(mapper.AdresseToAdresseDto(userOpt.get().getAdresse()));
+			uDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(userOpt.get().getEntreprise()));
+			uDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(userOpt.get().getEntreprise().getAdresseSiege()));
+
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
 			for(UtilisateurRole ur : userOpt.get().getRoles()) {
-				utilisateurRoleDto.add(DtoTools.convert(ur, UtilisateurRoleDto.class));
+				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
 			}
 			uDto.setRolesDto(utilisateurRoleDto);
 			
@@ -140,19 +147,19 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		if (user == null)
 			return null;
 
-		UtilisateurDto utilisateurDto = DtoTools.convert(user, UtilisateurDto.class);
+		UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(user);
 
-		AdresseDto adresseDto = DtoTools.convert(user.getAdresse(), AdresseDto.class);
+		AdresseDto adresseDto = mapper.AdresseToAdresseDto(user.getAdresse());
 		utilisateurDto.setAdresseDto(adresseDto);
 
-		EntrepriseDto entrepriseDto = DtoTools.convert(user.getEntreprise(), EntrepriseDto.class);
+		EntrepriseDto entrepriseDto = mapper.EntrepriseToEntrepriseDto(user.getEntreprise());
 		utilisateurDto.setEntrepriseDto(entrepriseDto);
 
 		List<UtilisateurRole> lstUsrRole = user.getRoles();
 		List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
 		for (UtilisateurRole utilisateurRole : lstUsrRole) {
 			if (utilisateurRole != null)
-				lstUsrRoleDto.add(DtoTools.convert(utilisateurRole, UtilisateurRoleDto.class));
+				lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 		}
 		utilisateurDto.setRolesDto(lstUsrRoleDto);
 
@@ -162,7 +169,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public UtilisateurDto getName(String name) {
 		Utilisateur user = utilisateurRepository.findByName(name);
 		if (user != null)
-			return DtoTools.convert(user, UtilisateurDto.class);
+			return mapper.UtilisateurToUtilisateurDto(user);
 		return null;
 	}
 
@@ -210,7 +217,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		filesService.createDirectory("utilisateurs/" + user.getId());
 
-		UtilisateurDto result = DtoTools.convert(utilisateurRepository.getOne(user.getId()), UtilisateurDto.class);
+		UtilisateurDto result = mapper.UtilisateurToUtilisateurDto(utilisateurRepository.getOne(user.getId()));
 		
 		return result;
 	}
@@ -226,7 +233,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<Utilisateur> users = utilisateurRepository.findByAdresse(ville);
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
-			res.add(DtoTools.convert(u, UtilisateurDto.class));
+			res.add(mapper.UtilisateurToUtilisateurDto(u));
 		}
 		return res;
 	}
@@ -236,7 +243,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<Utilisateur> users = utilisateurRepository.findByEntreprise(idEntreprise);
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
-			res.add(DtoTools.convert(u, UtilisateurDto.class));
+			res.add(mapper.UtilisateurToUtilisateurDto(u));
 		}
 		return res;
 	}
@@ -275,7 +282,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<Conge> conges = congeRepository.findByIdUtilisateur(id);
 
 		for (Conge c : conges) {
-			result.add(DtoTools.convert(c, CongeDto.class));
+			result.add(mapper.CongeToCongeDto(c));
 		}
 
 		return result;
@@ -283,7 +290,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public AdresseDto getAdresseByIdUtilisateur(long id) {
-		return DtoTools.convert(getUtilisateurById(id).getAdresse(), AdresseDto.class);
+		return mapper.AdresseToAdresseDto(getUtilisateurById(id).getAdresse());
 	}
 
 	// ##################################################
@@ -305,19 +312,19 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<UtilisateurDto> lstUsrDto = new ArrayList<UtilisateurDto>();
 
 		for (Utilisateur utilisateur : lstUsr) {
-			UtilisateurDto utilisateurDto = DtoTools.convert(utilisateur, UtilisateurDto.class);
+			UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
 
-			AdresseDto adresseDto = DtoTools.convert(utilisateur.getAdresse(), AdresseDto.class);
+			AdresseDto adresseDto = mapper.AdresseToAdresseDto(utilisateur.getAdresse());
 			utilisateurDto.setAdresseDto(adresseDto);
 
-			EntrepriseDto entrepriseDto = DtoTools.convert(utilisateur.getEntreprise(), EntrepriseDto.class);
+			EntrepriseDto entrepriseDto = mapper.EntrepriseToEntrepriseDto(utilisateur.getEntreprise());
 			utilisateurDto.setEntrepriseDto(entrepriseDto);
 
 			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
 			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
 			for (UtilisateurRole utilisateurRole : lstUsrRole) {
 				if (utilisateurRole != null)
-					lstUsrRoleDto.add(DtoTools.convert(utilisateurRole, UtilisateurRoleDto.class));
+					lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 			}
 			utilisateurDto.setRolesDto(lstUsrRoleDto);
 
@@ -333,19 +340,19 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Utilisateur utilisateur = getUtilisateurById(id);
 
 		if (utilisateur != null) {
-			UtilisateurDto utilisateurDto = DtoTools.convert(utilisateur, UtilisateurDto.class);
+			UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
 
-			AdresseDto adresseDto = DtoTools.convert(utilisateur.getAdresse(), AdresseDto.class);
+			AdresseDto adresseDto = mapper.AdresseToAdresseDto(utilisateur.getAdresse());
 			utilisateurDto.setAdresseDto(adresseDto);
 
-			EntrepriseDto entrepriseDto = DtoTools.convert(utilisateur.getEntreprise(), EntrepriseDto.class);
+			EntrepriseDto entrepriseDto = mapper.EntrepriseToEntrepriseDto(utilisateur.getEntreprise());
 			utilisateurDto.setEntrepriseDto(entrepriseDto);
 
 			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
 			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
 			for (UtilisateurRole utilisateurRole : lstUsrRole) {
 				if (utilisateurRole != null)
-					lstUsrRoleDto.add(DtoTools.convert(utilisateurRole, UtilisateurRoleDto.class));
+					lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 			}
 			utilisateurDto.setRolesDto(lstUsrRoleDto);
 
@@ -378,8 +385,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<Absence> lstAbs = absenceRepository.findDistinctByEtudiantPromotionsReferentPedagogiqueId(id);
 		List<AbsenceDto> lstAbsDto = new ArrayList<AbsenceDto>();
 		for (Absence abs : lstAbs) {
-			AbsenceDto absDto = DtoTools.convert(abs, AbsenceDto.class);
-			EtudiantDto etuDto = DtoTools.convert(abs.getEtudiant(), EtudiantDto.class);
+			AbsenceDto absDto = mapper.AbsenceToAbsenceDto(abs);
+			EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(abs.getEtudiant());
 			absDto.setEtudiantDto(etuDto);
 			lstAbsDto.add(absDto);
 			return lstAbsDto;
@@ -401,7 +408,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
-			res.add(DtoTools.convert(u, UtilisateurDto.class));
+			res.add(mapper.UtilisateurToUtilisateurDto(u));
 		}
 		return res;
 	}

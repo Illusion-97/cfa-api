@@ -101,35 +101,34 @@ public class InitDataBase {
 	@Test
 	void test() {
 		initDataBase();
-//		deleteDatabase();
+		//deleteDatabase();
 	}
 
 	/*
 	 * PAS A JOURS
 	 */
-	void deleteDatabase() {
-
-		etudiantRepository.deleteById(idEtudiant + 1);
-
-		List<Adresse> adresses = adresseRepository.findAll();
-		adresseRepository.delete(adresses.get(adresses.size() - 1));
-
-		List<GroupeEtudiant> groupes = groupeEtudiantRepository.findAll();
-		groupeEtudiantRepository.delete(groupes.get(groupes.size() - 1));
-
-		List<Intervention> interventions = interventionRepository.findAll();
-		Intervention inter = interventions.get(interventions.size() - 1);
-		inter.setPromotions(null);
-		interventionRepository.delete(inter);
-
-		List<Promotion> promotions = promotionRepository.findAll();
-		promotionRepository.delete(promotions.get(promotions.size() - 1));
-
-		List<Entreprise> entreprises = entrepriseRepository.findAll();
-		entrepriseRepository.delete(entreprises.get(entreprises.size() - 1));
-
-	}
-
+//	void deleteDatabase() {
+//
+//		etudiantRepository.deleteById(idEtudiant + 1);
+//
+//		List<Adresse> adresses = adresseRepository.findAll();
+//		adresseRepository.delete(adresses.get(adresses.size() - 1));
+//
+//		List<GroupeEtudiant> groupes = groupeEtudiantRepository.findAll();
+//		groupeEtudiantRepository.delete(groupes.get(groupes.size() - 1));
+//
+//		List<Intervention> interventions = interventionRepository.findAll();
+//		Intervention inter = interventions.get(interventions.size() - 1);
+//		inter.setPromotions(null);
+//		interventionRepository.delete(inter);
+//
+//		List<Promotion> promotions = promotionRepository.findAll();
+//		promotionRepository.delete(promotions.get(promotions.size() - 1));
+//
+//		List<Entreprise> entreprises = entrepriseRepository.findAll();
+//		entrepriseRepository.delete(entreprises.get(entreprises.size() - 1));
+//
+//	}
 	void initDataBase() {
 
 		UtilisateurRole roleEtudiant = new UtilisateurRole();
@@ -148,6 +147,9 @@ public class InitDataBase {
 		etudiant.setNom("Billon");
 		etudiant.setLogin("tbillon@dawan.fr");
 		etudiant.setPassword("pwd");
+		etudiant.setCivilite("Mr");
+		etudiant.setDateDeNaissance(LocalDate.now());
+		etudiant.setTelephone("06.12.80.45.99");
 
 		LocalDate promoDate = LocalDate.of(2021, 1, 1);
 
@@ -239,13 +241,21 @@ public class InitDataBase {
 		cef.setNom("Baron Gomez");
 		cef.setLogin("lbarongomez@dawan.fr");
 		cef.setPassword("pwd");
+		cef.setCivilite("Mme");
+		cef.setDateDeNaissance(date);
+		cef.setTelephone("06.12.80.45.96");
+		
 
 		// Centre Formation
 		CentreFormation centre = new CentreFormation();
 
 		// CUrsus
-		Cursus cursus = new Cursus();
-		cursus.setTitre("titre cursus");
+		Cursus cursus0 = new Cursus();
+		cursus0.setTitre("titre cursus 0");
+		Cursus cursus1 = new Cursus();
+		cursus1.setTitre("titre cursus 1");
+		Cursus cursus2 = new Cursus();
+		cursus2.setTitre("titre cursus 2");
 
 		// DEvoir
 		Devoir devoir = new Devoir();
@@ -263,6 +273,9 @@ public class InitDataBase {
 		formateur.setNom("Menut");
 		formateur.setLogin("smenut@dawan.fr");
 		formateur.setPassword("pwd");
+		formateur.setCivilite("Mr");
+		formateur.setDateDeNaissance(date);
+		formateur.setTelephone("06.12.80.45.95");
 
 		// PassageExamen
 		PassageExamen passageExamen = new PassageExamen();
@@ -300,7 +313,9 @@ public class InitDataBase {
 		utilisateurRoleRepository.save(roleadmin);
 		utilisateurRoleRepository.save(rolecef);
 		cefRepository.save(cef);
-		cursusRepository.save(cursus);
+		cursusRepository.save(cursus0);
+		cursusRepository.save(cursus1);
+		cursusRepository.save(cursus2);
 		devoirRepository.save(devoir);
 		examenRepository.save(exam);
 		formateurRepository.save(formateur);
@@ -358,7 +373,9 @@ public class InitDataBase {
 		lstDevoir.add(devoir);
 		lstCEF.add(cef);
 		lstCentre.add(centre);
-		lstCursus.add(cursus);
+		lstCursus.add(cursus0);
+		lstCursus.add(cursus1);
+		lstCursus.add(cursus2);
 		lstExamen.add(exam);
 		lstFormateur.add(formateur);
 		lstPassageExamen.add(passageExamen);
@@ -372,7 +389,7 @@ public class InitDataBase {
 		promotion.setEtudiants(lstEtudiant);
 		promotion.setCef(cef);
 		promotion.setCentreFormation(centre);
-		promotion.setCursus(cursus);
+		promotion.setCursus(cursus0);
 		promotion.setReferentPedagogique(formateur);
 		//promotion.setInterventions(lstInterventions);
 
@@ -380,13 +397,13 @@ public class InitDataBase {
 		promotion2.setEtudiants(lstEtudiant);
 		promotion2.setCef(cef);
 		promotion2.setCentreFormation(centre);
-		promotion2.setCursus(cursus);
+		promotion2.setCursus(cursus1);
 		promotion2.setReferentPedagogique(formateur);
 
 		promotion3.setEtudiants(lstEtudiant);
 		promotion3.setCef(cef);
 		promotion3.setCentreFormation(centre);
-		promotion3.setCursus(cursus);
+		promotion3.setCursus(cursus2);
 		promotion3.setReferentPedagogique(formateur);
 		//promotion3.setInterventions(lstInterventions1);
 
@@ -426,7 +443,7 @@ public class InitDataBase {
 
 		intervention.setFormateurs(lstFormateur);
 
-		cursus.setFormations(lstFormation);
+		cursus2.setFormations(lstFormation);
 
 		cef.setCentreFormation(centre);
 		cef.setRoles(lstRoleCef);
@@ -441,15 +458,15 @@ public class InitDataBase {
 		devoir.setIntervention(intervention3);
 		devoir.setIntervention(intervention4);
 
-		exam.setCursus(cursus);
+		exam.setCursus(cursus2);
 		exam.setFormation(formation);
 		
 		passageExamen.setExamen(exam);
 		passageExamen.setIntervention(intervention);
 		
 		note.setEtudiant(etudiant);
-		note.setExamen(passageExamen);
 		note.setDevoir(devoir);
+		note.setExamen(passageExamen);
 
 		formateur.setAdresse(adresse);
 		formateur.setEntreprise(entreprise);
@@ -480,7 +497,9 @@ public class InitDataBase {
 		utilisateurRoleRepository.save(roleadmin);
 		utilisateurRoleRepository.save(rolecef);
 		cefRepository.save(cef);
-		cursusRepository.save(cursus);
+		cursusRepository.save(cursus0);
+		cursusRepository.save(cursus1);
+		cursusRepository.save(cursus2);
 		devoirRepository.save(devoir);
 		examenRepository.save(exam);
 		formateurRepository.save(formateur);

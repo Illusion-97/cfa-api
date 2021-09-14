@@ -15,6 +15,8 @@ import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 
 @Service
@@ -24,13 +26,16 @@ public class AdresseServiceImpl implements AdresseService{
 	@Autowired
 	AdresseRepository adresseRepository;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<AdresseDto> getAllAdresse() {
 		List<Adresse> lst = adresseRepository.findAll();
 		
 		List<AdresseDto> lstDto = new ArrayList<AdresseDto>();
 		for (Adresse a : lst) {
-			lstDto.add(DtoTools.convert(a, AdresseDto.class));
+			lstDto.add(mapper.AdresseToAdresseDto(a));
 		}
 		return lstDto;
 	}
@@ -39,7 +44,7 @@ public class AdresseServiceImpl implements AdresseService{
 	public AdresseDto getById(long id) {
 		Optional<Adresse> adresseOpt = adresseRepository.findById(id);
 		if (adresseOpt.isPresent())
-			return DtoTools.convert(adresseOpt.get(), AdresseDto.class);
+			return mapper.AdresseToAdresseDto(adresseOpt.get());
 		return null;
 	}
 
@@ -50,7 +55,7 @@ public class AdresseServiceImpl implements AdresseService{
 		// conversion vers Dto
 		List<AdresseDto> lstDto = new ArrayList<AdresseDto>();
 		for (Adresse a : lst) {
-			AdresseDto aDto = DtoTools.convert(a, AdresseDto.class);
+			AdresseDto aDto =mapper.AdresseToAdresseDto(a);
 			lstDto.add(aDto);
 		}
 		return lstDto;
@@ -62,7 +67,7 @@ public class AdresseServiceImpl implements AdresseService{
 
 		a= adresseRepository.saveAndFlush(a);
 
-		return DtoTools.convert(a, AdresseDto.class);
+		return mapper.AdresseToAdresseDto(a);
 	}
 
 	@Override
@@ -82,7 +87,7 @@ public class AdresseServiceImpl implements AdresseService{
 		List<Adresse> adresses = adresseRepository.findAllByRueContainingOrVilleContaining(search, search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<AdresseDto> res = new ArrayList<AdresseDto>();
 		for (Adresse a : adresses) {
-			res.add(DtoTools.convert(a, AdresseDto.class));
+			res.add(mapper.AdresseToAdresseDto(a));
 		}
 		return res;
 	}

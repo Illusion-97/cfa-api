@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.CEF;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
 
 @Service
@@ -23,13 +25,16 @@ public class CEFServiceImpl implements CEFService {
 	@Autowired
 	CEFRepository cefRepository;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<CEFDto> getAllCef() {
 		List<CEF> lst = cefRepository.findAll();
 
 		List<CEFDto> lstDto = new ArrayList<CEFDto>();
 		for (CEF c : lst) {
-			lstDto.add(DtoTools.convert(c, CEFDto.class));
+			lstDto.add(mapper.CEFToCEFDto(c));
 		}
 		return lstDto;
 	}
@@ -41,7 +46,7 @@ public class CEFServiceImpl implements CEFService {
 		// conversion vers Dto
 		List<CEFDto> lstDto = new ArrayList<CEFDto>();
 		for (CEF c : lst) {
-			lstDto.add(DtoTools.convert(c, CEFDto.class));
+			lstDto.add(mapper.CEFToCEFDto(c));
 		}
 		return lstDto;
 	}
@@ -50,7 +55,7 @@ public class CEFServiceImpl implements CEFService {
 	public CEFDto getById(long id) {
 		Optional<CEF> c = cefRepository.findById(id);
 		if (c.isPresent())
-			return DtoTools.convert(c.get(), CEFDto.class);
+			return mapper.CEFToCEFDto(c.get());
 
 		return null;
 	}
@@ -61,7 +66,7 @@ public class CEFServiceImpl implements CEFService {
 
 		c = cefRepository.saveAndFlush(c);
 
-		return DtoTools.convert(c, CEFDto.class);
+		return mapper.CEFToCEFDto(c);
 	}
 
 	@Override

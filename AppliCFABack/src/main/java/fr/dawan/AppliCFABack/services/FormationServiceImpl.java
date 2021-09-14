@@ -19,6 +19,8 @@ import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.FormationRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 
@@ -31,20 +33,23 @@ public class FormationServiceImpl implements FormationService {
 	@Autowired
 	InterventionRepository interventionRepository;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<FormationDto> getAllFormation() {
 		List<Formation> lst = formationRepository.findAll();
 
 		List<FormationDto> lstDto = new ArrayList<FormationDto>();
 		for (Formation f : lst) {
-			FormationDto formationDto = DtoTools.convert(f, FormationDto.class);
+			FormationDto formationDto = mapper.FormationToFormationDto(f);
 
 			List<Cursus> lstCursus = f.getCursusLst();
 			List<CursusDto> lstCursusDto = new ArrayList<CursusDto>();
 
 			for (Cursus cursus : lstCursus) {
 				if (cursus != null)
-					lstCursusDto.add(DtoTools.convert(cursus, CursusDto.class));
+					lstCursusDto.add(mapper.CursusToCursusDto(cursus));
 			}
 
 			formationDto.setCursusLstDto(lstCursusDto);
@@ -63,10 +68,10 @@ public class FormationServiceImpl implements FormationService {
 		// conversion vers Dto
 		List<FormationDto> lstDto = new ArrayList<FormationDto>();
 		for (Formation c : lst) {
-			FormationDto cDto = DtoTools.convert(c, FormationDto.class);
+			FormationDto cDto = mapper.FormationToFormationDto(c);
 			List<CursusDto> cursusLstDto = new ArrayList<CursusDto>();
 			for (Cursus cursus : c.getCursusLst()) {
-				cursusLstDto.add(DtoTools.convert(cursus, CursusDto.class));
+				cursusLstDto.add(mapper.CursusToCursusDto(cursus));
 			}
 			cDto.setCursusLstDto(cursusLstDto);
 			lstDto.add(cDto);
@@ -84,13 +89,13 @@ public class FormationServiceImpl implements FormationService {
 	public FormationDto getById(long id) {
 		Optional<Formation> f = formationRepository.findById(id);
 		if (f.isPresent()) {
-			FormationDto formationDto = DtoTools.convert(f.get(), FormationDto.class);
+			FormationDto formationDto = mapper.FormationToFormationDto(f.get());
 			List<Cursus> lstCursus = f.get().getCursusLst();
 			List<CursusDto> lstCursusDto = new ArrayList<CursusDto>();
 
 			for (Cursus cursus : lstCursus) {
 				if (cursus != null)
-					lstCursusDto.add(DtoTools.convert(cursus, CursusDto.class));
+					lstCursusDto.add(mapper.CursusToCursusDto(cursus));
 			}
 
 			formationDto.setCursusLstDto(lstCursusDto);
@@ -106,11 +111,15 @@ public class FormationServiceImpl implements FormationService {
 
 		f = formationRepository.saveAndFlush(f);
 
-		return DtoTools.convert(f, FormationDto.class);
+		return mapper.FormationToFormationDto(f);
 	}
 
 	@Override
 	public void deleteById(long id) {
+		List<Intervention> lstInt = interventionRepository.findAllByFormationId(id);
+		for (Intervention intervention : lstInt) {
+			intervention.setFormation(null);
+		}
 		formationRepository.deleteById(id);
 
 	}
@@ -122,7 +131,7 @@ public class FormationServiceImpl implements FormationService {
 		List<InterventionDto> lstIntDto = new ArrayList<InterventionDto>();
 		for (Intervention itv : lstInt) {
 			if (itv != null)
-				lstIntDto.add(DtoTools.convert(itv, InterventionDto.class));
+				lstIntDto.add(mapper.InterventionToInterventionDto(itv));
 		}
 		return lstIntDto;
 	}

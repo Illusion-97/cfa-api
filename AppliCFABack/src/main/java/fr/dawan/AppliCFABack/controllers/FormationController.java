@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.FormationService;
 import fr.dawan.AppliCFABack.services.PromotionService;
 
@@ -31,9 +33,12 @@ public class FormationController {
 
 	@Autowired
 	FormationService formationService;
-	
+
 	@Autowired
 	PromotionService promotionService;
+	
+	@Autowired
+	CursusService cursusService;
 
 	// ##################################################
 	// # GET #
@@ -65,6 +70,12 @@ public class FormationController {
 			return formationService.getAllByPage(page, size, "");
 	}
 
+	@GetMapping(value = "/{id}/interventions", produces = "application/json")
+	public List<InterventionDto> findAllInterventionByFormationId(@PathVariable("id") long id) {
+
+		return formationService.findAllByFormationId(id);
+	}
+
 	@GetMapping(value = "/count", produces = "application/json")
 	public CountDto count() {
 		return formationService.count("");
@@ -72,14 +83,15 @@ public class FormationController {
 
 	@GetMapping(value = "/count/{search}", produces = "application/json")
 	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
-		if(search.isPresent())
+		if (search.isPresent())
 			return formationService.count(search.get());
 		else
 			return formationService.count("");
-		}
+	}
+
 	@GetMapping(value = "/getFormationByPromoId/{id}", produces = "application/json")
-	public List<FormationDto> getFormationByEtudidantId(@PathVariable(value = "id") long id){
-		
+	public List<FormationDto> getFormationByEtudidantId(@PathVariable(value = "id") long id) {
+
 		PromotionDto promotion = promotionService.getById(id);
 		List<InterventionDto> lstintervention = promotion.getInterventionsDto();
 		List<FormationDto> lstFormation = new ArrayList<FormationDto>();
@@ -87,9 +99,21 @@ public class FormationController {
 			lstFormation.add(i.getFormationDto());
 		}
 		return lstFormation;
-		
-	}
 
+	}
+	
+	@GetMapping(value = "/getFormationByCursusId/{id}", produces = "application/json")
+	public List<FormationDto> getFormationByCursusId(@PathVariable(value = "id") long id) {
+
+		CursusDto cDto = cursusService.getById(id);
+		List<FormationDto> lstFormation = new ArrayList<FormationDto>();
+
+		for (FormationDto formationDto : cDto.getFormationsDto()) {
+			lstFormation.add(formationDto);
+		}
+		return lstFormation;
+
+	}
 
 	// ##################################################
 	// # POST #

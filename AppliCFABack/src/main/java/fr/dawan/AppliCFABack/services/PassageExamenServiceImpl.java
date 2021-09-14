@@ -13,11 +13,10 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.ExamenDto;
-import fr.dawan.AppliCFABack.dto.FormationDto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.PassageExamenRepository;
 
 @Service
@@ -27,13 +26,16 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 	@Autowired
 	PassageExamenRepository passageExamenRepository;
 
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+
 	@Override
 	public List<PassageExamenDto> getAllPassageExamen() {
 		List<PassageExamen> lst = passageExamenRepository.findAll();
 
 		List<PassageExamenDto> lstDto = new ArrayList<PassageExamenDto>();
 		for (PassageExamen pe : lst) {
-			lstDto.add(DtoTools.convert(pe, PassageExamenDto.class));
+			lstDto.add(mapper.PassageExamenToPassageExamenDto(pe));
 		}
 		return lstDto;
 	}
@@ -45,10 +47,10 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		// conversion vers Dto
 		List<PassageExamenDto> lstDto = new ArrayList<PassageExamenDto>();
 		for (PassageExamen p : lst) {
-			PassageExamenDto pDto = DtoTools.convert(p, PassageExamenDto.class);
-			pDto.setExamenDto(DtoTools.convert(p.getExamen(), ExamenDto.class));
-			pDto.setInterventionDto(DtoTools.convert(p.getIntervention(), InterventionDto.class));
-			pDto.getInterventionDto().setFormationDto(DtoTools.convert(p.getIntervention().getFormation(), FormationDto.class));
+			PassageExamenDto pDto = mapper.PassageExamenToPassageExamenDto(p);
+			pDto.setExamenDto(mapper.ExamenToExamenDto(p.getExamen()));
+			pDto.setInterventionDto(mapper.InterventionToInterventionDto(p.getIntervention()));
+			pDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(p.getIntervention().getFormation()));
 			lstDto.add(pDto);
 		}
 		return lstDto;
@@ -65,10 +67,10 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		if (!pe.isPresent())
 			return null;
 		
-		PassageExamenDto pDto =  DtoTools.convert(pe.get(), PassageExamenDto.class);
-		pDto.setExamenDto(DtoTools.convert(pe.get().getExamen(), ExamenDto.class));
-		pDto.setInterventionDto(DtoTools.convert(pe.get().getIntervention(), InterventionDto.class));
-		pDto.getInterventionDto().setFormationDto(DtoTools.convert(pe.get().getIntervention().getFormation(), FormationDto.class));
+		PassageExamenDto pDto =  mapper.PassageExamenToPassageExamenDto(pe.get());
+		pDto.setExamenDto(mapper.ExamenToExamenDto(pe.get().getExamen()));
+		pDto.setInterventionDto(mapper.InterventionToInterventionDto(pe.get().getIntervention()));
+		pDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(pe.get().getExamen().getFormation()));
 		
 		return pDto;
 	}
@@ -79,7 +81,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 
 		pe = passageExamenRepository.saveAndFlush(pe);
 
-		return DtoTools.convert(pe, PassageExamenDto.class);
+		return mapper.PassageExamenToPassageExamenDto(pe);
 	}
 
 	@Override
