@@ -39,34 +39,30 @@ import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 @Service
 @Transactional
 public class UtilisateurServiceImpl implements UtilisateurService {
+
 	@Autowired
-	private UtilisateurRepository utilisateurRepository;
-	
+	UtilisateurRepository utilisateurRepository;
 	@Autowired
 	UtilisateurRoleRepository utilisateurRoleRepository;
-
 	@Autowired
 	AdresseRepository adresseRepository;
-	
 	@Autowired
 	EntrepriseRepository entrepriseRepository;
-	
-	@Autowired
-	EtudiantService etudiantService;
-
 	@Autowired
 	CongeRepository congeRepository;
-
-	@Autowired
-	FilesService filesService;
-
-
 	@Autowired
 	AbsenceRepository absenceRepository;
-	
+
+	@Autowired
+	EtudiantService etudiantService;
+	@Autowired
+	FilesService filesService;
+	@Autowired
+	FormateurService formateurService;
+
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
-	
+
 	@Override
 	public List<UtilisateurDto> getAll() {
 		List<Utilisateur> users = utilisateurRepository.findAll();
@@ -90,23 +86,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public List<UtilisateurDto> getAllUtilisateurs(int page, int size, String search) {
 
 		List<Utilisateur> users = utilisateurRepository
-				.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(search,
-						search, search, search, search, PageRequest.of(page, size))
+				.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(
+						search, search, search, search, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
-		
+
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
 			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(u);
 			uDto.setAdresseDto(mapper.AdresseToAdresseDto(u.getAdresse()));
 			uDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(u.getEntreprise()));
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
-			for(UtilisateurRole ur : u.getRoles()) {
+			for (UtilisateurRole ur : u.getRoles()) {
 				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
 			}
 			uDto.setRolesDto(utilisateurRoleDto);
-			
+
 			res.add(uDto);
-			
+
 		}
 		return res;
 	}
@@ -114,8 +110,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(utilisateurRepository
-				.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(search,
-						search, search, search, search));
+				.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(
+						search, search, search, search, search));
 	}
 
 	@Override
@@ -128,15 +124,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			uDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(userOpt.get().getEntreprise().getAdresseSiege()));
 
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
-			for(UtilisateurRole ur : userOpt.get().getRoles()) {
+			for (UtilisateurRole ur : userOpt.get().getRoles()) {
 				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
 			}
 			uDto.setRolesDto(utilisateurRoleDto);
-			
+
 			return uDto;
 		}
-			
-			
+
 		return null;
 	}
 
@@ -165,6 +160,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return utilisateurDto;
 	}
+
 	@Override
 	public UtilisateurDto getName(String name) {
 		Utilisateur user = utilisateurRepository.findByName(name);
@@ -175,27 +171,27 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public UtilisateurDto insertUpdate(UtilisateurDto uDto) throws Exception {
-		
-		//refus d'insertion :
-		//Si uDto n'est pas déjà en base (getId() == 0) => creation
-		//Si un utilisateur a la même adresse mail => throw Exception
-		if(uDto.getId() == 0 && findByEmail(uDto.getLogin()) != null) {
+
+		// refus d'insertion :
+		// Si uDto n'est pas déjà en base (getId() == 0) => creation
+		// Si un utilisateur a la même adresse mail => throw Exception
+		if (uDto.getId() == 0 && findByEmail(uDto.getLogin()) != null) {
 			throw new Exception("Un utilisateur utilise déjà cette adresse mail");
 		}
-		
+
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
-		
-		//On save l'addresse avant de save l'utilisateur
-		if(uDto.getAdresseDto() != null) {
+
+		// On save l'addresse avant de save l'utilisateur
+		if (uDto.getAdresseDto() != null) {
 			Adresse adresse = DtoTools.convert(uDto.getAdresseDto(), Adresse.class);
 			adresseRepository.saveAndFlush(adresse);
-			
+
 			Adresse adresseRepop = adresseRepository.getOne(adresse.getId());
 			user.setAdresse(adresseRepop);
-		}		
-		
-		//On save l'entreprise avant de save l'utilisateur
-		if(uDto.getEntrepriseDto() != null) {
+		}
+
+		// On save l'entreprise avant de save l'utilisateur
+		if (uDto.getEntrepriseDto() != null) {
 			Entreprise entreprise = DtoTools.convert(uDto.getEntrepriseDto(), Entreprise.class);
 			entrepriseRepository.saveAndFlush(entreprise);
 						
@@ -207,18 +203,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				Adresse adresseEntrepriseRepo = adresseRepository.getOne(adresseEntreprise.getId());
 				entreprise.setAdresseSiege(adresseEntrepriseRepo);
 			}	
-			
 			Entreprise entrepriseRepo = entrepriseRepository.getOne(entreprise.getId());
 			user.setEntreprise(entrepriseRepo);
 		}
-		
-		
+
 		utilisateurRepository.saveAndFlush(user);
 
 		filesService.createDirectory("utilisateurs/" + user.getId());
 
 		UtilisateurDto result = mapper.UtilisateurToUtilisateurDto(utilisateurRepository.getOne(user.getId()));
-		
+
 		return result;
 	}
 
@@ -263,6 +257,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(id));
 				break;
 			case "FORMATEUR":
+				result.addAll(formateurService.getAllJourneePlanningByIdFormateur(id));
 				break;
 			case "ADMIN":
 				break;
@@ -366,20 +361,20 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public List<UtilisateurDto> findByRole(long idRole) {
 		List<UtilisateurDto> res = getAll();
 		List<UtilisateurDto> resfinal = new ArrayList<UtilisateurDto>();
-		
+
 		for (UtilisateurDto u : res) {
 			List<UtilisateurRoleDto> userRole = u.getRolesDto();
-			
+
 			for (UtilisateurRoleDto ur : userRole) {
 				if (ur.getId() == idRole) {
 					resfinal.add(u);
 				}
-			}			
+			}
 		}
-		
+
 		return resfinal;
 	}
-	
+
 	@Override
 	public List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long id) {
 		List<Absence> lstAbs = absenceRepository.findDistinctByEtudiantPromotionsReferentPedagogiqueId(id);
@@ -400,12 +395,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public List<UtilisateurDto> findAllByRoleByPage(int page, int size,String role, String search) {
+	public List<UtilisateurDto> findAllByRoleByPage(int page, int size, String role, String search) {
 		List<Utilisateur> users = utilisateurRepository
 				.findAllByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
 						role, search, role, search, role, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
-				
+
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
 			res.add(mapper.UtilisateurToUtilisateurDto(u));

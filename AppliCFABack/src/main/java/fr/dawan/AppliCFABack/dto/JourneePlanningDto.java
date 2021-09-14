@@ -4,20 +4,28 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class JourneePlanningDto {
-
+	private long idIntervention;
 	private LocalDate date;
 	private FormationDto formationDto;
 	private List<FormateurDto> formateurDto;
-	
+
 	public JourneePlanningDto() {
 		super();
-	}	
-	
+	}
+
 	public JourneePlanningDto(LocalDate date, FormationDto formationDto, List<FormateurDto> formateurDto) {
 		super();
 		this.date = date;
 		this.formationDto = formationDto;
 		this.formateurDto = formateurDto;
+	}
+
+	public long getIdIntervention() {
+		return idIntervention;
+	}
+
+	public void setIdIntervention(long idIntervention) {
+		this.idIntervention = idIntervention;
 	}
 
 	public LocalDate getDate() {
@@ -43,6 +51,5 @@ public class JourneePlanningDto {
 	public void setFormateurDto(List<FormateurDto> formateurDto) {
 		this.formateurDto = formateurDto;
 	}
-	
-	
+
 }

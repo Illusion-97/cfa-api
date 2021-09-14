@@ -27,6 +27,7 @@ public interface InterventionRepository extends JpaRepository<Intervention, Long
 
 	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++ **/
 	Page<Intervention> findAllByFormateursId(long id, Pageable p); // Interventions du formateur
+	List<Intervention> findAllByFormateursId(long id); // Interventions du formateur
 
 	// Interventions du formateur + recherche par mot clé
 	Page<Intervention> findByFormateursIdAndFormationTitreContainingAllIgnoreCase(long id, String titre, Pageable p);

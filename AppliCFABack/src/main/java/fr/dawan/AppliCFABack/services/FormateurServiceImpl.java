@@ -16,6 +16,7 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
@@ -26,11 +27,13 @@ import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 @Service
 @Transactional
 public class FormateurServiceImpl implements FormateurService {
+	
 	@Autowired
-	private FormateurRepository formateurRepository;
+	FormateurRepository formateurRepository;
 	@Autowired
 	InterventionRepository interventionRepository;
-
+	@Autowired
+	JourneePlanningService journeePlanningService;
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
@@ -223,5 +226,16 @@ public class FormateurServiceImpl implements FormateurService {
 		return new CountDto(interventionRepository.countByFormateursId(id));
 	}
 
+	@Override
+	public List<JourneePlanningDto> getAllJourneePlanningByIdFormateur(long id) {
+		List<JourneePlanningDto> journeeDto = new ArrayList<JourneePlanningDto>();
+		List<Intervention> interventions = new ArrayList<Intervention>();
+
+		interventions.addAll(interventionRepository.findAllByFormateursId(id));
+		for (Intervention i : interventions)
+			journeeDto.addAll(journeePlanningService.getJourneePlanningFromIntervention(i));
+
+		return journeeDto;
+	}
 
 }
