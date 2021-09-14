@@ -9,6 +9,8 @@ public interface DossierProjetService {
 	List<DossierProjetDto> getAll();
 
 	DossierProjetDto getById(long id);
+	
+	DossierProjetDto getByName(String nom);
 
 	List<DossierProjetDto> getAllByPage(int page, int size, String string);
 

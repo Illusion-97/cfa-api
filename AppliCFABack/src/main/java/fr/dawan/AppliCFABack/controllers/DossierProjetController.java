@@ -57,6 +57,10 @@ public class DossierProjetController {
 	
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public DossierProjetDto save(@RequestBody DossierProjetDto dpDto) {
+		DossierProjetDto dpDto1 = dossierProService.getByName(dpDto.getNom());
+		if (dpDto1!= null) {
+			return null;
+		}
 		return dossierProService.saveOrUpdate(dpDto);
 	}
 	

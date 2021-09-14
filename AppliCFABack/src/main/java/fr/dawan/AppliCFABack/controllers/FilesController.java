@@ -38,6 +38,15 @@ public class FilesController {
 		
 		return fileService.getAllNamesByDirectory(directory + "/" + id);	
 	}
+	@GetMapping(value = "/{directory}/{id}/directory2}", produces = "application/json")
+	public String[] getAllNamesByDirectoryAndIdAndDirectory(@PathVariable("directory") String directory,@PathVariable("directory2") String directory2,
+			@PathVariable("id") long id) {
+
+		if (!directory.equals("promotions") && !directory.equals("utilisateurs") && !directory.equals("projets"))
+			return null;
+		
+		return fileService.getAllNamesByDirectory(directory + "/" + id +"/"+directory2);	
+	}
 
 	@GetMapping(value = "/{directory}/{id}/{fileName}")
 	public ResponseEntity<ByteArrayResource> getFileByDirectoryAndId(HttpServletResponse resonse,
@@ -51,7 +60,20 @@ public class FilesController {
 		
 		return fileService.getFile(workingDirectory, fileName);	
 
+	}@GetMapping(value = "/{directory}/{id}/{directory2}/{fileName}")
+	public ResponseEntity<ByteArrayResource> getFileByDirectoryAndIdAndDirectory(HttpServletResponse resonse,
+			@PathVariable("directory") String directory,@PathVariable("directory2") String directory2, @PathVariable("id") long id,
+			@PathVariable("fileName") String fileName) {
+
+		if (!directory.equals("promotions") && !directory.equals("utilisateurs") && !directory.equals("projets"))
+			return null;
+
+		String workingDirectory = directory + "/" + id + "/" + directory2 + "/";
+		
+		return fileService.getFile(workingDirectory, fileName);	
+
 	}
+	
 
 	@PostMapping(value = "/{directory}/{id}", consumes = "multipart/form-data")
 	public String postFileByDirectoryAndId(@PathVariable("directory") String directory, @PathVariable("id") long id,
