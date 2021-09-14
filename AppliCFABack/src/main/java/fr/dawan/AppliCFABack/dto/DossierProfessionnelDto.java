@@ -7,7 +7,7 @@ public class DossierProfessionnelDto {
 
 	private String nom;
 	
-	private CursusDto cursus;
+	private CursusDto cursusDto;
 	
 	public DossierProfessionnelDto() {
 		// TODO Auto-generated constructor stub
@@ -32,11 +32,11 @@ public class DossierProfessionnelDto {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public CursusDto getCursus() {
-		return cursus;
+	public CursusDto getCursusDto() {
+		return cursusDto;
 	}
-	public void setCursus(CursusDto cursus) {
-		this.cursus = cursus;
+	public void setCursusDto(CursusDto cursusDto) {
+		this.cursusDto = cursusDto;
 	}
 	
 

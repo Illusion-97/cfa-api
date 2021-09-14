@@ -35,7 +35,9 @@ public class FichePosteServiceImpl implements FichePosteService{
 		
 		List<FichePosteDto> lstDto = new ArrayList<FichePosteDto>();
 		for (FichePoste n : lst) {
-			lstDto.add(mapper.FichePosteToFichePosteDto(n));
+			FichePosteDto fDto =mapper.FichePosteToFichePosteDto(n);
+			fDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.getEtudiant()));
+			lstDto.add(fDto);
 		}
 		return lstDto;
 	}
@@ -62,8 +64,9 @@ public class FichePosteServiceImpl implements FichePosteService{
 	public FichePosteDto getById(long id) {
 		Optional<FichePoste> e = fichePosteRepository.findById(id);
 		if (e.isPresent()) {
+			
 			FichePosteDto fDto = mapper.FichePosteToFichePosteDto(e.get());
-						
+			fDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(e.get().getEtudiant()));			
 			return fDto;
 		}			
 
@@ -83,6 +86,18 @@ public class FichePosteServiceImpl implements FichePosteService{
 	public void deleteById(long id) {
 		fichePosteRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public FichePosteDto getByIdEtudiant(long id) {
+		List<FichePosteDto> lst = getAllFichePoste();
+		FichePosteDto f = new FichePosteDto();
+		for (FichePosteDto fichePosteDto : lst) {
+			if(fichePosteDto.getEtudiantDto().getId() == id) {
+				f = fichePosteDto;
+			}
+		}
+		return f;
 	}
 
 }

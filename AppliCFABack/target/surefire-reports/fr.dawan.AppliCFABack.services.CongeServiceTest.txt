@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: fr.dawan.AppliCFABack.services.CongeServiceTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.049 s <<< FAILURE! - in fr.dawan.AppliCFABack.services.CongeServiceTest
-testGetAcquisDisponiblesRestantsByIdUtilisateur  Time elapsed: 0.011 s  <<< ERROR!
-java.lang.NullPointerException
-	at fr.dawan.AppliCFABack.services.CongeServiceTest.testGetAcquisDisponiblesRestantsByIdUtilisateur(CongeServiceTest.java:74)
-

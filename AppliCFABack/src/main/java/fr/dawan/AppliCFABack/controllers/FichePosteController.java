@@ -69,6 +69,12 @@ public class FichePosteController {
 		else
 			return fichePosteService.count("");
 	}
+    
+    @GetMapping(value = "/etudiant/{id}", produces = "application/json")
+	public FichePosteDto getByIdEtudiant(@PathVariable("id") long id) {
+		return fichePosteService.getByIdEtudiant(id);
+	}
+    
 
 
 	// ##################################################

@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -16,20 +17,26 @@ public class FichePoste {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(nullable = false, length = 255)
+	@Column(nullable = true, length = 255)
 	private String intitule;
 	
-	@Column(nullable = false, length = 255)
+	@Column(nullable = true, length = 255)
 	private String nature;
 	
-	@Column(nullable = false, length = 255)
+	@Column(nullable = true, length = 255)
 	private String mission;
 	
-	@Column(nullable = false, length = 255)
+	@Column(nullable = true, length = 255)
 	private String compositionService;
 	
-	@Column(nullable = false, length = 255)
+	@Column(nullable = true, length = 255)
 	private String positionnement;
+	
+	@Column(nullable = true, length = 255)
+	private String missionPrincipale;
+	
+	@OneToOne
+	private Etudiant etudiant;
 
 	public FichePoste() {
 		super();
@@ -82,6 +89,25 @@ public class FichePoste {
 	public void setPositionnement(String positionnement) {
 		this.positionnement = positionnement;
 	}
+	
+
+	public String getMissionPrincipale() {
+		return missionPrincipale;
+	}
+
+	public void setMissionPrincipale(String missionPrincipale) {
+		this.missionPrincipale = missionPrincipale;
+	}
+
+	public Etudiant getEtudiant() {
+		return etudiant;
+	}
+
+	public void setEtudiant(Etudiant etudiant) {
+		this.etudiant = etudiant;
+	}
+	
+	
 	
 	
 

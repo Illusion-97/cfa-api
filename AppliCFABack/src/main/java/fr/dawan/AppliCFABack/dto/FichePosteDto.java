@@ -8,6 +8,8 @@ public class FichePosteDto {
 	private String mission;
 	private String compositionService;
 	private String positionnement;
+	private String missionPrincipale;
+	private EtudiantDto EtudiantDto;
 	
 	public FichePosteDto() {
 		super();
@@ -60,8 +62,22 @@ public class FichePosteDto {
 	public void setPositionnement(String positionnement) {
 		this.positionnement = positionnement;
 	}
-	
-	
+
+	public String getMissionPrincipale() {
+		return missionPrincipale;
+	}
+
+	public void setMissionPrincipale(String missionPrincipale) {
+		this.missionPrincipale = missionPrincipale;
+	}
+
+	public EtudiantDto getEtudiantDto() {
+		return EtudiantDto;
+	}
+
+	public void setEtudiantDto(EtudiantDto etudiantDto) {
+		EtudiantDto = etudiantDto;
+	}
 	
 
 }

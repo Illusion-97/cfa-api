@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
@@ -77,6 +76,12 @@ public class CursusController {
 			lstCursusMostRecent.add(lstCursus.get(i));
 		}
 		return lstCursusMostRecent;
+	}
+	@GetMapping(value = "/CurrentCursus/{id}",produces = "application/json")
+	public CursusDto getCurrentCursusByIdEtudiant(@PathVariable("id") long id) {
+		List<CursusDto> lstCursusDto = getByIdEtudiant(id);
+		CursusDto cdto = lstCursusDto.get(0);
+		return cdto;
 	}
 
 		

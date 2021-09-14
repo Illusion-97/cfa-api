@@ -64,6 +64,18 @@ public class FilesController {
 		else
 			return "KO";
 	}
+	@PostMapping(value = "/{directory}/{id}/{directory2}", consumes = "multipart/form-data")
+	public String postFileByDirectoryAndIdAndDirectory(@PathVariable("directory") String directory,@PathVariable("directory2") String directory2, @PathVariable("id") long id,
+			@RequestParam("file") MultipartFile file) {
+
+		String filePath = directory + "/" + id + "/" + directory2 + "/";
+		fileService.createDirectory(filePath);
+		
+		if(fileService.postFile(filePath, file))
+			return "OK";
+		else
+			return "KO";
+	}
 
 	@DeleteMapping(value = "/{directory}/{id}/{fileName}")
 	public String deleteFileByDirectoryAndId(@PathVariable("directory") String directory, @PathVariable("id") long id,
