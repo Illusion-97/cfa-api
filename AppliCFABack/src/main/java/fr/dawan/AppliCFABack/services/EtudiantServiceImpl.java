@@ -452,7 +452,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		List<Promotion> promotions = e.getPromotions();
 
-		int size = promotions.size();
+//		int size = promotions.size();
 
 		for (Promotion p : promotions)
 			interventions.addAll(interventionRepository.getInterventionsByIdPromotion(p.getId()));

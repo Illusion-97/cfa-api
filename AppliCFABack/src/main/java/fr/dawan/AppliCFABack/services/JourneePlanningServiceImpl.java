@@ -40,7 +40,7 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 				FormationDto fDto = mapper.FormationToFormationDto(f);
 				
 				JourneePlanningDto journee = new JourneePlanningDto(compteur, fDto, formateurs);
-				
+								
 				result.add(journee);
 			}
 				
