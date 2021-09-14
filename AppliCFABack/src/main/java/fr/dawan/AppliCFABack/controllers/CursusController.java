@@ -78,6 +78,12 @@ public class CursusController {
 		}
 		return lstCursusMostRecent;
 	}
+	@GetMapping(value = "/CurrentCursus/{id}",produces = "application/json")
+	public CursusDto getCurrentCursusByIdEtudiant(@PathVariable("id") long id) {
+		List<CursusDto> lstCursusDto = getByIdEtudiant(id);
+		CursusDto cdto = lstCursusDto.get(0);
+		return cdto;
+	}
 
 		
 	@GetMapping(value = "/count", produces = "application/json")

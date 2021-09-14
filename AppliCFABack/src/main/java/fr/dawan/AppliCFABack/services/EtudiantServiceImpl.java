@@ -19,6 +19,8 @@ import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
@@ -30,6 +32,8 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Devoir;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
@@ -112,6 +116,22 @@ public class EtudiantServiceImpl implements EtudiantService {
 				if (promotion != null)
 					lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
 			}
+			List<DossierProjet> lstDossierProjet = e.getDossierProjet();
+			List<DossierProjetDto> lstDossierProjetDto = new ArrayList<DossierProjetDto>();
+			for (DossierProjet dp : lstDossierProjet) {
+				DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
+				dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
+				lstDossierProjetDto.add(dpdto);
+		
+			}
+			List<DossierProfessionnel>lstDossierProfessionnel = e.getDossierProfessionnel();
+			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
+			for(DossierProfessionnel dp : lstDossierProfessionnel) {
+				DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
+				dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
+				lstDossierProfessionnelDto.add(dpDto);
+			}
+				
 
 			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 
@@ -120,6 +140,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 			etuDto.setEntrepriseDto(entDto);
 			etuDto.setPromotionsDto(lstPromoDto);
 			etuDto.setFormateurReferentDto(refDto);
+			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
+			etuDto.setDossierProjet(lstDossierProjetDto);
 
 			res.add(etuDto);
 		}
@@ -181,7 +203,24 @@ public class EtudiantServiceImpl implements EtudiantService {
 			promotions.add(pDto);
 		}
 		eDto.setPromotionsDto(promotions);
-
+		List<DossierProjet> lstDossierProjet = e.get().getDossierProjet();
+		List<DossierProjetDto> lstDossierProjetDto = new ArrayList<DossierProjetDto>();
+		for (DossierProjet dp : lstDossierProjet) {
+			DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
+			dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
+			lstDossierProjetDto.add(dpdto);
+		}
+		List<DossierProfessionnel>lstDossierProfessionnel = e.get().getDossierProfessionnel();
+		List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
+		for(DossierProfessionnel dp : lstDossierProfessionnel) {
+			DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
+			dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
+			lstDossierProfessionnelDto.add(dpDto);
+		}
+		eDto.setDossierProfessionnel(lstDossierProfessionnelDto);
+		eDto.setDossierProjet(lstDossierProjetDto);
+		
+		
 		return eDto;
 	}
 
@@ -501,6 +540,22 @@ public class EtudiantServiceImpl implements EtudiantService {
 				if (promotion != null)
 					lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
 			}
+			List<DossierProjet> lstDossierProjet = e.getDossierProjet();
+			List<DossierProjetDto> lstDossierProjetDto = new ArrayList<DossierProjetDto>();
+			for (DossierProjet dp : lstDossierProjet) {
+				DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
+				dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
+				lstDossierProjetDto.add(dpdto);
+		
+			}
+			List<DossierProfessionnel>lstDossierProfessionnel = e.getDossierProfessionnel();
+			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
+			for(DossierProfessionnel dp : lstDossierProfessionnel) {
+				DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
+				dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
+				lstDossierProfessionnelDto.add(dpDto);
+			}
+			
 
 			etuDto.setAdresseDto(addrDto);
 			etuDto.setGroupesDto(lstGrpEtuDto);
@@ -508,6 +563,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 			etuDto.setPromotionsDto(lstPromoDto);
 			etuDto.setFormateurReferentDto(refDto);
 			etuDto.setManagerDto(managDto);
+			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
+			etuDto.setDossierProjet(lstDossierProjetDto);
 			res.add(etuDto);
 		}
 

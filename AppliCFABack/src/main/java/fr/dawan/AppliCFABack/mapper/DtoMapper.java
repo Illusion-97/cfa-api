@@ -117,6 +117,7 @@ public interface DtoMapper {
 	@Mapping(source = ".", target = ".")
 	FichePosteDto FichePosteToFichePosteDto(FichePoste fichePoste);
 
+	@Mapping(source = ".", target = ".")
 	DossierProfessionnelDto DossierProfessionnelToDossierProfessionnelDto(DossierProfessionnel dossierProfessionnel);
 
 	@Mapping(source = ".", target = ".")

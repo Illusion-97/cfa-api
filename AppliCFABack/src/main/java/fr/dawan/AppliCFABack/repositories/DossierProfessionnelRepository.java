@@ -11,5 +11,8 @@ import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 public interface DossierProfessionnelRepository extends JpaRepository<DossierProfessionnel, Long>{
 
 	Page<DossierProfessionnel> findByNomContaining(String string, PageRequest of);
+	
+//	@Query("SELECT dp FROM DossierProfessionnel dp WHERE dp.etudiant.id = :id")
+//	List<DossierProfessionnel> findByIdEtudiant(long id);
 
 }

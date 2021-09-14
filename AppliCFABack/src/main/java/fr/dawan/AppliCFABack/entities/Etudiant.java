@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Etudiant extends Utilisateur {
@@ -19,16 +20,24 @@ public class Etudiant extends Utilisateur {
 	
 	@ManyToOne
 	private Utilisateur manager;
+	
+	@OneToMany
+	private List<DossierProfessionnel> dossierProfessionnel;
+	
+	@OneToMany
+	private List<DossierProjet> dossierProjet;
 
 
 	public Etudiant() {
 		super();
 	}
 
-	public Etudiant(List<Promotion> promotions, List<GroupeEtudiant> groupes) {
+	public Etudiant(List<Promotion> promotions, List<GroupeEtudiant> groupes,List<DossierProjet> dossierProjet, List<DossierProfessionnel> dossierProfessionnel) {
 		super();
 		this.promotions = promotions;
 		this.groupes = groupes;
+		this.dossierProfessionnel=dossierProfessionnel;
+		this.dossierProjet=dossierProjet;
 	}
 
 	public List<Promotion> getPromotions() {
@@ -61,6 +70,22 @@ public class Etudiant extends Utilisateur {
 
 	public void setManager(Utilisateur manager) {
 		this.manager = manager;
+	}
+
+	public List<DossierProfessionnel> getDossierProfessionnel() {
+		return dossierProfessionnel;
+	}
+
+	public void setDossierProfessionnel(List<DossierProfessionnel> dossierProfessionnel) {
+		this.dossierProfessionnel = dossierProfessionnel;
+	}
+
+	public List<DossierProjet> getDossierProjet() {
+		return dossierProjet;
+	}
+
+	public void setDossierProjet(List<DossierProjet> dossierProjet) {
+		this.dossierProjet = dossierProjet;
 	}
 	
 

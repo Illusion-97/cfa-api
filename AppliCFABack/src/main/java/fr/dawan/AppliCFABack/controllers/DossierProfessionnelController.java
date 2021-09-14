@@ -17,38 +17,40 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CursusDto;
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.services.DossierProfessionnelService;
 import fr.dawan.AppliCFABack.services.DossierProjetService;
 
 @RestController
-@RequestMapping("/AppliCFABack/dossierProjet")
-public class DossierProjetController {
+@RequestMapping("/AppliCFABack/dossierProfessionnel")
+public class DossierProfessionnelController {
 
 	@Autowired
-	DossierProjetService dossierProService;
+	DossierProfessionnelService dossierProService;
 
 	@GetMapping(produces = "application/json")
-	public List<DossierProjetDto> getAll() {
+	public List<DossierProfessionnelDto> getAll() {
 		return dossierProService.getAll();
 	}
 	
 	@GetMapping(value = "/{id}",produces = "application/json")
-	public DossierProjetDto getById(@PathVariable("id") long id) {
+	public DossierProfessionnelDto getById(@PathVariable("id") long id) {
 		return dossierProService.getById(id);
 	}
 	@GetMapping(value = "/etudiant/{id}",produces = "application/json")
-	public List<DossierProjetDto> getByIdEtudiant(@PathVariable("id") long id) {
+	public List<DossierProfessionnelDto> getByIdEtudiant(@PathVariable("id") long id) {
 		return dossierProService.getByIdEtudiant(id);
 	}
 	
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
-	public @ResponseBody List<DossierProjetDto> getAllByPage(@PathVariable("page") int page,
+	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		return dossierProService.getAllByPage(page, size, "");
 	}
 	
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
- 	public @ResponseBody List<DossierProjetDto> getAllByPage(@PathVariable("page") int page,
+ 	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
  			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
  		if(search.isPresent())
  			return dossierProService.getAllByPage(page, size, search.get());
@@ -57,7 +59,7 @@ public class DossierProjetController {
  	}
 	
 	@PostMapping(consumes = "application/json", produces = "application/json")
-	public DossierProjetDto save(@RequestBody DossierProjetDto dpDto) {
+	public DossierProfessionnelDto save(@RequestBody DossierProfessionnelDto dpDto) {
 		return dossierProService.saveOrUpdate(dpDto);
 	}
 	
@@ -75,7 +77,7 @@ public class DossierProjetController {
 	
 	
 	@PutMapping(consumes = "application/json", produces = "application/json")
-	public DossierProjetDto update(@RequestBody DossierProjetDto dpDto) {
+	public DossierProfessionnelDto update(@RequestBody DossierProfessionnelDto dpDto) {
 		return dossierProService.saveOrUpdate(dpDto);
 	}
 }

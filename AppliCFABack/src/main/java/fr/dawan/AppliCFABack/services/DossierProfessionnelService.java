@@ -14,5 +14,7 @@ public interface DossierProfessionnelService {
 	DossierProfessionnelDto saveOrUpdate(DossierProfessionnelDto dpDto);
 
 	void deleteById(long id);
+	
+	public List<DossierProfessionnelDto> getByIdEtudiant(long id);
 
 }

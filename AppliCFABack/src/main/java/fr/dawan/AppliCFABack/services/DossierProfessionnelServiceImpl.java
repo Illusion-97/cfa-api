@@ -12,10 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
-import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
-import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
@@ -37,7 +36,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 				
 				for (DossierProfessionnel dp : lstDossierProfessionnel) {
 					DossierProfessionnelDto dpDto =mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-					dpDto.setCursus(mapper.CursusToCursusDto(dp.getCursus()));
+					dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
 					lstDossierProfessionnelDto.add(dpDto);
 					
 				}
@@ -50,7 +49,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 				Optional<DossierProfessionnel> dp = dossierProRepo.findById(id);
 				if(dp.isPresent()) {
 					DossierProfessionnelDto dpDto =mapper.DossierProfessionnelToDossierProfessionnelDto(dp.get());
-					dpDto.setCursus(mapper.CursusToCursusDto(dp.get().getCursus()));
+					dpDto.setCursusDto(mapper.CursusToCursusDto(dp.get().getCursus()));
 					return dpDto;
 				}
 				return null;
@@ -67,7 +66,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 		List<DossierProfessionnelDto> lstDto = new ArrayList<DossierProfessionnelDto>();
 		for (DossierProfessionnel dp : lst) {
 			DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-			dpDto.setCursus(mapper.CursusToCursusDto(dp.getCursus()));
+			dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
 			
 			lstDto.add(dpDto);
 		}
@@ -77,6 +76,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 	@Override
 	public DossierProfessionnelDto saveOrUpdate(DossierProfessionnelDto dpDto) {
 		DossierProfessionnel d = DtoTools.convert(dpDto, DossierProfessionnel.class);
+		d.setCursus(DtoTools.convert(dpDto.getCursusDto(), Cursus.class));
 		dossierProRepo.saveAndFlush(d);
 		return mapper.DossierProfessionnelToDossierProfessionnelDto(d);
 	}
@@ -87,6 +87,11 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
 		dossierProRepo.deleteById(id);
 		
+	}
+	@Override
+	public List<DossierProfessionnelDto> getByIdEtudiant(long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
