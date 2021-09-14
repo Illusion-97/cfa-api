@@ -76,6 +76,10 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		}
 		return lstDto;
 	}
+	@Override
+	public DossierProjetDto getByName(String nom) {
+		return mapper.DossierProjetToDossierProjetDto(dossierProRepo.getByName(nom));
+	}
 
 	@Override
 	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) {

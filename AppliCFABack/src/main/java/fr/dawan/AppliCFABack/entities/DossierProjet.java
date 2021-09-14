@@ -20,11 +20,6 @@ public class DossierProjet {
 	@OneToOne
 	private Projet projet;
 	
-	public DossierProjet(String nom,Projet projet) {
-		this.nom=nom;
-		this.projet = projet;
-	}
-	
 	public long getId() {
 		return id;
 	}
