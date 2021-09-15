@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -96,17 +97,9 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 	@Override
 	public List<DossierProjetDto> getByIdEtudiant(long id) {
-		// TODO Auto-generated method stub
-//		List<DossierProjet> lstDp =dossierProRepo.findByIdEtudiant(id);
-//		List<DossierProjetDto> lstdpDto = new ArrayList<DossierProjetDto>();
-//		for (DossierProjet dp : lstDp) {
-//			DossierProjetDto dpDto = mapper.DossierProjetToDossierProjetDto(dp);
-//			dpDto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
-//			lstdpDto.add(dpDto);
-//			
-//		}
-//		return lstdpDto;
-		return null;
+
+		EtudiantDto e = etudiantService.getById(id);
+		return e.getDossierProjet();
 	}
 
 }
