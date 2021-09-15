@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 
 @Service
 @Transactional
@@ -25,6 +27,8 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 	
 	@Autowired
 	DossierProfessionnelRepository dossierProRepo;
+	@Autowired
+	EtudiantService etudiantService;
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
@@ -91,7 +95,9 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 	@Override
 	public List<DossierProfessionnelDto> getByIdEtudiant(long id) {
 		// TODO Auto-generated method stub
-		return null;
+		EtudiantDto e = etudiantService.getById(id);
+		
+		return e.getDossierProfessionnel();
 	}
 
 }

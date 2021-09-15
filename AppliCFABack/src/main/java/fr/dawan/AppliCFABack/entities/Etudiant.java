@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -21,7 +22,7 @@ public class Etudiant extends Utilisateur {
 	@ManyToOne
 	private Utilisateur manager;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<DossierProfessionnel> dossierProfessionnel;
 	
 	@OneToMany
