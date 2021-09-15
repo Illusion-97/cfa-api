@@ -30,6 +30,7 @@ import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
@@ -39,6 +40,7 @@ import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
@@ -124,6 +126,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 				lstDossierProjetDto.add(dpdto);
 		
 			}
+			List<UtilisateurRoleDto> URDto = new ArrayList<UtilisateurRoleDto>();
+			for (UtilisateurRole r : e.getRoles()) {
+				URDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
+			}
+			etuDto.setRolesDto(URDto);
+			
 			List<DossierProfessionnel>lstDossierProfessionnel = e.getDossierProfessionnel();
 			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
 			for(DossierProfessionnel dp : lstDossierProfessionnel) {
@@ -190,6 +198,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 			groupes.add(mapper.GroupeEtudiantToGroupEtudiantDto(g));
 		}		
 		eDto.setGroupesDto(groupes);
+		
+		List<UtilisateurRoleDto> URDto = new ArrayList<UtilisateurRoleDto>();
+		for (UtilisateurRole r : e.get().getRoles()) {
+			URDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
+		}
+		eDto.setRolesDto(URDto);
 		
 		List<PromotionDto> promotions = new ArrayList<PromotionDto>();
 		for(Promotion p : e.get().getPromotions()) {
