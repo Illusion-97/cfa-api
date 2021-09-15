@@ -50,4 +50,6 @@ public interface UtilisateurService {
 
 	CountDto countEtudiantPromotionsReferentPedagogiqueId(long id);
 
+	Boolean isReferent(long id);
+
 }

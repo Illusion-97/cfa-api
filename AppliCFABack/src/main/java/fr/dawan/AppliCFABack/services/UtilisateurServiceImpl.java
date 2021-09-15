@@ -294,11 +294,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	private Utilisateur getUtilisateurById(long id) {
 		Optional<Utilisateur> e = utilisateurRepository.findById(id);
-
+				
 		if (e.isPresent())
 			return e.get();
 
 		return null;
+		
+//		Utilisateur e = utilisateurRepository.getOne(id);
+//
+//		return e;
 	}
 
 	@Override
