@@ -25,7 +25,7 @@ public class Etudiant extends Utilisateur {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<DossierProfessionnel> dossierProfessionnel;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<DossierProjet> dossierProjet;
 
 
