@@ -17,4 +17,6 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long>{
 	Page<Promotion> findAllByNomContainingAllIgnoreCase(String nom, Pageable pageable );
 	
 	List<Promotion> findAllByInterventionsId(long id);
+
+	List<Promotion> findAllByReferentPedagogiqueId(long id);
 }

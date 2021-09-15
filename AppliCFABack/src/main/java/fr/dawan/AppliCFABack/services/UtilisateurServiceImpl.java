@@ -25,6 +25,7 @@ import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Entreprise;
+import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
@@ -33,6 +34,7 @@ import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
 import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 
@@ -52,6 +54,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	CongeRepository congeRepository;
 	@Autowired
 	AbsenceRepository absenceRepository;
+	@Autowired
+	PromotionRepository promotionRespository;
 
 	@Autowired
 	EtudiantService etudiantService;
@@ -411,6 +415,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return new CountDto(utilisateurRepository
 				.countByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
 						role, search, role, search, role, search));
+	}
+
+	@Override
+	public Boolean isReferent(long id) {
+		List<Promotion> result = promotionRespository.findAllByReferentPedagogiqueId(id);
+		
+		if(result.size() != 0) return true;
+		else return false;
 	}
 
 }
