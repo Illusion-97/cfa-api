@@ -70,13 +70,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		for (Utilisateur u : users) {
 
-			List<UtilisateurRoleDto> test = new ArrayList<UtilisateurRoleDto>();
+			List<UtilisateurRoleDto> role = new ArrayList<UtilisateurRoleDto>();
 			for (UtilisateurRole r : u.getRoles()) {
-				test.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
+				role.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
 			}
 
 			UtilisateurDto user = mapper.UtilisateurToUtilisateurDto(u);
-			user.setRolesDto(test);
+			user.setRolesDto(role);
 			res.add(user);
 		}
 		return res;
@@ -252,17 +252,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		for (UtilisateurRole role : userOpt.get().getRoles()) {
 			switch (role.getIntitule()) {
 			case "ETUDIANT":
-			default:
 				result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(id));
 				break;
 			case "FORMATEUR":
 				result.addAll(formateurService.getAllJourneePlanningByIdFormateur(id));
 				break;
-			case "ADMIN":
-				break;
-			case "CEF":
-				break;
-
 			}
 		}
 
