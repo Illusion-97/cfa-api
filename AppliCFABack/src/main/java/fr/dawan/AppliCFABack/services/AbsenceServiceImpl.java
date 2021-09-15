@@ -19,6 +19,7 @@ import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 
 @Service
 @Transactional
@@ -27,6 +28,9 @@ public class AbsenceServiceImpl implements AbsenceService {
 	@Autowired
 	AbsenceRepository absenceRepository;
 
+	@Autowired
+	EtudiantRepository etudiantRepository;
+	
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
@@ -106,7 +110,11 @@ public class AbsenceServiceImpl implements AbsenceService {
 		List<AbsenceDto> result = new ArrayList<AbsenceDto>();
 		List<Absence> list = absenceRepository.findAllByEtudiantId(id);
 		for(Absence a : list) {
-			result.add(mapper.AbsenceToAbsenceDto(a));
+			AbsenceDto absence = mapper.AbsenceToAbsenceDto(a);
+//			a.setEtudiant(etudiantRepository.getOne(id));
+			absence.setEtudiantDto(mapper.EtudiantToEtudiantDto(etudiantRepository.getOne(id)));
+//			result.add(mapper.AbsenceToAbsenceDto(a));
+			result.add(absence);
 		}
 		return result;
 	}

@@ -153,4 +153,9 @@ public class UtilisateurController {
 	public AdresseDto getAdresseByIdUtilisateur(@PathVariable("id") long id) {
 		return utilisateurService.getAdresseByIdUtilisateur(id);
 	}
+	
+	@GetMapping(value = "/{id}/isReferent", produces = "application/json")
+	public Boolean isReferent(@PathVariable("id") long id) {
+		return utilisateurService.isReferent(id);
+	}
 }
