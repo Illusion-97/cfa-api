@@ -121,6 +121,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(userOpt.get());
 			uDto.setAdresseDto(mapper.AdresseToAdresseDto(userOpt.get().getAdresse()));
 			uDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(userOpt.get().getEntreprise()));
+			uDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(userOpt.get().getEntreprise().getAdresseSiege()));
+
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
 			for (UtilisateurRole ur : userOpt.get().getRoles()) {
 				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
@@ -192,16 +194,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		if (uDto.getEntrepriseDto() != null) {
 			Entreprise entreprise = DtoTools.convert(uDto.getEntrepriseDto(), Entreprise.class);
 			entrepriseRepository.saveAndFlush(entreprise);
-
-			// On save l'adresse avant de save l'entreprise
-			if (uDto.getEntrepriseDto().getAdresseSiegeDto() != null) {
-				Adresse adresse = DtoTools.convert(uDto.getEntrepriseDto().getAdresseSiegeDto(), Adresse.class);
-				adresseRepository.saveAndFlush(adresse);
-
-				Adresse adresseRepo = adresseRepository.getOne(adresse.getId());
-				entreprise.setAdresseSiege(adresseRepo);
-			}
-
+						
+			//On save l'adresse avant de save l'entreprise
+			if(uDto.getEntrepriseDto().getAdresseSiegeDto() != null) {
+				Adresse adresseEntreprise = DtoTools.convert(uDto.getEntrepriseDto().getAdresseSiegeDto(), Adresse.class);
+				adresseRepository.saveAndFlush(adresseEntreprise);
+				
+				Adresse adresseEntrepriseRepo = adresseRepository.getOne(adresseEntreprise.getId());
+				entreprise.setAdresseSiege(adresseEntrepriseRepo);
+			}	
 			Entreprise entrepriseRepo = entrepriseRepository.getOne(entreprise.getId());
 			user.setEntreprise(entrepriseRepo);
 		}
@@ -293,11 +294,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	private Utilisateur getUtilisateurById(long id) {
 		Optional<Utilisateur> e = utilisateurRepository.findById(id);
-
+				
 		if (e.isPresent())
 			return e.get();
 
 		return null;
+		
+//		Utilisateur e = utilisateurRepository.getOne(id);
+//
+//		return e;
 	}
 
 	@Override
