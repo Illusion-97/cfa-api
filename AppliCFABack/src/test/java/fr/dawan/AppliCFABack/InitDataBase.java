@@ -31,6 +31,7 @@ import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.TypeConge;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
@@ -50,13 +51,17 @@ import fr.dawan.AppliCFABack.repositories.NoteRepository;
 import fr.dawan.AppliCFABack.repositories.PassageExamenRepository;
 import fr.dawan.AppliCFABack.repositories.ProjetRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
+import fr.dawan.AppliCFABack.tools.HashTools;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
 public class InitDataBase {
 
+	@Autowired
+	private UtilisateurRepository utilisateurRepository;
 	@Autowired
 	private EtudiantRepository etudiantRepository;
 	@Autowired
@@ -135,12 +140,21 @@ public class InitDataBase {
 		roleEtudiant.setIntitule("ETUDIANT");
 		UtilisateurRole roleformateur = new UtilisateurRole();
 		roleformateur.setIntitule("FORMATEUR");
-		UtilisateurRole roleadmin = new UtilisateurRole();
-		roleadmin.setIntitule("ADMIN");
+		UtilisateurRole roleAdmin = new UtilisateurRole();
+		roleAdmin.setIntitule("ADMIN");
 		UtilisateurRole rolecef = new UtilisateurRole();
 		rolecef.setIntitule("CEF");
-		UtilisateurRole roleRef = new UtilisateurRole();
-		roleRef.setIntitule("REFERENT");
+//		UtilisateurRole roleRef = new UtilisateurRole();
+//		roleRef.setIntitule("REFERENT");
+		
+		Utilisateur admin = new Etudiant();
+		admin.setPrenom("Mohamed");
+		admin.setNom("Derkaoui");
+		admin.setLogin("admin@dawan.fr");
+		admin.setPassword("pwd");
+		admin.setCivilite("Mr");
+		admin.setDateDeNaissance(LocalDate.now());
+		admin.setTelephone("06.12.80.45.99");
 		
 		Etudiant etudiant = new Etudiant();
 		etudiant.setPrenom("Tanguy");
@@ -239,7 +253,7 @@ public class InitDataBase {
 		CEF cef = new CEF();
 		cef.setPrenom("Laurence");
 		cef.setNom("Baron Gomez");
-		cef.setLogin("lbarongomez@dawan.fr");
+		cef.setLogin("cef@dawan.fr");
 		cef.setPassword("pwd");
 		cef.setCivilite("Mme");
 		cef.setDateDeNaissance(date);
@@ -271,7 +285,7 @@ public class InitDataBase {
 		Formateur formateur = new Formateur();
 		formateur.setPrenom("Stéphane");
 		formateur.setNom("Menut");
-		formateur.setLogin("smenut@dawan.fr");
+		formateur.setLogin("formateur@dawan.fr");
 		formateur.setPassword("pwd");
 		formateur.setCivilite("Mr");
 		formateur.setDateDeNaissance(date);
@@ -293,7 +307,17 @@ public class InitDataBase {
 		conge.setDateFin(LocalDate.now().plusDays(14));
 		conge.setMotif("Covid-19");
 		conge.setType(TypeConge.MALADIE);
+		
+		try {
+			admin.setPassword(HashTools.hashSHA512(admin.getPassword()));
+			etudiant.setPassword(HashTools.hashSHA512(etudiant.getPassword()));
+			cef.setPassword(HashTools.hashSHA512(cef.getPassword()));
+			formateur.setPassword(HashTools.hashSHA512(formateur.getPassword()));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}		
 
+		utilisateurRepository.save(admin);
 		etudiantRepository.save(etudiant);
 		groupeEtudiantRepository.save(groupe);
 		promotionRepository.save(promotion);
@@ -310,7 +334,7 @@ public class InitDataBase {
 		interventionRepository.save(intervention4);
 		utilisateurRoleRepository.save(roleEtudiant);
 		utilisateurRoleRepository.save(roleformateur);
-		utilisateurRoleRepository.save(roleadmin);
+		utilisateurRoleRepository.save(roleAdmin);
 		utilisateurRoleRepository.save(rolecef);
 		cefRepository.save(cef);
 		cursusRepository.save(cursus0);
@@ -332,6 +356,7 @@ public class InitDataBase {
 		List<Promotion> lstPromotion = new ArrayList<Promotion>();
 		List<Promotion> lstPromotion1 = new ArrayList<Promotion>();
 		List<GroupeEtudiant> lstGroupe = new ArrayList<GroupeEtudiant>();
+		List<UtilisateurRole> lstRoleAdmin = new ArrayList<UtilisateurRole>();
 		List<UtilisateurRole> lstRoleEtudiant = new ArrayList<UtilisateurRole>();
 		List<UtilisateurRole> lstRoleFormateur = new ArrayList<UtilisateurRole>();
 		List<UtilisateurRole> lstRoleCef = new ArrayList<UtilisateurRole>();
@@ -355,6 +380,7 @@ public class InitDataBase {
 		lstPromotion.add(promotion3);
 		lstPromotion1.add(promotion);
 		lstGroupe.add(groupe);
+		lstRoleAdmin.add(roleAdmin);
 		lstRoleEtudiant.add(roleEtudiant);
 		lstRoleFormateur.add(roleformateur);
 		lstRoleCef.add(rolecef);
@@ -388,7 +414,7 @@ public class InitDataBase {
 
 		promotion.setEtudiants(lstEtudiant);
 		promotion.setCef(cef);
-		promotion.setCentreFormation(centre);
+		promotion.setCentreFormation(centre); 
 		promotion.setCursus(cursus0);
 		promotion.setReferentPedagogique(formateur);
 		//promotion.setInterventions(lstInterventions);
@@ -445,6 +471,8 @@ public class InitDataBase {
 
 		cursus2.setFormations(lstFormation);
 
+		admin.setRoles(lstRoleAdmin);
+		
 		cef.setCentreFormation(centre);
 		cef.setRoles(lstRoleCef);
 		cef.setAdresse(adresse);
@@ -479,6 +507,7 @@ public class InitDataBase {
 
 		conge.setUtilisateur(etudiant);
 
+		utilisateurRepository.save(admin);
 		etudiantRepository.save(etudiant);
 		groupeEtudiantRepository.save(groupe);
 		promotionRepository.save(promotion);
@@ -494,7 +523,7 @@ public class InitDataBase {
 		interventionRepository.save(intervention4);
 		utilisateurRoleRepository.save(roleEtudiant);
 		utilisateurRoleRepository.save(roleformateur);
-		utilisateurRoleRepository.save(roleadmin);
+		utilisateurRoleRepository.save(roleAdmin);
 		utilisateurRoleRepository.save(rolecef);
 		cefRepository.save(cef);
 		cursusRepository.save(cursus0);

@@ -37,6 +37,7 @@ import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
+import fr.dawan.AppliCFABack.tools.HashTools;
 
 @Service
 @Transactional
@@ -182,8 +183,26 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		if (uDto.getId() == 0 && findByEmail(uDto.getLogin()) != null) {
 			throw new Exception("Un utilisateur utilise déjà cette adresse mail");
 		}
-
+		
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
+		
+		//HashTools throw Exception
+		try {
+			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+			if(user.getId() == 0) {
+				user.setPassword(HashTools.hashSHA512(user.getPassword()));
+			}else {
+				//Si on a modifié le mdp
+				Utilisateur userInDB = utilisateurRepository.getOne(user.getId());
+				if(!userInDB.getPassword().equals(user.getPassword())) {
+	                user.setPassword(HashTools.hashSHA512(user.getPassword()));
+	            }
+			}	
+		}catch (Exception e) {
+            e.printStackTrace();
+        }
+
+			
 
 		// On save l'addresse avant de save l'utilisateur
 		if (uDto.getAdresseDto() != null) {
