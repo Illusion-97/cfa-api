@@ -233,6 +233,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		utilisateurRepository.saveAndFlush(user);
 
 		filesService.createDirectory("utilisateurs/" + user.getId());
+		filesService.createDirectory("utilisateurs/" + user.getId() + "/DossierProfessionnel");
+		filesService.createDirectory("utilisateurs/" + user.getId() + "/DossierProjet");
 
 		UtilisateurDto result = mapper.UtilisateurToUtilisateurDto(utilisateurRepository.getOne(user.getId()));
 

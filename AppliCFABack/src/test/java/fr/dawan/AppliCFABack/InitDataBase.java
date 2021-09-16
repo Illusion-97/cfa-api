@@ -319,6 +319,9 @@ public class InitDataBase {
 
 		utilisateurRepository.save(admin);
 		etudiantRepository.save(etudiant);
+		cefRepository.save(cef);
+		formateurRepository.save(formateur);
+		
 		groupeEtudiantRepository.save(groupe);
 		promotionRepository.save(promotion);
 		promotionRepository.save(promotion2);
@@ -335,14 +338,12 @@ public class InitDataBase {
 		utilisateurRoleRepository.save(roleEtudiant);
 		utilisateurRoleRepository.save(roleformateur);
 		utilisateurRoleRepository.save(roleAdmin);
-		utilisateurRoleRepository.save(rolecef);
-		cefRepository.save(cef);
+		utilisateurRoleRepository.save(rolecef);		
 		cursusRepository.save(cursus0);
 		cursusRepository.save(cursus1);
 		cursusRepository.save(cursus2);
 		devoirRepository.save(devoir);
 		examenRepository.save(exam);
-		formateurRepository.save(formateur);
 		formationRepository.save(formation);
 		formationRepository.save(formation2);
 		formationRepository.save(formation3);
