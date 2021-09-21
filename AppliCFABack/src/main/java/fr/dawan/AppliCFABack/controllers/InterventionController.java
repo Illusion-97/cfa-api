@@ -23,6 +23,7 @@ import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.FilesService;
 import fr.dawan.AppliCFABack.services.InterventionService;
 
 @RestController
@@ -33,6 +34,8 @@ public class InterventionController {
 	InterventionService interventionService;
 	@Autowired
 	EtudiantService etudiantService;
+	@Autowired
+	FilesService filesService;
 
 	// ##################################################
 	// # GET #
@@ -140,6 +143,12 @@ public class InterventionController {
 	@GetMapping(value = "/{id}/formateurs", produces = "application/json")
 	public List<FormateurDto> findAllFormateursByInterventionId(@PathVariable("id") long id) {
 		return interventionService.findFormateursByInterventionsId(id);
+	}
+	
+	@GetMapping(value = "/{id}/supports", produces = "application/json")
+	public String[] findAllSupportByInterventionId(@PathVariable("id") long id) {
+		String path = "";
+		return filesService.getAllNamesByDirectory(path);
 	}
 
 }
