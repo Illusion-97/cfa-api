@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +25,9 @@ import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.FilesService;
 import fr.dawan.AppliCFABack.services.InterventionService;
+import org.springframework.core.io.ByteArrayResource;
 
 @RestController
 @RequestMapping("/AppliCFABack/interventions")
@@ -33,6 +37,8 @@ public class InterventionController {
 	InterventionService interventionService;
 	@Autowired
 	EtudiantService etudiantService;
+	@Autowired
+	FilesService filesService;
 
 	// ##################################################
 	// # GET #
@@ -87,6 +93,26 @@ public class InterventionController {
 		else
 			return interventionService.count("");
 	}
+	
+	@GetMapping(value = "/{id}/etudiants-promotion", produces = "application/json")
+	public List<EtudiantDto> findAllByPromotionInterventionsId(@PathVariable("id") long id) {
+		return interventionService.findAllByPromotionInterventionsId(id);
+	}
+
+	@GetMapping(value = "/{id}/promotions", produces = "application/json")
+	public List<PromotionDto> findAllPromotionsByInterventionId(@PathVariable("id") long id) {
+		return interventionService.findPromotionsByInterventionId(id);
+	}
+
+	@GetMapping(value = "/{id}/devoirs", produces = "application/json")
+	public List<DevoirDto> findAllDevoirsByInterventionId(@PathVariable("id") long id) {
+		return interventionService.findDevoirsByInterventionId(id);
+	}
+
+	@GetMapping(value = "/{id}/formateurs", produces = "application/json")
+	public List<FormateurDto> findAllFormateursByInterventionId(@PathVariable("id") long id) {
+		return interventionService.findFormateursByInterventionsId(id);
+	}
 
 	// ##################################################
 	// # POST #
@@ -121,25 +147,10 @@ public class InterventionController {
 	public InterventionDto update(@RequestBody InterventionDto iDto) {
 		return interventionService.saveOrUpdate(iDto);
 	}
-
-	@GetMapping(value = "/{id}/etudiants-promotion", produces = "application/json")
-	public List<EtudiantDto> findAllByPromotionInterventionsId(@PathVariable("id") long id) {
-		return interventionService.findAllByPromotionInterventionsId(id);
+	
+	@GetMapping(value = "/{id}/supports", produces = "application/json")
+	public String[] findAllSupportByInterventionId(@PathVariable("id") long id) {
+		String path = "interventions/" + id;
+		return filesService.getAllNamesByDirectory(path);
 	}
-
-	@GetMapping(value = "/{id}/promotions", produces = "application/json")
-	public List<PromotionDto> findAllPromotionsByInterventionId(@PathVariable("id") long id) {
-		return interventionService.findPromotionsByInterventionId(id);
-	}
-
-	@GetMapping(value = "/{id}/devoirs", produces = "application/json")
-	public List<DevoirDto> findAllDevoirsByInterventionId(@PathVariable("id") long id) {
-		return interventionService.findDevoirsByInterventionId(id);
-	}
-
-	@GetMapping(value = "/{id}/formateurs", produces = "application/json")
-	public List<FormateurDto> findAllFormateursByInterventionId(@PathVariable("id") long id) {
-		return interventionService.findFormateursByInterventionsId(id);
-	}
-
 }
