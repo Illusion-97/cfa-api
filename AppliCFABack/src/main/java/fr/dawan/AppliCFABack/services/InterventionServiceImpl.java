@@ -55,6 +55,8 @@ public class InterventionServiceImpl implements InterventionService {
 	DevoirRepository devoirRepository;
 	@Autowired
 	PassageExamenRepository passageExamenRepository;
+	@Autowired
+	FilesService filesService;
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
@@ -175,6 +177,8 @@ public class InterventionServiceImpl implements InterventionService {
 		Intervention i = DtoTools.convert(iDto, Intervention.class);
 
 		i = interventionRepository.saveAndFlush(i);
+		
+		filesService.createDirectory("interventions/" + i.getId());
 
 		return mapper.InterventionToInterventionDto(i);
 	}
@@ -193,6 +197,7 @@ public class InterventionServiceImpl implements InterventionService {
 			passExam.setIntervention(null);
 		// Une fois les liaisions enlevées on peux supprimer l'intervention
 		interventionRepository.deleteById(id);
+		filesService.deleteDirectoryWithContent("interventions/" + id);
 	}
 
 	@Override
