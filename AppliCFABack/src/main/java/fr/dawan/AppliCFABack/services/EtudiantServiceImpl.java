@@ -40,6 +40,7 @@ import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -52,6 +53,7 @@ import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.repositories.NoteRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.tools.HashTools;
 
 @Service
 @Transactional
@@ -240,7 +242,25 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Override
 	public EtudiantDto saveOrUpdate(EtudiantDto e) {
-		Etudiant etudiant = etudiantRepository.saveAndFlush(DtoTools.convert(e, Etudiant.class));
+		Etudiant etudiant = DtoTools.convert(e, Etudiant.class);
+		
+		//HashTools throw Exception
+		try {
+			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+			if(etudiant.getId() == 0) {
+				etudiant.setPassword(HashTools.hashSHA512(etudiant.getPassword()));
+			}else {
+				//Si on a modifié le mdp
+				Etudiant etudiantInDB = etudiantRepository.getOne(etudiant.getId());
+				if(!etudiantInDB.getPassword().equals(etudiant.getPassword())) {
+					etudiant.setPassword(HashTools.hashSHA512(etudiant.getPassword()));
+	            }
+			}	
+		}catch (Exception ex) {
+            ex.printStackTrace();
+        }
+		
+		etudiant = etudiantRepository.saveAndFlush(etudiant);
 
 		Path path = Paths.get("./src/main/resources/files/utilisateurs/" + etudiant.getId());
 

@@ -36,27 +36,6 @@ import fr.dawan.AppliCFABack.entities.TypeConge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
-import fr.dawan.AppliCFABack.repositories.AdresseRepository;
-import fr.dawan.AppliCFABack.repositories.CEFRepository;
-import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
-import fr.dawan.AppliCFABack.repositories.CongeRepository;
-import fr.dawan.AppliCFABack.repositories.CursusRepository;
-import fr.dawan.AppliCFABack.repositories.DevoirRepository;
-import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
-import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.ExamenRepository;
-import fr.dawan.AppliCFABack.repositories.FormateurRepository;
-import fr.dawan.AppliCFABack.repositories.FormationRepository;
-import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.InterventionRepository;
-import fr.dawan.AppliCFABack.repositories.NoteRepository;
-import fr.dawan.AppliCFABack.repositories.PassageExamenRepository;
-import fr.dawan.AppliCFABack.repositories.ProjetRepository;
-import fr.dawan.AppliCFABack.repositories.PromotionRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 import fr.dawan.AppliCFABack.services.AbsenceService;
 import fr.dawan.AppliCFABack.services.AdresseService;
 import fr.dawan.AppliCFABack.services.CEFService;
@@ -172,7 +151,7 @@ public class InitDataBase {
 //		UtilisateurRole roleRef = new UtilisateurRole();
 //		roleRef.setIntitule("REFERENT");
 		
-		Utilisateur admin = new Etudiant();
+		Utilisateur admin = new Utilisateur();
 		admin.setPrenom("Mohamed");
 		admin.setNom("Derkaoui");
 		admin.setLogin("admin@dawan.fr");
@@ -333,18 +312,10 @@ public class InitDataBase {
 		conge.setMotif("Covid-19");
 		conge.setType(TypeConge.MALADIE);
 		conge.setStatus(StatusConge.CONFIRME);
+				
+		System.out.println("0 admin id : " + admin.getId());
+		System.out.println("0 admin pwd : " + admin.getPassword());
 		
-		try {
-			admin.setPassword(HashTools.hashSHA512(admin.getPassword()));
-			etudiant.setPassword(HashTools.hashSHA512(etudiant.getPassword()));
-			cef.setPassword(HashTools.hashSHA512(cef.getPassword()));
-			formateur.setPassword(HashTools.hashSHA512(formateur.getPassword()));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}		
-		
-		mapper.UtilisateurToUtilisateurDto(admin);
-
 		admin = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(admin)), Utilisateur.class);
 		etudiant = DtoTools.convert(etudiantService.saveOrUpdate(mapper.EtudiantToEtudiantDto(etudiant)), Etudiant.class);
 		cef = DtoTools.convert(cefService.saveOrUpdate(mapper.CEFToCEFDto(cef)), CEF.class);
@@ -535,40 +506,47 @@ public class InitDataBase {
 
 		conge.setUtilisateur(etudiant);
 		
-		utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(admin));	//ATTENTION
-		etudiantService.saveOrUpdate(mapper.EtudiantToEtudiantDto(etudiant));
-		cefService.saveOrUpdate(mapper.CEFToCEFDto(cef));
-		formateurService.saveOrUpdate(mapper.FormateurToFormateurDto(formateur));		
-		groupeEtudiantService.saveOrUpdate(mapper.GroupeEtudiantToGroupEtudiantDto(groupe)); //ATTENTION
-		promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion));
-		promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion2));
-		promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion3));
-		noteService.saveOrUpdate(mapper.NoteToNoteDto(note));
-		entrepriseService.saveOrUpdate(mapper.EntrepriseToEntrepriseDto(entreprise));
-		adresseService.saveOrUpdate(mapper.AdresseToAdresseDto(adresse));
-		adresseService.saveOrUpdate(mapper.AdresseToAdresseDto(adresse2));
-		absenceService.saveOrUpdate(mapper.AbsenceToAbsenceDto(absence));
-		interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention));
-		interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention2));
-		interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention3));
-		interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention4));
-		utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleEtudiant));
-		utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleformateur));
-		utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleAdmin));
-		utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(rolecef));		
-		cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus0));
-		cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus1));
-		cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus2));
-		devoirService.saveOrUpdate(mapper.DevoirToDevoirDto(devoir));
-		examenService.saveOrUpdate(mapper.ExamenToExamenDto(exam));
-		formationService.saveOrUpdate(mapper.FormationToFormationDto(formation));
-		formationService.saveOrUpdate(mapper.FormationToFormationDto(formation2));
-		formationService.saveOrUpdate(mapper.FormationToFormationDto(formation2));
-		formationService.saveOrUpdate(mapper.FormationToFormationDto(formation4));
-		passageExamenService.saveOrUpdate(mapper.PassageExamenToPassageExamenDto(passageExamen));
-		projetService.saveOrUpdate(mapper.ProjetToProjetDto(projet));	//ATTENTION
-		centreFormationService.saveOrUpdate(mapper.CentreFormationToCentreFormationDto(centre));
-		congeService.saveOrUpdate(mapper.CongeToCongeDto(conge));
+		System.out.println("1 admin id : " + admin.getId());
+		System.out.println("1 admin pwd : " + admin.getPassword());
+		
+		admin = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(admin)), Utilisateur.class);
+		
+		System.out.println("2 admin id : " + admin.getId());
+		System.out.println("2 admin pwd : " + admin.getPassword());
+		
+		etudiant = DtoTools.convert(etudiantService.saveOrUpdate(mapper.EtudiantToEtudiantDto(etudiant)), Etudiant.class);
+		cef = DtoTools.convert(cefService.saveOrUpdate(mapper.CEFToCEFDto(cef)), CEF.class);
+		formateur = DtoTools.convert(formateurService.saveOrUpdate(mapper.FormateurToFormateurDto(formateur)), Formateur.class);		
+		groupe = DtoTools.convert(groupeEtudiantService.saveOrUpdate(mapper.GroupeEtudiantToGroupEtudiantDto(groupe)), GroupeEtudiant.class);
+		promotion = DtoTools.convert(promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion)), Promotion.class);
+		promotion2 = DtoTools.convert(promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion2)), Promotion.class);
+		promotion3 = DtoTools.convert(promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion3)), Promotion.class);
+		note = DtoTools.convert(noteService.saveOrUpdate(mapper.NoteToNoteDto(note)), Note.class);
+		entreprise = DtoTools.convert(entrepriseService.saveOrUpdate(mapper.EntrepriseToEntrepriseDto(entreprise)), Entreprise.class);
+		adresse = DtoTools.convert(adresseService.saveOrUpdate(mapper.AdresseToAdresseDto(adresse)), Adresse.class);
+		adresse2 = DtoTools.convert(adresseService.saveOrUpdate(mapper.AdresseToAdresseDto(adresse2)), Adresse.class);
+		absence = DtoTools.convert(absenceService.saveOrUpdate(mapper.AbsenceToAbsenceDto(absence)), Absence.class);
+		intervention = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention)), Intervention.class);
+		intervention2 = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention2)), Intervention.class);
+		intervention3 = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention3)), Intervention.class);
+		intervention4 = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention4)), Intervention.class);
+		roleEtudiant = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleEtudiant)), UtilisateurRole.class);
+		roleformateur = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleformateur)), UtilisateurRole.class);
+		roleAdmin = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleAdmin)), UtilisateurRole.class);
+		rolecef = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(rolecef)), UtilisateurRole.class);		
+		cursus0 = DtoTools.convert(cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus0)), Cursus.class);
+		cursus1 = DtoTools.convert(cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus1)), Cursus.class);
+		cursus2 = DtoTools.convert(cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus2)), Cursus.class);
+		devoir = DtoTools.convert(devoirService.saveOrUpdate(mapper.DevoirToDevoirDto(devoir)), Devoir.class);
+		exam = DtoTools.convert(examenService.saveOrUpdate(mapper.ExamenToExamenDto(exam)), Examen.class);
+		formation = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation)), Formation.class);
+		formation2 = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation2)), Formation.class);
+		formation2 = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation2)), Formation.class);
+		formation4 = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation4)), Formation.class);
+		passageExamen = DtoTools.convert(passageExamenService.saveOrUpdate(mapper.PassageExamenToPassageExamenDto(passageExamen)), PassageExamen.class);
+		projet = DtoTools.convert(projetService.saveOrUpdate(mapper.ProjetToProjetDto(projet)), Projet.class);
+		centre = DtoTools.convert(centreFormationService.saveOrUpdate(mapper.CentreFormationToCentreFormationDto(centre)), CentreFormation.class);
+		conge = DtoTools.convert(congeService.saveOrUpdate(mapper.CongeToCongeDto(conge)), Conge.class);
 
 	}
 }

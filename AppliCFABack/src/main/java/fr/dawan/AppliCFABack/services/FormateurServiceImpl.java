@@ -19,10 +19,12 @@ import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.tools.HashTools;
 
 @Service
 @Transactional
@@ -83,6 +85,23 @@ public class FormateurServiceImpl implements FormateurService {
 	@Override
 	public FormateurDto saveOrUpdate(FormateurDto fDto) {
 		Formateur formateur = DtoTools.convert(fDto, Formateur.class);
+		
+		//HashTools throw Exception
+		try {
+			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+			if(formateur.getId() == 0) {
+				formateur.setPassword(HashTools.hashSHA512(formateur.getPassword()));
+			}else {
+				//Si on a modifié le mdp
+				Formateur formateurInDB = formateurRepository.getOne(formateur.getId());
+				if(!formateurInDB.getPassword().equals(formateur.getPassword())) {
+					formateur.setPassword(HashTools.hashSHA512(formateur.getPassword()));
+	            }
+			}	
+		}catch (Exception e) {
+            e.printStackTrace();
+        }
+		
 		formateur = formateurRepository.saveAndFlush(formateur);
 		return mapper.FormateurToFormateurDto(formateur);
 	}
