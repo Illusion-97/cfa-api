@@ -56,6 +56,26 @@ import fr.dawan.AppliCFABack.services.ProjetService;
 import fr.dawan.AppliCFABack.services.PromotionService;
 import fr.dawan.AppliCFABack.services.UtilisateurRoleService;
 import fr.dawan.AppliCFABack.services.UtilisateurService;
+import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
+import fr.dawan.AppliCFABack.repositories.AdresseRepository;
+import fr.dawan.AppliCFABack.repositories.CEFRepository;
+import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
+import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.repositories.CursusRepository;
+import fr.dawan.AppliCFABack.repositories.DevoirRepository;
+import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.ExamenRepository;
+import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.FormationRepository;
+import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.NoteRepository;
+import fr.dawan.AppliCFABack.repositories.PassageExamenRepository;
+import fr.dawan.AppliCFABack.repositories.ProjetRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 import fr.dawan.AppliCFABack.tools.HashTools;
 
 @SpringBootTest
@@ -312,9 +332,6 @@ public class InitDataBase {
 		conge.setMotif("Covid-19");
 		conge.setType(TypeConge.MALADIE);
 		conge.setStatus(StatusConge.CONFIRME);
-				
-		System.out.println("0 admin id : " + admin.getId());
-		System.out.println("0 admin pwd : " + admin.getPassword());
 		
 		admin = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(admin)), Utilisateur.class);
 		etudiant = DtoTools.convert(etudiantService.saveOrUpdate(mapper.EtudiantToEtudiantDto(etudiant)), Etudiant.class);
@@ -506,47 +523,38 @@ public class InitDataBase {
 
 		conge.setUtilisateur(etudiant);
 		
-		System.out.println("1 admin id : " + admin.getId());
-		System.out.println("1 admin pwd : " + admin.getPassword());
-		
-		admin = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(admin)), Utilisateur.class);
-		
-		System.out.println("2 admin id : " + admin.getId());
-		System.out.println("2 admin pwd : " + admin.getPassword());
-		
-		etudiant = DtoTools.convert(etudiantService.saveOrUpdate(mapper.EtudiantToEtudiantDto(etudiant)), Etudiant.class);
-		cef = DtoTools.convert(cefService.saveOrUpdate(mapper.CEFToCEFDto(cef)), CEF.class);
-		formateur = DtoTools.convert(formateurService.saveOrUpdate(mapper.FormateurToFormateurDto(formateur)), Formateur.class);		
-		groupe = DtoTools.convert(groupeEtudiantService.saveOrUpdate(mapper.GroupeEtudiantToGroupEtudiantDto(groupe)), GroupeEtudiant.class);
-		promotion = DtoTools.convert(promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion)), Promotion.class);
-		promotion2 = DtoTools.convert(promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion2)), Promotion.class);
-		promotion3 = DtoTools.convert(promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion3)), Promotion.class);
-		note = DtoTools.convert(noteService.saveOrUpdate(mapper.NoteToNoteDto(note)), Note.class);
-		entreprise = DtoTools.convert(entrepriseService.saveOrUpdate(mapper.EntrepriseToEntrepriseDto(entreprise)), Entreprise.class);
-		adresse = DtoTools.convert(adresseService.saveOrUpdate(mapper.AdresseToAdresseDto(adresse)), Adresse.class);
-		adresse2 = DtoTools.convert(adresseService.saveOrUpdate(mapper.AdresseToAdresseDto(adresse2)), Adresse.class);
-		absence = DtoTools.convert(absenceService.saveOrUpdate(mapper.AbsenceToAbsenceDto(absence)), Absence.class);
-		intervention = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention)), Intervention.class);
-		intervention2 = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention2)), Intervention.class);
-		intervention3 = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention3)), Intervention.class);
-		intervention4 = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention4)), Intervention.class);
-		roleEtudiant = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleEtudiant)), UtilisateurRole.class);
-		roleformateur = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleformateur)), UtilisateurRole.class);
-		roleAdmin = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleAdmin)), UtilisateurRole.class);
-		rolecef = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(rolecef)), UtilisateurRole.class);		
-		cursus0 = DtoTools.convert(cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus0)), Cursus.class);
-		cursus1 = DtoTools.convert(cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus1)), Cursus.class);
-		cursus2 = DtoTools.convert(cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus2)), Cursus.class);
-		devoir = DtoTools.convert(devoirService.saveOrUpdate(mapper.DevoirToDevoirDto(devoir)), Devoir.class);
-		exam = DtoTools.convert(examenService.saveOrUpdate(mapper.ExamenToExamenDto(exam)), Examen.class);
-		formation = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation)), Formation.class);
-		formation2 = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation2)), Formation.class);
-		formation2 = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation2)), Formation.class);
-		formation4 = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation4)), Formation.class);
-		passageExamen = DtoTools.convert(passageExamenService.saveOrUpdate(mapper.PassageExamenToPassageExamenDto(passageExamen)), PassageExamen.class);
-		projet = DtoTools.convert(projetService.saveOrUpdate(mapper.ProjetToProjetDto(projet)), Projet.class);
-		centre = DtoTools.convert(centreFormationService.saveOrUpdate(mapper.CentreFormationToCentreFormationDto(centre)), CentreFormation.class);
-		conge = DtoTools.convert(congeService.saveOrUpdate(mapper.CongeToCongeDto(conge)), Conge.class);
+		utilisateurRepository.save(admin);
+		etudiantRepository.save(etudiant);
+		groupeEtudiantRepository.save(groupe);
+		promotionRepository.save(promotion);
+		promotionRepository.save(promotion2);
+		promotionRepository.save(promotion3);
+		noteRepository.save(note);
+		entrepriseRepository.save(entreprise);
+		adresseRepository.save(adresse);
+		absenceRepository.save(absence);
+		interventionRepository.save(intervention);
+		interventionRepository.save(intervention2);
+		interventionRepository.save(intervention3);
+		interventionRepository.save(intervention4);
+		utilisateurRoleRepository.save(roleEtudiant);
+		utilisateurRoleRepository.save(roleformateur);
+		utilisateurRoleRepository.save(roleAdmin);
+		utilisateurRoleRepository.save(rolecef);
+		cefRepository.save(cef);
+		cursusRepository.save(cursus0);
+		cursusRepository.save(cursus1);
+		cursusRepository.save(cursus2);
+		devoirRepository.save(devoir);
+		examenRepository.save(exam);
+		formateurRepository.save(formateur);
+		formationRepository.save(formation2);
+		formationRepository.save(formation3);
+		formationRepository.save(formation4);
+		passageExamenRepository.save(passageExamen);
+		projetRepository.save(projet);
+		centreFormationRepository.save(centre);
+		congeRepository.save(conge);
 
 	}
 }
