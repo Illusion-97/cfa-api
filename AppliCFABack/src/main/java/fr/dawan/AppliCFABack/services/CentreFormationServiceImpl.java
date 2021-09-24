@@ -89,7 +89,17 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	@Override
 	public CountDto count(String search) {
 		
-		return new CountDto(centreFormationRepository.countByEntrepriseRaisonSocialeContaining(search));
+		return new CountDto(centreFormationRepository.countByNomContaining(search));
+	}
+
+	@Override
+	public List<CentreFormationDto> getAllCentreFormations(int page, int size, String search) {
+		List<CentreFormation> cf = centreFormationRepository.findAllByNomContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<CentreFormationDto> res = new ArrayList<CentreFormationDto>();
+		for (CentreFormation c : cf) {
+			res.add(mapper.CentreFormationToCentreFormationDto(c));
+		}
+		return res;
 	}
 
 }

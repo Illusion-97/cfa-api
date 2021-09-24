@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.CentreFormationService;
 
 @RestController
@@ -47,6 +48,15 @@ public class CentreFormationController {
 			@PathVariable(value = "size") int size) {
 		return centreFormationService.getAllCentreFormation(page, size);
 	}
+	
+	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
+ 	public @ResponseBody List<CentreFormationDto> getAllByPage(@PathVariable("page") int page,
+ 			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
+ 		if(search.isPresent())
+ 			return centreFormationService.getAllCentreFormations(page, size, search.get());
+ 		else
+ 			return centreFormationService.getAllCentreFormations(page, size, "");
+ 	}
 	
 	
 	@GetMapping(value = "/count", produces = "application/json")
