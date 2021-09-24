@@ -9,4 +9,5 @@ import fr.dawan.AppliCFABack.entities.CentreFormation;
 @Repository
 public interface CentreFormationRepository extends JpaRepository<CentreFormation, Long>{
 
+	long countByEntrepriseRaisonSocialeContaining(String entrepriseRaisonSociale);
 }
