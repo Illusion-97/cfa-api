@@ -262,6 +262,7 @@ public class InitDataBase {
 
 		// Centre Formation
 		CentreFormation centre = new CentreFormation();
+		centre.setNom("Dawan");
 
 		// CUrsus
 		Cursus cursus0 = new Cursus();
