@@ -12,6 +12,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -26,37 +28,28 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.dawan.AppliCFABack.controllers.CursusController;
-import fr.dawan.AppliCFABack.dto.CursusDto;
-
+import fr.dawan.AppliCFABack.controllers.AbsenceController;
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class CursusControllerTests {
+public class AbsenceControllerTests {
 
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@Autowired
-	private CursusController cursusController;
+	private AbsenceController absenceController;
 	
-
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private long idCursus;
-
-	
-	@Test
-	void contextLoads() {
-		assertThat(cursusController).isNotNull();
-		
-	}
+	private long idAbsence;
 	
 	@BeforeAll
 	void init() {
-		assertThat(cursusController).isNotNull();
+		assertThat(absenceController).isNotNull();
 //		initDataBase();
 	}
 	
@@ -65,10 +58,11 @@ public class CursusControllerTests {
 //		testDelete();
 //		deleteDatabase();
 	}
+	
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/cursus").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/AppliCFABack/absences").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 
 		} catch (Exception e) {
@@ -79,9 +73,11 @@ public class CursusControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/cursus/" + idCursus).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/AppliCFABack/absences/" + idAbsence).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
-					.andExpect(jsonPath("$.titre", is("titre 1")));
+					.andExpect(jsonPath("$.dateDebut", is("06/10/2021")))
+					.andExpect(jsonPath("$.dateFin", is("07/10/2021")))
+					.andExpect(jsonPath("$.justificatif", is("justif")));
 
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -91,20 +87,22 @@ public class CursusControllerTests {
 	@Test
 	void testSave() {
 		try {
-			CursusDto cToInsert = new CursusDto();
-			cToInsert.setTitre("titre cursus save");
+			AbsenceDto aToInsert = new AbsenceDto();
+			aToInsert.setDateDebut(LocalDate.now());
+			aToInsert.setDateFin(LocalDate.now());
+			aToInsert.setJustificatif("justificatif save");
 			
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-			String jsonReq = objectMapper.writeValueAsString(cToInsert);
+			String jsonReq = objectMapper.writeValueAsString(aToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/cursus")
+			String jsonReponse = mockMvc.perform(post("/AppliCFABack/absences")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-			CursusDto cDto = objectMapper.readValue(jsonReponse, CursusDto.class);
-			assertTrue(cDto.getId() != 0);
+			AbsenceDto aDto = objectMapper.readValue(jsonReponse, AbsenceDto.class);
+			assertTrue(aDto.getId() != 0);
 
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -115,20 +113,25 @@ public class CursusControllerTests {
 	void testUpdate() {
 
 		try {
-			CursusDto cDto = cursusController.getById(idCursus+1);
-			cDto.setTitre("titre cursus update");
+			AbsenceDto aDto = absenceController.getById(idAbsence+1);
+			aDto.setDateDebut(LocalDate.now());
+			aDto.setDateFin(LocalDate.now());
+			aDto.setJustificatif("justificatif update");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-			String jsonReq = objectMapper.writeValueAsString(cDto);
+			String jsonReq = objectMapper.writeValueAsString(aDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/cursus") 
+			String jsonReponse = mockMvc.perform(put("/AppliCFABack/absences") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-			CursusDto res = objectMapper.readValue(jsonReponse, CursusDto.class);
-			assertEquals(res.getId(), cDto.getId());
-			assertEquals(res.getTitre(), cDto.getTitre());
+			AbsenceDto res = objectMapper.readValue(jsonReponse, AbsenceDto.class);
+			assertEquals(res.getId(), aDto.getId());
+			assertEquals(res.getDateDebut(), aDto.getDateDebut());
+			assertEquals(res.getDateFin(), aDto.getDateFin());
+			assertEquals(res.getJustificatif(), aDto.getJustificatif());
+			
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -139,7 +142,7 @@ public class CursusControllerTests {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/cursus/"+ idCursus) 
+			String rep = mockMvc.perform(delete("/AppliCFABack/absences/"+ idAbsence) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);

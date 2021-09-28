@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,9 @@ public class CentreFormation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@Column(nullable = true, length = 255)
+	private String nom;
 
 	@ManyToOne
 	private Adresse adresse;
@@ -29,6 +33,15 @@ public class CentreFormation {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
 	public Adresse getAdresse() {

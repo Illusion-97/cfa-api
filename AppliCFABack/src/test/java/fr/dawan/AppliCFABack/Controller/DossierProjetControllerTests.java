@@ -26,37 +26,29 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.dawan.AppliCFABack.controllers.CursusController;
-import fr.dawan.AppliCFABack.dto.CursusDto;
-
+import fr.dawan.AppliCFABack.controllers.DossierProjetController;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class CursusControllerTests {
+public class DossierProjetControllerTests {
+
 
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@Autowired
-	private CursusController cursusController;
+	private DossierProjetController dossierProjetController;
 	
-
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private long idCursus;
-
-	
-	@Test
-	void contextLoads() {
-		assertThat(cursusController).isNotNull();
-		
-	}
+	private long idDossierProjet;
 	
 	@BeforeAll
 	void init() {
-		assertThat(cursusController).isNotNull();
+		assertThat(dossierProjetController).isNotNull();
 //		initDataBase();
 	}
 	
@@ -68,7 +60,7 @@ public class CursusControllerTests {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/cursus").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/AppliCFABack/dossierProjet").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 
 		} catch (Exception e) {
@@ -79,9 +71,9 @@ public class CursusControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/cursus/" + idCursus).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/AppliCFABack/dossierProjet/" + idDossierProjet).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
-					.andExpect(jsonPath("$.titre", is("titre 1")));
+					.andExpect(jsonPath("$.nom", is("nom DossierProjet 1")));
 
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -91,20 +83,20 @@ public class CursusControllerTests {
 	@Test
 	void testSave() {
 		try {
-			CursusDto cToInsert = new CursusDto();
-			cToInsert.setTitre("titre cursus save");
+			DossierProjetDto dpToInsert = new DossierProjetDto();
+			dpToInsert.setNom("nom DossierProjet save");
 			
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-			String jsonReq = objectMapper.writeValueAsString(cToInsert);
+			String jsonReq = objectMapper.writeValueAsString(dpToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/cursus")
+			String jsonReponse = mockMvc.perform(post("/AppliCFABack/dossierProjet")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-			CursusDto cDto = objectMapper.readValue(jsonReponse, CursusDto.class);
-			assertTrue(cDto.getId() != 0);
+			DossierProjetDto dpDto = objectMapper.readValue(jsonReponse, DossierProjetDto.class);
+			assertTrue(dpDto.getId() != 0);
 
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -115,20 +107,20 @@ public class CursusControllerTests {
 	void testUpdate() {
 
 		try {
-			CursusDto cDto = cursusController.getById(idCursus+1);
-			cDto.setTitre("titre cursus update");
+			DossierProjetDto dpDto = dossierProjetController.getById(idDossierProjet+1);
+			dpDto.setNom("nom DossierProjet update");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-			String jsonReq = objectMapper.writeValueAsString(cDto);
+			String jsonReq = objectMapper.writeValueAsString(dpDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/cursus") 
+			String jsonReponse = mockMvc.perform(put("/AppliCFABack/dossierProjet") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-			CursusDto res = objectMapper.readValue(jsonReponse, CursusDto.class);
-			assertEquals(res.getId(), cDto.getId());
-			assertEquals(res.getTitre(), cDto.getTitre());
+			DossierProjetDto res = objectMapper.readValue(jsonReponse, DossierProjetDto.class);
+			assertEquals(res.getId(), dpDto.getId());
+			assertEquals(res.getNom(), dpDto.getNom());
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -139,7 +131,7 @@ public class CursusControllerTests {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/cursus/"+ idCursus) 
+			String rep = mockMvc.perform(delete("/AppliCFABack/dossierProjet/"+ idDossierProjet) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);

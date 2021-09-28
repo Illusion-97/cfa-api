@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
@@ -35,6 +36,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		List<CentreFormationDto> lstDto = new ArrayList<CentreFormationDto>();
 		for (CentreFormation cf : lst) {
 			CentreFormationDto cDto = mapper.CentreFormationToCentreFormationDto(cf);
+			cDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(cf.getEntreprise()));
 			cDto.setAdresseDto(mapper.AdresseToAdresseDto(cf.getAdresse()));
 			lstDto.add(cDto);
 		}
@@ -49,7 +51,10 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		// conversion vers Dto
 		List<CentreFormationDto> lstDto = new ArrayList<CentreFormationDto>();
 		for (CentreFormation cf : lst) {
-			lstDto.add(mapper.CentreFormationToCentreFormationDto(cf));
+			CentreFormationDto cDto = mapper.CentreFormationToCentreFormationDto(cf);
+			cDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(cf.getEntreprise()));
+			cDto.setAdresseDto(mapper.AdresseToAdresseDto(cf.getAdresse()));
+			lstDto.add(cDto);
 		}
 		return lstDto;
 	}
@@ -60,7 +65,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		if (!cf.isPresent()) return null;
 		
 		CentreFormationDto cDto = mapper.CentreFormationToCentreFormationDto(cf.get());
-		
+		cDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(cf.get().getEntreprise()));
 		cDto.setAdresseDto(mapper.AdresseToAdresseDto(cf.get().getAdresse()));
 		
 		return cDto;
@@ -79,6 +84,22 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	public void deleteById(long id) {
 		centreFormationRepository.deleteById(id);
 
+	}
+
+	@Override
+	public CountDto count(String search) {
+		
+		return new CountDto(centreFormationRepository.countByNomContaining(search));
+	}
+
+	@Override
+	public List<CentreFormationDto> getAllCentreFormations(int page, int size, String search) {
+		List<CentreFormation> cf = centreFormationRepository.findAllByNomContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<CentreFormationDto> res = new ArrayList<CentreFormationDto>();
+		for (CentreFormation c : cf) {
+			res.add(mapper.CentreFormationToCentreFormationDto(c));
+		}
+		return res;
 	}
 
 }

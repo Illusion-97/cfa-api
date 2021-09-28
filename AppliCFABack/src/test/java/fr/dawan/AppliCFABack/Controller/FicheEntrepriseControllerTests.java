@@ -26,37 +26,28 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.dawan.AppliCFABack.controllers.CursusController;
-import fr.dawan.AppliCFABack.dto.CursusDto;
-
+import fr.dawan.AppliCFABack.controllers.FicheEntrepriseController;
+import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class CursusControllerTests {
-
+public class FicheEntrepriseControllerTests {
+	
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@Autowired
-	private CursusController cursusController;
+	private FicheEntrepriseController ficheEntrepriseController;
 	
-
 	@Autowired
 	private ObjectMapper objectMapper;
-
-	private long idCursus;
-
 	
-	@Test
-	void contextLoads() {
-		assertThat(cursusController).isNotNull();
-		
-	}
+	private long idFicheEntreprise;
 	
 	@BeforeAll
 	void init() {
-		assertThat(cursusController).isNotNull();
+		assertThat(ficheEntrepriseController).isNotNull();
 //		initDataBase();
 	}
 	
@@ -68,7 +59,7 @@ public class CursusControllerTests {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/cursus").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/AppliCFABack/ficheEntreprises").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 
 		} catch (Exception e) {
@@ -79,9 +70,11 @@ public class CursusControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/cursus/" + idCursus).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/AppliCFABack/ficheEntreprises/" + idFicheEntreprise).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
-					.andExpect(jsonPath("$.titre", is("titre 1")));
+					.andExpect(jsonPath("$.historique", is("historique 1")))
+					.andExpect(jsonPath("$.nomDirigeant", is("nomDirigeant 1")))
+					.andExpect(jsonPath("$.secteurActivite", is("secteurActivite 1")));
 
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -91,21 +84,21 @@ public class CursusControllerTests {
 	@Test
 	void testSave() {
 		try {
-			CursusDto cToInsert = new CursusDto();
-			cToInsert.setTitre("titre cursus save");
+			FicheEntrepriseDto feToInsert = new FicheEntrepriseDto();
+			feToInsert.setHistorique("historique fiche entreprise save");
+			feToInsert.setNomDirigeant("nomDirigeant fiche entreprise save");
+			feToInsert.setSecteurActivite("secteurActivite fiche entreprise save");
 			
-
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-			String jsonReq = objectMapper.writeValueAsString(cToInsert);
+			String jsonReq = objectMapper.writeValueAsString(feToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/cursus")
+			String jsonReponse = mockMvc.perform(post("/AppliCFABack/ficheEntreprises")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-			CursusDto cDto = objectMapper.readValue(jsonReponse, CursusDto.class);
-			assertTrue(cDto.getId() != 0);
-
+			FicheEntrepriseDto feDto = objectMapper.readValue(jsonReponse, FicheEntrepriseDto.class);
+			assertTrue(feDto.getId() != 0);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -115,20 +108,24 @@ public class CursusControllerTests {
 	void testUpdate() {
 
 		try {
-			CursusDto cDto = cursusController.getById(idCursus+1);
-			cDto.setTitre("titre cursus update");
+			FicheEntrepriseDto feDto = ficheEntrepriseController.getById(idFicheEntreprise+1);
+			feDto.setHistorique("historique fiche entreprise update");
+			feDto.setNomDirigeant("nomDirigeant fiche entreprise update");
+			feDto.setSecteurActivite("secteurActivite fiche entreprise update");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-			String jsonReq = objectMapper.writeValueAsString(cDto);
+			String jsonReq = objectMapper.writeValueAsString(feDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/cursus") 
+			String jsonReponse = mockMvc.perform(put("/AppliCFABack/ficheEntreprises") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-			CursusDto res = objectMapper.readValue(jsonReponse, CursusDto.class);
-			assertEquals(res.getId(), cDto.getId());
-			assertEquals(res.getTitre(), cDto.getTitre());
+			FicheEntrepriseDto res = objectMapper.readValue(jsonReponse, FicheEntrepriseDto.class);
+			assertEquals(res.getId(), feDto.getId());
+			assertEquals(res.getNomDirigeant(), feDto.getNomDirigeant());
+			assertEquals(res.getSecteurActivite(), feDto.getSecteurActivite());
+			
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -139,7 +136,7 @@ public class CursusControllerTests {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/cursus/"+ idCursus) 
+			String rep = mockMvc.perform(delete("/AppliCFABack/ficheEntreprises/"+ idFicheEntreprise) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);
