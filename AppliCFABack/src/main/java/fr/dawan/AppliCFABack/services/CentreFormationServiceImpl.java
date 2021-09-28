@@ -97,7 +97,10 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		List<CentreFormation> cf = centreFormationRepository.findAllByNomContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<CentreFormationDto> res = new ArrayList<CentreFormationDto>();
 		for (CentreFormation c : cf) {
-			res.add(mapper.CentreFormationToCentreFormationDto(c));
+			CentreFormationDto cfDto = mapper.CentreFormationToCentreFormationDto(c);
+			cfDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(c.getEntreprise()));
+			cfDto.setAdresseDto(mapper.AdresseToAdresseDto(c.getAdresse()));
+			res.add(cfDto);
 		}
 		return res;
 	}
