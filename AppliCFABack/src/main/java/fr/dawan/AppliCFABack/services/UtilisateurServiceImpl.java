@@ -3,12 +3,15 @@ package fr.dawan.AppliCFABack.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
@@ -67,6 +70,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+	@Autowired
+	JavaMailSender javaMailSender;
 
 	@Override
 	public List<UtilisateurDto> getAll() {
@@ -125,9 +130,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (userOpt.isPresent()) {
 			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(userOpt.get());
-			
-			if(userOpt.get().getAdresse() != null) uDto.setAdresseDto(mapper.AdresseToAdresseDto(userOpt.get().getAdresse()));
-			if(userOpt.get().getEntreprise() != null) uDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(userOpt.get().getEntreprise()));
+
+			if (userOpt.get().getAdresse() != null)
+				uDto.setAdresseDto(mapper.AdresseToAdresseDto(userOpt.get().getAdresse()));
+			if (userOpt.get().getEntreprise() != null)
+				uDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(userOpt.get().getEntreprise()));
 //			if(userOpt.get().getEntreprise().getAdresseSiege() != null) uDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(userOpt.get().getEntreprise().getAdresseSiege()));
 
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
@@ -182,30 +189,48 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		// refus d'insertion :
 		// Si uDto n'est pas déjà en base (getId() == 0) => creation
 		// Si un utilisateur a la même adresse mail => throw Exception
-		
-		if (uDto.getId() == 0 && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
-			throw new Exception("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin() + " findByEmail " + findByEmail(uDto.getLogin()).toString());
-		}
-		
-		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
-		
-		//HashTools throw Exception
-		try {
-			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-			if(user.getId() == 0) {
-				user.setPassword(HashTools.hashSHA512(user.getPassword()));
-			}else {
-				//Si on a modifié le mdp
-				Utilisateur userInDB = utilisateurRepository.getOne(user.getId());
-				if(!userInDB.getPassword().equals(user.getPassword())) {
-	                user.setPassword(HashTools.hashSHA512(user.getPassword()));
-	            }
-			}	
-		}catch (Exception e) {
-            e.printStackTrace();
-        }
 
-			
+		if (uDto.getId() == 0 && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
+			throw new Exception("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin()
+					+ " findByEmail " + findByEmail(uDto.getLogin()).toString());
+		}
+
+		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
+
+		// HashTools throw Exception
+		try {
+			// Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+			if (user.getId() == 0) {
+				int leftLimit = 48; // numeral '0'
+				int rightLimit = 122; // letter 'z'
+				int targetStringLength = 10;
+				Random random = new Random();
+				
+				// Genere un mot de passe aleatoire de 0 à 9 et de A à Z(Majuscule/minuscule compris) en caractere ASCII
+				String generatedString = random.ints(leftLimit, rightLimit + 1)
+						.filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97)).limit(targetStringLength)
+						.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+				// appendCodePoint => recupere le String en code ASCII pour le dechiffrer en charactere alphanumerique
+				
+				// Envoie un mail avec son mot de passe au mail de la personne inscrite
+				SimpleMailMessage msg = new SimpleMailMessage();
+				msg.setTo(user.getLogin());
+				msg.setSubject("noreply - Mot de passe");
+				msg.setText("Voici votre mot de passe temporaire: " + generatedString);
+				javaMailSender.send(msg);
+				
+				user.setPassword(HashTools.hashSHA512(generatedString));
+
+			} else {
+				// Si on a modifié le mdp
+				Utilisateur userInDB = utilisateurRepository.getOne(user.getId());
+				if (!userInDB.getPassword().equals(user.getPassword())) {
+					user.setPassword(HashTools.hashSHA512(user.getPassword()));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		// On save l'addresse avant de save l'utilisateur
 		if (uDto.getAdresseDto() != null) {
@@ -220,15 +245,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		if (uDto.getEntrepriseDto() != null) {
 			Entreprise entreprise = DtoTools.convert(uDto.getEntrepriseDto(), Entreprise.class);
 			entrepriseRepository.saveAndFlush(entreprise);
-						
-			//On save l'adresse avant de save l'entreprise
-			if(uDto.getEntrepriseDto().getAdresseSiegeDto() != null) {
-				Adresse adresseEntreprise = DtoTools.convert(uDto.getEntrepriseDto().getAdresseSiegeDto(), Adresse.class);
+
+			// On save l'adresse avant de save l'entreprise
+			if (uDto.getEntrepriseDto().getAdresseSiegeDto() != null) {
+				Adresse adresseEntreprise = DtoTools.convert(uDto.getEntrepriseDto().getAdresseSiegeDto(),
+						Adresse.class);
 				adresseRepository.saveAndFlush(adresseEntreprise);
-				
+
 				Adresse adresseEntrepriseRepo = adresseRepository.getOne(adresseEntreprise.getId());
 				entreprise.setAdresseSiege(adresseEntrepriseRepo);
-			}	
+			}
 			Entreprise entrepriseRepo = entrepriseRepository.getOne(entreprise.getId());
 			user.setEntreprise(entrepriseRepo);
 		}
@@ -316,12 +342,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	private Utilisateur getUtilisateurById(long id) {
 		Optional<Utilisateur> e = utilisateurRepository.findById(id);
-				
+
 		if (e.isPresent())
 			return e.get();
 
 		return null;
-		
+
 //		Utilisateur e = utilisateurRepository.getOne(id);
 //
 //		return e;
@@ -444,9 +470,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public Boolean isReferent(long id) {
 		List<Promotion> result = promotionRespository.findAllByReferentPedagogiqueId(id);
-		
-		if(result.size() != 0) return true;
-		else return false;
+
+		if (result.size() != 0)
+			return true;
+		else
+			return false;
 	}
 
 }

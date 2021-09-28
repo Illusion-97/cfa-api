@@ -107,7 +107,6 @@ public class UtilisateurController {
 		try {
 			return ResponseEntity.ok(utilisateurService.insertUpdate(uDto));
 		}catch(Exception e) {
-			System.out.println(e.getMessage());
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		}
 	}
