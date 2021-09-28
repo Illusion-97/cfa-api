@@ -22,6 +22,7 @@ import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.PromotionService;
 
 @RestController
 @RequestMapping("/AppliCFABack/cursus")
@@ -63,6 +64,12 @@ public class CursusController {
 	public CursusDto getByIdPromotion(@PathVariable("id") long id) {
 		return cursusService.getByIdPromotion(id);
 	}
+	
+	@GetMapping(value = "/{id}/promotions",produces = "application/json")
+	public List<PromotionDto> getPromotionsById(@PathVariable("id") long id) {
+		return cursusService.getPromotionsById(id);
+	}
+	
 	@GetMapping(value = "/etudiant/{id}",produces = "application/json")
 	public List<CursusDto> getByIdEtudiant(@PathVariable("id") long id) {
 		List<PromotionDto> lstpDto = etudiantService.getPromotionsByIdEtudiant(id);
@@ -104,7 +111,7 @@ public class CursusController {
 	}
 	
 	
-	@DeleteMapping(value = "/delete/{id}", produces = "text/plain")
+	@DeleteMapping(value = "/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		try {
 			cursusService.deleteById(id);

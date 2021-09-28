@@ -136,4 +136,17 @@ public class PromotionServiceImpl implements PromotionService {
 		return lstDto;
 	}
 
+	@Override
+	public List<PromotionDto> getAllByCursusId(long id) {
+		List<Promotion> lst = promoRepo.findAllByCursusId(id);
+		
+		List<PromotionDto> result = new ArrayList<PromotionDto>();
+		
+		for(Promotion p : lst) {
+			result.add(mapper.PromotionToPromotionDto(p));
+		}
+		
+		return result;
+	}
+
 }
