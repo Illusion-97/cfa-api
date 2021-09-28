@@ -121,12 +121,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public UtilisateurDto getById(long id) {
+		System.out.println("id : " + id);
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (userOpt.isPresent()) {
 			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(userOpt.get());
-			uDto.setAdresseDto(mapper.AdresseToAdresseDto(userOpt.get().getAdresse()));
-			uDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(userOpt.get().getEntreprise()));
-			uDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(userOpt.get().getEntreprise().getAdresseSiege()));
+			
+			if(userOpt.get().getAdresse() != null) uDto.setAdresseDto(mapper.AdresseToAdresseDto(userOpt.get().getAdresse()));
+			if(userOpt.get().getEntreprise() != null) uDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(userOpt.get().getEntreprise()));
+//			if(userOpt.get().getEntreprise().getAdresseSiege() != null) uDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(userOpt.get().getEntreprise().getAdresseSiege()));
 
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
 			for (UtilisateurRole ur : userOpt.get().getRoles()) {
@@ -180,8 +182,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		// refus d'insertion :
 		// Si uDto n'est pas déjà en base (getId() == 0) => creation
 		// Si un utilisateur a la même adresse mail => throw Exception
-		if (uDto.getId() == 0 && findByEmail(uDto.getLogin()) != null) {
-			throw new Exception("Un utilisateur utilise déjà cette adresse mail");
+		
+		if (uDto.getId() == 0 && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
+			throw new Exception("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin() + " findByEmail " + findByEmail(uDto.getLogin()).toString());
 		}
 		
 		Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);

@@ -127,5 +127,4 @@ public interface DtoMapper {
 
 	@Mapping(source = ".", target = ".")
 	FicheEntrepriseDto FicheEntrepriseToFicheEntrepriseDto(FicheEntreprise FicheEntreprise);
-	
 }

@@ -14,9 +14,11 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.CEF;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
+import fr.dawan.AppliCFABack.tools.HashTools;
 
 @Service
 @Transactional
@@ -63,6 +65,22 @@ public class CEFServiceImpl implements CEFService {
 	@Override
 	public CEFDto saveOrUpdate(CEFDto cDto) {
 		CEF c = DtoTools.convert(cDto, CEF.class);
+		
+		//HashTools throw Exception
+		try {
+			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+			if(c.getId() == 0) {
+				c.setPassword(HashTools.hashSHA512(c.getPassword()));
+			}else {
+				//Si on a modifié le mdp
+				CEF cefInDB = cefRepository.getOne(c.getId());
+				if(!cefInDB.getPassword().equals(c.getPassword())) {
+	                c.setPassword(HashTools.hashSHA512(c.getPassword()));
+	            }
+			}	
+		}catch (Exception e) {
+            e.printStackTrace();
+        }
 
 		c = cefRepository.saveAndFlush(c);
 

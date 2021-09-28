@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
@@ -30,9 +31,11 @@ import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.StatusConge;
 import fr.dawan.AppliCFABack.entities.TypeConge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
@@ -53,13 +56,72 @@ import fr.dawan.AppliCFABack.repositories.ProjetRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
-import fr.dawan.AppliCFABack.tools.HashTools;
+import fr.dawan.AppliCFABack.services.AbsenceService;
+import fr.dawan.AppliCFABack.services.AdresseService;
+import fr.dawan.AppliCFABack.services.CEFService;
+import fr.dawan.AppliCFABack.services.CentreFormationService;
+import fr.dawan.AppliCFABack.services.CongeService;
+import fr.dawan.AppliCFABack.services.CursusService;
+import fr.dawan.AppliCFABack.services.DevoirService;
+import fr.dawan.AppliCFABack.services.EntrepriseService;
+import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.ExamenService;
+import fr.dawan.AppliCFABack.services.FormateurService;
+import fr.dawan.AppliCFABack.services.FormationService;
+import fr.dawan.AppliCFABack.services.GroupeEtudiantService;
+import fr.dawan.AppliCFABack.services.InterventionService;
+import fr.dawan.AppliCFABack.services.NoteService;
+import fr.dawan.AppliCFABack.services.PassageExamenService;
+import fr.dawan.AppliCFABack.services.ProjetService;
+import fr.dawan.AppliCFABack.services.PromotionService;
+import fr.dawan.AppliCFABack.services.UtilisateurRoleService;
+import fr.dawan.AppliCFABack.services.UtilisateurService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
 public class InitDataBase {
 
+	@Autowired
+	private UtilisateurService utilisateurService;	
+	@Autowired
+	private EtudiantService etudiantService;
+	@Autowired
+	private FormateurService formateurService;
+	@Autowired
+	private CEFService cefService;
+	@Autowired
+	private GroupeEtudiantService groupeEtudiantService;
+	@Autowired
+	private PromotionService promotionService;
+	@Autowired
+	private NoteService noteService;
+	@Autowired
+	private EntrepriseService entrepriseService;
+	@Autowired
+	private AdresseService adresseService;
+	@Autowired
+	private AbsenceService absenceService;
+	@Autowired
+	private InterventionService interventionService;
+	@Autowired
+	private UtilisateurRoleService utilisateurRoleService;	
+	@Autowired
+	private CursusService cursusService;
+	@Autowired
+	private DevoirService devoirService;
+	@Autowired
+	private ExamenService examenService;
+	@Autowired
+	private FormationService formationService;
+	@Autowired
+	private PassageExamenService passageExamenService;
+	@Autowired
+	private ProjetService projetService;
+	@Autowired
+	private CentreFormationService centreFormationService;
+	@Autowired
+	private CongeService congeService;
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
 	@Autowired
@@ -100,11 +162,12 @@ public class InitDataBase {
 	private CentreFormationRepository centreFormationRepository;
 	@Autowired
 	private CongeRepository congeRepository;
-
-	private long idEtudiant;
+	
+	@Autowired
+	private DtoMapper mapper;
 
 	@Test
-	void test() {
+	void test() throws Exception {
 		initDataBase();
 		//deleteDatabase();
 	}
@@ -134,7 +197,7 @@ public class InitDataBase {
 //		entrepriseRepository.delete(entreprises.get(entreprises.size() - 1));
 //
 //	}
-	void initDataBase() {
+	void initDataBase() throws Exception {
 
 		UtilisateurRole roleEtudiant = new UtilisateurRole();
 		roleEtudiant.setIntitule("ETUDIANT");
@@ -147,7 +210,7 @@ public class InitDataBase {
 //		UtilisateurRole roleRef = new UtilisateurRole();
 //		roleRef.setIntitule("REFERENT");
 		
-		Utilisateur admin = new Etudiant();
+		Utilisateur admin = new Utilisateur();
 		admin.setPrenom("Mohamed");
 		admin.setNom("Derkaoui");
 		admin.setLogin("admin@dawan.fr");
@@ -308,51 +371,42 @@ public class InitDataBase {
 		conge.setDateFin(LocalDate.now().plusDays(14));
 		conge.setMotif("Covid-19");
 		conge.setType(TypeConge.MALADIE);
+		conge.setStatus(StatusConge.CONFIRME);
 		
-		try {
-			admin.setPassword(HashTools.hashSHA512(admin.getPassword()));
-			etudiant.setPassword(HashTools.hashSHA512(etudiant.getPassword()));
-			cef.setPassword(HashTools.hashSHA512(cef.getPassword()));
-			formateur.setPassword(HashTools.hashSHA512(formateur.getPassword()));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}		
-
-		utilisateurRepository.save(admin);
-		etudiantRepository.save(etudiant);
-		cefRepository.save(cef);
-		formateurRepository.save(formateur);
-		
-		groupeEtudiantRepository.save(groupe);
-		promotionRepository.save(promotion);
-		promotionRepository.save(promotion2);
-		promotionRepository.save(promotion3);
-		noteRepository.save(note);
-		entrepriseRepository.save(entreprise);
-		adresseRepository.save(adresse);
-		adresseRepository.save(adresse2);
-		absenceRepository.save(absence);
-		interventionRepository.save(intervention);
-		interventionRepository.save(intervention2);
-		interventionRepository.save(intervention3);
-		interventionRepository.save(intervention4);
-		utilisateurRoleRepository.save(roleEtudiant);
-		utilisateurRoleRepository.save(roleformateur);
-		utilisateurRoleRepository.save(roleAdmin);
-		utilisateurRoleRepository.save(rolecef);		
-		cursusRepository.save(cursus0);
-		cursusRepository.save(cursus1);
-		cursusRepository.save(cursus2);
-		devoirRepository.save(devoir);
-		examenRepository.save(exam);
-		formationRepository.save(formation);
-		formationRepository.save(formation2);
-		formationRepository.save(formation3);
-		formationRepository.save(formation4);
-		passageExamenRepository.save(passageExamen);
-		projetRepository.save(projet);
-		centreFormationRepository.save(centre);
-		congeRepository.save(conge);
+		admin = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(admin)), Utilisateur.class);
+		etudiant = DtoTools.convert(etudiantService.saveOrUpdate(mapper.EtudiantToEtudiantDto(etudiant)), Etudiant.class);
+		cef = DtoTools.convert(cefService.saveOrUpdate(mapper.CEFToCEFDto(cef)), CEF.class);
+		formateur = DtoTools.convert(formateurService.saveOrUpdate(mapper.FormateurToFormateurDto(formateur)), Formateur.class);		
+		groupe = DtoTools.convert(groupeEtudiantService.saveOrUpdate(mapper.GroupeEtudiantToGroupEtudiantDto(groupe)), GroupeEtudiant.class);
+		promotion = DtoTools.convert(promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion)), Promotion.class);
+		promotion2 = DtoTools.convert(promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion2)), Promotion.class);
+		promotion3 = DtoTools.convert(promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion3)), Promotion.class);
+		note = DtoTools.convert(noteService.saveOrUpdate(mapper.NoteToNoteDto(note)), Note.class);
+		entreprise = DtoTools.convert(entrepriseService.saveOrUpdate(mapper.EntrepriseToEntrepriseDto(entreprise)), Entreprise.class);
+		adresse = DtoTools.convert(adresseService.saveOrUpdate(mapper.AdresseToAdresseDto(adresse)), Adresse.class);
+		adresse2 = DtoTools.convert(adresseService.saveOrUpdate(mapper.AdresseToAdresseDto(adresse2)), Adresse.class);
+		absence = DtoTools.convert(absenceService.saveOrUpdate(mapper.AbsenceToAbsenceDto(absence)), Absence.class);
+		intervention = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention)), Intervention.class);
+		intervention2 = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention2)), Intervention.class);
+		intervention3 = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention3)), Intervention.class);
+		intervention4 = DtoTools.convert(interventionService.saveOrUpdate(mapper.InterventionToInterventionDto(intervention4)), Intervention.class);
+		roleEtudiant = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleEtudiant)), UtilisateurRole.class);
+		roleformateur = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleformateur)), UtilisateurRole.class);
+		roleAdmin = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(roleAdmin)), UtilisateurRole.class);
+		rolecef = DtoTools.convert(utilisateurRoleService.saveOrUpdate(mapper.UtilisateurRoleToUtilisateurRoleDto(rolecef)), UtilisateurRole.class);		
+		cursus0 = DtoTools.convert(cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus0)), Cursus.class);
+		cursus1 = DtoTools.convert(cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus1)), Cursus.class);
+		cursus2 = DtoTools.convert(cursusService.saveOrUpdate(mapper.CursusToCursusDto(cursus2)), Cursus.class);
+		devoir = DtoTools.convert(devoirService.saveOrUpdate(mapper.DevoirToDevoirDto(devoir)), Devoir.class);
+		exam = DtoTools.convert(examenService.saveOrUpdate(mapper.ExamenToExamenDto(exam)), Examen.class);
+		formation = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation)), Formation.class);
+		formation2 = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation2)), Formation.class);
+		formation2 = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation2)), Formation.class);
+		formation4 = DtoTools.convert(formationService.saveOrUpdate(mapper.FormationToFormationDto(formation4)), Formation.class);
+		passageExamen = DtoTools.convert(passageExamenService.saveOrUpdate(mapper.PassageExamenToPassageExamenDto(passageExamen)), PassageExamen.class);
+		projet = DtoTools.convert(projetService.saveOrUpdate(mapper.ProjetToProjetDto(projet)), Projet.class);
+		centre = DtoTools.convert(centreFormationService.saveOrUpdate(mapper.CentreFormationToCentreFormationDto(centre)), CentreFormation.class);
+		conge = DtoTools.convert(congeService.saveOrUpdate(mapper.CongeToCongeDto(conge)), Conge.class);
 
 		List<Etudiant> lstEtudiant = new ArrayList<Etudiant>();
 		List<Promotion> lstPromotion = new ArrayList<Promotion>();
@@ -445,31 +499,21 @@ public class InitDataBase {
 
 		absence.setEtudiant(etudiant);
 
+		intervention.setFormateurs(lstFormateur);
 		intervention.setFormation(formation);
 		intervention.setPromotions(lstPromotion1);
 
+		intervention2.setFormateurs(lstFormateur);
 		intervention2.setFormation(formation2);
 		intervention2.setPromotions(lstPromotion1);
 
+		intervention3.setFormateurs(lstFormateur);
 		intervention3.setFormation(formation3);
 		intervention3.setPromotions(lstPromotion1);
 
+		intervention4.setFormateurs(lstFormateur);
 		intervention4.setFormation(formation4);
-		intervention4.setPromotions(lstPromotion1);
-
-//		intervention2.setPromotion(promotion);
-//		intervention2.setPromotion(promotion2);
-//		intervention2.setPromotion(promotion3);
-
-//		intervention3.setPromotion(promotion);
-//		intervention3.setPromotion(promotion2);
-//		intervention3.setPromotion(promotion3);
-
-//		intervention4.setPromotion(promotion);
-//		intervention4.setPromotion(promotion2);
-//		intervention4.setPromotion(promotion3);
-
-		intervention.setFormateurs(lstFormateur);
+		intervention4.setPromotions(lstPromotion1);		
 
 		cursus2.setFormations(lstFormation);
 
@@ -508,7 +552,7 @@ public class InitDataBase {
 		projet.setGroupe(groupe);
 
 		conge.setUtilisateur(etudiant);
-
+		
 		utilisateurRepository.save(admin);
 		etudiantRepository.save(etudiant);
 		groupeEtudiantRepository.save(groupe);
@@ -521,7 +565,7 @@ public class InitDataBase {
 		absenceRepository.save(absence);
 		interventionRepository.save(intervention);
 		interventionRepository.save(intervention2);
-		interventionRepository.save(intervention3);
+//		interventionRepository.save(intervention3);	
 		interventionRepository.save(intervention4);
 		utilisateurRoleRepository.save(roleEtudiant);
 		utilisateurRoleRepository.save(roleformateur);
@@ -530,7 +574,7 @@ public class InitDataBase {
 		cefRepository.save(cef);
 		cursusRepository.save(cursus0);
 		cursusRepository.save(cursus1);
-		cursusRepository.save(cursus2);
+//		cursusRepository.save(cursus2);
 		devoirRepository.save(devoir);
 		examenRepository.save(exam);
 		formateurRepository.save(formateur);
@@ -542,6 +586,5 @@ public class InitDataBase {
 		centreFormationRepository.save(centre);
 		congeRepository.save(conge);
 
-		this.idEtudiant = etudiant.getId();
 	}
 }
