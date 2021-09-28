@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
 
 public interface CursusService {
 
@@ -20,5 +21,7 @@ public interface CursusService {
 	CountDto count(String string);
 
 	CursusDto getByIdPromotion(long id);
+
+	List<PromotionDto> getPromotionsById(long id);
 
 }

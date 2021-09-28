@@ -95,9 +95,12 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		List<Entreprise> entreprises = entrepriseRepository.findAllByRaisonSocialeContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<EntrepriseDto> res = new ArrayList<EntrepriseDto>();
 		for (Entreprise e : entreprises) {
-			res.add(mapper.EntrepriseToEntrepriseDto(e));
+			EntrepriseDto eDto = mapper.EntrepriseToEntrepriseDto(e);
+			eDto.setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.getAdresseSiege()));
+			res.add(eDto);
 		}
 		return res;
 	}
+	
 
 }

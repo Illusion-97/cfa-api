@@ -21,6 +21,5 @@ public interface ProjetService {
 	
 	List<ProjetDto> getByGroupeId(long id);
 
-
 	
 }

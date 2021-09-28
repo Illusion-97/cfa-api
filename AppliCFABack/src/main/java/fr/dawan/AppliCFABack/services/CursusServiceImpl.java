@@ -111,4 +111,10 @@ public class CursusServiceImpl implements CursusService {
 		return cDto;
 	}
 
+	@Override
+	public List<PromotionDto> getPromotionsById(long id) {
+		return promoService.getAllByCursusId(id);
+	}
+
+
 }

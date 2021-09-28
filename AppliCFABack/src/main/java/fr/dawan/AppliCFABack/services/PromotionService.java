@@ -23,6 +23,8 @@ public interface PromotionService {
 
 	List<PromotionDto> getAllPromotions(int page, int size, String string);
 	
-	List<EtudiantDto> getEtudiantsById(long id);
+	List<EtudiantDto> getEtudiantsById(long id);	
+
+	List<PromotionDto> getAllByCursusId(long id);
 
 }
