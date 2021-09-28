@@ -36,26 +36,6 @@ import fr.dawan.AppliCFABack.entities.TypeConge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.services.AbsenceService;
-import fr.dawan.AppliCFABack.services.AdresseService;
-import fr.dawan.AppliCFABack.services.CEFService;
-import fr.dawan.AppliCFABack.services.CentreFormationService;
-import fr.dawan.AppliCFABack.services.CongeService;
-import fr.dawan.AppliCFABack.services.CursusService;
-import fr.dawan.AppliCFABack.services.DevoirService;
-import fr.dawan.AppliCFABack.services.EntrepriseService;
-import fr.dawan.AppliCFABack.services.EtudiantService;
-import fr.dawan.AppliCFABack.services.ExamenService;
-import fr.dawan.AppliCFABack.services.FormateurService;
-import fr.dawan.AppliCFABack.services.FormationService;
-import fr.dawan.AppliCFABack.services.GroupeEtudiantService;
-import fr.dawan.AppliCFABack.services.InterventionService;
-import fr.dawan.AppliCFABack.services.NoteService;
-import fr.dawan.AppliCFABack.services.PassageExamenService;
-import fr.dawan.AppliCFABack.services.ProjetService;
-import fr.dawan.AppliCFABack.services.PromotionService;
-import fr.dawan.AppliCFABack.services.UtilisateurRoleService;
-import fr.dawan.AppliCFABack.services.UtilisateurService;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
@@ -76,7 +56,26 @@ import fr.dawan.AppliCFABack.repositories.ProjetRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
-import fr.dawan.AppliCFABack.tools.HashTools;
+import fr.dawan.AppliCFABack.services.AbsenceService;
+import fr.dawan.AppliCFABack.services.AdresseService;
+import fr.dawan.AppliCFABack.services.CEFService;
+import fr.dawan.AppliCFABack.services.CentreFormationService;
+import fr.dawan.AppliCFABack.services.CongeService;
+import fr.dawan.AppliCFABack.services.CursusService;
+import fr.dawan.AppliCFABack.services.DevoirService;
+import fr.dawan.AppliCFABack.services.EntrepriseService;
+import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.ExamenService;
+import fr.dawan.AppliCFABack.services.FormateurService;
+import fr.dawan.AppliCFABack.services.FormationService;
+import fr.dawan.AppliCFABack.services.GroupeEtudiantService;
+import fr.dawan.AppliCFABack.services.InterventionService;
+import fr.dawan.AppliCFABack.services.NoteService;
+import fr.dawan.AppliCFABack.services.PassageExamenService;
+import fr.dawan.AppliCFABack.services.ProjetService;
+import fr.dawan.AppliCFABack.services.PromotionService;
+import fr.dawan.AppliCFABack.services.UtilisateurRoleService;
+import fr.dawan.AppliCFABack.services.UtilisateurService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -123,6 +122,46 @@ public class InitDataBase {
 	private CentreFormationService centreFormationService;
 	@Autowired
 	private CongeService congeService;
+	@Autowired
+	private UtilisateurRepository utilisateurRepository;
+	@Autowired
+	private EtudiantRepository etudiantRepository;
+	@Autowired
+	private GroupeEtudiantRepository groupeEtudiantRepository;
+	@Autowired
+	private PromotionRepository promotionRepository;
+	@Autowired
+	private NoteRepository noteRepository;
+	@Autowired
+	private EntrepriseRepository entrepriseRepository;
+	@Autowired
+	private AdresseRepository adresseRepository;
+	@Autowired
+	private AbsenceRepository absenceRepository;
+	@Autowired
+	private InterventionRepository interventionRepository;
+	@Autowired
+	private UtilisateurRoleRepository utilisateurRoleRepository;
+	@Autowired
+	private CEFRepository cefRepository;
+	@Autowired
+	private CursusRepository cursusRepository;
+	@Autowired
+	private DevoirRepository devoirRepository;
+	@Autowired
+	private ExamenRepository examenRepository;
+	@Autowired
+	private FormateurRepository formateurRepository;
+	@Autowired
+	private FormationRepository formationRepository;
+	@Autowired
+	private PassageExamenRepository passageExamenRepository;
+	@Autowired
+	private ProjetRepository projetRepository;
+	@Autowired
+	private CentreFormationRepository centreFormationRepository;
+	@Autowired
+	private CongeRepository congeRepository;
 	
 	@Autowired
 	private DtoMapper mapper;
@@ -459,31 +498,21 @@ public class InitDataBase {
 
 		absence.setEtudiant(etudiant);
 
+		intervention.setFormateurs(lstFormateur);
 		intervention.setFormation(formation);
 		intervention.setPromotions(lstPromotion1);
 
+		intervention2.setFormateurs(lstFormateur);
 		intervention2.setFormation(formation2);
 		intervention2.setPromotions(lstPromotion1);
 
+		intervention3.setFormateurs(lstFormateur);
 		intervention3.setFormation(formation3);
 		intervention3.setPromotions(lstPromotion1);
 
+		intervention4.setFormateurs(lstFormateur);
 		intervention4.setFormation(formation4);
-		intervention4.setPromotions(lstPromotion1);
-
-//		intervention2.setPromotion(promotion);
-//		intervention2.setPromotion(promotion2);
-//		intervention2.setPromotion(promotion3);
-
-//		intervention3.setPromotion(promotion);
-//		intervention3.setPromotion(promotion2);
-//		intervention3.setPromotion(promotion3);
-
-//		intervention4.setPromotion(promotion);
-//		intervention4.setPromotion(promotion2);
-//		intervention4.setPromotion(promotion3);
-
-		intervention.setFormateurs(lstFormateur);
+		intervention4.setPromotions(lstPromotion1);		
 
 		cursus2.setFormations(lstFormation);
 
@@ -535,7 +564,7 @@ public class InitDataBase {
 		absenceRepository.save(absence);
 		interventionRepository.save(intervention);
 		interventionRepository.save(intervention2);
-		interventionRepository.save(intervention3);
+//		interventionRepository.save(intervention3);	
 		interventionRepository.save(intervention4);
 		utilisateurRoleRepository.save(roleEtudiant);
 		utilisateurRoleRepository.save(roleformateur);
@@ -544,7 +573,7 @@ public class InitDataBase {
 		cefRepository.save(cef);
 		cursusRepository.save(cursus0);
 		cursusRepository.save(cursus1);
-		cursusRepository.save(cursus2);
+//		cursusRepository.save(cursus2);
 		devoirRepository.save(devoir);
 		examenRepository.save(exam);
 		formateurRepository.save(formateur);
