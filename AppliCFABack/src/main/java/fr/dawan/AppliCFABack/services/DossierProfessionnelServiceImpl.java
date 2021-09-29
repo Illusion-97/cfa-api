@@ -31,7 +31,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 	EtudiantService etudiantService;
 
 	@Autowired
-	private DtoMapper mapper = new DtoMapperImpl();
+	private DtoMapper mapper;
 	@Override
 	public List<DossierProfessionnelDto> getAll() {
 		// TODO Auto-generated method stub

@@ -38,7 +38,7 @@ public class FilesController {
 		
 		return fileService.getAllNamesByDirectory(directory + "/" + id);	
 	}
-	@GetMapping(value = "/{directory}/{id}/directory2}", produces = "application/json")
+	@GetMapping(value = "/{directory}/{id}/{directory2}", produces = "application/json")
 	public String[] getAllNamesByDirectoryAndIdAndDirectory(@PathVariable("directory") String directory,@PathVariable("directory2") String directory2,
 			@PathVariable("id") long id) {
 

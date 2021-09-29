@@ -30,7 +30,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	EtudiantService etudiantService;
 
 	@Autowired
-	private DtoMapper mapper = new DtoMapperImpl();
+	private DtoMapper mapper;
 
 	@Override
 	public List<DossierProjetDto> getAll() {
