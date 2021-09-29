@@ -54,8 +54,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-09-22T16:44:43+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
+    date = "2021-09-28T09:57:03+0200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.2 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -121,6 +121,7 @@ public class DtoMapperImpl implements DtoMapper {
         CentreFormationDto centreFormationDto = new CentreFormationDto();
 
         centreFormationDto.setId( centreFormation.getId() );
+        centreFormationDto.setNom( centreFormation.getNom() );
 
         return centreFormationDto;
     }
