@@ -377,6 +377,7 @@ public class InitDataBase {
 		etudiant = DtoTools.convert(etudiantService.saveOrUpdate(mapper.EtudiantToEtudiantDto(etudiant)), Etudiant.class);
 		cef = DtoTools.convert(cefService.saveOrUpdate(mapper.CEFToCEFDto(cef)), CEF.class);
 		formateur = DtoTools.convert(formateurService.saveOrUpdate(mapper.FormateurToFormateurDto(formateur)), Formateur.class);		
+		
 		groupe = DtoTools.convert(groupeEtudiantService.saveOrUpdate(mapper.GroupeEtudiantToGroupEtudiantDto(groupe)), GroupeEtudiant.class);
 		promotion = DtoTools.convert(promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion)), Promotion.class);
 		promotion2 = DtoTools.convert(promotionService.saveOrUpdate(mapper.PromotionToPromotionDto(promotion2)), Promotion.class);
