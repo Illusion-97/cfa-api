@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.services.DossierProjetService;
+import fr.dawan.AppliCFABack.services.EtudiantService;
 
 @RestController
 @RequestMapping("/AppliCFABack/dossierProjet")
@@ -25,6 +27,8 @@ public class DossierProjetController {
 
 	@Autowired
 	DossierProjetService dossierProService;
+	@Autowired
+	EtudiantService etudiantService;
 
 	@GetMapping(produces = "application/json")
 	public List<DossierProjetDto> getAll() {
@@ -55,19 +59,31 @@ public class DossierProjetController {
  			return dossierProService.getAllByPage(page, size, "");
  	}
 	
-	@PostMapping(consumes = "application/json", produces = "application/json")
-	public DossierProjetDto save(@RequestBody DossierProjetDto dpDto) {
+	@PostMapping(value = "/save/{id}" ,consumes = "application/json", produces = "application/json")
+	public DossierProjetDto save(@RequestBody DossierProjetDto dpDto, @PathVariable("id") long id) {
 		DossierProjetDto dpDto1 = dossierProService.getByName(dpDto.getNom());
 		if (dpDto1!= null) {
 			return null;
 		}
-		return dossierProService.saveOrUpdate(dpDto);
+		DossierProjetDto dp = dossierProService.saveOrUpdate(dpDto);
+		EtudiantDto eDto = etudiantService.getById(id);
+		eDto.getDossierProjet().add(dp);
+		etudiantService.saveOrUpdate(eDto);
+		return dp;
 	}
 	
 	
-	@DeleteMapping(value = "/delete/{id}", produces = "text/plain")
-	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
+	@DeleteMapping(value = "/{idEtudiant}/delete/{id}", produces = "text/plain")
+	public ResponseEntity<?> deleteById(@PathVariable("idEtudiant") long idEtudiant, @PathVariable("id") long id) {
 		try {
+			EtudiantDto eDto = etudiantService.getById(idEtudiant);
+			for(int i=0;i<eDto.getDossierProjet().size();i++) {
+				if (eDto.getDossierProjet().get(i).getId()==id) {
+					eDto.getDossierProjet().remove(i);
+					
+				}
+			}
+			etudiantService.saveOrUpdate(eDto);
 			dossierProService.deleteById(id);
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
 		} catch (Exception e) {
@@ -77,8 +93,16 @@ public class DossierProjetController {
 	}
 	
 	
-	@PutMapping(consumes = "application/json", produces = "application/json")
-	public DossierProjetDto update(@RequestBody DossierProjetDto dpDto) {
-		return dossierProService.saveOrUpdate(dpDto);
+	@PutMapping(value = "/save/{id}" ,consumes = "application/json", produces = "application/json")
+	public DossierProjetDto update(@RequestBody DossierProjetDto dpDto, @PathVariable("id") long id) {
+		DossierProjetDto dpDto1 = dossierProService.getByName(dpDto.getNom());
+		if (dpDto1!= null) {
+			return null;
+		}
+		DossierProjetDto dp = dossierProService.saveOrUpdate(dpDto);
+		EtudiantDto eDto = etudiantService.getById(id);
+		eDto.getDossierProjet().add(dp);
+		etudiantService.saveOrUpdate(eDto);
+		return dp;
 	}
 }

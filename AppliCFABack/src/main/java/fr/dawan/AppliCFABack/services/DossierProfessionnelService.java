@@ -17,4 +17,6 @@ public interface DossierProfessionnelService {
 	
 	public List<DossierProfessionnelDto> getByIdEtudiant(long id);
 
+	DossierProfessionnelDto getByName(String nom);
+
 }
