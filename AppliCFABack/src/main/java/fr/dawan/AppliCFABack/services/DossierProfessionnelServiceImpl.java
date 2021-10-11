@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.entities.Cursus;
@@ -98,6 +99,18 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 		EtudiantDto e = etudiantService.getById(id);
 		
 		return e.getDossierProfessionnel();
+	}
+
+	@Override
+	public DossierProfessionnelDto getByName(String nom) {
+		// TODO Auto-generated method stub
+		DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dossierProRepo.getByName(nom));
+		if(dpDto!=null) {
+			if(dossierProRepo.getByName(nom).getCursus()==null)
+				dpDto.setCursusDto( mapper.CursusToCursusDto(dossierProRepo.getByName(nom).getCursus()));		
+		return dpDto;
+		}
+		return null;
 	}
 
 }

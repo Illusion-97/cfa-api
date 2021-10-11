@@ -78,7 +78,13 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	}
 	@Override
 	public DossierProjetDto getByName(String nom) {
-		return mapper.DossierProjetToDossierProjetDto(dossierProRepo.getByName(nom));
+		DossierProjetDto dpDto = mapper.DossierProjetToDossierProjetDto(dossierProRepo.getByName(nom));
+		if(dpDto!=null) {
+			if(dossierProRepo.getByName(nom).getProjet()==null)
+				dpDto.setProjet( mapper.ProjetToProjetDto(dossierProRepo.getByName(nom).getProjet()));		
+		return dpDto;
+		}
+		return null;
 	}
 
 	@Override
