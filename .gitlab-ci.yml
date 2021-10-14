@@ -1,11 +1,11 @@
 image: maven:3-jdk-8
 
 variables:
-    MAVEN_OPTS: >
-        -Dmaven.test.skip=true
-        -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
-    ARCHIVE_NAME: cfa-jar
-    BUILD_OUTPUT: target/cfa-java.jar
+  MAVEN_OPTS: >
+    -Dmaven.test.skip=true
+    -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+  ARCHIVE_NAME: cfa-jar
+  BUILD_OUTPUT: target/cfa-java.jar
 
 stages:
   - build
@@ -18,13 +18,12 @@ build:
     # - dind
     - runner-java
   script: 
-   - mvn $MAVEN_OPTS clean package
-   - tar cfJ "$ARCHIVE_NAME.tar.xz" $BUILD_OUTPUT
- artifacts:
+    - mvn $MAVEN_OPTS clean package
+    - tar cfJ "$ARCHIVE_NAME.tar.xz" $BUILD_OUTPUT
+  artifacts:
     expire_in: 1 hour
     paths:
       - "$ARCHIVE_NAME.tar.xz"
-
 
 archive:
   image: lgatica/openssh-client
@@ -37,8 +36,8 @@ archive:
     - chmod 400 archive_pkey
     - chmod 700 .
     - >
-      echo 
-      "put -rp $ARCHIVE_PATH/$ARCHIVE_NAME $ARCHIVE_NAME" 
+      echo
+      "put -rp $ARCHIVE_PATH/$ARCHIVE_NAME.tar.xz $ARCHIVE_NAME.tar.xz"
       > archive_batch
     - >
       sftp
