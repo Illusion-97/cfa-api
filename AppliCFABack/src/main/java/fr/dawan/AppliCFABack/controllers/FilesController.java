@@ -111,4 +111,16 @@ public class FilesController {
 			return "supression échouée";
 
 	}
+	@DeleteMapping(value = "/{directory}/{id}/{directory2}/{fileName}")
+	public String deleteFileByDirectoryAndIdAndDirectory(@PathVariable("directory") String directory,@PathVariable("directory2") String directory2, @PathVariable("id") long id,
+			@PathVariable("fileName") String fileName) {
+
+		String filePath = directory + "/" + id + "/" + directory2+ "/"+ fileName;
+
+		if (fileService.deleteDirectoryWithContent(filePath))
+			return "supression effectuée";
+		else
+			return "supression échouée";
+
+	}
 }
