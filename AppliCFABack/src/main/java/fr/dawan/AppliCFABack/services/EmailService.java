@@ -5,4 +5,6 @@ import fr.dawan.AppliCFABack.entities.Conge;
 public interface EmailService {
 	
 	void alertDemandeCongetoReferent(Conge conge);
+	
+	void newPassword(String email, String password);
 }

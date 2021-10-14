@@ -66,5 +66,15 @@ public class EmailServiceImpl implements EmailService{
         javaMailSender.send(msg);
 		
 	}
+	
+	@Override
+	public void newPassword(String email, String password) {
+		// Envoie un mail avec son mot de passe au mail de la personne inscrite
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo(email);
+		msg.setSubject("noreply - Mot de passe");
+		msg.setText("Voici votre mot de passe temporaire pour le portail cfa: " + password);
+		javaMailSender.send(msg);
+	}
 
 }

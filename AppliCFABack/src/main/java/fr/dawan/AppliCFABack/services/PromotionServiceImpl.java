@@ -23,6 +23,7 @@ import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 
 @Service
@@ -34,6 +35,8 @@ public class PromotionServiceImpl implements PromotionService {
 	
 	@Autowired
 	FilesService filesService;
+	@Autowired
+	InterventionRepository interventionRepository;
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
@@ -87,7 +90,32 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public PromotionDto saveOrUpdate(PromotionDto pDto) {
 		Promotion p = DtoTools.convert(pDto, Promotion.class);
-		promoRepo.saveAndFlush(p);
+		
+		p = promoRepo.saveAndFlush(p);
+		
+		/*
+	
+		//Les interventions sont mappés dans Intervention
+		if(pDto.getInterventionsDto() != null) {
+			//On vérifie pour chaque intervention de promotion
+			for(InterventionDto iDto : pDto.getInterventionsDto()) {
+				Intervention intervention = interventionRepository.findById(iDto.getId()).get();
+				//On vérifie si intervention ne connait pas promotion
+				boolean verif = false;
+				for(Promotion promotion : intervention.getPromotions()) {
+					if(promotion.getId() == p.getId()) verif = true;
+				}
+				//Si intervention ne connait pas promotion :
+				if(!verif) {
+					List<Promotion> promos = intervention.getPromotions();
+					promos.add(promoRepo.getOne(p.getId()));
+					intervention.setPromotions(promos);
+					interventionRepository.saveAndFlush(intervention);
+				}
+			}	
+		}
+		
+		*/
 		
 		filesService.createDirectory("promotions/" + p.getId());
 		

@@ -67,11 +67,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	FilesService filesService;
 	@Autowired
 	FormateurService formateurService;
+	@Autowired 
+	EmailService emailService;
 
 	@Autowired
-	private DtoMapper mapper = new DtoMapperImpl();
-	@Autowired
-	JavaMailSender javaMailSender;
+	private DtoMapper mapper;
 
 	@Override
 	public List<UtilisateurDto> getAll() {
@@ -186,7 +186,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public UtilisateurDto insertUpdate(UtilisateurDto uDto) throws Exception {
 
-		// refus d'insertion :
+		// Refus d'insertion :
 		// Si uDto n'est pas déjà en base (getId() == 0) => creation
 		// Si un utilisateur a la même adresse mail => throw Exception
 
@@ -201,25 +201,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		try {
 			// Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
 			if (user.getId() == 0) {
-				int leftLimit = 48; // numeral '0'
-				int rightLimit = 122; // letter 'z'
-				int targetStringLength = 10;
-				Random random = new Random();
-				
-				// Genere un mot de passe aleatoire de 0 à 9 et de A à Z(Majuscule/minuscule compris) en caractere ASCII
-				String generatedString = random.ints(leftLimit, rightLimit + 1)
-						.filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97)).limit(targetStringLength)
-						.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
-				// appendCodePoint => recupere le String en code ASCII pour le dechiffrer en charactere alphanumerique
-				
-				// Envoie un mail avec son mot de passe au mail de la personne inscrite
-				SimpleMailMessage msg = new SimpleMailMessage();
-				msg.setTo(user.getLogin());
-				msg.setSubject("noreply - Mot de passe");
-				msg.setText("Voici votre mot de passe temporaire: " + generatedString);
-				javaMailSender.send(msg);
-				
-				user.setPassword(HashTools.hashSHA512(generatedString));
+				if(user.getPassword() == null) {
+					user.setPassword(HashTools.hashSHA512(generatePassword()));				
+					emailService.newPassword(user.getLogin(), user.getPassword());		
+				}else {
+					user.setPassword(HashTools.hashSHA512(user.getPassword()));		
+				}
 
 			} else {
 				// Si on a modifié le mdp
@@ -334,23 +321,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public AdresseDto getAdresseByIdUtilisateur(long id) {
 		return mapper.AdresseToAdresseDto(getUtilisateurById(id).getAdresse());
-	}
-
-	// ##################################################
-	// # UTILE #
-	// ##################################################
-
-	private Utilisateur getUtilisateurById(long id) {
-		Optional<Utilisateur> e = utilisateurRepository.findById(id);
-
-		if (e.isPresent())
-			return e.get();
-
-		return null;
-
-//		Utilisateur e = utilisateurRepository.getOne(id);
-//
-//		return e;
 	}
 
 	@Override
@@ -477,4 +447,36 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			return false;
 	}
 
+	
+	// ##################################################
+	// # UTILE #
+	// ##################################################
+
+	private Utilisateur getUtilisateurById(long id) {
+		Optional<Utilisateur> e = utilisateurRepository.findById(id);
+
+		if (e.isPresent())
+			return e.get();
+
+		return null;
+
+//			Utilisateur e = utilisateurRepository.getOne(id);
+//
+//			return e;
+	}
+	
+	private String generatePassword() {
+		int leftLimit = 48; // numeral '0'
+		int rightLimit = 122; // letter 'z'
+		int targetStringLength = 10;
+		Random random = new Random();
+		
+		// Genere un mot de passe aleatoire de 0 à 9 et de A à Z(Majuscule/minuscule compris) en caractere ASCII
+		String generatedString = random.ints(leftLimit, rightLimit + 1)
+				.filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97)).limit(targetStringLength)
+				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+		// appendCodePoint => recupere le String en code ASCII pour le dechiffrer en charactere alphanumerique
+		
+		return generatedString;
+	}
 }

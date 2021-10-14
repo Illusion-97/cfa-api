@@ -125,14 +125,15 @@ public class InterventionServiceImpl implements InterventionService {
 					lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
 			}
 
-//			List<FormateurDto> lstFormDto = new ArrayList<FormateurDto>();
-//			for (Formateur formateur : intervention.getFormateurs()) {
-//				if (formateur != null)
-//					lstFormDto.add(DtoTools.convert(formateur, FormateurDto.class));
-//			}
-//
-//			// On ajoute la liste des formateurs a l'intervention
-//			interventionDto.setFormateursDto(lstFormDto);
+			List<FormateurDto> lstFormDto = new ArrayList<FormateurDto>();
+			for (Formateur formateur : intervention.getFormateurs()) {
+				if (formateur != null)
+					lstFormDto.add(DtoTools.convert(formateur, FormateurDto.class));
+			}
+
+			// On ajoute la liste des formateurs a l'intervention
+			interventionDto.setFormateursDto(lstFormDto);
+			
 			// On ajoute la liste de promotions a l'intervention
 			interventionDto.setPromotionsDto(lstPromoDto);
 			// On ajoute l'intervention a la liste d'intervention
