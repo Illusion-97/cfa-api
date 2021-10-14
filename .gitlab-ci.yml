@@ -1,3 +1,12 @@
+image: maven:3-jdk-8
+
+variables:
+    MAVEN_OPTS: >
+        -Dmaven.test.skip=true
+        -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+    ARCHIVE_NAME: cfa-jar
+    BUILD_OUTPUT: target/cfa-java.jar
+
 stages:
   - build
   - test
@@ -8,8 +17,14 @@ build:
   tags:
     # - dind
     - runner-java
-  script:
-    - echo "UP TO YOU"
+  script: 
+   - mvn $MAVEN_OPTS clean package
+   - tar cfJ "$ARCHIVE_NAME.tar.xz" $BUILD_OUTPUT
+ artifacts:
+    expire_in: 1 hour
+    paths:
+      - "$ARCHIVE_NAME.tar.xz"
+
 
 .archive:
   image: lgatica/openssh-client
