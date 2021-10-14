@@ -26,7 +26,7 @@ build:
       - "$ARCHIVE_NAME.tar.xz"
 
 
-.archive:
+archive:
   image: lgatica/openssh-client
   stage: deploy
   tags:
