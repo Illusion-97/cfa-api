@@ -511,31 +511,36 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
 
-		List<DevoirDto> lstdDto =  new ArrayList<DevoirDto>();
-		EtudiantDto eDto = getById(id);
-		List<Devoir> lstD = devoirRepository.findAll();
-		for (Devoir devoir : lstD) {
-			for (PromotionDto pDto : eDto.getPromotionsDto()) {
-				for (InterventionDto iDto : pDto.getInterventionsDto()) {
-					if (devoir.getIntervention().getId() == iDto.getId()) {
-						DevoirDto dDto = mapper.DevoirToDevoirDto(devoir);
-						dDto.setInterventionDto(iDto);
-						dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(devoir.getIntervention().getFormation()));
-						lstdDto.add(dDto);
-					}
-				}
-			}
-			
+//		List<DevoirDto> lstdDto =  new ArrayList<DevoirDto>();
+//		EtudiantDto eDto = getById(id);
+//		List<Devoir> lstD = devoirRepository.findAll();
+//		
+//		for (PromotionDto pDto : eDto.getPromotionsDto()) {
+//			for (InterventionDto iDto : pDto.getInterventionsDto()) {
+//				for (Devoir devoir : lstD) {
+//					if (devoir.getIntervention().getId() == iDto.getId()) {
+//						DevoirDto dDto = mapper.DevoirToDevoirDto(devoir);
+//						dDto.setInterventionDto(iDto);
+//						dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(devoir.getIntervention().getFormation()));
+//						lstdDto.add(dDto);
+//					}
+//				}
+//			}			
+//		}
+//		
+//		return lstdDto;
+		
+		List<Devoir> lst = devoirRepository.findAllByInterventionPromotionsEtudiantsId(id, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<DevoirDto> res = new ArrayList<DevoirDto>();
+		
+		for(Devoir d : lst) {
+			DevoirDto dDto = mapper.DevoirToDevoirDto(d);			
+			dDto.setInterventionDto(mapper.InterventionToInterventionDto(d.getIntervention()));
+			dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(d.getIntervention().getFormation()));			
+			res.add(dDto);
 		}
 		
-		return lstdDto;
-//		List<Devoir> lst = devoirRepository.getDevoirsByIdEtudiant(id,  PageRequest.of(page, size)).get().collect(Collectors.toList());
-//		List<DevoirDto> res = new ArrayList<DevoirDto>();
-//		
-//		for(Devoir n : lst)
-//			res.add(DtoTools.convert(n, DevoirDto.class));
-//		
-//		return res;
+		return res;
 	}
 
 	@Override
