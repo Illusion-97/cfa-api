@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
+import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.ProjetService;
 
 @RestController
@@ -26,6 +30,9 @@ public class ProjetController {
 
 	@Autowired
 	ProjetService projetService;
+	
+	@Autowired
+	EtudiantService etudiantService;
 
 	// ##################################################
 	// # GET #
@@ -75,6 +82,22 @@ public class ProjetController {
 	public List<ProjetDto> getByGroupeId(@PathVariable("id") long id) {
     	return projetService.getByGroupeId(id);
 	}
+    @GetMapping(value = "/etudiant/{id}", produces = "application/json")
+   	public List<ProjetDto> getByIdEtudiant(@PathVariable("id") long id) {
+       EtudiantDto eDto = etudiantService.getById(id);
+       List<ProjetDto> lstProjetDto = projetService.getAllProjet();
+       List<GroupeEtudiantDto> gpeDto = eDto.getGroupesDto();
+       List<ProjetDto> lstProjetDtoEtudiant = new ArrayList<ProjetDto>();
+       for (GroupeEtudiantDto groupeEtudiantDto : gpeDto) {
+    	  for (ProjetDto projetDto : lstProjetDto) {
+    		  if (projetDto.getGroupeDto().getId()==groupeEtudiantDto.getId()) {
+				lstProjetDtoEtudiant.add(projetDto);
+			}
+			
+		}
+	}
+       	return lstProjetDtoEtudiant;
+   	}
     
 	// ##################################################
 	// # POST #
