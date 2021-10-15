@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
+import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -38,7 +39,9 @@ public class ProjetServiceImpl implements ProjetService {
 
 		List<ProjetDto> lstDto = new ArrayList<ProjetDto>();
 		for (Projet p : lst) {
-			lstDto.add(mapper.ProjetToProjetDto(p));
+			ProjetDto pDto = mapper.ProjetToProjetDto(p);
+			pDto.setGroupe(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
+			lstDto.add(pDto);
 		}
 		return lstDto;
 	}
@@ -65,8 +68,12 @@ public class ProjetServiceImpl implements ProjetService {
 	@Override
 	public ProjetDto getById(long id) {
 		Optional<Projet> p = projetRepository.findById(id);
-		if (p.isPresent())
-			return mapper.ProjetToProjetDto(p.get());
+		if (p.isPresent()) {
+
+			ProjetDto pDto = mapper.ProjetToProjetDto(p.get());
+			pDto.setGroupe(mapper.GroupeEtudiantToGroupEtudiantDto(p.get().getGroupe()));
+			return pDto;
+		}
 
 		return null;
 	}
@@ -94,7 +101,9 @@ public class ProjetServiceImpl implements ProjetService {
 		
 		List<ProjetDto> result = new ArrayList<ProjetDto>();
 		for(Projet p : projets) {
-			result.add(mapper.ProjetToProjetDto(p));
+		ProjetDto pDto = mapper.ProjetToProjetDto(p);
+		pDto.setGroupe(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
+		result.add(pDto);
 		}
 		
 		return result;
