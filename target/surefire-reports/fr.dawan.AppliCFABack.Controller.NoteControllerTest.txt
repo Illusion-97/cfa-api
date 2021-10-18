@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+Test set: fr.dawan.AppliCFABack.Controller.NoteControllerTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.062 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.NoteControllerTest
+testFindById  Time elapsed: 0.011 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.noteObtenu"
+	at fr.dawan.AppliCFABack.Controller.NoteControllerTest.testFindById(NoteControllerTest.java:74)
+Caused by: java.lang.IllegalArgumentException: json can not be null or empty
+	at fr.dawan.AppliCFABack.Controller.NoteControllerTest.testFindById(NoteControllerTest.java:74)
+
+testDelete  Time elapsed: 0.007 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<202> but was:<404>
+	at fr.dawan.AppliCFABack.Controller.NoteControllerTest.testDelete(NoteControllerTest.java:138)
+

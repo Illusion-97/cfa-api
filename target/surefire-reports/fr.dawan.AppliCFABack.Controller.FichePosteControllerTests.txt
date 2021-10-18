@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+Test set: fr.dawan.AppliCFABack.Controller.FichePosteControllerTests
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.062 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.FichePosteControllerTests
+testVindById  Time elapsed: 0.01 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.intitule"
+	at fr.dawan.AppliCFABack.Controller.FichePosteControllerTests.testVindById(FichePosteControllerTests.java:75)
+Caused by: java.lang.IllegalArgumentException: json can not be null or empty
+	at fr.dawan.AppliCFABack.Controller.FichePosteControllerTests.testVindById(FichePosteControllerTests.java:75)
+
+testDelete  Time elapsed: 0.008 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<202> but was:<404>
+	at fr.dawan.AppliCFABack.Controller.FichePosteControllerTests.testDelete(FichePosteControllerTests.java:142)
+

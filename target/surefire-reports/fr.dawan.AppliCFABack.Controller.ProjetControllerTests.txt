@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+Test set: fr.dawan.AppliCFABack.Controller.ProjetControllerTests
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.036 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.ProjetControllerTests
+testFindById  Time elapsed: 0.006 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.nom"
+	at fr.dawan.AppliCFABack.Controller.ProjetControllerTests.testFindById(ProjetControllerTests.java:75)
+Caused by: java.lang.IllegalArgumentException: json can not be null or empty
+	at fr.dawan.AppliCFABack.Controller.ProjetControllerTests.testFindById(ProjetControllerTests.java:75)
+
+testDelete  Time elapsed: 0.006 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<202> but was:<404>
+	at fr.dawan.AppliCFABack.Controller.ProjetControllerTests.testDelete(ProjetControllerTests.java:140)
+
