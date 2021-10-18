@@ -59,7 +59,7 @@ public class PromotionServiceImpl implements PromotionService {
 		pDto.setCursusDto(mapper.CursusToCursusDto(promo.getCursus()));
 		pDto.setCentreFormationDto(mapper.CentreFormationToCentreFormationDto(promo.getCentreFormation()));
 		pDto.setReferentPedagogiqueDto(mapper.UtilisateurToUtilisateurDto(promo.getReferentPedagogique()));
-		pDto.setCefDto(mapper.UtilisateurToUtilisateurDto(promo.getCef()));		
+		pDto.setCefDto(mapper.CEFToCEFDto(promo.getCef()));		
 		
 		List<Etudiant> etudiants = promo.getEtudiants();
 		List<EtudiantDto> eDtos = new ArrayList<EtudiantDto>();	

@@ -48,7 +48,9 @@ public class CEFServiceImpl implements CEFService {
 		// conversion vers Dto
 		List<CEFDto> lstDto = new ArrayList<CEFDto>();
 		for (CEF c : lst) {
-			lstDto.add(mapper.CEFToCEFDto(c));
+			CEFDto cDto = mapper.CEFToCEFDto(c);
+			cDto.setPersonneDto(mapper.UtilisateurToUtilisateurDto(c.getPersonne()));
+			lstDto.add(cDto);
 		}
 		return lstDto;
 	}
@@ -76,7 +78,7 @@ public class CEFServiceImpl implements CEFService {
 				c.getPersonne().setPassword(HashTools.hashSHA512(c.getPersonne().getPassword()));
 			}else {
 				//Si on a modifié le mdp
-				CEF cefInDB = cefRepository.getOne(c.getPersonne().getId());
+				CEF cefInDB = cefRepository.getOne(c.getId());
 				if(!cefInDB.getPersonne().getPassword().equals(c.getPersonne().getPassword())) {
 	                c.getPersonne().setPassword(HashTools.hashSHA512(c.getPersonne().getPassword()));
 	            }

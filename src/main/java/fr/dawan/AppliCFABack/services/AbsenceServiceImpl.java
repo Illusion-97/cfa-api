@@ -78,12 +78,12 @@ public class AbsenceServiceImpl implements AbsenceService {
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(
-				absenceRepository.countByEtudiantNomContainingOrEtudiantPrenomContainingAllIgnoreCase(search, search));
+				absenceRepository.countByEtudiantPersonneNomContainingOrEtudiantPersonnePrenomContainingAllIgnoreCase(search, search));
 	}
 
 	@Override
 	public List<AbsenceDto> getAllAbsence(int page, int size, String search) {
-		List<Absence> lst = absenceRepository.findByEtudiantNomContainingOrEtudiantPrenomContainingAllIgnoreCase(search,
+		List<Absence> lst = absenceRepository.findByEtudiantPersonneNomContainingOrEtudiantPersonnePrenomContainingAllIgnoreCase(search,
 				search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<AbsenceDto> lstDto = new ArrayList<AbsenceDto>();
 		for (Absence a : lst) {

@@ -104,6 +104,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		for (Etudiant e : lst) {
 			EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(e);
+			UtilisateurDto personne = mapper.UtilisateurToUtilisateurDto(e.getPersonne());
 			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getPersonne().getAdresse());
 			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getPersonne().getEntreprise());
 
@@ -146,9 +147,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 
-			etuDto.setAdresseDto(addrDto);
+			etuDto.setPersonneDto(personne);
+			etuDto.getPersonneDto().setAdresseDto(addrDto);
 			etuDto.setGroupesDto(lstGrpEtuDto);
-			etuDto.setEntrepriseDto(entDto);
+			etuDto.getPersonneDto().setEntrepriseDto(entDto);
 			etuDto.setPromotionsDto(lstPromoDto);
 			etuDto.setFormateurReferentDto(refDto);
 			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
@@ -193,7 +195,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e.get());
 		
 		eDto.setPersonneDto(mapper.UtilisateurToUtilisateurDto(e.get().getPersonne()));
-		eDto.setAdresseDto(mapper.AdresseToAdresseDto(e.get().getAdresse()));
+		eDto.getPersonneDto().setAdresseDto(mapper.AdresseToAdresseDto(e.get().getPersonne().getAdresse()));
 		eDto.setFormateurReferentDto(mapper.UtilisateurToUtilisateurDto(e.get().getFormateurReferent()));
 		eDto.setManagerDto(mapper.UtilisateurToUtilisateurDto(e.get().getManager()));
 
@@ -204,10 +206,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 		eDto.setGroupesDto(groupes);
 		
 		List<UtilisateurRoleDto> URDto = new ArrayList<UtilisateurRoleDto>();
-		for (UtilisateurRole r : e.get().getRoles()) {
+		for (UtilisateurRole r : e.get().getPersonne().getRoles()) {
 			URDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
 		}
-		eDto.setRolesDto(URDto);
+		eDto.getPersonneDto().setRolesDto(URDto);
 		
 		List<PromotionDto> promotions = new ArrayList<PromotionDto>();
 		for(Promotion p : e.get().getPromotions()) {
@@ -249,13 +251,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 		//HashTools throw Exception
 		try {
 			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-			if(etudiant.getId() == 0) {
-				etudiant.setPassword(HashTools.hashSHA512(etudiant.getPassword()));
+			if(etudiant.getPersonne().getId() == 0) {
+				etudiant.getPersonne().setPassword(HashTools.hashSHA512(etudiant.getPersonne().getPassword()));
 			}else {
 				//Si on a modifié le mdp
 				Etudiant etudiantInDB = etudiantRepository.getOne(etudiant.getId());
-				if(!etudiantInDB.getPassword().equals(etudiant.getPassword())) {
-					etudiant.setPassword(HashTools.hashSHA512(etudiant.getPassword()));
+				if(!etudiantInDB.getPersonne().getPassword().equals(etudiant.getPersonne().getPassword())) {
+					etudiant.getPersonne().setPassword(HashTools.hashSHA512(etudiant.getPersonne().getPassword()));
 	            }
 			}	
 		}catch (Exception ex) {
@@ -264,7 +266,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		
 		etudiant = etudiantRepository.saveAndFlush(etudiant);
 
-		Path path = Paths.get("./src/main/resources/files/utilisateurs/" + etudiant.getId());
+		Path path = Paths.get("./src/main/resources/files/utilisateurs/" + etudiant.getPersonne().getId());
 
 		try {
 			Files.createDirectories(path);
@@ -282,6 +284,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		if (etudiant == null)
 			return;
+		
+		Utilisateur personne = etudiant.getPersonne();
+		etudiant.setPersonne(null);
+		personne.setEtudiant(null);
+		
+		etudiantRepository.save(etudiant);
+		utilisateurRepository.save(personne);
 
 		// Etudiant
 		// @ManyToMany Promotion promotions
@@ -300,7 +309,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		for (Promotion p : promotions) {
 			for (Etudiant e : p.getEtudiants())
-				if (e.getId() == etudiant.getId()) {
+				if (e.getPersonne().getId() == etudiant.getPersonne().getId()) {
 					toDelete = e;
 					break;
 				}
@@ -310,7 +319,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		for (GroupeEtudiant g : groupes) {
 			for (Etudiant e : g.getEtudiants())
-				if (e.getId() == etudiant.getId()) {
+				if (e.getPersonne().getId() == etudiant.getPersonne().getId()) {
 					toDelete = e;
 					break;
 				}
@@ -382,12 +391,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Override
 	public EntrepriseDto getEntrepriseByIdEtudiant(long id) {
-		return mapper.EntrepriseToEntrepriseDto(getEtudiantById(id).getEntreprise());
+		return mapper.EntrepriseToEntrepriseDto(getEtudiantById(id).getPersonne().getEntreprise());
 	}
 
 	@Override
 	public AdresseDto getAdresseByIdEtudiant(long id) {
-		return mapper.AdresseToAdresseDto(getEtudiantById(id).getAdresse());
+		return mapper.AdresseToAdresseDto(getEtudiantById(id).getPersonne().getAdresse());
 	}
 
 	// ##################################################
@@ -472,7 +481,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	private Etudiant getEtudiantById(long id) {
 		Optional<Etudiant> e = etudiantRepository.findById(id);
 
-		if (e.isPresent())
+		if (e.isPresent()) 
 			return e.get();
 
 		return null;
@@ -548,22 +557,23 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public CountDto count(String search) {
 		// TODO Auto-generated method stub
 		return new CountDto(etudiantRepository
-				.countDistinctByPrenomContainingIgnoringCaseOrNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
+				.countDistinctByPersonnePrenomContainingIgnoringCaseOrPersonneNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
 						search, search, search, search, search, search));
 	}
 
 	@Override
 	public List<EtudiantDto> getAllByPage(int page, int size, String search) {
 		List<Etudiant> lstStud = etudiantRepository
-				.findDistinctAllByPrenomContainingIgnoringCaseOrNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
+				.findDistinctAllByPersonnePrenomContainingIgnoringCaseOrPersonneNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
 						search, search, search, search, search, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
 		List<EtudiantDto> res = new ArrayList<EtudiantDto>();
 
 		for (Etudiant e : lstStud) {
 			EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(e);
-			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getAdresse());
-			EntrepriseDto entDto =mapper.EntrepriseToEntrepriseDto(e.getEntreprise());
+			UtilisateurDto pDto =  mapper.UtilisateurToUtilisateurDto(e.getPersonne());
+			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getPersonne().getAdresse());
+			EntrepriseDto entDto =mapper.EntrepriseToEntrepriseDto(e.getPersonne().getEntreprise());
 			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 			UtilisateurDto managDto = mapper.UtilisateurToUtilisateurDto(e.getManager());
 
@@ -597,10 +607,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 				lstDossierProfessionnelDto.add(dpDto);
 			}
 			
-
-			etuDto.setAdresseDto(addrDto);
+			
+			etuDto.setPersonneDto(pDto);
+			etuDto.getPersonneDto().setAdresseDto(addrDto);
 			etuDto.setGroupesDto(lstGrpEtuDto);
-			etuDto.setEntrepriseDto(entDto);
+			etuDto.getPersonneDto().setEntrepriseDto(entDto);
 			etuDto.setPromotionsDto(lstPromoDto);
 			etuDto.setFormateurReferentDto(refDto);
 			etuDto.setManagerDto(managDto);

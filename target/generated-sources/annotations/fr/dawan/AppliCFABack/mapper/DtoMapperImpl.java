@@ -54,7 +54,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-10-18T10:56:32+0200",
+    date = "2021-10-18T15:07:26+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -99,6 +99,8 @@ public class DtoMapperImpl implements DtoMapper {
         }
 
         CEFDto cEFDto = new CEFDto();
+
+        cEFDto.setId( cef.getId() );
 
         return cEFDto;
     }
@@ -188,6 +190,7 @@ public class DtoMapperImpl implements DtoMapper {
 
         EtudiantDto etudiantDto = new EtudiantDto();
 
+        etudiantDto.setId( etudiant.getId() );
         etudiantDto.setDossierProfessionnel( dossierProfessionnelListToDossierProfessionnelDtoList( etudiant.getDossierProfessionnel() ) );
         etudiantDto.setDossierProjet( dossierProjetListToDossierProjetDtoList( etudiant.getDossierProjet() ) );
 
@@ -215,6 +218,8 @@ public class DtoMapperImpl implements DtoMapper {
         }
 
         FormateurDto formateurDto = new FormateurDto();
+
+        formateurDto.setId( formateur.getId() );
 
         return formateurDto;
     }
@@ -335,13 +340,13 @@ public class DtoMapperImpl implements DtoMapper {
 
         UtilisateurDto utilisateurDto = new UtilisateurDto();
 
-        utilisateurDto.setId( utilisateur.getId() );
-        utilisateurDto.setLogin( utilisateur.getLogin() );
-        utilisateurDto.setPassword( utilisateur.getPassword() );
-        utilisateurDto.setPrenom( utilisateur.getPrenom() );
-        utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setCivilite( utilisateur.getCivilite() );
         utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
+        utilisateurDto.setId( utilisateur.getId() );
+        utilisateurDto.setLogin( utilisateur.getLogin() );
+        utilisateurDto.setNom( utilisateur.getNom() );
+        utilisateurDto.setPassword( utilisateur.getPassword() );
+        utilisateurDto.setPrenom( utilisateur.getPrenom() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
 
         return utilisateurDto;

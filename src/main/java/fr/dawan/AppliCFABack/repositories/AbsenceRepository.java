@@ -23,10 +23,10 @@ public interface AbsenceRepository extends JpaRepository<Absence, Long> {
 
 	List<Absence> findAllByEtudiantId(long id);
 
-	Page<Absence> findByEtudiantNomContainingOrEtudiantPrenomContainingAllIgnoreCase(String prenom, String nom,
+	Page<Absence> findByEtudiantPersonneNomContainingOrEtudiantPersonnePrenomContainingAllIgnoreCase(String prenom, String nom,
 			Pageable p);
 
-	long countByEtudiantNomContainingOrEtudiantPrenomContainingAllIgnoreCase(String prenom, String nom);
+	long countByEtudiantPersonneNomContainingOrEtudiantPersonnePrenomContainingAllIgnoreCase(String prenom, String nom);
 
 	List<Absence> findByEtudiantPromotionsId(long id);
 

@@ -142,6 +142,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
 			}
 			uDto.setRolesDto(utilisateurRoleDto);
+			
+			if(userOpt.get().getEtudiant() != null) uDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(userOpt.get().getEtudiant()));
+			if(userOpt.get().getFormateur() != null) uDto.setFormateurDto(mapper.FormateurToFormateurDto(userOpt.get().getFormateur()));
+			if(userOpt.get().getCef() != null) uDto.setCefDto(mapper.CEFToCEFDto(userOpt.get().getCef()));
 
 			return uDto;
 		}
@@ -171,6 +175,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 		}
 		utilisateurDto.setRolesDto(lstUsrRoleDto);
+		
+		utilisateurDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(user.getEtudiant()));
+		utilisateurDto.setFormateurDto(mapper.FormateurToFormateurDto(user.getFormateur()));
+		utilisateurDto.setCefDto(mapper.CEFToCEFDto(user.getCef()));
 
 		return utilisateurDto;
 	}
@@ -344,6 +352,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 			}
 			utilisateurDto.setRolesDto(lstUsrRoleDto);
+			
+			utilisateurDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(utilisateur.getEtudiant()));
+			utilisateurDto.setFormateurDto(mapper.FormateurToFormateurDto(utilisateur.getFormateur()));
+			utilisateurDto.setCefDto(mapper.CEFToCEFDto(utilisateur.getCef()));
 
 			lstUsrDto.add(utilisateurDto);
 		}
@@ -372,6 +384,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 			}
 			utilisateurDto.setRolesDto(lstUsrRoleDto);
+			
+			utilisateurDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(utilisateur.getEtudiant()));
+			utilisateurDto.setFormateurDto(mapper.FormateurToFormateurDto(utilisateur.getFormateur()));
+			utilisateurDto.setCefDto(mapper.CEFToCEFDto(utilisateur.getCef()));
 
 			return utilisateurDto;
 		}
@@ -460,9 +476,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return null;
 
-//			Utilisateur e = utilisateurRepository.getOne(id);
-//
-//			return e;
 	}
 	
 	private String generatePassword() {

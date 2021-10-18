@@ -18,6 +18,7 @@ import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -38,13 +39,18 @@ public class JourneePlanningServiceTest {
 		intervention2.setDateDebut(LocalDate.of(2021, 10, 31));
 		intervention2.setDateFin(LocalDate.of(2021, 11, 12));
 		
+		Utilisateur monFormateur1 = new Utilisateur();
+		monFormateur1.setNom("formateur 1 nom");
+		monFormateur1.setPrenom("formateur 1 prenom");		
 		Formateur formateur1 = new Formateur();
-		formateur1.setNom("formateur 1 nom");
-		formateur1.setPrenom("formateur 1 prenom");
+		formateur1.setPersonne(monFormateur1);
 		
+		
+		Utilisateur monFormateur2 = new Utilisateur();
+		monFormateur2.setNom("formateur 1 nom");
+		monFormateur2.setPrenom("formateur 1 prenom");		
 		Formateur formateur2 = new Formateur();
-		formateur2.setNom("formateur 2 nom");
-		formateur2.setPrenom("formateur 2 prenom");
+		formateur2.setPersonne(monFormateur2);
 		
 		Formation formation1 = new Formation();
 		formation1.setContenu("formation 1 contenu");
@@ -77,14 +83,14 @@ public class JourneePlanningServiceTest {
 		
 		//Journee 0
 		assertEquals(LocalDate.of(2021, 4, 1), result.get(0).getDate());
-		assertEquals("formateur 1 nom", result.get(0).getFormateurDto().get(0).getNom());
-		assertEquals("formateur 2 nom", result.get(0).getFormateurDto().get(1).getNom());
+		assertEquals("formateur 1 nom", result.get(0).getFormateurDto().get(0).getPersonneDto().getNom());
+		assertEquals("formateur 2 nom", result.get(0).getFormateurDto().get(1).getPersonneDto().getNom());
 		assertEquals("formation 1 titre", result.get(0).getFormationDto().getTitre());
 		
 		//Journee 4
 		assertEquals(LocalDate.of(2021, 11, 2), result.get(4).getDate());
-		assertEquals("formateur 1 nom", result.get(4).getFormateurDto().get(0).getNom());
-		assertEquals("formateur 2 nom", result.get(4).getFormateurDto().get(1).getNom());
+		assertEquals("formateur 1 nom", result.get(4).getFormateurDto().get(0).getPersonneDto().getNom());
+		assertEquals("formateur 2 nom", result.get(4).getFormateurDto().get(1).getPersonneDto().getNom());
 		assertEquals("formation 2 titre", result.get(4).getFormationDto().getTitre());
 		
 		for(JourneePlanningDto j : result) {

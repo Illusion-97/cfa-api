@@ -63,7 +63,7 @@ public class FormateurServiceImpl implements FormateurService {
 	@Override
 	public List<FormateurDto> getAllByPageWithKeyword(int page, int size, String search) {
 		List<Formateur> lstFor = formateurRepository
-				.findAllByPrenomContainingOrNomContainingAllIgnoreCase(search, search, PageRequest.of(page, size)).get()
+				.findAllByPersonnePrenomContainingOrPersonneNomContainingAllIgnoreCase(search, search, PageRequest.of(page, size)).get()
 				.collect(Collectors.toList());
 		List<FormateurDto> lstDto = new ArrayList<FormateurDto>();
 
@@ -89,13 +89,13 @@ public class FormateurServiceImpl implements FormateurService {
 		//HashTools throw Exception
 		try {
 			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-			if(formateur.getId() == 0) {
-				formateur.setPassword(HashTools.hashSHA512(formateur.getPassword()));
+			if(formateur.getPersonne().getId() == 0) {
+				formateur.getPersonne().setPassword(HashTools.hashSHA512(formateur.getPersonne().getPassword()));
 			}else {
 				//Si on a modifié le mdp
 				Formateur formateurInDB = formateurRepository.getOne(formateur.getId());
-				if(!formateurInDB.getPassword().equals(formateur.getPassword())) {
-					formateur.setPassword(HashTools.hashSHA512(formateur.getPassword()));
+				if(!formateurInDB.getPersonne().getPassword().equals(formateur.getPersonne().getPassword())) {
+					formateur.getPersonne().setPassword(HashTools.hashSHA512(formateur.getPersonne().getPassword()));
 	            }
 			}	
 		}catch (Exception e) {
@@ -138,6 +138,7 @@ public class FormateurServiceImpl implements FormateurService {
 				if (intervention != null)
 					lstInterDto.add(mapper.InterventionToInterventionDto(intervention));
 			}
+			formateurDto.setPersonneDto(mapper.UtilisateurToUtilisateurDto(formateur.getPersonne()));
 			formateurDto.setInterventionsDto(lstInterDto);
 			lstDto.add(formateurDto);
 		}
@@ -146,7 +147,7 @@ public class FormateurServiceImpl implements FormateurService {
 
 	@Override // nb de formateur
 	public CountDto count(String search) {
-		return new CountDto(formateurRepository.countByPrenomContainingOrNomContainingAllIgnoreCase(search, search));
+		return new CountDto(formateurRepository.countByPersonnePrenomContainingOrPersonneNomContainingAllIgnoreCase(search, search));
 	}
 
 //	// Recupere les interventions par rapport a l'id du formateur

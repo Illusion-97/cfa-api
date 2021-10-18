@@ -85,8 +85,8 @@ public class CEFControllerTests {
 	void testSave() {
 		try {
 			CEFDto eToInsert = new CEFDto();
-			eToInsert.setNom("Cef save nom save");
-			eToInsert.setPrenom("Cef prenom save");
+//			eToInsert.setNom("Cef save nom save");
+//			eToInsert.setPrenom("Cef prenom save");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
@@ -109,8 +109,8 @@ public class CEFControllerTests {
 
 		try {
 			CEFDto cDto = cefController.getById(idCEF+1);
-			cDto.setNom("Cef nom update");
-			cDto.setPrenom("Cef prenom update");
+//			cDto.setNom("Cef nom update");
+//			cDto.setPrenom("Cef prenom update");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(cDto);
@@ -122,8 +122,8 @@ public class CEFControllerTests {
 
 			CEFDto res = objectMapper.readValue(jsonReponse, CEFDto.class);
 			assertEquals(res.getId(), cDto.getId());
-			assertEquals(res.getNom(),cDto.getNom());
-			assertEquals(res.getPrenom(),cDto.getPrenom());
+//			assertEquals(res.getNom(),cDto.getNom());
+//			assertEquals(res.getPrenom(),cDto.getPrenom());
 
 		} catch (Exception e) {
 			fail(e.getMessage());
