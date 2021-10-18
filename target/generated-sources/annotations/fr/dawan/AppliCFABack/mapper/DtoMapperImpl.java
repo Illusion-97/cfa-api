@@ -54,8 +54,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-10-15T10:43:27+0200",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_271 (Oracle Corporation)"
+    date = "2021-10-18T10:45:28+0200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -67,9 +67,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         AbsenceDto absenceDto = new AbsenceDto();
 
-        absenceDto.setId( absence.getId() );
         absenceDto.setDateDebut( absence.getDateDebut() );
         absenceDto.setDateFin( absence.getDateFin() );
+        absenceDto.setId( absence.getId() );
         absenceDto.setJustificatif( absence.getJustificatif() );
 
         return absenceDto;
@@ -83,11 +83,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         AdresseDto adresseDto = new AdresseDto();
 
+        adresseDto.setCodePostal( adresse.getCodePostal() );
         adresseDto.setId( adresse.getId() );
         adresseDto.setNumero( adresse.getNumero() );
         adresseDto.setRue( adresse.getRue() );
         adresseDto.setVille( adresse.getVille() );
-        adresseDto.setCodePostal( adresse.getCodePostal() );
 
         return adresseDto;
     }
@@ -100,12 +100,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         CEFDto cEFDto = new CEFDto();
 
-        cEFDto.setLogin( cef.getLogin() );
-        cEFDto.setPassword( cef.getPassword() );
-        cEFDto.setPrenom( cef.getPrenom() );
-        cEFDto.setNom( cef.getNom() );
         cEFDto.setCivilite( cef.getCivilite() );
         cEFDto.setDateDeNaissance( cef.getDateDeNaissance() );
+        cEFDto.setLogin( cef.getLogin() );
+        cEFDto.setNom( cef.getNom() );
+        cEFDto.setPassword( cef.getPassword() );
+        cEFDto.setPrenom( cef.getPrenom() );
         cEFDto.setTelephone( cef.getTelephone() );
         cEFDto.setId( cef.getId() );
 
@@ -134,13 +134,13 @@ public class DtoMapperImpl implements DtoMapper {
 
         CongeDto congeDto = new CongeDto();
 
-        congeDto.setId( conge.getId() );
         congeDto.setDateDebut( conge.getDateDebut() );
         congeDto.setDateFin( conge.getDateFin() );
-        congeDto.setMotif( conge.getMotif() );
-        congeDto.setType( conge.getType() );
-        congeDto.setStatus( conge.getStatus() );
+        congeDto.setId( conge.getId() );
         congeDto.setJustificatif( conge.getJustificatif() );
+        congeDto.setMotif( conge.getMotif() );
+        congeDto.setStatus( conge.getStatus() );
+        congeDto.setType( conge.getType() );
 
         return congeDto;
     }
@@ -167,10 +167,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         DevoirDto devoirDto = new DevoirDto();
 
-        devoirDto.setId( devoir.getId() );
-        devoirDto.setEnonce( devoir.getEnonce() );
         devoirDto.setDateDebut( devoir.getDateDebut() );
         devoirDto.setDateFin( devoir.getDateFin() );
+        devoirDto.setEnonce( devoir.getEnonce() );
+        devoirDto.setId( devoir.getId() );
 
         return devoirDto;
     }
@@ -197,16 +197,16 @@ public class DtoMapperImpl implements DtoMapper {
 
         EtudiantDto etudiantDto = new EtudiantDto();
 
-        etudiantDto.setLogin( etudiant.getLogin() );
-        etudiantDto.setPassword( etudiant.getPassword() );
-        etudiantDto.setPrenom( etudiant.getPrenom() );
-        etudiantDto.setNom( etudiant.getNom() );
         etudiantDto.setCivilite( etudiant.getCivilite() );
         etudiantDto.setDateDeNaissance( etudiant.getDateDeNaissance() );
+        etudiantDto.setLogin( etudiant.getLogin() );
+        etudiantDto.setNom( etudiant.getNom() );
+        etudiantDto.setPassword( etudiant.getPassword() );
+        etudiantDto.setPrenom( etudiant.getPrenom() );
         etudiantDto.setTelephone( etudiant.getTelephone() );
-        etudiantDto.setId( etudiant.getId() );
         etudiantDto.setDossierProfessionnel( dossierProfessionnelListToDossierProfessionnelDtoList( etudiant.getDossierProfessionnel() ) );
         etudiantDto.setDossierProjet( dossierProjetListToDossierProjetDtoList( etudiant.getDossierProjet() ) );
+        etudiantDto.setId( etudiant.getId() );
 
         return etudiantDto;
     }
@@ -219,8 +219,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExamenDto examenDto = new ExamenDto();
 
-        examenDto.setId( examen.getId() );
         examenDto.setEnonce( examen.getEnonce() );
+        examenDto.setId( examen.getId() );
 
         return examenDto;
     }
@@ -233,12 +233,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         FormateurDto formateurDto = new FormateurDto();
 
-        formateurDto.setLogin( formateur.getLogin() );
-        formateurDto.setPassword( formateur.getPassword() );
-        formateurDto.setPrenom( formateur.getPrenom() );
-        formateurDto.setNom( formateur.getNom() );
         formateurDto.setCivilite( formateur.getCivilite() );
         formateurDto.setDateDeNaissance( formateur.getDateDeNaissance() );
+        formateurDto.setLogin( formateur.getLogin() );
+        formateurDto.setNom( formateur.getNom() );
+        formateurDto.setPassword( formateur.getPassword() );
+        formateurDto.setPrenom( formateur.getPrenom() );
         formateurDto.setTelephone( formateur.getTelephone() );
         formateurDto.setId( formateur.getId() );
 
@@ -253,9 +253,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         FormationDto formationDto = new FormationDto();
 
+        formationDto.setContenu( formation.getContenu() );
         formationDto.setId( formation.getId() );
         formationDto.setTitre( formation.getTitre() );
-        formationDto.setContenu( formation.getContenu() );
 
         return formationDto;
     }
@@ -268,9 +268,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         GroupeEtudiantDto groupeEtudiantDto = new GroupeEtudiantDto();
 
+        groupeEtudiantDto.setEtudiants( etudiantListToEtudiantDtoList( groupeEtudiant.getEtudiants() ) );
         groupeEtudiantDto.setId( groupeEtudiant.getId() );
         groupeEtudiantDto.setNom( groupeEtudiant.getNom() );
-        groupeEtudiantDto.setEtudiants( etudiantListToEtudiantDtoList( groupeEtudiant.getEtudiants() ) );
 
         return groupeEtudiantDto;
     }
@@ -283,9 +283,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         InterventionDto interventionDto = new InterventionDto();
 
-        interventionDto.setId( intervention.getId() );
         interventionDto.setDateDebut( intervention.getDateDebut() );
         interventionDto.setDateFin( intervention.getDateFin() );
+        interventionDto.setId( intervention.getId() );
         interventionDto.setNoteInfoPersonnel( intervention.getNoteInfoPersonnel() );
 
         return interventionDto;
@@ -314,9 +314,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         PassageExamenDto passageExamenDto = new PassageExamenDto();
 
-        passageExamenDto.setId( passageExamen.getId() );
         passageExamenDto.setDateDebut( passageExamen.getDateDebut() );
         passageExamenDto.setDateFin( passageExamen.getDateFin() );
+        passageExamenDto.setId( passageExamen.getId() );
 
         return passageExamenDto;
     }
@@ -329,10 +329,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         ProjetDto projetDto = new ProjetDto();
 
-        projetDto.setId( projet.getId() );
-        projetDto.setNom( projet.getNom() );
         projetDto.setDescription( projet.getDescription() );
         projetDto.setGroupe( GroupeEtudiantToGroupEtudiantDto( projet.getGroupe() ) );
+        projetDto.setId( projet.getId() );
+        projetDto.setNom( projet.getNom() );
 
         return projetDto;
     }
@@ -345,10 +345,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         PromotionDto promotionDto = new PromotionDto();
 
-        promotionDto.setId( promotion.getId() );
-        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
+        promotionDto.setId( promotion.getId() );
+        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }
@@ -361,13 +361,13 @@ public class DtoMapperImpl implements DtoMapper {
 
         UtilisateurDto utilisateurDto = new UtilisateurDto();
 
-        utilisateurDto.setId( utilisateur.getId() );
-        utilisateurDto.setLogin( utilisateur.getLogin() );
-        utilisateurDto.setPassword( utilisateur.getPassword() );
-        utilisateurDto.setPrenom( utilisateur.getPrenom() );
-        utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setCivilite( utilisateur.getCivilite() );
         utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
+        utilisateurDto.setId( utilisateur.getId() );
+        utilisateurDto.setLogin( utilisateur.getLogin() );
+        utilisateurDto.setNom( utilisateur.getNom() );
+        utilisateurDto.setPassword( utilisateur.getPassword() );
+        utilisateurDto.setPrenom( utilisateur.getPrenom() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
 
         return utilisateurDto;
@@ -395,13 +395,13 @@ public class DtoMapperImpl implements DtoMapper {
 
         FichePosteDto fichePosteDto = new FichePosteDto();
 
+        fichePosteDto.setCompositionService( fichePoste.getCompositionService() );
         fichePosteDto.setId( fichePoste.getId() );
         fichePosteDto.setIntitule( fichePoste.getIntitule() );
-        fichePosteDto.setNature( fichePoste.getNature() );
         fichePosteDto.setMission( fichePoste.getMission() );
-        fichePosteDto.setCompositionService( fichePoste.getCompositionService() );
-        fichePosteDto.setPositionnement( fichePoste.getPositionnement() );
         fichePosteDto.setMissionPrincipale( fichePoste.getMissionPrincipale() );
+        fichePosteDto.setNature( fichePoste.getNature() );
+        fichePosteDto.setPositionnement( fichePoste.getPositionnement() );
 
         return fichePosteDto;
     }
@@ -443,17 +443,17 @@ public class DtoMapperImpl implements DtoMapper {
 
         FicheEntrepriseDto ficheEntrepriseDto = new FicheEntrepriseDto();
 
-        ficheEntrepriseDto.setId( FicheEntreprise.getId() );
-        ficheEntrepriseDto.setHistorique( FicheEntreprise.getHistorique() );
-        ficheEntrepriseDto.setNomDirigeant( FicheEntreprise.getNomDirigeant() );
-        ficheEntrepriseDto.setSecteurActivite( FicheEntreprise.getSecteurActivite() );
-        ficheEntrepriseDto.setOrganisationType( FicheEntreprise.getOrganisationType() );
-        ficheEntrepriseDto.setNbSalarie( FicheEntreprise.getNbSalarie() );
-        ficheEntrepriseDto.setChiffreAffaireAnnuel( FicheEntreprise.getChiffreAffaireAnnuel() );
         ficheEntrepriseDto.setActiviteDescription( FicheEntreprise.getActiviteDescription() );
+        ficheEntrepriseDto.setChiffreAffaireAnnuel( FicheEntreprise.getChiffreAffaireAnnuel() );
         ficheEntrepriseDto.setClientType( FicheEntreprise.getClientType() );
         ficheEntrepriseDto.setFormationProfil( FicheEntreprise.getFormationProfil() );
+        ficheEntrepriseDto.setHistorique( FicheEntreprise.getHistorique() );
+        ficheEntrepriseDto.setId( FicheEntreprise.getId() );
         ficheEntrepriseDto.setMetiersExerces( FicheEntreprise.getMetiersExerces() );
+        ficheEntrepriseDto.setNbSalarie( FicheEntreprise.getNbSalarie() );
+        ficheEntrepriseDto.setNomDirigeant( FicheEntreprise.getNomDirigeant() );
+        ficheEntrepriseDto.setOrganisationType( FicheEntreprise.getOrganisationType() );
+        ficheEntrepriseDto.setSecteurActivite( FicheEntreprise.getSecteurActivite() );
 
         return ficheEntrepriseDto;
     }
