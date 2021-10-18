@@ -104,8 +104,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		for (Etudiant e : lst) {
 			EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(e);
-			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getAdresse());
-			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getEntreprise());
+			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getPersonne().getAdresse());
+			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getPersonne().getEntreprise());
 
 			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
 			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<GroupeEtudiantDto>();
@@ -130,10 +130,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 		
 			}
 			List<UtilisateurRoleDto> URDto = new ArrayList<UtilisateurRoleDto>();
-			for (UtilisateurRole r : e.getRoles()) {
+			for (UtilisateurRole r : e.getPersonne().getRoles()) {
 				URDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
 			}
-			etuDto.setRolesDto(URDto);
+			etuDto.getPersonneDto().setRolesDto(URDto);
 			
 			List<DossierProfessionnel>lstDossierProfessionnel = e.getDossierProfessionnel();
 			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
