@@ -7,9 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Etudiant extends Utilisateur {
+public class Etudiant{
+	
+	@OneToOne
+	private Utilisateur personne;
+	
 	@ManyToMany(mappedBy = "etudiants")
 	private List<Promotion> promotions;
 	
@@ -87,6 +92,14 @@ public class Etudiant extends Utilisateur {
 
 	public void setDossierProjet(List<DossierProjet> dossierProjet) {
 		this.dossierProjet = dossierProjet;
+	}
+
+	public Utilisateur getPersonne() {
+		return personne;
+	}
+
+	public void setPersonne(Utilisateur personne) {
+		this.personne = personne;
 	}
 	
 

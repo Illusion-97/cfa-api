@@ -1,7 +1,8 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class CEFDto extends UtilisateurDto {
+public class CEFDto{
 	private long id;
+	private UtilisateurDto personneDto;
 	private CentreFormationDto centreFormationDto;
 
 	public CEFDto() {
@@ -22,6 +23,14 @@ public class CEFDto extends UtilisateurDto {
 
 	public void setCentreFormationDto(CentreFormationDto centreFormationDto) {
 		this.centreFormationDto = centreFormationDto;
+	}
+
+	public UtilisateurDto getPersonneDto() {
+		return personneDto;
+	}
+
+	public void setPersonneDto(UtilisateurDto personneDto) {
+		this.personneDto = personneDto;
 	}
 
 }

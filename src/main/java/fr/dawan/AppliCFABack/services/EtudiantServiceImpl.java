@@ -192,6 +192,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		
 		EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e.get());
 		
+		eDto.setPersonneDto(mapper.UtilisateurToUtilisateurDto(e.get().getPersonne()));
 		eDto.setAdresseDto(mapper.AdresseToAdresseDto(e.get().getAdresse()));
 		eDto.setFormateurReferentDto(mapper.UtilisateurToUtilisateurDto(e.get().getFormateurReferent()));
 		eDto.setManagerDto(mapper.UtilisateurToUtilisateurDto(e.get().getManager()));

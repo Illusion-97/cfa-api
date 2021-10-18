@@ -2,9 +2,13 @@ package fr.dawan.AppliCFABack.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
-public class CEF extends Utilisateur {
+public class CEF{
+	
+	@OneToOne
+	private Utilisateur personne;
 
 	@ManyToOne
 	private CentreFormation centreFormation;
@@ -24,6 +28,14 @@ public class CEF extends Utilisateur {
 
 	public void setCentreFormation(CentreFormation centreFormation) {
 		this.centreFormation = centreFormation;
+	}
+
+	public Utilisateur getPersonne() {
+		return personne;
+	}
+
+	public void setPersonne(Utilisateur personne) {
+		this.personne = personne;
 	}
 
 }

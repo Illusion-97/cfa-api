@@ -2,8 +2,9 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.util.List;
 
-public class EtudiantDto extends UtilisateurDto {
+public class EtudiantDto{
 	private long id;
+	private UtilisateurDto personneDto;
 	private List<PromotionDto> promotionsDto;
 	private List<GroupeEtudiantDto> groupesDto;
 	private UtilisateurDto formateurReferentDto;
@@ -70,6 +71,14 @@ public class EtudiantDto extends UtilisateurDto {
 
 	public void setDossierProjet(List<DossierProjetDto> dossierProjet) {
 		this.dossierProjet = dossierProjet;
+	}
+
+	public UtilisateurDto getPersonneDto() {
+		return personneDto;
+	}
+
+	public void setPersonneDto(UtilisateurDto personneDto) {
+		this.personneDto = personneDto;
 	}
 
 	
