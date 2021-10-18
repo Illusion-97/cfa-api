@@ -253,6 +253,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			Entreprise entrepriseRepo = entrepriseRepository.getOne(entreprise.getId());
 			user.setEntreprise(entrepriseRepo);
 		}
+		
+		//Changement de role, on créer l'entité associée 
 
 		utilisateurRepository.saveAndFlush(user);
 

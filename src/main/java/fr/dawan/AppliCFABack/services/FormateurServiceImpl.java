@@ -86,21 +86,24 @@ public class FormateurServiceImpl implements FormateurService {
 	public FormateurDto saveOrUpdate(FormateurDto fDto) {
 		Formateur formateur = DtoTools.convert(fDto, Formateur.class);
 		
-		//HashTools throw Exception
-		try {
-			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-			if(formateur.getPersonne().getId() == 0) {
-				formateur.getPersonne().setPassword(HashTools.hashSHA512(formateur.getPersonne().getPassword()));
-			}else {
-				//Si on a modifié le mdp
-				Formateur formateurInDB = formateurRepository.getOne(formateur.getId());
-				if(!formateurInDB.getPersonne().getPassword().equals(formateur.getPersonne().getPassword())) {
+		if(formateur.getPersonne() != null) {
+			//HashTools throw Exception
+			try {
+				//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+				if(formateur.getPersonne().getId() == 0) {
 					formateur.getPersonne().setPassword(HashTools.hashSHA512(formateur.getPersonne().getPassword()));
-	            }
-			}	
-		}catch (Exception e) {
-            e.printStackTrace();
-        }
+				}else {
+					//Si on a modifié le mdp
+					Formateur formateurInDB = formateurRepository.getOne(formateur.getId());
+					if(!formateurInDB.getPersonne().getPassword().equals(formateur.getPersonne().getPassword())) {
+						formateur.getPersonne().setPassword(HashTools.hashSHA512(formateur.getPersonne().getPassword()));
+		            }
+				}	
+			}catch (Exception e) {
+	            e.printStackTrace();
+	        }
+		}
+		
 		
 		formateur = formateurRepository.saveAndFlush(formateur);
 		return mapper.FormateurToFormateurDto(formateur);

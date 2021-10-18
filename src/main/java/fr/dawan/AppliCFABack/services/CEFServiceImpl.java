@@ -71,21 +71,23 @@ public class CEFServiceImpl implements CEFService {
 	public CEFDto saveOrUpdate(CEFDto cDto) {
 		CEF c = DtoTools.convert(cDto, CEF.class);
 		
-		//HashTools throw Exception
-		try {
-			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-			if(c.getPersonne().getId() == 0) {
-				c.getPersonne().setPassword(HashTools.hashSHA512(c.getPersonne().getPassword()));
-			}else {
-				//Si on a modifié le mdp
-				CEF cefInDB = cefRepository.getOne(c.getId());
-				if(!cefInDB.getPersonne().getPassword().equals(c.getPersonne().getPassword())) {
-	                c.getPersonne().setPassword(HashTools.hashSHA512(c.getPersonne().getPassword()));
-	            }
-			}	
-		}catch (Exception e) {
-            e.printStackTrace();
-        }
+		if(c.getPersonne() != null) {
+			//HashTools throw Exception
+			try {
+				//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+				if(c.getPersonne().getId() == 0) {
+					c.getPersonne().setPassword(HashTools.hashSHA512(c.getPersonne().getPassword()));
+				}else {
+					//Si on a modifié le mdp
+					CEF cefInDB = cefRepository.getOne(c.getId());
+					if(!cefInDB.getPersonne().getPassword().equals(c.getPersonne().getPassword())) {
+		                c.getPersonne().setPassword(HashTools.hashSHA512(c.getPersonne().getPassword()));
+		            }
+				}	
+			}catch (Exception e) {
+	            e.printStackTrace();
+	        }
+		}		
 
 		c = cefRepository.saveAndFlush(c);
 

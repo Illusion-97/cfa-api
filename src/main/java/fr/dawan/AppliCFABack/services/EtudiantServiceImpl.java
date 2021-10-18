@@ -246,33 +246,39 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Override
 	public EtudiantDto saveOrUpdate(EtudiantDto e) {
-		Etudiant etudiant = DtoTools.convert(e, Etudiant.class);
-		
-		//HashTools throw Exception
-		try {
-			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-			if(etudiant.getPersonne().getId() == 0) {
-				etudiant.getPersonne().setPassword(HashTools.hashSHA512(etudiant.getPersonne().getPassword()));
-			}else {
-				//Si on a modifié le mdp
-				Etudiant etudiantInDB = etudiantRepository.getOne(etudiant.getId());
-				if(!etudiantInDB.getPersonne().getPassword().equals(etudiant.getPersonne().getPassword())) {
+		Etudiant etudiant = DtoTools.convert(e, Etudiant.class);		
+
+		if(etudiant.getPersonne() != null) {
+			//HashTools throw Exception
+			try {
+				//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+				if(etudiant.getPersonne().getId() == 0) {
 					etudiant.getPersonne().setPassword(HashTools.hashSHA512(etudiant.getPersonne().getPassword()));
-	            }
-			}	
-		}catch (Exception ex) {
-            ex.printStackTrace();
-        }
+				}else {
+					//Si on a modifié le mdp
+					Etudiant etudiantInDB = etudiantRepository.getOne(etudiant.getId());
+					if(!etudiantInDB.getPersonne().getPassword().equals(etudiant.getPersonne().getPassword())) {
+						etudiant.getPersonne().setPassword(HashTools.hashSHA512(etudiant.getPersonne().getPassword()));
+		            }
+				}	
+			}catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+			
+			//Pour le dossier
+			Path path = Paths.get("./src/main/resources/files/utilisateurs/" + etudiant.getPersonne().getId());
+
+			try {
+				Files.createDirectories(path);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		
 		
 		etudiant = etudiantRepository.saveAndFlush(etudiant);
-
-		Path path = Paths.get("./src/main/resources/files/utilisateurs/" + etudiant.getPersonne().getId());
-
-		try {
-			Files.createDirectories(path);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+	
+		
 
 		return mapper.EtudiantToEtudiantDto(etudiant);
 	}
