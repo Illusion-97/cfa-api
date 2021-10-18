@@ -1,0 +1,18 @@
+-------------------------------------------------------------------------------
+Test set: fr.dawan.AppliCFABack.Controller.UtilisateurControllerTests
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.037 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.UtilisateurControllerTests
+testSave  Time elapsed: 0.011 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<404>
+	at fr.dawan.AppliCFABack.Controller.UtilisateurControllerTests.testSave(UtilisateurControllerTests.java:101)
+
+testFindById  Time elapsed: 0.006 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.login"
+	at fr.dawan.AppliCFABack.Controller.UtilisateurControllerTests.testFindById(UtilisateurControllerTests.java:75)
+Caused by: java.lang.IllegalArgumentException: json can not be null or empty
+	at fr.dawan.AppliCFABack.Controller.UtilisateurControllerTests.testFindById(UtilisateurControllerTests.java:75)
+
+testUpdate  Time elapsed: 0.004 s  <<< FAILURE!
+java.lang.AssertionError: Cannot invoke "fr.dawan.AppliCFABack.dto.UtilisateurDto.setLogin(String)" because "cDto" is null
+	at fr.dawan.AppliCFABack.Controller.UtilisateurControllerTests.testUpdate(UtilisateurControllerTests.java:136)
+

@@ -1,0 +1,18 @@
+-------------------------------------------------------------------------------
+Test set: fr.dawan.AppliCFABack.Controller.FicheEntrepriseControllerTests
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.051 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.FicheEntrepriseControllerTests
+testFindById  Time elapsed: 0.008 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.historique"
+	at fr.dawan.AppliCFABack.Controller.FicheEntrepriseControllerTests.testFindById(FicheEntrepriseControllerTests.java:75)
+Caused by: java.lang.IllegalArgumentException: json can not be null or empty
+	at fr.dawan.AppliCFABack.Controller.FicheEntrepriseControllerTests.testFindById(FicheEntrepriseControllerTests.java:75)
+
+testDelete  Time elapsed: 0.008 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<202> but was:<404>
+	at fr.dawan.AppliCFABack.Controller.FicheEntrepriseControllerTests.testDelete(FicheEntrepriseControllerTests.java:141)
+
+testUpdate  Time elapsed: 0.007 s  <<< FAILURE!
+java.lang.AssertionError: Cannot invoke "fr.dawan.AppliCFABack.entities.Entreprise.getAdresseSiege()" because the return value of "fr.dawan.AppliCFABack.entities.FicheEntreprise.getEntreprise()" is null
+	at fr.dawan.AppliCFABack.Controller.FicheEntrepriseControllerTests.testUpdate(FicheEntrepriseControllerTests.java:130)
+

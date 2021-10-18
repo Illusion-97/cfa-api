@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: fr.dawan.AppliCFABack.services.CongeServiceTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.015 s <<< FAILURE! - in fr.dawan.AppliCFABack.services.CongeServiceTest
+testGetAcquisDisponiblesRestantsByIdUtilisateur  Time elapsed: 0.004 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "fr.dawan.AppliCFABack.entities.Etudiant.getPromotions()" because the return value of "fr.dawan.AppliCFABack.services.EtudiantServiceImpl.getEtudiantById(long)" is null
+	at fr.dawan.AppliCFABack.services.CongeServiceTest.testGetAcquisDisponiblesRestantsByIdUtilisateur(CongeServiceTest.java:74)
+

@@ -1,0 +1,56 @@
+-------------------------------------------------------------------------------
+Test set: fr.dawan.AppliCFABack.Controller.EtudiantControllerTests
+-------------------------------------------------------------------------------
+Tests run: 13, Failures: 12, Errors: 0, Skipped: 0, Time elapsed: 0.134 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.EtudiantControllerTests
+testGetIntervenionByIdEtudiant  Time elapsed: 0.006 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<400>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetIntervenionByIdEtudiant(EtudiantControllerTests.java:222)
+
+testGetAdresseByIdEtudiant  Time elapsed: 0.011 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetAdresseByIdEtudiant(EtudiantControllerTests.java:182)
+
+testGetEntrepriseByIdEtudiant  Time elapsed: 0.008 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetEntrepriseByIdEtudiant(EtudiantControllerTests.java:146)
+
+testSave  Time elapsed: 0.033 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testSave(EtudiantControllerTests.java:103)
+
+testGetPromotionsByIdEtudiant  Time elapsed: 0.007 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetPromotionsByIdEtudiant(EtudiantControllerTests.java:158)
+
+testGetFormateurReferentByIdEtudiant  Time elapsed: 0.009 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetFormateurReferentByIdEtudiant(EtudiantControllerTests.java:234)
+
+testGetAbsencesByIdEtudiant  Time elapsed: 0.018 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$[0].justificatif"
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetAbsencesByIdEtudiant(EtudiantControllerTests.java:211)
+Caused by: com.jayway.jsonpath.PathNotFoundException: No results for path: $[0]['justificatif']
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetAbsencesByIdEtudiant(EtudiantControllerTests.java:211)
+
+testGetGroupesByIdEtudiant  Time elapsed: 0.007 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetGroupesByIdEtudiant(EtudiantControllerTests.java:170)
+
+testFindById  Time elapsed: 0.007 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.nom"
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testFindById(EtudiantControllerTests.java:78)
+Caused by: java.lang.IllegalArgumentException: json can not be null or empty
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testFindById(EtudiantControllerTests.java:78)
+
+testGetNotesByIdEtudiant  Time elapsed: 0.006 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<400>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetNotesByIdEtudiant(EtudiantControllerTests.java:197)
+
+testGetFormateurManagerByIdEtudiant  Time elapsed: 0.007 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetFormateurManagerByIdEtudiant(EtudiantControllerTests.java:246)
+
+testUpdate  Time elapsed: 0.006 s  <<< FAILURE!
+java.lang.AssertionError: Cannot invoke "fr.dawan.AppliCFABack.dto.EtudiantDto.setNom(String)" because "eDto" is null
+	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testUpdate(EtudiantControllerTests.java:137)
+
