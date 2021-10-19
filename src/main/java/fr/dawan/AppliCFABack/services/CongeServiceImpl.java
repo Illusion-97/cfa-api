@@ -126,9 +126,11 @@ public class CongeServiceImpl implements CongeService {
 		return result;
 	}
 
-	private double getAcquis(long id) {		
+	private double getAcquis(long id) {	
 		
-		List<PromotionDto> promos = etudiantService.getPromotionsByIdEtudiant(id);
+		UtilisateurDto utilisateur = utilisateurService.getById(id);
+		
+		List<PromotionDto> promos = etudiantService.getPromotionsByIdEtudiant(utilisateur.getEtudiantDto().getId());
 		
 		if(promos == null)
 			return 0;

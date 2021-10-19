@@ -28,7 +28,7 @@ import fr.dawan.AppliCFABack.services.FormationService;
 import fr.dawan.AppliCFABack.services.PromotionService;
 
 @RestController
-@RequestMapping("/AppliCFABack/formations")
+@RequestMapping("/formations")
 public class FormationController {
 
 	@Autowired

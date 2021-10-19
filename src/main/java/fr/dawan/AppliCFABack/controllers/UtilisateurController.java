@@ -25,7 +25,7 @@ import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.UtilisateurService;
 
 @RestController
-@RequestMapping("/AppliCFABack/utilisateurs")
+@RequestMapping("/utilisateurs")
 public class UtilisateurController {
 	@Autowired
 	private UtilisateurService utilisateurService;

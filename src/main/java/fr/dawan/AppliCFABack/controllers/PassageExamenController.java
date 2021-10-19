@@ -21,7 +21,7 @@ import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.services.PassageExamenService;
 
 @RestController
-@RequestMapping("/AppliCFABack/passageExamens")
+@RequestMapping("/passageExamens")
 public class PassageExamenController {
 
 	@Autowired

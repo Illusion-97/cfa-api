@@ -20,7 +20,7 @@ import fr.dawan.AppliCFABack.services.FilesService;
 
 @MultipartConfig
 @RestController
-@RequestMapping("/AppliCFABack/files")
+@RequestMapping("/files")
 public class FilesController {	
 	
 	@Autowired

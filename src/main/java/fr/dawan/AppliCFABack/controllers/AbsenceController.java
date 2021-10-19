@@ -21,7 +21,7 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.services.AbsenceService;
 
 @RestController
-@RequestMapping("/AppliCFABack/absences")
+@RequestMapping("/absences")
 public class AbsenceController {
 
 	@Autowired

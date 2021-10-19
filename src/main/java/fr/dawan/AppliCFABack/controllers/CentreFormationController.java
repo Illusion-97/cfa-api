@@ -22,7 +22,7 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.CentreFormationService;
 
 @RestController
-@RequestMapping("/AppliCFABack/centreFormations")
+@RequestMapping("/centreFormations")
 public class CentreFormationController {
 
 	@Autowired

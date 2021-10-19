@@ -21,7 +21,7 @@ import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.services.DevoirService;
 
 @RestController
-@RequestMapping("/AppliCFABack/devoirs")
+@RequestMapping("/devoirs")
 public class DevoirController {
 
 	@Autowired

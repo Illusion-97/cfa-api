@@ -22,7 +22,7 @@ import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.services.GroupeEtudiantService;
 
 @RestController
-@RequestMapping("/AppliCFABack/groupeEtudiants")
+@RequestMapping("/groupeEtudiants")
 public class GroupeController {
 
 	@Autowired

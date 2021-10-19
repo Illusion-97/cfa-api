@@ -25,7 +25,7 @@ import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.PromotionService;
 
 @RestController
-@RequestMapping("/AppliCFABack/cursus")
+@RequestMapping("/cursus")
 public class CursusController {
 
 	

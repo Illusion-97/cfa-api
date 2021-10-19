@@ -21,7 +21,7 @@ import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.services.NoteService;
 
 @RestController
-@RequestMapping("/AppliCFABack/notes")
+@RequestMapping("/notes")
 public class NoteController {
 
 	@Autowired

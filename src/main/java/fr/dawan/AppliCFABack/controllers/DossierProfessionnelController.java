@@ -25,7 +25,7 @@ import fr.dawan.AppliCFABack.services.DossierProjetService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 
 @RestController
-@RequestMapping("/AppliCFABack/dossierProfessionnel")
+@RequestMapping("/dossierProfessionnel")
 public class DossierProfessionnelController {
 
 	@Autowired
