@@ -49,7 +49,7 @@ public class CEFServiceImpl implements CEFService {
 		List<CEFDto> lstDto = new ArrayList<CEFDto>();
 		for (CEF c : lst) {
 			CEFDto cDto = mapper.CEFToCEFDto(c);
-			cDto.setPersonneDto(mapper.UtilisateurToUtilisateurDto(c.getPersonne()));
+			cDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(c.getUtilisateur()));
 			lstDto.add(cDto);
 		}
 		return lstDto;
@@ -60,7 +60,7 @@ public class CEFServiceImpl implements CEFService {
 		Optional<CEF> c = cefRepository.findById(id);
 		if (c.isPresent()) {
 			CEFDto cefDto = mapper.CEFToCEFDto(c.get());
-			cefDto.setPersonneDto(mapper.UtilisateurToUtilisateurDto(c.get().getPersonne()));
+			cefDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(c.get().getUtilisateur()));
 			return cefDto;
 		}
 			
@@ -71,17 +71,17 @@ public class CEFServiceImpl implements CEFService {
 	public CEFDto saveOrUpdate(CEFDto cDto) {
 		CEF c = DtoTools.convert(cDto, CEF.class);
 		
-		if(c.getPersonne() != null) {
+		if(c.getUtilisateur() != null) {
 			//HashTools throw Exception
 			try {
 				//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-				if(c.getPersonne().getId() == 0) {
-					c.getPersonne().setPassword(HashTools.hashSHA512(c.getPersonne().getPassword()));
+				if(c.getUtilisateur().getId() == 0) {
+					c.getUtilisateur().setPassword(HashTools.hashSHA512(c.getUtilisateur().getPassword()));
 				}else {
 					//Si on a modifié le mdp
 					CEF cefInDB = cefRepository.getOne(c.getId());
-					if(!cefInDB.getPersonne().getPassword().equals(c.getPersonne().getPassword())) {
-		                c.getPersonne().setPassword(HashTools.hashSHA512(c.getPersonne().getPassword()));
+					if(!cefInDB.getUtilisateur().getPassword().equals(c.getUtilisateur().getPassword())) {
+		                c.getUtilisateur().setPassword(HashTools.hashSHA512(c.getUtilisateur().getPassword()));
 		            }
 				}	
 			}catch (Exception e) {

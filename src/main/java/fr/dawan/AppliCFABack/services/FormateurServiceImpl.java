@@ -63,7 +63,7 @@ public class FormateurServiceImpl implements FormateurService {
 	@Override
 	public List<FormateurDto> getAllByPageWithKeyword(int page, int size, String search) {
 		List<Formateur> lstFor = formateurRepository
-				.findAllByPersonnePrenomContainingOrPersonneNomContainingAllIgnoreCase(search, search, PageRequest.of(page, size)).get()
+				.findAllByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(search, search, PageRequest.of(page, size)).get()
 				.collect(Collectors.toList());
 		List<FormateurDto> lstDto = new ArrayList<FormateurDto>();
 
@@ -86,17 +86,17 @@ public class FormateurServiceImpl implements FormateurService {
 	public FormateurDto saveOrUpdate(FormateurDto fDto) {
 		Formateur formateur = DtoTools.convert(fDto, Formateur.class);
 		
-		if(formateur.getPersonne() != null) {
+		if(formateur.getUtilisateur() != null) {
 			//HashTools throw Exception
 			try {
 				//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-				if(formateur.getPersonne().getId() == 0) {
-					formateur.getPersonne().setPassword(HashTools.hashSHA512(formateur.getPersonne().getPassword()));
+				if(formateur.getUtilisateur().getId() == 0) {
+					formateur.getUtilisateur().setPassword(HashTools.hashSHA512(formateur.getUtilisateur().getPassword()));
 				}else {
 					//Si on a modifié le mdp
 					Formateur formateurInDB = formateurRepository.getOne(formateur.getId());
-					if(!formateurInDB.getPersonne().getPassword().equals(formateur.getPersonne().getPassword())) {
-						formateur.getPersonne().setPassword(HashTools.hashSHA512(formateur.getPersonne().getPassword()));
+					if(!formateurInDB.getUtilisateur().getPassword().equals(formateur.getUtilisateur().getPassword())) {
+						formateur.getUtilisateur().setPassword(HashTools.hashSHA512(formateur.getUtilisateur().getPassword()));
 		            }
 				}	
 			}catch (Exception e) {
@@ -141,7 +141,7 @@ public class FormateurServiceImpl implements FormateurService {
 				if (intervention != null)
 					lstInterDto.add(mapper.InterventionToInterventionDto(intervention));
 			}
-			formateurDto.setPersonneDto(mapper.UtilisateurToUtilisateurDto(formateur.getPersonne()));
+			formateurDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(formateur.getUtilisateur()));
 			formateurDto.setInterventionsDto(lstInterDto);
 			lstDto.add(formateurDto);
 		}
@@ -150,7 +150,7 @@ public class FormateurServiceImpl implements FormateurService {
 
 	@Override // nb de formateur
 	public CountDto count(String search) {
-		return new CountDto(formateurRepository.countByPersonnePrenomContainingOrPersonneNomContainingAllIgnoreCase(search, search));
+		return new CountDto(formateurRepository.countByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(search, search));
 	}
 
 //	// Recupere les interventions par rapport a l'id du formateur

@@ -426,15 +426,19 @@ public class InitDataBase {
 		promotion3.setCursus(cursus2);
 		promotion3.setReferentPedagogique(monFormateur);
 
-		etudiant.setGroupes(lstGroupe);
-		etudiant.setPromotions(lstPromotion);
-		etudiant.setManager(cef.getPersonne());
-		etudiant.setFormateurReferent(formateur.getPersonne());		
+
 		monEtudiant.setEntreprise(entreprise);
 		monEtudiant.setAdresse(adresse);
 		monEtudiant.setRoles(lstRoleEtudiant);
-		etudiant.setPersonne(monEtudiant);
+		monEtudiant.setEtudiant(etudiant);
+		
+		etudiant.setGroupes(lstGroupe);
+		etudiant.setPromotions(lstPromotion);	
+		etudiant.setUtilisateur(monEtudiant);
 
+		etudiant.setManager(monCEF);
+		etudiant.setFormateurReferent(monFormateur);	
+		
 		absence.setEtudiant(etudiant);
 
 		intervention.setFormateurs(lstFormateur);
@@ -457,11 +461,14 @@ public class InitDataBase {
 
 		admin.setRoles(lstRoleAdmin);
 		
-		cef.setCentreFormation(centre);
+
 		monCEF.setRoles(lstRoleCef);
 		monCEF.setAdresse(adresse);
 		monCEF.setEntreprise(entreprise);
-		cef.setPersonne(monCEF);
+		monCEF.setCef(cef);
+		
+		cef.setCentreFormation(centre);
+		cef.setUtilisateur(monCEF);
 		
 		centre.setAdresse(adresse);
 		centre.setEntreprise(entreprise);
@@ -482,11 +489,13 @@ public class InitDataBase {
 		note.setExamen(passageExamen);
 
 
-		formateur.setInterventions(lstInterventions);
 		monFormateur.setAdresse(adresse);
 		monFormateur.setEntreprise(entreprise);
 		monFormateur.setRoles(lstRoleFormateur);
-		formateur.setPersonne(monFormateur);
+		monFormateur.setFormateur(formateur);
+
+		formateur.setInterventions(lstInterventions);
+		formateur.setUtilisateur(monFormateur);
 
 		formation.setCursusLst(lstCursus);		
 
@@ -495,6 +504,9 @@ public class InitDataBase {
 		conge.setUtilisateur(monEtudiant);
 		
 		utilisateurRepository.save(admin);
+		utilisateurRepository.save(monEtudiant);
+		utilisateurRepository.save(monFormateur);
+		utilisateurRepository.save(monCEF);
 		etudiantRepository.save(etudiant);
 		groupeEtudiantRepository.save(groupe);
 		promotionRepository.save(promotion);

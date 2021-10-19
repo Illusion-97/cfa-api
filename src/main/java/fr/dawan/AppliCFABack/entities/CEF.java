@@ -15,7 +15,7 @@ public class CEF{
 	private long id;
 	
 	@OneToOne
-	private Utilisateur personne;
+	private Utilisateur utilisateur;
 
 	@ManyToOne
 	private CentreFormation centreFormation;
@@ -37,12 +37,12 @@ public class CEF{
 		this.centreFormation = centreFormation;
 	}
 
-	public Utilisateur getPersonne() {
-		return personne;
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-	public void setPersonne(Utilisateur personne) {
-		this.personne = personne;
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 	public long getId() {

@@ -20,7 +20,7 @@ public class Etudiant{
 	private long id;
 	
 	@OneToOne
-	private Utilisateur personne;
+	private Utilisateur utilisateur;
 	
 	@ManyToMany(mappedBy = "etudiants")
 	private List<Promotion> promotions;
@@ -101,12 +101,12 @@ public class Etudiant{
 		this.dossierProjet = dossierProjet;
 	}
 
-	public Utilisateur getPersonne() {
-		return personne;
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-	public void setPersonne(Utilisateur personne) {
-		this.personne = personne;
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 	public long getId() {

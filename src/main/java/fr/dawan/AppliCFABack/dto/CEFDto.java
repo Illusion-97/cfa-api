@@ -2,7 +2,7 @@ package fr.dawan.AppliCFABack.dto;
 
 public class CEFDto{
 	private long id;
-	private UtilisateurDto personneDto;
+	private UtilisateurDto utilisateurDto;
 	private CentreFormationDto centreFormationDto;
 
 	public CEFDto() {
@@ -25,12 +25,12 @@ public class CEFDto{
 		this.centreFormationDto = centreFormationDto;
 	}
 
-	public UtilisateurDto getPersonneDto() {
-		return personneDto;
+	public UtilisateurDto getUtilisateurDto() {
+		return utilisateurDto;
 	}
 
-	public void setPersonneDto(UtilisateurDto personneDto) {
-		this.personneDto = personneDto;
+	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
+		this.utilisateurDto = utilisateurDto;
 	}
 
 }

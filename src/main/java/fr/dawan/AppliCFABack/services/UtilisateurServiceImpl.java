@@ -304,10 +304,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		for (UtilisateurRole role : userOpt.get().getRoles()) {
 			switch (role.getIntitule()) {
 			case "ETUDIANT":
-				result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(id));
+				result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(userOpt.get().getEtudiant().getId()));
 				break;
 			case "FORMATEUR":
-				result.addAll(formateurService.getAllJourneePlanningByIdFormateur(id));
+				result.addAll(formateurService.getAllJourneePlanningByIdFormateur(userOpt.get().getFormateur().getId()));
 				break;
 			}
 		}

@@ -51,7 +51,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	
 	@Override
 	public List<GroupeEtudiantDto> getAllByPage(int page, int size, String search) {
-		List<GroupeEtudiant> lst = groupeEtudiantRepository.findAllByNomContainingIgnoringCaseOrEtudiantsPersonneNomContainingIgnoringCaseOrEtudiantsPersonnePrenomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<GroupeEtudiant> lst = groupeEtudiantRepository.findAllByNomContainingIgnoringCaseOrEtudiantsUtilisateurNomContainingIgnoringCaseOrEtudiantsUtilisateurPrenomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<GroupeEtudiantDto> lstDto = new ArrayList<GroupeEtudiantDto>();
@@ -75,7 +75,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(groupeEtudiantRepository.countByNomContainingIgnoringCaseOrEtudiantsPersonneNomContainingIgnoringCaseOrEtudiantsPersonnePrenomContainingIgnoringCase(search, search, search));
+		return new CountDto(groupeEtudiantRepository.countByNomContainingIgnoringCaseOrEtudiantsUtilisateurNomContainingIgnoringCaseOrEtudiantsUtilisateurPrenomContainingIgnoringCase(search, search, search));
 	}
 
 	@Override

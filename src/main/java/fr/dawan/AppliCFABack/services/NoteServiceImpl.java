@@ -42,7 +42,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public List<NoteDto> getAllByPage(int page, int size, String search) {
-		List<Note> lst = noteRepository.findAllByEtudiantPersonnePrenomContainingIgnoringCaseOrEtudiantPersonneNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search,search, search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Note> lst = noteRepository.findAllByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search,search, search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<NoteDto> lstDto = new ArrayList<NoteDto>();
@@ -58,7 +58,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(noteRepository.countByEtudiantPersonnePrenomContainingIgnoringCaseOrEtudiantPersonneNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search, search, search, search));
+		return new CountDto(noteRepository.countByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search, search, search, search));
 	}
 
 	@Override

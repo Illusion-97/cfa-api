@@ -17,7 +17,7 @@ public class Formateur{
 	private long id;
 	
 	@OneToOne
-	private Utilisateur personne;
+	private Utilisateur utilisateur;
 	
 	@ManyToMany(mappedBy = "formateurs")
 	private List<Intervention> interventions;
@@ -34,12 +34,12 @@ public class Formateur{
 		this.interventions = interventions;
 	}
 
-	public Utilisateur getPersonne() {
-		return personne;
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-	public void setPersonne(Utilisateur personne) {
-		this.personne = personne;
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 	public long getId() {

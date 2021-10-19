@@ -4,7 +4,7 @@ import java.util.List;
 
 public class EtudiantDto{
 	private long id;
-	private UtilisateurDto personneDto;
+	private UtilisateurDto utilisateurDto;
 	private List<PromotionDto> promotionsDto;
 	private List<GroupeEtudiantDto> groupesDto;
 	private UtilisateurDto formateurReferentDto;
@@ -73,12 +73,12 @@ public class EtudiantDto{
 		this.dossierProjet = dossierProjet;
 	}
 
-	public UtilisateurDto getPersonneDto() {
-		return personneDto;
+	public UtilisateurDto getUtilisateurDto() {
+		return utilisateurDto;
 	}
 
-	public void setPersonneDto(UtilisateurDto personneDto) {
-		this.personneDto = personneDto;
+	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
+		this.utilisateurDto = utilisateurDto;
 	}
 
 	
