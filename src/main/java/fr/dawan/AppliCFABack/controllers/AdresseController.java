@@ -21,7 +21,7 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.services.AdresseService;
 
 @RestController
-@RequestMapping("/AppliCFABack/adresses")
+@RequestMapping("/adresses")
 public class AdresseController {
 	
 	@Autowired

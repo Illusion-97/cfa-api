@@ -19,7 +19,7 @@ import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.services.CEFService;
 
 @RestController
-@RequestMapping("/AppliCFABack/cefs")
+@RequestMapping("/cefs")
 public class CEFController {
 
 	@Autowired

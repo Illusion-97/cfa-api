@@ -29,7 +29,7 @@ import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 
 @RestController
-@RequestMapping("/AppliCFABack/etudiants")
+@RequestMapping("/etudiants")
 public class EtudiantController {
 
 	@Autowired

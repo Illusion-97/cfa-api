@@ -35,8 +35,8 @@ public class AppliCfaBackApplication {
 			// CROSS ORIGIN
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/AppliCFABack").allowedMethods("GET").allowedOrigins("*");
-				registry.addMapping("/AppliCFABack").allowedMethods("POST", "PUT").allowedOrigins("*");
+//				registry.addMapping("/AppliCFABack").allowedMethods("GET").allowedOrigins("*");
+//				registry.addMapping("/AppliCFABack").allowedMethods("POST", "PUT").allowedOrigins("*");
 				registry.addMapping("/**").allowedOrigins("*").allowedMethods("*").allowedHeaders("*")
 						.exposedHeaders("Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
 								"Origin", "Authorization", "X-Requested-With", "requestId", "Correlation-Id")

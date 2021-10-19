@@ -21,7 +21,7 @@ import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.services.FichePosteService;
 
 @RestController
-@RequestMapping("/AppliCFABack/fichePostes")
+@RequestMapping("/fichePostes")
 public class FichePosteController {
 	
 	@Autowired

@@ -25,7 +25,7 @@ import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.ProjetService;
 
 @RestController
-@RequestMapping("/AppliCFABack/projets")
+@RequestMapping("/projets")
 public class ProjetController {
 
 	@Autowired

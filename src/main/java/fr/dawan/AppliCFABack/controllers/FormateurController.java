@@ -22,7 +22,7 @@ import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.services.FormateurService;
 
 @RestController
-@RequestMapping("/AppliCFABack/formateurs")
+@RequestMapping("/formateurs")
 public class FormateurController {
 	@Autowired
 	FormateurService formateurService;

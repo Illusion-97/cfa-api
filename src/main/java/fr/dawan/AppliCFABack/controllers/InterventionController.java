@@ -30,7 +30,7 @@ import fr.dawan.AppliCFABack.services.InterventionService;
 import org.springframework.core.io.ByteArrayResource;
 
 @RestController
-@RequestMapping("/AppliCFABack/interventions")
+@RequestMapping("/interventions")
 public class InterventionController {
 
 	@Autowired

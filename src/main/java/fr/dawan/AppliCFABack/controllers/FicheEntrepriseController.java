@@ -21,7 +21,7 @@ import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
 import fr.dawan.AppliCFABack.services.FicheEntrepriseService;
 
 @RestController
-@RequestMapping("/AppliCFABack/ficheEntreprises")
+@RequestMapping("/ficheEntreprises")
 public class FicheEntrepriseController {
 
 	@Autowired

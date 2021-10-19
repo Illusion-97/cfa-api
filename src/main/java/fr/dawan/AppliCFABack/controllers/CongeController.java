@@ -21,7 +21,7 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.services.CongeService;
 
 @RestController
-@RequestMapping("/AppliCFABack/conges")
+@RequestMapping("/conges")
 public class CongeController {
 	
 	@Autowired

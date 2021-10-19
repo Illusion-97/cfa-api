@@ -23,7 +23,7 @@ import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.PromotionService;
 
 @RestController
-@RequestMapping("/AppliCFABack/promotions")
+@RequestMapping("/promotions")
 public class PromotionController {
 
 	
