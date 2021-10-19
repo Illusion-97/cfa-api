@@ -1,0 +1,18 @@
+-------------------------------------------------------------------------------
+Test set: fr.dawan.AppliCFABack.Controller.PassageExamenTests
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.036 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.PassageExamenTests
+testFindById  Time elapsed: 0.008 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.dateDebut"
+	at fr.dawan.AppliCFABack.Controller.PassageExamenTests.testFindById(PassageExamenTests.java:77)
+Caused by: java.lang.IllegalArgumentException: json can not be null or empty
+	at fr.dawan.AppliCFABack.Controller.PassageExamenTests.testFindById(PassageExamenTests.java:77)
+
+testDelete  Time elapsed: 0.006 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<202> but was:<404>
+	at fr.dawan.AppliCFABack.Controller.PassageExamenTests.testDelete(PassageExamenTests.java:141)
+
+testUpdate  Time elapsed: 0.004 s  <<< FAILURE!
+java.lang.AssertionError: Cannot invoke "fr.dawan.AppliCFABack.entities.Examen.getFormation()" because the return value of "fr.dawan.AppliCFABack.entities.PassageExamen.getExamen()" is null
+	at fr.dawan.AppliCFABack.Controller.PassageExamenTests.testUpdate(PassageExamenTests.java:130)
+
