@@ -21,7 +21,7 @@ import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.services.UtilisateurRoleService;
 
 @RestController
-@RequestMapping("/AppliCFABack/utilisateursRoles")
+@RequestMapping("/utilisateursRoles")
 public class UtilisateurRoleController {
 	
 	@Autowired
