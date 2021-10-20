@@ -3,10 +3,22 @@ package fr.dawan.AppliCFABack.entities;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Formateur extends Utilisateur {
+public class Formateur{
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	
+	@OneToOne
+	private Utilisateur utilisateur;
+	
 	@ManyToMany(mappedBy = "formateurs")
 	private List<Intervention> interventions;
 
@@ -20,6 +32,22 @@ public class Formateur extends Utilisateur {
 
 	public void setInterventions(List<Intervention> interventions) {
 		this.interventions = interventions;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 

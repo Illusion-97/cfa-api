@@ -26,7 +26,7 @@ public class Promotion { // CDA2021
 	private LocalDate dateFin; // 31/12/2021
 
 	@ManyToOne
-	private Utilisateur cef;
+	private CEF cef;
 
 	@ManyToMany
 	private List<Etudiant> etudiants;
@@ -47,7 +47,7 @@ public class Promotion { // CDA2021
 		super();
 	}
 
-	public Promotion(long id, String nom, LocalDate dateDebut, LocalDate dateFin, Utilisateur cef,
+	public Promotion(long id, String nom, LocalDate dateDebut, LocalDate dateFin, CEF cef,
 			List<Etudiant> etudiants, List<Intervention> interventions, CentreFormation centreFormation,
 			Utilisateur referentPedagogique, Cursus cursus) {
 		super();
@@ -95,11 +95,11 @@ public class Promotion { // CDA2021
 		this.dateFin = dateFin;
 	}
 
-	public Utilisateur getCef() {
+	public CEF getCef() {
 		return cef;
 	}
 
-	public void setCef(Utilisateur cef) {
+	public void setCef(CEF cef) {
 		this.cef = cef;
 	}
 

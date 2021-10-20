@@ -12,6 +12,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -48,6 +49,13 @@ public class Utilisateur {
 
 	@ManyToOne
 	private Entreprise entreprise;
+	
+	@OneToOne
+	private Etudiant etudiant;
+	@OneToOne
+	private Formateur formateur;
+	@OneToOne
+	private CEF cef;
 
 	public Utilisateur() {
 		super();
@@ -141,4 +149,29 @@ public class Utilisateur {
 		this.dateDeNaissance = dateDeNaissance;
 	}
 
+	public Etudiant getEtudiant() {
+		return etudiant;
+	}
+
+	public void setEtudiant(Etudiant etudiant) {
+		this.etudiant = etudiant;
+	}
+
+	public Formateur getFormateur() {
+		return formateur;
+	}
+
+	public void setFormateur(Formateur formateur) {
+		this.formateur = formateur;
+	}
+
+	public CEF getCef() {
+		return cef;
+	}
+
+	public void setCef(CEF cef) {
+		this.cef = cef;
+	}
+
+	
 }

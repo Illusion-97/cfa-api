@@ -8,7 +8,7 @@ public class PromotionDto {
 	private String nom;
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
-	private UtilisateurDto cefDto;
+	private CEFDto cefDto;
 	private List<EtudiantDto> etudiantsDto;
 	private List<InterventionDto> interventionsDto;
 	private CentreFormationDto centreFormationDto;
@@ -51,11 +51,11 @@ public class PromotionDto {
 		this.dateFin = dateFin;
 	}
 
-	public UtilisateurDto getCefDto() {
+	public CEFDto getCefDto() {
 		return cefDto;
 	}
 
-	public void setCefDto(UtilisateurDto cefDto) {
+	public void setCefDto(CEFDto cefDto) {
 		this.cefDto = cefDto;
 	}
 

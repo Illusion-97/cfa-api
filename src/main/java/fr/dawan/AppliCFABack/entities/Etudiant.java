@@ -4,12 +4,24 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Etudiant extends Utilisateur {
+public class Etudiant{
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	
+	@OneToOne
+	private Utilisateur utilisateur;
+	
 	@ManyToMany(mappedBy = "etudiants")
 	private List<Promotion> promotions;
 	
@@ -87,6 +99,22 @@ public class Etudiant extends Utilisateur {
 
 	public void setDossierProjet(List<DossierProjet> dossierProjet) {
 		this.dossierProjet = dossierProjet;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 

@@ -48,7 +48,9 @@ public class CEFServiceImpl implements CEFService {
 		// conversion vers Dto
 		List<CEFDto> lstDto = new ArrayList<CEFDto>();
 		for (CEF c : lst) {
-			lstDto.add(mapper.CEFToCEFDto(c));
+			CEFDto cDto = mapper.CEFToCEFDto(c);
+			cDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(c.getUtilisateur()));
+			lstDto.add(cDto);
 		}
 		return lstDto;
 	}
@@ -56,9 +58,12 @@ public class CEFServiceImpl implements CEFService {
 	@Override
 	public CEFDto getById(long id) {
 		Optional<CEF> c = cefRepository.findById(id);
-		if (c.isPresent())
-			return mapper.CEFToCEFDto(c.get());
-
+		if (c.isPresent()) {
+			CEFDto cefDto = mapper.CEFToCEFDto(c.get());
+			cefDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(c.get().getUtilisateur()));
+			return cefDto;
+		}
+			
 		return null;
 	}
 
@@ -66,21 +71,23 @@ public class CEFServiceImpl implements CEFService {
 	public CEFDto saveOrUpdate(CEFDto cDto) {
 		CEF c = DtoTools.convert(cDto, CEF.class);
 		
-		//HashTools throw Exception
-		try {
-			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-			if(c.getId() == 0) {
-				c.setPassword(HashTools.hashSHA512(c.getPassword()));
-			}else {
-				//Si on a modifié le mdp
-				CEF cefInDB = cefRepository.getOne(c.getId());
-				if(!cefInDB.getPassword().equals(c.getPassword())) {
-	                c.setPassword(HashTools.hashSHA512(c.getPassword()));
-	            }
-			}	
-		}catch (Exception e) {
-            e.printStackTrace();
-        }
+		if(c.getUtilisateur() != null) {
+			//HashTools throw Exception
+			try {
+				//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+				if(c.getUtilisateur().getId() == 0) {
+					c.getUtilisateur().setPassword(HashTools.hashSHA512(c.getUtilisateur().getPassword()));
+				}else {
+					//Si on a modifié le mdp
+					CEF cefInDB = cefRepository.getOne(c.getId());
+					if(!cefInDB.getUtilisateur().getPassword().equals(c.getUtilisateur().getPassword())) {
+		                c.getUtilisateur().setPassword(HashTools.hashSHA512(c.getUtilisateur().getPassword()));
+		            }
+				}	
+			}catch (Exception e) {
+	            e.printStackTrace();
+	        }
+		}		
 
 		c = cefRepository.saveAndFlush(c);
 

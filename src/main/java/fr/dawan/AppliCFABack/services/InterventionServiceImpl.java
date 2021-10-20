@@ -214,8 +214,11 @@ public class InterventionServiceImpl implements InterventionService {
 		List<Etudiant> lstEtu = etudiantRepository.findAllDistinctByPromotionsInterventionsId(id);
 		List<EtudiantDto> lstEtuDto = new ArrayList<EtudiantDto>();
 		for (Etudiant etu : lstEtu) {
-			if (etu != null)
-				lstEtuDto.add(mapper.EtudiantToEtudiantDto(etu));
+			if (etu != null) {
+				EtudiantDto eDto = mapper.EtudiantToEtudiantDto(etu);
+				eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(etu.getUtilisateur()));
+				lstEtuDto.add(eDto);
+			}				
 		}
 		return lstEtuDto;
 	}
@@ -250,8 +253,11 @@ public class InterventionServiceImpl implements InterventionService {
 		List<Formateur> lstForm = formateurRepository.findByInterventionsId(id);
 		List<FormateurDto> lstFormDto = new ArrayList<FormateurDto>();
 		for (Formateur form : lstForm) {
-			if (form != null)
-				lstFormDto.add(mapper.FormateurToFormateurDto(form));
+			if (form != null) {
+				FormateurDto fDto = mapper.FormateurToFormateurDto(form);
+				fDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(form.getUtilisateur()));
+				lstFormDto.add(fDto);				
+			}
 		}
 		return lstFormDto;
 	}

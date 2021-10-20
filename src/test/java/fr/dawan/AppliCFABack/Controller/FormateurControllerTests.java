@@ -86,8 +86,8 @@ public class FormateurControllerTests {
 	void testSave() {
 		try {
 			FormateurDto eToInsert = new FormateurDto();
-			eToInsert.setNom("formateur save nom save");
-			eToInsert.setPrenom("formateur prenom save");
+//			eToInsert.setNom("formateur save nom save");
+//			eToInsert.setPrenom("formateur prenom save");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
@@ -110,8 +110,8 @@ public class FormateurControllerTests {
 
 		try {
 			FormateurDto cDto = formateurController.getById(idFormateur+1);
-			cDto.setNom("FormateurDto nom update");
-			cDto.setPrenom("FormateurDto prenom update");
+//			cDto.setNom("FormateurDto nom update");
+//			cDto.setPrenom("FormateurDto prenom update");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(cDto);
@@ -123,8 +123,8 @@ public class FormateurControllerTests {
 
 			FormateurDto res = objectMapper.readValue(jsonReponse, FormateurDto.class);
 			assertEquals(res.getId(), cDto.getId());
-			assertEquals(res.getNom(),cDto.getNom());
-			assertEquals(res.getPrenom(),cDto.getPrenom());
+//			assertEquals(res.getNom(),cDto.getNom());
+//			assertEquals(res.getPrenom(),cDto.getPrenom());
 
 		} catch (Exception e) {
 			fail(e.getMessage());

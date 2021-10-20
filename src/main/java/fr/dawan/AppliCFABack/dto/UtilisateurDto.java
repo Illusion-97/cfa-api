@@ -15,6 +15,9 @@ public class UtilisateurDto {
 	private AdresseDto adresseDto;
 	private EntrepriseDto entrepriseDto;
 	private List<UtilisateurRoleDto> rolesDto;
+	private EtudiantDto etudiantDto;
+	private FormateurDto formateurDto;
+	private CEFDto cefDto;
 
 	public UtilisateurDto() {
 		super();
@@ -106,6 +109,30 @@ public class UtilisateurDto {
 
 	public void setRolesDto(List<UtilisateurRoleDto> rolesDto) {
 		this.rolesDto = rolesDto;
+	}
+
+	public EtudiantDto getEtudiantDto() {
+		return etudiantDto;
+	}
+
+	public void setEtudiantDto(EtudiantDto etudiantDto) {
+		this.etudiantDto = etudiantDto;
+	}
+
+	public FormateurDto getFormateurDto() {
+		return formateurDto;
+	}
+
+	public void setFormateurDto(FormateurDto formateurDto) {
+		this.formateurDto = formateurDto;
+	}
+
+	public CEFDto getCefDto() {
+		return cefDto;
+	}
+
+	public void setCefDto(CEFDto cefDto) {
+		this.cefDto = cefDto;
 	}
 
 
