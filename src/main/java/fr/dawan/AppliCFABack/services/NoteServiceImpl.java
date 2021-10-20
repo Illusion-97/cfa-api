@@ -70,6 +70,7 @@ public class NoteServiceImpl implements NoteService {
 		NoteDto nDto = mapper.NoteToNoteDto(n.get());
 		nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.get().getDevoir()));
 		nDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.get().getEtudiant()));
+		nDto.getEtudiantDto().setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(n.get().getEtudiant().getUtilisateur()));
 		nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.get().getExamen()));
 		if(n.get().getExamen() != null) nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.get().getExamen().getExamen()));
 		return nDto;

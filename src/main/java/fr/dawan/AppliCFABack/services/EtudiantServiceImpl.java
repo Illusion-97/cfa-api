@@ -104,10 +104,15 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		for (Etudiant e : lst) {
 			EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(e);
+			
 			UtilisateurDto Utilisateur = mapper.UtilisateurToUtilisateurDto(e.getUtilisateur());
+			etuDto.setUtilisateurDto(Utilisateur);
+			
 			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getUtilisateur().getAdresse());
 			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
 
+
+			
 			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
 			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<GroupeEtudiantDto>();
 			for (GroupeEtudiant grp : lstGrpEtu) {
@@ -130,10 +135,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 				lstDossierProjetDto.add(dpdto);
 		
 			}
+			
 			List<UtilisateurRoleDto> URDto = new ArrayList<UtilisateurRoleDto>();
 			for (UtilisateurRole r : e.getUtilisateur().getRoles()) {
 				URDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
 			}
+			
 			etuDto.getUtilisateurDto().setRolesDto(URDto);
 			
 			List<DossierProfessionnel>lstDossierProfessionnel = e.getDossierProfessionnel();
@@ -147,7 +154,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 
-			etuDto.setUtilisateurDto(Utilisateur);
 			etuDto.getUtilisateurDto().setAdresseDto(addrDto);
 			etuDto.setGroupesDto(lstGrpEtuDto);
 			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
@@ -389,8 +395,17 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public List<GroupeEtudiantDto> getGroupesByIdEtudiant(long id) {
 		List<GroupeEtudiant> lst = getEtudiantById(id).getGroupes();
 		List<GroupeEtudiantDto> lstDto = new ArrayList<GroupeEtudiantDto>();
-		for (GroupeEtudiant g : lst)
-			lstDto.add(mapper.GroupeEtudiantToGroupEtudiantDto(g));
+		for (GroupeEtudiant g : lst) {
+			GroupeEtudiantDto gDto = mapper.GroupeEtudiantToGroupEtudiantDto(g);
+			List<EtudiantDto> eDtos = new ArrayList<EtudiantDto>();
+			for(Etudiant e : g.getEtudiants()) {
+				EtudiantDto etudiantDto = mapper.EtudiantToEtudiantDto(e);
+				etudiantDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
+				eDtos.add(etudiantDto);
+			}
+			gDto.setEtudiants(eDtos);
+			lstDto.add(gDto);
+		}
 
 		return lstDto;
 	}

@@ -56,6 +56,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 		
 		AbsenceDto aDto =mapper.AbsenceToAbsenceDto(a.get());
 		aDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(a.get().getEtudiant()));
+		aDto.getEtudiantDto().setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(a.get().getEtudiant().getUtilisateur()));
 		
 		return aDto;
 	}
@@ -111,9 +112,8 @@ public class AbsenceServiceImpl implements AbsenceService {
 		List<Absence> list = absenceRepository.findAllByEtudiantId(id);
 		for(Absence a : list) {
 			AbsenceDto absence = mapper.AbsenceToAbsenceDto(a);
-//			a.setEtudiant(etudiantRepository.getOne(id));
 			absence.setEtudiantDto(mapper.EtudiantToEtudiantDto(etudiantRepository.getOne(id)));
-//			result.add(mapper.AbsenceToAbsenceDto(a));
+			absence.getEtudiantDto().setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(etudiantRepository.getOne(id).getUtilisateur()));
 			result.add(absence);
 		}
 		return result;

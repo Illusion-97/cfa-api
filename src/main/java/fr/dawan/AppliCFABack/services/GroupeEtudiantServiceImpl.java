@@ -65,6 +65,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 					pDtos.add(mapper.PromotionToPromotionDto(p));
 				}
 				eDto.setPromotionsDto(pDtos);
+				eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
 				etudiantsDto.add(eDto);
 			}
 			gDto.setEtudiants(etudiantsDto);
@@ -128,8 +129,6 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	public List<EtudiantDto> getEtudiantsByGroupeId(long id) {
 		Optional<GroupeEtudiant> g = groupeEtudiantRepository.findById(id);
 		
-		
-		
 		if(!g.isPresent())
 			return null;
 		
@@ -141,6 +140,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 				pDtos.add(mapper.PromotionToPromotionDto(p));
 			}
 			eDto.setPromotionsDto(pDtos);
+			eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
 			result.add(eDto);
 		}		
 		
