@@ -58,7 +58,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-10-20T16:17:44+0200",
+    date = "2021-10-20T17:07:09+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -474,9 +474,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         ContratDto contratDto = new ContratDto();
 
+        contratDto.setId( contrat.getId() );
         contratDto.setDateDebut( contrat.getDateDebut() );
         contratDto.setDateFin( contrat.getDateFin() );
-        contratDto.setId( contrat.getId() );
         contratDto.setMaitreApprentissage( contrat.getMaitreApprentissage() );
 
         return contratDto;
