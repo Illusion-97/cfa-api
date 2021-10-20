@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Test set: fr.dawan.AppliCFABack.Controller.FormationControllerTests
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.035 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.FormationControllerTests
+testFindById  Time elapsed: 0.007 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.titre"
+	at fr.dawan.AppliCFABack.Controller.FormationControllerTests.testFindById(FormationControllerTests.java:76)
+Caused by: java.lang.IllegalArgumentException: json can not be null or empty
+	at fr.dawan.AppliCFABack.Controller.FormationControllerTests.testFindById(FormationControllerTests.java:76)
+

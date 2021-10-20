@@ -84,6 +84,33 @@ public class CursusController {
 		}
 		return lstCursusMostRecent;
 	}
+	@GetMapping(value = "/etudiant/{id}/{page}/{size}",produces = "application/json")
+	public List<CursusDto> getByIdEtudiant(@PathVariable("id") long id,@PathVariable("page") int page,
+ 			@PathVariable(value = "size") int size) {
+		List<PromotionDto> lstpDto = etudiantService.getPromotionsByIdEtudiant(id);
+		List<CursusDto> lstCursus = new ArrayList<CursusDto>();
+		List<CursusDto> lstCursusMostRecent = new ArrayList<CursusDto>();
+		for (PromotionDto pDto : lstpDto) {
+			CursusDto cdto = cursusService.getByIdPromotion(pDto.getId());
+			lstCursus.add(cdto);
+		}
+		for( int i=lstCursus.size()-1;i>=0;i--) {
+			lstCursusMostRecent.add(lstCursus.get(i));
+		}
+		List<CursusDto> lstPaginate =  new ArrayList<CursusDto>();
+		
+		if(lstCursusMostRecent.size() >= (page*size)) {
+			for (int i=(page)*size;i <(page+1)*size;i++) {
+				lstPaginate.add(lstCursusMostRecent.get(i));
+			}
+		}else {
+			for (int i=(page)*size;i <lstCursusMostRecent.size();i++) {
+				lstPaginate.add(lstCursusMostRecent.get(i));
+			}
+		}
+		
+		return lstPaginate;
+	}
 	@GetMapping(value = "/CurrentCursus/{id}",produces = "application/json")
 	public CursusDto getCurrentCursusByIdEtudiant(@PathVariable("id") long id) {
 		List<CursusDto> lstCursusDto = getByIdEtudiant(id);

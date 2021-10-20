@@ -210,6 +210,11 @@ public class InitDataBase {
 
 		Entreprise entreprise = new Entreprise();
 		entreprise.setRaisonSociale("raison sociale");
+		entreprise.setEffectifTotal("200");
+		entreprise.setEmployeurType("Employeur type test");
+		entreprise.setSiret("42998754800162");
+		entreprise.setNaf("Naf test");
+
 
 		Adresse adresse = new Adresse();
 		adresse.setNumero(12);

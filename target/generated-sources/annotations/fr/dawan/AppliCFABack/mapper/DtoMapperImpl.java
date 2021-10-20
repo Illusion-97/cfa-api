@@ -54,8 +54,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-10-20T09:18:32+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
+    date = "2021-10-19T15:08:52+0200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.2 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -100,6 +100,13 @@ public class DtoMapperImpl implements DtoMapper {
 
         CEFDto cEFDto = new CEFDto();
 
+        cEFDto.setLogin( cef.getLogin() );
+        cEFDto.setPassword( cef.getPassword() );
+        cEFDto.setPrenom( cef.getPrenom() );
+        cEFDto.setNom( cef.getNom() );
+        cEFDto.setCivilite( cef.getCivilite() );
+        cEFDto.setDateDeNaissance( cef.getDateDeNaissance() );
+        cEFDto.setTelephone( cef.getTelephone() );
         cEFDto.setId( cef.getId() );
 
         return cEFDto;
@@ -178,6 +185,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         entrepriseDto.setId( entreprise.getId() );
         entrepriseDto.setRaisonSociale( entreprise.getRaisonSociale() );
+        entrepriseDto.setSiret( entreprise.getSiret() );
+        entrepriseDto.setNaf( entreprise.getNaf() );
+        entrepriseDto.setEffectifTotal( entreprise.getEffectifTotal() );
+        entrepriseDto.setEmployeurType( entreprise.getEmployeurType() );
 
         return entrepriseDto;
     }
@@ -190,6 +201,13 @@ public class DtoMapperImpl implements DtoMapper {
 
         EtudiantDto etudiantDto = new EtudiantDto();
 
+        etudiantDto.setLogin( etudiant.getLogin() );
+        etudiantDto.setPassword( etudiant.getPassword() );
+        etudiantDto.setPrenom( etudiant.getPrenom() );
+        etudiantDto.setNom( etudiant.getNom() );
+        etudiantDto.setCivilite( etudiant.getCivilite() );
+        etudiantDto.setDateDeNaissance( etudiant.getDateDeNaissance() );
+        etudiantDto.setTelephone( etudiant.getTelephone() );
         etudiantDto.setId( etudiant.getId() );
         etudiantDto.setDossierProfessionnel( dossierProfessionnelListToDossierProfessionnelDtoList( etudiant.getDossierProfessionnel() ) );
         etudiantDto.setDossierProjet( dossierProjetListToDossierProjetDtoList( etudiant.getDossierProjet() ) );
@@ -219,6 +237,13 @@ public class DtoMapperImpl implements DtoMapper {
 
         FormateurDto formateurDto = new FormateurDto();
 
+        formateurDto.setLogin( formateur.getLogin() );
+        formateurDto.setPassword( formateur.getPassword() );
+        formateurDto.setPrenom( formateur.getPrenom() );
+        formateurDto.setNom( formateur.getNom() );
+        formateurDto.setCivilite( formateur.getCivilite() );
+        formateurDto.setDateDeNaissance( formateur.getDateDeNaissance() );
+        formateurDto.setTelephone( formateur.getTelephone() );
         formateurDto.setId( formateur.getId() );
 
         return formateurDto;
