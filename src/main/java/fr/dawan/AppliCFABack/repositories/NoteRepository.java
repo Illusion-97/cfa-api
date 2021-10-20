@@ -21,10 +21,10 @@ public interface NoteRepository extends JpaRepository<Note, Long>{
 	@Query("SELECT n FROM Note n WHERE n.etudiant.id = :id")
 	List<Note> getNotesByIdEtudiant(@Param("id") long id );
 
-	Page<Note> findAllByEtudiantPrenomContainingIgnoringCaseOrEtudiantNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(
+	Page<Note> findAllByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(
 			String search, String search2, String search3, String search4, Pageable pageable);
 
-	long countByEtudiantPrenomContainingIgnoringCaseOrEtudiantNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(
+	long countByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(
 			String search, String search2, String search3, String search4);
 
 	List<Note> findAllByEtudiantId(long id);

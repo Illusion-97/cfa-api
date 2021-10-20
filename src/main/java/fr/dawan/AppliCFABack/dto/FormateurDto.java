@@ -2,8 +2,9 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.util.List;
 
-public class FormateurDto extends UtilisateurDto{
+public class FormateurDto{
 	private long id;
+	private UtilisateurDto utilisateurDto;
 	private List<InterventionDto> interventionsDto;
 	
 	public FormateurDto() {
@@ -23,6 +24,14 @@ public class FormateurDto extends UtilisateurDto{
 	
 	public void setInterventionsDto(List<InterventionDto> interventionsDto) {
 		this.interventionsDto = interventionsDto;
+	}
+
+	public UtilisateurDto getUtilisateurDto() {
+		return utilisateurDto;
+	}
+
+	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
+		this.utilisateurDto = utilisateurDto;
 	}
 	
 	

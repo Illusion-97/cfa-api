@@ -59,17 +59,19 @@ public class PromotionServiceImpl implements PromotionService {
 		pDto.setCursusDto(mapper.CursusToCursusDto(promo.getCursus()));
 		pDto.setCentreFormationDto(mapper.CentreFormationToCentreFormationDto(promo.getCentreFormation()));
 		pDto.setReferentPedagogiqueDto(mapper.UtilisateurToUtilisateurDto(promo.getReferentPedagogique()));
-		pDto.setCefDto(mapper.UtilisateurToUtilisateurDto(promo.getCef()));		
+		pDto.setCefDto(mapper.CEFToCEFDto(promo.getCef()));		
+		pDto.getCefDto().setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(promo.getCef().getUtilisateur()));
 		
 		List<Etudiant> etudiants = promo.getEtudiants();
 		List<EtudiantDto> eDtos = new ArrayList<EtudiantDto>();	
 		for(Etudiant e : etudiants) {
-			EtudiantDto eDto =mapper.EtudiantToEtudiantDto(e);
+			EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
 			List<GroupeEtudiantDto> gDtos = new ArrayList<GroupeEtudiantDto>();
 			for(GroupeEtudiant g : e.getGroupes()) {
 				gDtos.add(mapper.GroupeEtudiantToGroupEtudiantDto(g));
 			}
 			eDto.setGroupesDto(gDtos);
+			eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
 			eDtos.add(eDto);
 		}
 		pDto.setEtudiantsDto(eDtos);
@@ -159,6 +161,7 @@ public class PromotionServiceImpl implements PromotionService {
 			}
 			EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
 			eDto.setPromotionsDto(promoList);
+			eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
 			lstDto.add(eDto);
 		}
 		return lstDto;

@@ -42,7 +42,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public List<NoteDto> getAllByPage(int page, int size, String search) {
-		List<Note> lst = noteRepository.findAllByEtudiantPrenomContainingIgnoringCaseOrEtudiantNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search,search, search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Note> lst = noteRepository.findAllByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search,search, search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<NoteDto> lstDto = new ArrayList<NoteDto>();
@@ -58,7 +58,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(noteRepository.countByEtudiantPrenomContainingIgnoringCaseOrEtudiantNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search, search, search, search));
+		return new CountDto(noteRepository.countByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search, search, search, search));
 	}
 
 	@Override
@@ -70,6 +70,7 @@ public class NoteServiceImpl implements NoteService {
 		NoteDto nDto = mapper.NoteToNoteDto(n.get());
 		nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.get().getDevoir()));
 		nDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.get().getEtudiant()));
+		nDto.getEtudiantDto().setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(n.get().getEtudiant().getUtilisateur()));
 		nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.get().getExamen()));
 		if(n.get().getExamen() != null) nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.get().getExamen().getExamen()));
 		return nDto;

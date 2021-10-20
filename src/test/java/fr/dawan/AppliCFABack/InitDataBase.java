@@ -125,6 +125,11 @@ public class InitDataBase {
 
 	void initDataBase() throws Exception {
 
+		LocalDate date = LocalDate.now();
+		LocalDate date2 = date.plusDays(7);
+		LocalDate date3 = date2.plusDays(7);
+		LocalDate date4 = date3.plusDays(7);
+
 		UtilisateurRole roleEtudiant = new UtilisateurRole();
 		roleEtudiant.setIntitule("ETUDIANT");
 		UtilisateurRole roleformateur = new UtilisateurRole();
@@ -143,14 +148,41 @@ public class InitDataBase {
 		admin.setDateDeNaissance(LocalDate.now());
 		admin.setTelephone("06.12.80.45.99");
 		
+		Utilisateur monEtudiant = new Utilisateur();
+		monEtudiant.setPrenom("Tanguy");
+		monEtudiant.setNom("Billon");
+		monEtudiant.setLogin("tbillon@dawan.fr");
+		monEtudiant.setPassword("pwd");
+		monEtudiant.setCivilite("Mr");
+		monEtudiant.setDateDeNaissance(LocalDate.now());
+		monEtudiant.setTelephone("06.12.80.45.99");
+		
+		// CEF
+		Utilisateur monCEF = new Utilisateur();
+		monCEF.setPrenom("Laurence");
+		monCEF.setNom("Baron Gomez");
+		monCEF.setLogin("cef@dawan.fr");
+		monCEF.setPassword("pwd");
+		monCEF.setCivilite("Mme");
+		monCEF.setDateDeNaissance(date);
+		monCEF.setTelephone("06.12.80.45.96");
+		
+
+		// Formateur
+		Utilisateur monFormateur = new Utilisateur();
+		monFormateur.setPrenom("Stéphane");
+		monFormateur.setNom("Menut");
+		monFormateur.setLogin("formateur@dawan.fr");
+		monFormateur.setPassword("pwd");
+		monFormateur.setCivilite("Mr");
+		monFormateur.setDateDeNaissance(date);
+		monFormateur.setTelephone("06.12.80.45.95");
+				
+		
 		Etudiant etudiant = new Etudiant();
-		etudiant.setPrenom("Tanguy");
-		etudiant.setNom("Billon");
-		etudiant.setLogin("tbillon@dawan.fr");
-		etudiant.setPassword("pwd");
-		etudiant.setCivilite("Mr");
-		etudiant.setDateDeNaissance(LocalDate.now());
-		etudiant.setTelephone("06.12.80.45.99");
+		CEF cef = new CEF();
+		Formateur formateur = new Formateur();
+		
 
 		LocalDate promoDate = LocalDate.of(2021, 1, 1);
 
@@ -220,11 +252,6 @@ public class InitDataBase {
 		formation4.setTitre("Spring MVC");
 		formation4.setContenu("");
 
-		LocalDate date = LocalDate.now();
-		LocalDate date2 = date.plusDays(7);
-		LocalDate date3 = date2.plusDays(7);
-		LocalDate date4 = date3.plusDays(7);
-
 		Intervention intervention = new Intervention();
 		intervention.setDateDebut(date);
 		intervention.setDateFin(date.plusDays(4));
@@ -240,16 +267,6 @@ public class InitDataBase {
 		Intervention intervention4 = new Intervention();
 		intervention4.setDateDebut(date4.plusDays(2));
 		intervention4.setDateFin(date4.plusDays(4));
-
-		// CEF
-		CEF cef = new CEF();
-		cef.setPrenom("Laurence");
-		cef.setNom("Baron Gomez");
-		cef.setLogin("cef@dawan.fr");
-		cef.setPassword("pwd");
-		cef.setCivilite("Mme");
-		cef.setDateDeNaissance(date);
-		cef.setTelephone("06.12.80.45.96");
 		
 
 		// Centre Formation
@@ -274,15 +291,6 @@ public class InitDataBase {
 		Examen exam = new Examen();
 		exam.setEnonce("enonce examen");
 
-		// Formateur
-		Formateur formateur = new Formateur();
-		formateur.setPrenom("Stéphane");
-		formateur.setNom("Menut");
-		formateur.setLogin("formateur@dawan.fr");
-		formateur.setPassword("pwd");
-		formateur.setCivilite("Mr");
-		formateur.setDateDeNaissance(date);
-		formateur.setTelephone("06.12.80.45.95");
 
 		// PassageExamen
 		PassageExamen passageExamen = new PassageExamen();
@@ -303,6 +311,11 @@ public class InitDataBase {
 		conge.setStatus(StatusConge.CONFIRME);
 		
 		admin = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(admin)), Utilisateur.class);
+		monEtudiant = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(monEtudiant)), Utilisateur.class);
+		monCEF = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(monCEF)), Utilisateur.class);
+		monFormateur = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(monFormateur)), Utilisateur.class);
+		
+		
 		etudiant = DtoTools.convert(etudiantService.saveOrUpdate(mapper.EtudiantToEtudiantDto(etudiant)), Etudiant.class);
 		cef = DtoTools.convert(cefService.saveOrUpdate(mapper.CEFToCEFDto(cef)), CEF.class);
 		formateur = DtoTools.convert(formateurService.saveOrUpdate(mapper.FormateurToFormateurDto(formateur)), Formateur.class);		
@@ -339,6 +352,7 @@ public class InitDataBase {
 		conge = congeRepository.save(conge);
 
 		List<Etudiant> lstEtudiant = new ArrayList<Etudiant>();
+		List<Utilisateur> lstUtilisateurEtudiant = new ArrayList<Utilisateur>();
 		List<Promotion> lstPromotion = new ArrayList<Promotion>();
 		List<Promotion> lstPromotion1 = new ArrayList<Promotion>();
 		List<GroupeEtudiant> lstGroupe = new ArrayList<GroupeEtudiant>();
@@ -361,6 +375,7 @@ public class InitDataBase {
 		List<Projet> lstProjet = new ArrayList<Projet>();
 
 		lstEtudiant.add(etudiant);
+		lstUtilisateurEtudiant.add(monEtudiant);
 		lstPromotion.add(promotion);
 		lstPromotion.add(promotion2);
 		lstPromotion.add(promotion3);
@@ -393,7 +408,7 @@ public class InitDataBase {
 		lstPassageExamen.add(passageExamen);
 		lstProjet.add(projet);
 
-		roleEtudiant.setUtilisateurs(lstEtudiant.stream().collect(Collectors.toList()));
+		roleEtudiant.setUtilisateurs(lstUtilisateurEtudiant.stream().collect(Collectors.toList()));
 
 		entreprise.setAdresseSiege(adresse2);
 		groupe.setEtudiants(lstEtudiant);
@@ -402,28 +417,33 @@ public class InitDataBase {
 		promotion.setCef(cef);
 		promotion.setCentreFormation(centre); 
 		promotion.setCursus(cursus0);
-		promotion.setReferentPedagogique(formateur);
+		promotion.setReferentPedagogique(monFormateur);
 
 		promotion2.setEtudiants(lstEtudiant);
 		promotion2.setCef(cef);
 		promotion2.setCentreFormation(centre);
 		promotion2.setCursus(cursus1);
-		promotion2.setReferentPedagogique(formateur);
+		promotion2.setReferentPedagogique(monFormateur);
 
 		promotion3.setEtudiants(lstEtudiant);
 		promotion3.setCef(cef);
 		promotion3.setCentreFormation(centre);
 		promotion3.setCursus(cursus2);
-		promotion3.setReferentPedagogique(formateur);
+		promotion3.setReferentPedagogique(monFormateur);
 
+
+		monEtudiant.setEntreprise(entreprise);
+		monEtudiant.setAdresse(adresse);
+		monEtudiant.setRoles(lstRoleEtudiant);
+		monEtudiant.setEtudiant(etudiant);
+		
 		etudiant.setGroupes(lstGroupe);
-		etudiant.setPromotions(lstPromotion);
-		etudiant.setEntreprise(entreprise);
-		etudiant.setAdresse(adresse);
-		etudiant.setRoles(lstRoleEtudiant);
-		etudiant.setManager(cef);
-		etudiant.setFormateurReferent(formateur);
+		etudiant.setPromotions(lstPromotion);	
+		etudiant.setUtilisateur(monEtudiant);
 
+		etudiant.setManager(monCEF);
+		etudiant.setFormateurReferent(monFormateur);	
+		
 		absence.setEtudiant(etudiant);
 
 		intervention.setFormateurs(lstFormateur);
@@ -446,10 +466,14 @@ public class InitDataBase {
 
 		admin.setRoles(lstRoleAdmin);
 		
+
+		monCEF.setRoles(lstRoleCef);
+		monCEF.setAdresse(adresse);
+		monCEF.setEntreprise(entreprise);
+		monCEF.setCef(cef);
+		
 		cef.setCentreFormation(centre);
-		cef.setRoles(lstRoleCef);
-		cef.setAdresse(adresse);
-		cef.setEntreprise(entreprise);
+		cef.setUtilisateur(monCEF);
 		
 		centre.setAdresse(adresse);
 		centre.setEntreprise(entreprise);
@@ -469,18 +493,25 @@ public class InitDataBase {
 		note.setDevoir(devoir);
 		note.setExamen(passageExamen);
 
-		formateur.setAdresse(adresse);
-		formateur.setEntreprise(entreprise);
+
+		monFormateur.setAdresse(adresse);
+		monFormateur.setEntreprise(entreprise);
+		monFormateur.setRoles(lstRoleFormateur);
+		monFormateur.setFormateur(formateur);
+
 		formateur.setInterventions(lstInterventions);
-		formateur.setRoles(lstRoleFormateur);
+		formateur.setUtilisateur(monFormateur);
 
 		formation.setCursusLst(lstCursus);		
 
 		projet.setGroupe(groupe);
 
-		conge.setUtilisateur(etudiant);
+		conge.setUtilisateur(monEtudiant);
 		
 		utilisateurRepository.save(admin);
+		utilisateurRepository.save(monEtudiant);
+		utilisateurRepository.save(monFormateur);
+		utilisateurRepository.save(monCEF);
 		etudiantRepository.save(etudiant);
 		groupeEtudiantRepository.save(groupe);
 		promotionRepository.save(promotion);

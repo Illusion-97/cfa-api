@@ -10,9 +10,9 @@ import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 @Repository
 public interface GroupeEtudiantRepository extends JpaRepository<GroupeEtudiant, Long> {
 
-	Page<GroupeEtudiant> findAllByNomContainingIgnoringCaseOrEtudiantsNomContainingIgnoringCaseOrEtudiantsPrenomContainingIgnoringCase(
+	Page<GroupeEtudiant> findAllByNomContainingIgnoringCaseOrEtudiantsUtilisateurNomContainingIgnoringCaseOrEtudiantsUtilisateurPrenomContainingIgnoringCase(
 			String search, String search2, String search3, Pageable pageable);
 
-	long countByNomContainingIgnoringCaseOrEtudiantsNomContainingIgnoringCaseOrEtudiantsPrenomContainingIgnoringCase(
+	long countByNomContainingIgnoringCaseOrEtudiantsUtilisateurNomContainingIgnoringCaseOrEtudiantsUtilisateurPrenomContainingIgnoringCase(
 			String search, String search2, String search3);	
 }
