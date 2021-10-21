@@ -10,7 +10,7 @@ import fr.dawan.AppliCFABack.entities.Contrat;
 @Repository
 public interface ContratRepository extends JpaRepository<Contrat, Long>{
 
-	Page<Contrat> findAllByMaitreApprentissagePrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(
+	Page<Contrat> findAllByMaitreApprentissagePrenomContainingIgnoringCaseOrMaitreApprentissageNomContainingIgnoringCase(
 			String prenom, String nom, PageRequest pageable);
 
 }
