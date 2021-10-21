@@ -5,6 +5,7 @@ import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.ContratDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
@@ -18,6 +19,7 @@ import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.MaitreApprentissageDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
@@ -29,6 +31,7 @@ import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Contrat;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
@@ -42,6 +45,7 @@ import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
@@ -54,7 +58,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-10-20T14:27:41+0200",
+    date = "2021-10-20T17:10:35+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -83,11 +87,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         AdresseDto adresseDto = new AdresseDto();
 
-        adresseDto.setCodePostal( adresse.getCodePostal() );
         adresseDto.setId( adresse.getId() );
         adresseDto.setNumero( adresse.getNumero() );
         adresseDto.setRue( adresse.getRue() );
         adresseDto.setVille( adresse.getVille() );
+        adresseDto.setCodePostal( adresse.getCodePostal() );
 
         return adresseDto;
     }
@@ -160,10 +164,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         DevoirDto devoirDto = new DevoirDto();
 
+        devoirDto.setId( devoir.getId() );
+        devoirDto.setEnonce( devoir.getEnonce() );
         devoirDto.setDateDebut( devoir.getDateDebut() );
         devoirDto.setDateFin( devoir.getDateFin() );
-        devoirDto.setEnonce( devoir.getEnonce() );
-        devoirDto.setId( devoir.getId() );
 
         return devoirDto;
     }
@@ -176,12 +180,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         EntrepriseDto entrepriseDto = new EntrepriseDto();
 
-        entrepriseDto.setEffectifTotal( entreprise.getEffectifTotal() );
-        entrepriseDto.setEmployeurType( entreprise.getEmployeurType() );
         entrepriseDto.setId( entreprise.getId() );
-        entrepriseDto.setNaf( entreprise.getNaf() );
         entrepriseDto.setRaisonSociale( entreprise.getRaisonSociale() );
         entrepriseDto.setSiret( entreprise.getSiret() );
+        entrepriseDto.setNaf( entreprise.getNaf() );
+        entrepriseDto.setEffectifTotal( entreprise.getEffectifTotal() );
+        entrepriseDto.setEmployeurType( entreprise.getEmployeurType() );
 
         return entrepriseDto;
     }
@@ -194,9 +198,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         EtudiantDto etudiantDto = new EtudiantDto();
 
+        etudiantDto.setId( etudiant.getId() );
         etudiantDto.setDossierProfessionnel( dossierProfessionnelListToDossierProfessionnelDtoList( etudiant.getDossierProfessionnel() ) );
         etudiantDto.setDossierProjet( dossierProjetListToDossierProjetDtoList( etudiant.getDossierProjet() ) );
-        etudiantDto.setId( etudiant.getId() );
 
         return etudiantDto;
     }
@@ -209,8 +213,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExamenDto examenDto = new ExamenDto();
 
-        examenDto.setEnonce( examen.getEnonce() );
         examenDto.setId( examen.getId() );
+        examenDto.setEnonce( examen.getEnonce() );
 
         return examenDto;
     }
@@ -236,9 +240,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         FormationDto formationDto = new FormationDto();
 
-        formationDto.setContenu( formation.getContenu() );
         formationDto.setId( formation.getId() );
         formationDto.setTitre( formation.getTitre() );
+        formationDto.setContenu( formation.getContenu() );
 
         return formationDto;
     }
@@ -297,9 +301,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         PassageExamenDto passageExamenDto = new PassageExamenDto();
 
+        passageExamenDto.setId( passageExamen.getId() );
         passageExamenDto.setDateDebut( passageExamen.getDateDebut() );
         passageExamenDto.setDateFin( passageExamen.getDateFin() );
-        passageExamenDto.setId( passageExamen.getId() );
 
         return passageExamenDto;
     }
@@ -312,10 +316,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         ProjetDto projetDto = new ProjetDto();
 
-        projetDto.setDescription( projet.getDescription() );
-        projetDto.setGroupe( GroupeEtudiantToGroupEtudiantDto( projet.getGroupe() ) );
         projetDto.setId( projet.getId() );
         projetDto.setNom( projet.getNom() );
+        projetDto.setDescription( projet.getDescription() );
+        projetDto.setGroupe( GroupeEtudiantToGroupEtudiantDto( projet.getGroupe() ) );
 
         return projetDto;
     }
@@ -328,10 +332,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         PromotionDto promotionDto = new PromotionDto();
 
-        promotionDto.setDateDebut( promotion.getDateDebut() );
-        promotionDto.setDateFin( promotion.getDateFin() );
         promotionDto.setId( promotion.getId() );
         promotionDto.setNom( promotion.getNom() );
+        promotionDto.setDateDebut( promotion.getDateDebut() );
+        promotionDto.setDateFin( promotion.getDateFin() );
 
         return promotionDto;
     }
@@ -344,13 +348,13 @@ public class DtoMapperImpl implements DtoMapper {
 
         UtilisateurDto utilisateurDto = new UtilisateurDto();
 
-        utilisateurDto.setCivilite( utilisateur.getCivilite() );
-        utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
         utilisateurDto.setId( utilisateur.getId() );
         utilisateurDto.setLogin( utilisateur.getLogin() );
-        utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setPassword( utilisateur.getPassword() );
         utilisateurDto.setPrenom( utilisateur.getPrenom() );
+        utilisateurDto.setNom( utilisateur.getNom() );
+        utilisateurDto.setCivilite( utilisateur.getCivilite() );
+        utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
 
         return utilisateurDto;
@@ -439,6 +443,42 @@ public class DtoMapperImpl implements DtoMapper {
         ficheEntrepriseDto.setMetiersExerces( FicheEntreprise.getMetiersExerces() );
 
         return ficheEntrepriseDto;
+    }
+
+    @Override
+    public ContratDto ContratToContratDto(Contrat contrat) {
+        if ( contrat == null ) {
+            return null;
+        }
+
+        ContratDto contratDto = new ContratDto();
+
+        contratDto.setId( contrat.getId() );
+        contratDto.setDateDebut( contrat.getDateDebut() );
+        contratDto.setDateFin( contrat.getDateFin() );
+        contratDto.setMaitreApprentissage( contrat.getMaitreApprentissage() );
+
+        return contratDto;
+    }
+
+    @Override
+    public MaitreApprentissageDto MaitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage) {
+        if ( maitreApprentissage == null ) {
+            return null;
+        }
+
+        MaitreApprentissageDto maitreApprentissageDto = new MaitreApprentissageDto();
+
+        maitreApprentissageDto.setLogin( maitreApprentissage.getLogin() );
+        maitreApprentissageDto.setPassword( maitreApprentissage.getPassword() );
+        maitreApprentissageDto.setPrenom( maitreApprentissage.getPrenom() );
+        maitreApprentissageDto.setNom( maitreApprentissage.getNom() );
+        maitreApprentissageDto.setCivilite( maitreApprentissage.getCivilite() );
+        maitreApprentissageDto.setDateDeNaissance( maitreApprentissage.getDateDeNaissance() );
+        maitreApprentissageDto.setTelephone( maitreApprentissage.getTelephone() );
+        maitreApprentissageDto.setId( maitreApprentissage.getId() );
+
+        return maitreApprentissageDto;
     }
 
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {
