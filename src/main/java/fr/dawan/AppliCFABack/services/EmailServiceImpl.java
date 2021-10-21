@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.repositories.CongeRepository;
 
 @Service
 public class EmailServiceImpl implements EmailService{
@@ -21,10 +22,14 @@ public class EmailServiceImpl implements EmailService{
 	@Autowired
 	EtudiantService etudiantService;
 	
+	@Autowired 
+	CongeRepository congeRepository;
+	
 	@Override
 	public void alertDemandeCongetoReferent(Conge c) {		
 		//On détermine le référent de l'étudiant concerné
-		List<PromotionDto> promotions = etudiantService.getPromotionsByIdEtudiant(c.getUtilisateur().getId());
+		Conge congeDb = congeRepository.getOne(c.getId());
+		List<PromotionDto> promotions = etudiantService.getPromotionsByIdEtudiant(congeDb.getUtilisateur().getEtudiant().getId());
 		UtilisateurDto referentPedagogique = null;
 		PromotionDto pSelected = null;
 		for(PromotionDto p : promotions) {
