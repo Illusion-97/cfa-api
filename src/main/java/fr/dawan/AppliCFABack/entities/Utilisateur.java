@@ -56,6 +56,8 @@ public class Utilisateur {
 	private Formateur formateur;
 	@OneToOne
 	private CEF cef;
+	@OneToOne
+	private MaitreApprentissage maitreApprentissage;
 
 	public Utilisateur() {
 		super();
@@ -171,6 +173,14 @@ public class Utilisateur {
 
 	public void setCef(CEF cef) {
 		this.cef = cef;
+	}
+
+	public MaitreApprentissage getMaitreApprentissage() {
+		return maitreApprentissage;
+	}
+
+	public void setMaitreApprentissage(MaitreApprentissage maitreApprentissage) {
+		this.maitreApprentissage = maitreApprentissage;
 	}
 
 	

@@ -26,8 +26,12 @@ import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Entreprise;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
@@ -35,8 +39,12 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
+import fr.dawan.AppliCFABack.repositories.CEFRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
 import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
@@ -60,6 +68,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	AbsenceRepository absenceRepository;
 	@Autowired
 	PromotionRepository promotionRespository;
+	@Autowired
+	EtudiantRepository etudiantRepository;
+	@Autowired
+	FormateurRepository formateurRepository;
+	@Autowired
+	CEFRepository cefRepository;
+	@Autowired
+	MaitreApprentissageRepository maitreApprentissageRepository;
 
 	@Autowired
 	EtudiantService etudiantService;
@@ -252,12 +268,115 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			}
 			Entreprise entrepriseRepo = entrepriseRepository.getOne(entreprise.getId());
 			user.setEntreprise(entrepriseRepo);
+		}		
+
+		user = utilisateurRepository.saveAndFlush(user);
+		
+		Boolean isEtudiant = false;
+		Boolean isFormateur = false;
+		Boolean isCEF = false;
+		Boolean isMaitreApprentissage = false;
+		
+		//Changement de role, on créer l'entité associée 		
+		for(UtilisateurRole role : user.getRoles()) {
+			if(role.getIntitule() == "ETUDIANT")
+				isEtudiant = true;
+			if(role.getIntitule() == "FORMATEUR")
+				isFormateur = true;
+			if(role.getIntitule() == "CEF")
+				isCEF = true;
+			if(role.getIntitule() == "MAITREAPPRENTISSAGE")
+				isMaitreApprentissage = true;
 		}
 		
-		//Changement de role, on créer l'entité associée 
+		//Si on ajoute un role
+		if(isEtudiant && user.getEtudiant() == null) {
+			Etudiant etudiant = new Etudiant();
+			etudiant = etudiantRepository.saveAndFlush(etudiant);
+			user.setEtudiant(etudiant);
+			etudiant.setUtilisateur(user);
+			
+			etudiant = etudiantRepository.saveAndFlush(etudiant);
+			user = utilisateurRepository.saveAndFlush(user);
+			
+		}
+		if(isFormateur && user.getFormateur() == null) {
+			Formateur formateur = new Formateur();
+			formateur = formateurRepository.saveAndFlush(formateur);
+			user.setFormateur(formateur);
+			formateur.setUtilisateur(user);
+			
+			formateur = formateurRepository.saveAndFlush(formateur);
+			user = utilisateurRepository.saveAndFlush(user);
+		}
+		if(isCEF && user.getCef() == null) {
+			CEF cef = new CEF();
+			cef = cefRepository.saveAndFlush(cef);
+			user.setCef(cef);
+			cef.setUtilisateur(user);
+			
+			cef = cefRepository.saveAndFlush(cef);
+			user = utilisateurRepository.saveAndFlush(user);
+		}
+		if(isMaitreApprentissage && user.getMaitreApprentissage() == null) {
+			MaitreApprentissage MaApp = new MaitreApprentissage();
+			MaApp = maitreApprentissageRepository.saveAndFlush(MaApp);
+			user.setMaitreApprentissage(MaApp);
+			MaApp.setUtilisateur(user);
+			
+			MaApp = maitreApprentissageRepository.saveAndFlush(MaApp);
+			user = utilisateurRepository.saveAndFlush(user);
+		}
+		
+		//Si on supprime un role
+		if(!isEtudiant && user.getEtudiant() != null) {
+			Etudiant etudiant = etudiantRepository.getOne(user.getEtudiant().getId());
+			etudiant.setUtilisateur(null);
+			user.setEtudiant(null);
+			
+			etudiant = etudiantRepository.saveAndFlush(etudiant);
+			user = utilisateurRepository.saveAndFlush(user);
+			
+			//On delete l'etudiant ?
+//			etudiantService.deleteById(etudiant.getId());			
+		}
+		if(!isFormateur && user.getFormateur() != null) {
+			Formateur formateur = formateurRepository.getOne(user.getFormateur().getId());
+			formateur.setUtilisateur(null);
+			user.setFormateur(null);
+			
+			formateur = formateurRepository.saveAndFlush(formateur);
+			user = utilisateurRepository.saveAndFlush(user);
+			
+			//On delete l'etudiant ?
+//			formateurService.deleteById(formateur.getId());		
+		}
+		if(!isCEF && user.getCef() != null) {
+			CEF cef = cefRepository.getOne(user.getCef().getId());
+			cef.setUtilisateur(null);
+			user.setCef(null);
+			
+			cef = cefRepository.saveAndFlush(cef);
+			user = utilisateurRepository.saveAndFlush(user);
+			
+			//On delete l'etudiant ?
+//			cefService.deleteById(cef.getId());	
+		}
+		if(!isMaitreApprentissage && user.getMaitreApprentissage() != null) {
+			MaitreApprentissage maitreApprentissage = maitreApprentissageRepository.getOne(user.getMaitreApprentissage().getId());
+			maitreApprentissage.setUtilisateur(null);
+			user.setMaitreApprentissage(null);
+			
+			maitreApprentissage = maitreApprentissageRepository.saveAndFlush(maitreApprentissage);
+			user = utilisateurRepository.saveAndFlush(user);
+			
+			//On delete l'etudiant ?
+//			maitreApprentissageService.deleteById(maitreApprentissage.getId());	
+		}
 
-		utilisateurRepository.saveAndFlush(user);
-
+		
+		
+		//On créer les dossier pour l'utilisateur dans le shared 
 		filesService.createDirectory("utilisateurs/" + user.getId());
 		filesService.createDirectory("utilisateurs/" + user.getId() + "/DossierProfessionnel");
 		filesService.createDirectory("utilisateurs/" + user.getId() + "/DossierProjet");

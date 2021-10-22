@@ -18,6 +18,7 @@ public class UtilisateurDto {
 	private EtudiantDto etudiantDto;
 	private FormateurDto formateurDto;
 	private CEFDto cefDto;
+	private MaitreApprentissageDto maitreApprentissageDto;
 
 	public UtilisateurDto() {
 		super();
@@ -135,8 +136,12 @@ public class UtilisateurDto {
 		this.cefDto = cefDto;
 	}
 
+	public MaitreApprentissageDto getMaitreApprentissageDto() {
+		return maitreApprentissageDto;
+	}
 
-	
-	
+	public void setMaitreApprentissageDto(MaitreApprentissageDto maitreApprentissageDto) {
+		this.maitreApprentissageDto = maitreApprentissageDto;
+	}
 
 }

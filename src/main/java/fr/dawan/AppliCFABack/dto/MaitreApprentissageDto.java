@@ -1,9 +1,12 @@
 package fr.dawan.AppliCFABack.dto;
 
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+
 public class MaitreApprentissageDto extends UtilisateurDto{
 
 	private long id;
 	private EntrepriseDto entrepriseDto;
+	private UtilisateurDto utilisateurDto;
 	
 	public MaitreApprentissageDto() {
 		super();
@@ -25,4 +28,13 @@ public class MaitreApprentissageDto extends UtilisateurDto{
 		this.entrepriseDto = entrepriseDto;
 	}
 
+	public UtilisateurDto getUtilisateurDto() {
+		return utilisateurDto;
+	}
+
+	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
+		this.utilisateurDto = utilisateurDto;
+	}
+
+	
 }

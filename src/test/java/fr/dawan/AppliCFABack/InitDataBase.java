@@ -138,6 +138,8 @@ public class InitDataBase {
 		roleAdmin.setIntitule("ADMIN");
 		UtilisateurRole rolecef = new UtilisateurRole();
 		rolecef.setIntitule("CEF");
+		UtilisateurRole roleMaitreApprentissage = new UtilisateurRole();
+		roleMaitreApprentissage.setIntitule("MAITREAPPRENTISSAGE");
 		
 		Utilisateur admin = new Utilisateur();
 		admin.setPrenom("Mohamed");
@@ -336,7 +338,8 @@ public class InitDataBase {
 		roleEtudiant = utilisateurRoleRepository.save(roleEtudiant);
 		roleformateur = utilisateurRoleRepository.save(roleformateur);
 		roleAdmin = utilisateurRoleRepository.save(roleAdmin);
-		rolecef = utilisateurRoleRepository.save(rolecef);		
+		rolecef = utilisateurRoleRepository.save(rolecef);	
+		roleMaitreApprentissage = utilisateurRoleRepository.save(roleMaitreApprentissage);	
 		cursus0 = cursusRepository.save(cursus0);
 		cursus1 = cursusRepository.save(cursus1);
 		cursus2 = cursusRepository.save(cursus2);
