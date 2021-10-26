@@ -34,7 +34,7 @@ public interface UtilisateurService {
 
 	List<UtilisateurDto> findByAdresse(String ville);
 
-	List<UtilisateurDto> findByEntreprise(long idEntreprise);
+//	List<UtilisateurDto> findByEntreprise(long idEntreprise);
 
 	List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id);
 

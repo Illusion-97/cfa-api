@@ -11,12 +11,11 @@ import fr.dawan.AppliCFABack.entities.Etudiant;
 
 @Repository
 public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
-	Page<Etudiant> findDistinctAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
-			String prenom, String nom, String promotionsNom, String groupesNom, String refNom, String refPrenom,
-			Pageable p);
+	Page<Etudiant> findDistinctAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContaining(
+			String prenom, String nom, String promotionsNom, String groupesNom, Pageable p);
 
-	long countDistinctByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
-			String prenom, String nom, String promotionsNom, String groupesNom, String refNom, String refPrenom);
+	long countDistinctByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContaining(
+			String prenom, String nom, String promotionsNom, String groupesNom);
 
 	Page<Etudiant> findAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCaseOrUtilisateurLoginContainingIgnoringCase(
 			String search, String search2, String search3, Pageable pageable);

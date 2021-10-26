@@ -4,6 +4,7 @@ public class CEFDto{
 	private long id;
 	private UtilisateurDto utilisateurDto;
 	private CentreFormationDto centreFormationDto;
+	private EntrepriseDto entrepriseDto;
 
 	public CEFDto() {
 		super();
@@ -31,6 +32,14 @@ public class CEFDto{
 
 	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
 		this.utilisateurDto = utilisateurDto;
+	}
+
+	public EntrepriseDto getEntrepriseDto() {
+		return entrepriseDto;
+	}
+
+	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
+		this.entrepriseDto = entrepriseDto;
 	}
 
 }

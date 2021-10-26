@@ -123,10 +123,11 @@ public class UtilisateurController {
 		return utilisateurService.findByAdresse(ville);
 	}
 
-	@GetMapping(value = "/entreprise", produces = "application/json")
-	public List<UtilisateurDto> findByEntreprise(@RequestParam("id") long id) {
-		return utilisateurService.findByEntreprise(id);
-	}
+//	@GetMapping(value = "/entreprise", produces = "application/json")
+//	public List<UtilisateurDto> findByEntreprise(@RequestParam("id") long id) {
+//		return utilisateurService.findByEntreprise(id);
+//	}
+	
 	@GetMapping(value = "/roles/{idRole}", produces = "application/json")
 	public List<UtilisateurDto> findByRole(@PathVariable("role") long idRole) {
 		return utilisateurService.findByRole(idRole);

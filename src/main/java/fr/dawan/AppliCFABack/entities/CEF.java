@@ -19,6 +19,9 @@ public class CEF{
 
 	@ManyToOne
 	private CentreFormation centreFormation;
+	
+	@ManyToOne
+	private Entreprise entreprise;
 
 	public CEF() {
 		super();

@@ -24,6 +24,8 @@ public class Contrat {
 	
 	@ManyToOne
 	private MaitreApprentissage maitreApprentissage;
+	@ManyToOne
+	private Etudiant etudiant;
 
 	public Contrat() {
 		super();
@@ -59,6 +61,14 @@ public class Contrat {
 
 	public void setMaitreApprentissage(MaitreApprentissage maitreApprentissage) {
 		this.maitreApprentissage = maitreApprentissage;
+	}
+
+	public Etudiant getEtudiant() {
+		return etudiant;
+	}
+
+	public void setEtudiant(Etudiant etudiant) {
+		this.etudiant = etudiant;
 	}
 
 }

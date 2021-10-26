@@ -6,6 +6,7 @@ public class FormateurDto{
 	private long id;
 	private UtilisateurDto utilisateurDto;
 	private List<InterventionDto> interventionsDto;
+	private EntrepriseDto entrepriseDto;
 	
 	public FormateurDto() {
 	}
@@ -32,6 +33,14 @@ public class FormateurDto{
 
 	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
 		this.utilisateurDto = utilisateurDto;
+	}
+
+	public EntrepriseDto getEntrepriseDto() {
+		return entrepriseDto;
+	}
+
+	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
+		this.entrepriseDto = entrepriseDto;
 	}
 	
 	

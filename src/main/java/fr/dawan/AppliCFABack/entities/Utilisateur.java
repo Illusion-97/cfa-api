@@ -47,8 +47,8 @@ public class Utilisateur {
 	@ManyToMany
 	private List<UtilisateurRole> roles;
 
-	@ManyToOne
-	private Entreprise entreprise;
+//	@ManyToOne
+//	private Entreprise entreprise;
 	
 	@OneToOne
 	private Etudiant etudiant;
@@ -119,13 +119,13 @@ public class Utilisateur {
 		this.roles = roles;
 	}
 
-	public Entreprise getEntreprise() {
-		return entreprise;
-	}
-
-	public void setEntreprise(Entreprise entreprise) {
-		this.entreprise = entreprise;
-	}
+//	public Entreprise getEntreprise() {
+//		return entreprise;
+//	}
+//
+//	public void setEntreprise(Entreprise entreprise) {
+//		this.entreprise = entreprise;
+//	}
 
 	public String getCivilite() {
 		return civilite;

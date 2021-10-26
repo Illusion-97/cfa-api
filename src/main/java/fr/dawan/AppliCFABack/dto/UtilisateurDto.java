@@ -13,7 +13,7 @@ public class UtilisateurDto {
 	private LocalDate dateDeNaissance;
 	private String telephone;
 	private AdresseDto adresseDto;
-	private EntrepriseDto entrepriseDto;
+//	private EntrepriseDto entrepriseDto;
 	private List<UtilisateurRoleDto> rolesDto;
 	private EtudiantDto etudiantDto;
 	private FormateurDto formateurDto;
@@ -96,13 +96,13 @@ public class UtilisateurDto {
 		this.adresseDto = adresseDto;
 	}
 
-	public EntrepriseDto getEntrepriseDto() {
-		return entrepriseDto;
-	}
-
-	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
-		this.entrepriseDto = entrepriseDto;
-	}
+//	public EntrepriseDto getEntrepriseDto() {
+//		return entrepriseDto;
+//	}
+//
+//	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
+//		this.entrepriseDto = entrepriseDto;
+//	}
 
 	public List<UtilisateurRoleDto> getRolesDto() {
 		return rolesDto;

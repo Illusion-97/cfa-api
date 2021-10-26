@@ -112,15 +112,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public List<UtilisateurDto> getAllUtilisateurs(int page, int size, String search) {
 
 		List<Utilisateur> users = utilisateurRepository
-				.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(
-						search, search, search, search, search, PageRequest.of(page, size))
+				.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCase(
+						search, search, search, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
 
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
 			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(u);
 			uDto.setAdresseDto(mapper.AdresseToAdresseDto(u.getAdresse()));
-			uDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(u.getEntreprise()));
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
 			for (UtilisateurRole ur : u.getRoles()) {
 				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
@@ -136,8 +135,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(utilisateurRepository
-				.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCaseOrEntrepriseRaisonSocialeContainingIgnoringCase(
-						search, search, search, search, search));
+				.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCase(
+						search, search, search, search));
 	}
 
 	@Override
@@ -149,8 +148,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			if (userOpt.get().getAdresse() != null)
 				uDto.setAdresseDto(mapper.AdresseToAdresseDto(userOpt.get().getAdresse()));
-			if (userOpt.get().getEntreprise() != null)
-				uDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(userOpt.get().getEntreprise()));
+
 //			if(userOpt.get().getEntreprise().getAdresseSiege() != null) uDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(userOpt.get().getEntreprise().getAdresseSiege()));
 
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
@@ -180,9 +178,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		AdresseDto adresseDto = mapper.AdresseToAdresseDto(user.getAdresse());
 		utilisateurDto.setAdresseDto(adresseDto);
-
-		EntrepriseDto entrepriseDto = mapper.EntrepriseToEntrepriseDto(user.getEntreprise());
-		utilisateurDto.setEntrepriseDto(entrepriseDto);
 
 		List<UtilisateurRole> lstUsrRole = user.getRoles();
 		List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
@@ -242,52 +237,40 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+			
 
 		// On save l'addresse avant de save l'utilisateur
-		if (uDto.getAdresseDto() != null) {
+		if (uDto.getAdresseDto() != null && uDto.getAdresseDto().getId() == 0) {
 			Adresse adresse = DtoTools.convert(uDto.getAdresseDto(), Adresse.class);
 			adresseRepository.saveAndFlush(adresse);
 
 			Adresse adresseRepop = adresseRepository.getOne(adresse.getId());
 			user.setAdresse(adresseRepop);
 		}
-
-		// On save l'entreprise avant de save l'utilisateur
-		if (uDto.getEntrepriseDto() != null) {
-			Entreprise entreprise = DtoTools.convert(uDto.getEntrepriseDto(), Entreprise.class);
-			entrepriseRepository.saveAndFlush(entreprise);
-
-			// On save l'adresse avant de save l'entreprise
-			if (uDto.getEntrepriseDto().getAdresseSiegeDto() != null) {
-				Adresse adresseEntreprise = DtoTools.convert(uDto.getEntrepriseDto().getAdresseSiegeDto(),
-						Adresse.class);
-				adresseRepository.saveAndFlush(adresseEntreprise);
-
-				Adresse adresseEntrepriseRepo = adresseRepository.getOne(adresseEntreprise.getId());
-				entreprise.setAdresseSiege(adresseEntrepriseRepo);
-			}
-			Entreprise entrepriseRepo = entrepriseRepository.getOne(entreprise.getId());
-			user.setEntreprise(entrepriseRepo);
-		}		
-
-		user = utilisateurRepository.saveAndFlush(user);
 		
+		//On save les roles
+		//Changement de role, on créer l'entité associée 
 		Boolean isEtudiant = false;
 		Boolean isFormateur = false;
 		Boolean isCEF = false;
 		Boolean isMaitreApprentissage = false;
-		
-		//Changement de role, on créer l'entité associée 		
+				
 		for(UtilisateurRole role : user.getRoles()) {
-			if(role.getIntitule() == "ETUDIANT")
+			if(role.getIntitule().equals("ETUDIANT")) {
 				isEtudiant = true;
-			if(role.getIntitule() == "FORMATEUR")
-				isFormateur = true;
-			if(role.getIntitule() == "CEF")
+			}
+			if(role.getIntitule().equals("FORMATEUR")) {
+				isFormateur = true;				
+			}
+			if(role.getIntitule().equals("CEF")) {
 				isCEF = true;
-			if(role.getIntitule() == "MAITREAPPRENTISSAGE")
+			}
+			if(role.getIntitule().equals("MAITREAPPRENTISSAGE")) {
 				isMaitreApprentissage = true;
+			}
 		}
+		
+		user = utilisateurRepository.saveAndFlush(user);
 		
 		//Si on ajoute un role
 		if(isEtudiant && user.getEtudiant() == null) {
@@ -297,7 +280,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			etudiant.setUtilisateur(user);
 			
 			etudiant = etudiantRepository.saveAndFlush(etudiant);
-			user = utilisateurRepository.saveAndFlush(user);
 			
 		}
 		if(isFormateur && user.getFormateur() == null) {
@@ -307,7 +289,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			formateur.setUtilisateur(user);
 			
 			formateur = formateurRepository.saveAndFlush(formateur);
-			user = utilisateurRepository.saveAndFlush(user);
 		}
 		if(isCEF && user.getCef() == null) {
 			CEF cef = new CEF();
@@ -316,7 +297,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			cef.setUtilisateur(user);
 			
 			cef = cefRepository.saveAndFlush(cef);
-			user = utilisateurRepository.saveAndFlush(user);
 		}
 		if(isMaitreApprentissage && user.getMaitreApprentissage() == null) {
 			MaitreApprentissage MaApp = new MaitreApprentissage();
@@ -325,8 +305,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			MaApp.setUtilisateur(user);
 			
 			MaApp = maitreApprentissageRepository.saveAndFlush(MaApp);
-			user = utilisateurRepository.saveAndFlush(user);
 		}
+		
 		
 		//Si on supprime un role
 		if(!isEtudiant && user.getEtudiant() != null) {
@@ -335,7 +315,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			user.setEtudiant(null);
 			
 			etudiant = etudiantRepository.saveAndFlush(etudiant);
-			user = utilisateurRepository.saveAndFlush(user);
 			
 			//On delete l'etudiant ?
 //			etudiantService.deleteById(etudiant.getId());			
@@ -346,7 +325,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			user.setFormateur(null);
 			
 			formateur = formateurRepository.saveAndFlush(formateur);
-			user = utilisateurRepository.saveAndFlush(user);
 			
 			//On delete l'etudiant ?
 //			formateurService.deleteById(formateur.getId());		
@@ -357,24 +335,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			user.setCef(null);
 			
 			cef = cefRepository.saveAndFlush(cef);
-			user = utilisateurRepository.saveAndFlush(user);
 			
 			//On delete l'etudiant ?
 //			cefService.deleteById(cef.getId());	
 		}
 		if(!isMaitreApprentissage && user.getMaitreApprentissage() != null) {
-			MaitreApprentissage maitreApprentissage = maitreApprentissageRepository.getOne(user.getMaitreApprentissage().getId());
+			MaitreApprentissage maitreApprentissage = maitreApprentissageRepository.getOne(user.getMaitreApprentissage().getUtilisateur().getId());
 			maitreApprentissage.setUtilisateur(null);
 			user.setMaitreApprentissage(null);
 			
 			maitreApprentissage = maitreApprentissageRepository.saveAndFlush(maitreApprentissage);
-			user = utilisateurRepository.saveAndFlush(user);
 			
 			//On delete l'etudiant ?
 //			maitreApprentissageService.deleteById(maitreApprentissage.getId());	
 		}
 
-		
+		user = utilisateurRepository.saveAndFlush(user);
 		
 		//On créer les dossier pour l'utilisateur dans le shared 
 		filesService.createDirectory("utilisateurs/" + user.getId());
@@ -402,15 +378,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return res;
 	}
 
-	@Override
-	public List<UtilisateurDto> findByEntreprise(long idEntreprise) {
-		List<Utilisateur> users = utilisateurRepository.findByEntreprise(idEntreprise);
-		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
-		for (Utilisateur u : users) {
-			res.add(mapper.UtilisateurToUtilisateurDto(u));
-		}
-		return res;
-	}
+//	@Override
+//	public List<UtilisateurDto> findByEntreprise(long idEntreprise) {
+//		List<Utilisateur> users = utilisateurRepository.findByEntreprise(idEntreprise);
+//		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
+//		for (Utilisateur u : users) {
+//			res.add(mapper.UtilisateurToUtilisateurDto(u));
+//		}
+//		return res;
+//	}
 
 	@Override
 	public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id) {
@@ -463,9 +439,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			AdresseDto adresseDto = mapper.AdresseToAdresseDto(utilisateur.getAdresse());
 			utilisateurDto.setAdresseDto(adresseDto);
 
-			EntrepriseDto entrepriseDto = mapper.EntrepriseToEntrepriseDto(utilisateur.getEntreprise());
-			utilisateurDto.setEntrepriseDto(entrepriseDto);
-
 			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
 			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
 			for (UtilisateurRole utilisateurRole : lstUsrRole) {
@@ -494,9 +467,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			AdresseDto adresseDto = mapper.AdresseToAdresseDto(utilisateur.getAdresse());
 			utilisateurDto.setAdresseDto(adresseDto);
-
-			EntrepriseDto entrepriseDto = mapper.EntrepriseToEntrepriseDto(utilisateur.getEntreprise());
-			utilisateurDto.setEntrepriseDto(entrepriseDto);
 
 			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
 			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -18,6 +19,9 @@ public class Formateur{
 	
 	@OneToOne
 	private Utilisateur utilisateur;
+	
+	@ManyToOne
+	private Entreprise entreprise;
 	
 	@ManyToMany(mappedBy = "formateurs")
 	private List<Intervention> interventions;

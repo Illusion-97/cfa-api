@@ -7,7 +7,7 @@ public class EtudiantDto{
 	private UtilisateurDto utilisateurDto;
 	private List<PromotionDto> promotionsDto;
 	private List<GroupeEtudiantDto> groupesDto;
-	private UtilisateurDto formateurReferentDto;
+//	private UtilisateurDto formateurReferentDto;
 	private UtilisateurDto managerDto;
 	private List<DossierProfessionnelDto>dossierProfessionnel;
 	private List<DossierProjetDto> dossierProjet;
@@ -41,13 +41,13 @@ public class EtudiantDto{
 		this.groupesDto = groupesDto;
 	}
 
-	public UtilisateurDto getFormateurReferentDto() {
-		return formateurReferentDto;
-	}
-
-	public void setFormateurReferentDto(UtilisateurDto formateurReferentDto) {
-		this.formateurReferentDto = formateurReferentDto;
-	}
+//	public UtilisateurDto getFormateurReferentDto() {
+//		return formateurReferentDto;
+//	}
+//
+//	public void setFormateurReferentDto(UtilisateurDto formateurReferentDto) {
+//		this.formateurReferentDto = formateurReferentDto;
+//	}
 
 	public UtilisateurDto getManagerDto() {
 		return managerDto;

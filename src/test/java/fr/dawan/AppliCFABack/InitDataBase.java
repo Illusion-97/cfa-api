@@ -18,6 +18,7 @@ import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Contrat;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.Entreprise;
@@ -27,6 +28,7 @@ import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
@@ -41,6 +43,7 @@ import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.repositories.ContratRepository;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
 import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
@@ -50,6 +53,7 @@ import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.FormationRepository;
 import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
 import fr.dawan.AppliCFABack.repositories.NoteRepository;
 import fr.dawan.AppliCFABack.repositories.PassageExamenRepository;
 import fr.dawan.AppliCFABack.repositories.ProjetRepository;
@@ -114,6 +118,10 @@ public class InitDataBase {
 	private CentreFormationRepository centreFormationRepository;
 	@Autowired
 	private CongeRepository congeRepository;
+	@Autowired
+	private MaitreApprentissageRepository maitreApprentissageRepository;
+	@Autowired
+	private ContratRepository contratRepository;
 	
 	@Autowired
 	private DtoMapper mapper;
@@ -149,7 +157,7 @@ public class InitDataBase {
 		admin.setCivilite("Mr");
 		admin.setDateDeNaissance(LocalDate.now());
 		admin.setTelephone("06.12.80.45.99");
-		
+				
 		Utilisateur monEtudiant = new Utilisateur();
 		monEtudiant.setPrenom("Tanguy");
 		monEtudiant.setNom("Billon");
@@ -184,7 +192,11 @@ public class InitDataBase {
 		Etudiant etudiant = new Etudiant();
 		CEF cef = new CEF();
 		Formateur formateur = new Formateur();
+		MaitreApprentissage mApprentissage = new MaitreApprentissage();
 		
+		Contrat contrat = new Contrat();
+		contrat.setDateDebut(LocalDate.now());
+		contrat.setDateFin(LocalDate.now());
 
 		LocalDate promoDate = LocalDate.of(2021, 1, 1);
 
@@ -320,8 +332,10 @@ public class InitDataBase {
 		
 		etudiant = DtoTools.convert(etudiantService.saveOrUpdate(mapper.EtudiantToEtudiantDto(etudiant)), Etudiant.class);
 		cef = DtoTools.convert(cefService.saveOrUpdate(mapper.CEFToCEFDto(cef)), CEF.class);
-		formateur = DtoTools.convert(formateurService.saveOrUpdate(mapper.FormateurToFormateurDto(formateur)), Formateur.class);		
+		formateur = DtoTools.convert(formateurService.saveOrUpdate(mapper.FormateurToFormateurDto(formateur)), Formateur.class);	
+		mApprentissage = maitreApprentissageRepository.save(mApprentissage);	
 		
+		contrat = contratRepository.save(contrat);
 		groupe = groupeEtudiantRepository.save(groupe);
 		promotion = promotionRepository.save(promotion);
 		promotion2 = promotionRepository.save(promotion2);
@@ -435,7 +449,6 @@ public class InitDataBase {
 		promotion3.setReferentPedagogique(monFormateur);
 
 
-		monEtudiant.setEntreprise(entreprise);
 		monEtudiant.setAdresse(adresse);
 		monEtudiant.setRoles(lstRoleEtudiant);
 		monEtudiant.setEtudiant(etudiant);
@@ -444,8 +457,7 @@ public class InitDataBase {
 		etudiant.setPromotions(lstPromotion);	
 		etudiant.setUtilisateur(monEtudiant);
 
-		etudiant.setManager(monCEF);
-		etudiant.setFormateurReferent(monFormateur);	
+		etudiant.setManager(monCEF);	
 		
 		absence.setEtudiant(etudiant);
 
@@ -472,7 +484,6 @@ public class InitDataBase {
 
 		monCEF.setRoles(lstRoleCef);
 		monCEF.setAdresse(adresse);
-		monCEF.setEntreprise(entreprise);
 		monCEF.setCef(cef);
 		
 		cef.setCentreFormation(centre);
@@ -498,9 +509,11 @@ public class InitDataBase {
 
 
 		monFormateur.setAdresse(adresse);
-		monFormateur.setEntreprise(entreprise);
 		monFormateur.setRoles(lstRoleFormateur);
 		monFormateur.setFormateur(formateur);
+		
+		mApprentissage.setUtilisateur(monFormateur);
+		monFormateur.setMaitreApprentissage(mApprentissage);
 
 		formateur.setInterventions(lstInterventions);
 		formateur.setUtilisateur(monFormateur);
@@ -511,11 +524,15 @@ public class InitDataBase {
 
 		conge.setUtilisateur(monEtudiant);
 		
+		contrat.setEtudiant(etudiant);
+		contrat.setMaitreApprentissage(mApprentissage);
+		
 		utilisateurRepository.save(admin);
 		utilisateurRepository.save(monEtudiant);
 		utilisateurRepository.save(monFormateur);
 		utilisateurRepository.save(monCEF);
 		etudiantRepository.save(etudiant);
+		maitreApprentissageRepository.save(mApprentissage);
 		groupeEtudiantRepository.save(groupe);
 		promotionRepository.save(promotion);
 		promotionRepository.save(promotion2);
@@ -546,6 +563,6 @@ public class InitDataBase {
 		projetRepository.save(projet);
 		centreFormationRepository.save(centre);
 		congeRepository.save(conge);
-
+		contratRepository.save(contrat);
 	}
 }

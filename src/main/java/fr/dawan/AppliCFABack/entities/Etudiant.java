@@ -28,8 +28,8 @@ public class Etudiant{
 	@ManyToMany(mappedBy = "etudiants")
 	private List<GroupeEtudiant> groupes;
 	
-	@ManyToOne
-	private Utilisateur formateurReferent;
+//	@ManyToOne
+//	private Utilisateur formateurReferent;
 	
 	@ManyToOne
 	private Utilisateur manager;
@@ -69,13 +69,13 @@ public class Etudiant{
 		this.groupes = groupes;
 	}
 
-	public Utilisateur getFormateurReferent() {
-		return formateurReferent;
-	}
-
-	public void setFormateurReferent(Utilisateur formateurReferent) {
-		this.formateurReferent = formateurReferent;
-	}
+//	public Utilisateur getFormateurReferent() {
+//		return formateurReferent;
+//	}
+//
+//	public void setFormateurReferent(Utilisateur formateurReferent) {
+//		this.formateurReferent = formateurReferent;
+//	}
 
 	public Utilisateur getManager() {
 		return manager;

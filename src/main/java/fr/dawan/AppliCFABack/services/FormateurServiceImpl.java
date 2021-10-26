@@ -75,9 +75,12 @@ public class FormateurServiceImpl implements FormateurService {
 
 	@Override
 	public FormateurDto getById(long id) {
-		Optional<Formateur> i = formateurRepository.findById(id);
-		if (i.isPresent())
-			return mapper.FormateurToFormateurDto(i.get());
+		Optional<Formateur> f = formateurRepository.findById(id);
+		if (f.isPresent()) {
+			FormateurDto fDto = mapper.FormateurToFormateurDto(f.get());
+			fDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(f.get().getUtilisateur()));
+			return fDto;
+		}
 
 		return null;
 	}

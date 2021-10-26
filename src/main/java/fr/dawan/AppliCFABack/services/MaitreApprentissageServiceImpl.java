@@ -68,13 +68,13 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 		//HashTools throw Exception
 		try {
 			//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-			if(ma.getId() == 0) {
-				ma.setPassword(HashTools.hashSHA512(ma.getPassword()));
+			if(ma.getUtilisateur().getId() == 0) {
+				ma.getUtilisateur().setPassword(HashTools.hashSHA512(ma.getUtilisateur().getPassword()));
 			}else {
 				//Si on a modifié le mdp
-				MaitreApprentissage maInDB = maitreApprentissageRepository.getOne(ma.getId());
-				if(!maInDB.getPassword().equals(ma.getPassword())) {
-					ma.setPassword(HashTools.hashSHA512(ma.getPassword()));
+				MaitreApprentissage maInDB = maitreApprentissageRepository.getOne(ma.getUtilisateur().getId());
+				if(!maInDB.getUtilisateur().getPassword().equals(ma.getUtilisateur().getPassword())) {
+					ma.getUtilisateur().setPassword(HashTools.hashSHA512(ma.getUtilisateur().getPassword()));
 	            }
 			}	
 		}catch (Exception e) {

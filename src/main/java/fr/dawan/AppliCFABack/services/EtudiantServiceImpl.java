@@ -28,11 +28,11 @@ import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.Contrat;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
@@ -46,6 +46,7 @@ import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
+import fr.dawan.AppliCFABack.repositories.ContratRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
@@ -91,6 +92,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 	DevoirRepository devoirRepository;
 	
 	@Autowired
+	ContratRepository contratRepository;
+	
+	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
 	// ##################################################
@@ -109,7 +113,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			etuDto.setUtilisateurDto(Utilisateur);
 			
 			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getUtilisateur().getAdresse());
-			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
+//			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
 
 
 			
@@ -152,13 +156,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 			}
 				
 
-			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
+//			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 
 			etuDto.getUtilisateurDto().setAdresseDto(addrDto);
 			etuDto.setGroupesDto(lstGrpEtuDto);
-			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
+//			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
 			etuDto.setPromotionsDto(lstPromoDto);
-			etuDto.setFormateurReferentDto(refDto);
+//			etuDto.setFormateurReferentDto(refDto);
 			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
 			etuDto.setDossierProjet(lstDossierProjetDto);
 
@@ -202,7 +206,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		
 		eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.get().getUtilisateur()));
 		eDto.getUtilisateurDto().setAdresseDto(mapper.AdresseToAdresseDto(e.get().getUtilisateur().getAdresse()));
-		eDto.setFormateurReferentDto(mapper.UtilisateurToUtilisateurDto(e.get().getFormateurReferent()));
+//		eDto.setFormateurReferentDto(mapper.UtilisateurToUtilisateurDto(e.get().getFormateurReferent()));
 		eDto.setManagerDto(mapper.UtilisateurToUtilisateurDto(e.get().getManager()));
 
 		List<GroupeEtudiantDto> groupes = new ArrayList<GroupeEtudiantDto>();
@@ -412,7 +416,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Override
 	public EntrepriseDto getEntrepriseByIdEtudiant(long id) {
-		return mapper.EntrepriseToEntrepriseDto(getEtudiantById(id).getUtilisateur().getEntreprise());
+		//ATTENTION : L'etudiant a potentiellement une liste de contrat => une liste d'entreprise
+		Contrat contrat = contratRepository.findByEtudiantId(id);
+		return mapper.EntrepriseToEntrepriseDto(contrat.getMaitreApprentissage().getEntreprise());
 	}
 
 	@Override
@@ -531,7 +537,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Override
 	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
-		return mapper.UtilisateurToUtilisateurDto(getEtudiantById(id).getFormateurReferent());
+		Contrat contrat = contratRepository.findByEtudiantId(id);
+		return mapper.UtilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
 	}
 
 	@Override
@@ -578,15 +585,15 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public CountDto count(String search) {
 		// TODO Auto-generated method stub
 		return new CountDto(etudiantRepository
-				.countDistinctByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
-						search, search, search, search, search, search));
+				.countDistinctByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContaining(
+						search, search, search, search));
 	}
 
 	@Override
 	public List<EtudiantDto> getAllByPage(int page, int size, String search) {
 		List<Etudiant> lstStud = etudiantRepository
-				.findDistinctAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContainingOrFormateurReferentNomContainingOrFormateurReferentPrenomContainingAllIgnoreCase(
-						search, search, search, search, search, search, PageRequest.of(page, size))
+				.findDistinctAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContaining(
+						search, search, search, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
 		List<EtudiantDto> res = new ArrayList<EtudiantDto>();
 
@@ -594,8 +601,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 			EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(e);
 			UtilisateurDto pDto =  mapper.UtilisateurToUtilisateurDto(e.getUtilisateur());
 			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getUtilisateur().getAdresse());
-			EntrepriseDto entDto =mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
-			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
+//			EntrepriseDto entDto =mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
+//			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 			UtilisateurDto managDto = mapper.UtilisateurToUtilisateurDto(e.getManager());
 
 			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
@@ -632,9 +639,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 			etuDto.setUtilisateurDto(pDto);
 			etuDto.getUtilisateurDto().setAdresseDto(addrDto);
 			etuDto.setGroupesDto(lstGrpEtuDto);
-			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
+//			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
 			etuDto.setPromotionsDto(lstPromoDto);
-			etuDto.setFormateurReferentDto(refDto);
+//			etuDto.setFormateurReferentDto(refDto);
 			etuDto.setManagerDto(managDto);
 			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
 			etuDto.setDossierProjet(lstDossierProjetDto);

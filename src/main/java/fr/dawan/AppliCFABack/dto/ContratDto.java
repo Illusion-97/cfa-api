@@ -9,7 +9,8 @@ public class ContratDto {
 	private long id;
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
-	private MaitreApprentissage maitreApprentissage;
+	private MaitreApprentissageDto maitreApprentissageDto;
+	private EtudiantDto etudiantDto;
 	
 	public ContratDto() {
 		super();
@@ -39,12 +40,21 @@ public class ContratDto {
 		this.dateFin = dateFin;
 	}
 
-	public MaitreApprentissage getMaitreApprentissage() {
-		return maitreApprentissage;
+	public MaitreApprentissageDto getMaitreApprentissageDto() {
+		return maitreApprentissageDto;
 	}
 
-	public void setMaitreApprentissage(MaitreApprentissage maitreApprentissage) {
-		this.maitreApprentissage = maitreApprentissage;
+	public void setMaitreApprentissageDto(MaitreApprentissageDto maitreApprentissageDto) {
+		this.maitreApprentissageDto = maitreApprentissageDto;
 	}
+
+	public EtudiantDto getEtudiantDto() {
+		return etudiantDto;
+	}
+
+	public void setEtudiantDto(EtudiantDto etudiantDto) {
+		this.etudiantDto = etudiantDto;
+	}
+
 
 }

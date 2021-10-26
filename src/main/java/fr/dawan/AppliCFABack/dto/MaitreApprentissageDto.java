@@ -1,8 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-
-public class MaitreApprentissageDto extends UtilisateurDto{
+public class MaitreApprentissageDto{
 
 	private long id;
 	private EntrepriseDto entrepriseDto;

@@ -51,7 +51,7 @@ public class ContratServiceImpl implements ContratService{
 
 	@Override
 	public List<ContratDto> getAllByPage(int page, int size, String search) {
-		List<Contrat> lst = contratRepository.findAllByMaitreApprentissagePrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Contrat> lst = contratRepository.findAllByMaitreApprentissageUtilisateurPrenomContainingIgnoringCaseOrMaitreApprentissageUtilisateurNomContainingIgnoringCase(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<ContratDto> lstDto = new ArrayList<ContratDto>();
