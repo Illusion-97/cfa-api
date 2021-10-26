@@ -60,7 +60,7 @@ public class FormationControllerTests {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/formations").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/formations").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 					
 		} catch (Exception e) {
@@ -71,7 +71,7 @@ public class FormationControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/formations/" + idFormation).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/formations/" + idFormation).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$.titre", is("titre 1")))
 					.andExpect(jsonPath("$.contenu", is("contenu 1")));
@@ -91,7 +91,7 @@ public class FormationControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/formations")
+			String jsonReponse = mockMvc.perform(post("/formations")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -115,7 +115,7 @@ public class FormationControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(fDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/formations") 
+			String jsonReponse = mockMvc.perform(put("/formations") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -134,7 +134,7 @@ public class FormationControllerTests {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/formations/"+idFormation) 
+			String rep = mockMvc.perform(delete("/formations/"+idFormation) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);

@@ -59,7 +59,7 @@ public class ExamenControllerTest {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/examens").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/examens").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 
 		} catch (Exception e) {
@@ -70,7 +70,7 @@ public class ExamenControllerTest {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/examens/" + idExamen).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/examens/" + idExamen).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$.enonce", is("enonce 1")));
 
@@ -88,7 +88,7 @@ public class ExamenControllerTest {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/examens")
+			String jsonReponse = mockMvc.perform(post("/examens")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -111,7 +111,7 @@ public class ExamenControllerTest {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/examens") 
+			String jsonReponse = mockMvc.perform(put("/examens") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -129,7 +129,7 @@ public class ExamenControllerTest {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/examens/"+idExamen) 
+			String rep = mockMvc.perform(delete("/examens/"+idExamen) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);

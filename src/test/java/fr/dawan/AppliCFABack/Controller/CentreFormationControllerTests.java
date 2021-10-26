@@ -59,7 +59,7 @@ public class CentreFormationControllerTests {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/centreFormations").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/centreFormations").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 
 		} catch (Exception e) {
@@ -70,7 +70,7 @@ public class CentreFormationControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/centreFormations/" + idCentreFormation).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/centreFormations/" + idCentreFormation).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$.entreprise", is("entreprise 1")));
 
@@ -88,7 +88,7 @@ public class CentreFormationControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/centreFormations")
+			String jsonReponse = mockMvc.perform(post("/centreFormations")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -111,7 +111,7 @@ public class CentreFormationControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/centreFormations") 
+			String jsonReponse = mockMvc.perform(put("/centreFormations") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -129,7 +129,7 @@ public class CentreFormationControllerTests {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/centreFormations/"+ idCentreFormation) 
+			String rep = mockMvc.perform(delete("/centreFormations/"+ idCentreFormation) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);
