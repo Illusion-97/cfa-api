@@ -220,7 +220,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		try {
 			// Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
 			if (user.getId() == 0) {
-				if(user.getPassword() == null) {
+				if(user.getPassword() == "" || user.getPassword() == null) {
 					user.setPassword(HashTools.hashSHA512(generatePassword()));				
 					emailService.newPassword(user.getLogin(), user.getPassword());		
 				}else {
