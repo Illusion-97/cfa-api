@@ -59,7 +59,7 @@ public class UtilisateurControllerTests {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/utilisateurs").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/utilisateurs").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 
 		} catch (Exception e) {
@@ -70,7 +70,7 @@ public class UtilisateurControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/utilisateurs/" + idUtilisateur).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/utilisateurs/" + idUtilisateur).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$.login", is(" test login")))
 					.andExpect(jsonPath("$.password", is("test password")))
@@ -95,7 +95,7 @@ public class UtilisateurControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/utilisateurs")
+			String jsonReponse = mockMvc.perform(post("/utilisateurs")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -122,7 +122,7 @@ public class UtilisateurControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(cDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/utilisateurs") 
+			String jsonReponse = mockMvc.perform(put("/utilisateurs") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -141,7 +141,7 @@ public class UtilisateurControllerTests {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/utilisateurs/"+idUtilisateur) 
+			String rep = mockMvc.perform(delete("/utilisateurs/"+idUtilisateur) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);

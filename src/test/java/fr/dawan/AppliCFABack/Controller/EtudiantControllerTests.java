@@ -60,7 +60,7 @@ public class EtudiantControllerTests {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/etudiants").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/etudiants").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 					//.andExpect(jsonPath("$[0].nom", is("nom 1"))).andExpect(status().isOk());
 					//.andExpect(jsonPath("$[0].prenom", is("prenom 1")));
@@ -73,7 +73,7 @@ public class EtudiantControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/etudiants/" + idEtudiant).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/etudiants/" + idEtudiant).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$.nom", is("nom 1")))
 					.andExpect(jsonPath("$.prenom", is("prenom 1")))
@@ -97,7 +97,7 @@ public class EtudiantControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/etudiants")
+			String jsonReponse = mockMvc.perform(post("/etudiants")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -121,7 +121,7 @@ public class EtudiantControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/etudiants") 
+			String jsonReponse = mockMvc.perform(put("/etudiants") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -142,7 +142,7 @@ public class EtudiantControllerTests {
 	@Test
 	void testGetEntrepriseByIdEtudiant() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/etudiants/"+idEtudiant+"/entreprise").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/etudiants/"+idEtudiant+"/entreprise").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$.raisonSociale", is("raisone sociale")));
 
@@ -154,7 +154,7 @@ public class EtudiantControllerTests {
 	@Test
 	void testGetPromotionsByIdEtudiant() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/etudiants/"+idEtudiant+"/promotions").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/etudiants/"+idEtudiant+"/promotions").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$[0].nom", is("promotion 1")));
 
@@ -166,7 +166,7 @@ public class EtudiantControllerTests {
 	@Test
 	void testGetGroupesByIdEtudiant() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/etudiants/"+idEtudiant+"/groupes").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/etudiants/"+idEtudiant+"/groupes").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$[0].nom", is("groupe 1")));
 
@@ -178,7 +178,7 @@ public class EtudiantControllerTests {
 	@Test
 	void testGetAdresseByIdEtudiant() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/etudiants/"+idEtudiant+"/adresse").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/etudiants/"+idEtudiant+"/adresse").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$.numero", is(0)))
 					.andExpect(jsonPath("$.ligne", is("ligne")))
@@ -193,7 +193,7 @@ public class EtudiantControllerTests {
 	@Test
 	void testGetNotesByIdEtudiant() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/etudiants/"+idEtudiant+"/notes").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/etudiants/"+idEtudiant+"/notes").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$[0].noteObtenu", is(20)))
 					.andExpect(jsonPath("$[0].observations", is("parfait")));
@@ -206,7 +206,7 @@ public class EtudiantControllerTests {
 	@Test
 	void testGetAbsencesByIdEtudiant() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/etudiants/"+idEtudiant+"/absences").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/etudiants/"+idEtudiant+"/absences").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$[0].justificatif", is("justificatif")));
 
@@ -218,7 +218,7 @@ public class EtudiantControllerTests {
 	@Test
 	void testGetIntervenionByIdEtudiant() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/etudiants/"+idEtudiant+"/intervention").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/etudiants/"+idEtudiant+"/intervention").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 			
 
@@ -230,7 +230,7 @@ public class EtudiantControllerTests {
 	@Test
 	void testGetFormateurReferentByIdEtudiant() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/etudiants/"+idEtudiant+"/formateurReferent").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/etudiants/"+idEtudiant+"/formateurReferent").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 			
 
@@ -242,7 +242,7 @@ public class EtudiantControllerTests {
 	@Test
 	void testGetFormateurManagerByIdEtudiant() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/etudiants/"+idEtudiant+"/manager").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/etudiants/"+idEtudiant+"/manager").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 			
 
@@ -255,7 +255,7 @@ public class EtudiantControllerTests {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/etudiants/"+idEtudiant) 
+			String rep = mockMvc.perform(delete("/etudiants/"+idEtudiant) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);

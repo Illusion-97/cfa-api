@@ -61,7 +61,7 @@ public class FormateurControllerTests {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/formateurs").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/formateurs").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 					
 		} catch (Exception e) {
@@ -72,7 +72,7 @@ public class FormateurControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/formateurs/" + idFormateur).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/formateurs/" + idFormateur).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$.nom", is("formateur 1")))
 					.andExpect(jsonPath("$.prenom", is("formateur 1")));
@@ -92,7 +92,7 @@ public class FormateurControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/formateurs")
+			String jsonReponse = mockMvc.perform(post("/formateurs")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -116,7 +116,7 @@ public class FormateurControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(cDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/formateurs") 
+			String jsonReponse = mockMvc.perform(put("/formateurs") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -135,7 +135,7 @@ public class FormateurControllerTests {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/FormateurDto/"+idFormateur) 
+			String rep = mockMvc.perform(delete("/FormateurDto/"+idFormateur) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);
