@@ -14,7 +14,7 @@ public class FicheEntrepriseDto {
 	private String clientType;
 	private String formationProfil;
 	private String metiersExerces;
-	private EtudiantDto EtudiantDto;
+	private EtudiantDto etudiantDto;
 	
 	public FicheEntrepriseDto() {
 		super();
@@ -119,11 +119,11 @@ public class FicheEntrepriseDto {
 	}
 
 	public EtudiantDto getEtudiantDto() {
-		return EtudiantDto;
+		return etudiantDto;
 	}
 
 	public void setEtudiantDto(EtudiantDto etudiantDto) {
-		EtudiantDto = etudiantDto;
+		this.etudiantDto = etudiantDto;
 	}
 	
 	
