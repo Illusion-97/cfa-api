@@ -62,7 +62,7 @@ public class DevoirControllerTest {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/devoirs").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/devoirs").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 
 		} catch (Exception e) {
@@ -73,7 +73,7 @@ public class DevoirControllerTest {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/devoirs/" + idDevoir).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/devoirs/" + idDevoir).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$.enonce", is("enonce 1")))
 					.andExpect(jsonPath("$.dateDebut", is("06/09/2021")))
@@ -95,7 +95,7 @@ public class DevoirControllerTest {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/devoirs")
+			String jsonReponse = mockMvc.perform(post("/devoirs")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -120,7 +120,7 @@ public class DevoirControllerTest {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/devoirs") 
+			String jsonReponse = mockMvc.perform(put("/devoirs") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -140,7 +140,7 @@ public class DevoirControllerTest {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/devoirs/"+idDevoir) 
+			String rep = mockMvc.perform(delete("/devoirs/"+idDevoir) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);

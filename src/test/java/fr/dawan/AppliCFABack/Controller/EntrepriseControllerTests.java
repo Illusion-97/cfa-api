@@ -59,7 +59,7 @@ public class EntrepriseControllerTests {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/entreprises").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/entreprises").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 
 		} catch (Exception e) {
@@ -70,7 +70,7 @@ public class EntrepriseControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/entreprises/" + idEntreprise).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/entreprises/" + idEntreprise).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$.raisonSociale", is("raison sociale 1")));
 
@@ -88,7 +88,7 @@ public class EntrepriseControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/entreprises")
+			String jsonReponse = mockMvc.perform(post("/entreprises")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -111,7 +111,7 @@ public class EntrepriseControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/entreprises") 
+			String jsonReponse = mockMvc.perform(put("/entreprises") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -130,7 +130,7 @@ public class EntrepriseControllerTests {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/entreprises/"+idEntreprise) 
+			String rep = mockMvc.perform(delete("/entreprises/"+idEntreprise) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);

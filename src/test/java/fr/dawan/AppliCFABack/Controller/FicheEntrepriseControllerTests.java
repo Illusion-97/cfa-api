@@ -59,7 +59,7 @@ public class FicheEntrepriseControllerTests {
 	@Test
 	void testFindAll() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/ficheEntreprises").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/ficheEntreprises").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 
 		} catch (Exception e) {
@@ -70,7 +70,7 @@ public class FicheEntrepriseControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			mockMvc.perform(get("/AppliCFABack/ficheEntreprises/" + idFicheEntreprise).accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(get("/ficheEntreprises/" + idFicheEntreprise).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$.historique", is("historique 1")))
 					.andExpect(jsonPath("$.nomDirigeant", is("nomDirigeant 1")))
@@ -92,7 +92,7 @@ public class FicheEntrepriseControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(feToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/AppliCFABack/ficheEntreprises")
+			String jsonReponse = mockMvc.perform(post("/ficheEntreprises")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -116,7 +116,7 @@ public class FicheEntrepriseControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(feDto);
 
-			String jsonReponse = mockMvc.perform(put("/AppliCFABack/ficheEntreprises") 
+			String jsonReponse = mockMvc.perform(put("/ficheEntreprises") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -136,7 +136,7 @@ public class FicheEntrepriseControllerTests {
 	void testDelete() {
 
 		try {
-			String rep = mockMvc.perform(delete("/AppliCFABack/ficheEntreprises/"+ idFicheEntreprise) 
+			String rep = mockMvc.perform(delete("/ficheEntreprises/"+ idFicheEntreprise) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
 			assertEquals("suppression effectuée", rep);
