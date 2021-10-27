@@ -254,21 +254,24 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Boolean isFormateur = false;
 		Boolean isCEF = false;
 		Boolean isMaitreApprentissage = false;
-				
-		for(UtilisateurRole role : user.getRoles()) {
-			if(role.getIntitule().equals("ETUDIANT")) {
-				isEtudiant = true;
-			}
-			if(role.getIntitule().equals("FORMATEUR")) {
-				isFormateur = true;				
-			}
-			if(role.getIntitule().equals("CEF")) {
-				isCEF = true;
-			}
-			if(role.getIntitule().equals("MAITREAPPRENTISSAGE")) {
-				isMaitreApprentissage = true;
+			
+		if(user.getRoles() != null) {
+			for(UtilisateurRole role : user.getRoles()) {
+				if(role.getIntitule().equals("ETUDIANT")) {
+					isEtudiant = true;
+				}
+				if(role.getIntitule().equals("FORMATEUR")) {
+					isFormateur = true;				
+				}
+				if(role.getIntitule().equals("CEF")) {
+					isCEF = true;
+				}
+				if(role.getIntitule().equals("MAITREAPPRENTISSAGE")) {
+					isMaitreApprentissage = true;
+				}
 			}
 		}
+		
 		
 		user = utilisateurRepository.saveAndFlush(user);
 		
