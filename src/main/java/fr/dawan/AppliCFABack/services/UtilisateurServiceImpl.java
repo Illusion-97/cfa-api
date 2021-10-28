@@ -1,54 +1,26 @@
 package fr.dawan.AppliCFABack.services;
 
+import com.univocity.parsers.common.record.Record;
+import com.univocity.parsers.csv.CsvParser;
+import com.univocity.parsers.csv.CsvParserSettings;
+import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.repositories.*;
+import fr.dawan.AppliCFABack.tools.HashTools;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.transaction.Transactional;
+import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
-
-import fr.dawan.AppliCFABack.dto.AbsenceDto;
-import fr.dawan.AppliCFABack.dto.AdresseDto;
-import fr.dawan.AppliCFABack.dto.CongeDto;
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EntrepriseDto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
-import fr.dawan.AppliCFABack.entities.Absence;
-import fr.dawan.AppliCFABack.entities.Adresse;
-import fr.dawan.AppliCFABack.entities.CEF;
-import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.Entreprise;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
-import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-import fr.dawan.AppliCFABack.entities.UtilisateurRole;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
-import fr.dawan.AppliCFABack.repositories.AdresseRepository;
-import fr.dawan.AppliCFABack.repositories.CEFRepository;
-import fr.dawan.AppliCFABack.repositories.CongeRepository;
-import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
-import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.FormateurRepository;
-import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
-import fr.dawan.AppliCFABack.repositories.PromotionRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
-import fr.dawan.AppliCFABack.tools.HashTools;
 
 @Service
 @Transactional
@@ -223,8 +195,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             // Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
             if (user.getId() == 0) {
                 if (user.getPassword() == "" || user.getPassword() == null) {
-                    user.setPassword(HashTools.hashSHA512(generatePassword()));
+                    user.setPassword(generatePassword());
                     emailService.newPassword(user.getLogin(), user.getPassword());
+                    user.setPassword(HashTools.hashSHA512(user.getPassword()));
+
                 } else {
                     user.setPassword(HashTools.hashSHA512(user.getPassword()));
                 }
@@ -556,6 +530,42 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             return true;
         else
             return false;
+    }
+
+    @Override
+    public void uploadFile(MultipartFile file) throws Exception {
+//        List<Utilisateur> utilisateurs = new ArrayList<>();
+        InputStream inputStream = file.getInputStream(); // recupere le stream du fichier pour lire son contenu
+
+        CsvParserSettings settings = new CsvParserSettings();
+        settings.setHeaderExtractionEnabled(true); // definit si oui ou non on extrait les en-tetes lors du parsing
+        settings.detectFormatAutomatically(); // detecte automatiquement le separateur
+
+        CsvParser parser = new CsvParser(settings);
+        List<Record> records = parser.parseAllRecords(inputStream);
+        records.forEach(item -> {
+            Utilisateur utilisateur = new Utilisateur();
+
+            // on definit les valeurs par rapport au nom de l'entete
+            // utilisateur.setId(Integer.parseInt(item.getString("id")));
+            utilisateur.setPrenom(item.getString("prenom"));
+            utilisateur.setNom(item.getString("nom"));
+            utilisateur.setCivilite(item.getString("civilite"));
+            utilisateur.setLogin(item.getString("login"));
+            utilisateur.setDateDeNaissance(LocalDate.parse(item.getString("date_de_naissance")));
+            // utilisateur.setPassword(item.getString("password"));
+            utilisateur.setTelephone(item.getString("telephone"));
+
+            // on convertit l'utilisateur en Dto puis on appelle la methode insertUpdate
+            UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
+            try {
+                insertUpdate(utilisateurDto);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            utilisateurs.add(utilisateur);
+        });
+//        utilisateurRepository.saveAll(utilisateurs);
     }
 
 
