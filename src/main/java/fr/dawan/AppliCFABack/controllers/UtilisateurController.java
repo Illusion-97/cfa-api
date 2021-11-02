@@ -152,7 +152,6 @@ public class UtilisateurController {
             utilisateurService.uploadFile(file);
             return ResponseEntity.status(HttpStatus.OK).body("Upload success");
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
 

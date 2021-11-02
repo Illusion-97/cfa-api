@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -547,14 +548,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             Utilisateur utilisateur = new Utilisateur();
 
             // on definit les valeurs par rapport au nom de l'entete
-            // utilisateur.setId(Integer.parseInt(item.getString("id")));
             utilisateur.setPrenom(item.getString("prenom"));
             utilisateur.setNom(item.getString("nom"));
             utilisateur.setCivilite(item.getString("civilite"));
             utilisateur.setLogin(item.getString("login"));
             utilisateur.setDateDeNaissance(LocalDate.parse(item.getString("date_de_naissance")));
-            // utilisateur.setPassword(item.getString("password"));
             utilisateur.setTelephone(item.getString("telephone"));
+            utilisateur.setPassword(item.getString("password"));
 
             // on convertit l'utilisateur en Dto puis on appelle la methode insertUpdate
             UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
@@ -566,6 +566,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 //            utilisateurs.add(utilisateur);
         });
 //        utilisateurRepository.saveAll(utilisateurs);
+
     }
 
 
