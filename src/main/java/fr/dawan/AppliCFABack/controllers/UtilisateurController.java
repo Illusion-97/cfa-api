@@ -147,15 +147,13 @@ public class UtilisateurController {
     }
 
     @PostMapping(value = "/upload-file", consumes = "multipart/form-data")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             utilisateurService.uploadFile(file);
             return ResponseEntity.status(HttpStatus.OK).body("Upload success");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
-
     }
 }
 

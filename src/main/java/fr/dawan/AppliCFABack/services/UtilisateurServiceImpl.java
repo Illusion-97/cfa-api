@@ -535,38 +535,43 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public void uploadFile(MultipartFile file) throws Exception {
-//        List<Utilisateur> utilisateurs = new ArrayList<>();
+        if (file.isEmpty()) {
+            throw new Exception("Fichier introuvable");
+        }
+
         InputStream inputStream = file.getInputStream(); // recupere le stream du fichier pour lire son contenu
+        String filename = file.getOriginalFilename();
+        String[] fileSplited = filename.split("\\.");
+        if (fileSplited[1].equals("csv")) { // si l'extension du fichier == csv
+            CsvParserSettings settings = new CsvParserSettings();
+            settings.setHeaderExtractionEnabled(true); // definit si oui ou non on extrait les en-tetes lors du parsing
+            settings.detectFormatAutomatically(); // detecte automatiquement le separateur
 
-        CsvParserSettings settings = new CsvParserSettings();
-        settings.setHeaderExtractionEnabled(true); // definit si oui ou non on extrait les en-tetes lors du parsing
-        settings.detectFormatAutomatically(); // detecte automatiquement le separateur
+            CsvParser parser = new CsvParser(settings);
+            List<Record> records = parser.parseAllRecords(inputStream);
+            records.forEach(item -> {
+                Utilisateur utilisateur = new Utilisateur();
 
-        CsvParser parser = new CsvParser(settings);
-        List<Record> records = parser.parseAllRecords(inputStream);
-        records.forEach(item -> {
-            Utilisateur utilisateur = new Utilisateur();
+                // on definit les valeurs par rapport au nom de l'entete
+                utilisateur.setPrenom(item.getString("prenom"));
+                utilisateur.setNom(item.getString("nom"));
+                utilisateur.setCivilite(item.getString("civilite"));
+                utilisateur.setLogin(item.getString("login"));
+                utilisateur.setDateDeNaissance(LocalDate.parse(item.getString("date_de_naissance")));
+                utilisateur.setTelephone(item.getString("telephone"));
+                utilisateur.setPassword(item.getString("password"));
 
-            // on definit les valeurs par rapport au nom de l'entete
-            utilisateur.setPrenom(item.getString("prenom"));
-            utilisateur.setNom(item.getString("nom"));
-            utilisateur.setCivilite(item.getString("civilite"));
-            utilisateur.setLogin(item.getString("login"));
-            utilisateur.setDateDeNaissance(LocalDate.parse(item.getString("date_de_naissance")));
-            utilisateur.setTelephone(item.getString("telephone"));
-            utilisateur.setPassword(item.getString("password"));
-
-            // on convertit l'utilisateur en Dto puis on appelle la methode insertUpdate
-            UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
-            try {
-                insertUpdate(utilisateurDto);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-//            utilisateurs.add(utilisateur);
-        });
-//        utilisateurRepository.saveAll(utilisateurs);
-
+                // on convertit l'utilisateur en Dto puis on appelle la methode insertUpdate
+                UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
+                try {
+                    insertUpdate(utilisateurDto);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } else { // sinon => ERROR
+            throw new Exception("Extension de fichier incorrecte");
+        }
     }
 
 
