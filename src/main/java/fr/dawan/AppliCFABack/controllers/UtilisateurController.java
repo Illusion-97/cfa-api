@@ -150,7 +150,7 @@ public class UtilisateurController {
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             utilisateurService.uploadFile(file);
-            return ResponseEntity.status(HttpStatus.OK).body("Upload success");
+            return ResponseEntity.status(HttpStatus.OK).body("Import du fichier réussi");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
