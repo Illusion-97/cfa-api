@@ -9,7 +9,7 @@ public class FichePosteDto {
 	private String compositionService;
 	private String positionnement;
 	private String missionPrincipale;
-	private EtudiantDto EtudiantDto;
+	private EtudiantDto etudiantDto;
 	
 	public FichePosteDto() {
 		super();
@@ -72,11 +72,11 @@ public class FichePosteDto {
 	}
 
 	public EtudiantDto getEtudiantDto() {
-		return EtudiantDto;
+		return etudiantDto;
 	}
 
 	public void setEtudiantDto(EtudiantDto etudiantDto) {
-		EtudiantDto = etudiantDto;
+		this.etudiantDto = etudiantDto;
 	}
 	
 
