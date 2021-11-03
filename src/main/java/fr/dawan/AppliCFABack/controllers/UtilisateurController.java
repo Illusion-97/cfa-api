@@ -146,10 +146,10 @@ public class UtilisateurController {
         return utilisateurService.isReferent(id);
     }
 
-    @PostMapping(value = "/upload-file", consumes = "multipart/form-data")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+    @PostMapping(value = "{id}/upload-file", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadFile(@PathVariable("id") long id, @RequestParam("file") MultipartFile file) {
         try {
-            utilisateurService.uploadFile(file);
+            utilisateurService.uploadFile(file, id);
             return ResponseEntity.status(HttpStatus.OK).body("Import du fichier réussi");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
