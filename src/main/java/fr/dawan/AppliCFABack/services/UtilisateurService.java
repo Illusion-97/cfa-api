@@ -1,16 +1,10 @@
 package fr.dawan.AppliCFABack.services;
 
+import fr.dawan.AppliCFABack.dto.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.List;
-
-import fr.dawan.AppliCFABack.dto.AbsenceDto;
-import fr.dawan.AppliCFABack.dto.AdresseDto;
-import fr.dawan.AppliCFABack.dto.CongeDto;
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 
 public interface UtilisateurService {
     List<UtilisateurDto> getAll();
@@ -55,6 +49,6 @@ public interface UtilisateurService {
 
     Boolean isReferent(long id);
 
-    void uploadFile(MultipartFile file) throws IOException, Exception;
+    void uploadFile(MultipartFile file, long idUser) throws Exception;
 
 }
