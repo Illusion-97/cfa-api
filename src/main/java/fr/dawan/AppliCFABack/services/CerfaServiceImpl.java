@@ -1,10 +1,14 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CerfaDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -14,6 +18,8 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CerfaRepository;
 
+@Service
+@Transactional
 public class CerfaServiceImpl implements CerfaService {
 
 	@Autowired
