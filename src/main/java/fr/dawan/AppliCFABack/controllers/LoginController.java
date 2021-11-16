@@ -22,7 +22,6 @@ import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 
 @MultipartConfig
 @RestController
-//@RequestMapping("/AppliCFABack")
 public class LoginController {
 	
 	@Autowired
