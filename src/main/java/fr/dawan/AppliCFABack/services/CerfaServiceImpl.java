@@ -51,6 +51,10 @@ public class CerfaServiceImpl implements CerfaService {
 		cDto.setRemuneration2(mapper.RemunerationTORemunerationDto(c.get().getRemuneration2()));
 		cDto.setRemuneration3(mapper.RemunerationTORemunerationDto(c.get().getRemuneration3()));
 		cDto.setRemuneration4(mapper.RemunerationTORemunerationDto(c.get().getRemuneration4()));
+		cDto.setAdresseApprenti(mapper.AdresseToAdresseDto(c.get().getAdresseApprenti()));
+		cDto.setAdresseEmployeur(mapper.AdresseToAdresseDto(c.get().getAdresseEmployeur()));
+		cDto.setAdresseRepresentant(mapper.AdresseToAdresseDto(c.get().getAdresseRepresentant()));
+		cDto.setAdresseResponsable(mapper.AdresseToAdresseDto(c.get().getAdresseResponsable()));
 		cDto.setEtudiant(etudiantService.getById(c.get().getEtudiant().getId()));
 		return cDto;
 	}
@@ -67,6 +71,10 @@ public class CerfaServiceImpl implements CerfaService {
 			cDto.setRemuneration2(mapper.RemunerationTORemunerationDto(c.getRemuneration2()));
 			cDto.setRemuneration3(mapper.RemunerationTORemunerationDto(c.getRemuneration3()));
 			cDto.setRemuneration4(mapper.RemunerationTORemunerationDto(c.getRemuneration4()));
+			cDto.setAdresseApprenti(mapper.AdresseToAdresseDto(c.getAdresseApprenti()));
+			cDto.setAdresseEmployeur(mapper.AdresseToAdresseDto(c.getAdresseEmployeur()));
+			cDto.setAdresseRepresentant(mapper.AdresseToAdresseDto(c.getAdresseRepresentant()));
+			cDto.setAdresseResponsable(mapper.AdresseToAdresseDto(c.getAdresseResponsable()));
 			cDto.setEtudiant(etudiantService.getById(c.getEtudiant().getId()));
 			lstCerfaDto.add(cDto);
 		}

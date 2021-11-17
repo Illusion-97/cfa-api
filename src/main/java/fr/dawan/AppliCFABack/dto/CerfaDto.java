@@ -2,8 +2,6 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.time.LocalDate;
 
-import fr.dawan.AppliCFABack.entities.Adresse;
-
 public class CerfaDto {
 	
 	private long id;
@@ -14,7 +12,7 @@ public class CerfaDto {
 	
 	private String prenomEmployeur;
 	
-	private Adresse adresseEmployeur;
+	private AdresseDto adresseEmployeur;
 	
 	private String telEmployeur;
 	
@@ -42,7 +40,7 @@ public class CerfaDto {
 	
 	private String sexe;
 	
-	private Adresse adresseApprenti;
+	private AdresseDto adresseApprenti;
 	
 	private String departementNaissance;
 	
@@ -74,7 +72,7 @@ public class CerfaDto {
 	
 	private String prenomRepresentant;
 	
-	private Adresse adresseRepresentant;
+	private AdresseDto adresseRepresentant;
 	
 	private String nomPremierTuteur;
 	
@@ -142,7 +140,7 @@ public class CerfaDto {
 	
 	private String codeRncp;
 	
-	private Adresse adresseResponsable;
+	private AdresseDto adresseResponsable;
 	
 	private LocalDate dateDebutFormation;
 	
@@ -202,11 +200,11 @@ public class CerfaDto {
 		this.prenomEmployeur = prenomEmployeur;
 	}
 
-	public Adresse getAdresseEmployeur() {
+	public AdresseDto getAdresseEmployeur() {
 		return adresseEmployeur;
 	}
 
-	public void setAdresseEmployeur(Adresse adresseEmployeur) {
+	public void setAdresseEmployeur(AdresseDto adresseEmployeur) {
 		this.adresseEmployeur = adresseEmployeur;
 	}
 
@@ -314,11 +312,11 @@ public class CerfaDto {
 		this.sexe = sexe;
 	}
 
-	public Adresse getAdresseApprenti() {
+	public AdresseDto getAdresseApprenti() {
 		return adresseApprenti;
 	}
 
-	public void setAdresseApprenti(Adresse adresseApprenti) {
+	public void setAdresseApprenti(AdresseDto adresseApprenti) {
 		this.adresseApprenti = adresseApprenti;
 	}
 
@@ -442,11 +440,11 @@ public class CerfaDto {
 		this.prenomRepresentant = prenomRepresentant;
 	}
 
-	public Adresse getAdresseRepresentant() {
+	public AdresseDto getAdresseRepresentant() {
 		return adresseRepresentant;
 	}
 
-	public void setAdresseRepresentant(Adresse adresseRepresentant) {
+	public void setAdresseRepresentant(AdresseDto adresseRepresentant) {
 		this.adresseRepresentant = adresseRepresentant;
 	}
 
@@ -714,11 +712,11 @@ public class CerfaDto {
 		this.codeRncp = codeRncp;
 	}
 
-	public Adresse getAdresseResponsable() {
+	public AdresseDto getAdresseResponsable() {
 		return adresseResponsable;
 	}
 
-	public void setAdresseResponsable(Adresse adresseResponsable) {
+	public void setAdresseResponsable(AdresseDto adresseResponsable) {
 		this.adresseResponsable = adresseResponsable;
 	}
 
