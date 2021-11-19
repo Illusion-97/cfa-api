@@ -12,6 +12,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Cerfa {
@@ -171,15 +174,19 @@ public class Cerfa {
 	private String machineRisque;
 	
 	@ManyToOne
+	@Cascade(CascadeType.ALL)
 	private Remuneration remuneration1;
 	
 	@ManyToOne
+	@Cascade(CascadeType.ALL)
 	private Remuneration remuneration2;
 	
 	@ManyToOne
+	@Cascade(CascadeType.ALL)
 	private Remuneration remuneration3;
 	
 	@ManyToOne
+	@Cascade(CascadeType.ALL)
 	private Remuneration remuneration4;
 	
 	@Column(nullable = true, length = 255)
