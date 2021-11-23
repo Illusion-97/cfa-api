@@ -2,6 +2,8 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+
 public class CerfaDto {
 	
 	private long id;
@@ -163,6 +165,96 @@ public class CerfaDto {
 	private String numAvenant;
 	
 	private EtudiantDto etudiant;
+
+	private String modeContractuelApprentissage;
+	
+	private String complementEmployeur;
+	
+	private String employeurType;
+	
+	private String assuranceChomage;
+	
+	private String complementApprentit;
+	
+	private String complementRepresentant;
+	
+	private String egilibiliteFonction;
+	
+	private String complementResponsable;
+	
+	private String faitA;
+
+	public String getModeContractuelApprentissage() {
+		return modeContractuelApprentissage;
+	}
+
+	public void setModeContractuelApprentissage(String modeContractuelApprentissage) {
+		this.modeContractuelApprentissage = modeContractuelApprentissage;
+	}
+
+	public String getComplementEmployeur() {
+		return complementEmployeur;
+	}
+
+	public void setComplementEmployeur(String complementEmployeur) {
+		this.complementEmployeur = complementEmployeur;
+	}
+
+	public String getEmployeurType() {
+		return employeurType;
+	}
+
+	public void setEmployeurType(String employeurType) {
+		this.employeurType = employeurType;
+	}
+
+	public String getAssuranceChomage() {
+		return assuranceChomage;
+	}
+
+	public void setAssuranceChomage(String assuranceChomage) {
+		this.assuranceChomage = assuranceChomage;
+	}
+
+	public String getComplementApprentit() {
+		return complementApprentit;
+	}
+
+	public void setComplementApprentit(String complementApprentit) {
+		this.complementApprentit = complementApprentit;
+	}
+
+	public String getComplementRepresentant() {
+		return complementRepresentant;
+	}
+
+	public void setComplementRepresentant(String complementRepresentant) {
+		this.complementRepresentant = complementRepresentant;
+	}
+
+	public String getEgilibiliteFonction() {
+		return egilibiliteFonction;
+	}
+
+	public void setEgilibiliteFonction(String egilibiliteFonction) {
+		this.egilibiliteFonction = egilibiliteFonction;
+	}
+
+	public String getComplementResponsable() {
+		return complementResponsable;
+	}
+
+	public void setComplementResponsable(String complementResponsable) {
+		this.complementResponsable = complementResponsable;
+	}
+
+	public String getFaitA() {
+		return faitA;
+	}
+
+	public void setFaitA(String faitA) {
+		this.faitA = faitA;
+	}
 
 	public CerfaDto() {
 		super();

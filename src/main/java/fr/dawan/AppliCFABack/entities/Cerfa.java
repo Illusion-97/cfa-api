@@ -261,6 +261,105 @@ public class Cerfa {
 	@Column(nullable = true, length = 255)
 	private String numAvenant;
 	
+	@Column(nullable = true, length = 255)
+	private String modeContractuelApprentissage;
+	
+	@Column(nullable = true, length = 255)
+	private String complementEmployeur;
+	
+	@Column(nullable = true, length = 255)
+	private String employeurType;
+	
+	@Column(nullable = true, length = 255)
+	private String assuranceChomage;
+	
+	@Column(nullable = true, length = 255)
+	private String complementApprentit;
+	
+	@Column(nullable = true, length = 255)
+	private String complementRepresentant;
+	
+	@Column(nullable = true, length = 255)
+	private String egilibiliteFonction;
+	
+	@Column(nullable = true, length = 255)
+	private String complementResponsable;
+	
+	@Column(nullable = true, length = 255)
+	private String faitA;
+	
+	public String getModeContractuelApprentissage() {
+		return modeContractuelApprentissage;
+	}
+
+	public void setModeContractuelApprentissage(String modeContractuelApprentissage) {
+		this.modeContractuelApprentissage = modeContractuelApprentissage;
+	}
+
+	public String getComplementEmployeur() {
+		return complementEmployeur;
+	}
+
+	public void setComplementEmployeur(String complementEmployeur) {
+		this.complementEmployeur = complementEmployeur;
+	}
+
+	public String getEmployeurType() {
+		return employeurType;
+	}
+
+	public void setEmployeurType(String employeurType) {
+		this.employeurType = employeurType;
+	}
+
+	public String getAssuranceChomage() {
+		return assuranceChomage;
+	}
+
+	public void setAssuranceChomage(String assuranceChomage) {
+		this.assuranceChomage = assuranceChomage;
+	}
+
+	public String getComplementApprentit() {
+		return complementApprentit;
+	}
+
+	public void setComplementApprentit(String complementApprentit) {
+		this.complementApprentit = complementApprentit;
+	}
+
+	public String getComplementRepresentant() {
+		return complementRepresentant;
+	}
+
+	public void setComplementRepresentant(String complementRepresentant) {
+		this.complementRepresentant = complementRepresentant;
+	}
+
+	public String getEgilibiliteFonction() {
+		return egilibiliteFonction;
+	}
+
+	public void setÉegilibiliteFonction(String egilibiliteFonction) {
+		this.egilibiliteFonction = egilibiliteFonction;
+	}
+
+	public String getComplementResponsable() {
+		return complementResponsable;
+	}
+
+	public void setComplementResponsable(String complementResponsable) {
+		this.complementResponsable = complementResponsable;
+	}
+
+	public String getFaitA() {
+		return faitA;
+	}
+
+	public void setFaitA(String faitA) {
+		this.faitA = faitA;
+	}
+
 	@OneToOne
 	private Etudiant etudiant;
 
