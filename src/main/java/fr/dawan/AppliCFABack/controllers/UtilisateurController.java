@@ -28,12 +28,6 @@ public class UtilisateurController {
 
     }
 
-    // GET: /AppliCFABack/utilisateurs
-    @GetMapping(produces = {"application/json", "application/xml"})
-    public List<UtilisateurDto> getAll() {
-        return utilisateurService.getAll();
-    }
-
     @GetMapping(value = "/{page}/{size}", produces = "application/json")
     public @ResponseBody
     List<UtilisateurDto> getAllByPage(
@@ -56,6 +50,12 @@ public class UtilisateurController {
         else
             return utilisateurService.count(search.get().toString());
     }
+    
+    // GET: /AppliCFABack/utilisateurs/{id}
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public UtilisateurDto getById(@PathVariable("id") long id) {
+        return utilisateurService.getById(id);
+    }
 
     // GET: /AppliCFABack/utilisateurs/with-object
     @GetMapping(produces = {"application/json", "application/xml"}, value = "/with-object")
@@ -63,11 +63,13 @@ public class UtilisateurController {
         return utilisateurService.getAllWithObject();
     }
 
-    // GET: /AppliCFABack/utilisateurs/{id}
-    @GetMapping(value = "/{id}", produces = "application/json")
-    public UtilisateurDto getById(@PathVariable("id") long id) {
-        return utilisateurService.getById(id);
+    // GET: /AppliCFABack/utilisateurs
+    @GetMapping(produces = {"application/json", "application/xml"})
+    public List<UtilisateurDto> getAll() {
+        return utilisateurService.getAll();
     }
+    
+   
 
     // GET: /AppliCFABack/utilisateurs/{login}
     @GetMapping(value = "/email={login}", produces = "application/json")
