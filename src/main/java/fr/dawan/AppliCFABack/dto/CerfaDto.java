@@ -2,7 +2,7 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.time.LocalDate;
 
-import fr.dawan.AppliCFABack.entities.Adresse;
+import javax.persistence.Column;
 
 public class CerfaDto {
 	
@@ -14,7 +14,7 @@ public class CerfaDto {
 	
 	private String prenomEmployeur;
 	
-	private Adresse adresseEmployeur;
+	private AdresseDto adresseEmployeur;
 	
 	private String telEmployeur;
 	
@@ -42,7 +42,7 @@ public class CerfaDto {
 	
 	private String sexe;
 	
-	private Adresse adresseApprenti;
+	private AdresseDto adresseApprenti;
 	
 	private String departementNaissance;
 	
@@ -74,7 +74,7 @@ public class CerfaDto {
 	
 	private String prenomRepresentant;
 	
-	private Adresse adresseRepresentant;
+	private AdresseDto adresseRepresentant;
 	
 	private String nomPremierTuteur;
 	
@@ -142,7 +142,7 @@ public class CerfaDto {
 	
 	private String codeRncp;
 	
-	private Adresse adresseResponsable;
+	private AdresseDto adresseResponsable;
 	
 	private LocalDate dateDebutFormation;
 	
@@ -165,6 +165,96 @@ public class CerfaDto {
 	private String numAvenant;
 	
 	private EtudiantDto etudiant;
+
+	private String modeContractuelApprentissage;
+	
+	private String complementEmployeur;
+	
+	private String employeurType;
+	
+	private String assuranceChomage;
+	
+	private String complementApprentit;
+	
+	private String complementRepresentant;
+	
+	private String egilibiliteFonction;
+	
+	private String complementResponsable;
+	
+	private String faitA;
+
+	public String getModeContractuelApprentissage() {
+		return modeContractuelApprentissage;
+	}
+
+	public void setModeContractuelApprentissage(String modeContractuelApprentissage) {
+		this.modeContractuelApprentissage = modeContractuelApprentissage;
+	}
+
+	public String getComplementEmployeur() {
+		return complementEmployeur;
+	}
+
+	public void setComplementEmployeur(String complementEmployeur) {
+		this.complementEmployeur = complementEmployeur;
+	}
+
+	public String getEmployeurType() {
+		return employeurType;
+	}
+
+	public void setEmployeurType(String employeurType) {
+		this.employeurType = employeurType;
+	}
+
+	public String getAssuranceChomage() {
+		return assuranceChomage;
+	}
+
+	public void setAssuranceChomage(String assuranceChomage) {
+		this.assuranceChomage = assuranceChomage;
+	}
+
+	public String getComplementApprentit() {
+		return complementApprentit;
+	}
+
+	public void setComplementApprentit(String complementApprentit) {
+		this.complementApprentit = complementApprentit;
+	}
+
+	public String getComplementRepresentant() {
+		return complementRepresentant;
+	}
+
+	public void setComplementRepresentant(String complementRepresentant) {
+		this.complementRepresentant = complementRepresentant;
+	}
+
+	public String getEgilibiliteFonction() {
+		return egilibiliteFonction;
+	}
+
+	public void setEgilibiliteFonction(String egilibiliteFonction) {
+		this.egilibiliteFonction = egilibiliteFonction;
+	}
+
+	public String getComplementResponsable() {
+		return complementResponsable;
+	}
+
+	public void setComplementResponsable(String complementResponsable) {
+		this.complementResponsable = complementResponsable;
+	}
+
+	public String getFaitA() {
+		return faitA;
+	}
+
+	public void setFaitA(String faitA) {
+		this.faitA = faitA;
+	}
 
 	public CerfaDto() {
 		super();
@@ -202,11 +292,11 @@ public class CerfaDto {
 		this.prenomEmployeur = prenomEmployeur;
 	}
 
-	public Adresse getAdresseEmployeur() {
+	public AdresseDto getAdresseEmployeur() {
 		return adresseEmployeur;
 	}
 
-	public void setAdresseEmployeur(Adresse adresseEmployeur) {
+	public void setAdresseEmployeur(AdresseDto adresseEmployeur) {
 		this.adresseEmployeur = adresseEmployeur;
 	}
 
@@ -314,11 +404,11 @@ public class CerfaDto {
 		this.sexe = sexe;
 	}
 
-	public Adresse getAdresseApprenti() {
+	public AdresseDto getAdresseApprenti() {
 		return adresseApprenti;
 	}
 
-	public void setAdresseApprenti(Adresse adresseApprenti) {
+	public void setAdresseApprenti(AdresseDto adresseApprenti) {
 		this.adresseApprenti = adresseApprenti;
 	}
 
@@ -442,11 +532,11 @@ public class CerfaDto {
 		this.prenomRepresentant = prenomRepresentant;
 	}
 
-	public Adresse getAdresseRepresentant() {
+	public AdresseDto getAdresseRepresentant() {
 		return adresseRepresentant;
 	}
 
-	public void setAdresseRepresentant(Adresse adresseRepresentant) {
+	public void setAdresseRepresentant(AdresseDto adresseRepresentant) {
 		this.adresseRepresentant = adresseRepresentant;
 	}
 
@@ -714,11 +804,11 @@ public class CerfaDto {
 		this.codeRncp = codeRncp;
 	}
 
-	public Adresse getAdresseResponsable() {
+	public AdresseDto getAdresseResponsable() {
 		return adresseResponsable;
 	}
 
-	public void setAdresseResponsable(Adresse adresseResponsable) {
+	public void setAdresseResponsable(AdresseDto adresseResponsable) {
 		this.adresseResponsable = adresseResponsable;
 	}
 

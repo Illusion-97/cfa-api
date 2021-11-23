@@ -37,7 +37,7 @@ public class AppliCfaBackApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 //				registry.addMapping("/").allowedMethods("GET").allowedOrigins("*");
 //				registry.addMapping("/").allowedMethods("POST", "PUT").allowedOrigins("*");
-				registry.addMapping("/**").allowedOrigins("*").allowedMethods("*").allowedHeaders("*")
+				registry.addMapping("/**").allowedOrigins("*").allowedMethods("*","GET", "POST", "PUT", "DELETE", "OPTIONS").allowedHeaders("*")
 						.exposedHeaders("Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
 								"Origin", "Authorization", "X-Requested-With", "requestId", "Correlation-Id")
 						.allowCredentials(true).maxAge(3600);
@@ -46,7 +46,7 @@ public class AppliCfaBackApplication {
 			// Intercepteurs
 			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
-                registry.addInterceptor(tokenInterceptor);
+               registry.addInterceptor(tokenInterceptor);
 			}
 
 		};
