@@ -40,6 +40,7 @@ public class AppliCfaBackApplication {
 				registry.addMapping("/**").allowedOrigins("*").allowedMethods("*","GET", "POST", "PUT", "DELETE", "OPTIONS").allowedHeaders("*")
 //						.exposedHeaders("Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
 //								"Origin", "Authorization", "X-Requested-With", "requestId", "Correlation-Id")
+
 						.allowCredentials(true).maxAge(3600);
 			}
 

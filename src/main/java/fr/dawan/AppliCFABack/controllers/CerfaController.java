@@ -25,7 +25,11 @@ import fr.dawan.AppliCFABack.services.CerfaService;
 public class CerfaController {
 	
 	@Autowired
-	CerfaService cerfaService;
+	private CerfaService cerfaService;
+
+	public void setCerfaService(CerfaService cerfaService){
+		this.cerfaService = cerfaService;
+	}
 	
 	@GetMapping(produces = "application/json")
 	public List<CerfaDto> getAll() {
