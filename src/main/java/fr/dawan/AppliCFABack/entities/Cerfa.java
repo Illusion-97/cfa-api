@@ -33,6 +33,7 @@ public class Cerfa {
 	private String prenomEmployeur;
 	
 	@ManyToOne
+	@Cascade(CascadeType.DELETE)
 	private Adresse adresseEmployeur;
 	
 	@Column(nullable = true, length = 255)
@@ -123,6 +124,7 @@ public class Cerfa {
 	private String prenomRepresentant;
 	
 	@ManyToOne
+	@Cascade(CascadeType.DELETE)
 	private Adresse adresseRepresentant;
 	
 	@Column(nullable = true, length = 255)
@@ -174,15 +176,19 @@ public class Cerfa {
 	private String machineRisque;
 	
 	@ManyToOne
+	@Cascade(CascadeType.DELETE)
 	private Remuneration remuneration1;
 	
 	@ManyToOne
+	@Cascade(CascadeType.DELETE)
 	private Remuneration remuneration2;
 	
 	@ManyToOne
+	@Cascade(CascadeType.DELETE)
 	private Remuneration remuneration3;
 	
 	@ManyToOne
+	@Cascade(CascadeType.DELETE)
 	private Remuneration remuneration4;
 	
 	@Column(nullable = true, length = 255)
@@ -225,6 +231,7 @@ public class Cerfa {
 	private String codeRncp;
 	
 	@ManyToOne
+	@Cascade(CascadeType.DELETE)
 	private Adresse adresseResponsable;
 	
 	@Column(nullable = true, length = 255)

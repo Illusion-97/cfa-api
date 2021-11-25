@@ -92,14 +92,14 @@ public class CerfaServiceImpl implements CerfaService {
 	public void deleteById(long id) {
 		// TODO Auto-generated method stub
 		Cerfa c = cerfaRepo.getOne(id);
-		adresseRepo.deleteById(c.getAdresseApprenti().getId());
-		adresseRepo.deleteById(c.getAdresseEmployeur().getId());
-		adresseRepo.deleteById(c.getAdresseRepresentant().getId());
-		adresseRepo.deleteById(c.getAdresseResponsable().getId());
-		remunerationRepo.deleteById(c.getRemuneration1().getId());
-		remunerationRepo.deleteById(c.getRemuneration2().getId());
-		remunerationRepo.deleteById(c.getRemuneration3().getId());
-		remunerationRepo.deleteById(c.getRemuneration4().getId());
+//		adresseRepo.deleteById(c.getAdresseApprenti().getId());
+//		adresseRepo.deleteById(c.getAdresseEmployeur().getId());
+//		adresseRepo.deleteById(c.getAdresseRepresentant().getId());
+//		adresseRepo.deleteById(c.getAdresseResponsable().getId());
+//		remunerationRepo.deleteById(c.getRemuneration1().getId());
+//		remunerationRepo.deleteById(c.getRemuneration2().getId());
+//		remunerationRepo.deleteById(c.getRemuneration3().getId());
+//		remunerationRepo.deleteById(c.getRemuneration4().getId());
 		cerfaRepo.deleteById(id);
 
 	}
@@ -121,21 +121,21 @@ public class CerfaServiceImpl implements CerfaService {
 	            remunerationRepo.saveAndFlush(r);
 
 	            Remuneration remunerationRepop = remunerationRepo.getOne(r.getId());
-	            c.setRemuneration1(remunerationRepop);
+	            c.setRemuneration2(remunerationRepop);
 	        }
 		 if (cDto.getRemuneration3() != null && cDto.getRemuneration3().getId() == 0) {
 	            Remuneration r = DtoTools.convert(cDto.getRemuneration3(), Remuneration.class);
 	            remunerationRepo.saveAndFlush(r);
 
 	            Remuneration remunerationRepop = remunerationRepo.getOne(r.getId());
-	            c.setRemuneration1(remunerationRepop);
+	            c.setRemuneration3(remunerationRepop);
 	        }
 		 if (cDto.getRemuneration4() != null && cDto.getRemuneration4().getId() == 0) {
 	            Remuneration r = DtoTools.convert(cDto.getRemuneration4(), Remuneration.class);
 	            remunerationRepo.saveAndFlush(r);
 
 	            Remuneration remunerationRepop = remunerationRepo.getOne(r.getId());
-	            c.setRemuneration1(remunerationRepop);
+	            c.setRemuneration4(remunerationRepop);
 	        }
 		
 		 if (cDto.getAdresseApprenti() != null && cDto.getAdresseApprenti().getId() == 0) {

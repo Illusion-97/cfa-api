@@ -225,15 +225,15 @@ public class CerfaControllerTests {
 	@Test
 	void testDelete() {
 
-//		try {
-//			String rep = mockMvc.perform(delete("/cerfa/"+idCerfa) 
-//					.accept(MediaType.TEXT_PLAIN))
-//					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
-//			assertEquals("suppression effectuée", rep);
-//
-//		} catch (Exception e) {
-//			fail(e.getMessage());
-//		}
+		try {
+			String rep = mockMvc.perform(delete("/cerfa/"+16) 
+					.accept(MediaType.TEXT_PLAIN))
+					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
+			assertEquals("suppression effectuée", rep);
+
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
 	}
 
 }
