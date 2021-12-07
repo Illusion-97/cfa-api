@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CerfaDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.services.CerfaService;
 
 @RestController
@@ -70,7 +71,10 @@ public class CerfaController {
 		else
 			return cerfaService.count("");
 	}
-    
+    @GetMapping(value = "/etudiant/{id}", produces = "application/json")
+ 	public CerfaDto getByIdEtudiant(@PathVariable("id") long id) {
+ 		return cerfaService.getByIdEtudiant(id);
+ 	} 
     	// ##################################################
  		// # 					POST 						#
  		// ##################################################
