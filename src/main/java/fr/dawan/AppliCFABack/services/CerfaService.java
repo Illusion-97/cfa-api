@@ -19,4 +19,6 @@ public interface CerfaService {
 
 	CerfaDto saveOrUpdate(CerfaDto cDto);
 
+	CerfaDto getByIdEtudiant(long id);
+
 }

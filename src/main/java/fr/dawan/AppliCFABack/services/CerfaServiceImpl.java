@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CerfaDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.Cerfa;
 import fr.dawan.AppliCFABack.entities.Remuneration;
@@ -173,6 +174,18 @@ public class CerfaServiceImpl implements CerfaService {
 	        }
 		cerfaRepo.saveAndFlush(c);
 		return mapper.CerfaToCerfaDto(c);
+	}
+
+	@Override
+	public CerfaDto getByIdEtudiant(long id) {
+		List<CerfaDto> lst = getAll();
+		CerfaDto cerfa = new CerfaDto();
+		for (CerfaDto c : lst) {
+			if(c.getEtudiant().getId() == id) {
+				cerfa = c;
+			}
+		}
+		return cerfa;
 	}
 
 }
