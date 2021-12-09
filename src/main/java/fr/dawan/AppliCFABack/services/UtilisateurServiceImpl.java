@@ -53,7 +53,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     FormateurService formateurService;
     @Autowired
     EmailService emailService;
-
+    @Autowired
+    UtilisateurRoleService utilisateurRoleService;
     @Autowired
     private DtoMapper mapper;
 
@@ -530,8 +531,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public void uploadFile(MultipartFile file, long idUser) throws Exception {
-// J'ai 'renforcé' la secu en mappant l'id de l'utilisateur. Seul l'admin pourra uplaod des fichier. A voir si je
-// laisse ..
+// J'ai 'renforcé' la secu en mappant l'id de l'utilisateur. Seul l'admin pourra uplaod des fichier. A voir si je laisse
         Utilisateur user = getUtilisateurById(idUser);
         for (UtilisateurRole role : user.getRoles()) {
 
@@ -557,17 +557,27 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                         Utilisateur utilisateur = new Utilisateur();
 
                         // on definit les valeurs par rapport au nom de l'entete
+                        utilisateur.setCivilite(item.getString("civilite"));
                         utilisateur.setPrenom(item.getString("prenom"));
                         utilisateur.setNom(item.getString("nom"));
-                        utilisateur.setCivilite(item.getString("civilite"));
                         utilisateur.setLogin(item.getString("login"));
                         utilisateur.setDateDeNaissance(LocalDate.parse(item.getString("date_de_naissance")));
                         utilisateur.setTelephone(item.getString("telephone"));
                         utilisateur.setPassword(item.getString("password")); // TODO: commenter cette ligne plus tard
 
+
                         // on convertit l'utilisateur en Dto puis on appelle la methode insertUpdate
                         UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
+                        List<UtilisateurRoleDto> roleDtoList = new ArrayList<>();
+                        // On cherche un role par son intitule
+                        UtilisateurRoleDto rDto = utilisateurRoleService.findByIntitule(item.getString("rolesDto"));
+                        // On ajoute ce role dans une liste de role
+                        roleDtoList.add(rDto);
+                        // on ajoute la liste à l'utilisateur
+                        utilisateurDto.setRolesDto(roleDtoList);
+
                         try {
+                            // On appelle la methode pour inserer un utilisateur
                             insertUpdate(utilisateurDto);
                         } catch (Exception e) {
                             e.printStackTrace();
