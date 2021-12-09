@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 
+import java.util.List;
+
 @Repository
 public interface UtilisateurRoleRepository extends JpaRepository<UtilisateurRole, Long>{
 
@@ -15,5 +17,5 @@ public interface UtilisateurRoleRepository extends JpaRepository<UtilisateurRole
 	
 	long countByIntituleContainingIgnoringCase(String search);
 
-	
+	UtilisateurRole findByIntituleContaining(String intitule);
 }
