@@ -21,68 +21,79 @@ import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 
 @Service
 @Transactional
-public class UtilisateurRoleServiceImpl implements UtilisateurRoleService{
+public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
 
-	@Autowired
-	UtilisateurRoleRepository utilisateurRoleRepository;
+    @Autowired
+    UtilisateurRoleRepository utilisateurRoleRepository;
 
-	@Autowired
-	private DtoMapper mapper = new DtoMapperImpl();
-	
-	@Override
-	public List<UtilisateurRoleDto> getAllUtilisateurRole() {
-		List<UtilisateurRole> lst = utilisateurRoleRepository.findAll();
+    @Autowired
+    private DtoMapper mapper = new DtoMapperImpl();
 
-		List<UtilisateurRoleDto> lstDto = new ArrayList<UtilisateurRoleDto>();
-		for (UtilisateurRole n : lst) {
-			lstDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(n));
-		}
-		return lstDto;
-	}
+    @Override
+    public List<UtilisateurRoleDto> getAllUtilisateurRole() {
+        List<UtilisateurRole> lst = utilisateurRoleRepository.findAll();
 
-	@Override
-	public List<UtilisateurRoleDto> getAllByPage(int page, int size, String search) {
-		List<UtilisateurRole> lst = utilisateurRoleRepository.findAllByIntituleContainingIgnoringCase(search,PageRequest.of(page, size)).get().collect(Collectors.toList());
+        List<UtilisateurRoleDto> lstDto = new ArrayList<UtilisateurRoleDto>();
+        for (UtilisateurRole n : lst) {
+            lstDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(n));
+        }
+        return lstDto;
+    }
 
-		// conversion vers Dto
-		List<UtilisateurRoleDto> lstDto = new ArrayList<UtilisateurRoleDto>();
-		for (UtilisateurRole c : lst) {
-			UtilisateurRoleDto uDto =mapper.UtilisateurRoleToUtilisateurRoleDto(c);
-			lstDto.add(uDto);
-		}
-		return lstDto;
-	}
+    @Override
+    public List<UtilisateurRoleDto> getAllByPage(int page, int size, String search) {
+        List<UtilisateurRole> lst = utilisateurRoleRepository.findAllByIntituleContainingIgnoringCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
-	@Override
-	public CountDto count(String search) {
-		return new CountDto(utilisateurRoleRepository.countByIntituleContainingIgnoringCase(search));
-	}
+        // conversion vers Dto
+        List<UtilisateurRoleDto> lstDto = new ArrayList<UtilisateurRoleDto>();
+        for (UtilisateurRole c : lst) {
+            UtilisateurRoleDto uDto = mapper.UtilisateurRoleToUtilisateurRoleDto(c);
+            lstDto.add(uDto);
+        }
+        return lstDto;
+    }
 
-	@Override
-	public UtilisateurRoleDto getById(long id) {
-		Optional<UtilisateurRole> e = utilisateurRoleRepository.findById(id);
-		if (e.isPresent()) {
-			UtilisateurRoleDto uDto = mapper.UtilisateurRoleToUtilisateurRoleDto(e.get());
-						
-			return uDto;
-		}			
+    @Override
+    public CountDto count(String search) {
+        return new CountDto(utilisateurRoleRepository.countByIntituleContainingIgnoringCase(search));
+    }
 
-		return null;
-	}
+    @Override
+    public UtilisateurRoleDto getById(long id) {
+        Optional<UtilisateurRole> e = utilisateurRoleRepository.findById(id);
+        if (e.isPresent()) {
+            UtilisateurRoleDto uDto = mapper.UtilisateurRoleToUtilisateurRoleDto(e.get());
 
-	@Override
-	public UtilisateurRoleDto saveOrUpdate(UtilisateurRoleDto uDto) {
-		UtilisateurRole u = DtoTools.convert(uDto, UtilisateurRole.class);
-		
-		u = utilisateurRoleRepository.saveAndFlush(u);
-		
-		return mapper.UtilisateurRoleToUtilisateurRoleDto(u);
-	}
+            return uDto;
+        }
 
-	@Override
-	public void deleteById(long id) {
-		utilisateurRoleRepository.deleteById(id);
-		
-	}
+        return null;
+    }
+
+    @Override
+    public UtilisateurRoleDto saveOrUpdate(UtilisateurRoleDto uDto) {
+        UtilisateurRole u = DtoTools.convert(uDto, UtilisateurRole.class);
+
+        u = utilisateurRoleRepository.saveAndFlush(u);
+
+        return mapper.UtilisateurRoleToUtilisateurRoleDto(u);
+    }
+
+    @Override
+    public UtilisateurRoleDto findByIntitule(String intitule) {
+        UtilisateurRole role = utilisateurRoleRepository.findByIntituleContaining(intitule);
+        return mapper.UtilisateurRoleToUtilisateurRoleDto(role);
+    }
+
+    @Override
+    public UtilisateurRole findByIntituleBis(String intitule) {
+        return utilisateurRoleRepository.findByIntituleContaining(intitule);
+    }
+
+    @Override
+    public void deleteById(long id) {
+        utilisateurRoleRepository.deleteById(id);
+
+    }
 
 }
