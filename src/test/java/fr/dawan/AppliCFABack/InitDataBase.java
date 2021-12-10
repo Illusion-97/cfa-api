@@ -152,7 +152,7 @@ public class InitDataBase {
 		Utilisateur admin = new Utilisateur();
 		admin.setPrenom("Mohamed");
 		admin.setNom("Derkaoui");
-		admin.setLogin("amdin@dawan.fr");
+		admin.setLogin("admin@dawan.fr");
 		admin.setPassword("pwd");
 		admin.setCivilite("M");
 		admin.setDateDeNaissance(LocalDate.now());

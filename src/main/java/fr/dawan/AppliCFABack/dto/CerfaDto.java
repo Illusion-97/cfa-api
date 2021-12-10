@@ -899,6 +899,48 @@ public class CerfaDto {
 	public void setEtudiant(EtudiantDto etudiant) {
 		this.etudiant = etudiant;
 	}
+
+	@Override
+	public String toString() {
+		return "CerfaDto [id=" + id + ", employeurPriveOuPublic=" + employeurPriveOuPublic + ", nomEmployeur="
+				+ nomEmployeur + ", prenomEmployeur=" + prenomEmployeur + ", adresseEmployeur=" + adresseEmployeur
+				+ ", telEmployeur=" + telEmployeur + ", emailEmployeur=" + emailEmployeur + ", siretEtablissement="
+				+ siretEtablissement + ", employeurSpecifique=" + employeurSpecifique + ", naf=" + naf
+				+ ", effectifEntreprise=" + effectifEntreprise + ", conventionCollectiveApplicable="
+				+ conventionCollectiveApplicable + ", codeIdccConvention=" + codeIdccConvention
+				+ ", nomNaissanceApprenti=" + nomNaissanceApprenti + ", prenomApprenti=" + prenomApprenti
+				+ ", nirApprenti=" + nirApprenti + ", dateDeNaissance=" + dateDeNaissance + ", sexe=" + sexe
+				+ ", adresseApprenti=" + adresseApprenti + ", departementNaissance=" + departementNaissance
+				+ ", communeNaissance=" + communeNaissance + ", telApprenti=" + telApprenti + ", emailApprenti="
+				+ emailApprenti + ", nationalite=" + nationalite + ", regimeSocial=" + regimeSocial + ", sportifs="
+				+ sportifs + ", handicape=" + handicape + ", situationAvantContrat=" + situationAvantContrat
+				+ ", dernierDiplome=" + dernierDiplome + ", derniereClasseSuivi=" + derniereClasseSuivi
+				+ ", intitulePrecisDernierDiplome=" + intitulePrecisDernierDiplome + ", diplomeLePlusEleveObtenu="
+				+ diplomeLePlusEleveObtenu + ", nomRepresentant=" + nomRepresentant + ", prenomRepresentant="
+				+ prenomRepresentant + ", adresseRepresentant=" + adresseRepresentant + ", nomPremierTuteur="
+				+ nomPremierTuteur + ", prenomPremierTuteur=" + prenomPremierTuteur + ", dateDeNaissancePremierTuteur="
+				+ dateDeNaissancePremierTuteur + ", nomDeuxiemeTuteur=" + nomDeuxiemeTuteur + ", prenomDeuxiemeTuteur="
+				+ prenomDeuxiemeTuteur + ", dateDeNaissanceDeuxiemeTuteur=" + dateDeNaissanceDeuxiemeTuteur
+				+ ", contratType=" + contratType + ", derogationType=" + derogationType + ", contratNum=" + contratNum
+				+ ", dateConclusion=" + dateConclusion + ", dateDebutContrat=" + dateDebutContrat + ", dateAvenant="
+				+ dateAvenant + ", dateFinContrat=" + dateFinContrat + ", heureTravail=" + heureTravail
+				+ ", minuteTravail=" + minuteTravail + ", machineRisque=" + machineRisque + ", remuneration1="
+				+ remuneration1 + ", remuneration2=" + remuneration2 + ", remuneration3=" + remuneration3
+				+ ", remuneration4=" + remuneration4 + ", salaireBrut=" + salaireBrut + ", caisseDeRetraite="
+				+ caisseDeRetraite + ", nourriture=" + nourriture + ", logement=" + logement + ", autre=" + autre
+				+ ", cfaEntreprise=" + cfaEntreprise + ", cfaResponsable=" + cfaResponsable + ", diplomeVise="
+				+ diplomeVise + ", intitulePrecisDiplomeVise=" + intitulePrecisDiplomeVise + ", cfaUai=" + cfaUai
+				+ ", cfaSiret=" + cfaSiret + ", diplomeCode=" + diplomeCode + ", codeRncp=" + codeRncp
+				+ ", adresseResponsable=" + adresseResponsable + ", dateDebutFormation=" + dateDebutFormation
+				+ ", dateExamen=" + dateExamen + ", formationDuree=" + formationDuree + ", validationEmployeur="
+				+ validationEmployeur + ", nomOrganisme=" + nomOrganisme + ", siretOrganisme=" + siretOrganisme
+				+ ", receptionDossier=" + receptionDossier + ", dateDecision=" + dateDecision + ", numDepot=" + numDepot
+				+ ", numAvenant=" + numAvenant + ", etudiant=" + etudiant + ", modeContractuelApprentissage="
+				+ modeContractuelApprentissage + ", complementEmployeur=" + complementEmployeur + ", employeurType="
+				+ employeurType + ", assuranceChomage=" + assuranceChomage + ", complementApprentit="
+				+ complementApprentit + ", complementRepresentant=" + complementRepresentant + ", egilibiliteFonction="
+				+ egilibiliteFonction + ", complementResponsable=" + complementResponsable + ", faitA=" + faitA + "]";
+	}
 	
 	
 	
