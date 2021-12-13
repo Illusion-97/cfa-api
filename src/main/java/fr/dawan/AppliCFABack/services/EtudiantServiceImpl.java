@@ -520,15 +520,16 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		List<Intervention> interventions = new ArrayList<Intervention>();
 
+		//On récupère l'étudiant
 		Etudiant e = getEtudiantById(id);
 
 		List<Promotion> promotions = e.getPromotions();
 
-//		int size = promotions.size();
-
+		//on récupère toutes les interventions de l'étudiant.
 		for (Promotion p : promotions)
 			interventions.addAll(interventionRepository.getInterventionsByIdPromotion(p.getId()));
 
+		//pour chaque intervention, on récupère les JourneePlannignDto
 		for (Intervention i : interventions)
 			result.addAll(journeePlanningService.getJourneePlanningFromIntervention(i));
 

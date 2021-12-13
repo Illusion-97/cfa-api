@@ -183,7 +183,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             throw new Exception("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin()
                     + " findByEmail " + findByEmail(uDto.getLogin()).toString());
         }
-
+               
         Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
 
         // HashTools throw Exception
@@ -192,7 +192,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             if (user.getId() == 0) {
                 if (user.getPassword().equals("") || user.getPassword() == null) {
                     user.setPassword(generatePassword());
-                    emailService.newPassword(user.getLogin(), user.getPassword());
+                    //emailService.newPassword(user.getLogin(), user.getPassword());
                     user.setPassword(HashTools.hashSHA512(user.getPassword()));
 
                 } else {
@@ -219,6 +219,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             Adresse adresseRepop = adresseRepository.getOne(adresse.getId());
             user.setAdresse(adresseRepop);
         }
+        
 
         //On save les roles
         //Changement de role, on créer l'entité associée
@@ -243,7 +244,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 }
             }
         }
-
+        
         user = utilisateurRepository.saveAndFlush(user);
 
         //Si on ajoute un role
@@ -338,7 +339,43 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public void deleteById(long id) {
-        utilisateurRepository.deleteById(id);
+    	
+    	
+    	Utilisateur utilisateur = utilisateurRepository.getOne(id);
+    	
+    	if(utilisateur.getEtudiant() != null) {
+    		Etudiant etudiant = etudiantRepository.getOne(utilisateur.getEtudiant().getId());
+    		etudiant.setUtilisateur(null);
+    		utilisateur.setEtudiant(null);
+//    		etudiantRepository.save(etudiant);
+    		etudiantRepository.delete(etudiant);
+    	}
+		if(utilisateur.getFormateur() != null) {
+			Formateur formateur = formateurRepository.getOne(utilisateur.getFormateur().getId());
+			formateur.setUtilisateur(null);
+    		utilisateur.setFormateur(null);
+//    		formateurRepository.save(formateur);
+    		formateurRepository.delete(formateur);
+		}
+		if(utilisateur.getCef() != null) {
+			CEF cef = cefRepository.getOne(utilisateur.getCef().getId());
+    		cef.setUtilisateur(null);
+    		utilisateur.setCef(null);
+//    		cefRepository.save(cef);
+    		cefRepository.delete(cef);
+		}
+		if(utilisateur.getMaitreApprentissage() != null) {
+			MaitreApprentissage maitreApprentissage = maitreApprentissageRepository.getOne(utilisateur.getMaitreApprentissage().getId());
+			maitreApprentissage.setUtilisateur(null);
+    		utilisateur.setMaitreApprentissage(null);
+//    		maitreApprentissageRepository.save(maitreApprentissage);
+    		maitreApprentissageRepository.delete(maitreApprentissage);
+		}
+		
+    	
+        utilisateurRepository.deleteById(id);        
+        
+        
         filesService.deleteDirectoryWithContent("utilisateurs/" + id);
     }
 

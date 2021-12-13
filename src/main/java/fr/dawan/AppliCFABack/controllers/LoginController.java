@@ -22,7 +22,6 @@ import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 
 @MultipartConfig
 @RestController
-//@RequestMapping("/AppliCFABack")
 public class LoginController {
 	
 	@Autowired
@@ -33,11 +32,13 @@ public class LoginController {
 
 	@PostMapping(value="/authenticate", consumes = "application/json")
     public ResponseEntity<?> checkLogin(@RequestBody LoginDto loginObj) throws Exception{
+		//On récupère l'utilisateur concerné dans la bdd grace au login dans loginObj
         UtilisateurDto uDto = utilisateurService.findByEmail(loginObj.getLogin());
+        //On hash le pwd du loginObj pour plus tard le comparer
         String hashedPwd  = HashTools.hashSHA512(loginObj.getPassword());
-//        String password = loginObj.getPassword();
+        
         if(uDto !=null && uDto.getPassword().contentEquals(hashedPwd )) {
-            //Fabrication du token en utilisant jjwt (librairie incluse dans le pom)
+            //Fabrication du token en utilisant jwt (librairie incluse dans le pom)
             Map<String, Object> claims = new HashMap<String, Object>();
             claims.put("user_id", uDto.getId());
             claims.put("user_email", uDto.getLogin());
