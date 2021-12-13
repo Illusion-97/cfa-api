@@ -154,7 +154,7 @@ public class InitDataBase {
 		admin.setNom("Derkaoui");
 		admin.setLogin("admin@dawan.fr");
 		admin.setPassword("pwd");
-		admin.setCivilite("Mr");
+		admin.setCivilite("M");
 		admin.setDateDeNaissance(LocalDate.now());
 		admin.setTelephone("06.12.80.45.99");
 				
@@ -163,7 +163,7 @@ public class InitDataBase {
 		monEtudiant.setNom("Billon");
 		monEtudiant.setLogin("tbillon@dawan.fr");
 		monEtudiant.setPassword("pwd");
-		monEtudiant.setCivilite("Mr");
+		monEtudiant.setCivilite("M");
 		monEtudiant.setDateDeNaissance(LocalDate.now());
 		monEtudiant.setTelephone("06.12.80.45.99");
 		
@@ -184,7 +184,7 @@ public class InitDataBase {
 		monFormateur.setNom("Menut");
 		monFormateur.setLogin("formateur@dawan.fr");
 		monFormateur.setPassword("pwd");
-		monFormateur.setCivilite("Mr");
+		monFormateur.setCivilite("M");
 		monFormateur.setDateDeNaissance(date);
 		monFormateur.setTelephone("06.12.80.45.95");
 				

@@ -35,4 +35,12 @@ public class UtilisateurRoleDto {
 		this.utilisateursDto = utilisateursDto;
 	}
 
+	@Override
+	public String toString() {
+		return "UtilisateurRoleDto{" +
+				"id=" + id +
+				", intitule='" + intitule + '\'' +
+				", utilisateursDto=" + utilisateursDto +
+				'}';
+	}
 }

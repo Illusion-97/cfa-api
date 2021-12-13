@@ -4,19 +4,24 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 
 public interface UtilisateurRoleService {
 
-	List<UtilisateurRoleDto> getAllUtilisateurRole();
-	
-	List<UtilisateurRoleDto> getAllByPage(int page, int size, String string);
+    List<UtilisateurRoleDto> getAllUtilisateurRole();
 
-	CountDto count(String string);
+    List<UtilisateurRoleDto> getAllByPage(int page, int size, String string);
 
-	UtilisateurRoleDto getById(long id);
+    CountDto count(String string);
 
-	UtilisateurRoleDto saveOrUpdate(UtilisateurRoleDto uDto);
+    UtilisateurRoleDto getById(long id);
 
-	void deleteById(long id);
+    UtilisateurRoleDto saveOrUpdate(UtilisateurRoleDto uDto);
+
+    UtilisateurRoleDto findByIntitule(String intitule);
+
+    UtilisateurRole findByIntituleBis(String intitule);
+
+    void deleteById(long id);
 
 }

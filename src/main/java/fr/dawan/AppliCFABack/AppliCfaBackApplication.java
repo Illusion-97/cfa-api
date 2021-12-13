@@ -32,21 +32,22 @@ public class AppliCfaBackApplication {
 
 		return new WebMvcConfigurer() {
 
-			// CROSS ORIGIN
+			// CORS ORIGIN
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/AppliCFABack").allowedMethods("GET").allowedOrigins("*");
-//				registry.addMapping("/AppliCFABack").allowedMethods("POST", "PUT").allowedOrigins("*");
-				registry.addMapping("/**").allowedOrigins("*").allowedMethods("*").allowedHeaders("*")
-						.exposedHeaders("Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
-								"Origin", "Authorization", "X-Requested-With", "requestId", "Correlation-Id")
+//				registry.addMapping("/").allowedMethods("GET").allowedOrigins("*");
+				registry.addMapping("/swagger-ui/index.html").allowedMethods("POST", "PUT").allowedOrigins("*");
+				registry.addMapping("/**").allowedOrigins("*").allowedMethods("*","GET", "POST", "PUT", "DELETE", "OPTIONS").allowedHeaders("*")
+//						.exposedHeaders("Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
+//								"Origin", "Authorization", "X-Requested-With", "requestId", "Correlation-Id")
+
 						.allowCredentials(true).maxAge(3600);
 			}
 
 			// Intercepteurs
 			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
-                registry.addInterceptor(tokenInterceptor);
+				registry.addInterceptor(tokenInterceptor);
 			}
 
 		};
