@@ -1,7 +1,14 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,9 +18,12 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.interceptors.TokenSaver;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 
 @Service
+@Transactional
 public class EmailServiceImpl implements EmailService{
 
 	@Autowired
@@ -24,6 +34,13 @@ public class EmailServiceImpl implements EmailService{
 	
 	@Autowired 
 	CongeRepository congeRepository;
+	
+	@Autowired
+	private JavaMailSender emailSender;
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+
 	
 	@Override
 	public void alertDemandeCongetoReferent(Conge c) {		
@@ -80,6 +97,31 @@ public class EmailServiceImpl implements EmailService{
 		msg.setSubject("noreply - Mot de passe");
 		msg.setText("Voici votre mot de passe temporaire pour le portail cfa: " + password);
 		javaMailSender.send(msg);
+	}
+
+	@Override
+	public void sendMailForResetPassword(UtilisateurDto uDto) throws Exception {
+		Map<String, Object> claims = new HashMap<String, Object>();
+		claims.put("name", uDto.getNom());
+
+		String token = jwtTokenUtil.doGenerateToken(claims, uDto.getLogin());
+		TokenSaver.getTokensbyemail().put(uDto.getLogin(), token);
+
+		String resetLink = "http://localhost:8081//#/fr/reset-password?token=" + token;
+		String body = "<HTML><body> <a href=\"" + resetLink + "\">Réinitialiser mon mot de passe</a></body></HTML>";
+
+		MimeMessage msg = emailSender.createMimeMessage();
+		msg.addRecipients(Message.RecipientType.TO, uDto.getLogin());
+		msg.setSubject("Réinitialisation du mot de passe du CFA Dawan");
+		msg.setText("Bonjour " + uDto.getNom()
+				+ ". <br /><br />Ce message vous a été envoyé car vous avez oublié votre mot de passe sur l'application"
+				+ " CFA Dawan. <br />Pour réinitialiser votre mot de passe, veuillez cliquer sur ce lien : "
+				+ body, "UTF-8", "html");
+
+		emailSender.send(msg);
+
+		
+		
 	}
 
 }
