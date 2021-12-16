@@ -51,4 +51,6 @@ public interface UtilisateurService {
 
     void uploadFile(MultipartFile file, long idUser) throws Exception;
 
+	boolean resetPassword(ResetResponse reset) throws Exception;
+
 }
