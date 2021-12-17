@@ -207,7 +207,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.get().getUtilisateur()));
 		eDto.getUtilisateurDto().setAdresseDto(mapper.AdresseToAdresseDto(e.get().getUtilisateur().getAdresse()));
 //		eDto.setFormateurReferentDto(mapper.UtilisateurToUtilisateurDto(e.get().getFormateurReferent()));
-		eDto.setManagerDto(mapper.UtilisateurToUtilisateurDto(e.get().getManager()));
+//		eDto.setManagerDto(mapper.UtilisateurToUtilisateurDto(e.get().getManager()));
 
 		List<GroupeEtudiantDto> groupes = new ArrayList<GroupeEtudiantDto>();
 		for(GroupeEtudiant g : e.get().getGroupes()) {
@@ -541,10 +541,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return mapper.UtilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
 	}
 
-	@Override
-	public UtilisateurDto getManagerByIdEtudiant(long id) {
-		return mapper.UtilisateurToUtilisateurDto(getEtudiantById(id).getManager());
-	}
+//	@Override
+//	public UtilisateurDto getManagerByIdEtudiant(long id) {
+//		return mapper.UtilisateurToUtilisateurDto(getEtudiantById(id).getManager());
+//	}
 
 	@Override
 	public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
@@ -603,7 +603,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getUtilisateur().getAdresse());
 //			EntrepriseDto entDto =mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
 //			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
-			UtilisateurDto managDto = mapper.UtilisateurToUtilisateurDto(e.getManager());
+//			UtilisateurDto managDto = mapper.UtilisateurToUtilisateurDto(e.getManager());
 
 			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
 			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<GroupeEtudiantDto>();
@@ -642,7 +642,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 //			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
 			etuDto.setPromotionsDto(lstPromoDto);
 //			etuDto.setFormateurReferentDto(refDto);
-			etuDto.setManagerDto(managDto);
+//			etuDto.setManagerDto(managDto);
 			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
 			etuDto.setDossierProjet(lstDossierProjetDto);
 			res.add(etuDto);
