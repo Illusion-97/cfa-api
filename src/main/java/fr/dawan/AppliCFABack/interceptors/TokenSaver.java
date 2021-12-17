@@ -11,5 +11,8 @@ public class TokenSaver {
 		static {
 			tokensByEmail = new HashMap<String, String>();
 		}
-
+		
+		public static Map<String, String> getTokensbyemail() {
+			return tokensByEmail;
+		}
 }
