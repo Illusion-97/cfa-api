@@ -457,7 +457,7 @@ public class InitDataBase {
 		etudiant.setPromotions(lstPromotion);	
 		etudiant.setUtilisateur(monEtudiant);
 
-		etudiant.setManager(monCEF);	
+//		etudiant.setManager(monCEF);	
 		
 		absence.setEtudiant(etudiant);
 

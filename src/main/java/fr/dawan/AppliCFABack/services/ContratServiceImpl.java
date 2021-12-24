@@ -81,4 +81,14 @@ public class ContratServiceImpl implements ContratService{
 		return null;
 	}
 
+	@Override
+	public ContratDto getByEtudiantId(long id) {
+		Contrat c = contratRepository.findByEtudiantId(id);
+	if (c != null) {
+		ContratDto cDto = mapper.ContratToContratDto(c);
+		return cDto;
+	}
+	return null;
+	}
+
 }

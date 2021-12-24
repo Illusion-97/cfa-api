@@ -8,6 +8,8 @@ import fr.dawan.AppliCFABack.entities.*;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.*;
 import fr.dawan.AppliCFABack.tools.HashTools;
+import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -57,6 +59,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     UtilisateurRoleService utilisateurRoleService;
     @Autowired
     private DtoMapper mapper;
+    
+    @Autowired
+	private JwtTokenUtil jwtTokenUtil;
+
 
     @Override
     public List<UtilisateurDto> getAll() {
@@ -662,4 +668,31 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
         return generatedString;
     }
+
+	@Override
+	public boolean resetPassword(ResetResponse reset) throws Exception {
+		String hashedPwd = HashTools.hashSHA512(reset.getPassword());
+		String email = jwtTokenUtil.getUsernameFromToken(reset.getToken());
+
+		Utilisateur u = utilisateurRepository.findByEmail(email);
+		String currentPwd = "";
+
+		if (u != null)
+			currentPwd = HashTools.hashSHA512(u.getPassword());
+
+		if (u != null && !currentPwd.equals(hashedPwd)) {
+
+			u.setPassword(hashedPwd);
+			utilisateurRepository.saveAndFlush(u);
+
+			return true;
+		} else if (u != null && currentPwd.equals(hashedPwd)) {
+			// same password
+			return false;
+		} else {
+			// if user == null
+			return false;
+		}
+
+	}
 }

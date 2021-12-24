@@ -204,9 +204,9 @@ public class EtudiantController {
 		return etudiantService.getFormateurReferentByIdEtudiant(id);
 	}
 
-	@GetMapping(value = "/{id}/manager", produces = "application/json")
-	public UtilisateurDto getManagerByIdEtudiant(@PathVariable("id") long id) {
-		return etudiantService.getManagerByIdEtudiant(id);
-	}
+//	@GetMapping(value = "/{id}/manager", produces = "application/json")
+//	public UtilisateurDto getManagerByIdEtudiant(@PathVariable("id") long id) {
+//		return etudiantService.getManagerByIdEtudiant(id);
+//	}
 
 }

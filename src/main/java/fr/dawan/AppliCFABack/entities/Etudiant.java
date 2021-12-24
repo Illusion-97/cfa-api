@@ -31,8 +31,8 @@ public class Etudiant{
 //	@ManyToOne
 //	private Utilisateur formateurReferent;
 	
-	@ManyToOne
-	private Utilisateur manager;
+//	@ManyToOne
+//	private Utilisateur manager;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<DossierProfessionnel> dossierProfessionnel;
@@ -77,13 +77,13 @@ public class Etudiant{
 //		this.formateurReferent = formateurReferent;
 //	}
 
-	public Utilisateur getManager() {
-		return manager;
-	}
-
-	public void setManager(Utilisateur manager) {
-		this.manager = manager;
-	}
+//	public Utilisateur getManager() {
+//		return manager;
+//	}
+//
+//	public void setManager(Utilisateur manager) {
+//		this.manager = manager;
+//	}
 
 	public List<DossierProfessionnel> getDossierProfessionnel() {
 		return dossierProfessionnel;

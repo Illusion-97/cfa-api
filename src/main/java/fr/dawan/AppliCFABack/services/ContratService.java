@@ -18,6 +18,8 @@ public interface ContratService {
 
 	ContratDto count(String string);
 
+	ContratDto getByEtudiantId(long id);
+
 
 
 }

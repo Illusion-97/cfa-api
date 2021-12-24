@@ -39,6 +39,10 @@ public class ContratController {
 		public ContratDto getById(@PathVariable("id") long id) {
 			return contratService.getById(id);
 		}
+		@GetMapping(value = "/etudiant{id}", produces = "application/json")
+		public ContratDto getByEtudiantId(@PathVariable("id") long id) {
+			return contratService.getByEtudiantId(id);
+		}
 
 		
 		@GetMapping(value = "/{page}/{size}", produces = "application/json")
