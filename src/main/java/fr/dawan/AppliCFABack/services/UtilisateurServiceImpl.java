@@ -334,6 +334,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         filesService.createDirectory("utilisateurs/" + user.getId() + "/DossierProjet");
 
         UtilisateurDto result = mapper.UtilisateurToUtilisateurDto(utilisateurRepository.getOne(user.getId()));
+        result.setEtudiantDto(mapper.EtudiantToEtudiantDto(user.getEtudiant()));
+        result.setFormateurDto(mapper.FormateurToFormateurDto(user.getFormateur()));
+        result.setCefDto(mapper.CEFToCEFDto(user.getCef()));
+        result.setMaitreApprentissageDto(mapper.MaitreApprentissageToMaitreApprentissageDto(user.getMaitreApprentissage()));
 
         return result;
     }

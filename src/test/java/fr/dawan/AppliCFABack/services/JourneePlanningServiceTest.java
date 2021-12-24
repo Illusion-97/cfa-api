@@ -47,8 +47,8 @@ public class JourneePlanningServiceTest {
 		
 		
 		Utilisateur monFormateur2 = new Utilisateur();
-		monFormateur2.setNom("formateur 1 nom");
-		monFormateur2.setPrenom("formateur 1 prenom");		
+		monFormateur2.setNom("formateur 2 nom");
+		monFormateur2.setPrenom("formateur 2 prenom");		
 		Formateur formateur2 = new Formateur();
 		formateur2.setUtilisateur(monFormateur2);
 		

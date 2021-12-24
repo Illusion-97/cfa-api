@@ -32,8 +32,12 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 			if(EstJoursOuvrable(compteur)) {
 				
 				List<FormateurDto> formateurs = new ArrayList<FormateurDto>();
-				for(Formateur f : i.getFormateurs()) 
-					formateurs.add(mapper.FormateurToFormateurDto(f));
+								
+				for(Formateur f : i.getFormateurs()) {
+					FormateurDto formDto = mapper.FormateurToFormateurDto(f);
+					formDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(f.getUtilisateur()));
+					formateurs.add(formDto);
+				}
 				
 				Formation f = i.getFormation();
 				
