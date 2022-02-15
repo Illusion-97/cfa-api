@@ -107,7 +107,7 @@ public class EmailServiceImpl implements EmailService{
 		String token = jwtTokenUtil.doGenerateToken(claims, uDto.getLogin());
 		TokenSaver.getTokensbyemail().put(uDto.getLogin(), token);
 
-		String resetLink = "http://localhost:8081//#/fr/reset-password?token=" + token;
+		String resetLink = "http://localhost:8081//#/reset-password?token=" + token;
 		String body = "<HTML><body> <a href=\"" + resetLink + "\">Réinitialiser mon mot de passe</a></body></HTML>";
 
 		MimeMessage msg = emailSender.createMimeMessage();
