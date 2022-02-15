@@ -41,21 +41,6 @@ public class ResetPasswordController {
 		}
 	}
 
-/*	@PostMapping(value = "/forgot-mobile", produces = "application/json")
-	public ResponseEntity<Object> sendCodeByEmail(@RequestBody ResetPasswordDto resetObj) throws Exception {
-		
-		UtilisateurDto uDto = userService.findByEmail(resetObj.getEmail());
-
-		if (uDto != null) {
-			
-			emailService.sendMailForResetPassword(uDto);
-
-			return ResponseEntity.status(HttpStatus.OK).body(new ResetPasswordDto(resetObj.getEmail()));
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
-	}*/
-
 	@PostMapping(value = "/reset-password", consumes = "application/json")
 	public ResponseEntity<String> resetPassword(@RequestBody ResetResponse reset) throws Exception {
 
