@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +19,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
@@ -32,6 +36,7 @@ import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.FormationRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 
@@ -153,7 +158,7 @@ public class FormationServiceImpl implements FormationService {
 	@Override
 	public void fetchDG2Formations(String email, String password) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
-		List<FormationDG2Dto> fResJson;
+		List<FormationDG2Dto> fResJson = new ArrayList<>();
 		
 		URI url = new URI("https://dawan.org/api2/cfa/trainings");
 
@@ -167,13 +172,16 @@ public class FormationServiceImpl implements FormationService {
 		if (repWs.getStatusCode() == HttpStatus.OK) {
 			String json = repWs.getBody();
 			
-			fResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() { 
-			});
-
+			try {
+				fResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() { 
+				});
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			for (FormationDG2Dto fDG2 : fResJson) {
 				Formation formationImport = mapper.formationDG2DtoToFormation(fDG2);
 				Optional<Formation> optFormation = formationRepository.findByIdDg2(formationImport.getIdDg2());
-
 				if (optFormation.isPresent()) {
 					if (optFormation.get().equals(formationImport))
 						continue;
@@ -181,9 +189,18 @@ public class FormationServiceImpl implements FormationService {
 						formationImport.setTitre(optFormation.get().getTitre());
 						formationImport.setId(optFormation.get().getId());
 					}
-					formationRepository.saveAndFlush(formationImport);
+					try {
+						formationRepository.saveAndFlush(formationImport);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				} else {
-					formationRepository.saveAndFlush(formationImport);
+					try {
+						formationRepository.saveAndFlush(formationImport);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		} else {
@@ -191,6 +208,31 @@ public class FormationServiceImpl implements FormationService {
 		}
 
 
+	}
+	
+	//import InterventionDG2 => mettre dans interventionService
+	public List<InterventionDG2Dto> fetchInterventionFromDG2(long id, String email, String password) throws Exception{
+		List<InterventionDG2Dto> lst = new ArrayList<>();
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		URI urlSession = new URI("https://dawan.org/api2/cfa/trainings/"+ id +"/sessions");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("x-auth-token", email + ":" + password);
+
+		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+		ResponseEntity<String> repSessionWs = restTemplate.exchange(urlSession, HttpMethod.GET, httpEntity, String.class);
+		if (repSessionWs.getStatusCode() == HttpStatus.OK) {
+			String json2 = repSessionWs.getBody();
+			
+			try {
+				lst = objectMapper.readValue(json2, new TypeReference<List<InterventionDG2Dto>>() { 
+				});
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return lst;
 	}
 
 }

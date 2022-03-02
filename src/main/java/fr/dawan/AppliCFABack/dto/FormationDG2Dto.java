@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FormationDG2Dto {
@@ -8,6 +9,7 @@ public class FormationDG2Dto {
     private String title; //titre pro ...
     private String duration; // durée en h/j
     private String slug;  //slug
+    @JsonProperty("published")
     private boolean state; //status
     
 	public FormationDG2Dto() {

@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class Cursus { // cursus du catalogue Dev Full Stack
 	@Column(nullable = false, length = 255)
 	private String titre;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Formation> formations;
 
 	public Cursus() {

@@ -20,6 +20,7 @@ import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.MaitreApprentissageDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
@@ -63,7 +64,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-02T09:37:32+0100",
+    date = "2022-03-02T15:06:11+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -604,9 +605,41 @@ public class DtoMapperImpl implements DtoMapper {
 
         Formation formation = new Formation();
 
+        formation.setIdDg2( formationDG2Dto.getId() );
+        formation.setTitre( formationDG2Dto.getTitle() );
+        formation.setDuration( formationDG2Dto.getDuration() );
         formation.setId( formationDG2Dto.getId() );
+        formation.setSlug( formationDG2Dto.getSlug() );
 
         return formation;
+    }
+
+    @Override
+    public Cursus cursusDG2DtoToCursus(InterventionDG2Dto cursusDG2Dto) {
+        if ( cursusDG2Dto == null ) {
+            return null;
+        }
+
+        Cursus cursus = new Cursus();
+
+        cursus.setTitre( cursusDG2Dto.getSlug() );
+        cursus.setId( cursusDG2Dto.getId() );
+
+        return cursus;
+    }
+
+    @Override
+    public List<Cursus> lstCursusDG2DtoToListCursus(List<InterventionDG2Dto> lstCurusDto) {
+        if ( lstCurusDto == null ) {
+            return null;
+        }
+
+        List<Cursus> list = new ArrayList<Cursus>( lstCurusDto.size() );
+        for ( InterventionDG2Dto interventionDG2Dto : lstCurusDto ) {
+            list.add( cursusDG2DtoToCursus( interventionDG2Dto ) );
+        }
+
+        return list;
     }
 
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {
