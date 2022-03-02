@@ -21,6 +21,7 @@ import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
 import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
+import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
@@ -147,4 +148,10 @@ public interface DtoMapper {
 
 	@Mapping(source = ".", target = ".")
 	RemunerationDto RemunerationTORemunerationDto(Remuneration remuneration);
+	
+	@Mapping(source = ".", target = ".")
+	Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
+
+	
+	
 }

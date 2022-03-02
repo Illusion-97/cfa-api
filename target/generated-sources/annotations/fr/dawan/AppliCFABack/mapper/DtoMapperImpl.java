@@ -17,6 +17,7 @@ import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
 import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
+import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
@@ -62,8 +63,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-12-16T13:25:07+0100",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.2 (Oracle Corporation)"
+    date = "2022-03-02T09:37:32+0100",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -593,6 +594,19 @@ public class DtoMapperImpl implements DtoMapper {
         remunerationDto.setSmicOuSmc( remuneration.getSmicOuSmc() );
 
         return remunerationDto;
+    }
+
+    @Override
+    public Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto) {
+        if ( formationDG2Dto == null ) {
+            return null;
+        }
+
+        Formation formation = new Formation();
+
+        formation.setId( formationDG2Dto.getId() );
+
+        return formation;
     }
 
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {

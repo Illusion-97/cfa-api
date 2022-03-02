@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,11 +10,21 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.entities.Cursus;
@@ -35,6 +46,9 @@ public class FormationServiceImpl implements FormationService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Override
 	public List<FormationDto> getAllFormation() {
@@ -134,6 +148,49 @@ public class FormationServiceImpl implements FormationService {
 				lstIntDto.add(mapper.InterventionToInterventionDto(itv));
 		}
 		return lstIntDto;
+	}
+
+	@Override
+	public void fetchDG2Formations(String email, String password) throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+		List<FormationDG2Dto> fResJson;
+		
+		URI url = new URI("https://dawan.org/api2/cfa/trainings");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("x-auth-token", email + ":" + password);
+
+		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+
+		if (repWs.getStatusCode() == HttpStatus.OK) {
+			String json = repWs.getBody();
+			
+			fResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() { 
+			});
+
+			for (FormationDG2Dto fDG2 : fResJson) {
+				Formation formationImport = mapper.formationDG2DtoToFormation(fDG2);
+				Optional<Formation> optFormation = formationRepository.findByIdDg2(formationImport.getIdDg2());
+
+				if (optFormation.isPresent()) {
+					if (optFormation.get().equals(formationImport))
+						continue;
+					else if (!optFormation.get().equals(formationImport)) {
+						formationImport.setTitre(optFormation.get().getTitre());
+						formationImport.setId(optFormation.get().getId());
+					}
+					formationRepository.saveAndFlush(formationImport);
+				} else {
+					formationRepository.saveAndFlush(formationImport);
+				}
+			}
+		} else {
+			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+		}
+
+
 	}
 
 }

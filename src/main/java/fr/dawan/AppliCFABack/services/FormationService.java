@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -21,5 +22,7 @@ public interface FormationService {
 	void deleteById(long id);
 
 	List<InterventionDto> findAllByFormationId(long id);
+	
+	void fetchDG2Formations(String email, String password) throws Exception;
 
 }
