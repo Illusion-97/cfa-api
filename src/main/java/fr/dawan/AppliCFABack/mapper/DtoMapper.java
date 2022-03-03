@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
+import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CerfaDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
@@ -164,5 +165,12 @@ public interface DtoMapper {
 	Cursus cursusDG2DtoToCursus(InterventionDG2Dto cursusDG2Dto);
 	
 	List<Cursus> lstCursusDG2DtoToListCursus(List<InterventionDG2Dto> lstCurusDto);
+	
+	@Mapping(target = "adresse", ignore = true)
+	@Mapping(target = "entreprise", ignore = true)
+	@Mapping(source = "name", target = "nom")
+	@Mapping(source = "id", target = "idDg2")
+	@Mapping(source = "country", target = "countryCode")
+	CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
 	
 }

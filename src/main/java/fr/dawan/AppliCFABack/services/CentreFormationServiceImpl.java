@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,8 +10,18 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
@@ -28,6 +39,9 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Override
 	public List<CentreFormationDto> getAllCentreFormation() {
@@ -103,6 +117,46 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 			res.add(cfDto);
 		}
 		return res;
+	}
+
+	@Override
+	public void fetchAllDG2CentreFormation(String email, String password) throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+		List<CentreFormationDG2Dto> cResJson;
+
+		URI url = new URI("https://dawan.org/api2/cfa/locations");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("x-auth-token", email + ":" + password);
+
+		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+
+		if (repWs.getStatusCode() == HttpStatus.OK) {
+			String json = repWs.getBody();
+
+			cResJson = objectMapper.readValue(json, new TypeReference<List<CentreFormationDG2Dto>>() {
+			});
+
+			for (CentreFormationDG2Dto cDG2 : cResJson) {
+				CentreFormation centreImport = mapper.centreFormationDG2DtoToCentreFormation(cDG2);
+				Optional<CentreFormation> optCentre = centreFormationRepository.findByIdDg2(centreImport.getIdDg2());
+
+				if (optCentre.isPresent()) {
+					if (optCentre.get().equals(centreImport))
+						continue;
+					else if (!optCentre.get().equals(centreImport)) {
+						centreImport.setId(optCentre.get().getId());
+					}
+					centreFormationRepository.saveAndFlush(centreImport);
+				} else {
+					centreFormationRepository.saveAndFlush(centreImport);
+				}
+			}
+		} else {
+			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+		}
 	}
 
 }

@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +16,6 @@ public interface CentreFormationRepository extends JpaRepository<CentreFormation
 	long countByNomContaining(String nom);
 	
 	Page<CentreFormation> findAllByNomContaining(String nom, Pageable pageable );
+	
+	Optional<CentreFormation> findByIdDg2(long centreFormationId);
 }
