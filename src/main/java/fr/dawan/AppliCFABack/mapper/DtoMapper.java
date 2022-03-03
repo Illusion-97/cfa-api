@@ -171,6 +171,7 @@ public interface DtoMapper {
 	@Mapping(source = "name", target = "nom")
 	@Mapping(source = "id", target = "idDg2")
 	@Mapping(source = "country", target = "countryCode")
+	@Mapping(target = "id", ignore = true)
 	CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
 	
 }
