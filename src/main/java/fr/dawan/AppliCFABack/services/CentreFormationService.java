@@ -20,5 +20,7 @@ public interface CentreFormationService {
 	CountDto count(String string);
 
 	List<CentreFormationDto> getAllCentreFormations(int page, int size, String string);
+	
+	void fetchAllDG2CentreFormation(String email, String password) throws Exception;
 
 }

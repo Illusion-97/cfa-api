@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
@@ -7,10 +9,12 @@ import org.springframework.stereotype.Component;
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
+import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CerfaDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.ContratDto;
+import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
@@ -21,6 +25,7 @@ import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
 import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
+import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
@@ -147,4 +152,26 @@ public interface DtoMapper {
 
 	@Mapping(source = ".", target = ".")
 	RemunerationDto RemunerationTORemunerationDto(Remuneration remuneration);
+	
+	@Mapping(target = "contenu", ignore = true)
+	@Mapping(target = "cursusLst", ignore = true)
+	@Mapping(source = "id", target = "idDg2")
+	@Mapping(source = "title", target = "titre")
+	@Mapping(source = "duration", target = "duration")
+	Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
+	
+	@Mapping(target = "formations", ignore = true)
+	@Mapping(source = "slug", target = "titre")
+	Cursus cursusDG2DtoToCursus(InterventionDG2Dto cursusDG2Dto);
+	
+	List<Cursus> lstCursusDG2DtoToListCursus(List<InterventionDG2Dto> lstCurusDto);
+	
+	@Mapping(target = "adresse", ignore = true)
+	@Mapping(target = "entreprise", ignore = true)
+	@Mapping(source = "name", target = "nom")
+	@Mapping(source = "id", target = "idDg2")
+	@Mapping(source = "country", target = "countryCode")
+	@Mapping(target = "id", ignore = true)
+	CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
+	
 }
