@@ -30,6 +30,7 @@ public class CEFServiceImpl implements CEFService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la liste des cef
 	@Override
 	public List<CEFDto> getAllCef() {
 		List<CEF> lst = cefRepository.findAll();
@@ -41,6 +42,7 @@ public class CEFServiceImpl implements CEFService {
 		return lstDto;
 	}
 
+	//recuperation des cef avec pagination
 	@Override
 	public List<CEFDto> getAllCef(int page, int size) {
 		List<CEF> lst = cefRepository.findAll(PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -55,6 +57,8 @@ public class CEFServiceImpl implements CEFService {
 		return lstDto;
 	}
 
+	
+	//recuperation des cef par id
 	@Override
 	public CEFDto getById(long id) {
 		Optional<CEF> c = cefRepository.findById(id);
@@ -67,6 +71,7 @@ public class CEFServiceImpl implements CEFService {
 		return null;
 	}
 
+	//methode d'ajout ou modification d'une user cef
 	@Override
 	public CEFDto saveOrUpdate(CEFDto cDto) {
 		CEF c = DtoTools.convert(cDto, CEF.class);
@@ -94,6 +99,7 @@ public class CEFServiceImpl implements CEFService {
 		return mapper.CEFToCEFDto(c);
 	}
 
+	//methode de suppression d'un cef
 	@Override
 	public void deleteById(long id) {
 		cefRepository.deleteById(id);

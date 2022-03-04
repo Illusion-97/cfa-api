@@ -51,6 +51,7 @@ public class FormationServiceImpl implements FormationService {
 	@Autowired
 	private RestTemplate restTemplate;
 
+	//recuperation de la liste des formations
 	@Override
 	public List<FormationDto> getAllFormation() {
 		List<Formation> lst = formationRepository.findAll();
@@ -73,6 +74,7 @@ public class FormationServiceImpl implements FormationService {
 		return lstDto;
 	}
 
+	//recuperation de la liste des formations avec pagination et recherche
 	@Override
 	public List<FormationDto> getAllByPage(int page, int size, String search) {
 		List<Formation> lst = formationRepository
@@ -94,12 +96,14 @@ public class FormationServiceImpl implements FormationService {
 		return lstDto;
 	}
 
+	//methode count
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(
 				formationRepository.countByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(search, search));
 	}
 
+	//methode de recuperation d'une formation en fonction de son id 
 	@Override
 	public FormationDto getById(long id) {
 		Optional<Formation> f = formationRepository.findById(id);
@@ -120,6 +124,7 @@ public class FormationServiceImpl implements FormationService {
 		return null;
 	}
 
+	//methode d'ajout ou modification d'une formation
 	@Override
 	public FormationDto saveOrUpdate(FormationDto fDto) {
 		Formation f = DtoTools.convert(fDto, Formation.class);
@@ -129,6 +134,7 @@ public class FormationServiceImpl implements FormationService {
 		return mapper.FormationToFormationDto(f);
 	}
 
+	//methode de suppression d'une formation
 	@Override
 	public void deleteById(long id) {
 		List<Intervention> lstInt = interventionRepository.findAllByFormationId(id);
@@ -139,6 +145,7 @@ public class FormationServiceImpl implements FormationService {
 
 	}
 
+	//recuperation de la liste des formations par id
 	@Override
 	public List<InterventionDto> findAllByFormationId(long id) {
 

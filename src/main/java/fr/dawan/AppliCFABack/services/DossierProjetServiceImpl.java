@@ -32,6 +32,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	@Autowired
 	private DtoMapper mapper;
 
+	//recuperation des dossiers projet
 	@Override
 	public List<DossierProjetDto> getAll() {
 		// TODO Auto-generated method stub
@@ -47,6 +48,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
  		return lstDossierProjetDto;
 	}
 
+	//recuperation des dossiers projet par id
 	@Override
 	public DossierProjetDto getById(long id) {
 		// TODO Auto-generated method stub
@@ -59,6 +61,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		return null;
 	}
 
+	//recuperation de la liste des dossiers projet avec pagination et recherche
 	@Override
 	public List<DossierProjetDto> getAllByPage(int page, int size, String string) {
 		List<DossierProjet> lst = dossierProRepo
@@ -76,6 +79,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		}
 		return lstDto;
 	}
+	
+	//recuperation des dossiers projet par nom
 	@Override
 	public DossierProjetDto getByName(String nom) {
 		DossierProjetDto dpDto = mapper.DossierProjetToDossierProjetDto(dossierProRepo.getByName(nom));
@@ -87,6 +92,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		return null;
 	}
 
+	//methode d'ajout ou de modification d'un dossier projet
 	@Override
 	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) {
 		DossierProjet d = DtoTools.convert(dpDto, DossierProjet.class);
@@ -94,6 +100,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		return mapper.DossierProjetToDossierProjetDto(d);
 	}
 
+	//methode de suppression d'un soddier projet
 	@Override
 	public void deleteById(long id) {
 		// TODO Auto-generated method stub
@@ -101,6 +108,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		
 	}
 
+	//recuperation des dossiers projet par id etudiant
 	@Override
 	public List<DossierProjetDto> getByIdEtudiant(long id) {
 

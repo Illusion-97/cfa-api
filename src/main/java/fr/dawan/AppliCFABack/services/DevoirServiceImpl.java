@@ -29,6 +29,7 @@ public class DevoirServiceImpl implements DevoirService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la liste des devoirs
 	@Override
 	public List<DevoirDto> getAllDevoir() {
 		List<Devoir> lst = devoirRepository.findAll();
@@ -40,6 +41,7 @@ public class DevoirServiceImpl implements DevoirService {
 		return lstDto;
 	}
 
+	//recuperation de la liste des devoirs avec pagination 
 	@Override
 	public List<DevoirDto> getAllDevoir(int page, int size) {
 		List<Devoir> lst = devoirRepository.findAll(PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -52,6 +54,7 @@ public class DevoirServiceImpl implements DevoirService {
 		return lstDto;
 	}
 
+	//recuperation de la liste des devoirs avec pagination et recherche
 	@Override
 	public List<DevoirDto> getAllByPage(int page, int size, String search) {
 		List<Devoir> lst = devoirRepository.findAllByEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -67,12 +70,13 @@ public class DevoirServiceImpl implements DevoirService {
 		return lstDto;
 	}
 
+	//methode count
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(devoirRepository.countByEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search));
 	}
 
-	
+	//recuperation des devoirs par id
 	@Override
 	public DevoirDto getById(long id) {
 		Optional<Devoir> d = devoirRepository.findById(id);
@@ -87,6 +91,7 @@ public class DevoirServiceImpl implements DevoirService {
 		return null;
 	}
 
+	//methode d'ajout ou modification d'un  devoir
 	@Override
 	public DevoirDto saveOrUpdate(DevoirDto dDto) {
 		Devoir d = DtoTools.convert(dDto, Devoir.class);
@@ -96,6 +101,7 @@ public class DevoirServiceImpl implements DevoirService {
 		return mapper.DevoirToDevoirDto(d);
 	}
 
+	//methode de suppression d'un devoir
 	@Override
 	public void deleteById(long id) {
 		Optional<Devoir> d = devoirRepository.findById(id);
@@ -109,6 +115,7 @@ public class DevoirServiceImpl implements DevoirService {
 
 	}
 
+	//methode count
 	@Override
 	public CountDto count() {
 		// TODO Auto-generated method stub

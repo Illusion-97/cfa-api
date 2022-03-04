@@ -34,6 +34,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la liste des absences
 	@Override
 	public List<AbsenceDto> getAllAbsence() {
 		List<Absence> lst = absenceRepository.findAll();
@@ -49,6 +50,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 		return lstDto;
 	}
 
+	//recuperation des absences par id
 	@Override
 	public AbsenceDto getById(long id) {
 		Optional<Absence> a = absenceRepository.findById(id);
@@ -61,6 +63,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 		return aDto;
 	}
 
+	//methode d'ajout ou modification d'une absence
 	@Override
 	public AbsenceDto saveOrUpdate(AbsenceDto aDto) {
 		Absence a = DtoTools.convert(aDto, Absence.class);
@@ -70,18 +73,21 @@ public class AbsenceServiceImpl implements AbsenceService {
 		return mapper.AbsenceToAbsenceDto(a);
 	}
 
+	//methode de suppression d'une absence
 	@Override
 	public void deleteById(long id) {
 		absenceRepository.deleteById(id);
 
 	}
 
+	//methode count
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(
 				absenceRepository.countByEtudiantUtilisateurNomContainingOrEtudiantUtilisateurPrenomContainingAllIgnoreCase(search, search));
 	}
 
+	//recuperation de la liste des absences avec pagination et recherche
 	@Override
 	public List<AbsenceDto> getAllAbsence(int page, int size, String search) {
 		List<Absence> lst = absenceRepository.findByEtudiantUtilisateurNomContainingOrEtudiantUtilisateurPrenomContainingAllIgnoreCase(search,
@@ -106,6 +112,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 		return lstDto;
 	}
 
+	//recuperation des absences par etudiant id
 	@Override
 	public List<AbsenceDto> getAllByIdEtudiant(long id) {
 		List<AbsenceDto> result = new ArrayList<AbsenceDto>();

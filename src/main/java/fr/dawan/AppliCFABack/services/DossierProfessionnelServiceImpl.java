@@ -33,6 +33,8 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
 	@Autowired
 	private DtoMapper mapper;
+	
+	//recuperation de la liste des dossiers professionnnel
 	@Override
 	public List<DossierProfessionnelDto> getAll() {
 		// TODO Auto-generated method stub
@@ -48,6 +50,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 		 		return lstDossierProfessionnelDto;
 	}
 
+	//recuperation des dossier professionnel par id
 	@Override
 	public DossierProfessionnelDto getById(long id) {
 		// TODO Auto-generated method stub
@@ -60,6 +63,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 				return null;
 	}
 
+	//recuperation de la liste des dossiers professionnels avec pagination et recherche
 	@Override
 	public List<DossierProfessionnelDto> getAllByPage(int page, int size, String string) {
 		List<DossierProfessionnel> lst = dossierProRepo
@@ -78,6 +82,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 		return lstDto;
 	}
 
+	//methode d'ajout ou modification d'un dossier professionnel
 	@Override
 	public DossierProfessionnelDto saveOrUpdate(DossierProfessionnelDto dpDto) {
 		DossierProfessionnel d = DtoTools.convert(dpDto, DossierProfessionnel.class);
@@ -86,6 +91,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 		return mapper.DossierProfessionnelToDossierProfessionnelDto(d);
 	}
 
+	//methode de suppression d'un dossier professionnel
 	@Override
 	public void deleteById(long id) {
 		// TODO Auto-generated method stub
@@ -93,6 +99,8 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 		dossierProRepo.deleteById(id);
 		
 	}
+	
+	//recuperation d'un dp par id etudiant
 	@Override
 	public List<DossierProfessionnelDto> getByIdEtudiant(long id) {
 		// TODO Auto-generated method stub
@@ -101,6 +109,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 		return e.getDossierProfessionnel();
 	}
 
+	//recuperation d'un dossier par nom
 	@Override
 	public DossierProfessionnelDto getByName(String nom) {
 		// TODO Auto-generated method stub

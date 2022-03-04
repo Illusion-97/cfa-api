@@ -29,6 +29,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la liste des entreprises
 	@Override
 	public List<EntrepriseDto> getAllEntreprise() {
 		List<Entreprise> lst = entrepriseRepository.findAll();
@@ -42,6 +43,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		return lstDto;
 	}
 
+	//recuperation des entreprises avec pagination
 	@Override
 	public List<EntrepriseDto> getAllEntreprise(int page, int size) {
 		List<Entreprise> lst = entrepriseRepository.findAll(PageRequest.of(page, size)).get()
