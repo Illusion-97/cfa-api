@@ -43,6 +43,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	@Autowired
 	private RestTemplate restTemplate;
 
+	//recuperation de la liste des centres de formation
 	@Override
 	public List<CentreFormationDto> getAllCentreFormation() {
 		List<CentreFormation> lst = centreFormationRepository.findAll();
@@ -57,6 +58,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		return lstDto;
 	}
 
+	//recuperation de la liste des centres de formation avec pagination
 	@Override
 	public List<CentreFormationDto> getAllCentreFormation(int page, int size) {
 		List<CentreFormation> lst = centreFormationRepository.findAll(PageRequest.of(page, size)).get()
@@ -73,6 +75,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		return lstDto;
 	}
 
+	//methode de recuperation d'un centre de formation en fonction de son id
 	@Override
 	public CentreFormationDto getById(long id) {
 		Optional<CentreFormation> cf = centreFormationRepository.findById(id);
@@ -85,6 +88,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		return cDto;
 	}
 
+	//methode d'ajout ou modification d'un centre de formation
 	@Override
 	public CentreFormationDto saveOrUpdate(CentreFormationDto cfDto) {
 		CentreFormation cf = DtoTools.convert(cfDto, CentreFormation.class);
@@ -94,18 +98,21 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		return mapper.CentreFormationToCentreFormationDto(cf);
 	}
 
+	//methode de suppression d'un centre de formation
 	@Override
 	public void deleteById(long id) {
 		centreFormationRepository.deleteById(id);
 
 	}
 
+	//methode count
 	@Override
 	public CountDto count(String search) {
 		
 		return new CountDto(centreFormationRepository.countByNomContaining(search));
 	}
 
+	//recuperation de la liste des centres de formations avec pagination et recherche
 	@Override
 	public List<CentreFormationDto> getAllCentreFormations(int page, int size, String search) {
 		List<CentreFormation> cf = centreFormationRepository.findAllByNomContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -119,13 +126,16 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		return res;
 	}
 
+	//import des locations DG2
 	@Override
 	public void fetchAllDG2CentreFormation(String email, String password) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<CentreFormationDG2Dto> cResJson;
-
+		
+		//url dg2 qui concerne la recupération des locations
 		URI url = new URI("https://dawan.org/api2/cfa/locations");
-
+		
+		//recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
 
@@ -135,10 +145,10 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 
 		if (repWs.getStatusCode() == HttpStatus.OK) {
 			String json = repWs.getBody();
-
+			//recuperation des values en json et lecture
 			cResJson = objectMapper.readValue(json, new TypeReference<List<CentreFormationDG2Dto>>() {
 			});
-
+			//boucle pour récupérer toute la liste
 			for (CentreFormationDG2Dto cDG2 : cResJson) {
 				CentreFormation centreImport = mapper.centreFormationDG2DtoToCentreFormation(cDG2);
 				Optional<CentreFormation> optCentre = centreFormationRepository.findByIdDg2(centreImport.getIdDg2());

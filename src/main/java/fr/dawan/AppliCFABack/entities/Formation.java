@@ -17,7 +17,7 @@ public class Formation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(nullable = false, length = 255)
+	@Column(nullable = false, length = 255) // title dans dg2
 	private String titre;
 
 	@Column(nullable= true, length = 1024)
@@ -26,13 +26,13 @@ public class Formation {
 	@ManyToMany(mappedBy = "formations", cascade = CascadeType.ALL)
 	private List<Cursus> cursusLst;
 	
-	@Column(nullable = true)
+	@Column(nullable = true) //pour recupérer l'id dg2
 	private long idDg2;
 	
-	@Column(nullable = false, length = 255, unique = true)
+	@Column(nullable = false, length = 255, unique = true) // attribut de dg2
 	private String duration;
 	
-	@Column(nullable = false, length = 255, unique = true)
+	@Column(nullable = false, length = 255, unique = true) // attribut de dg2
 	private String slug;
 
 	public Formation() {

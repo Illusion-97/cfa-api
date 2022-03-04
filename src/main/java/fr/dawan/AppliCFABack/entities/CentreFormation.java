@@ -14,13 +14,13 @@ public class CentreFormation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(nullable = true)
+	@Column(nullable = true) // id dans dg2
 	private long idDg2;
 	
-	@Column(nullable = false, length = 4)
+	@Column(nullable = false, length = 4) // country dans dg2
 	private String countryCode;
 	
-	@Column(nullable = true, length = 255)
+	@Column(nullable = true, length = 255) // name dans dg2
 	private String nom;
 
 	@ManyToOne
@@ -31,6 +31,14 @@ public class CentreFormation {
 
 	public CentreFormation() {
 		super();
+	}
+
+	public CentreFormation(long id, String nom, Adresse adresse, Entreprise entreprise) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.adresse = adresse;
+		this.entreprise = entreprise;
 	}
 
 	public CentreFormation(long id, long idDg2, String countryCode, String nom, Adresse adresse,

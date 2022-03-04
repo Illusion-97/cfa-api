@@ -150,14 +150,17 @@ public class FormationServiceImpl implements FormationService {
 		}
 		return lstIntDto;
 	}
-
+	
+	//import des formations DG2
 	@Override
 	public void fetchDG2Formations(String email, String password) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<FormationDG2Dto> fResJson = new ArrayList<>();
 		
+		//url dg2 qui concerne la recupération des formations
 		URI url = new URI("https://dawan.org/api2/cfa/trainings");
 
+		//recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
 
@@ -169,6 +172,7 @@ public class FormationServiceImpl implements FormationService {
 			String json = repWs.getBody();
 			
 			try {
+				//recuperation des values en json et lecture
 				fResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() { 
 				});
 			} catch (Exception e) {
@@ -206,7 +210,7 @@ public class FormationServiceImpl implements FormationService {
 
 	}
 	
-	//import InterventionDG2 => mettre dans interventionService
+	//TODO import InterventionDG2 => mettre dans interventionService
 	public List<InterventionDG2Dto> fetchInterventionFromDG2(long id, String email, String password) throws Exception{
 		List<InterventionDG2Dto> lst = new ArrayList<>();
 		ObjectMapper objectMapper = new ObjectMapper();
