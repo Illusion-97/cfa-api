@@ -60,6 +60,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		return lstDto;
 	}
 
+	//recuperation des entreprises par id
 	@Override
 	public EntrepriseDto getById(long id) {
 		Optional<Entreprise> e = entrepriseRepository.findById(id);
@@ -72,6 +73,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		return null;
 	}
 
+	//methode d'ajout ou modification d'une entreprise
 	@Override
 	public EntrepriseDto saveOrUpdate(EntrepriseDto eDto) {
 		Entreprise e = DtoTools.convert(eDto, Entreprise.class);
@@ -81,17 +83,20 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		return mapper.EntrepriseToEntrepriseDto(e);
 	}
 
+	//methode de suppression d'une entreprise
 	@Override
 	public void deleteById(long id) {
 		entrepriseRepository.deleteById(id);
 
 	}
 
+	//methode count
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(entrepriseRepository.countByRaisonSocialeContaining(search));
 	}
 
+	//recuperation de la liste des entreprises avec pagination et recherche
 	@Override
 	public List<EntrepriseDto> getAllEntreprises(int page, int size, String search) {
 		List<Entreprise> entreprises = entrepriseRepository.findAllByRaisonSocialeContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());

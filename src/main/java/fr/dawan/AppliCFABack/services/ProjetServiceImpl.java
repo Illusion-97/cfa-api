@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
-import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -33,6 +32,7 @@ public class ProjetServiceImpl implements ProjetService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la liste des projets
 	@Override
 	public List<ProjetDto> getAllProjet() {
 		List<Projet> lst = projetRepository.findAll();
@@ -46,6 +46,7 @@ public class ProjetServiceImpl implements ProjetService {
 		return lstDto;
 	}
 
+	//recuperation de la liste des projets avec pagination et recherche
 	@Override
 	public List<ProjetDto> getAllByPage(int page, int size, String search) {
 		List<Projet> lst = projetRepository.findAllByNomContainingIgnoringCaseOrDescriptionContainingIgnoringCaseOrGroupeNomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -60,11 +61,13 @@ public class ProjetServiceImpl implements ProjetService {
 		return lstDto;
 	}
 
+	//count search
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(projetRepository.countByNomContainingIgnoringCaseOrDescriptionContainingIgnoringCaseOrGroupeNomContainingIgnoringCase(search, search, search));
 	}
 
+	//recuperation des projets par id
 	@Override
 	public ProjetDto getById(long id) {
 		Optional<Projet> p = projetRepository.findById(id);
@@ -78,6 +81,7 @@ public class ProjetServiceImpl implements ProjetService {
 		return null;
 	}
 
+	//methode d'ajout ou modification d'un projet
 	@Override
 	public ProjetDto saveOrUpdate(ProjetDto pDto) {
 		Projet p = DtoTools.convert(pDto, Projet.class);
@@ -89,12 +93,14 @@ public class ProjetServiceImpl implements ProjetService {
 		return mapper.ProjetToProjetDto(p);
 	}
 
+	//methode de suppression d'un projet
 	@Override
 	public void deleteById(long id) {
 		projetRepository.deleteById(id);
 		filesService.deleteDirectoryWithContent("projets/"+id);
 	}
 
+	//recuperation des projets par groupe id
 	@Override
 	public List<ProjetDto> getByGroupeId(long id) {
 		List<Projet> projets = projetRepository.findAllByGroupeId(id);	

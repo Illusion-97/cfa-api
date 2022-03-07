@@ -22,6 +22,7 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la journée de planning en fonction de l'intervention
 	@Override
 	public List<JourneePlanningDto> getJourneePlanningFromIntervention(Intervention i) {
 		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();

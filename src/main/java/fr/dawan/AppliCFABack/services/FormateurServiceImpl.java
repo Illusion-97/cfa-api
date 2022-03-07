@@ -19,7 +19,6 @@ import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
@@ -39,6 +38,7 @@ public class FormateurServiceImpl implements FormateurService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la lsite des formateurs
 	@Override
 	public List<FormateurDto> getAll() {
 		List<Formateur> lst = formateurRepository.findAll();
@@ -49,6 +49,7 @@ public class FormateurServiceImpl implements FormateurService {
 		return lstDto;
 	}
 
+	//recuperation des formateurs avec pagination
 	@Override
 	public List<FormateurDto> getAllByPage(int page, int size) {
 		List<Formateur> lst = formateurRepository.findAll(PageRequest.of(page, size)).get()
@@ -60,6 +61,7 @@ public class FormateurServiceImpl implements FormateurService {
 		return lstDto;
 	}
 
+	//recuperation des formateurs avec pagination + recherche
 	@Override
 	public List<FormateurDto> getAllByPageWithKeyword(int page, int size, String search) {
 		List<Formateur> lstFor = formateurRepository
@@ -73,6 +75,7 @@ public class FormateurServiceImpl implements FormateurService {
 		return lstDto;
 	}
 
+	//recuperation des formateurs par id
 	@Override
 	public FormateurDto getById(long id) {
 		Optional<Formateur> f = formateurRepository.findById(id);
@@ -85,6 +88,7 @@ public class FormateurServiceImpl implements FormateurService {
 		return null;
 	}
 
+	//methode d'ajout ou modification d'un formateur
 	@Override
 	public FormateurDto saveOrUpdate(FormateurDto fDto) {
 		Formateur formateur = DtoTools.convert(fDto, Formateur.class);
@@ -112,6 +116,7 @@ public class FormateurServiceImpl implements FormateurService {
 		return mapper.FormateurToFormateurDto(formateur);
 	}
 
+	//methode de suppression d'un formateur
 	@Override
 	public void deleteById(long id) {
 		Optional<Formateur> formateur = formateurRepository.findById(id);
@@ -252,6 +257,7 @@ public class FormateurServiceImpl implements FormateurService {
 		return new CountDto(interventionRepository.countByFormateursId(id));
 	}
 
+	//planning du formateur
 	@Override
 	public List<JourneePlanningDto> getAllJourneePlanningByIdFormateur(long id) {
 		List<JourneePlanningDto> journeeDto = new ArrayList<JourneePlanningDto>();

@@ -3,15 +3,12 @@ package fr.dawan.AppliCFABack.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
 import fr.dawan.AppliCFABack.entities.FicheEntreprise;
@@ -29,6 +26,7 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la liste des fiches entreprise
 	@Override
 	public List<FicheEntrepriseDto> getAllFicheEntreprise() {
 		List<FicheEntreprise> lst = ficheEntrepriseRepository.findAll();
@@ -45,6 +43,7 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 		return lstDto;
 	}
 
+	//recuperation de la liste des fiches entreprise avec pagination et recherche
 	@Override
 	public List<FicheEntrepriseDto> getAllByPage(int page, int size, String search) {
 		List<FicheEntreprise> lst = ficheEntrepriseRepository
@@ -68,6 +67,7 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 //		return new CountDto(ficheEntrepriseRepository.countByNomContainingIgnoringCase(search));
 //	}
 
+	//recuperation des fiches entreprise par id
 	@Override
 	public FicheEntrepriseDto getById(long id) {
 		Optional<FicheEntreprise> e = ficheEntrepriseRepository.findById(id);
@@ -85,6 +85,7 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 		return null;
 	}
 
+	//methode d'ajout ou modification d'une fiche entreprise
 	@Override
 	public FicheEntrepriseDto saveOrUpdate(FicheEntrepriseDto fDto) {
 		FicheEntreprise u = DtoTools.convert(fDto, FicheEntreprise.class);
@@ -94,12 +95,14 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 		return mapper.FicheEntrepriseToFicheEntrepriseDto(u);
 	}
 
+	//methode de suppression d'une fiche entreprise
 	@Override
 	public void deleteById(long id) {
 		ficheEntrepriseRepository.deleteById(id);
 
 	}
 
+	//recuperation des fiches entreprise par id etudiant
 	@Override
 	public FicheEntrepriseDto getByIdEtudiant(long id) {
 		List<FicheEntrepriseDto> lst = getAllFicheEntreprise();

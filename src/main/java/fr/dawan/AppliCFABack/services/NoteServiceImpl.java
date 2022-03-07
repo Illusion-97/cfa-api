@@ -29,6 +29,7 @@ public class NoteServiceImpl implements NoteService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la liste des notes
 	@Override
 	public List<NoteDto> getAllNote() {
 		List<Note> lst = noteRepository.findAll();
@@ -40,6 +41,7 @@ public class NoteServiceImpl implements NoteService {
 		return lstDto;
 	}
 
+	//recuperation de la liste des notes avec pagination et recherche
 	@Override
 	public List<NoteDto> getAllByPage(int page, int size, String search) {
 		List<Note> lst = noteRepository.findAllByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search,search, search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -56,11 +58,13 @@ public class NoteServiceImpl implements NoteService {
 		return lstDto;
 	}
 
+	//count search
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(noteRepository.countByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search, search, search, search));
 	}
 
+	//recuperation des notes par id
 	@Override
 	public NoteDto getById(long id) {
 		Optional<Note> n = noteRepository.findById(id);
@@ -76,6 +80,7 @@ public class NoteServiceImpl implements NoteService {
 		return nDto;
 	}
 
+	//methode d'ajout ou modification d'une note
 	@Override
 	public NoteDto saveOrUpdate(NoteDto nDto) {
 		Note n = DtoTools.convert(nDto, Note.class);
@@ -85,16 +90,20 @@ public class NoteServiceImpl implements NoteService {
 		return mapper.NoteToNoteDto(n);
 	}
 
+	//nb note
 	@Override
 	public CountDto count() {
 		return new CountDto(noteRepository.count());
 	}
+	
+	//methode de suppression d'une note
 	@Override
 	public void deleteById(long id) {
 		noteRepository.deleteById(id);
 
 	}
 
+	//recuperation des note par etudiant id
 	@Override
 	public List<NoteDto> getAllByIdEtudiant(long id) {
 		List<NoteDto> result = new ArrayList<NoteDto>();

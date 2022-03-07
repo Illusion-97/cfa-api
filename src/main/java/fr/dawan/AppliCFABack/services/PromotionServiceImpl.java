@@ -41,6 +41,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la liste des promo
 	@Override
 	public List<PromotionDto> getAll() {
 		List<Promotion> lst = promoRepo.findAll();
@@ -51,6 +52,7 @@ public class PromotionServiceImpl implements PromotionService {
 		return lstDto;
 	}
 
+	//recuperation de la liste des promo avec id
 	@Override
 	public PromotionDto getById(long id) {
 		Promotion promo = promoRepo.getOne(id);
@@ -89,6 +91,7 @@ public class PromotionServiceImpl implements PromotionService {
 		return pDto;
 	}
 
+	//methode d'ajout ou modification d'une promo
 	@Override
 	public PromotionDto saveOrUpdate(PromotionDto pDto) {
 		Promotion p = DtoTools.convert(pDto, Promotion.class);
@@ -124,22 +127,26 @@ public class PromotionServiceImpl implements PromotionService {
 		return mapper.PromotionToPromotionDto(p);
 	}
 
+	//methode de suppression d'une promo
 	@Override
 	public void deleteById(long id) {
 		promoRepo.deleteById(id);
 		filesService.deleteDirectoryWithContent("promotions/"+id);
 	}
 
+	//recuperation du referent avec id
 	@Override
 	public UtilisateurDto getReferentById(long id) {
 		return mapper.UtilisateurToUtilisateurDto(promoRepo.getOne(id).getReferentPedagogique());
 	}
 
+	//methode count search
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(promoRepo.countByNomContaining(search));
 	}
 
+	//recuperation de la liste des promo avec pagination et recherche
 	@Override
 	public List<PromotionDto> getAllPromotions(int page, int size, String search) {
 		List<Promotion> promo = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -150,6 +157,7 @@ public class PromotionServiceImpl implements PromotionService {
 		return res;
 	}
 
+	//recuperation des etudiants par id
 	@Override
 	public List<EtudiantDto> getEtudiantsById(long id) {
 		List<Etudiant> lst = promoRepo.getOne(id).getEtudiants();
@@ -167,6 +175,7 @@ public class PromotionServiceImpl implements PromotionService {
 		return lstDto;
 	}
 
+	//recuperation des cursus
 	@Override
 	public List<PromotionDto> getAllByCursusId(long id) {
 		List<Promotion> lst = promoRepo.findAllByCursusId(id);
