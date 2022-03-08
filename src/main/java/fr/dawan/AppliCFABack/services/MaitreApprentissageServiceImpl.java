@@ -29,6 +29,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	
+	//recuperation de la liste des MaitreApprentissage
 	@Override
 	public List<MaitreApprentissageDto> getAllMaitreApprentissage() {
 		List<MaitreApprentissage> lst = maitreApprentissageRepository.findAll();
@@ -40,6 +41,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 		return lstDto;
 	}
 
+	//recuperation de la liste des MaitreApprentissage avec pagination et recherche
 	@Override
 	public List<MaitreApprentissageDto> getAllMaitreApprentissage(int page, int size) {
 		List<MaitreApprentissage> lst = maitreApprentissageRepository.findAll(PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -52,6 +54,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 		return lstDto;
 	}
 
+	//recuperation des MaitreApprentissage par id
 	@Override
 	public MaitreApprentissageDto getById(long id) {
 		Optional<MaitreApprentissage> c = maitreApprentissageRepository.findById(id);
@@ -61,6 +64,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 		return null;
 	}
 
+	//methode d'ajout ou modification d'un MaitreApprentissage
 	@Override
 	public MaitreApprentissageDto saveOrUpdate(MaitreApprentissageDto maDto) {
 		MaitreApprentissage ma = DtoTools.convert(maDto, MaitreApprentissage.class);
@@ -86,6 +90,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 		return mapper.MaitreApprentissageToMaitreApprentissageDto(ma);
 	}
 
+	//methode de suppression d'un MaitreApprentissage
 	@Override
 	public void deleteById(long id) {
 		maitreApprentissageRepository.deleteById(id);

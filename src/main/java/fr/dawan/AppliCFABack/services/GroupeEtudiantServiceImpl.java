@@ -38,6 +38,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	
+	//recuperation de la liste des groupes
 	@Override
 	public List<GroupeEtudiantDto> getAllGroupeEtudiant() {
 		List<GroupeEtudiant> lst = groupeEtudiantRepository.findAll();
@@ -49,6 +50,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		return lstDto;
 	}
 	
+	//recuperation de la liste des groupes avec pagination et recherche
 	@Override
 	public List<GroupeEtudiantDto> getAllByPage(int page, int size, String search) {
 		List<GroupeEtudiant> lst = groupeEtudiantRepository.findAllByNomContainingIgnoringCaseOrEtudiantsUtilisateurNomContainingIgnoringCaseOrEtudiantsUtilisateurPrenomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -74,11 +76,13 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		return lstDto;
 	}
 
+	//methode count nb groupes
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(groupeEtudiantRepository.countByNomContainingIgnoringCaseOrEtudiantsUtilisateurNomContainingIgnoringCaseOrEtudiantsUtilisateurPrenomContainingIgnoringCase(search, search, search));
 	}
 
+	//recuperation des groupes avec l'id
 	@Override
 	public GroupeEtudiantDto getById(long id) {
 		Optional<GroupeEtudiant> g = groupeEtudiantRepository.findById(id);
@@ -101,6 +105,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		return gDto;
 	}
 
+	//methode d'ajout ou modification d'un groupe
 	@Override
 	public GroupeEtudiantDto saveOrUpdate(GroupeEtudiantDto gDto) {
 		System.out.println("GroupeEtudiantDto saveOrUpdate");
@@ -108,6 +113,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		return mapper.GroupeEtudiantToGroupEtudiantDto(g);
 	}
 
+	//methode de suppression d'un groupe
 	@Override
 	public void deleteById(long id) {
 		
@@ -125,6 +131,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		groupeEtudiantRepository.deleteById(id);		
 	}
 
+	//recuperation des etudiants avec id du groupe
 	@Override
 	public List<EtudiantDto> getEtudiantsByGroupeId(long id) {
 		Optional<GroupeEtudiant> g = groupeEtudiantRepository.findById(id);

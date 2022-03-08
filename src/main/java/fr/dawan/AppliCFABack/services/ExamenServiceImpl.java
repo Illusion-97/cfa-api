@@ -29,6 +29,7 @@ public class ExamenServiceImpl implements ExamenService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la liste des examens
 	@Override
 	public List<ExamenDto> getAllExamen() {
 		List<Examen> lst = examenRepository.findAll();
@@ -43,6 +44,7 @@ public class ExamenServiceImpl implements ExamenService {
 		return lstDto;
 	}
 
+	//recuperation de la liste des examens avec pagination et recherche
 	@Override
 	public List<ExamenDto> getAllByPage(int page, int size, String search) {
 		List<Examen> lst = examenRepository.findAllByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -58,6 +60,7 @@ public class ExamenServiceImpl implements ExamenService {
 		return lstDto;
 	}
 
+	//methode count
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(examenRepository.countByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(search, search, search));
@@ -78,6 +81,7 @@ public class ExamenServiceImpl implements ExamenService {
 		return null;
 	}
 
+	//methode d'ajout ou modification d'un examen
 	@Override
 	public ExamenDto saveOrUpdate(ExamenDto eDto) {
 		Examen e = DtoTools.convert(eDto, Examen.class);
@@ -87,6 +91,7 @@ public class ExamenServiceImpl implements ExamenService {
 		return mapper.ExamenToExamenDto(e);
 	}
 
+	//methode de suppression d'un examen
 	@Override
 	public void deleteById(long id) {
 		examenRepository.deleteById(id);

@@ -64,6 +64,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private JwtTokenUtil jwtTokenUtil;
 
 
+    //recuperation de la liste des user
     @Override
     public List<UtilisateurDto> getAll() {
         List<Utilisateur> users = utilisateurRepository.findAll();
@@ -83,6 +84,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return res;
     }
 
+    //recuperation de la liste des user avec pagination et recherche
     @Override
     public List<UtilisateurDto> getAllUtilisateurs(int page, int size, String search) {
 
@@ -107,6 +109,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return res;
     }
 
+    //count search
     @Override
     public CountDto count(String search) {
         return new CountDto(utilisateurRepository
@@ -114,6 +117,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                         search, search, search, search));
     }
 
+    //recuperation des user par id
     @Override
     public UtilisateurDto getById(long id) {
         System.out.println("id : " + id);
@@ -144,6 +148,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return null;
     }
 
+    //recuperation des user par email
     @Override
     public UtilisateurDto findByEmail(String email) {
         Utilisateur user = utilisateurRepository.findByEmail(email);
@@ -171,6 +176,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return utilisateurDto;
     }
 
+    //recuperation des user par name
     @Override
     public UtilisateurDto getName(String name) {
         Utilisateur user = utilisateurRepository.findByName(name);
@@ -179,6 +185,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return null;
     }
 
+    //methode d'ajout ou modification d'un user
     @Override
     public UtilisateurDto insertUpdate(UtilisateurDto uDto) throws Exception {
 
@@ -348,6 +355,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return result;
     }
 
+    //methode de suppression d'un user
     @Override
     public void deleteById(long id) {
     	
@@ -390,6 +398,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         filesService.deleteDirectoryWithContent("utilisateurs/" + id);
     }
 
+    //recuperation des user par adresse id
     @Override
     public List<UtilisateurDto> findByAdresse(String ville) {
         List<Utilisateur> users = utilisateurRepository.findByAdresse(ville);
@@ -410,6 +419,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 //		return res;
 //	}
 
+    //planning de l'user
     @Override
     public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id) {
         List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
@@ -432,6 +442,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return result;
     }
 
+    //congé de l'user
     @Override
     public List<CongeDto> getAllCongesByIdUtilisateur(long id) {
         List<CongeDto> result = new ArrayList<CongeDto>();
@@ -508,6 +519,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return null;
     }
 
+    //recuperation des user par role
     @Override
     public List<UtilisateurDto> findByRole(long idRole) {
         List<UtilisateurDto> res = getAll();
@@ -526,6 +538,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return resfinal;
     }
 
+  //recuperation des user par etudiant id, referent
     @Override
     public List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long id) {
         List<Absence> lstAbs = absenceRepository.findDistinctByEtudiantPromotionsReferentPedagogiqueId(id);
@@ -540,11 +553,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return null;
     }
 
+    //methode count
     @Override
     public CountDto countEtudiantPromotionsReferentPedagogiqueId(long id) {
         return new CountDto(absenceRepository.countDistinctByEtudiantPromotionsReferentPedagogiqueId(id));
     }
 
+    //recuperation des user par role + pagination + recherche
     @Override
     public List<UtilisateurDto> findAllByRoleByPage(int page, int size, String role, String search) {
         List<Utilisateur> users = utilisateurRepository
@@ -559,6 +574,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return res;
     }
 
+    // count par role comme plusieurs role
     @Override
     public CountDto countByRole(String role, String search) {
         return new CountDto(utilisateurRepository
@@ -566,6 +582,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                         role, search, role, search, role, search));
     }
 
+    //user referent ou non
     @Override
     public Boolean isReferent(long id) {
         List<Promotion> result = promotionRespository.findAllByReferentPedagogiqueId(id);
@@ -576,6 +593,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             return false;
     }
 
+    //file upload
     @Override
     public void uploadFile(MultipartFile file, long idUser) throws Exception {
 // J'ai 'renforcé' la secu en mappant l'id de l'utilisateur. Seul l'admin pourra uplaod des fichier. A voir si je laisse
@@ -654,6 +672,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     }
 
+    //generation pwd
     private String generatePassword() {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
@@ -669,6 +688,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return generatedString;
     }
 
+    //reset pwd
 	@Override
 	public boolean resetPassword(ResetResponse reset) throws Exception {
 		String hashedPwd = HashTools.hashSHA512(reset.getPassword());

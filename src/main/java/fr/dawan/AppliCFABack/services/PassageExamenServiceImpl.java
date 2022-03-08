@@ -29,6 +29,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	//recuperation de la liste des passages d'examen
 	@Override
 	public List<PassageExamenDto> getAllPassageExamen() {
 		List<PassageExamen> lst = passageExamenRepository.findAll();
@@ -40,6 +41,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		return lstDto;
 	}
 
+	//recuperation de la liste des passages d'examen avec pagination et recherche
 	@Override
 	public List<PassageExamenDto> getAllByPage(int page, int size, String search) {
 		List<PassageExamen> lst = passageExamenRepository.findAllByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search,search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -56,11 +58,13 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		return lstDto;
 	}
 
+	//count search
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(passageExamenRepository.countByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search));
 	}
 
+	//recuperation des passages d'examen par id
 	@Override
 	public PassageExamenDto getById(long id) {
 		Optional<PassageExamen> pe = passageExamenRepository.findById(id);
@@ -75,6 +79,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		return pDto;
 	}
 
+	//methode d'ajout ou modification d'un passage d'examen
 	@Override
 	public PassageExamenDto saveOrUpdate(PassageExamenDto peDto) {
 		PassageExamen pe = DtoTools.convert(peDto, PassageExamen.class);
@@ -84,6 +89,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		return mapper.PassageExamenToPassageExamenDto(pe);
 	}
 
+	//methode de suppression d'un passage d'examen
 	@Override
 	public void deleteById(long id) {
 		passageExamenRepository.deleteById(id);

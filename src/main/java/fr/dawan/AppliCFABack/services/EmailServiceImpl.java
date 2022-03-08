@@ -41,7 +41,7 @@ public class EmailServiceImpl implements EmailService{
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
-	
+	//envoi de mail au referent pour la demande de congé
 	@Override
 	public void alertDemandeCongetoReferent(Conge c) {		
 		//On détermine le référent de l'étudiant concerné
@@ -99,6 +99,7 @@ public class EmailServiceImpl implements EmailService{
 		javaMailSender.send(msg);
 	}
 
+	//envoie de mail avec lien pour modifier le mdp
 	@Override
 	public void sendMailForResetPassword(UtilisateurDto uDto) throws Exception {
 		Map<String, Object> claims = new HashMap<String, Object>();
