@@ -7,6 +7,9 @@ public class FormationDto {
 	private String titre;
 	private String contenu;
 	private List<CursusDto> cursusLstDto;
+	private long idDg2;
+	private String duration;
+	private String slug;
 
 	public FormationDto() {
 		super();
@@ -42,6 +45,30 @@ public class FormationDto {
 
 	public void setCursusLstDto(List<CursusDto> cursusLstDto) {
 		this.cursusLstDto = cursusLstDto;
+	}
+
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
 	}
 
 }
