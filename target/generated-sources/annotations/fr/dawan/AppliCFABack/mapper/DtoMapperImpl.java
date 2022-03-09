@@ -65,7 +65,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-04T11:03:47+0100",
+    date = "2022-03-09T09:41:44+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -124,7 +124,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         CentreFormationDto centreFormationDto = new CentreFormationDto();
 
+        centreFormationDto.setCountryCode( centreFormation.getCountryCode() );
         centreFormationDto.setId( centreFormation.getId() );
+        centreFormationDto.setIdDg2( centreFormation.getIdDg2() );
         centreFormationDto.setNom( centreFormation.getNom() );
 
         return centreFormationDto;
@@ -220,8 +222,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExamenDto examenDto = new ExamenDto();
 
-        examenDto.setEnonce( examen.getEnonce() );
         examenDto.setId( examen.getId() );
+        examenDto.setEnonce( examen.getEnonce() );
 
         return examenDto;
     }
@@ -248,7 +250,10 @@ public class DtoMapperImpl implements DtoMapper {
         FormationDto formationDto = new FormationDto();
 
         formationDto.setContenu( formation.getContenu() );
+        formationDto.setDuration( formation.getDuration() );
         formationDto.setId( formation.getId() );
+        formationDto.setIdDg2( formation.getIdDg2() );
+        formationDto.setSlug( formation.getSlug() );
         formationDto.setTitre( formation.getTitre() );
 
         return formationDto;
@@ -277,9 +282,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         InterventionDto interventionDto = new InterventionDto();
 
+        interventionDto.setId( intervention.getId() );
         interventionDto.setDateDebut( intervention.getDateDebut() );
         interventionDto.setDateFin( intervention.getDateFin() );
-        interventionDto.setId( intervention.getId() );
         interventionDto.setNoteInfoPersonnel( intervention.getNoteInfoPersonnel() );
 
         return interventionDto;

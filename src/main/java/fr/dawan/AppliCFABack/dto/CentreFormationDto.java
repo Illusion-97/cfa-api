@@ -1,7 +1,11 @@
 package fr.dawan.AppliCFABack.dto;
 
+import javax.persistence.Column;
+
 public class CentreFormationDto {
 	private long id;
+	private long idDg2;
+	private String countryCode;
 	private String nom;
 	private AdresseDto adresseDto;
 	private EntrepriseDto entrepriseDto;
@@ -43,4 +47,19 @@ public class CentreFormationDto {
 		this.entrepriseDto = entrepriseDto;
 	}
 
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 }
