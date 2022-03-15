@@ -53,6 +53,33 @@ public class Examen { // examen Java
 	@OneToMany(mappedBy = "examen")
 	private Set<Note> notes;
 	
+	@ManyToOne
+	private Promotion promotion;
+	
+	public Set<CompetenceProfessionnelle> getCompetenceProfessionnelle() {
+		return competenceProfessionnelle;
+	}
+
+	public void setCompetenceProfessionnelle(Set<CompetenceProfessionnelle> competenceProfessionnelle) {
+		this.competenceProfessionnelle = competenceProfessionnelle;
+	}
+
+	public Set<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(Set<Note> notes) {
+		this.notes = notes;
+	}
+
+	public Promotion getPromotion() {
+		return promotion;
+	}
+
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
+
 	public Examen() {
 		super();
 	}

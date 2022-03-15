@@ -26,5 +26,6 @@ public interface PromotionService {
 	List<EtudiantDto> getEtudiantsById(long id);	
 
 	List<PromotionDto> getAllByCursusId(long id);
+	
 
 }
