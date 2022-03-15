@@ -359,7 +359,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		List<Absence> absences = absenceRepository.getAbsencesByIdEtudiant(id);
 
 		for (Note n : notes) {
-			n.setEtudiant(null);
+//			n.setEtudiant(null);
 			noteRepository.save(n);
 			noteRepository.delete(n);
 		}
@@ -448,9 +448,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		for (Note n : lst) {
 			NoteDto nDto =mapper.NoteToNoteDto(n);
-			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
-			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
-			nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.getExamen().getExamen()));
+//			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
+//			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
+//			nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.getExamen().getExamen()));
 			
 			
 			res.add(nDto);

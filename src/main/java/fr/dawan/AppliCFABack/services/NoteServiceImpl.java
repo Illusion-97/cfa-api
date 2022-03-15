@@ -44,18 +44,19 @@ public class NoteServiceImpl implements NoteService {
 	//recuperation de la liste des notes avec pagination et recherche
 	@Override
 	public List<NoteDto> getAllByPage(int page, int size, String search) {
-		List<Note> lst = noteRepository.findAllByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search,search, search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
-
-		// conversion vers Dto
-		List<NoteDto> lstDto = new ArrayList<NoteDto>();
-		for (Note n : lst) {
-			NoteDto nDto = mapper.NoteToNoteDto(n);
-			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
-			nDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.getEtudiant()));
-			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
-			lstDto.add(nDto);
-		}
-		return lstDto;
+//		List<Note> lst = noteRepository.findAllByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search,search, search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+//
+//		// conversion vers Dto
+//		List<NoteDto> lstDto = new ArrayList<NoteDto>();
+//		for (Note n : lst) {
+//			NoteDto nDto = mapper.NoteToNoteDto(n);
+//			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
+//			nDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.getEtudiant()));
+//			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
+//			lstDto.add(nDto);
+//		}
+//		return lstDto;
+		return null;
 	}
 
 	//count search
@@ -67,17 +68,18 @@ public class NoteServiceImpl implements NoteService {
 	//recuperation des notes par id
 	@Override
 	public NoteDto getById(long id) {
-		Optional<Note> n = noteRepository.findById(id);
-		if (!n.isPresent())
-			return null;
-		
-		NoteDto nDto = mapper.NoteToNoteDto(n.get());
-		nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.get().getDevoir()));
-		nDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.get().getEtudiant()));
-		nDto.getEtudiantDto().setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(n.get().getEtudiant().getUtilisateur()));
-		nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.get().getExamen()));
-		if(n.get().getExamen() != null) nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.get().getExamen().getExamen()));
-		return nDto;
+//		Optional<Note> n = noteRepository.findById(id);
+//		if (!n.isPresent())
+//			return null;
+//		
+//		NoteDto nDto = mapper.NoteToNoteDto(n.get());
+//		nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.get().getDevoir()));
+//		nDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.get().getEtudiant()));
+//		nDto.getEtudiantDto().setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(n.get().getEtudiant().getUtilisateur()));
+//		nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.get().getExamen()));
+//		if(n.get().getExamen() != null) nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.get().getExamen().getExamen()));
+//		return nDto;
+		return null;
 	}
 
 	//methode d'ajout ou modification d'une note
@@ -106,16 +108,17 @@ public class NoteServiceImpl implements NoteService {
 	//recuperation des note par etudiant id
 	@Override
 	public List<NoteDto> getAllByIdEtudiant(long id) {
-		List<NoteDto> result = new ArrayList<NoteDto>();
-		List<Note> list = noteRepository.findAllByEtudiantId(id);
-		for(Note n : list) {
-			NoteDto nDto = mapper.NoteToNoteDto(n);
-			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
-			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
-			if(n.getExamen() != null) nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.getExamen().getExamen()));
-			result.add(nDto);
-		}
-		return result;
+//		List<NoteDto> result = new ArrayList<NoteDto>();
+//		List<Note> list = noteRepository.findAllByEtudiantId(id);
+//		for(Note n : list) {
+//			NoteDto nDto = mapper.NoteToNoteDto(n);
+//			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
+//			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
+//			if(n.getExamen() != null) nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.getExamen().getExamen()));
+//			result.add(nDto);
+//		}
+//		return result;
+		return null;
 	}
 
 }

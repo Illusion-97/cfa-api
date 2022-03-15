@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Cursus { // cursus du catalogue Dev Full Stack
@@ -23,6 +25,9 @@ public class Cursus { // cursus du catalogue Dev Full Stack
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Formation> formations;
 
+	@OneToMany(mappedBy = "cursus")
+	private Set<ActiviteType> activiteTypes;
+	
 	public Cursus() {
 		super();
 	}

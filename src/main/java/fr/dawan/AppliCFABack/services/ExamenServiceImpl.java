@@ -32,32 +32,34 @@ public class ExamenServiceImpl implements ExamenService {
 	//recuperation de la liste des examens
 	@Override
 	public List<ExamenDto> getAllExamen() {
-		List<Examen> lst = examenRepository.findAll();
-
-		List<ExamenDto> lstDto = new ArrayList<ExamenDto>();
-		for (Examen e : lst) {
-			ExamenDto eDto = mapper.ExamenToExamenDto(e);
-		eDto.setCursusDto(mapper.CursusToCursusDto(e.getCursus()));
-		eDto.setFormationDto(mapper.FormationToFormationDto(e.getFormation()));
-		lstDto.add(eDto);
-		}
-		return lstDto;
+//		List<Examen> lst = examenRepository.findAll();
+//
+//		List<ExamenDto> lstDto = new ArrayList<ExamenDto>();
+//		for (Examen e : lst) {
+//			ExamenDto eDto = mapper.ExamenToExamenDto(e);
+//		eDto.setCursusDto(mapper.CursusToCursusDto(e.getCursus()));
+//		eDto.setFormationDto(mapper.FormationToFormationDto(e.getFormation()));
+//		lstDto.add(eDto);
+//		}
+//		return lstDto;
+		return null;
 	}
 
 	//recuperation de la liste des examens avec pagination et recherche
 	@Override
 	public List<ExamenDto> getAllByPage(int page, int size, String search) {
-		List<Examen> lst = examenRepository.findAllByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
-
-		// conversion vers Dto
-		List<ExamenDto> lstDto = new ArrayList<ExamenDto>();
-		for (Examen e : lst) {
-			ExamenDto eDto = mapper.ExamenToExamenDto(e);
-			eDto.setCursusDto(mapper.CursusToCursusDto(e.getCursus()));
-			eDto.setFormationDto(mapper.FormationToFormationDto(e.getFormation()));
-			lstDto.add(eDto);
-		}
-		return lstDto;
+//		List<Examen> lst = examenRepository.findAllByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+//
+//		// conversion vers Dto
+//		List<ExamenDto> lstDto = new ArrayList<ExamenDto>();
+//		for (Examen e : lst) {
+//			ExamenDto eDto = mapper.ExamenToExamenDto(e);
+//			eDto.setCursusDto(mapper.CursusToCursusDto(e.getCursus()));
+//			eDto.setFormationDto(mapper.FormationToFormationDto(e.getFormation()));
+//			lstDto.add(eDto);
+//		}
+//		return lstDto;
+		return null;
 	}
 
 	//methode count
@@ -68,15 +70,15 @@ public class ExamenServiceImpl implements ExamenService {
 
 	@Override
 	public ExamenDto getById(long id) {
-		Optional<Examen> e = examenRepository.findById(id);
-		if (e.isPresent()) {
-			ExamenDto eDto = mapper.ExamenToExamenDto(e.get());
-						
-			eDto.setCursusDto(mapper.CursusToCursusDto(e.get().getCursus()));
-			eDto.setFormationDto(mapper.FormationToFormationDto(e.get().getFormation()));
-			
-			return eDto;
-		}			
+//		Optional<Examen> e = examenRepository.findById(id);
+//		if (e.isPresent()) {
+//			ExamenDto eDto = mapper.ExamenToExamenDto(e.get());
+//						
+//			eDto.setCursusDto(mapper.CursusToCursusDto(e.get().getCursus()));
+//			eDto.setFormationDto(mapper.FormationToFormationDto(e.get().getFormation()));
+//			
+//			return eDto;
+//		}			
 
 		return null;
 	}
@@ -84,11 +86,12 @@ public class ExamenServiceImpl implements ExamenService {
 	//methode d'ajout ou modification d'un examen
 	@Override
 	public ExamenDto saveOrUpdate(ExamenDto eDto) {
-		Examen e = DtoTools.convert(eDto, Examen.class);
-
-		e = examenRepository.saveAndFlush(e);
-
-		return mapper.ExamenToExamenDto(e);
+//		Examen e = DtoTools.convert(eDto, Examen.class);
+//
+//		e = examenRepository.saveAndFlush(e);
+//
+//		return mapper.ExamenToExamenDto(e);
+		return null;
 	}
 
 	//methode de suppression d'un examen
