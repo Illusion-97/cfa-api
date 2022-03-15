@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Promotion { // CDA2021
@@ -42,6 +44,10 @@ public class Promotion { // CDA2021
 
 	@ManyToOne
 	private Cursus cursus; // Dev Full Stack
+	
+	@OneToMany(mappedBy = "promotion")
+	private Set<Examen> examens;
+
 
 	public Promotion() {
 		super();
@@ -142,5 +148,13 @@ public class Promotion { // CDA2021
 	public void setInterventions(List<Intervention> interventions) {
 		this.interventions = interventions;
 	}
+	public Set<Examen> getExamens() {
+		return examens;
+	}
+
+	public void setExamens(Set<Examen> examens) {
+		this.examens = examens;
+	}
+
 	
 }
