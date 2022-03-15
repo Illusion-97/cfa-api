@@ -25,6 +25,9 @@ public class Note {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Examen examen;
+	
+	@ManyToOne
+	private Etudiant etudiantNote;
 
 //	@Column(nullable = false, length = 255)
 //	private int noteObtenu;
@@ -41,6 +44,14 @@ public class Note {
 //
 //	@OneToOne
 //	private Devoir devoir;
+
+	public Etudiant getEtudiantNote() {
+		return etudiantNote;
+	}
+
+	public void setEtudiantNote(Etudiant etudiantNote) {
+		this.etudiantNote = etudiantNote;
+	}
 
 	public Note() {
 		super();

@@ -29,7 +29,7 @@ public class Etudiant{
 	private List<GroupeEtudiant> groupes;
 	
 	
-	@OneToMany(mappedBy = "etudiant", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "etudiantNote", cascade = CascadeType.REMOVE)
 	private Set<Note> notes;
 	
 //	@ManyToOne

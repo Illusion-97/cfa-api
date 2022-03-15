@@ -10,11 +10,11 @@ import fr.dawan.AppliCFABack.entities.PassageExamen;
 @Repository
 public interface PassageExamenRepository extends JpaRepository<PassageExamen, Long> {
 
-	Page<PassageExamen> findAllByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(
-			String search, String search2, Pageable pageable);
-
-	long countByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(String search,
-			String search2);
-
-	PassageExamen findByInterventionId(long id);
+//	Page<PassageExamen> findAllByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(
+//			String search, String search2, Pageable pageable);
+//
+//	long countByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(String search,
+//			String search2);
+//
+//	PassageExamen findByInterventionId(long id);
 }

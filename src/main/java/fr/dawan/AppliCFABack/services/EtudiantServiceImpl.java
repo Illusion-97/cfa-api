@@ -300,79 +300,79 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public void deleteById(long id) {
 
-		Etudiant etudiant = getEtudiantById(id);
+//		Etudiant etudiant = getEtudiantById(id);
 
-		if (etudiant == null)
-			return;
-		
-		Utilisateur Utilisateur = etudiant.getUtilisateur();
-		etudiant.setUtilisateur(null);
-		Utilisateur.setEtudiant(null);
-		
-		etudiantRepository.save(etudiant);
-		utilisateurRepository.save(Utilisateur);
-
-		// Etudiant
-		// @ManyToMany Promotion promotions
-		// @ManyToMany GroupeEtudiant groupes
-
-		// On récupère ces objets, et on supprime les liens :
-
-		List<Promotion> promotions = etudiant.getPromotions();
-		List<GroupeEtudiant> groupes = etudiant.getGroupes();
-		etudiant.setGroupes(null);
-		etudiant.setPromotions(null);
-
-		etudiantRepository.save(etudiant);
-
-		Etudiant toDelete = new Etudiant();
-
-		for (Promotion p : promotions) {
-			for (Etudiant e : p.getEtudiants())
-				if (e.getUtilisateur().getId() == etudiant.getUtilisateur().getId()) {
-					toDelete = e;
-					break;
-				}
-			p.getEtudiants().remove(toDelete);
-			promotionRepository.save(p);
-		}
-
-		for (GroupeEtudiant g : groupes) {
-			for (Etudiant e : g.getEtudiants())
-				if (e.getUtilisateur().getId() == etudiant.getUtilisateur().getId()) {
-					toDelete = e;
-					break;
-				}
-			g.getEtudiants().remove(toDelete);
-			groupeEtudiantRepository.save(g);
-		}
-
-		// Note
-		// @ManyToOne Etudiant etudiant
-
-		// Absence
-		// @ManyToOne Etudiant etudiant
-
-		// On récupère ces objets, et on supprime les liens :
-
-		List<Note> notes = noteRepository.getNotesByIdEtudiant(id);
-		List<Absence> absences = absenceRepository.getAbsencesByIdEtudiant(id);
-
-		for (Note n : notes) {
-//			n.setEtudiant(null);
-			noteRepository.save(n);
-			noteRepository.delete(n);
-		}
-
-		for (Absence a : absences) {
-			a.setEtudiant(null);
-			absenceRepository.save(a);
-			absenceRepository.delete(a);
-		}
-
-		// Les liens sont tous supprimés : on peut supprimé l'étudiant
-
-		etudiantRepository.delete(etudiant);
+//		if (etudiant == null)
+//			return;
+//		
+//		Utilisateur Utilisateur = etudiant.getUtilisateur();
+//		etudiant.setUtilisateur(null);
+//		Utilisateur.setEtudiant(null);
+//		
+//		etudiantRepository.save(etudiant);
+//		utilisateurRepository.save(Utilisateur);
+//
+//		// Etudiant
+//		// @ManyToMany Promotion promotions
+//		// @ManyToMany GroupeEtudiant groupes
+//
+//		// On récupère ces objets, et on supprime les liens :
+//
+//		List<Promotion> promotions = etudiant.getPromotions();
+//		List<GroupeEtudiant> groupes = etudiant.getGroupes();
+//		etudiant.setGroupes(null);
+//		etudiant.setPromotions(null);
+//
+//		etudiantRepository.save(etudiant);
+//
+//		Etudiant toDelete = new Etudiant();
+//
+//		for (Promotion p : promotions) {
+//			for (Etudiant e : p.getEtudiants())
+//				if (e.getUtilisateur().getId() == etudiant.getUtilisateur().getId()) {
+//					toDelete = e;
+//					break;
+//				}
+//			p.getEtudiants().remove(toDelete);
+//			promotionRepository.save(p);
+//		}
+//
+//		for (GroupeEtudiant g : groupes) {
+//			for (Etudiant e : g.getEtudiants())
+//				if (e.getUtilisateur().getId() == etudiant.getUtilisateur().getId()) {
+//					toDelete = e;
+//					break;
+//				}
+//			g.getEtudiants().remove(toDelete);
+//			groupeEtudiantRepository.save(g);
+//		}
+//
+//		// Note
+//		// @ManyToOne Etudiant etudiant
+//
+//		// Absence
+//		// @ManyToOne Etudiant etudiant
+//
+//		// On récupère ces objets, et on supprime les liens :
+//
+//		List<Note> notes = noteRepository.getNotesByIdEtudiant(id);
+//		List<Absence> absences = absenceRepository.getAbsencesByIdEtudiant(id);
+//
+//		for (Note n : notes) {
+////			n.setEtudiant(null);
+//			noteRepository.save(n);
+//			noteRepository.delete(n);
+//		}
+//
+//		for (Absence a : absences) {
+//			a.setEtudiant(null);
+//			absenceRepository.save(a);
+//			absenceRepository.delete(a);
+//		}
+//
+//		// Les liens sont tous supprimés : on peut supprimé l'étudiant
+//
+//		etudiantRepository.delete(etudiant);
 	}
 
 	// ##################################################
@@ -442,33 +442,33 @@ public class EtudiantServiceImpl implements EtudiantService {
 	//recuperation des notes par id etudiants + pagination
 	@Override
 	public List<NoteDto> getNotesByIdEtudiant(long id, int page, int size) {
-		List<Note> lst = noteRepository.getNotesByIdEtudiant(id, PageRequest.of(page, size)).get()
-				.collect(Collectors.toList());
-		List<NoteDto> res = new ArrayList<NoteDto>();
+//		List<Note> lst = noteRepository.getNotesByIdEtudiant(id, PageRequest.of(page, size)).get()
+//				.collect(Collectors.toList());
+//		List<NoteDto> res = new ArrayList<NoteDto>();
+//
+//		for (Note n : lst) {
+//			NoteDto nDto =mapper.NoteToNoteDto(n);
+////			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
+////			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
+////			nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.getExamen().getExamen()));
+//			
+//			
+//			res.add(nDto);
+//		}
+//		
 
-		for (Note n : lst) {
-			NoteDto nDto =mapper.NoteToNoteDto(n);
-//			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
-//			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
-//			nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.getExamen().getExamen()));
-			
-			
-			res.add(nDto);
-		}
-		
-
-		return res;
+		return null;
 	}
 
 	//recuperation des notes par id etudiants
 	public List<NoteDto> getNotesByIdEtudiant(long id) {
-		List<Note> lst = noteRepository.getNotesByIdEtudiant(id);
-		List<NoteDto> res = new ArrayList<NoteDto>();
+//		List<Note> lst = noteRepository.getNotesByIdEtudiant(id);
+//		List<NoteDto> res = new ArrayList<NoteDto>();
+//
+//		for (Note n : lst)
+//			res.add(mapper.NoteToNoteDto(n));
 
-		for (Note n : lst)
-			res.add(mapper.NoteToNoteDto(n));
-
-		return res;
+		return null;
 	}
 
 	//recuperation des absences par id etudiants

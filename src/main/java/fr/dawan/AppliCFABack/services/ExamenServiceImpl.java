@@ -65,7 +65,8 @@ public class ExamenServiceImpl implements ExamenService {
 	//methode count
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(examenRepository.countByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(search, search, search));
+//		return new CountDto(examenRepository.countByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(search, search, search));
+		return null;
 	}
 
 	@Override

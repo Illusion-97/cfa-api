@@ -44,24 +44,25 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 	//recuperation de la liste des passages d'examen avec pagination et recherche
 	@Override
 	public List<PassageExamenDto> getAllByPage(int page, int size, String search) {
-		List<PassageExamen> lst = passageExamenRepository.findAllByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search,search, PageRequest.of(page, size)).get().collect(Collectors.toList());
-
-		// conversion vers Dto
-		List<PassageExamenDto> lstDto = new ArrayList<PassageExamenDto>();
-		for (PassageExamen p : lst) {
-			PassageExamenDto pDto = mapper.PassageExamenToPassageExamenDto(p);
-			pDto.setExamenDto(mapper.ExamenToExamenDto(p.getExamen()));
-			pDto.setInterventionDto(mapper.InterventionToInterventionDto(p.getIntervention()));
-			pDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(p.getIntervention().getFormation()));
-			lstDto.add(pDto);
-		}
-		return lstDto;
+//		List<PassageExamen> lst = passageExamenRepository.findAllByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search,search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+//
+//		// conversion vers Dto
+//		List<PassageExamenDto> lstDto = new ArrayList<PassageExamenDto>();
+//		for (PassageExamen p : lst) {
+//			PassageExamenDto pDto = mapper.PassageExamenToPassageExamenDto(p);
+//			pDto.setExamenDto(mapper.ExamenToExamenDto(p.getExamen()));
+//			pDto.setInterventionDto(mapper.InterventionToInterventionDto(p.getIntervention()));
+//			pDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(p.getIntervention().getFormation()));
+//			lstDto.add(pDto);
+//		}
+		return null;
 	}
 
 	//count search
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(passageExamenRepository.countByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search));
+//		return new CountDto(passageExamenRepository.countByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search));
+		return null;
 	}
 
 	//recuperation des passages d'examen par id

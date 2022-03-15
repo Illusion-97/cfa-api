@@ -25,7 +25,7 @@ public class Cursus { // cursus du catalogue Dev Full Stack
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Formation> formations;
 
-	@OneToMany(mappedBy = "cursus")
+	@OneToMany(mappedBy = "cursusActiviteType")
 	private Set<ActiviteType> activiteTypes;
 	
 	public Cursus() {
