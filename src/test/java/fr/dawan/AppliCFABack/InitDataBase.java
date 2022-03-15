@@ -219,8 +219,8 @@ public class InitDataBase {
 		groupe.setNom("groupe 1");
 
 		Note note = new Note();
-		note.setNoteObtenu(20);
-		note.setObservations("parfait");
+//		note.setNoteObtenu(20);
+//		note.setObservations("parfait");
 
 		Entreprise entreprise = new Entreprise();
 		entreprise.setRaisonSociale("raison sociale");
@@ -303,7 +303,7 @@ public class InitDataBase {
 
 		// Examen
 		Examen exam = new Examen();
-		exam.setEnonce("enonce examen");
+//		exam.setEnonce("enonce examen");
 
 
 		// PassageExamen
@@ -497,15 +497,15 @@ public class InitDataBase {
 		devoir.setIntervention(intervention3);
 		devoir.setIntervention(intervention4);
 
-		exam.setCursus(cursus2);
-		exam.setFormation(formation);
-		
+//		exam.setCursus(cursus2);
+//		exam.setFormation(formation);
+//		
 		passageExamen.setExamen(exam);
 		passageExamen.setIntervention(intervention);
 		
-		note.setEtudiant(etudiant);
-		note.setDevoir(devoir);
-		note.setExamen(passageExamen);
+//		note.setEtudiant(etudiant);
+//		note.setDevoir(devoir);
+//		note.setExamen(passageExamen);
 
 
 		monFormateur.setAdresse(adresse);

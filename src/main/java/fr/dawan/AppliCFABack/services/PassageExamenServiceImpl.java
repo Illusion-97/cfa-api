@@ -74,8 +74,8 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		PassageExamenDto pDto =  mapper.PassageExamenToPassageExamenDto(pe.get());
 		pDto.setExamenDto(mapper.ExamenToExamenDto(pe.get().getExamen()));
 		pDto.setInterventionDto(mapper.InterventionToInterventionDto(pe.get().getIntervention()));
-		pDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(pe.get().getExamen().getFormation()));
-		
+//		pDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(pe.get().getExamen().getFormation()));
+	
 		return pDto;
 	}
 
