@@ -84,7 +84,9 @@ public class NoteControllerTest {
 		try {
 			NoteDto eToInsert = new NoteDto();
 			eToInsert.setNoteObtenu(16);
-			eToInsert.setObservations("Good job save");
+			eToInsert.setEtudiantNoteId(1);
+			eToInsert.setExamenId(1);
+			eToInsert.setSatifaction(true);
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
@@ -107,8 +109,10 @@ public class NoteControllerTest {
 
 		try {
 			NoteDto eDto = noteController.getById(idNote+1);
-			eDto.setNoteObtenu(12);
-			eDto.setObservations("Moyen update");
+			eDto.setNoteObtenu(16);
+			eDto.setEtudiantNoteId(1);
+			eDto.setExamenId(1);
+			eDto.setSatifaction(true);
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eDto);
@@ -121,8 +125,9 @@ public class NoteControllerTest {
 			NoteDto res = objectMapper.readValue(jsonReponse, NoteDto.class);
 			assertEquals(res.getId(), eDto.getId());
 			assertEquals(res.getNoteObtenu(), eDto.getNoteObtenu());
-			assertEquals(res.getObservations(), eDto.getObservations());
-			
+			assertEquals(res.getEtudiantNoteId(), eDto.getEtudiantNoteId());
+			assertEquals(res.getExamenId(), eDto.getExamenId());
+			assertEquals(res.getEtudiantNoteId(), eDto.isSatifaction());
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}

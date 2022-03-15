@@ -69,10 +69,10 @@ public class NoteServiceImpl implements NoteService {
 	//recuperation des notes par id
 	@Override
 	public NoteDto getById(long id) {
-//		Optional<Note> n = noteRepository.findById(id);
-//		if (!n.isPresent())
-//			return null;
-//		
+		Optional<Note> n = noteRepository.findById(id);
+		if (!n.isPresent())
+			return null;
+		
 //		NoteDto nDto = mapper.NoteToNoteDto(n.get());
 //		nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.get().getDevoir()));
 //		nDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.get().getEtudiant()));
@@ -80,7 +80,7 @@ public class NoteServiceImpl implements NoteService {
 //		nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.get().getExamen()));
 //		if(n.get().getExamen() != null) nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.get().getExamen().getExamen()));
 //		return nDto;
-		return null;
+		return DtoTools.convert(n.get(), NoteDto.class);
 	}
 
 	//methode d'ajout ou modification d'une note
@@ -109,17 +109,18 @@ public class NoteServiceImpl implements NoteService {
 	//recuperation des note par etudiant id
 	@Override
 	public List<NoteDto> getAllByIdEtudiant(long id) {
-//		List<NoteDto> result = new ArrayList<NoteDto>();
-//		List<Note> list = noteRepository.findAllByEtudiantId(id);
-//		for(Note n : list) {
+		List<NoteDto> result = new ArrayList<NoteDto>();
+		List<Note> list = noteRepository.findAllByEtudiantNoteId(id);
+		for(Note n : list) {
 //			NoteDto nDto = mapper.NoteToNoteDto(n);
 //			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
 //			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
 //			if(n.getExamen() != null) nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.getExamen().getExamen()));
-//			result.add(nDto);
-//		}
-//		return result;
-		return null;
+			NoteDto nDto = DtoTools.convert(n, NoteDto.class);
+			result.add(nDto);
+		}
+		return result;
+		
 	}
 
 }
