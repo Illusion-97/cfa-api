@@ -11,10 +11,10 @@ import fr.dawan.AppliCFABack.entities.Examen;
 @Repository
 public interface ExamenRepository extends JpaRepository<Examen, Long>{
 
-	Page<Examen> findAllByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(String enonce,
-			String formationTitre, String cursusTitre, Pageable pageable);
-
-	long countByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(String search, String search2,
-			String search3);
+//	Page<Examen> findAllByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(String enonce,
+//			String formationTitre, String cursusTitre, Pageable pageable);
+//
+//	long countByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(String search, String search2,
+//			String search3);
 
 }

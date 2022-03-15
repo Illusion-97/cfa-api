@@ -192,7 +192,8 @@ public class InterventionServiceImpl implements InterventionService {
 		if (dev != null)
 			dev.setIntervention(null);
 		// Meme chose : on regarde si un passage d'examen est lié une intervention
-		PassageExamen passExam = passageExamenRepository.findByInterventionId(id);
+//		PassageExamen passExam = passageExamenRepository.findByInterventionId(id);
+		PassageExamen passExam= null;
 		// Si c'est le cas : on enleve sa liaison en rendant l'intervention à null
 		if (passExam != null)
 			passExam.setIntervention(null);
