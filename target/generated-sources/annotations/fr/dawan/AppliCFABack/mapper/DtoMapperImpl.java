@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.mapper;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
@@ -32,6 +33,7 @@ import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
@@ -65,7 +67,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-16T12:31:54+0100",
+    date = "2022-03-16T16:21:15+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -173,10 +175,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         DevoirDto devoirDto = new DevoirDto();
 
-        devoirDto.setId( devoir.getId() );
-        devoirDto.setEnonce( devoir.getEnonce() );
         devoirDto.setDateDebut( devoir.getDateDebut() );
         devoirDto.setDateFin( devoir.getDateFin() );
+        devoirDto.setEnonce( devoir.getEnonce() );
+        devoirDto.setId( devoir.getId() );
 
         return devoirDto;
     }
@@ -311,9 +313,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         PassageExamenDto passageExamenDto = new PassageExamenDto();
 
-        passageExamenDto.setId( passageExamen.getId() );
         passageExamenDto.setDateDebut( passageExamen.getDateDebut() );
         passageExamenDto.setDateFin( passageExamen.getDateFin() );
+        passageExamenDto.setId( passageExamen.getId() );
 
         return passageExamenDto;
     }
@@ -342,10 +344,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         PromotionDto promotionDto = new PromotionDto();
 
-        promotionDto.setId( promotion.getId() );
-        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
+        promotionDto.setId( promotion.getId() );
+        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }
@@ -599,6 +601,21 @@ public class DtoMapperImpl implements DtoMapper {
         remunerationDto.setSmicOuSmc( remuneration.getSmicOuSmc() );
 
         return remunerationDto;
+    }
+
+    @Override
+    public ActiviteTypeDto ActiviteTypeToActiviteTypeDto(ActiviteType activiteType) {
+        if ( activiteType == null ) {
+            return null;
+        }
+
+        ActiviteTypeDto activiteTypeDto = new ActiviteTypeDto();
+
+        activiteTypeDto.setId( activiteType.getId() );
+        activiteTypeDto.setLibelle( activiteType.getLibelle() );
+        activiteTypeDto.setNumeroFiche( activiteType.getNumeroFiche() );
+
+        return activiteTypeDto;
     }
 
     @Override

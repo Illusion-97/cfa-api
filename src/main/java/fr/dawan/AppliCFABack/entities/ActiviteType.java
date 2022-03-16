@@ -2,13 +2,12 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -25,7 +24,7 @@ public class ActiviteType {
 	@Column(nullable = false)
 	private byte numeroFiche;
 	
-	@OneToMany(mappedBy = "activiteType")
+	@OneToMany(mappedBy = "activiteType" ,cascade = CascadeType.ALL )
 	private List<Examen> examens;
 	
 	@ManyToOne 
