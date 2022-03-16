@@ -1,7 +1,9 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -13,11 +15,13 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Promotion;
@@ -86,8 +90,14 @@ public class PromotionServiceImpl implements PromotionService {
 			iDtos.add(iDto);
 		}
 		pDto.setInterventionsDto(iDtos);
-		
-		
+		Set<Examen> examens = promo.getExamens();
+		Set<ExamenDto> examenDtos = new HashSet<ExamenDto>();
+
+		for (Examen examen : examens) {
+			ExamenDto eDto = mapper.ExamenToExamenDto(examen);
+			examenDtos.add(eDto);
+		}		
+		pDto.setExamensDto(examenDtos);
 		return pDto;
 	}
 

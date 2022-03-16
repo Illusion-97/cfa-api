@@ -65,7 +65,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-15T15:30:31+0100",
+    date = "2022-03-16T09:43:20+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -207,9 +207,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         EtudiantDto etudiantDto = new EtudiantDto();
 
+        etudiantDto.setId( etudiant.getId() );
         etudiantDto.setDossierProfessionnel( dossierProfessionnelListToDossierProfessionnelDtoList( etudiant.getDossierProfessionnel() ) );
         etudiantDto.setDossierProjet( dossierProjetListToDossierProjetDtoList( etudiant.getDossierProjet() ) );
-        etudiantDto.setId( etudiant.getId() );
 
         return etudiantDto;
     }
@@ -281,9 +281,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         InterventionDto interventionDto = new InterventionDto();
 
+        interventionDto.setId( intervention.getId() );
         interventionDto.setDateDebut( intervention.getDateDebut() );
         interventionDto.setDateFin( intervention.getDateFin() );
-        interventionDto.setId( intervention.getId() );
         interventionDto.setNoteInfoPersonnel( intervention.getNoteInfoPersonnel() );
 
         return interventionDto;
