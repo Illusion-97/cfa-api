@@ -65,7 +65,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-16T09:43:20+0100",
+    date = "2022-03-16T12:31:54+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -173,10 +173,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         DevoirDto devoirDto = new DevoirDto();
 
+        devoirDto.setId( devoir.getId() );
+        devoirDto.setEnonce( devoir.getEnonce() );
         devoirDto.setDateDebut( devoir.getDateDebut() );
         devoirDto.setDateFin( devoir.getDateFin() );
-        devoirDto.setEnonce( devoir.getEnonce() );
-        devoirDto.setId( devoir.getId() );
 
         return devoirDto;
     }
@@ -207,9 +207,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         EtudiantDto etudiantDto = new EtudiantDto();
 
-        etudiantDto.setId( etudiant.getId() );
         etudiantDto.setDossierProfessionnel( dossierProfessionnelListToDossierProfessionnelDtoList( etudiant.getDossierProfessionnel() ) );
         etudiantDto.setDossierProjet( dossierProjetListToDossierProjetDtoList( etudiant.getDossierProjet() ) );
+        etudiantDto.setId( etudiant.getId() );
 
         return etudiantDto;
     }
@@ -281,9 +281,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         InterventionDto interventionDto = new InterventionDto();
 
-        interventionDto.setId( intervention.getId() );
         interventionDto.setDateDebut( intervention.getDateDebut() );
         interventionDto.setDateFin( intervention.getDateFin() );
+        interventionDto.setId( intervention.getId() );
         interventionDto.setNoteInfoPersonnel( intervention.getNoteInfoPersonnel() );
 
         return interventionDto;
@@ -311,9 +311,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         PassageExamenDto passageExamenDto = new PassageExamenDto();
 
+        passageExamenDto.setId( passageExamen.getId() );
         passageExamenDto.setDateDebut( passageExamen.getDateDebut() );
         passageExamenDto.setDateFin( passageExamen.getDateFin() );
-        passageExamenDto.setId( passageExamen.getId() );
 
         return passageExamenDto;
     }
@@ -342,10 +342,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         PromotionDto promotionDto = new PromotionDto();
 
-        promotionDto.setDateDebut( promotion.getDateDebut() );
-        promotionDto.setDateFin( promotion.getDateFin() );
         promotionDto.setId( promotion.getId() );
         promotionDto.setNom( promotion.getNom() );
+        promotionDto.setDateDebut( promotion.getDateDebut() );
+        promotionDto.setDateFin( promotion.getDateFin() );
 
         return promotionDto;
     }
