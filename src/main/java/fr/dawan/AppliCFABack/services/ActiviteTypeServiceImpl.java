@@ -53,7 +53,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 
 	@Override
 	public ActiviteTypeDto getById(long id) {
-		Optional<ActiviteType>  act = activiteTypeRepo.findById(null);
+		Optional<ActiviteType>  act = activiteTypeRepo.findById(id);
 		if (act.isPresent()) {
 			 ActiviteTypeDto atDto = mapper.ActiviteTypeToActiviteTypeDto(act.get());
 			 List<Examen> examens = act.get().getExamens();
@@ -62,7 +62,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 				 examensDto.add(mapper.ExamenToExamenDto(examen));
 			}
 			 atDto.setExamensDto(examensDto);
-			 
+			 atDto.setCursusActiviteTypeId(act.get().getCursusActiviteType().getId());
 			return atDto;
 		}
 		

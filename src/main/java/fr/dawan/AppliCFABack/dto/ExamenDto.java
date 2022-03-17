@@ -15,6 +15,7 @@ public class ExamenDto {
 	private PromotionDto promotionDto;
 	private Set<CompetenceProfessionnelleDto> competenceProfessionnelleDto;
 	private Set<NoteDto> notesDto;
+	
 	public long getId() {
 		return id;
 	}

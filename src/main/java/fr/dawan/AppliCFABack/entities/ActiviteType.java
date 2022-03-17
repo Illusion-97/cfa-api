@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,6 +30,10 @@ public class ActiviteType {
 	
 	@ManyToOne 
 	private Cursus cursusActiviteType;
+	
+	@OneToMany(mappedBy = "activiteType")
+	private Set<CompetenceProfessionnelle> competenceProfessionnelles;
+	
 
 	public long getId() {
 		return id;
@@ -69,5 +74,14 @@ public class ActiviteType {
 	public void setCursusActiviteType(Cursus cursusActiviteType) {
 		this.cursusActiviteType = cursusActiviteType;
 	}
+
+	public Set<CompetenceProfessionnelle> getCompetenceProfessionnelles() {
+		return competenceProfessionnelles;
+	}
+
+	public void setCompetenceProfessionnelles(Set<CompetenceProfessionnelle> competenceProfessionnelles) {
+		this.competenceProfessionnelles = competenceProfessionnelles;
+	}
+	
 	
 }
