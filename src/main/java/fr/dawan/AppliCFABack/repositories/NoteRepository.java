@@ -23,10 +23,10 @@ public interface NoteRepository extends JpaRepository<Note, Long>{
 //
 //	Page<Note> findAllByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(
 //			String search, String search2, String search3, String search4, Pageable pageable);
-//
+
 //	long countByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(
 //			String search, String search2, String search3, String search4);
 //
-//	List<Note> findAllByEtudiantId(long id);
+	List<Note> findAllByEtudiantNoteId(long id);
 
 }

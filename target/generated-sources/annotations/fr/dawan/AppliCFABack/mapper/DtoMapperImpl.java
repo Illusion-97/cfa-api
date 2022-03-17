@@ -69,7 +69,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-17T09:43:33+0100",
+    date = "2022-03-17T10:01:20+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -94,9 +94,7 @@ public class DtoMapperImpl implements DtoMapper {
         ActiviteTypeDto activiteTypeDto = new ActiviteTypeDto();
 
         activiteTypeDto.setId( activiteType.getId() );
-        if ( activiteType.getLibelle() != null ) {
-            activiteTypeDto.setLibelle( Long.parseLong( activiteType.getLibelle() ) );
-        }
+        activiteTypeDto.setLibelle( activiteType.getLibelle() );
         activiteTypeDto.setNumeroFiche( activiteType.getNumeroFiche() );
 
         return activiteTypeDto;
@@ -335,6 +333,7 @@ public class DtoMapperImpl implements DtoMapper {
         NoteDto noteDto = new NoteDto();
 
         noteDto.setId( note.getId() );
+        noteDto.setSatifaction( note.isSatifaction() );
 
         return noteDto;
     }
@@ -635,6 +634,21 @@ public class DtoMapperImpl implements DtoMapper {
         remunerationDto.setSmicOuSmc( remuneration.getSmicOuSmc() );
 
         return remunerationDto;
+    }
+
+    @Override
+    public ActiviteTypeDto ActiviteTypeToActiviteTypeDto(ActiviteType activiteType) {
+        if ( activiteType == null ) {
+            return null;
+        }
+
+        ActiviteTypeDto activiteTypeDto = new ActiviteTypeDto();
+
+        activiteTypeDto.setId( activiteType.getId() );
+        activiteTypeDto.setLibelle( activiteType.getLibelle() );
+        activiteTypeDto.setNumeroFiche( activiteType.getNumeroFiche() );
+
+        return activiteTypeDto;
     }
 
     @Override

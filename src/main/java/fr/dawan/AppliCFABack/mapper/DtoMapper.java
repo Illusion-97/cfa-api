@@ -164,6 +164,9 @@ public interface DtoMapper {
 	@Mapping(source = ".", target = ".")
 	RemunerationDto RemunerationTORemunerationDto(Remuneration remuneration);
 	
+	@Mapping(source = ".", target = ".")
+	ActiviteTypeDto ActiviteTypeToActiviteTypeDto(ActiviteType activiteType);
+	
 	@Mapping(target = "contenu", ignore = true)
 	@Mapping(target = "cursusLst", ignore = true)
 	@Mapping(source = "id", target = "idDg2")

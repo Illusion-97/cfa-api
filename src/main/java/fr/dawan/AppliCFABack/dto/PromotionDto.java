@@ -2,6 +2,9 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+
+import fr.dawan.AppliCFABack.entities.Examen;
 
 public class PromotionDto {
 	private long id;
@@ -11,6 +14,7 @@ public class PromotionDto {
 	private CEFDto cefDto;
 	private List<EtudiantDto> etudiantsDto;
 	private List<InterventionDto> interventionsDto;
+	private Set<ExamenDto> examensDto;
 	private CentreFormationDto centreFormationDto;
 	private UtilisateurDto referentPedagogiqueDto;
 	private CursusDto cursusDto;
@@ -97,6 +101,14 @@ public class PromotionDto {
 
 	public void setInterventionsDto(List<InterventionDto> interventionsDto) {
 		this.interventionsDto = interventionsDto;
+	}
+	
+	public Set<ExamenDto> getExamensDto() {
+		return examensDto;
+	}
+
+	public void setExamensDto(Set<ExamenDto> examensDto) {
+		this.examensDto = examensDto;
 	}
 
 }
