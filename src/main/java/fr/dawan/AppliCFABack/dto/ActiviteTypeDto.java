@@ -15,6 +15,28 @@ public class ActiviteTypeDto {
 	
 	private long cursusActiviteTypeId;
 
+	
+	public ActiviteTypeDto() {
+		super();
+	}
+
+	public ActiviteTypeDto(long id, String libelle, byte numeroFiche, List<ExamenDto> examensDto,
+			long cursusActiviteTypeId) {
+		super();
+		this.id = id;
+		this.libelle = libelle;
+		this.numeroFiche = numeroFiche;
+		this.examensDto = examensDto;
+		this.cursusActiviteTypeId = cursusActiviteTypeId;
+	}
+
+	public ActiviteTypeDto(long id, String libelle, byte numeroFiche) {
+		super();
+		this.id = id;
+		this.libelle = libelle;
+		this.numeroFiche = numeroFiche;
+	}
+
 	public long getId() {
 		return id;
 	}

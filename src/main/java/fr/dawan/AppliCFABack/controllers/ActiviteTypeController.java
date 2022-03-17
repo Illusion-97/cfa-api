@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,11 +36,20 @@ public class ActiviteTypeController {
 	}
 	
 	@PostMapping(consumes = "application/json",produces = "application/json")
-	ActiviteTypeDto save( @RequestBody ActiviteTypeDto actDto) {
+	ResponseEntity<ActiviteTypeDto> save( @RequestBody ActiviteTypeDto actDto) {
+		
+		return ResponseEntity
+				.status(HttpStatus.CREATED)
+				.body(activiteTypeService.saveOrUpdate(actDto));
+	}
+	
+	@PutMapping(consumes = "application/json",produces = "application/json")
+	ActiviteTypeDto update( @RequestBody ActiviteTypeDto actDto) {
 		return activiteTypeService.saveOrUpdate(actDto);
 	}
+	
 	@DeleteMapping(value = "/{id}", produces = "text/plain")
-	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
+	public ResponseEntity<String> deleteById(@PathVariable(value = "id") long id) {
 		try {
 			activiteTypeService.deleteById(id);
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
