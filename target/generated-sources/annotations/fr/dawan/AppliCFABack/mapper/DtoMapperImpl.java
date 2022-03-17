@@ -1,11 +1,13 @@
 package fr.dawan.AppliCFABack.mapper;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CerfaDto;
+import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.ContratDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
@@ -32,10 +34,12 @@ import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Cerfa;
+import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Contrat;
 import fr.dawan.AppliCFABack.entities.Cursus;
@@ -65,10 +69,38 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-15T14:58:13+0100",
+    date = "2022-03-17T09:18:54+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
+
+    @Override
+    public CompetenceProfessionnelleDto CompetenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle) {
+        if ( competenceProfessionnelle == null ) {
+            return null;
+        }
+
+        CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto();
+
+        return competenceProfessionnelleDto;
+    }
+
+    @Override
+    public ActiviteTypeDto ActiviteTypeToActiviteDto(ActiviteType activiteType) {
+        if ( activiteType == null ) {
+            return null;
+        }
+
+        ActiviteTypeDto activiteTypeDto = new ActiviteTypeDto();
+
+        activiteTypeDto.setId( activiteType.getId() );
+        if ( activiteType.getLibelle() != null ) {
+            activiteTypeDto.setLibelle( Long.parseLong( activiteType.getLibelle() ) );
+        }
+        activiteTypeDto.setNumeroFiche( activiteType.getNumeroFiche() );
+
+        return activiteTypeDto;
+    }
 
     @Override
     public AbsenceDto AbsenceToAbsenceDto(Absence absence) {
@@ -222,7 +254,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExamenDto examenDto = new ExamenDto();
 
+        examenDto.setDateExamen( examen.getDateExamen() );
+        examenDto.setDescriptif( examen.getDescriptif() );
+        examenDto.setDuree( examen.getDuree() );
         examenDto.setId( examen.getId() );
+        examenDto.setPieceJointe( examen.getPieceJointe() );
+        examenDto.setTitre( examen.getTitre() );
 
         return examenDto;
     }

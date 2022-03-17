@@ -78,12 +78,12 @@ public class ExamenControllerTest {
 			fail(e.getMessage());
 		}
 	}
-
+	
 	@Test
 	void testSave() {
 		try {
 			ExamenDto eToInsert = new ExamenDto();
-			eToInsert.setEnonce("enonce save");
+			eToInsert.setTitre("Titre de mon examen");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
@@ -106,7 +106,7 @@ public class ExamenControllerTest {
 
 		try {
 			ExamenDto eDto = examenController.getById(idExamen+1);
-			eDto.setEnonce("enonce update");
+			eDto.setTitre("Mon titre update");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eDto);
@@ -118,7 +118,7 @@ public class ExamenControllerTest {
 
 			ExamenDto res = objectMapper.readValue(jsonReponse, ExamenDto.class);
 			assertEquals(res.getId(), eDto.getId());
-			assertEquals(res.getEnonce(), eDto.getEnonce());
+			assertEquals(res.getTitre(), eDto.getTitre());
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -132,7 +132,7 @@ public class ExamenControllerTest {
 			String rep = mockMvc.perform(delete("/examens/"+idExamen) 
 					.accept(MediaType.TEXT_PLAIN))
 					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
-			assertEquals("suppression effectuée", rep);
+			assertEquals("suppression effectuÃ©e", rep);
 
 		} catch (Exception e) {
 			fail(e.getMessage());

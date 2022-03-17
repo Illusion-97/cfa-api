@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -42,19 +43,19 @@ public class Examen { // examen Java
 	private String pieceJointe;
 	
 	@Column(nullable = false)
-	private Date dateExamen; 
+	private LocalDateTime dateExamen; 
 	
 	@ManyToOne
 	private ActiviteType activiteType;
+	
+	@ManyToOne
+	private Promotion promotion;
 	
 	@ManyToMany
 	private Set<CompetenceProfessionnelle> competenceProfessionnelle;
 	
 	@OneToMany(mappedBy = "examen")
 	private Set<Note> notes;
-	
-	@ManyToOne
-	private Promotion promotion;
 	
 	public Set<CompetenceProfessionnelle> getCompetenceProfessionnelle() {
 		return competenceProfessionnelle;
@@ -116,11 +117,11 @@ public class Examen { // examen Java
 		this.pieceJointe = pieceJointe;
 	}
 
-	public Date getDateExamen() {
+	public LocalDateTime getDateExamen() {
 		return dateExamen;
 	}
 
-	public void setDateExamen(Date dateExamen) {
+	public void setDateExamen(LocalDateTime dateExamen) {
 		this.dateExamen = dateExamen;
 	}
 
@@ -134,10 +135,6 @@ public class Examen { // examen Java
 
 	public Set<CompetenceProfessionnelle> getCompetencesProfessionnelles() {
 		return competenceProfessionnelle;
-	}
-
-	public void setCompetencesProfessionnelles(Set<CompetenceProfessionnelle> competencesProfessionnelles) {
-		this.competenceProfessionnelle = competenceProfessionnelle;
 	}
 
 	public long getId() {

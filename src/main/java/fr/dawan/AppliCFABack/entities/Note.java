@@ -22,7 +22,6 @@ public class Note {
 	@Column(nullable = false)
 	private boolean satifaction;
 	
-	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Examen examen;
 	
