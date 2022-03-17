@@ -167,6 +167,8 @@ public interface DtoMapper {
 	@Mapping(source = ".", target = ".")
 	ActiviteTypeDto ActiviteTypeToActiviteTypeDto(ActiviteType activiteType);
 	
+	@Mapping(source = ".", target = ".")
+	CompetenceProfessionnelleDto CompetenceProfessionnelleToCompetenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
 	@Mapping(target = "contenu", ignore = true)
 	@Mapping(target = "cursusLst", ignore = true)
 	@Mapping(source = "id", target = "idDg2")
@@ -187,6 +189,8 @@ public interface DtoMapper {
 	@Mapping(source = "country", target = "countryCode")
 	@Mapping(target = "id", ignore = true)
 	CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
+
+	
 
 	
 	

@@ -9,7 +9,15 @@ public class CompetenceProfessionnelleDto {
 	private long id;
 	private String libelle;
 	private byte numeroFiche;
-	private List<Examen> examensDto;
+	private List<ExamenDto> examensDto;
+	private long activiteTypeId;
+	
+	public long getActiviteTypeId() {
+		return activiteTypeId;
+	}
+	public void setActiviteTypeId(long activiteTypeId) {
+		this.activiteTypeId = activiteTypeId;
+	}
 	public long getId() {
 		return id;
 	}
@@ -28,10 +36,10 @@ public class CompetenceProfessionnelleDto {
 	public void setNumeroFiche(byte numeroFiche) {
 		this.numeroFiche = numeroFiche;
 	}
-	public List<Examen> getExamensDto() {
+	public List<ExamenDto> getExamensDto() {
 		return examensDto;
 	}
-	public void setExamensDto(List<Examen> examensDto) {
+	public void setExamensDto(List<ExamenDto> examensDto) {
 		this.examensDto = examensDto;
 	}
 

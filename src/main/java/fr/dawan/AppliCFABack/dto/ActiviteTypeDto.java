@@ -1,6 +1,8 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.util.List;
+import java.util.Set;
+
 
 public class ActiviteTypeDto {
 	
@@ -14,21 +16,14 @@ public class ActiviteTypeDto {
 	private List<ExamenDto> examensDto;
 	
 	private long cursusActiviteTypeId;
-
+	
+	private Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto;
+	
 	
 	public ActiviteTypeDto() {
 		super();
 	}
 
-	public ActiviteTypeDto(long id, String libelle, byte numeroFiche, List<ExamenDto> examensDto,
-			long cursusActiviteTypeId) {
-		super();
-		this.id = id;
-		this.libelle = libelle;
-		this.numeroFiche = numeroFiche;
-		this.examensDto = examensDto;
-		this.cursusActiviteTypeId = cursusActiviteTypeId;
-	}
 
 	public ActiviteTypeDto(long id, String libelle, byte numeroFiche) {
 		super();
@@ -75,6 +70,16 @@ public class ActiviteTypeDto {
 
 	public void setCursusActiviteTypeId(long cursusActiviteTypeId) {
 		this.cursusActiviteTypeId = cursusActiviteTypeId;
+	}
+
+
+	public Set<CompetenceProfessionnelleDto> getCompetenceProfessionnellesDto() {
+		return competenceProfessionnellesDto;
+	}
+
+
+	public void setCompetenceProfessionnellesDto(Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto) {
+		this.competenceProfessionnellesDto = competenceProfessionnellesDto;
 	}
 
 	
