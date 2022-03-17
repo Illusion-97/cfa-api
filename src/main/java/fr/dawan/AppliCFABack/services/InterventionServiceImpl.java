@@ -167,6 +167,7 @@ public class InterventionServiceImpl implements InterventionService {
 			interventionDto.setFormateursDto(lstFormaDto);
 			interventionDto.setPromotionsDto(lstPromoDto);
 			interventionDto.setFormationDto(formationDto);
+			interventionDto.setHeuresDisponsees();
 			return interventionDto;
 		}
 

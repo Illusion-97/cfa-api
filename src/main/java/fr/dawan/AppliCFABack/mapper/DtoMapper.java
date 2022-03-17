@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
@@ -38,6 +39,7 @@ import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
@@ -152,6 +154,9 @@ public interface DtoMapper {
 
 	@Mapping(source = ".", target = ".")
 	RemunerationDto RemunerationTORemunerationDto(Remuneration remuneration);
+	
+	@Mapping(source = ".", target = ".")
+	ActiviteTypeDto ActiviteTypeToActiviteTypeDto(ActiviteType activiteType);
 	
 	@Mapping(target = "contenu", ignore = true)
 	@Mapping(target = "cursusLst", ignore = true)

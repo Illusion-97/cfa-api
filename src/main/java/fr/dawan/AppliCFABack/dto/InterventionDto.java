@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
+
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,11 +14,14 @@ public class InterventionDto {
 	private List<PromotionDto> promotionsDto; // CDA 2021
 	private List<FormateurDto> formateursDto;
 	private String noteInfoPersonnel;
+	private long heuresDisponsees;
 	
 	public InterventionDto() {
 		// TODO Auto-generated constructor stub
+		
+	
 	}
-
+	
 	public long getId() {
 		return id;
 	}
@@ -80,5 +85,19 @@ public class InterventionDto {
 	public void setNoteInfoPersonnel(String noteInfoPersonnel) {
 		this.noteInfoPersonnel = noteInfoPersonnel;
 	}
+	public long getHeuresDisponsees() {
+		return heuresDisponsees;
+	}
+	public void setHeuresDisponsees() {
+		if (this.getDateDebut() != null && this.getDateFin() != null) {
+			this.heuresDisponsees =	Duration.between(this.getDateDebut().atStartOfDay(), this.getDateFin().atStartOfDay()).toDays() *7;
+			
+		}
+	}
+	public void setHeuresDisponsees(long heuresDisponsees) {
+		this.heuresDisponsees = heuresDisponsees;
+	}
+
+	
 
 }

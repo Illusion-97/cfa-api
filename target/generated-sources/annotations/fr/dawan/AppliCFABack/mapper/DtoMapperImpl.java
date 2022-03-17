@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.mapper;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
@@ -32,6 +33,7 @@ import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
@@ -65,7 +67,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-15T14:58:13+0100",
+    date = "2022-03-16T16:21:15+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -298,6 +300,7 @@ public class DtoMapperImpl implements DtoMapper {
         NoteDto noteDto = new NoteDto();
 
         noteDto.setId( note.getId() );
+        noteDto.setSatifaction( note.isSatifaction() );
 
         return noteDto;
     }
@@ -598,6 +601,21 @@ public class DtoMapperImpl implements DtoMapper {
         remunerationDto.setSmicOuSmc( remuneration.getSmicOuSmc() );
 
         return remunerationDto;
+    }
+
+    @Override
+    public ActiviteTypeDto ActiviteTypeToActiviteTypeDto(ActiviteType activiteType) {
+        if ( activiteType == null ) {
+            return null;
+        }
+
+        ActiviteTypeDto activiteTypeDto = new ActiviteTypeDto();
+
+        activiteTypeDto.setId( activiteType.getId() );
+        activiteTypeDto.setLibelle( activiteType.getLibelle() );
+        activiteTypeDto.setNumeroFiche( activiteType.getNumeroFiche() );
+
+        return activiteTypeDto;
     }
 
     @Override
