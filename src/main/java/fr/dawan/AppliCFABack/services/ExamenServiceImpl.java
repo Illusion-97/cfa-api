@@ -53,10 +53,18 @@ public class ExamenServiceImpl implements ExamenService {
 			Set<Note> lstNotes = e.getNotes();
 			Set<NoteDto> lstNoteDto = new HashSet<NoteDto>();
 			for (Note note : lstNotes) {
-				if(note != null)
-					lstNoteDto.add(mapper.NoteToNoteDto(note));
+				if(note != null) {
+					NoteDto noteDto = mapper.NoteToNoteDto(note);
+					
+					noteDto.setPrenom(note.getEtudiantNote().);
+//					noteDto.setPrenom(note.getEtudiantNote().getUtilisateur().getPrenom());
+//					noteDto.setNom("chevallereau");
+//					noteDto.setPrenom("valentin");
+					lstNoteDto.add(noteDto);	
+				}
+	
+
 			}
-			
 			
 			eDto.setPromotionDto(mapper.PromotionToPromotionDto(e.getPromotion()));
 // Le pb			eDto.setActiviteTypeDto(mapper.ActiviteTypeToActiviteDto(e.getActiviteType()));		
@@ -82,7 +90,7 @@ public class ExamenServiceImpl implements ExamenService {
 		for (Examen e : lst) {
 			ExamenDto eDto = mapper.ExamenToExamenDto(e);
 			
-			eDto.setPromotionDto(mapper.PromotionToPromotionDto(null));
+			eDto.setPromotionDto(mapper.PromotionToPromotionDto(e.getPromotion()));
 //			eDto.setCursusDto(mapper.CursusToCursusDto(e.getCursus()));
 //			eDto.setFormationDto(mapper.FormationToFormationDto(e.getFormation()));
 			lstDto.add(eDto);
