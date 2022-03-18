@@ -55,7 +55,7 @@ public class CompetenceProfessionnelleController {
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
 			
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression non réalisée");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
 		}
 		
 	}
