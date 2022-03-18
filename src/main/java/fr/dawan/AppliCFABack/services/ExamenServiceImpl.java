@@ -56,7 +56,7 @@ public class ExamenServiceImpl implements ExamenService {
 				if(note != null) {
 					NoteDto noteDto = mapper.NoteToNoteDto(note);
 					
-					noteDto.setPrenom(note.getEtudiantNote().);
+//					noteDto.setPrenom(note.getEtudiantNote());
 //					noteDto.setPrenom(note.getEtudiantNote().getUtilisateur().getPrenom());
 //					noteDto.setNom("chevallereau");
 //					noteDto.setPrenom("valentin");
