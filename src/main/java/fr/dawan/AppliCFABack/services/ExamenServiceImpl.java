@@ -54,27 +54,12 @@ public class ExamenServiceImpl implements ExamenService {
 			Set<NoteDto> lstNoteDto = new HashSet<NoteDto>();
 			for (Note note : lstNotes) {
 				if(note != null) {
-					NoteDto noteDto = mapper.NoteToNoteDto(note);
-					
-//					noteDto.setPrenom(note.getEtudiantNote());
-//					noteDto.setPrenom(note.getEtudiantNote().getUtilisateur().getPrenom());
-//					noteDto.setNom("chevallereau");
-//					noteDto.setPrenom("valentin");
+					NoteDto noteDto = DtoTools.convert(note, NoteDto.class);
 					lstNoteDto.add(noteDto);	
 				}
-	
-
 			}
-			
 			eDto.setPromotionDto(mapper.PromotionToPromotionDto(e.getPromotion()));
-// Le pb			eDto.setActiviteTypeDto(mapper.ActiviteTypeToActiviteDto(e.getActiviteType()));		
-//			eDto.setCompetenceProfessionnelleDto(lstCpDto);
 			eDto.setNotesDto(lstNoteDto);
-// ************* AU DESSUS = A RAJOUTER *************
-			
-			//eDto.setCursusDto(mapper.CursusToCursusDto(e.getCursus()));
-			//eDto.setFormationDto(mapper.FormationToFormationDto(e.getFormation()));
-			
 			lstDto.add(eDto);
 		}
 		return lstDto;

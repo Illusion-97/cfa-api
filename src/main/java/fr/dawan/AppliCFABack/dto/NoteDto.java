@@ -8,26 +8,23 @@ public class NoteDto {
 	private boolean satifaction;
 	private long etudiantNoteId;
 	private long examenId;
-	private String etudiantNoteNom;
-	private String etudiantNotePrenom;
+	private String etudiantNoteUtilisateurNom;
+	private String etudiantNoteUtilisateurPrenom;
 	
-
-
-
-	public String getEtudiantNoteNom() {
-		return etudiantNoteNom;
+	public String getEtudiantNoteUtilisateurNom() {
+		return etudiantNoteUtilisateurNom;
 	}
 
-	public void setEtudiantNoteNom(String etudiantNoteNom) {
-		this.etudiantNoteNom = etudiantNoteNom;
+	public void setEtudiantNoteUtilisateurNom(String etudiantNoteUtilisateurNom) {
+		this.etudiantNoteUtilisateurNom = etudiantNoteUtilisateurNom;
 	}
 
-	public String getEtudiantNotePrenom() {
-		return etudiantNotePrenom;
+	public String getEtudiantNoteUtilisateurPrenom() {
+		return etudiantNoteUtilisateurPrenom;
 	}
 
-	public void setEtudiantNotePrenom(String etudiantNotePrenom) {
-		this.etudiantNotePrenom = etudiantNotePrenom;
+	public void setEtudiantNoteUtilisateurPrenom(String etudiantNoteUtilisateurPrenom) {
+		this.etudiantNoteUtilisateurPrenom = etudiantNoteUtilisateurPrenom;
 	}
 
 	public long getId() {
