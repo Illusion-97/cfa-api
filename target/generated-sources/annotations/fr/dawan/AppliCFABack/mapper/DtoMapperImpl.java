@@ -69,7 +69,9 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-18T11:57:37+0100",
+
+    date = "2022-03-18T14:52:03+0100",
+
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -80,11 +82,17 @@ public class DtoMapperImpl implements DtoMapper {
             return null;
         }
 
-        CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto();
+        long id = 0L;
+        String libelle = null;
+        byte numeroFiche = 0;
 
-        competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
-        competenceProfessionnelleDto.setLibelle( competenceProfessionnelle.getLibelle() );
-        competenceProfessionnelleDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
+        id = competenceProfessionnelle.getId();
+        libelle = competenceProfessionnelle.getLibelle();
+        numeroFiche = competenceProfessionnelle.getNumeroFiche();
+
+        long activiteTypeId = 0L;
+
+        CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto( id, libelle, numeroFiche, activiteTypeId );
 
         return competenceProfessionnelleDto;
     }
@@ -662,11 +670,17 @@ public class DtoMapperImpl implements DtoMapper {
             return null;
         }
 
-        CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto();
+        long id = 0L;
+        String libelle = null;
+        byte numeroFiche = 0;
 
-        competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
-        competenceProfessionnelleDto.setLibelle( competenceProfessionnelle.getLibelle() );
-        competenceProfessionnelleDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
+        id = competenceProfessionnelle.getId();
+        libelle = competenceProfessionnelle.getLibelle();
+        numeroFiche = competenceProfessionnelle.getNumeroFiche();
+
+        long activiteTypeId = 0L;
+
+        CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto( id, libelle, numeroFiche, activiteTypeId );
 
         return competenceProfessionnelleDto;
     }

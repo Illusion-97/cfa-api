@@ -12,6 +12,14 @@ public class CompetenceProfessionnelleDto {
 	private List<ExamenDto> examensDto;
 	private long activiteTypeId;
 	
+	
+	public CompetenceProfessionnelleDto(long id, String libelle, byte numeroFiche, long activiteTypeId) {
+		super();
+		this.id = id;
+		this.libelle = libelle;
+		this.numeroFiche = numeroFiche;
+		this.activiteTypeId = activiteTypeId;
+	}
 	public long getActiviteTypeId() {
 		return activiteTypeId;
 	}
