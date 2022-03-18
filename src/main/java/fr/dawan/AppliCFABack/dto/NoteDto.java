@@ -4,11 +4,31 @@ import fr.dawan.AppliCFABack.entities.Examen;
 
 public class NoteDto {
 	private long id;
-	private double noteObtenu;
+	private double noteObtenue;
 	private boolean satifaction;
 	private long etudiantNoteId;
 	private long examenId;
+	private String etudiantNoteNom;
+	private String etudiantNotePrenom;
 	
+
+
+
+	public String getEtudiantNoteNom() {
+		return etudiantNoteNom;
+	}
+
+	public void setEtudiantNoteNom(String etudiantNoteNom) {
+		this.etudiantNoteNom = etudiantNoteNom;
+	}
+
+	public String getEtudiantNotePrenom() {
+		return etudiantNotePrenom;
+	}
+
+	public void setEtudiantNotePrenom(String etudiantNotePrenom) {
+		this.etudiantNotePrenom = etudiantNotePrenom;
+	}
 
 	public long getId() {
 		return id;
@@ -18,12 +38,12 @@ public class NoteDto {
 		this.id = id;
 	}
 
-	public double getNoteObtenu() {
-		return noteObtenu;
+	public double getNoteObtenue() {
+		return noteObtenue;
 	}
 
-	public void setNoteObtenu(double noteObtenu) {
-		this.noteObtenu = noteObtenu;
+	public void setNoteObtenue(double noteObtenue) {
+		this.noteObtenue = noteObtenue;
 	}
 
 	public boolean isSatifaction() {

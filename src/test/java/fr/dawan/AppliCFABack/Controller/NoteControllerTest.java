@@ -83,7 +83,7 @@ public class NoteControllerTest {
 	void testSave() {
 		try {
 			NoteDto eToInsert = new NoteDto();
-			eToInsert.setNoteObtenu(16);
+			eToInsert.setNoteObtenue(16);
 			eToInsert.setEtudiantNoteId(1);
 			eToInsert.setExamenId(1);
 			eToInsert.setSatifaction(true);
@@ -109,7 +109,7 @@ public class NoteControllerTest {
 
 		try {
 			NoteDto eDto = noteController.getById(idNote+1);
-			eDto.setNoteObtenu(16);
+			eDto.setNoteObtenue(16);
 			eDto.setEtudiantNoteId(1);
 			eDto.setExamenId(1);
 			eDto.setSatifaction(true);
@@ -124,7 +124,7 @@ public class NoteControllerTest {
 
 			NoteDto res = objectMapper.readValue(jsonReponse, NoteDto.class);
 			assertEquals(res.getId(), eDto.getId());
-			assertEquals(res.getNoteObtenu(), eDto.getNoteObtenu());
+			assertEquals(res.getNoteObtenue(), eDto.getNoteObtenue());
 			assertEquals(res.getEtudiantNoteId(), eDto.getEtudiantNoteId());
 			assertEquals(res.getExamenId(), eDto.getExamenId());
 			assertEquals(res.getEtudiantNoteId(), eDto.isSatifaction());
