@@ -87,6 +87,7 @@ public class PromotionServiceImpl implements PromotionService {
 		for(Intervention i : interventions) {
 			InterventionDto iDto =mapper.InterventionToInterventionDto(i);
 			iDto.setFormationDto(mapper.FormationToFormationDto(i.getFormation()));
+			iDto.setHeuresDisponsees();
 			iDtos.add(iDto);
 		}
 		pDto.setInterventionsDto(iDtos);
