@@ -67,7 +67,10 @@ public class InterventionServiceImpl implements InterventionService {
 
 		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
 		for (Intervention i : lst) {
-			lstDto.add(mapper.InterventionToInterventionDto(i));
+			InterventionDto interventionDto = mapper.InterventionToInterventionDto(i);
+			interventionDto.setHeuresDisponsees();
+			lstDto.add(interventionDto);
+			
 		}
 		return lstDto;
 	}
