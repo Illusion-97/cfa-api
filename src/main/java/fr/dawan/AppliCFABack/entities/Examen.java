@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
@@ -43,7 +44,7 @@ public class Examen { // examen Java
 	private String pieceJointe;
 	
 	@Column(nullable = false)
-	private LocalDateTime dateExamen; 
+	private LocalDate dateExamen; 
 	
 	@ManyToOne
 	private ActiviteType activiteType;
@@ -117,11 +118,12 @@ public class Examen { // examen Java
 		this.pieceJointe = pieceJointe;
 	}
 
-	public LocalDateTime getDateExamen() {
+
+	public LocalDate getDateExamen() {
 		return dateExamen;
 	}
 
-	public void setDateExamen(LocalDateTime dateExamen) {
+	public void setDateExamen(LocalDate dateExamen) {
 		this.dateExamen = dateExamen;
 	}
 

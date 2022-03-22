@@ -1,8 +1,9 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ExamenDto {
 	private long id;
@@ -10,12 +11,12 @@ public class ExamenDto {
 	private String descriptif;
 	private double duree;
 	private String pieceJointe;
-	private LocalDateTime dateExamen;
+	private LocalDate dateExamen;
 	private ActiviteTypeDto activiteTypeDto;
 	private PromotionDto promotionDto;
 	private Set<CompetenceProfessionnelleDto> competenceProfessionnelleDto;
 	private Set<NoteDto> notesDto;
-	
+	private List<Byte> blocksConcernee;
 	public long getId() {
 		return id;
 	}
@@ -46,10 +47,11 @@ public class ExamenDto {
 	public void setPieceJointe(String pieceJointe) {
 		this.pieceJointe = pieceJointe;
 	}
-	public LocalDateTime getDateExamen() {
+	
+	public LocalDate getDateExamen() {
 		return dateExamen;
 	}
-	public void setDateExamen(LocalDateTime dateExamen) {
+	public void setDateExamen(LocalDate dateExamen) {
 		this.dateExamen = dateExamen;
 	}
 	public ActiviteTypeDto getActiviteTypeDto() {
@@ -69,6 +71,8 @@ public class ExamenDto {
 	}
 	public void setCompetenceProfessionnelleDto(Set<CompetenceProfessionnelleDto> competenceProfessionnelleDto) {
 		this.competenceProfessionnelleDto = competenceProfessionnelleDto;
+		List<Byte> blocksConcernee=  this.competenceProfessionnelleDto.stream().map(CompetenceProfessionnelleDto::getNumeroFiche).collect(Collectors.toList());
+		setBlocksConcernee(blocksConcernee);
 	}
 	public Set<NoteDto> getNotesDto() {
 		return notesDto;
@@ -76,8 +80,13 @@ public class ExamenDto {
 	public void setNotesDto(Set<NoteDto> notesDto) {
 		this.notesDto = notesDto;
 	}
+	public List<Byte> getBlocksConcernee() {
+		return blocksConcernee;
+	}
+	private void setBlocksConcernee(List<Byte> blocksConcernee) {
+		this.blocksConcernee = blocksConcernee;
+	}
 
-	
 //	private FormationDto formationDto;
 //	private CursusDto cursusDto;
 
