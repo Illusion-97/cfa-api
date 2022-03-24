@@ -63,13 +63,14 @@ import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Remuneration;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-21T17:28:05+0100",
+    date = "2022-03-24T09:30:07+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -260,14 +261,21 @@ public class DtoMapperImpl implements DtoMapper {
             return null;
         }
 
-        ExamenDto examenDto = new ExamenDto();
+        LocalDate dateExamen = null;
+        String descriptif = null;
+        double duree = 0.0d;
+        long id = 0L;
+        String pieceJointe = null;
+        String titre = null;
 
-        examenDto.setDateExamen( examen.getDateExamen() );
-        examenDto.setDescriptif( examen.getDescriptif() );
-        examenDto.setDuree( examen.getDuree() );
-        examenDto.setId( examen.getId() );
-        examenDto.setPieceJointe( examen.getPieceJointe() );
-        examenDto.setTitre( examen.getTitre() );
+        dateExamen = examen.getDateExamen();
+        descriptif = examen.getDescriptif();
+        duree = examen.getDuree();
+        id = examen.getId();
+        pieceJointe = examen.getPieceJointe();
+        titre = examen.getTitre();
+
+        ExamenDto examenDto = new ExamenDto( id, titre, descriptif, duree, pieceJointe, dateExamen );
 
         return examenDto;
     }

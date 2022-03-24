@@ -76,8 +76,11 @@ public class ExamenController {
 	// ##################################################
 
 	@PostMapping(consumes = "application/json", produces = "application/json")
-	public ExamenDto save(@RequestBody ExamenDto eDto) {
-		return examenService.saveOrUpdate(eDto);
+	ResponseEntity<ExamenDto> save(@RequestBody ExamenDto eDto) {
+		return ResponseEntity
+				.status(HttpStatus.CREATED)
+				.body(examenService.saveOrUpdate(eDto));
+	
 	}
 
 	// ##################################################
