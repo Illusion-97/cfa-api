@@ -83,5 +83,15 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 		activiteTypeRepo.deleteById(id);
 		
 	}
+	@Override
+	public List<ActiviteTypeDto> getAllActiviteTypesByPromotionId(long id) {
+		 
+		List<ActiviteType> activiteTypes = activiteTypeRepo.getActiviteTypesByPromotionId(id);
+		List<ActiviteTypeDto> result = new ArrayList<ActiviteTypeDto>() ;
+		   for (ActiviteType activiteType : activiteTypes) {
+			result.add(DtoTools.convert(activiteType, ActiviteTypeDto.class));
+		} 
+		return result;
+	}
 
 }

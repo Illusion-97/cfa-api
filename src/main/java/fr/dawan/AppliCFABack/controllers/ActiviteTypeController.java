@@ -29,6 +29,11 @@ public class ActiviteTypeController {
 		return activiteTypeService.getAllActiviteType();
 	}
 	
+	@GetMapping( value = "/promotion/{id}", produces = "application/json")
+	List<ActiviteTypeDto> getAllByPromotion(@PathVariable("id") long id){
+		return activiteTypeService.getAllActiviteTypesByPromotionId(id);
+	}
+	
 	@GetMapping(value = "/{id}",produces = "application/json")
 	ActiviteTypeDto getById(@PathVariable("id") long id ) {
 		

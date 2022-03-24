@@ -58,7 +58,7 @@ public class ExamenServiceImpl implements ExamenService {
 					lstNoteDto.add(noteDto);	
 				}
 			}
-			eDto.setPromotionDto(mapper.PromotionToPromotionDto(e.getPromotion()));
+//			eDto.setPromotionDto(mapper.PromotionToPromotionDto(e.getPromotion()));
 			eDto.setNotesDto(lstNoteDto);
 			lstDto.add(eDto);
 		}
@@ -75,7 +75,7 @@ public class ExamenServiceImpl implements ExamenService {
 		for (Examen e : lst) {
 			ExamenDto eDto = mapper.ExamenToExamenDto(e);
 			
-			eDto.setPromotionDto(mapper.PromotionToPromotionDto(e.getPromotion()));
+//			eDto.setPromotionDto(mapper.PromotionToPromotionDto(e.getPromotion()));
 //			eDto.setCursusDto(mapper.CursusToCursusDto(e.getCursus()));
 //			eDto.setFormationDto(mapper.FormationToFormationDto(e.getFormation()));
 			lstDto.add(eDto);
@@ -95,9 +95,9 @@ public class ExamenServiceImpl implements ExamenService {
 	public ExamenDto getById(long id) {
 		Optional<Examen> e = examenRepository.findById(id);
 		if (e.isPresent()) {
-			ExamenDto eDto = mapper.ExamenToExamenDto(e.get());
+			ExamenDto eDto = DtoTools.convert(e.get(), ExamenDto.class);
 
-			eDto.setPromotionDto(mapper.PromotionToPromotionDto(e.get().getPromotion()));	
+			
 //			eDto.setCursusDto(mapper.CursusToCursusDto(e.get().getCursus()));
 //			eDto.setFormationDto(mapper.FormationToFormationDto(e.get().getFormation()));
 			
@@ -111,8 +111,8 @@ public class ExamenServiceImpl implements ExamenService {
 	@Override
 	public ExamenDto saveOrUpdate(ExamenDto eDto) {
 		Examen e = DtoTools.convert(eDto, Examen.class);
-		examenRepository.saveAndFlush(e);
-		return mapper.ExamenToExamenDto(e);
+		Examen exDb =  examenRepository.saveAndFlush(e);
+		return  DtoTools.convert(exDb,ExamenDto.class);
 	}
 
 	//methode de suppression d'un examen

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
@@ -21,6 +22,7 @@ import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
@@ -207,5 +209,7 @@ public class PromotionServiceImpl implements PromotionService {
 		
 		return result;
 	}
+
+	
 
 }

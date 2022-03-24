@@ -70,7 +70,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-24T09:30:07+0100",
+    date = "2022-03-24T14:40:36+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -396,10 +396,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         PromotionDto promotionDto = new PromotionDto();
 
-        promotionDto.setId( promotion.getId() );
-        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
+        promotionDto.setId( promotion.getId() );
+        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }

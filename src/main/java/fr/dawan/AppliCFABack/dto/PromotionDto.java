@@ -18,7 +18,7 @@ public class PromotionDto {
 	private CentreFormationDto centreFormationDto;
 	private UtilisateurDto referentPedagogiqueDto;
 	private CursusDto cursusDto;
-
+	
 	public PromotionDto() {
 		super();
 	}

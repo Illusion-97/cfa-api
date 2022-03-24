@@ -11,6 +11,7 @@ public interface ActiviteTypeService {
 	ActiviteTypeDto getById(long id);
 	ActiviteTypeDto saveOrUpdate(ActiviteTypeDto atDto);
 	void deleteById(long id);
-	
+	List<ActiviteTypeDto> getAllActiviteTypesByPromotionId(long id);
+
 	
 }

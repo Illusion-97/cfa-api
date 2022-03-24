@@ -1,9 +1,13 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,8 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
@@ -24,8 +33,14 @@ import fr.dawan.AppliCFABack.services.ExamenService;
 @RequestMapping("/examens")
 public class ExamenController {
 
+	@Value("${app.storagefolder}")
+	private String storageFolder;
+	
 	@Autowired
 	ExamenService examenService;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	// ##################################################
 	// # GET #
@@ -75,12 +90,20 @@ public class ExamenController {
 	// # POST #
 	// ##################################################
 
-	@PostMapping(consumes = "application/json", produces = "application/json")
-	ResponseEntity<ExamenDto> save(@RequestBody ExamenDto eDto) {
-		return ResponseEntity
-				.status(HttpStatus.CREATED)
-				.body(examenService.saveOrUpdate(eDto));
-	
+
+	@PostMapping(consumes = "multipart/form-data", produces = "application/json")
+	public ResponseEntity<ExamenDto> save(@RequestParam("examen") String examStr , @RequestPart("file") MultipartFile file)throws Exception {
+		
+		File f = new File(storageFolder + "/examens/" + file.getOriginalFilename());
+		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f));
+		bos.write(file.getBytes());
+		bos.close();
+		 ExamenDto examenDto	= objectMapper.readValue(examStr, ExamenDto.class)	;
+		 examenDto.setPieceJointe(file.getOriginalFilename());
+		 ExamenDto result = examenService.saveOrUpdate(examenDto);
+		 return ResponseEntity
+				 .status(HttpStatus.CREATED)
+				 .body(result);
 	}
 
 	// ##################################################
