@@ -12,8 +12,8 @@ public class ExamenDto {
 	private double duree;
 	private String pieceJointe;
 	private LocalDate dateExamen;
-	private ActiviteTypeDto activiteTypeDto;
-	private PromotionDto promotionDto;
+	private long activiteTypeId;
+	private long promotionId;
 	private Set<CompetenceProfessionnelleDto> competenceProfessionnelleDto;
 	private Set<NoteDto> notesDto;
 	private List<Byte> blocksConcernee;
@@ -54,17 +54,18 @@ public class ExamenDto {
 	public void setDateExamen(LocalDate dateExamen) {
 		this.dateExamen = dateExamen;
 	}
-	public ActiviteTypeDto getActiviteTypeDto() {
-		return activiteTypeDto;
+
+	public long getActiviteTypeId() {
+		return activiteTypeId;
 	}
-	public void setActiviteTypeDto(ActiviteTypeDto activiteTypeDto) {
-		this.activiteTypeDto = activiteTypeDto;
+	public void setActiviteTypeId(long activiteTypeId) {
+		this.activiteTypeId = activiteTypeId;
 	}
-	public PromotionDto getPromotionDto() {
-		return promotionDto;
+	public long getPromotionId() {
+		return promotionId;
 	}
-	public void setPromotionDto(PromotionDto promotionDto) {
-		this.promotionDto = promotionDto;
+	public void setPromotionId(long promotionId) {
+		this.promotionId = promotionId;
 	}
 	public Set<CompetenceProfessionnelleDto> getCompetenceProfessionnelleDto() {
 		return competenceProfessionnelleDto;

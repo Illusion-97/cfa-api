@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ArrayOfCompteBancaire xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CompteBancaire>
+    <Numero>vfgjlm</Numero>
+    <Solde>25000</Solde>
+    <IsActif>false</IsActif>
+  </CompteBancaire>
+  <CompteBancaire>
+    <Numero>cdfgt52</Numero>
+    <Solde>14503</Solde>
+    <IsActif>false</IsActif>
+  </CompteBancaire>
+  <CompteBancaire>
+    <Numero>sqdq25</Numero>
+    <Solde>2563</Solde>
+    <IsActif>false</IsActif>
+  </CompteBancaire>
+  <CompteBancaire>
+    <Numero>dfsdqjyu</Numero>
+    <Solde>125638</Solde>
+    <IsActif>false</IsActif>
+  </CompteBancaire>
+</ArrayOfCompteBancaire>
