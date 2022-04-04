@@ -17,7 +17,7 @@ public class ActiviteTypeDto {
 	
 	private long cursusActiviteTypeId;
 	
-	private Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto;
+	private List<CompetenceProfessionnelleDto> competenceProfessionnellesDto;
 	
 	
 	public ActiviteTypeDto() {
@@ -73,14 +73,15 @@ public class ActiviteTypeDto {
 	}
 
 
-	public Set<CompetenceProfessionnelleDto> getCompetenceProfessionnellesDto() {
+	public List<CompetenceProfessionnelleDto> getCompetenceProfessionnellesDto() {
 		return competenceProfessionnellesDto;
 	}
 
 
-	public void setCompetenceProfessionnellesDto(Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto) {
+	public void setCompetenceProfessionnellesDto(List<CompetenceProfessionnelleDto> competenceProfessionnellesDto) {
 		this.competenceProfessionnellesDto = competenceProfessionnellesDto;
 	}
 
-	
+
+
 }
