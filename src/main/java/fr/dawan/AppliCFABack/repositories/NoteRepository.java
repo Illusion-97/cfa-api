@@ -28,5 +28,7 @@ public interface NoteRepository extends JpaRepository<Note, Long>{
 //			String search, String search2, String search3, String search4);
 //
 	List<Note> findAllByEtudiantNoteId(long id);
+	
+	List<Note> findAllByExamenId(long id);
 
 }

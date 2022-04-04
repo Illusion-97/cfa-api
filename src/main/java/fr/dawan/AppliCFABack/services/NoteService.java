@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
 
 public interface NoteService {
 
@@ -17,11 +18,13 @@ public interface NoteService {
 
 	CountDto count();
 	
-	NoteDto saveOrUpdate(NoteDto nDto);
+	NoteDtoToSave saveOrUpdate(NoteDtoToSave nDto);
 
 	void deleteById(long id);
 
 	List<NoteDto> getAllByIdEtudiant(long id);
+	
+	List<NoteDto> getAllByExamenId(long id);
 
 	
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
 import fr.dawan.AppliCFABack.services.NoteService;
 
 @RestController
@@ -73,13 +74,16 @@ public class NoteController {
 	public @ResponseBody List<NoteDto> getAllByIdEtudiant(@PathVariable("id") long id) {
 		return noteService.getAllByIdEtudiant(id);
 	}
-    
+    @GetMapping(value = "/examen/{id}", produces = "application/json")
+	public @ResponseBody List<NoteDto> getAllByExamenId(@PathVariable("id") long id) {
+		return noteService.getAllByExamenId(id);
+	}
 	// ##################################################
 	// # POST #
 	// ##################################################
 
 	@PostMapping(consumes = "application/json", produces = "application/json")
-	public NoteDto save(@RequestBody NoteDto nDto) {
+	public NoteDtoToSave save(@RequestBody NoteDtoToSave nDto) {
 		return noteService.saveOrUpdate(nDto);
 	}
 
@@ -103,7 +107,7 @@ public class NoteController {
 	// ##################################################
 
 	@PutMapping(consumes = "application/json", produces = "application/json")
-	public NoteDto update(@RequestBody NoteDto nDto) {
+	public NoteDtoToSave update(@RequestBody NoteDtoToSave nDto) {
 		return noteService.saveOrUpdate(nDto);
 	}
 
