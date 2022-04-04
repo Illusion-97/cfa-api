@@ -20,6 +20,9 @@ public class ExamenDto {
 	private List<Byte> blocksConcernee;
 	
 	
+	public ExamenDto() {
+		super();
+	}
 	public ExamenDto(long id, String titre, String descriptif, double duree, String pieceJointe, LocalDate dateExamen) {
 		super();
 		this.id = id;

@@ -1,16 +1,27 @@
 package fr.dawan.AppliCFABack.dto;
 
-import fr.dawan.AppliCFABack.entities.Examen;
+import fr.dawan.AppliCFABack.entities.Note.Satisfaction;
 
 public class NoteDto {
 	private long id;
 	private double noteObtenue;
-	private boolean satifaction;
+	private Satisfaction satisfaction;
 	private long etudiantNoteId;
 	private long examenId;
 	private String etudiantNoteUtilisateurNom;
 	private String etudiantNoteUtilisateurPrenom;
 	
+	
+	public NoteDto() {
+		super();
+	}
+
+	public NoteDto(double noteObtenue, long etudiantNoteId) {
+		super();
+		this.noteObtenue = noteObtenue;
+		this.etudiantNoteId = etudiantNoteId;
+	}
+
 	public String getEtudiantNoteUtilisateurNom() {
 		return etudiantNoteUtilisateurNom;
 	}
@@ -43,12 +54,13 @@ public class NoteDto {
 		this.noteObtenue = noteObtenue;
 	}
 
-	public boolean isSatifaction() {
-		return satifaction;
+
+	public Satisfaction getSatisfaction() {
+		return satisfaction;
 	}
 
-	public void setSatifaction(boolean satifaction) {
-		this.satifaction = satifaction;
+	public void setSatisfaction(Satisfaction satisfaction) {
+		this.satisfaction = satisfaction;
 	}
 
 	public long getEtudiantNoteId() {

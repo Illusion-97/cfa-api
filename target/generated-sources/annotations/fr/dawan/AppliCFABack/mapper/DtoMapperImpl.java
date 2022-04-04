@@ -63,14 +63,13 @@ import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Remuneration;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-24T14:40:36+0100",
+    date = "2022-04-04T11:22:55+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -261,21 +260,14 @@ public class DtoMapperImpl implements DtoMapper {
             return null;
         }
 
-        LocalDate dateExamen = null;
-        String descriptif = null;
-        double duree = 0.0d;
-        long id = 0L;
-        String pieceJointe = null;
-        String titre = null;
+        ExamenDto examenDto = new ExamenDto();
 
-        dateExamen = examen.getDateExamen();
-        descriptif = examen.getDescriptif();
-        duree = examen.getDuree();
-        id = examen.getId();
-        pieceJointe = examen.getPieceJointe();
-        titre = examen.getTitre();
-
-        ExamenDto examenDto = new ExamenDto( id, titre, descriptif, duree, pieceJointe, dateExamen );
+        examenDto.setId( examen.getId() );
+        examenDto.setTitre( examen.getTitre() );
+        examenDto.setDescriptif( examen.getDescriptif() );
+        examenDto.setDuree( examen.getDuree() );
+        examenDto.setPieceJointe( examen.getPieceJointe() );
+        examenDto.setDateExamen( examen.getDateExamen() );
 
         return examenDto;
     }
@@ -352,7 +344,7 @@ public class DtoMapperImpl implements DtoMapper {
 
         noteDto.setId( note.getId() );
         noteDto.setNoteObtenue( note.getNoteObtenue() );
-        noteDto.setSatifaction( note.isSatifaction() );
+        noteDto.setSatisfaction( note.getSatisfaction() );
 
         return noteDto;
     }
@@ -365,9 +357,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         PassageExamenDto passageExamenDto = new PassageExamenDto();
 
-        passageExamenDto.setId( passageExamen.getId() );
         passageExamenDto.setDateDebut( passageExamen.getDateDebut() );
         passageExamenDto.setDateFin( passageExamen.getDateFin() );
+        passageExamenDto.setId( passageExamen.getId() );
 
         return passageExamenDto;
     }

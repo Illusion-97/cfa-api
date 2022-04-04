@@ -1,13 +1,16 @@
 package fr.dawan.AppliCFABack.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import fr.dawan.AppliCFABack.entities.Note.Satisfaction;
 
 
 @Entity
@@ -20,15 +23,19 @@ public class Note {
 	@Column(nullable = false, precision = 4, scale = 2)
 	private double noteObtenue;
 	
-	@Column(nullable = false)
-	private boolean satifaction;
+	@Column
+	@Enumerated(EnumType.STRING)
+	private  Satisfaction satisfaction;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Examen examen;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Etudiant etudiantNote;
 
+	public enum Satisfaction {
+			OUI,NON
+	}
 //	@Column(nullable = false, length = 255)
 //	private int noteObtenu;
 //
@@ -73,12 +80,12 @@ public class Note {
 		this.noteObtenue = noteObtenue;
 	}
 
-	public boolean isSatifaction() {
-		return satifaction;
+	public Satisfaction getSatisfaction() {
+		return satisfaction;
 	}
 
-	public void setSatifaction(boolean satifaction) {
-		this.satifaction = satifaction;
+	public void setSatisfaction(Satisfaction satisfaction) {
+		this.satisfaction = satisfaction;
 	}
 
 	public Examen getExamen() {

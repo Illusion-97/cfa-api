@@ -28,6 +28,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.controllers.NoteController;
 import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
+import fr.dawan.AppliCFABack.entities.Note.Satisfaction;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -82,11 +84,11 @@ public class NoteControllerTest {
 	@Test
 	void testSave() {
 		try {
-			NoteDto eToInsert = new NoteDto();
+			NoteDtoToSave eToInsert = new NoteDtoToSave();
 			eToInsert.setNoteObtenue(16);
 			eToInsert.setEtudiantNoteId(1);
 			eToInsert.setExamenId(1);
-			eToInsert.setSatifaction(true);
+			eToInsert.setSatisfaction(Satisfaction.OUI);
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
@@ -112,7 +114,7 @@ public class NoteControllerTest {
 			eDto.setNoteObtenue(16);
 			eDto.setEtudiantNoteId(1);
 			eDto.setExamenId(1);
-			eDto.setSatifaction(true);
+			eDto.setSatisfaction(Satisfaction.OUI);
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eDto);
@@ -127,7 +129,7 @@ public class NoteControllerTest {
 			assertEquals(res.getNoteObtenue(), eDto.getNoteObtenue());
 			assertEquals(res.getEtudiantNoteId(), eDto.getEtudiantNoteId());
 			assertEquals(res.getExamenId(), eDto.getExamenId());
-			assertEquals(res.getEtudiantNoteId(), eDto.isSatifaction());
+			assertEquals(res.getSatisfaction(), eDto.getSatisfaction());
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}

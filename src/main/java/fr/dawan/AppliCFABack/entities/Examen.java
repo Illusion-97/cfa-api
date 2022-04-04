@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,7 +56,7 @@ public class Examen { // examen Java
 	@ManyToMany
 	private Set<CompetenceProfessionnelle> competenceProfessionnelle;
 	
-	@OneToMany(mappedBy = "examen")
+	@OneToMany(mappedBy = "examen",cascade = CascadeType.REMOVE )
 	private Set<Note> notes;
 	
 	public Set<CompetenceProfessionnelle> getCompetenceProfessionnelle() {
