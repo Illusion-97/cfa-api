@@ -1,8 +1,7 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -47,8 +46,8 @@ public class Examen { // examen Java
 	@Column(nullable = false)
 	private LocalDate dateExamen; 
 	
-	@ManyToOne
-	private ActiviteType activiteType;
+	@ManyToMany
+	private List<ActiviteType> activiteType;
 	
 	@ManyToOne
 	private Promotion promotion;
@@ -128,11 +127,12 @@ public class Examen { // examen Java
 		this.dateExamen = dateExamen;
 	}
 
-	public ActiviteType getActiviteType() {
+
+	public List<ActiviteType> getActiviteType() {
 		return activiteType;
 	}
 
-	public void setActiviteType(ActiviteType activiteType) {
+	public void setActiviteType(List<ActiviteType> activiteType) {
 		this.activiteType = activiteType;
 	}
 
