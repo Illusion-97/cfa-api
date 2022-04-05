@@ -216,30 +216,5 @@ public class FormationServiceImpl implements FormationService {
 
 
 	}
-	
-	//TODO import InterventionDG2 => mettre dans interventionService
-	public List<InterventionDG2Dto> fetchInterventionFromDG2(long id, String email, String password) throws Exception{
-		List<InterventionDG2Dto> lst = new ArrayList<>();
-		ObjectMapper objectMapper = new ObjectMapper();
-		
-		URI urlSession = new URI("https://dawan.org/api2/cfa/trainings/"+ id +"/sessions");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("x-auth-token", email + ":" + password);
-
-		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-		ResponseEntity<String> repSessionWs = restTemplate.exchange(urlSession, HttpMethod.GET, httpEntity, String.class);
-		if (repSessionWs.getStatusCode() == HttpStatus.OK) {
-			String json2 = repSessionWs.getBody();
-			
-			try {
-				lst = objectMapper.readValue(json2, new TypeReference<List<InterventionDG2Dto>>() { 
-				});
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return lst;
-	}
 
 }
