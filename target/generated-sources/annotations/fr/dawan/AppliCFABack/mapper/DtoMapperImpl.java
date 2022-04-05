@@ -69,7 +69,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-04-05T10:02:05+0200",
+    date = "2022-04-05T11:07:34+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -80,17 +80,11 @@ public class DtoMapperImpl implements DtoMapper {
             return null;
         }
 
-        long id = 0L;
-        String libelle = null;
-        byte numeroFiche = 0;
+        CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto();
 
-        id = competenceProfessionnelle.getId();
-        libelle = competenceProfessionnelle.getLibelle();
-        numeroFiche = competenceProfessionnelle.getNumeroFiche();
-
-        long activiteTypeId = 0L;
-
-        CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto( id, libelle, numeroFiche, activiteTypeId );
+        competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
+        competenceProfessionnelleDto.setLibelle( competenceProfessionnelle.getLibelle() );
+        competenceProfessionnelleDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
 
         return competenceProfessionnelleDto;
     }
@@ -388,10 +382,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         PromotionDto promotionDto = new PromotionDto();
 
-        promotionDto.setId( promotion.getId() );
-        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
+        promotionDto.setId( promotion.getId() );
+        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }
@@ -668,17 +662,11 @@ public class DtoMapperImpl implements DtoMapper {
             return null;
         }
 
-        long id = 0L;
-        String libelle = null;
-        byte numeroFiche = 0;
+        CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto();
 
-        id = competenceProfessionnelle.getId();
-        libelle = competenceProfessionnelle.getLibelle();
-        numeroFiche = competenceProfessionnelle.getNumeroFiche();
-
-        long activiteTypeId = 0L;
-
-        CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto( id, libelle, numeroFiche, activiteTypeId );
+        competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
+        competenceProfessionnelleDto.setLibelle( competenceProfessionnelle.getLibelle() );
+        competenceProfessionnelleDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
 
         return competenceProfessionnelleDto;
     }

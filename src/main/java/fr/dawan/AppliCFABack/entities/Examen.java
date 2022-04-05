@@ -47,23 +47,23 @@ public class Examen { // examen Java
 	private LocalDate dateExamen; 
 	
 	@ManyToMany
-	private List<ActiviteType> activiteType;
+	private List<ActiviteType> activiteTypes;
 	
 	@ManyToOne
 	private Promotion promotion;
 	
 	@ManyToMany
-	private Set<CompetenceProfessionnelle> competenceProfessionnelle;
+	private Set<CompetenceProfessionnelle> competencesProfessionnelles;
 	
-	@OneToMany(mappedBy = "examen",cascade = CascadeType.REMOVE )
+	@OneToMany(mappedBy = "examen",cascade = CascadeType.ALL )
 	private Set<Note> notes;
 	
 	public Set<CompetenceProfessionnelle> getCompetenceProfessionnelle() {
-		return competenceProfessionnelle;
+		return competencesProfessionnelles;
 	}
 
 	public void setCompetenceProfessionnelle(Set<CompetenceProfessionnelle> competenceProfessionnelle) {
-		this.competenceProfessionnelle = competenceProfessionnelle;
+		this.competencesProfessionnelles = competenceProfessionnelle;
 	}
 
 	public Set<Note> getNotes() {
@@ -129,15 +129,15 @@ public class Examen { // examen Java
 
 
 	public List<ActiviteType> getActiviteType() {
-		return activiteType;
+		return activiteTypes;
 	}
 
 	public void setActiviteType(List<ActiviteType> activiteType) {
-		this.activiteType = activiteType;
+		this.activiteTypes = activiteType;
 	}
 
 	public Set<CompetenceProfessionnelle> getCompetencesProfessionnelles() {
-		return competenceProfessionnelle;
+		return competencesProfessionnelles;
 	}
 
 	public long getId() {
