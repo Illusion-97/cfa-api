@@ -69,7 +69,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-04-04T11:22:55+0200",
+    date = "2022-04-05T10:02:05+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -262,12 +262,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExamenDto examenDto = new ExamenDto();
 
-        examenDto.setId( examen.getId() );
-        examenDto.setTitre( examen.getTitre() );
+        examenDto.setDateExamen( examen.getDateExamen() );
         examenDto.setDescriptif( examen.getDescriptif() );
         examenDto.setDuree( examen.getDuree() );
+        examenDto.setId( examen.getId() );
         examenDto.setPieceJointe( examen.getPieceJointe() );
-        examenDto.setDateExamen( examen.getDateExamen() );
+        examenDto.setTitre( examen.getTitre() );
 
         return examenDto;
     }
@@ -388,10 +388,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         PromotionDto promotionDto = new PromotionDto();
 
-        promotionDto.setDateDebut( promotion.getDateDebut() );
-        promotionDto.setDateFin( promotion.getDateFin() );
         promotionDto.setId( promotion.getId() );
         promotionDto.setNom( promotion.getNom() );
+        promotionDto.setDateDebut( promotion.getDateDebut() );
+        promotionDto.setDateFin( promotion.getDateFin() );
 
         return promotionDto;
     }
