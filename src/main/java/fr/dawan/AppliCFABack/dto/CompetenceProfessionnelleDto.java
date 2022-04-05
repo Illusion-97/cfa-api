@@ -13,6 +13,9 @@ public class CompetenceProfessionnelleDto {
 	private long activiteTypeId;
 	
 	
+	public CompetenceProfessionnelleDto() {
+		super();
+	}
 	public CompetenceProfessionnelleDto(long id, String libelle, byte numeroFiche, long activiteTypeId) {
 		super();
 		this.id = id;

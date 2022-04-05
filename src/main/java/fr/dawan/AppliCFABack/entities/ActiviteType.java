@@ -25,7 +25,7 @@ public class ActiviteType {
 	@Column(nullable = false)
 	private byte numeroFiche;
 	
-	@OneToMany(mappedBy = "activiteType" ,cascade = CascadeType.ALL )
+	@OneToMany(mappedBy = "activiteTypes" ,cascade = CascadeType.ALL )
 	private List<Examen> examens;
 	
 	@OneToMany(mappedBy = "activiteType")

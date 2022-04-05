@@ -13,9 +13,9 @@ public class ExamenDto {
 	private double duree;
 	private String pieceJointe;
 	private LocalDate dateExamen;
-	private long activiteTypeId;
+	private List<ActiviteTypeDto> activiteTypesDto;
 	private long promotionId;
-	private Set<CompetenceProfessionnelleDto> competenceProfessionnelleDto;
+	private Set<CompetenceProfessionnelleDto> competencesProfessionnellesDto;
 	private Set<NoteDto> notesDto;
 	private List<Byte> blocksConcernee;
 	
@@ -70,11 +70,12 @@ public class ExamenDto {
 		this.dateExamen = dateExamen;
 	}
 
-	public long getActiviteTypeId() {
-		return activiteTypeId;
+	
+	public List<ActiviteTypeDto> getActiviteTypes() {
+		return activiteTypesDto;
 	}
-	public void setActiviteTypeId(long activiteTypeId) {
-		this.activiteTypeId = activiteTypeId;
+	public void setActiviteTypes(List<ActiviteTypeDto> activiteTypes) {
+		this.activiteTypesDto = activiteTypes;
 	}
 	public long getPromotionId() {
 		return promotionId;
@@ -83,11 +84,11 @@ public class ExamenDto {
 		this.promotionId = promotionId;
 	}
 	public Set<CompetenceProfessionnelleDto> getCompetenceProfessionnelleDto() {
-		return competenceProfessionnelleDto;
+		return competencesProfessionnellesDto;
 	}
 	public void setCompetenceProfessionnelleDto(Set<CompetenceProfessionnelleDto> competenceProfessionnelleDto) {
-		this.competenceProfessionnelleDto = competenceProfessionnelleDto;
-		List<Byte> blocksConcernee=  this.competenceProfessionnelleDto.stream().map(CompetenceProfessionnelleDto::getNumeroFiche).collect(Collectors.toList());
+		this.competencesProfessionnellesDto = competenceProfessionnelleDto;
+		List<Byte> blocksConcernee=  this.competencesProfessionnellesDto.stream().map(CompetenceProfessionnelleDto::getNumeroFiche).collect(Collectors.toList());
 		setBlocksConcernee(blocksConcernee);
 	}
 	public Set<NoteDto> getNotesDto() {

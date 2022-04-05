@@ -24,7 +24,7 @@ public class CompetenceProfessionnelle {
 	@Column(nullable = false)
 	private byte numeroFiche;
 	
-	@ManyToMany(mappedBy = "competenceProfessionnelle")
+	@ManyToMany(mappedBy = "competencesProfessionnelles")
 	private List<Examen> examens;
 	
 	@ManyToOne
