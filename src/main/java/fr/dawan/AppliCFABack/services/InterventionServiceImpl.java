@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +10,16 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
@@ -17,6 +27,7 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.entities.Devoir;
@@ -60,6 +71,9 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Override
 	public List<InterventionDto> getAllIntervention() {
@@ -267,6 +281,30 @@ public class InterventionServiceImpl implements InterventionService {
 		return lstFormDto;
 	}
 	
-	//TODO import dg2 interventions 
+		//import InterventionDG2 
+		@Override
+		public List<InterventionDG2Dto> fetchDG2Interventions(long id, String email, String password) throws Exception{
+			List<InterventionDG2Dto> lst = new ArrayList<>();
+			ObjectMapper objectMapper = new ObjectMapper();
+			
+			URI urlSession = new URI("https://dawan.org/api2/cfa/trainings/"+ id +"/sessions");
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("x-auth-token", email + ":" + password);
+
+			HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+			ResponseEntity<String> repSessionWs = restTemplate.exchange(urlSession, HttpMethod.GET, httpEntity, String.class);
+			if (repSessionWs.getStatusCode() == HttpStatus.OK) {
+				String json2 = repSessionWs.getBody();
+				
+				try {
+					lst = objectMapper.readValue(json2, new TypeReference<List<InterventionDG2Dto>>() { 
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return lst;
+		}
 
 }
