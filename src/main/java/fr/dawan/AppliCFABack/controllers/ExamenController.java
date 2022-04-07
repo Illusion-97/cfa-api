@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
 import fr.dawan.AppliCFABack.services.ExamenService;
 
 @RestController
@@ -92,15 +93,15 @@ public class ExamenController {
 
 
 	@PostMapping(consumes = "multipart/form-data", produces = "application/json")
-	public ResponseEntity<ExamenDto> save(@RequestParam("examen") String examStr , @RequestPart("file") MultipartFile file)throws Exception {
+	public ResponseEntity<ExamenDtoSave> save(@RequestParam("examen") String examStr , @RequestPart("file") MultipartFile file)throws Exception {
 		
 		File f = new File(storageFolder + "/examens/" + file.getOriginalFilename());
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f));
 		bos.write(file.getBytes());
 		bos.close();
-		 ExamenDto examenDto	= objectMapper.readValue(examStr, ExamenDto.class)	;
+		ExamenDtoSave examenDto	= objectMapper.readValue(examStr, ExamenDtoSave.class)	;
 		 examenDto.setPieceJointe(file.getOriginalFilename());
-		 ExamenDto result = examenService.saveOrUpdate(examenDto);
+		 ExamenDtoSave result = examenService.saveOrUpdate(examenDto);
 		 return ResponseEntity
 				 .status(HttpStatus.CREATED)
 				 .body(result);
@@ -126,7 +127,7 @@ public class ExamenController {
 	// ##################################################
 
 	@PutMapping(consumes = "application/json", produces = "application/json")
-	public ExamenDto update(@RequestBody ExamenDto eDto) {
+	public ExamenDtoSave update(@RequestBody ExamenDtoSave eDto) throws Exception {
 		return examenService.saveOrUpdate(eDto);
 	}
 }

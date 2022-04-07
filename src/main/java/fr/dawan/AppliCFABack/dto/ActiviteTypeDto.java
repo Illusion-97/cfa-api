@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.util.List;
-import java.util.Set;
 
 
 public class ActiviteTypeDto {

@@ -100,12 +100,19 @@ public class PromotionServiceImpl implements PromotionService {
 
 		for (Examen examen : examens) {
 			ExamenDto eDto = mapper.ExamenToExamenDto(examen);
-			Set<CompetenceProfessionnelle>competenceProfessionnelles = examen.getCompetenceProfessionnelle();
+			Set<CompetenceProfessionnelle>competenceProfessionnelles = examen.getCompetencesProfessionnelles();
 			Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new HashSet<CompetenceProfessionnelleDto>();
 			for (CompetenceProfessionnelle cptP : competenceProfessionnelles) {
 				competenceProfessionnellesDto.add(mapper.CompetenceProfessionnelleDto(cptP));
 			}
 			eDto.setCompetenceProfessionnelleDto(competenceProfessionnellesDto);
+			
+			List<ActiviteType> activiteTypes = examen.getActiviteType();
+			List<ActiviteTypeDto> activiteTypesDto = new ArrayList<ActiviteTypeDto>();
+			for (ActiviteType at : activiteTypes) {
+				activiteTypesDto.add(mapper.ActiviteTypeToActiviteDto(at));
+			}
+			eDto.setActiviteTypes(activiteTypesDto);
 			examenDtos.add(eDto);
 		}		
 		pDto.setExamensDto(examenDtos);
