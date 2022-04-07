@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.mapper;
 
 import java.util.List;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
@@ -190,7 +191,9 @@ public interface DtoMapper {
 	@Mapping(target = "id", ignore = true)
 	CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
 
-	
+	PromotionDto PromotionToPromotionDto(PromotionDto pDto);
+
+
 
 	
 	

@@ -28,5 +28,8 @@ public interface PromotionService {
 
 	List<PromotionDto> getAllByCursusId(long id);
 	
+	List<PromotionDto> getPromotionByEtudiantIdAndByCursusId(long id);
+
+	 UtilisateurDto getCefById(long id);
 
 }

@@ -209,7 +209,23 @@ public class PromotionServiceImpl implements PromotionService {
 		
 		return result;
 	}
-
 	
+	@Override
+    public UtilisateurDto getCefById(long id) {
+        return mapper.UtilisateurToUtilisateurDto(promoRepo.getOne(id).getCef().getUtilisateur());
+    }
+
+	@Override
+	public List<PromotionDto> getPromotionByEtudiantIdAndByCursusId(long id) {
+		List<Promotion> promos = promoRepo.getByEtudiantId(id);
+		List<PromotionDto> result = new ArrayList<PromotionDto>();
+		
+		for(Promotion p : promos) {
+			PromotionDto pDto = mapper.PromotionToPromotionDto(p);
+			pDto.setCursusDto(mapper.CursusToCursusDto(p.getCursus()));
+			result.add(mapper.PromotionToPromotionDto(pDto));
+		}
+		return result;
+	}
 
 }

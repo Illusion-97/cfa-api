@@ -23,6 +23,11 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long>{
 	List<Promotion> findAllByReferentPedagogiqueId(long id);
 
 	List<Promotion> findAllByCursusId(long id);
+	
+	@Query("FROM Promotion p JOIN p.etudiants e ON e.id = :id")
+	List<Promotion> getByEtudiantId(long id);
+    
+    
 
 
 }
