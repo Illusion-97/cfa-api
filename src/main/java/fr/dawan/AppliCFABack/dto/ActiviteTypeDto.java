@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.util.List;
-import java.util.Set;
 
 
 public class ActiviteTypeDto {
@@ -17,7 +16,7 @@ public class ActiviteTypeDto {
 	
 	private long cursusActiviteTypeId;
 	
-	private Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto;
+	private List<CompetenceProfessionnelleDto> competencesProfessionnellesDto;
 	
 	
 	public ActiviteTypeDto() {
@@ -73,14 +72,15 @@ public class ActiviteTypeDto {
 	}
 
 
-	public Set<CompetenceProfessionnelleDto> getCompetenceProfessionnellesDto() {
-		return competenceProfessionnellesDto;
+	public List<CompetenceProfessionnelleDto> getCompetenceProfessionnellesDto() {
+		return competencesProfessionnellesDto;
 	}
 
 
-	public void setCompetenceProfessionnellesDto(Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto) {
-		this.competenceProfessionnellesDto = competenceProfessionnellesDto;
+	public void setCompetenceProfessionnellesDto(List<CompetenceProfessionnelleDto> competenceProfessionnellesDto) {
+		this.competencesProfessionnellesDto = competenceProfessionnellesDto;
 	}
 
-	
+
+
 }

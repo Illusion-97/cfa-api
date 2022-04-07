@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -85,12 +86,12 @@ public class NoteServiceImpl implements NoteService {
 
 	//methode d'ajout ou modification d'une note
 	@Override
-	public NoteDto saveOrUpdate(NoteDto nDto) {
+	public NoteDtoToSave saveOrUpdate( NoteDtoToSave nDto) {
 		Note n = DtoTools.convert(nDto, Note.class);
-
+		
 		n = noteRepository.saveAndFlush(n);
 
-		return mapper.NoteToNoteDto(n);
+		return DtoTools.convert(n, NoteDtoToSave.class);
 	}
 
 	//nb note
@@ -121,6 +122,17 @@ public class NoteServiceImpl implements NoteService {
 		}
 		return result;
 		
+	}
+
+	@Override
+	public List<NoteDto> getAllByExamenId(long id) {
+		List<NoteDto> result = new ArrayList<NoteDto>();
+		List<Note> list = noteRepository.findAllByExamenId(id);
+		for (Note note : list) {
+			NoteDto nDto = DtoTools.convert(note, NoteDto.class);
+			result.add(nDto);
+		}
+		return result;
 	}
 
 }

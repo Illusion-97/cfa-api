@@ -25,15 +25,14 @@ public class ActiviteType {
 	@Column(nullable = false)
 	private byte numeroFiche;
 	
-	@OneToMany(mappedBy = "activiteType" ,cascade = CascadeType.ALL )
+	@OneToMany(mappedBy = "activiteTypes" ,cascade = CascadeType.ALL )
 	private List<Examen> examens;
-	
-	@ManyToOne 
-	private Cursus cursusActiviteType;
 	
 	@OneToMany(mappedBy = "activiteType")
 	private Set<CompetenceProfessionnelle> competenceProfessionnelles;
 	
+	@ManyToOne 
+	private Cursus cursusActiviteType;	
 
 	public long getId() {
 		return id;

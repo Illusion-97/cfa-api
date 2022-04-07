@@ -2,7 +2,6 @@ package fr.dawan.AppliCFABack.mapper;
 
 import java.util.List;
 
-import org.hibernate.internal.build.AllowSysOut;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
@@ -193,7 +192,7 @@ public interface DtoMapper {
 
 	PromotionDto PromotionToPromotionDto(PromotionDto pDto);
 
-
+	
 
 	
 	

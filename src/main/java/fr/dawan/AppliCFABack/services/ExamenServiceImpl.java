@@ -16,13 +16,19 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
 import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
+import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository;
+import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
 
 @Service
@@ -31,6 +37,15 @@ public class ExamenServiceImpl implements ExamenService {
 
 	@Autowired
 	ExamenRepository examenRepository;
+	
+	@Autowired
+	PromotionService promotionService;
+	
+	@Autowired
+	ActiviteTypeRepository activiteTypeRepository;
+	
+	@Autowired
+	CompetenceProfessionnelleRepository competenceProfessionnelleRepository;
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
@@ -43,7 +58,7 @@ public class ExamenServiceImpl implements ExamenService {
 		for (Examen e : lst) {
 			ExamenDto eDto = mapper.ExamenToExamenDto(e);
 			
-			Set<CompetenceProfessionnelle> lstCp = e.getCompetenceProfessionnelle();
+			Set<CompetenceProfessionnelle> lstCp = e.getCompetencesProfessionnelles();
 			Set<CompetenceProfessionnelleDto> lstCpDto = new HashSet<CompetenceProfessionnelleDto>();
 			for (CompetenceProfessionnelle cp : lstCp) {
 				if (cp != null)
@@ -109,10 +124,48 @@ public class ExamenServiceImpl implements ExamenService {
 
 	//methode d'ajout ou modification d'un examen
 	@Override
-	public ExamenDto saveOrUpdate(ExamenDto eDto) {
+	public ExamenDtoSave saveOrUpdate(ExamenDtoSave eDto) throws Exception {
+		
+		if (eDto.getActiviteTypesId().isEmpty() || eDto.getActiviteTypesId() == null) 
+			throw new Exception("Activites Types manquante");
+
+		List<ActiviteType> activiteTypes = new ArrayList<ActiviteType>();
+		for(long idA : eDto.getActiviteTypesId()) {
+			activiteTypes.add(activiteTypeRepository.getOne(idA));
+		}
+		if (eDto.getCompetencesProfessionnellesId().isEmpty() || eDto.getCompetencesProfessionnellesId() == null) 
+				throw new Exception("Compétences Professionnelles manquante");
+			
+		Set<CompetenceProfessionnelle> competenceProfessionnelles = new HashSet<CompetenceProfessionnelle>();
+		for(long idC : eDto.getCompetencesProfessionnellesId() ) {
+			competenceProfessionnelles.add(competenceProfessionnelleRepository.getOne(idC));
+		}
+		
 		Examen e = DtoTools.convert(eDto, Examen.class);
-		Examen exDb =  examenRepository.saveAndFlush(e);
-		return  DtoTools.convert(exDb,ExamenDto.class);
+		e.setActiviteType(activiteTypes);
+		e.setCompetencesProfessionnelles(competenceProfessionnelles);
+		if (eDto.getId() != 0) {
+			return  DtoTools.convert(examenRepository.saveAndFlush(e),ExamenDtoSave.class);
+		}
+		else {
+			Examen exDb =  examenRepository.saveAndFlush(e);
+			//Ajout list de notes vide avec les etudiants 
+			List<EtudiantDto> etudiantsParPromo = promotionService.getEtudiantsById(exDb.getPromotion().getId());
+			Set<Note> Notes =  new HashSet<Note>();
+			for (EtudiantDto etudiantDto : etudiantsParPromo) {
+				Note note = new Note();
+				note.setEtudiantNote(DtoTools.convert(etudiantDto, Etudiant.class));
+				note.setNoteObtenue(0.0);
+				note.setExamen(exDb);
+				Notes.add(note);
+			}
+			exDb.setNotes(Notes);
+			
+			 return DtoTools.convert(examenRepository.saveAndFlush(exDb),ExamenDtoSave.class);
+			
+		}
+		
+		
 	}
 
 	//methode de suppression d'un examen

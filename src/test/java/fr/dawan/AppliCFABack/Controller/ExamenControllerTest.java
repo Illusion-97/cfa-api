@@ -92,22 +92,22 @@ public class ExamenControllerTest {
 		       .andExpect(jsonPath("$[0].titre", is(examenDto.get(0).getTitre())));
 	}
 	
-	@Test
-	void testInsert() throws Exception{
-		ExamenDto examenToInsert = examenDto.get(0);
-		
-		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-		String examenToInsertStr = objectMapper.writeValueAsString(examenToInsert);
-		
-		when(examenService.saveOrUpdate(examenToInsert)).thenReturn(examenToInsert);
-		
-		mockMvc.perform(post("/examens")
-				.contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
-				.content(examenToInsertStr)
-				.accept(MediaType.APPLICATION_JSON))
-			   .andExpect(status().isCreated());
-	
-	}
+//	@Test
+//	void testInsert() throws Exception{
+//		ExamenDto examenToInsert = examenDto.get(0);
+//		
+//		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+//		String examenToInsertStr = objectMapper.writeValueAsString(examenToInsert);
+//		
+//		when(examenService.saveOrUpdate(examenToInsert)).thenReturn(examenToInsert);
+//		
+//		mockMvc.perform(post("/examens")
+//				.contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
+//				.content(examenToInsertStr)
+//				.accept(MediaType.APPLICATION_JSON))
+//			   .andExpect(status().isCreated());
+//	
+//	}
 
 	@Test
 	void testFindById() throws Exception{

@@ -8,10 +8,13 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
+import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
+import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -33,7 +36,6 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 			 ActiviteTypeDto atDto = mapper.ActiviteTypeToActiviteTypeDto(activiteType);
 			 List<ExamenDto> examensDto = new ArrayList<ExamenDto>();
 			 for (Examen ex :activiteType.getExamens() ) {
-	
 				 examensDto.add(mapper.ExamenToExamenDto(ex));
 				 
 			}
@@ -87,11 +89,17 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 	public List<ActiviteTypeDto> getAllActiviteTypesByPromotionId(long id) {
 		 
 		List<ActiviteType> activiteTypes = activiteTypeRepo.getActiviteTypesByPromotionId(id);
-		List<ActiviteTypeDto> result = new ArrayList<ActiviteTypeDto>() ;
+		List<ActiviteTypeDto> activiteTypeDto = new ArrayList<ActiviteTypeDto>() ;
 		   for (ActiviteType activiteType : activiteTypes) {
-			result.add(DtoTools.convert(activiteType, ActiviteTypeDto.class));
+			ActiviteTypeDto atDto = mapper.ActiviteTypeToActiviteDto(activiteType);
+			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<CompetenceProfessionnelleDto>();
+			for (CompetenceProfessionnelle cp: activiteType.getCompetenceProfessionnelles()) {
+				cpDto.add(mapper.CompetenceProfessionnelleToCompetenceProfessionnelleDto(cp));
+				atDto.setCompetenceProfessionnellesDto(cpDto);
+			}
+			activiteTypeDto.add(atDto);
 		} 
-		return result;
+		return activiteTypeDto;
 	}
 
 }

@@ -1,10 +1,12 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,25 +48,19 @@ public class Examen { // examen Java
 	@Column(nullable = false)
 	private LocalDate dateExamen; 
 	
-	@ManyToOne
-	private ActiviteType activiteType;
+	@ManyToMany
+	private List<ActiviteType> activiteTypes;
 	
 	@ManyToOne
 	private Promotion promotion;
 	
 	@ManyToMany
-	private Set<CompetenceProfessionnelle> competenceProfessionnelle;
+	private Set<CompetenceProfessionnelle> competencesProfessionnelles;
 	
-	@OneToMany(mappedBy = "examen")
+	@OneToMany(mappedBy = "examen",cascade = CascadeType.ALL )
 	private Set<Note> notes;
 	
-	public Set<CompetenceProfessionnelle> getCompetenceProfessionnelle() {
-		return competenceProfessionnelle;
-	}
 
-	public void setCompetenceProfessionnelle(Set<CompetenceProfessionnelle> competenceProfessionnelle) {
-		this.competenceProfessionnelle = competenceProfessionnelle;
-	}
 
 	public Set<Note> getNotes() {
 		return notes;
@@ -127,16 +123,22 @@ public class Examen { // examen Java
 		this.dateExamen = dateExamen;
 	}
 
-	public ActiviteType getActiviteType() {
-		return activiteType;
+
+	public List<ActiviteType> getActiviteType() {
+		return activiteTypes;
 	}
 
-	public void setActiviteType(ActiviteType activiteType) {
-		this.activiteType = activiteType;
+	public void setActiviteType(List<ActiviteType> activiteType) {
+		this.activiteTypes = activiteType;
 	}
 
 	public Set<CompetenceProfessionnelle> getCompetencesProfessionnelles() {
-		return competenceProfessionnelle;
+		return competencesProfessionnelles;
+	}
+	
+	
+	public void setCompetencesProfessionnelles(Set<CompetenceProfessionnelle> competencesProfessionnelles) {
+		this.competencesProfessionnelles = competencesProfessionnelles;
 	}
 
 	public long getId() {
@@ -147,7 +149,26 @@ public class Examen { // examen Java
 		this.id = id;
 	}
 	
-	
+	public List<Long> getActiviteTypesId(){
+		List<Long> activityteTypesId = new ArrayList<Long>();
+		for(ActiviteType at : activiteTypes) {
+			
+			if (at != null) {
+				activityteTypesId.add(at.getId());
+			}
+		}
+		return activityteTypesId;
+	}
+	public List<Long> getCompetencesProfessionnellesId(){
+		List<Long> competencesProId = new ArrayList<Long>();
+		for(CompetenceProfessionnelle cp : competencesProfessionnelles) {
+			
+			if (cp != null) {
+				competencesProId.add(cp.getId());
+			}
+		}
+		return competencesProId;
+	}
 
 //	public Examen(String enonce, Formation formation, Cursus cursus) {
 //		super();

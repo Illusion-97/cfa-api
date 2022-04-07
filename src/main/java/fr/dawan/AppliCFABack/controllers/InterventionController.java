@@ -1,10 +1,10 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +27,6 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FilesService;
 import fr.dawan.AppliCFABack.services.InterventionService;
-import org.springframework.core.io.ByteArrayResource;
 
 @RestController
 @RequestMapping("/interventions")
@@ -152,5 +151,23 @@ public class InterventionController {
 	public String[] findAllSupportByInterventionId(@PathVariable("id") long id) {
 		String path = "interventions/" + id;
 		return filesService.getAllNamesByDirectory(path);
+	}
+	
+	// ##################################################
+	// # FETCH Dawan webservice #
+	// ##################################################
+	//paramétre à revoir !!!! TODO
+	@GetMapping(value = "/dg2", produces = "application/json")
+	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers) {
+		String userDG2 = headers.get("x-auth-token");
+		String[] splitUserDG2String = userDG2.split(":");
+
+		try {
+			interventionService.fetchDG2Interventions(1,splitUserDG2String[0], splitUserDG2String[1]);
+			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error while fetching data from the webservice DG2");
+		}
 	}
 }
