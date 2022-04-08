@@ -156,18 +156,9 @@ public class InterventionController {
 	// ##################################################
 	// # FETCH Dawan webservice #
 	// ##################################################
-	//paramétre à revoir !!!! TODO
-	@GetMapping(value = "/dg2", produces = "application/json")
-	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers) {
-		String userDG2 = headers.get("x-auth-token");
-		String[] splitUserDG2String = userDG2.split(":");
-
-		try {
-			interventionService.fetchDG2Interventions(1,splitUserDG2String[0], splitUserDG2String[1]);
-			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error while fetching data from the webservice DG2");
-		}
-	}
+	//TODO controller à faire et test la methode
+	//@GetMapping(value = "/dg2", produces = "application/json")
+//	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers) {
+//		
+//	}
 }
