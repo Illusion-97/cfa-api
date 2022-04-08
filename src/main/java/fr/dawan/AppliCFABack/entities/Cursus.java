@@ -28,6 +28,11 @@ public class Cursus { // cursus du catalogue Dev Full Stack
 	@OneToMany(mappedBy = "cursusActiviteType")
 	private Set<ActiviteType> activiteTypes;
 	
+	@Column(columnDefinition = "TEXT")
+    private String description;
+	
+    private int duree;
+	
 	public Cursus() {
 		super();
 	}
@@ -62,4 +67,29 @@ public class Cursus { // cursus du catalogue Dev Full Stack
 		this.formations = formations;
 	}
 
+	public Set<ActiviteType> getActiviteTypes() {
+		return activiteTypes;
+	}
+
+	public void setActiviteTypes(Set<ActiviteType> activiteTypes) {
+		this.activiteTypes = activiteTypes;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getDuree() {
+		return duree;
+	}
+
+	public void setDuree(int duree) {
+		this.duree = duree;
+	}
+
+	
 }

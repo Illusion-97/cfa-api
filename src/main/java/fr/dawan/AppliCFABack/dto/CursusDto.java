@@ -6,6 +6,8 @@ public class CursusDto {
 	private long id;
 	private String titre;
 	private List<FormationDto> formationsDto;
+    private String description;
+    private int duree;
 
 	public CursusDto() {
 		super();
@@ -35,4 +37,21 @@ public class CursusDto {
 		this.formationsDto = formationsDto;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getDuree() {
+		return duree;
+	}
+
+	public void setDuree(int duree) {
+		this.duree = duree;
+	}
+
+	
 }

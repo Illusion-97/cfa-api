@@ -1,6 +1,8 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -58,13 +60,7 @@ public class Examen { // examen Java
 	@OneToMany(mappedBy = "examen",cascade = CascadeType.ALL )
 	private Set<Note> notes;
 	
-	public Set<CompetenceProfessionnelle> getCompetenceProfessionnelle() {
-		return competencesProfessionnelles;
-	}
 
-	public void setCompetenceProfessionnelle(Set<CompetenceProfessionnelle> competenceProfessionnelle) {
-		this.competencesProfessionnelles = competenceProfessionnelle;
-	}
 
 	public Set<Note> getNotes() {
 		return notes;
@@ -139,6 +135,11 @@ public class Examen { // examen Java
 	public Set<CompetenceProfessionnelle> getCompetencesProfessionnelles() {
 		return competencesProfessionnelles;
 	}
+	
+	
+	public void setCompetencesProfessionnelles(Set<CompetenceProfessionnelle> competencesProfessionnelles) {
+		this.competencesProfessionnelles = competencesProfessionnelles;
+	}
 
 	public long getId() {
 		return id;
@@ -148,7 +149,26 @@ public class Examen { // examen Java
 		this.id = id;
 	}
 	
-	
+	public List<Long> getActiviteTypesId(){
+		List<Long> activityteTypesId = new ArrayList<Long>();
+		for(ActiviteType at : activiteTypes) {
+			
+			if (at != null) {
+				activityteTypesId.add(at.getId());
+			}
+		}
+		return activityteTypesId;
+	}
+	public List<Long> getCompetencesProfessionnellesId(){
+		List<Long> competencesProId = new ArrayList<Long>();
+		for(CompetenceProfessionnelle cp : competencesProfessionnelles) {
+			
+			if (cp != null) {
+				competencesProId.add(cp.getId());
+			}
+		}
+		return competencesProId;
+	}
 
 //	public Examen(String enonce, Formation formation, Cursus cursus) {
 //		super();

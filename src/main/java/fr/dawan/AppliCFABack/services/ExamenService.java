@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
 
 public interface ExamenService {
 
@@ -15,7 +16,7 @@ public interface ExamenService {
 
 	ExamenDto getById(long id);
 
-	ExamenDto saveOrUpdate(ExamenDto eDto);
+	ExamenDtoSave saveOrUpdate(ExamenDtoSave eDto) throws Exception;
 
 	void deleteById(long id);
 

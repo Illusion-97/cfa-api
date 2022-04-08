@@ -100,12 +100,19 @@ public class PromotionServiceImpl implements PromotionService {
 
 		for (Examen examen : examens) {
 			ExamenDto eDto = mapper.ExamenToExamenDto(examen);
-			Set<CompetenceProfessionnelle>competenceProfessionnelles = examen.getCompetenceProfessionnelle();
+			Set<CompetenceProfessionnelle>competenceProfessionnelles = examen.getCompetencesProfessionnelles();
 			Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new HashSet<CompetenceProfessionnelleDto>();
 			for (CompetenceProfessionnelle cptP : competenceProfessionnelles) {
 				competenceProfessionnellesDto.add(mapper.CompetenceProfessionnelleDto(cptP));
 			}
 			eDto.setCompetenceProfessionnelleDto(competenceProfessionnellesDto);
+			
+			List<ActiviteType> activiteTypes = examen.getActiviteType();
+			List<ActiviteTypeDto> activiteTypesDto = new ArrayList<ActiviteTypeDto>();
+			for (ActiviteType at : activiteTypes) {
+				activiteTypesDto.add(mapper.ActiviteTypeToActiviteDto(at));
+			}
+			eDto.setActiviteTypes(activiteTypesDto);
 			examenDtos.add(eDto);
 		}		
 		pDto.setExamensDto(examenDtos);
@@ -209,7 +216,23 @@ public class PromotionServiceImpl implements PromotionService {
 		
 		return result;
 	}
-
 	
+	@Override
+    public UtilisateurDto getCefById(long id) {
+        return mapper.UtilisateurToUtilisateurDto(promoRepo.getOne(id).getCef().getUtilisateur());
+    }
+
+	@Override
+	public List<PromotionDto> getPromotionByEtudiantIdAndByCursusId(long id) {
+		List<Promotion> promos = promoRepo.getByEtudiantId(id);
+		List<PromotionDto> result = new ArrayList<PromotionDto>();
+		
+		for(Promotion p : promos) {
+			PromotionDto pDto = mapper.PromotionToPromotionDto(p);
+			pDto.setCursusDto(mapper.CursusToCursusDto(p.getCursus()));
+			result.add(mapper.PromotionToPromotionDto(pDto));
+		}
+		return result;
+	}
 
 }

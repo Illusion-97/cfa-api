@@ -97,4 +97,14 @@ public class PromotionController {
 	public List<EtudiantDto> getEtudiantsById(@PathVariable("id") long id) {
 		return promoService.getEtudiantsById(id);
 	}
+	
+	@GetMapping(value = "/{id}/cefs",produces = "application/json")
+    public UtilisateurDto getCefById(@PathVariable("id") long id) {
+        return promoService.getCefById(id);
+    }
+	
+	@GetMapping(value = "/{id}/etudiants/cursus", produces = "application/json")
+	public List<PromotionDto> getPromotionByEtudiantIdAndByCursusId(@PathVariable("id") long id) {
+		return promoService.getPromotionByEtudiantIdAndByCursusId(id);
+	}
 }

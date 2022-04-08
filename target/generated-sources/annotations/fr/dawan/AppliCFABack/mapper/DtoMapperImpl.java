@@ -64,14 +64,17 @@ import fr.dawan.AppliCFABack.entities.Remuneration;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-04-05T14:19:45+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 
+    date = "2022-04-07T12:06:31+0200",
+
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -194,6 +197,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         CursusDto cursusDto = new CursusDto();
 
+        cursusDto.setDescription( cursus.getDescription() );
+        cursusDto.setDuree( cursus.getDuree() );
         cursusDto.setId( cursus.getId() );
         cursusDto.setTitre( cursus.getTitre() );
 
@@ -352,9 +357,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         PassageExamenDto passageExamenDto = new PassageExamenDto();
 
-        passageExamenDto.setId( passageExamen.getId() );
         passageExamenDto.setDateDebut( passageExamen.getDateDebut() );
         passageExamenDto.setDateFin( passageExamen.getDateFin() );
+        passageExamenDto.setId( passageExamen.getId() );
 
         return passageExamenDto;
     }
@@ -730,6 +735,38 @@ public class DtoMapperImpl implements DtoMapper {
         centreFormation.setCountryCode( centreFormationDG2Dto.getCountry() );
 
         return centreFormation;
+    }
+
+    @Override
+    public PromotionDto PromotionToPromotionDto(PromotionDto pDto) {
+        if ( pDto == null ) {
+            return null;
+        }
+
+        PromotionDto promotionDto = new PromotionDto();
+
+        promotionDto.setId( pDto.getId() );
+        promotionDto.setNom( pDto.getNom() );
+        promotionDto.setDateDebut( pDto.getDateDebut() );
+        promotionDto.setDateFin( pDto.getDateFin() );
+        promotionDto.setCefDto( pDto.getCefDto() );
+        List<EtudiantDto> list = pDto.getEtudiantsDto();
+        if ( list != null ) {
+            promotionDto.setEtudiantsDto( new ArrayList<EtudiantDto>( list ) );
+        }
+        promotionDto.setCentreFormationDto( pDto.getCentreFormationDto() );
+        promotionDto.setReferentPedagogiqueDto( pDto.getReferentPedagogiqueDto() );
+        promotionDto.setCursusDto( pDto.getCursusDto() );
+        List<InterventionDto> list1 = pDto.getInterventionsDto();
+        if ( list1 != null ) {
+            promotionDto.setInterventionsDto( new ArrayList<InterventionDto>( list1 ) );
+        }
+        Set<ExamenDto> set = pDto.getExamensDto();
+        if ( set != null ) {
+            promotionDto.setExamensDto( new HashSet<ExamenDto>( set ) );
+        }
+
+        return promotionDto;
     }
 
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {

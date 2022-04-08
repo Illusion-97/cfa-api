@@ -190,6 +190,8 @@ public interface DtoMapper {
 	@Mapping(target = "id", ignore = true)
 	CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
 
+	PromotionDto PromotionToPromotionDto(PromotionDto pDto);
+
 	
 
 	
