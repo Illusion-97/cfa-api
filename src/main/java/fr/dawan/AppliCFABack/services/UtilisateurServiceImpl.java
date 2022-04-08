@@ -1,21 +1,5 @@
 package fr.dawan.AppliCFABack.services;
 
-import com.univocity.parsers.common.record.Record;
-import com.univocity.parsers.csv.CsvParser;
-import com.univocity.parsers.csv.CsvParserSettings;
-import fr.dawan.AppliCFABack.dto.*;
-import fr.dawan.AppliCFABack.entities.*;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.repositories.*;
-import fr.dawan.AppliCFABack.tools.HashTools;
-import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.transaction.Transactional;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,6 +7,50 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.univocity.parsers.common.record.Record;
+import com.univocity.parsers.csv.CsvParser;
+import com.univocity.parsers.csv.CsvParserSettings;
+
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.dto.ResetResponse;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.CEF;
+import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
+import fr.dawan.AppliCFABack.repositories.AdresseRepository;
+import fr.dawan.AppliCFABack.repositories.CEFRepository;
+import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.tools.HashTools;
+import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 
 @Service
 @Transactional
@@ -715,4 +743,47 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 
 	}
+	
+	//import des users DG2 en prevoyance des necessité d'ajouts pour le projet
+//		@Override
+//		public void fetchAllDG2User(String email, String password) throws Exception {
+//			ObjectMapper objectMapper = new ObjectMapper();
+//			List<UserDG2Dto> cResJson;
+//			
+//			//url dg2 qui concerne la recupération des locations
+//			URI url = new URI("https://dawan.org/api2/cfa/users");
+//			
+//			//recupérartion des headers / email / password dg2
+//			HttpHeaders headers = new HttpHeaders();
+//			headers.add("x-auth-token", email + ":" + password);
+//
+//			HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+//
+//			ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+//
+//			if (repWs.getStatusCode() == HttpStatus.OK) {
+//				String json = repWs.getBody();
+//				//recuperation des values en json et lecture
+//				cResJson = objectMapper.readValue(json, new TypeReference<List<UtilisateurDG2Dto>>() {
+//				});
+//				//boucle pour récupérer toute la liste
+//				for (UtilisateurDG2Dto uDG2 : uResJson) {
+//					Utilisateur userImport = mapper.utilisateurDG2DtoToUtilisateur(uDG2);
+//					Optional<Utilisateur> optUser = utilisateurRepository.findByIdDg2(userImport.getIdDg2());
+//
+//					if (optUser.isPresent()) {
+//						if (optUser.get().equals(userImport))
+//							continue;
+//						else if (!optUser.get().equals(userImport)) {
+//							userImport.setId(optUser.get().getId());
+//						}
+//						utilisateurRepository.saveAndFlush(userImport);
+//					} else {
+//						utilisateurRepository.saveAndFlush(userImport);
+//					}
+//				}
+//			} else {
+//				throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+//			}
+//		}
 }

@@ -281,7 +281,7 @@ public class InterventionServiceImpl implements InterventionService {
 		return lstFormDto;
 	}
 	
-		//import InterventionDG2 
+		//import InterventionDG2 interventions prévues pour une formation 
 		@Override
 		public List<InterventionDG2Dto> fetchDG2Interventions(long id, String email, String password) throws Exception{
 			List<InterventionDG2Dto> lst = new ArrayList<>();
