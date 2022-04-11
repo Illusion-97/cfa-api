@@ -126,11 +126,11 @@ public class ExamenServiceImpl implements ExamenService {
 	@Override
 	public ExamenDtoSave saveOrUpdate(ExamenDtoSave eDto) throws Exception {
 		
-		if (eDto.getActiviteTypesId().isEmpty() || eDto.getActiviteTypesId() == null) 
+		if (eDto.getActivitesTypesId().isEmpty() || eDto.getActivitesTypesId() == null) 
 			throw new Exception("Activites Types manquante");
 
 		List<ActiviteType> activiteTypes = new ArrayList<ActiviteType>();
-		for(long idA : eDto.getActiviteTypesId()) {
+		for(long idA : eDto.getActivitesTypesId()) {
 			activiteTypes.add(activiteTypeRepository.getOne(idA));
 		}
 		if (eDto.getCompetencesProfessionnellesId().isEmpty() || eDto.getCompetencesProfessionnellesId() == null) 
