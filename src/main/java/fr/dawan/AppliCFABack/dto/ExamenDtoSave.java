@@ -19,7 +19,7 @@ public class ExamenDtoSave {
 	
 	private LocalDate dateExamen; 
 	
-	private List<Long> activitesTypesId;
+	private List<Long> activiteTypesId;
 	
 	private long promotionId;
 	
@@ -77,12 +77,12 @@ public class ExamenDtoSave {
 
 
 
-	public List<Long> getActivitesTypesId() {
-		return activitesTypesId;
+	public List<Long> getActiviteTypesId() {
+		return activiteTypesId;
 	}
 
-	public void setActivitesTypesId(List<Long> activitesTypesId) {
-		this.activitesTypesId = activitesTypesId;
+	public void setActiviteTypesId(List<Long> activiteTypesId) {
+		this.activiteTypesId = activiteTypesId;
 	}
 
 	public long getPromotionId() {

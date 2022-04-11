@@ -17,8 +17,6 @@ public class ExamenDto {
 	private long promotionId;
 	private Set<CompetenceProfessionnelleDto> competencesProfessionnellesDto;
 	private Set<NoteDto> notesDto;
-	private List<Byte> blocksConcernee;
-	
 	
 	public ExamenDto() {
 		super();
@@ -88,19 +86,11 @@ public class ExamenDto {
 	}
 	public void setCompetenceProfessionnelleDto(Set<CompetenceProfessionnelleDto> competenceProfessionnelleDto) {
 		this.competencesProfessionnellesDto = competenceProfessionnelleDto;
-		List<Byte> blocksConcernee=  this.competencesProfessionnellesDto.stream().map(CompetenceProfessionnelleDto::getNumeroFiche).collect(Collectors.toList());
-		setBlocksConcernee(blocksConcernee);
 	}
 	public Set<NoteDto> getNotesDto() {
 		return notesDto;
 	}
 	public void setNotesDto(Set<NoteDto> notesDto) {
 		this.notesDto = notesDto;
-	}
-	public List<Byte> getBlocksConcernee() {
-		return blocksConcernee;
-	}
-	private void setBlocksConcernee(List<Byte> blocksConcernee) {
-		this.blocksConcernee = blocksConcernee;
 	}
 }
