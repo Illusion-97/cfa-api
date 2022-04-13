@@ -23,7 +23,7 @@ public class Intervention { // intervention prévue
 
 //	@Temporal(value = TemporalType.DATE)
 	private LocalDate dateFin; // 18/03
-
+	
 	@ManyToOne
 	private Formation formation; // Java init
 
@@ -35,6 +35,9 @@ public class Intervention { // intervention prévue
 
 	@ManyToMany
 	private List<Formateur> formateurs;
+	
+	@ManyToMany(mappedBy = "interventions")
+	private List<SupportCours> supportsCours;
 
 	@Column
 	private String noteInfoPersonnel;

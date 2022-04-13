@@ -71,7 +71,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-04-11T12:16:25+0200",
+    date = "2022-04-13T09:40:55+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -355,9 +355,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         PassageExamenDto passageExamenDto = new PassageExamenDto();
 
-        passageExamenDto.setId( passageExamen.getId() );
         passageExamenDto.setDateDebut( passageExamen.getDateDebut() );
         passageExamenDto.setDateFin( passageExamen.getDateFin() );
+        passageExamenDto.setId( passageExamen.getId() );
 
         return passageExamenDto;
     }
@@ -386,10 +386,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         PromotionDto promotionDto = new PromotionDto();
 
-        promotionDto.setId( promotion.getId() );
-        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
+        promotionDto.setId( promotion.getId() );
+        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }
@@ -743,26 +743,26 @@ public class DtoMapperImpl implements DtoMapper {
 
         PromotionDto promotionDto = new PromotionDto();
 
-        promotionDto.setId( pDto.getId() );
-        promotionDto.setNom( pDto.getNom() );
+        promotionDto.setCefDto( pDto.getCefDto() );
+        promotionDto.setCentreFormationDto( pDto.getCentreFormationDto() );
+        promotionDto.setCursusDto( pDto.getCursusDto() );
         promotionDto.setDateDebut( pDto.getDateDebut() );
         promotionDto.setDateFin( pDto.getDateFin() );
-        promotionDto.setCefDto( pDto.getCefDto() );
         List<EtudiantDto> list = pDto.getEtudiantsDto();
         if ( list != null ) {
             promotionDto.setEtudiantsDto( new ArrayList<EtudiantDto>( list ) );
-        }
-        promotionDto.setCentreFormationDto( pDto.getCentreFormationDto() );
-        promotionDto.setReferentPedagogiqueDto( pDto.getReferentPedagogiqueDto() );
-        promotionDto.setCursusDto( pDto.getCursusDto() );
-        List<InterventionDto> list1 = pDto.getInterventionsDto();
-        if ( list1 != null ) {
-            promotionDto.setInterventionsDto( new ArrayList<InterventionDto>( list1 ) );
         }
         Set<ExamenDto> set = pDto.getExamensDto();
         if ( set != null ) {
             promotionDto.setExamensDto( new HashSet<ExamenDto>( set ) );
         }
+        promotionDto.setId( pDto.getId() );
+        List<InterventionDto> list1 = pDto.getInterventionsDto();
+        if ( list1 != null ) {
+            promotionDto.setInterventionsDto( new ArrayList<InterventionDto>( list1 ) );
+        }
+        promotionDto.setNom( pDto.getNom() );
+        promotionDto.setReferentPedagogiqueDto( pDto.getReferentPedagogiqueDto() );
 
         return promotionDto;
     }

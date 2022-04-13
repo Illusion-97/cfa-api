@@ -4,10 +4,13 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 @Entity
 public class Absence {
@@ -15,6 +18,9 @@ public class Absence {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@Version
+	private int version;
 
 	private LocalDate dateDebut;
 
@@ -25,6 +31,17 @@ public class Absence {
 
 	@ManyToOne
 	private Etudiant etudiant;
+	
+	@ManyToOne
+	private Intervention intervention;
+	
+	@Enumerated(EnumType.STRING)
+	private TypeAbsence typeAbsence;
+	
+	public enum TypeAbsence {
+		RETARD,
+		ABSENCE
+	}
 
 	public Absence() {
 		super();
@@ -58,6 +75,14 @@ public class Absence {
 		return justificatif;
 	}
 
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
+	}
+
 	public void setJustificatif(String justificatif) {
 		this.justificatif = justificatif;
 	}
@@ -70,4 +95,21 @@ public class Absence {
 		this.etudiant = etudiant;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public TypeAbsence getTypeAbsence() {
+		return typeAbsence;
+	}
+
+	public void setTypeAbsence(TypeAbsence typeAbsence) {
+		this.typeAbsence = typeAbsence;
+	}
+
+		
 }

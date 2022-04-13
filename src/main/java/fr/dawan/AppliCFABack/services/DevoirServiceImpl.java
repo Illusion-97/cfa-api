@@ -57,7 +57,7 @@ public class DevoirServiceImpl implements DevoirService {
 	//recuperation de la liste des devoirs avec pagination et recherche
 	@Override
 	public List<DevoirDto> getAllByPage(int page, int size, String search) {
-		List<Devoir> lst = devoirRepository.findAllByEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Devoir> lst = devoirRepository.findAllByConsigneContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<DevoirDto> lstDto = new ArrayList<DevoirDto>();
@@ -73,7 +73,7 @@ public class DevoirServiceImpl implements DevoirService {
 	//methode count
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(devoirRepository.countByEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search));
+		return new CountDto(devoirRepository.countByConsigneContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search));
 	}
 
 	//recuperation des devoirs par id
