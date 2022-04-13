@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 @Entity
 public class Devoir {
@@ -15,10 +16,13 @@ public class Devoir {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@Version
+	private int version;
 
 	@Column(nullable = false, length = 255)
-	String enonce;
-
+	private String consigne;
+	
 	private LocalDate dateDebut;
 
 	private LocalDate dateFin;
@@ -30,17 +34,16 @@ public class Devoir {
 		super();
 	}
 
-	public Devoir(long id, String enonce, LocalDate dateDebut, LocalDate dateFin, Intervention intervention) {
-		super();
-		this.id = id;
-		this.enonce = enonce;
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
-		this.intervention = intervention;
-	}
-
 	public long getId() {
 		return id;
+	}
+
+	public String getConsigne() {
+		return consigne;
+	}
+
+	public void setConsigne(String consigne) {
+		this.consigne = consigne;
 	}
 
 	public void setId(long id) {
@@ -48,11 +51,11 @@ public class Devoir {
 	}
 
 	public String getEnonce() {
-		return enonce;
+		return consigne;
 	}
 
 	public void setEnonce(String enonce) {
-		this.enonce = enonce;
+		this.consigne = enonce;
 	}
 
 	public LocalDate getDateDebut() {
@@ -77,6 +80,14 @@ public class Devoir {
 
 	public void setIntervention(Intervention intervention) {
 		this.intervention = intervention;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 }

@@ -15,10 +15,10 @@ import fr.dawan.AppliCFABack.entities.Etudiant;
 @Repository
 public interface DevoirRepository extends JpaRepository<Devoir, Long> {
 
-	Page<Devoir> findAllByEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(String enonce,
+	Page<Devoir> findAllByConsigneContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(String consigne,
 			String formationTitre, Pageable pageable);
 
-	long countByEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(String enonce,
+	long countByConsigneContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(String consigne,
 			String formationTitre);
 
 	// @Query(value = "SELECT n FROM Note n WHERE n.etudiant.id = :id")
