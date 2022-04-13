@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,8 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Version;
 
+@SuppressWarnings("serial")
 @Entity
-public class SupportCours {
+public class SupportCours implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

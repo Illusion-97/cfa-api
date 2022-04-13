@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -8,14 +10,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.services.GenericService;
 
 public abstract class GenericController<TDto> {
 
+    protected final GenericService<TDto> service;
 
-    protected  final GenericService<TDto> service;
+    public GenericController() {
+		this.service = null;
+	}
 
-    public GenericController(GenericService<TDto> service) {
+	public GenericController(GenericService<TDto> service) {
         super();
         this.service = service;
     }
@@ -32,8 +39,8 @@ public abstract class GenericController<TDto> {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
         }
-
     }
+    
     @PostMapping(consumes = "application/json",produces = "application/json")
     ResponseEntity<TDto> save( @RequestBody TDto tDto) throws Exception {
 
@@ -44,5 +51,12 @@ public abstract class GenericController<TDto> {
     @PutMapping(consumes = "application/json",produces = "application/json")
     TDto update( @RequestBody TDto tDto) throws Exception {
         return service.saveOrUpdate(tDto);
+    }
+    
+    @GetMapping(value = "/count/{search}", produces = "application/json")
+    public CountDto count(@PathVariable("search") Optional<String> search) {
+        if (search.isPresent())
+            return service.count(search.get());
+        return service.count("");
     }
 }
