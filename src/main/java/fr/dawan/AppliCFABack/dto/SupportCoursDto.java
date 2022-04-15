@@ -7,6 +7,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class SupportCoursDto implements Serializable{
 
+	private long id;
 	private int version;
 	private String titre;
 	private String pieceJointe;
@@ -35,6 +36,12 @@ public class SupportCoursDto implements Serializable{
 	}
 	public void setInterventionsId(List<Long> interventionsId) {
 		this.interventionsId = interventionsId;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	

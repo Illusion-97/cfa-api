@@ -566,26 +566,26 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return resfinal;
     }
 
-  //recuperation des user par etudiant id, referent
-    @Override
-    public List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long id) {
-        List<Absence> lstAbs = absenceRepository.findDistinctByEtudiantPromotionsReferentPedagogiqueId(id);
-        List<AbsenceDto> lstAbsDto = new ArrayList<AbsenceDto>();
-        for (Absence abs : lstAbs) {
-            AbsenceDto absDto = mapper.AbsenceToAbsenceDto(abs);
-            EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(abs.getEtudiant());
-            absDto.setEtudiantDto(etuDto);
-            lstAbsDto.add(absDto);
-            return lstAbsDto;
-        }
-        return null;
-    }
+//  //recuperation des user par etudiant id, referent
+//    @Override
+//    public List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long id) {
+//        List<Absence> lstAbs = absenceRepository.findDistinctByEtudiantPromotionsReferentPedagogiqueId(id);
+//        List<AbsenceDto> lstAbsDto = new ArrayList<AbsenceDto>();
+//        for (Absence abs : lstAbs) {
+//            AbsenceDto absDto = mapper.AbsenceToAbsenceDto(abs);
+//            EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(abs.getEtudiant());
+//            absDto.setEtudiantDto(etuDto);
+//            lstAbsDto.add(absDto);
+//            return lstAbsDto;
+//        }
+//        return null;
+//    }
 
-    //methode count
-    @Override
-    public CountDto countEtudiantPromotionsReferentPedagogiqueId(long id) {
-        return new CountDto(absenceRepository.countDistinctByEtudiantPromotionsReferentPedagogiqueId(id));
-    }
+//    //methode count
+//    @Override
+//    public CountDto countEtudiantPromotionsReferentPedagogiqueId(long id) {
+//        return new CountDto(absenceRepository.countDistinctByEtudiantPromotionsReferentPedagogiqueId(id));
+//    }
 
     //recuperation des user par role + pagination + recherche
     @Override

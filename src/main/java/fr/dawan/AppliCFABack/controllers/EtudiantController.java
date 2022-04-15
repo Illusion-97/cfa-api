@@ -180,11 +180,11 @@ public class EtudiantController {
 		return etudiantService.getAbsencesByIdEtudiant(id);
 	}
 
-	@GetMapping(value = "/{id}/absences/{page}/{size}", produces = "application/json")
-	public List<AbsenceDto> getAbsencesByIdEtudiant(@PathVariable("id") long id, @PathVariable("page") int page,
-			@PathVariable(value = "size") int size) {
-		return etudiantService.getAbsencesByIdEtudiant(id, page, size);
-	}
+//	@GetMapping(value = "/{id}/absences/{page}/{size}", produces = "application/json")
+//	public List<AbsenceDto> getAbsencesByIdEtudiant(@PathVariable("id") long id, @PathVariable("page") int page,
+//			@PathVariable(value = "size") int size) {
+//		return etudiantService.getAbsencesByIdEtudiant(id, page, size);
+//	}
 
 	// ##################################################
 	// # Get : 3eme Niveau #
@@ -199,10 +199,10 @@ public class EtudiantController {
 		return etudiantService.getIntervenionByIdEtudiant(id);
 	}
 
-	@GetMapping(value = "/{id}/formateurReferent", produces = "application/json")
-	public UtilisateurDto getFormateurReferentByIdEtudiant(@PathVariable("id") long id) {
-		return etudiantService.getFormateurReferentByIdEtudiant(id);
-	}
+//	@GetMapping(value = "/{id}/formateurReferent", produces = "application/json")
+//	public UtilisateurDto getFormateurReferentByIdEtudiant(@PathVariable("id") long id) {
+//		return etudiantService.getFormateurReferentByIdEtudiant(id);
+//	}
 
 //	@GetMapping(value = "/{id}/manager", produces = "application/json")
 //	public UtilisateurDto getManagerByIdEtudiant(@PathVariable("id") long id) {
