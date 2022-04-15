@@ -1,17 +1,33 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class AbsenceDto {
+@SuppressWarnings("serial")
+public class AbsenceDto implements Serializable{
 	private long id;
+	private int version; 
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	private String justificatif;
 	private EtudiantDto etudiantDto;
+	private long interventionId;
+	private String typeAbsence;
 
 	public AbsenceDto() {
 		super();
 	}
+
+	
+	public String getTypeAbsence() {
+		return typeAbsence;
+	}
+
+
+	public void setTypeAbsence(String typeAbsence) {
+		this.typeAbsence = typeAbsence;
+	}
+
 
 	public long getId() {
 		return id;
@@ -53,4 +69,20 @@ public class AbsenceDto {
 		this.etudiantDto = etudiantDto;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public long getInterventionId() {
+		return interventionId;
+	}
+
+	public void setInterventionId(long interventionId) {
+		this.interventionId = interventionId;
+	}
+	
 }

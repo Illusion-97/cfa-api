@@ -17,11 +17,7 @@ import fr.dawan.AppliCFABack.services.GenericService;
 public abstract class GenericController<TDto> {
 
     protected final GenericService<TDto> service;
-
-    public GenericController() {
-		this.service = null;
-	}
-
+    
 	public GenericController(GenericService<TDto> service) {
         super();
         this.service = service;

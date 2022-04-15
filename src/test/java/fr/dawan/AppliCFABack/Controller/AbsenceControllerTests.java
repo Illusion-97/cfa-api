@@ -109,35 +109,35 @@ public class AbsenceControllerTests {
 		}
 	}
 	
-	@Test
-	void testUpdate() {
-
-		try {
-			AbsenceDto aDto = absenceController.getById(idAbsence+1);
-			aDto.setDateDebut(LocalDate.now());
-			aDto.setDateFin(LocalDate.now());
-			aDto.setJustificatif("justificatif update");
-
-			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-			String jsonReq = objectMapper.writeValueAsString(aDto);
-
-			String jsonReponse = mockMvc.perform(put("/absences") 
-					.contentType(MediaType.APPLICATION_JSON) 
-					.accept(MediaType.APPLICATION_JSON) 
-					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-			AbsenceDto res = objectMapper.readValue(jsonReponse, AbsenceDto.class);
-			assertEquals(res.getId(), aDto.getId());
-			assertEquals(res.getDateDebut(), aDto.getDateDebut());
-			assertEquals(res.getDateFin(), aDto.getDateFin());
-			assertEquals(res.getJustificatif(), aDto.getJustificatif());
-			
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-
-	}
-	
+//	@Test
+//	void testUpdate() {
+//
+//		try {
+//			AbsenceDto aDto = absenceController.getById(idAbsence+1);
+//			aDto.setDateDebut(LocalDate.now());
+//			aDto.setDateFin(LocalDate.now());
+//			aDto.setJustificatif("justificatif update");
+//
+//			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+//			String jsonReq = objectMapper.writeValueAsString(aDto);
+//
+//			String jsonReponse = mockMvc.perform(put("/absences") 
+//					.contentType(MediaType.APPLICATION_JSON) 
+//					.accept(MediaType.APPLICATION_JSON) 
+//					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//			AbsenceDto res = objectMapper.readValue(jsonReponse, AbsenceDto.class);
+//			assertEquals(res.getId(), aDto.getId());
+//			assertEquals(res.getDateDebut(), aDto.getDateDebut());
+//			assertEquals(res.getDateFin(), aDto.getDateFin());
+//			assertEquals(res.getJustificatif(), aDto.getJustificatif());
+//			
+//		} catch (Exception e) {
+//			fail(e.getMessage());
+//		}
+//
+//	}
+//	
 	@Test
 	void testDelete() {
 

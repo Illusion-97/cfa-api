@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -13,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 @Entity
-public class Absence {
+public class Absence implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +22,13 @@ public class Absence {
 	
 	@Version
 	private int version;
-
+	
+	@Column(nullable = false)
 	private LocalDate dateDebut;
-
+	
 	private LocalDate dateFin;
 
-	@Column(nullable = false, length = 255)
+	@Column(length = 255)
 	private String justificatif;
 
 	@ManyToOne
@@ -35,6 +37,7 @@ public class Absence {
 	@ManyToOne
 	private Intervention intervention;
 	
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TypeAbsence typeAbsence;
 	

@@ -474,7 +474,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	//recuperation des absences par id etudiants
 	@Override
 	public List<AbsenceDto> getAbsencesByIdEtudiant(long id) {
-		List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id);
+		List<Absence> lst = absenceRepository.findAllByEtudiantId(id);
 		List<AbsenceDto> res = new ArrayList<AbsenceDto>();
 
 		for (Absence n : lst)
@@ -484,17 +484,17 @@ public class EtudiantServiceImpl implements EtudiantService {
 	}
 
 	//recuperation des absences par id etudiants + pagination
-	@Override
-	public List<AbsenceDto> getAbsencesByIdEtudiant(long id, int page, int size) {
-		List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id, PageRequest.of(page, size)).get()
-				.collect(Collectors.toList());
-		List<AbsenceDto> res = new ArrayList<AbsenceDto>();
-
-		for (Absence n : lst)
-			res.add(mapper.AbsenceToAbsenceDto(n));
-
-		return res;
-	}
+//	@Override
+//	public List<AbsenceDto> getAbsencesByIdEtudiant(long id, int page, int size) {
+//		List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id, PageRequest.of(page, size)).get()
+//				.collect(Collectors.toList());
+//		List<AbsenceDto> res = new ArrayList<AbsenceDto>();
+//
+//		for (Absence n : lst)
+//			res.add(mapper.AbsenceToAbsenceDto(n));
+//
+//		return res;
+//	}
 
 	// ##################################################
 	// # 3eme Niveau #
@@ -554,11 +554,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 	}
 
 	//recuperation du formateur referent par id etudiants 
-	@Override
-	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
-		Contrat contrat = contratRepository.findByEtudiantId(id);
-		return mapper.UtilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
-	}
+//	@Override
+//	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
+//		Contrat contrat = contratRepository.findByEtudiantId(id);
+//		return mapper.UtilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
+//	}
 
 //	@Override
 //	public UtilisateurDto getManagerByIdEtudiant(long id) {
@@ -672,7 +672,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		return res;
 	}
-
 	
 
 }

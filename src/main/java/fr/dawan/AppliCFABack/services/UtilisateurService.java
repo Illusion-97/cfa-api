@@ -43,9 +43,9 @@ public interface UtilisateurService {
 
     List<UtilisateurDto> findByRole(long idRole);
 
-    List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long id);
+//    List<AbsenceDto> findAllByEtudiantPromotionsReferentPedagogiqueId(long id);
 
-    CountDto countEtudiantPromotionsReferentPedagogiqueId(long id);
+//    CountDto countEtudiantPromotionsReferentPedagogiqueId(long id);
 
     Boolean isReferent(long id);
 

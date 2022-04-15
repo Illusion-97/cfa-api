@@ -1,8 +1,10 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,10 +30,17 @@ public class SupportCours implements Serializable{
 	@Column(nullable = false)
 	private String pieceJointe;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.REMOVE)
 	private List<Intervention> interventions;
 
-
+	public List<Long> getInterventionsId(){
+		List<Long> res = new ArrayList<Long>();
+		for (Intervention i : interventions) {
+			res.add(i.getId());
+		}
+		return res;
+	}
+	
 	public List<Intervention> getInterventions() {
 		return interventions;
 	}
