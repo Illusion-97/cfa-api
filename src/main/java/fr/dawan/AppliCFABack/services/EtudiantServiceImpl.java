@@ -39,9 +39,7 @@ import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -592,9 +590,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 		List<DevoirDto> res = new ArrayList<DevoirDto>();
 		
 		for(Devoir d : lst) {
-			DevoirDto dDto = mapper.DevoirToDevoirDto(d);			
-			dDto.setInterventionDto(mapper.InterventionToInterventionDto(d.getIntervention()));
-			dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(d.getIntervention().getFormation()));			
+			DevoirDto dDto = DtoTools.convert(d, DevoirDto.class);			
+					
 			res.add(dDto);
 		}
 		

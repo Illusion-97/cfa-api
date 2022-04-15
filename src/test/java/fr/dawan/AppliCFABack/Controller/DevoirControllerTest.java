@@ -88,7 +88,7 @@ public class DevoirControllerTest {
 	void testSave() {
 		try {
 			DevoirDto eToInsert = new DevoirDto();
-			eToInsert.setEnonce("enonce save");
+			eToInsert.setConsigne("enonce save");
 			eToInsert.setDateDebut(LocalDate.now());
 			eToInsert.setDateFin(LocalDate.now());
 
@@ -112,8 +112,8 @@ public class DevoirControllerTest {
 	void testUpdate() {
 
 		try {
-			DevoirDto eDto = devoirController.getById(idDevoir+1);
-			eDto.setEnonce("enonce update");
+			DevoirDto eDto = devoirController.findById(idDevoir +1);
+			eDto.setConsigne("enonce update");
 			eDto.setDateDebut(LocalDate.now());
 			eDto.setDateFin(LocalDate.now());
 
@@ -127,7 +127,7 @@ public class DevoirControllerTest {
 
 			DevoirDto res = objectMapper.readValue(jsonReponse, DevoirDto.class);
 			assertEquals(res.getId(), eDto.getId());
-			assertEquals(res.getEnonce(), eDto.getEnonce());
+			assertEquals(res.getConsigne(), eDto.getConsigne());
 			assertEquals(res.getDateDebut(), eDto.getDateDebut());
 			assertEquals(res.getDateFin(), eDto.getDateFin());
 		} catch (Exception e) {

@@ -1,13 +1,23 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class DevoirDto {
+@SuppressWarnings("serial")
+public class DevoirDto  implements Serializable {
 	private long id;
-	String enonce;
+
+	private int version;
+
+	private String consigne;
+	
 	private LocalDate dateDebut;
+
 	private LocalDate dateFin;
-	private InterventionDto interventionDto;
+
+
+	private long interventionId;
+
 
 	public DevoirDto() {
 		// TODO Auto-generated constructor stub
@@ -21,12 +31,20 @@ public class DevoirDto {
 		this.id = id;
 	}
 
-	public String getEnonce() {
-		return enonce;
+	public int getVersion() {
+		return version;
 	}
 
-	public void setEnonce(String enonce) {
-		this.enonce = enonce;
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public String getConsigne() {
+		return consigne;
+	}
+
+	public void setConsigne(String consigne) {
+		this.consigne = consigne;
 	}
 
 	public LocalDate getDateDebut() {
@@ -45,12 +63,14 @@ public class DevoirDto {
 		this.dateFin = dateFin;
 	}
 
-	public InterventionDto getInterventionDto() {
-		return interventionDto;
+	public long getInterventionId() {
+		return interventionId;
 	}
 
-	public void setInterventionDto(InterventionDto interventionDto) {
-		this.interventionDto = interventionDto;
+	public void setInterventionId(long interventionId) {
+		this.interventionId = interventionId;
 	}
+
+
 
 }

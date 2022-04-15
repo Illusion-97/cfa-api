@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,8 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
+@SuppressWarnings("serial")
 @Entity
-public class Positionnement {
+public class Positionnement implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

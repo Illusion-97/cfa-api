@@ -41,19 +41,6 @@ public class DevoirServiceImpl implements DevoirService {
 		return lstDto;
 	}
 
-	//recuperation de la liste des devoirs avec pagination 
-	@Override
-	public List<DevoirDto> getAllDevoir(int page, int size) {
-		List<Devoir> lst = devoirRepository.findAll(PageRequest.of(page, size)).get().collect(Collectors.toList());
-
-		// conversion vers Dto
-		List<DevoirDto> lstDto = new ArrayList<DevoirDto>();
-		for (Devoir d : lst) {
-			lstDto.add(mapper.DevoirToDevoirDto(d));
-		}
-		return lstDto;
-	}
-
 	//recuperation de la liste des devoirs avec pagination et recherche
 	@Override
 	public List<DevoirDto> getAllByPage(int page, int size, String search) {
@@ -62,9 +49,8 @@ public class DevoirServiceImpl implements DevoirService {
 		// conversion vers Dto
 		List<DevoirDto> lstDto = new ArrayList<DevoirDto>();
 		for (Devoir d : lst) {
-			DevoirDto dDto = mapper.DevoirToDevoirDto(d);
-			dDto.setInterventionDto(mapper.InterventionToInterventionDto(d.getIntervention()));
-			dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(d.getIntervention().getFormation()));
+			DevoirDto dDto = DtoTools.convert(d, DevoirDto.class);
+		
 			lstDto.add(dDto);
 		}
 		return lstDto;
@@ -81,13 +67,9 @@ public class DevoirServiceImpl implements DevoirService {
 	public DevoirDto getById(long id) {
 		Optional<Devoir> d = devoirRepository.findById(id);
 		if (d.isPresent()) {
-			DevoirDto dDto = mapper.DevoirToDevoirDto(d.get());
-			dDto.setInterventionDto(mapper.InterventionToInterventionDto(d.get().getIntervention()));
-			dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(d.get().getIntervention().getFormation()));
-			return dDto;
+			return DtoTools.convert(d.get(),DevoirDto.class);
 		}
 			
-
 		return null;
 	}
 
@@ -103,23 +85,15 @@ public class DevoirServiceImpl implements DevoirService {
 
 	//methode de suppression d'un devoir
 	@Override
-	public void deleteById(long id) {
-		Optional<Devoir> d = devoirRepository.findById(id);
-		
-		if (!d.isPresent())
-			return;
-		
-		d.get().setIntervention(null);
-		devoirRepository.save(d.get());		
-		devoirRepository.deleteById(id);	
+	public void delete(long id) {
+		devoirRepository.deleteById(id);
 
 	}
 
-	//methode count
-	@Override
-	public CountDto count() {
-		// TODO Auto-generated method stub
-		return new CountDto(devoirRepository.count());
-	}
+
+
+	
+
+
 
 }

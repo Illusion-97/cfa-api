@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -10,8 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
+@SuppressWarnings("serial")
 @Entity
-public class Devoir {
+public class Devoir implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +22,7 @@ public class Devoir {
 	@Version
 	private int version;
 
-	@Column(nullable = false, length = 255)
+	@Column(nullable = false, columnDefinition="TEXT")
 	private String consigne;
 	
 	private LocalDate dateDebut;
