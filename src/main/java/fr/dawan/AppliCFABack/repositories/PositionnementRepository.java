@@ -9,7 +9,7 @@ import fr.dawan.AppliCFABack.entities.Positionnement;
 
 public interface PositionnementRepository  extends JpaRepository<Positionnement, Long>{
 	
-	@Query("SELECT p FROM Positionnement p JOIN p.etudiant e JOIN e.promotions promo On promo.id = : idPromotion")
+	@Query("SELECT p FROM Positionnement p JOIN p.etudiant e JOIN e.promotions promo WHERE promo.id = :idPromotion")
 	List<Positionnement> getAllByPromotionId(long idPromotion);
 
 	List<Positionnement> getAllByInterventionId(long idIntervention);
