@@ -71,7 +71,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-04-13T09:40:55+0200",
+    date = "2022-04-14T12:50:39+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -211,10 +211,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         DevoirDto devoirDto = new DevoirDto();
 
+        devoirDto.setConsigne( devoir.getConsigne() );
         devoirDto.setDateDebut( devoir.getDateDebut() );
         devoirDto.setDateFin( devoir.getDateFin() );
-        devoirDto.setEnonce( devoir.getEnonce() );
         devoirDto.setId( devoir.getId() );
+        devoirDto.setVersion( devoir.getVersion() );
 
         return devoirDto;
     }

@@ -8,5 +8,5 @@ import fr.dawan.AppliCFABack.entities.SupportCours;
 @Repository
 public interface SupportCoursRepository extends JpaRepository<SupportCours, Long>{
 
-	long CountByTitreContaining(String search);
+	long countByTitreContaining(String search);
 }
