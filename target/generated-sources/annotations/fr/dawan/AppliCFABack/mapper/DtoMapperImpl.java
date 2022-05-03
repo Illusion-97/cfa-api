@@ -1,6 +1,5 @@
 package fr.dawan.AppliCFABack.mapper;
 
-import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
@@ -33,7 +32,6 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
-import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
@@ -71,7 +69,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-03T15:02:49+0200",
+    date = "2022-05-03T16:43:44+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -84,8 +82,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto();
 
-        competenceProfessionnelleDto.setVersion( competenceProfessionnelle.getVersion() );
         competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
+        competenceProfessionnelleDto.setVersion( competenceProfessionnelle.getVersion() );
         competenceProfessionnelleDto.setLibelle( competenceProfessionnelle.getLibelle() );
         competenceProfessionnelleDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
 
@@ -106,26 +104,6 @@ public class DtoMapperImpl implements DtoMapper {
         activiteTypeDto.setNumeroFiche( activiteType.getNumeroFiche() );
 
         return activiteTypeDto;
-    }
-
-    @Override
-    public AbsenceDto AbsenceToAbsenceDto(Absence absence) {
-        if ( absence == null ) {
-            return null;
-        }
-
-        AbsenceDto absenceDto = new AbsenceDto();
-
-        absenceDto.setId( absence.getId() );
-        absenceDto.setVersion( absence.getVersion() );
-        absenceDto.setDateDebut( absence.getDateDebut() );
-        absenceDto.setDateFin( absence.getDateFin() );
-        absenceDto.setJustificatif( absence.getJustificatif() );
-        if ( absence.getTypeAbsence() != null ) {
-            absenceDto.setTypeAbsence( absence.getTypeAbsence().name() );
-        }
-
-        return absenceDto;
     }
 
     @Override
@@ -410,9 +388,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
-        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
+        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }
@@ -427,12 +405,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         utilisateurDto.setId( utilisateur.getId() );
         utilisateurDto.setVersion( utilisateur.getVersion() );
-        utilisateurDto.setLogin( utilisateur.getLogin() );
-        utilisateurDto.setPassword( utilisateur.getPassword() );
-        utilisateurDto.setPrenom( utilisateur.getPrenom() );
-        utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setCivilite( utilisateur.getCivilite() );
         utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
+        utilisateurDto.setLogin( utilisateur.getLogin() );
+        utilisateurDto.setNom( utilisateur.getNom() );
+        utilisateurDto.setPassword( utilisateur.getPassword() );
+        utilisateurDto.setPrenom( utilisateur.getPrenom() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
 
         return utilisateurDto;
@@ -702,8 +680,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto();
 
-        competenceProfessionnelleDto.setVersion( competenceProfessionnelle.getVersion() );
         competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
+        competenceProfessionnelleDto.setVersion( competenceProfessionnelle.getVersion() );
         competenceProfessionnelleDto.setLibelle( competenceProfessionnelle.getLibelle() );
         competenceProfessionnelleDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
 
@@ -783,25 +761,25 @@ public class DtoMapperImpl implements DtoMapper {
 
         promotionDto.setId( pDto.getId() );
         promotionDto.setVersion( pDto.getVersion() );
-        promotionDto.setNom( pDto.getNom() );
+        promotionDto.setCefDto( pDto.getCefDto() );
+        promotionDto.setCentreFormationDto( pDto.getCentreFormationDto() );
+        promotionDto.setCursusDto( pDto.getCursusDto() );
         promotionDto.setDateDebut( pDto.getDateDebut() );
         promotionDto.setDateFin( pDto.getDateFin() );
-        promotionDto.setCefDto( pDto.getCefDto() );
         List<EtudiantDto> list = pDto.getEtudiantsDto();
         if ( list != null ) {
             promotionDto.setEtudiantsDto( new ArrayList<EtudiantDto>( list ) );
-        }
-        promotionDto.setCentreFormationDto( pDto.getCentreFormationDto() );
-        promotionDto.setReferentPedagogiqueDto( pDto.getReferentPedagogiqueDto() );
-        promotionDto.setCursusDto( pDto.getCursusDto() );
-        List<InterventionDto> list1 = pDto.getInterventionsDto();
-        if ( list1 != null ) {
-            promotionDto.setInterventionsDto( new ArrayList<InterventionDto>( list1 ) );
         }
         Set<ExamenDto> set = pDto.getExamensDto();
         if ( set != null ) {
             promotionDto.setExamensDto( new HashSet<ExamenDto>( set ) );
         }
+        List<InterventionDto> list1 = pDto.getInterventionsDto();
+        if ( list1 != null ) {
+            promotionDto.setInterventionsDto( new ArrayList<InterventionDto>( list1 ) );
+        }
+        promotionDto.setNom( pDto.getNom() );
+        promotionDto.setReferentPedagogiqueDto( pDto.getReferentPedagogiqueDto() );
 
         return promotionDto;
     }

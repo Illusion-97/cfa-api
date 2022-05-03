@@ -33,7 +33,6 @@ import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
@@ -55,8 +54,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	AdresseRepository adresseRepository;
 	@Autowired
 	CongeRepository congeRepository;
-	@Autowired
-	AbsenceRepository absenceRepository;
 	@Autowired
 	PromotionRepository promotionRespository;
 	@Autowired
