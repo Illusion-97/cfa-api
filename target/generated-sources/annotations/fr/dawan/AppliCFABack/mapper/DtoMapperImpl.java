@@ -71,7 +71,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-03T14:47:39+0200",
+    date = "2022-05-03T15:02:49+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -154,8 +154,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         CEFDto cEFDto = new CEFDto();
 
-        cEFDto.setVersion( cef.getVersion() );
         cEFDto.setId( cef.getId() );
+        cEFDto.setVersion( cef.getVersion() );
 
         return cEFDto;
     }
@@ -410,9 +410,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
+        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
-        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }
@@ -427,12 +427,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         utilisateurDto.setId( utilisateur.getId() );
         utilisateurDto.setVersion( utilisateur.getVersion() );
-        utilisateurDto.setCivilite( utilisateur.getCivilite() );
-        utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
         utilisateurDto.setLogin( utilisateur.getLogin() );
-        utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setPassword( utilisateur.getPassword() );
         utilisateurDto.setPrenom( utilisateur.getPrenom() );
+        utilisateurDto.setNom( utilisateur.getNom() );
+        utilisateurDto.setCivilite( utilisateur.getCivilite() );
+        utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
 
         return utilisateurDto;
@@ -783,25 +783,25 @@ public class DtoMapperImpl implements DtoMapper {
 
         promotionDto.setId( pDto.getId() );
         promotionDto.setVersion( pDto.getVersion() );
-        promotionDto.setCefDto( pDto.getCefDto() );
-        promotionDto.setCentreFormationDto( pDto.getCentreFormationDto() );
-        promotionDto.setCursusDto( pDto.getCursusDto() );
+        promotionDto.setNom( pDto.getNom() );
         promotionDto.setDateDebut( pDto.getDateDebut() );
         promotionDto.setDateFin( pDto.getDateFin() );
+        promotionDto.setCefDto( pDto.getCefDto() );
         List<EtudiantDto> list = pDto.getEtudiantsDto();
         if ( list != null ) {
             promotionDto.setEtudiantsDto( new ArrayList<EtudiantDto>( list ) );
+        }
+        promotionDto.setCentreFormationDto( pDto.getCentreFormationDto() );
+        promotionDto.setReferentPedagogiqueDto( pDto.getReferentPedagogiqueDto() );
+        promotionDto.setCursusDto( pDto.getCursusDto() );
+        List<InterventionDto> list1 = pDto.getInterventionsDto();
+        if ( list1 != null ) {
+            promotionDto.setInterventionsDto( new ArrayList<InterventionDto>( list1 ) );
         }
         Set<ExamenDto> set = pDto.getExamensDto();
         if ( set != null ) {
             promotionDto.setExamensDto( new HashSet<ExamenDto>( set ) );
         }
-        List<InterventionDto> list1 = pDto.getInterventionsDto();
-        if ( list1 != null ) {
-            promotionDto.setInterventionsDto( new ArrayList<InterventionDto>( list1 ) );
-        }
-        promotionDto.setNom( pDto.getNom() );
-        promotionDto.setReferentPedagogiqueDto( pDto.getReferentPedagogiqueDto() );
 
         return promotionDto;
     }

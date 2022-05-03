@@ -9,10 +9,6 @@ public class CEFDto extends BaseEntityDto implements Serializable{
 	private CentreFormationDto centreFormationDto;
 	private EntrepriseDto entrepriseDto;
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public CentreFormationDto getCentreFormationDto() {
 		return centreFormationDto;
 	}
