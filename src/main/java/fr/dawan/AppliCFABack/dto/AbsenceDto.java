@@ -18,6 +18,30 @@ public class AbsenceDto implements Serializable{
 		super();
 	}
 
+	public AbsenceDto(long id, int version, LocalDate dateDebut, LocalDate dateFin, String justificatif,
+			EtudiantDto etudiantDto, long interventionId, String typeAbsence) {
+		super();
+		this.id = id;
+		this.version = version;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.justificatif = justificatif;
+		this.etudiantDto = etudiantDto;
+		this.interventionId = interventionId;
+		this.typeAbsence = typeAbsence;
+	}
+	
+	public AbsenceDto(long id, int version, LocalDate dateDebut, LocalDate dateFin, String justificatif,
+			long interventionId, String typeAbsence) {
+		super();
+		this.id = id;
+		this.version = version;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.justificatif = justificatif;
+		this.interventionId = interventionId;
+		this.typeAbsence = typeAbsence;
+	}
 	
 	public String getTypeAbsence() {
 		return typeAbsence;

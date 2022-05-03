@@ -13,6 +13,19 @@ public class SupportCoursDto implements Serializable{
 	private String pieceJointe;
 	private List<Long> interventionsId;
 	
+	public SupportCoursDto() {
+		super();
+	}
+
+	public SupportCoursDto(long id, int version, String titre, String pieceJointe, List<Long> interventionsId) {
+		super();
+		this.id = id;
+		this.version = version;
+		this.titre = titre;
+		this.pieceJointe = pieceJointe;
+		this.interventionsId = interventionsId;
+	}
+	
 	public int getVersion() {
 		return version;
 	}
