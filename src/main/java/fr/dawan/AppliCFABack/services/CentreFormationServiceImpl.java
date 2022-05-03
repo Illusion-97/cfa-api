@@ -43,7 +43,12 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	//recuperation de la liste des centres de formation
+	/**
+	 * Récupération de la liste des centres de formation
+	 * 
+	 * @return lstDto	Liste des objets centre de formation
+	 */
+	
 	@Override
 	public List<CentreFormationDto> getAllCentreFormation() {
 		List<CentreFormation> lst = centreFormationRepository.findAll();
@@ -58,7 +63,14 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		return lstDto;
 	}
 
-	//recuperation de la liste des centres de formation avec pagination
+	/**
+	 * Va permettre de récupérer tous les centres de formations avec pagination
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @return LstDto Liste des objets centre de formation
+	 */
+	
 	@Override
 	public List<CentreFormationDto> getAllCentreFormation(int page, int size) {
 		List<CentreFormation> lst = centreFormationRepository.findAll(PageRequest.of(page, size)).get()
@@ -75,7 +87,11 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		return lstDto;
 	}
 
-	//methode de recuperation d'un centre de formation en fonction de son id
+	/**
+	 * Récupération des centres de formation en fonction de l'id
+	 * 
+	 */
+	
 	@Override
 	public CentreFormationDto getById(long id) {
 		Optional<CentreFormation> cf = centreFormationRepository.findById(id);
@@ -88,7 +104,11 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		return cDto;
 	}
 
-	//methode d'ajout ou modification d'un centre de formation
+	/**
+	 * Sauvegarde ou mise à jour d'un centre de formation
+	 * 
+	 */
+	
 	@Override
 	public CentreFormationDto saveOrUpdate(CentreFormationDto cfDto) {
 		CentreFormation cf = DtoTools.convert(cfDto, CentreFormation.class);
@@ -98,21 +118,39 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		return mapper.CentreFormationToCentreFormationDto(cf);
 	}
 
-	//methode de suppression d'un centre de formation
+	/**
+	 * Suppression d'un centre de formation
+	 * 
+	 * @param id	Id concernant un centre de formation
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		centreFormationRepository.deleteById(id);
 
 	}
 
-	//methode count
+	/**
+	 * Recherche d'un centre de foramtion
+	 * 
+	 * @param search recherche par nom
+	 */
+	
 	@Override
 	public CountDto count(String search) {
 		
 		return new CountDto(centreFormationRepository.countByNomContaining(search));
 	}
 
-	//recuperation de la liste des centres de formations avec pagination et recherche
+	/**
+	 * Va permettre de récupérer tous les centres de formation avec pagination
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search éléments centres de formation
+	 * @return LstDto Liste des objets centre de formation
+	 */
+	
 	@Override
 	public List<CentreFormationDto> getAllCentreFormations(int page, int size, String search) {
 		List<CentreFormation> cf = centreFormationRepository.findAllByNomContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -126,7 +164,16 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		return res;
 	}
 
-	//import des locations DG2
+	/**
+	 * Va récupérer tous les centres de formation de DG2
+	 * 
+	 * @param Id	Id concernant la session
+	 * @param email Email l'utilsateur dg2
+	 * @param password   Mot de passe de l'utlisateur dg2
+	 * 
+	 * @exception Exception retourne une exception si erreur dans la récupération des centres
+	 */
+
 	@Override
 	public void fetchAllDG2CentreFormation(String email, String password) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();

@@ -75,6 +75,12 @@ public class InterventionServiceImpl implements InterventionService {
 	@Autowired
 	private RestTemplate restTemplate;
 
+	/**
+	 * Récupération de toutes les interventions
+	 * 
+	 * @return lstDto	Liste des objets interevention
+	 */
+	
 	@Override
 	public List<InterventionDto> getAllIntervention() {
 		List<Intervention> lst = interventionRepository.findAll();
@@ -89,6 +95,13 @@ public class InterventionServiceImpl implements InterventionService {
 		return lstDto;
 	}
 
+	/**
+	 * Va permettre de récupérer toutes les interventions
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @return LstDto Liste des objets interventions
+	 */
 	@Override
 	public List<InterventionDto> getAllIntervention(int page, int size) {
 		List<Intervention> lst = interventionRepository.findAll(PageRequest.of(page, size)).get()
@@ -106,6 +119,15 @@ public class InterventionServiceImpl implements InterventionService {
 		return lstDto;
 	}
 
+	/**
+	 * Va permettre de récupérer toutes les interventions avec pagination
+	 * 
+	 * @param page	numero de page
+	 * @param size	nombre d'éléments
+	 * @param search éléménts de l'intervention
+	 * @return List Liste des devoirs concerné
+	 */
+	
 	@Override
 	public List<InterventionDto> getAllByPage(int page, int size, String search) {
 		List<Intervention> lstIn = interventionRepository
@@ -159,6 +181,12 @@ public class InterventionServiceImpl implements InterventionService {
 		}
 		return lstDto;
 	}
+	/**
+	 * Va permettre de récupérer l'intervention en fonction de son id
+	 * 
+	 * @param Id	Id concernant l'intervention
+	 * @return interventionDto l'objet intervention
+	 */
 
 	@Override
 	public InterventionDto getById(long id) {
@@ -191,6 +219,11 @@ public class InterventionServiceImpl implements InterventionService {
 		return null;
 	}
 
+	/**
+	 * Sauvegarde ou mise à jour d'une intervention
+	 * 
+	 */
+	
 	@Override
 	public InterventionDto saveOrUpdate(InterventionDto iDto) {
 		Intervention i = DtoTools.convert(iDto, Intervention.class);
@@ -201,7 +234,13 @@ public class InterventionServiceImpl implements InterventionService {
 
 		return mapper.InterventionToInterventionDto(i);
 	}
-
+	
+	/**
+	 * Suppression d'une intervention
+	 * 
+	 * @param Id	Id concernant l'intervention
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		// On regarde si un devoir est lié à une intervention
@@ -220,6 +259,12 @@ public class InterventionServiceImpl implements InterventionService {
 		filesService.deleteDirectoryWithContent("interventions/" + id);
 	}
 
+	/**
+	 * Recherche d'une intervention
+	 * 
+	 * @param search recherche par titre formation ou promo
+	 */
+	
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(interventionRepository
@@ -227,7 +272,15 @@ public class InterventionServiceImpl implements InterventionService {
 						search));
 	}
 
-	// Liste des etudiants des promotions par l'id de l'intervention
+	
+	/**
+	 * Va permettre de récupérer la liste des etudiants de la promotion 
+	 * en fonction de l'id de l'intervention
+	 * 
+	 * @param Id	Id concernant l'intervention
+	 * @return List Liste des etudiants concerné
+	 */
+	
 	@Override
 	public List<EtudiantDto> findAllByPromotionInterventionsId(long id) {
 		List<Etudiant> lstEtu = etudiantRepository.findAllDistinctByPromotionsInterventionsId(id);
@@ -241,8 +294,15 @@ public class InterventionServiceImpl implements InterventionService {
 		}
 		return lstEtuDto;
 	}
-
-	// Liste des promotions par l'id de l'intervention
+	
+	/**
+	 * Va permettre de récupérer les promotions 
+	 * en fonction de l'id de l'intervention
+	 * 
+	 * @param Id	Id concernant l'intervention
+	 * @return List Liste des promotions concerné
+	 */
+	
 	@Override
 	public List<PromotionDto> findPromotionsByInterventionId(long id) {
 		List<Promotion> lstProm = promoRepository.findAllByInterventionsId(id);
@@ -254,7 +314,14 @@ public class InterventionServiceImpl implements InterventionService {
 		return lstPromDto;
 	}
 
-	// Liste des devoirs par l'id de l'intervention
+	/**
+	 * Va permettre de récupérer les devoirs 
+	 * en fonction de l'id de l'intervention
+	 * 
+	 * @param Id	Id concernant l'intervention
+	 * @return List Liste des devoirs concerné
+	 */
+	
 	@Override
 	public List<DevoirDto> findDevoirsByInterventionId(long id) {
 		List<Devoir> lsDev = devoirRepository.findAllByInterventionId(id);
@@ -267,6 +334,13 @@ public class InterventionServiceImpl implements InterventionService {
 		return lsDevDto;
 	}
 
+	/**
+	 * Va permettre de recupérer le formateur en fonction de l'intervention
+	 * 
+	 * @param Id	Id concernant l'intervention
+	 * @return List Liste des formateurs concerné
+	 */
+	
 	@Override
 	public List<FormateurDto> findFormateursByInterventionsId(long id) {
 		List<Formateur> lstForm = formateurRepository.findByInterventionsId(id);
@@ -280,7 +354,15 @@ public class InterventionServiceImpl implements InterventionService {
 		}
 		return lstFormDto;
 	}
-	
+	/**
+	 * Va permettre l'import des intervention de Dg2
+	 * 
+	 * @param Id	Id concernant la session
+	 * @param email Email l'utilsateur dg2
+	 * @param password   Mot de passe de l'utlisateur dg2
+	 * @return List Liste des interventions
+	 */
+
 		//import InterventionDG2 interventions prévues pour une formation 
 		@Override
 		public List<InterventionDG2Dto> fetchDG2Interventions(long id, String email, String password) throws Exception{

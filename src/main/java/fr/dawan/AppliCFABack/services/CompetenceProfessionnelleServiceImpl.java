@@ -28,6 +28,13 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	
+	/**
+	 * Récupération de tous les competences pro
+	 * 
+	 * @return competenceProfessionnellesDto	
+	 * Liste des objets competences pro
+	 */
+	
 	@Override
 	public List<CompetenceProfessionnelleDto> getAllCompetenceProfessionnelle() {
 		List<CompetenceProfessionnelle> competenceProfessionnelles = competenceProfessionnelleRepository.findAll();
@@ -46,6 +53,11 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 		return competenceProfessionnellesDto;
 	}
 
+	/**
+	 * Récupération des competence pro en fonction de l'id
+	 * 
+	 */
+	
 	@Override
 	public CompetenceProfessionnelleDto getById(long id) {
 		Optional<CompetenceProfessionnelle> cpt = competenceProfessionnelleRepository.findById(id);
@@ -56,6 +68,11 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 		return null;
 	}
 
+	/**
+	 * Sauvegarde ou mise à jour d'une competence pro
+	 * 
+	 */
+	
 	@Override
 	public CompetenceProfessionnelleDto saveOrUpdate(CompetenceProfessionnelleDto cpDto) {
 		CompetenceProfessionnelle cpt = DtoTools.convert(cpDto, CompetenceProfessionnelle.class);
@@ -64,6 +81,12 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 		return DtoTools.convert(cptBd, CompetenceProfessionnelleDto.class);
 	}
 
+	/**
+	 * Suppression d'une competence pro
+	 * 
+	 * @param id	Id concernant la competence pro
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		competenceProfessionnelleRepository.deleteById(id);		

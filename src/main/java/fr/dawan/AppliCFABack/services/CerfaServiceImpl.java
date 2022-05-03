@@ -48,6 +48,11 @@ public class CerfaServiceImpl implements CerfaService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	/**
+	 * Récupération des cerfa de  en fonction de l'id
+	 * 
+	 */
 
 	@Override
 	public CerfaDto getById(long id) {
@@ -66,6 +71,12 @@ public class CerfaServiceImpl implements CerfaService {
 		return cDto;
 	}
 
+	/**
+	 * Récupération de la liste des cerfa
+	 * 
+	 * @return lstCerfaDto	Liste des objets cerfa
+	 */
+	
 	@Override
 	public List<CerfaDto> getAll() {
 		// TODO Auto-generated method stub
@@ -88,6 +99,12 @@ public class CerfaServiceImpl implements CerfaService {
 		return lstCerfaDto;
 	}
 
+	/**
+	 * Suppression d'un cerfa
+	 * 
+	 * @param id	Id concernant un cerfa
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		// TODO Auto-generated method stub
@@ -104,6 +121,11 @@ public class CerfaServiceImpl implements CerfaService {
 
 	}
 
+	/**
+	 * Sauvegarde ou mise à jour d'un cerfa
+	 * 
+	 */
+	
 	@Override
 	public CerfaDto saveOrUpdate(CerfaDto cDto) {
 		// TODO Auto-generated method stub
@@ -175,6 +197,13 @@ public class CerfaServiceImpl implements CerfaService {
 		return mapper.CerfaToCerfaDto(c);
 	}
 
+	/**
+	 * Récupération d'un cerfa par rapport à étudiant
+	 * 
+	 * @param id 	Id d'un etudiant
+	 * @return cerfa le ceraf de l'étudiant donné
+	 */
+	
 	@Override
 	public CerfaDto getByIdEtudiant(long id) {
 		List<CerfaDto> lst = getAll();
