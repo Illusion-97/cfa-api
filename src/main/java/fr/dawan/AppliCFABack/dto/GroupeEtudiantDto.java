@@ -1,22 +1,16 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GroupeEtudiantDto {
-	private long id;
+@SuppressWarnings("serial")
+public class GroupeEtudiantDto extends BaseEntityDto implements Serializable {
+
 	private String nom;
 	private List<EtudiantDto> etudiantsDto;
 
 	public GroupeEtudiantDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getNom() {

@@ -1,14 +1,22 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.NoteControllerTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.062 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.NoteControllerTest
-testFindById  Time elapsed: 0.011 s  <<< FAILURE!
-java.lang.AssertionError: No value at JSON path "$.noteObtenu"
-	at fr.dawan.AppliCFABack.Controller.NoteControllerTest.testFindById(NoteControllerTest.java:74)
-Caused by: java.lang.IllegalArgumentException: json can not be null or empty
-	at fr.dawan.AppliCFABack.Controller.NoteControllerTest.testFindById(NoteControllerTest.java:74)
+Tests run: 5, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.09 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.NoteControllerTest
+testFindAll  Time elapsed: 0.036 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.NoteControllerTest.testFindAll(NoteControllerTest.java:64)
 
-testDelete  Time elapsed: 0.007 s  <<< FAILURE!
+testFindById  Time elapsed: 0.024 s  <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.noteObtenu"
+	at fr.dawan.AppliCFABack.Controller.NoteControllerTest.testFindById(NoteControllerTest.java:76)
+Caused by: java.lang.IllegalArgumentException: json can not be null or empty
+	at fr.dawan.AppliCFABack.Controller.NoteControllerTest.testFindById(NoteControllerTest.java:76)
+
+testDelete  Time elapsed: 0.014 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<202> but was:<404>
-	at fr.dawan.AppliCFABack.Controller.NoteControllerTest.testDelete(NoteControllerTest.java:138)
+	at fr.dawan.AppliCFABack.Controller.NoteControllerTest.testDelete(NoteControllerTest.java:145)
+
+testUpdate  Time elapsed: 0.002 s  <<< FAILURE!
+java.lang.AssertionError: null
+	at fr.dawan.AppliCFABack.Controller.NoteControllerTest.testUpdate(NoteControllerTest.java:134)
 

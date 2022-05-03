@@ -5,16 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
-import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 
 @Service
 @Transactional
@@ -25,56 +22,56 @@ public class AbsenceServiceImpl implements AbsenceService {
 
 //	@Autowired
 //	EtudiantRepository etudiantRepository;
-	
+
 	@Override
 	public AbsenceDto getById(long id) {
 		Optional<Absence> absence = absenceRepository.findById(id);
-		if(absence.isPresent()) {
+		if (absence.isPresent()) {
 			return DtoTools.convert(absence.get(), AbsenceDto.class);
-			
+
 		}
 		return null;
 	}
-	
+
 	@Override
 	public List<AbsenceDto> getAllByInterventionId(long id) {
 		List<Absence> absences = absenceRepository.findAllByInterventionId(id);
 		List<AbsenceDto> result = new ArrayList<AbsenceDto>();
-		for(Absence a: absences) {
+		for (Absence a : absences) {
 			result.add(DtoTools.convert(a, AbsenceDto.class));
 		}
 		return result;
 	}
-	
+
 	@Override
 	public AbsenceDto saveOrUpdate(AbsenceDto aDto) {
 		Absence abs = DtoTools.convert(aDto, Absence.class);
 		Absence absDb = absenceRepository.saveAndFlush(abs);
-		return DtoTools.convert(absDb, AbsenceDto.class);	
+		return DtoTools.convert(absDb, AbsenceDto.class);
 	}
-	
+
 	@Override
 	public void delete(long id) {
 		absenceRepository.deleteById(id);
 	}
-		
-
 
 	@Override
 	public List<AbsenceDto> getAllByEtudiantId(long id) {
 		List<Absence> absences = absenceRepository.findAllByEtudiantId(id);
 		List<AbsenceDto> result = new ArrayList<AbsenceDto>();
-		for(Absence a : absences) {
+		for (Absence a : absences) {
 			result.add(DtoTools.convert(a, AbsenceDto.class));
 		}
 		return result;
-	} 
+	}
 
 	@Override
 	public List<AbsenceDto> getAllByNomPrenomContaining(String search) {
-		List<Absence> absences = absenceRepository.findByEtudiantUtilisateurNomContainingOrEtudiantUtilisateurPrenomContainingAllIgnoreCase("%" +search+ "%");
+		List<Absence> absences = absenceRepository
+				.findByEtudiantUtilisateurNomContainingOrEtudiantUtilisateurPrenomContainingAllIgnoreCase(
+						"%" + search + "%");
 		List<AbsenceDto> result = new ArrayList<AbsenceDto>();
-		for(Absence a: absences) {
+		for (Absence a : absences) {
 			result.add(DtoTools.convert(a, AbsenceDto.class));
 		}
 		return result;
@@ -90,12 +87,10 @@ public class AbsenceServiceImpl implements AbsenceService {
 //		return result;
 //	}
 
-
 	@Override
-	public CountDto count (String search) {
+	public CountDto count(String search) {
 		return new CountDto(absenceRepository.countByUtilisateurEtudiantNomOrPrenomContaining(search));
 	}
-
 
 //	@Autowired
 //	private DtoMapper mapper = new DtoMapperImpl();
@@ -191,7 +186,5 @@ public class AbsenceServiceImpl implements AbsenceService {
 //		}
 //		return result;
 //	}
-
-	
 
 }

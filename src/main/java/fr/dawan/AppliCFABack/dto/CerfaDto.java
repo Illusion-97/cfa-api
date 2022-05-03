@@ -1,187 +1,185 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.Column;
+@SuppressWarnings("serial")
+public class CerfaDto extends BaseEntityDto implements Serializable {
 
-public class CerfaDto {
-	
-	private long id;
-	
 	private String employeurPriveOuPublic;
-	
+
 	private String nomEmployeur;
-	
+
 	private String prenomEmployeur;
-	
+
 	private AdresseDto adresseEmployeur;
-	
+
 	private String telEmployeur;
-	
+
 	private String emailEmployeur;
-	
+
 	private String siretEtablissement;
-	
+
 	private String employeurSpecifique;
-	
+
 	private String naf;
-	
+
 	private String effectifEntreprise;
-	
+
 	private String conventionCollectiveApplicable;
-	
+
 	private String codeIdccConvention;
-	
+
 	private String nomNaissanceApprenti;
-	
+
 	private String prenomApprenti;
-	
+
 	private String nirApprenti;
-	
+
 	private String dateDeNaissance;
-	
+
 	private String sexe;
-	
+
 	private AdresseDto adresseApprenti;
-	
+
 	private String departementNaissance;
-	
+
 	private String communeNaissance;
-	
+
 	private String telApprenti;
-	
+
 	private String emailApprenti;
-	
+
 	private String nationalite;
-	
+
 	private String regimeSocial;
-	
+
 	private String sportifs;
-	
+
 	private String handicape;
-	
+
 	private String situationAvantContrat;
-	
+
 	private String dernierDiplome;
-	
+
 	private String derniereClasseSuivi;
-	
+
 	private String intitulePrecisDernierDiplome;
-	
+
 	private String diplomeLePlusEleveObtenu;
-	
+
 	private String nomRepresentant;
-	
+
 	private String prenomRepresentant;
-	
+
 	private AdresseDto adresseRepresentant;
-	
+
 	private String nomPremierTuteur;
-	
+
 	private String prenomPremierTuteur;
-	
+
 	private String dateDeNaissancePremierTuteur;
-	
+
 	private String nomDeuxiemeTuteur;
-	
+
 	private String prenomDeuxiemeTuteur;
-	
+
 	private String dateDeNaissanceDeuxiemeTuteur;
-	
+
 	private String contratType;
-	
+
 	private String derogationType;
-	
+
 	private String contratNum;
-	
+
 	private LocalDate dateConclusion;
-	
+
 	private LocalDate dateDebutContrat;
-	
+
 	private LocalDate dateAvenant;
-	
+
 	private LocalDate dateFinContrat;
-	
+
 	private String heureTravail;
-	
+
 	private String minuteTravail;
-	
+
 	private String machineRisque;
-	
+
 	private RemunerationDto remuneration1;
-	
+
 	private RemunerationDto remuneration2;
-	
+
 	private RemunerationDto remuneration3;
-	
+
 	private RemunerationDto remuneration4;
-	
+
 	private String salaireBrut;
-	
+
 	private String caisseDeRetraite;
-	
+
 	private String nourriture;
-	
+
 	private String logement;
-	
+
 	private String autre;
-	
+
 	private String cfaEntreprise;
-	
+
 	private String cfaResponsable;
-	
+
 	private String diplomeVise;
-	
+
 	private String intitulePrecisDiplomeVise;
-	
+
 	private String cfaUai;
-	
+
 	private String cfaSiret;
-	
+
 	private String diplomeCode;
-	
+
 	private String codeRncp;
-	
+
 	private AdresseDto adresseResponsable;
-	
+
 	private LocalDate dateDebutFormation;
-	
+
 	private LocalDate dateExamen;
-	
+
 	private String formationDuree;
-	
+
 	private String validationEmployeur;
-	
+
 	private String nomOrganisme;
-	
+
 	private String siretOrganisme;
-	
+
 	private LocalDate receptionDossier;
-	
+
 	private LocalDate dateDecision;
-	
+
 	private String numDepot;
-	
+
 	private String numAvenant;
-	
+
 	private EtudiantDto etudiant;
 
 	private String modeContractuelApprentissage;
-	
+
 	private String complementEmployeur;
-	
+
 	private String employeurType;
-	
+
 	private String assuranceChomage;
-	
+
 	private String complementApprentit;
-	
+
 	private String complementRepresentant;
-	
+
 	private String egilibiliteFonction;
-	
+
 	private String complementResponsable;
-	
+
 	private String faitA;
 
 	public String getModeContractuelApprentissage() {
@@ -258,14 +256,6 @@ public class CerfaDto {
 
 	public CerfaDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getEmployeurPriveOuPublic() {
@@ -941,7 +931,5 @@ public class CerfaDto {
 				+ complementApprentit + ", complementRepresentant=" + complementRepresentant + ", egilibiliteFonction="
 				+ egilibiliteFonction + ", complementResponsable=" + complementResponsable + ", faitA=" + faitA + "]";
 	}
-	
-	
-	
+
 }

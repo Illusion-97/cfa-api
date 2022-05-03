@@ -6,36 +6,15 @@ import fr.dawan.AppliCFABack.entities.Positionnement.Niveau;
 
 @SuppressWarnings("serial")
 
-public class PositionnementDto implements Serializable {
+public class PositionnementDto extends BaseEntityDto implements Serializable {
 
-	
-	private long id;
-	
-	private int version;
-	
 	private Niveau niveauDebut;
-	
+
 	private Niveau niveauFin;
 
-	 private long interventionId;
-	 
-	 private long etudiantId;
+	private long interventionId;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
+	private long etudiantId;
 
 	public Niveau getNiveauDebut() {
 		return niveauDebut;
@@ -69,7 +48,4 @@ public class PositionnementDto implements Serializable {
 		this.etudiantId = etudiantId;
 	}
 
-
-	 
-	
 }

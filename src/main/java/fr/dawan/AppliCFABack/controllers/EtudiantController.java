@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -25,7 +24,6 @@ import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 
 @RestController

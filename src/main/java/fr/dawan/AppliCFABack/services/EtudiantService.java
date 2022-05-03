@@ -12,9 +12,7 @@ import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 
 public interface EtudiantService {
 
@@ -23,8 +21,11 @@ public interface EtudiantService {
 	// ##################################################
 
 	List<EtudiantDto> getAll();
+
 	List<EtudiantDto> getAllByPage(int page, int size, String search);
+
 	CountDto count(String search);
+
 	EtudiantDto getById(long id);
 
 	EtudiantDto saveOrUpdate(EtudiantDto e);

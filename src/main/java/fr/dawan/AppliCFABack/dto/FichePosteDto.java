@@ -1,8 +1,10 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class FichePosteDto {
+import java.io.Serializable;
 
-	private long id;
+@SuppressWarnings("serial")
+public class FichePosteDto extends BaseEntityDto implements Serializable {
+
 	private String intitule;
 	private String nature;
 	private String mission;
@@ -10,17 +12,9 @@ public class FichePosteDto {
 	private String positionnement;
 	private String missionPrincipale;
 	private EtudiantDto etudiantDto;
-	
+
 	public FichePosteDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getIntitule() {
@@ -78,6 +72,5 @@ public class FichePosteDto {
 	public void setEtudiantDto(EtudiantDto etudiantDto) {
 		this.etudiantDto = etudiantDto;
 	}
-	
 
 }

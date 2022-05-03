@@ -1,28 +1,22 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class FormateurDto{
-	private long id;
+@SuppressWarnings("serial")
+public class FormateurDto extends BaseEntityDto implements Serializable {
+
 	private UtilisateurDto utilisateurDto;
 	private List<InterventionDto> interventionsDto;
 	private EntrepriseDto entrepriseDto;
-	
+
 	public FormateurDto() {
 	}
-	
-	public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-	
+
 	public List<InterventionDto> getInterventionsDto() {
 		return interventionsDto;
 	}
-	
+
 	public void setInterventionsDto(List<InterventionDto> interventionsDto) {
 		this.interventionsDto = interventionsDto;
 	}
@@ -42,6 +36,5 @@ public class FormateurDto{
 	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
 		this.entrepriseDto = entrepriseDto;
 	}
-	
-	
+
 }

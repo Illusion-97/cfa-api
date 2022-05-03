@@ -1,17 +1,19 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@SuppressWarnings("serial")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FormationDG2Dto {
-	private long id; //
-    private String title; //titre pro ...
-    private String duration; // durée en h/j
-    private String slug;  //slug
-    @JsonProperty("published")
-    private boolean state; //status
-    
+public class FormationDG2Dto extends BaseEntityDto implements Serializable {
+	private String title; // titre pro ...
+	private String duration; // durée en h/j
+	private String slug; // slug
+	@JsonProperty("published")
+	private boolean state; // status
+
 	public FormationDG2Dto() {
 		super();
 	}
@@ -23,14 +25,6 @@ public class FormationDG2Dto {
 		this.duration = duration;
 		this.slug = slug;
 		this.state = state;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getTitle() {
@@ -64,6 +58,5 @@ public class FormationDG2Dto {
 	public void setState(boolean state) {
 		this.state = state;
 	}
-
 
 }

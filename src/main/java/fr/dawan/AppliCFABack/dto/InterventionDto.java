@@ -1,12 +1,13 @@
 package fr.dawan.AppliCFABack.dto;
 
-
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
-public class InterventionDto {
-	private long id;
+@SuppressWarnings("serial")
+public class InterventionDto extends BaseEntityDto implements Serializable {
+
 	private LocalDate dateDebut; // 12/03
 	private LocalDate dateFin; // 18/03
 	private FormationDto formationDto; // Java init
@@ -15,19 +16,10 @@ public class InterventionDto {
 	private List<FormateurDto> formateursDto;
 	private String noteInfoPersonnel;
 	private long heuresDisponsees;
-	
+
 	public InterventionDto() {
 		// TODO Auto-generated constructor stub
-		
-	
-	}
-	
-	public long getId() {
-		return id;
-	}
 
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public LocalDate getDateDebut() {
@@ -85,19 +77,21 @@ public class InterventionDto {
 	public void setNoteInfoPersonnel(String noteInfoPersonnel) {
 		this.noteInfoPersonnel = noteInfoPersonnel;
 	}
+
 	public long getHeuresDisponsees() {
 		return heuresDisponsees;
 	}
+
 	public void setHeuresDisponsees() {
 		if (this.getDateDebut() != null && this.getDateFin() != null) {
-			this.heuresDisponsees =	Duration.between(this.getDateDebut().atStartOfDay(), this.getDateFin().atStartOfDay()).toDays() *7;
-			
+			this.heuresDisponsees = Duration
+					.between(this.getDateDebut().atStartOfDay(), this.getDateFin().atStartOfDay()).toDays() * 7;
+
 		}
 	}
+
 	public void setHeuresDisponsees(long heuresDisponsees) {
 		this.heuresDisponsees = heuresDisponsees;
 	}
-
-	
 
 }

@@ -3,19 +3,10 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
 @SuppressWarnings("serial")
 
-public class DevoirEtudiantDto implements Serializable {
+public class DevoirEtudiantDto extends BaseEntityDto implements Serializable {
 
-
-	private long id;
-	
 	private long devoirId;
 	
 	private long etudiantId;
@@ -23,14 +14,6 @@ public class DevoirEtudiantDto implements Serializable {
 	private LocalDateTime dateRendu;
 	
 	private String pieceJointe;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public long getDevoirId() {
 		return devoirId;

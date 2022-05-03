@@ -1,17 +1,15 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-import fr.dawan.AppliCFABack.entities.Examen;
+@SuppressWarnings("serial")
+public class CompetenceProfessionnelleDto extends BaseEntityDto implements Serializable {
 
-public class CompetenceProfessionnelleDto {
-
-	private long id;
 	private String libelle;
 	private byte numeroFiche;
 	private List<ExamenDto> examensDto;
 	private long activiteTypeId;
-	
 	
 	public CompetenceProfessionnelleDto() {
 		super();

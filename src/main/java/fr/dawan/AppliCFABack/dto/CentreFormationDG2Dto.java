@@ -1,11 +1,13 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@SuppressWarnings("serial")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CentreFormationDG2Dto {
+public class CentreFormationDG2Dto extends BaseEntityDto implements Serializable{
 
-	private long id;
 	private String name;
 	private boolean published;
 	private String country;
@@ -20,14 +22,6 @@ public class CentreFormationDG2Dto {
 		this.name = name;
 		this.published = published;
 		this.country = country;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getName() {

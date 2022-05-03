@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @SuppressWarnings("serial")
-public class AbsenceDto implements Serializable{
-	private long id;
-	private int version; 
+public class AbsenceDto extends BaseEntityDto implements Serializable{
+	
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	private String justificatif;
@@ -17,7 +16,7 @@ public class AbsenceDto implements Serializable{
 	public AbsenceDto() {
 		super();
 	}
-
+	
 	public AbsenceDto(long id, int version, LocalDate dateDebut, LocalDate dateFin, String justificatif,
 			EtudiantDto etudiantDto, long interventionId, String typeAbsence) {
 		super();
@@ -42,23 +41,14 @@ public class AbsenceDto implements Serializable{
 		this.interventionId = interventionId;
 		this.typeAbsence = typeAbsence;
 	}
-	
+
+
 	public String getTypeAbsence() {
 		return typeAbsence;
 	}
 
-
 	public void setTypeAbsence(String typeAbsence) {
 		this.typeAbsence = typeAbsence;
-	}
-
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public LocalDate getDateDebut() {
@@ -91,14 +81,6 @@ public class AbsenceDto implements Serializable{
 
 	public void setEtudiantDto(EtudiantDto etudiantDto) {
 		this.etudiantDto = etudiantDto;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
 	}
 
 	public long getInterventionId() {

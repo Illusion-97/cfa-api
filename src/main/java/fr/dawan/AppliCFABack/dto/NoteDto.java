@@ -1,17 +1,18 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
+
 import fr.dawan.AppliCFABack.entities.Note.Satisfaction;
 
-public class NoteDto {
-	private long id;
+@SuppressWarnings("serial")
+public class NoteDto extends BaseEntityDto implements Serializable {
 	private double noteObtenue;
 	private Satisfaction satisfaction;
 	private long etudiantNoteId;
 	private long examenId;
 	private String etudiantNoteUtilisateurNom;
 	private String etudiantNoteUtilisateurPrenom;
-	
-	
+
 	public NoteDto() {
 		super();
 	}
@@ -38,14 +39,6 @@ public class NoteDto {
 		this.etudiantNoteUtilisateurPrenom = etudiantNoteUtilisateurPrenom;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public double getNoteObtenue() {
 		return noteObtenue;
 	}
@@ -53,7 +46,6 @@ public class NoteDto {
 	public void setNoteObtenue(double noteObtenue) {
 		this.noteObtenue = noteObtenue;
 	}
-
 
 	public Satisfaction getSatisfaction() {
 		return satisfaction;
@@ -79,7 +71,6 @@ public class NoteDto {
 		this.examenId = examenId;
 	}
 
-	
 //	public int getNoteObtenu() {
 //		return noteObtenu;
 //	}

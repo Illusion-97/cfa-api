@@ -1,8 +1,10 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class FicheEntrepriseDto {
-	
-	private long id;
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class FicheEntrepriseDto extends BaseEntityDto implements Serializable {
+
 	private EntrepriseDto entrepriseDto;
 	private String historique;
 	private String nomDirigeant;
@@ -15,20 +17,10 @@ public class FicheEntrepriseDto {
 	private String formationProfil;
 	private String metiersExerces;
 	private EtudiantDto etudiantDto;
-	
+
 	public FicheEntrepriseDto() {
 		super();
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	
 
 	public EntrepriseDto getEntrepriseDto() {
 		return entrepriseDto;
@@ -125,6 +117,5 @@ public class FicheEntrepriseDto {
 	public void setEtudiantDto(EtudiantDto etudiantDto) {
 		this.etudiantDto = etudiantDto;
 	}
-	
-	
+
 }

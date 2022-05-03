@@ -1,21 +1,15 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class MaitreApprentissageDto{
+import java.io.Serializable;
 
-	private long id;
+@SuppressWarnings("serial")
+public class MaitreApprentissageDto extends BaseEntityDto implements Serializable {
+
 	private EntrepriseDto entrepriseDto;
 	private UtilisateurDto utilisateurDto;
-	
+
 	public MaitreApprentissageDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public EntrepriseDto getEntrepriseDto() {
@@ -34,5 +28,4 @@ public class MaitreApprentissageDto{
 		this.utilisateurDto = utilisateurDto;
 	}
 
-	
 }

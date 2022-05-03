@@ -3,14 +3,9 @@ package fr.dawan.AppliCFABack.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.NoteDto;
@@ -30,7 +25,6 @@ public class NoteServiceImpl implements NoteService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	//recuperation de la liste des notes
 	@Override
 	public List<NoteDto> getAllNote() {
 		List<Note> lst = noteRepository.findAll();
@@ -42,7 +36,7 @@ public class NoteServiceImpl implements NoteService {
 		return lstDto;
 	}
 
-	//recuperation de la liste des notes avec pagination et recherche
+	// recuperation de la liste des notes avec pagination et recherche
 	@Override
 	public List<NoteDto> getAllByPage(int page, int size, String search) {
 //		List<Note> lst = noteRepository.findAllByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search,search, search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -60,20 +54,18 @@ public class NoteServiceImpl implements NoteService {
 		return null;
 	}
 
-	//count search
 	@Override
 	public CountDto count(String search) {
 //		return new CountDto(noteRepository.countByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search, search, search, search));
 		return null;
 	}
 
-	//recuperation des notes par id
 	@Override
 	public NoteDto getById(long id) {
 		Optional<Note> n = noteRepository.findById(id);
 		if (!n.isPresent())
 			return null;
-		
+
 //		NoteDto nDto = mapper.NoteToNoteDto(n.get());
 //		nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.get().getDevoir()));
 //		nDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.get().getEtudiant()));
@@ -84,35 +76,34 @@ public class NoteServiceImpl implements NoteService {
 		return DtoTools.convert(n.get(), NoteDto.class);
 	}
 
-	//methode d'ajout ou modification d'une note
 	@Override
-	public NoteDtoToSave saveOrUpdate( NoteDtoToSave nDto) {
+	public NoteDtoToSave saveOrUpdate(NoteDtoToSave nDto) {
 		Note n = DtoTools.convert(nDto, Note.class);
-		
+
 		n = noteRepository.saveAndFlush(n);
 
 		return DtoTools.convert(n, NoteDtoToSave.class);
 	}
 
-	//nb note
+	// nb note
 	@Override
 	public CountDto count() {
 		return new CountDto(noteRepository.count());
 	}
-	
-	//methode de suppression d'une note
+
+	// methode de suppression d'une note
 	@Override
 	public void deleteById(long id) {
 		noteRepository.deleteById(id);
 
 	}
 
-	//recuperation des note par etudiant id
+	// recuperation des note par etudiant id
 	@Override
 	public List<NoteDto> getAllByIdEtudiant(long id) {
 		List<NoteDto> result = new ArrayList<NoteDto>();
 		List<Note> list = noteRepository.findAllByEtudiantNoteId(id);
-		for(Note n : list) {
+		for (Note n : list) {
 //			NoteDto nDto = mapper.NoteToNoteDto(n);
 //			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
 //			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
@@ -121,7 +112,7 @@ public class NoteServiceImpl implements NoteService {
 			result.add(nDto);
 		}
 		return result;
-		
+
 	}
 
 	@Override

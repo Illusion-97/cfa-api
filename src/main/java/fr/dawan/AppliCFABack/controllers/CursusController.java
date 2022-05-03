@@ -22,7 +22,6 @@ import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
-import fr.dawan.AppliCFABack.services.PromotionService;
 
 @RestController
 @RequestMapping("/cursus")

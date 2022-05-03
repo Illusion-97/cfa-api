@@ -1,12 +1,13 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import fr.dawan.AppliCFABack.entities.StatusConge;
 import fr.dawan.AppliCFABack.entities.TypeConge;
 
-public class CongeDto {
-	private long id;
+@SuppressWarnings("serial")
+public class CongeDto extends BaseEntityDto implements Serializable {
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	private String motif;
@@ -17,14 +18,6 @@ public class CongeDto {
 	
 	public CongeDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public LocalDate getDateDebut() {

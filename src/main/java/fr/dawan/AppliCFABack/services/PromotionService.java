@@ -1,8 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
-
-import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
@@ -23,13 +21,13 @@ public interface PromotionService {
 	CountDto count(String string);
 
 	List<PromotionDto> getAllPromotions(int page, int size, String string);
-	
-	List<EtudiantDto> getEtudiantsById(long id);	
+
+	List<EtudiantDto> getEtudiantsById(long id);
 
 	List<PromotionDto> getAllByCursusId(long id);
-	
+
 	List<PromotionDto> getPromotionByEtudiantIdAndByCursusId(long id);
 
-	 UtilisateurDto getCefById(long id);
+	UtilisateurDto getCefById(long id);
 
 }

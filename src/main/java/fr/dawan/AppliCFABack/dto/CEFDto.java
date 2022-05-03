@@ -1,18 +1,13 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class CEFDto{
-	private long id;
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class CEFDto extends BaseEntityDto implements Serializable{
+	
 	private UtilisateurDto utilisateurDto;
 	private CentreFormationDto centreFormationDto;
 	private EntrepriseDto entrepriseDto;
-
-	public CEFDto() {
-		super();
-	}
-
-	public long getId() {
-		return id;
-	}
 
 	public void setId(long id) {
 		this.id = id;
