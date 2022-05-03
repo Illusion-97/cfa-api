@@ -24,7 +24,7 @@ public class Formation extends BaseEntity implements Serializable {
 	@Column(nullable = true) // pour recupérer l'id dg2
 	private long idDg2;
 
-	@Column(nullable = false, length = 255, unique = true) // attribut de dg2
+	@Column(nullable = false, length = 255) // attribut de dg2
 	private String duration;
 
 	@Column(nullable = false, length = 255, unique = true) // attribut de dg2

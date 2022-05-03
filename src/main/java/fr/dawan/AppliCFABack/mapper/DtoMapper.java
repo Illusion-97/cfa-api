@@ -5,8 +5,6 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
-
-import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
@@ -39,7 +37,6 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
-import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
@@ -73,15 +70,12 @@ import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 @Mapper
 @Component
 public interface DtoMapper {
-	
+
 	@Mapping(source = ".", target = ".")
 	CompetenceProfessionnelleDto CompetenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
-	
+
 	@Mapping(source = ".", target = ".")
 	ActiviteTypeDto ActiviteTypeToActiviteDto(ActiviteType activiteType);
-	
-	@Mapping(source = ".", target = ".")
-	AbsenceDto AbsenceToAbsenceDto(Absence absence);
 
 	@Mapping(source = ".", target = ".")
 	AdresseDto AdresseToAdresseDto(Adresse adresse);
@@ -151,10 +145,10 @@ public interface DtoMapper {
 
 	@Mapping(source = ".", target = ".")
 	FicheEntrepriseDto FicheEntrepriseToFicheEntrepriseDto(FicheEntreprise FicheEntreprise);
-	
+
 	@Mapping(source = ".", target = ".")
 	ContratDto ContratToContratDto(Contrat contrat);
-	
+
 	@Mapping(source = ".", target = ".")
 	MaitreApprentissageDto MaitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage);
 
@@ -163,25 +157,27 @@ public interface DtoMapper {
 
 	@Mapping(source = ".", target = ".")
 	RemunerationDto RemunerationTORemunerationDto(Remuneration remuneration);
-	
+
 	@Mapping(source = ".", target = ".")
 	ActiviteTypeDto ActiviteTypeToActiviteTypeDto(ActiviteType activiteType);
-	
+
 	@Mapping(source = ".", target = ".")
-	CompetenceProfessionnelleDto CompetenceProfessionnelleToCompetenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
+	CompetenceProfessionnelleDto CompetenceProfessionnelleToCompetenceProfessionnelleDto(
+			CompetenceProfessionnelle competenceProfessionnelle);
+
 	@Mapping(target = "contenu", ignore = true)
 	@Mapping(target = "cursusLst", ignore = true)
 	@Mapping(source = "id", target = "idDg2")
 	@Mapping(source = "title", target = "titre")
 	@Mapping(source = "duration", target = "duration")
 	Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
-	
+
 	@Mapping(target = "formations", ignore = true)
 	@Mapping(source = "slug", target = "titre")
 	Cursus cursusDG2DtoToCursus(InterventionDG2Dto cursusDG2Dto);
-	
+
 	List<Cursus> lstCursusDG2DtoToListCursus(List<InterventionDG2Dto> lstCurusDto);
-	
+
 	@Mapping(target = "adresse", ignore = true)
 	@Mapping(target = "entreprise", ignore = true)
 	@Mapping(source = "name", target = "nom")
@@ -192,8 +188,4 @@ public interface DtoMapper {
 
 	PromotionDto PromotionToPromotionDto(PromotionDto pDto);
 
-	
-
-	
-	
 }

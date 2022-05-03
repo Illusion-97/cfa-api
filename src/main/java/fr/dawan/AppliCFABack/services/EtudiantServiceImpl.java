@@ -8,14 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
@@ -31,7 +27,6 @@ import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
-import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Contrat;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
@@ -43,7 +38,6 @@ import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.ContratRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
@@ -67,9 +61,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Autowired
 	NoteRepository noteRepository;
-
-	@Autowired
-	AbsenceRepository absenceRepository;
 
 	@Autowired
 	InterventionRepository interventionRepository;
@@ -508,24 +499,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 //			res.add(mapper.NoteToNoteDto(n));
 
 		return null;
-	}
-
-	/**
-	 * Récupération des absences en fonction de l'id etudiant
-	 * 
-	 * @param id	id de l'etudiant
-	 * @return res liste des absences de l'étudiant
-	 */
-	
-	@Override
-	public List<AbsenceDto> getAbsencesByIdEtudiant(long id) {
-		List<Absence> lst = absenceRepository.findAllByEtudiantId(id);
-		List<AbsenceDto> res = new ArrayList<AbsenceDto>();
-
-		for (Absence n : lst)
-			res.add(mapper.AbsenceToAbsenceDto(n));
-
-		return res;
 	}
 
 	//recuperation des absences par id etudiants + pagination

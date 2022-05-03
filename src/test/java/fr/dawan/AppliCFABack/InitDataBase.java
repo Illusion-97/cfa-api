@@ -11,9 +11,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
@@ -38,7 +36,6 @@ import fr.dawan.AppliCFABack.entities.TypeConge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
@@ -92,8 +89,6 @@ public class InitDataBase {
 	private EntrepriseRepository entrepriseRepository;
 	@Autowired
 	private AdresseRepository adresseRepository;
-	@Autowired
-	private AbsenceRepository absenceRepository;
 	@Autowired
 	private InterventionRepository interventionRepository;
 	@Autowired
@@ -242,11 +237,6 @@ public class InitDataBase {
 		adresse2.setVille("Paris");
 		adresse2.setCodePostal("75015");
 
-		Absence absence = new Absence();
-		absence.setDateDebut(LocalDate.now());
-		absence.setDateFin(LocalDate.now());
-		absence.setJustificatif("justificatif");
-
 		// Formation
 		Formation formation = new Formation();
 
@@ -344,7 +334,6 @@ public class InitDataBase {
 		entreprise = entrepriseRepository.save(entreprise);
 		adresse = adresseRepository.save(adresse);
 		adresse2 = adresseRepository.save(adresse2);
-		absence = absenceRepository.save(absence);
 		intervention = interventionRepository.save(intervention);
 		intervention2 = interventionRepository.save(intervention2);
 		intervention3 = interventionRepository.save(intervention3);
@@ -459,7 +448,6 @@ public class InitDataBase {
 
 //		etudiant.setManager(monCEF);	
 		
-		absence.setEtudiant(etudiant);
 
 		intervention.setFormateurs(lstFormateur);
 		intervention.setFormation(formation);
@@ -540,7 +528,6 @@ public class InitDataBase {
 		noteRepository.save(note);
 		entrepriseRepository.save(entreprise);
 		adresseRepository.save(adresse);
-		absenceRepository.save(absence);
 		interventionRepository.save(intervention);
 		interventionRepository.save(intervention2);
 		interventionRepository.save(intervention3);	

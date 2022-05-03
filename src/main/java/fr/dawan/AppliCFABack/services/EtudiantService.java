@@ -1,8 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
-
-import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
@@ -48,8 +46,6 @@ public interface EtudiantService {
 	// ##################################################
 
 	List<NoteDto> getNotesByIdEtudiant(long id, int page, int size);
-
-	List<AbsenceDto> getAbsencesByIdEtudiant(long id);
 
 	// ##################################################
 	// # 3eme Niveau #

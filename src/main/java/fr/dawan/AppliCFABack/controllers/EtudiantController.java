@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
@@ -168,14 +167,6 @@ public class EtudiantController {
 	public List<DevoirDto> getDevoirsByIdEtudiant(@PathVariable("id") long id, @PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		return etudiantService.getDevoirsByIdEtudiant(id, page, size);
-	}
-
-	/*
-	 * On récupère les absences de l'étudiant à partir de son id
-	 */
-	@GetMapping(value = "/{id}/absences", produces = "application/json")
-	public List<AbsenceDto> getAbsencesByIdEtudiant(@PathVariable("id") long id) {
-		return etudiantService.getAbsencesByIdEtudiant(id);
 	}
 
 //	@GetMapping(value = "/{id}/absences/{page}/{size}", produces = "application/json")
