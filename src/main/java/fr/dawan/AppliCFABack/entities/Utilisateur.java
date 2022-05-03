@@ -1,25 +1,21 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+@SuppressWarnings("serial")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Utilisateur {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+public class Utilisateur extends BaseEntity implements Serializable {
 
 	@Column(nullable = false, length = 255)
 	private String login;
@@ -32,15 +28,15 @@ public class Utilisateur {
 
 	@Column(nullable = false, length = 255)
 	private String nom;
-	
+
 	@Column(nullable = false, length = 255)
 	private String civilite;
-	
+
 	private LocalDate dateDeNaissance;
 
 	@Column(nullable = false, length = 255)
 	private String telephone;
-	
+
 	@ManyToOne
 	private Adresse adresse;
 
@@ -49,7 +45,7 @@ public class Utilisateur {
 
 //	@ManyToOne
 //	private Entreprise entreprise;
-	
+
 	@OneToOne
 	private Etudiant etudiant;
 	@OneToOne
@@ -61,14 +57,6 @@ public class Utilisateur {
 
 	public Utilisateur() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getLogin() {
@@ -142,7 +130,7 @@ public class Utilisateur {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	
+
 	public LocalDate getDateDeNaissance() {
 		return dateDeNaissance;
 	}
@@ -183,5 +171,4 @@ public class Utilisateur {
 		this.maitreApprentissage = maitreApprentissage;
 	}
 
-	
 }

@@ -1,34 +1,30 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class Entreprise {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+public class Entreprise extends BaseEntity implements Serializable {
 
 	@Column(nullable = false, length = 255)
 	private String raisonSociale;
-	
+
 	@Column(nullable = false, length = 255)
 	private String siret;
-	
+
 	@Column(nullable = false, length = 255)
 	private String naf;
-	
+
 	@Column(nullable = false, length = 255)
 	private String effectifTotal;
-	
+
 	@Column(nullable = false, length = 255)
 	private String employeurType;
-	
+
 	@ManyToOne
 	private Adresse adresseSiege;
 
@@ -40,14 +36,6 @@ public class Entreprise {
 		super();
 		this.raisonSociale = raisonSociale;
 		this.adresseSiege = adresseSiege;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getRaisonSociale() {
@@ -97,5 +85,5 @@ public class Entreprise {
 	public void setEmployeurType(String employeurType) {
 		this.employeurType = employeurType;
 	}
-	
+
 }

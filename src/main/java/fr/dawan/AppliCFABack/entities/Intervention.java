@@ -1,29 +1,24 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class Intervention { // intervention prévue
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+public class Intervention extends BaseEntity implements Serializable { // intervention prévue
 
 //	@Temporal(value = TemporalType.DATE)
 	private LocalDate dateDebut; // 12/03
 
 //	@Temporal(value = TemporalType.DATE)
 	private LocalDate dateFin; // 18/03
-	
+
 	@ManyToOne
 	private Formation formation; // Java init
 
@@ -35,7 +30,7 @@ public class Intervention { // intervention prévue
 
 	@ManyToMany
 	private List<Formateur> formateurs;
-	
+
 	@ManyToMany(mappedBy = "interventions")
 	private List<SupportCours> supportsCours;
 

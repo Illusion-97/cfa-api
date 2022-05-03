@@ -1,24 +1,19 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class Promotion { // CDA2021
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+public class Promotion extends BaseEntity implements Serializable { // CDA2021
 
 	@Column(nullable = false, length = 255)
 	private String nom;
@@ -32,7 +27,7 @@ public class Promotion { // CDA2021
 
 	@ManyToMany
 	private List<Etudiant> etudiants;
-	
+
 	@ManyToMany(mappedBy = "promotions")
 	private List<Intervention> interventions;
 
@@ -44,18 +39,17 @@ public class Promotion { // CDA2021
 
 	@ManyToOne
 	private Cursus cursus; // Dev Full Stack
-	
+
 	@OneToMany(mappedBy = "promotion")
 	private Set<Examen> examens;
-
 
 	public Promotion() {
 		super();
 	}
 
-	public Promotion(long id, String nom, LocalDate dateDebut, LocalDate dateFin, CEF cef,
-			List<Etudiant> etudiants, List<Intervention> interventions, CentreFormation centreFormation,
-			Utilisateur referentPedagogique, Cursus cursus) {
+	public Promotion(long id, String nom, LocalDate dateDebut, LocalDate dateFin, CEF cef, List<Etudiant> etudiants,
+			List<Intervention> interventions, CentreFormation centreFormation, Utilisateur referentPedagogique,
+			Cursus cursus) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -67,14 +61,6 @@ public class Promotion { // CDA2021
 		this.centreFormation = centreFormation;
 		this.referentPedagogique = referentPedagogique;
 		this.cursus = cursus;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getNom() {
@@ -148,6 +134,7 @@ public class Promotion { // CDA2021
 	public void setInterventions(List<Intervention> interventions) {
 		this.interventions = interventions;
 	}
+
 	public Set<Examen> getExamens() {
 		return examens;
 	}
@@ -156,5 +143,4 @@ public class Promotion { // CDA2021
 		this.examens = examens;
 	}
 
-	
 }

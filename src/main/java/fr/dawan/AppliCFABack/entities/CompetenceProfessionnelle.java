@@ -1,42 +1,28 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class CompetenceProfessionnelle {
+public class CompetenceProfessionnelle extends BaseEntity implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
 	@Column(nullable = false)
 	private String libelle;
-	
+
 	@Column(nullable = false)
 	private byte numeroFiche;
-	
+
 	@ManyToMany(mappedBy = "competencesProfessionnelles")
 	private List<Examen> examens;
-	
+
 	@ManyToOne
 	private ActiviteType activiteType;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getLibelle() {
 		return libelle;
@@ -69,6 +55,5 @@ public class CompetenceProfessionnelle {
 	public void setActiviteType(ActiviteType activiteType) {
 		this.activiteType = activiteType;
 	}
-	
-	
+
 }

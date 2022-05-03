@@ -7,22 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Version;
 
+@SuppressWarnings("serial")
 @Entity
-public class Absence implements Serializable{
+public class Absence extends BaseEntity implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@Version
-	private int version;
-	
 	@Column(nullable = false)
 	private LocalDate dateDebut;
 	
@@ -48,14 +38,6 @@ public class Absence implements Serializable{
 
 	public Absence() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public LocalDate getDateDebut() {
@@ -98,13 +80,6 @@ public class Absence implements Serializable{
 		this.etudiant = etudiant;
 	}
 
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
 
 	public TypeAbsence getTypeAbsence() {
 		return typeAbsence;

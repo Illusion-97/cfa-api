@@ -1,37 +1,32 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class Formation {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+public class Formation extends BaseEntity implements Serializable {
 
 	@Column(nullable = false, length = 255) // title dans dg2
 	private String titre;
 
-	@Column(nullable= true, length = 1024)
+	@Column(nullable = true, length = 1024)
 	private String contenu;
 
 	@ManyToMany(mappedBy = "formations", cascade = CascadeType.ALL)
 	private List<Cursus> cursusLst;
-	
-	@Column(nullable = true) //pour recupérer l'id dg2
+
+	@Column(nullable = true) // pour recupérer l'id dg2
 	private long idDg2;
-	
+
 	@Column(nullable = false, length = 255, unique = true) // attribut de dg2
 	private String duration;
-	
+
 	@Column(nullable = false, length = 255, unique = true) // attribut de dg2
 	private String slug;
 
@@ -56,14 +51,6 @@ public class Formation {
 		this.idDg2 = idDg2;
 		this.duration = duration;
 		this.slug = slug;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getTitre() {
@@ -156,7 +143,5 @@ public class Formation {
 	public void setSlug(String slug) {
 		this.slug = slug;
 	}
-	
-	
-	
+
 }
