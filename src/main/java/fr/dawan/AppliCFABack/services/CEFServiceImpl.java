@@ -51,7 +51,7 @@ public class CEFServiceImpl implements CEFService {
 	 * 
 	 * @param page	numero de la page
 	 * @param size	éléments sur la page
-	 * @return LstDto Liste des objets adresse
+	 * @return LstDto Liste des objets CEF
 	 */
 	
 	@Override

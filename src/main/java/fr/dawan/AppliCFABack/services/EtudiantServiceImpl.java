@@ -99,7 +99,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 	// # CRUD #
 	// ##################################################
 
-	//recuperation de la liste des etudiants
+	/**
+	 * Récupération de la liste des etudiants
+	 * 
+	 * @return res	Liste des objets etudiants
+	 */
+	
 	@Override
 	public List<EtudiantDto> getAll() {
 		List<Etudiant> lst = etudiantRepository.findAll();
@@ -195,7 +200,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 //		return new CountDto(etudiantRepository.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search, search, search));
 //	}
 
-	//recuperation des etudiants par id
+	/**
+	 * Récupération des etudiants en fonction de l'id
+	 * 
+	 * @param id	id de l'étudiant
+	 * @return eDto objet Etudiant
+	 */
+	
 	@Override
 	public EtudiantDto getById(long id) {
 		Optional<Etudiant> e = etudiantRepository.findById(id);
@@ -254,7 +265,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return eDto;
 	}
 
-	//methode d'ajout ou modification d'un etudiant
+	/**
+	 * Sauvegarde ou mise à jour d'un etudiant
+	 * 
+	 */
+	
 	@Override
 	public EtudiantDto saveOrUpdate(EtudiantDto e) {
 		Etudiant etudiant = DtoTools.convert(e, Etudiant.class);		
@@ -294,7 +309,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return mapper.EtudiantToEtudiantDto(etudiant);
 	}
 
-	//methode de suppression d'un etudiant
+	/**
+	 * Suppression d'un etudiant
+	 * 
+	 * @param id	Id concernant l'etudiant
+	 */
 	@Override
 	public void deleteById(long id) {
 
@@ -377,7 +396,14 @@ public class EtudiantServiceImpl implements EtudiantService {
 	// # 1er Niveau #
 	// ##################################################
 
-	//recuperartion des promo par id etudiant
+	
+	/**
+	 * Récupération des promotions en fonction de l'id etudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 * @return lstDto liste des promotions de l'étudiant
+	 */
+	
 	@Override
 	public List<PromotionDto> getPromotionsByIdEtudiant(long id) {
 		List<Promotion> lst = getEtudiantById(id).getPromotions();
@@ -398,7 +424,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return lstDto;
 	}
 
-	//recuperation des groupes par id etudiant
+	/**
+	 * Récupération des groupes en fonction de l'id etudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 * @return lstDto liste des groupes de l'étudiant
+	 */
 	@Override
 	public List<GroupeEtudiantDto> getGroupesByIdEtudiant(long id) {
 		List<GroupeEtudiant> lst = getEtudiantById(id).getGroupes();
@@ -418,7 +449,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return lstDto;
 	}
 
-	//recuperation des entreprises par id etudiant
+	/**
+	 * Récupération de l'entreprise en fonction de l'id etudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 */
+	
 	@Override
 	public EntrepriseDto getEntrepriseByIdEtudiant(long id) {
 		//ATTENTION : L'etudiant a potentiellement une liste de contrat => une liste d'entreprise
@@ -426,7 +462,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return mapper.EntrepriseToEntrepriseDto(contrat.getMaitreApprentissage().getEntreprise());
 	}
 
-	//recuperation des adresses par id etudiant
+	/**
+	 * Récupération de l'adresse de l'étudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 */
+	
 	@Override
 	public AdresseDto getAdresseByIdEtudiant(long id) {
 		return mapper.AdresseToAdresseDto(getEtudiantById(id).getUtilisateur().getAdresse());
@@ -469,7 +510,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return null;
 	}
 
-	//recuperation des absences par id etudiants
+	/**
+	 * Récupération des absences en fonction de l'id etudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 * @return res liste des absences de l'étudiant
+	 */
+	
 	@Override
 	public List<AbsenceDto> getAbsencesByIdEtudiant(long id) {
 		List<Absence> lst = absenceRepository.findAllByEtudiantId(id);
@@ -499,7 +546,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 	// ##################################################
 
 	
-	//recuperation des interventions par id etudiants 
+	/**
+	 * Récupération des interventions en fonction de l'id etudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 * @return res liste des interventions de l'étudiant
+	 */
+	
 	@Override
 	public List<InterventionDto> getIntervenionByIdEtudiant(long id) {
 		List<Intervention> interventions = new ArrayList<Intervention>();
@@ -518,7 +571,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 	// # UTILE #
 	// ##################################################
 
-	//recuperation des etudiants par id etudiants 
+	/**
+	 * Récupération de l'etudiants en fonction de l'id etudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 */
 	private Etudiant getEtudiantById(long id) {
 		Optional<Etudiant> e = etudiantRepository.findById(id);
 
@@ -529,6 +586,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 	}
 
 	//recuperation du planning par id etudiants 
+	/**
+	 * Récupération du planning en fonction de l'id etudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 * @return result planning de l'étudiant
+	 */
 	@Override
 	public List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id) {
 		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
@@ -564,6 +627,14 @@ public class EtudiantServiceImpl implements EtudiantService {
 //	}
 
 	//recuperation des devoirs par id etudiants + pagination
+	/**
+	 * Va permettre de récupérer tous les devoirs avec pagination
+	 * 
+	 * @param id 	id de l'étudiant
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @return res Liste des devoirs de l'étudiants
+	 */
 	@Override
 	public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
 
@@ -598,7 +669,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return res;
 	}
 
-	//methode count
+	/**
+	 * Recherche d'un etudiant
+	 * 
+	 * @param search recherche par prenom / nom / promotion / groupe
+	 */
+	
 	@Override
 	public CountDto count(String search) {
 		// TODO Auto-generated method stub
@@ -608,6 +684,16 @@ public class EtudiantServiceImpl implements EtudiantService {
 	}
 
 	//recuperation de la liste des etudiants avec pagination et recherche
+	/**
+	 * Va permettre de récupérer tous les etudiants avec pagination
+	 * recherche par nom / prenom / promo / groupe
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search	éléments etudiant (nom,prenom,groupe,promo)
+	 * @return res Liste des objets etudiant
+	 */
+	
 	@Override
 	public List<EtudiantDto> getAllByPage(int page, int size, String search) {
 		List<Etudiant> lstStud = etudiantRepository

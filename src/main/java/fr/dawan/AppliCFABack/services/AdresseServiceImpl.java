@@ -30,7 +30,7 @@ public class AdresseServiceImpl implements AdresseService{
 	private DtoMapper mapper = new DtoMapperImpl();
 
 	/**
-	 * Récupération de toutes les adresses
+	 * Récupération de la liste des adresses
 	 * 
 	 * @return lstDto	Liste des objets adresses
 	 */
