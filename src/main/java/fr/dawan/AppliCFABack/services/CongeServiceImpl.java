@@ -47,7 +47,12 @@ public class CongeServiceImpl implements CongeService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	
-	//recuperation de liste des conge
+	/**
+	 * Récupération de la liste des congés
+	 * 
+	 * @return lstDto	Liste des objets congés
+	 */
+	
 	@Override
 	public List<CongeDto> getAllConge() {
 		List<Conge> lst = congeRepository.findAll();
@@ -59,7 +64,11 @@ public class CongeServiceImpl implements CongeService {
 		return lstDto;
 	}
 
-	//recuperation des congés par id
+	/**
+	 * Récupération des congés en fonction de l'id
+	 * 
+	 */
+	
 	@Override
 	public CongeDto getById(long id) {
 		Optional<Conge> f = congeRepository.findById(id);
@@ -71,7 +80,16 @@ public class CongeServiceImpl implements CongeService {
 		return null;		
 	}
 	
-	//recuperation de la liste des congés avec pagination et recherche
+	/**
+	 * Va permettre de récupérer tous les congés avec pagination
+	 * et recherche
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search éléménts du congé
+	 * @return LstDto Liste des objets congé
+	 */
+	
 	@Override
 	public List<CongeDto> getAllByPage(int page, int size, String search) {
 		List<Conge> lst = congeRepository.findAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -87,7 +105,11 @@ public class CongeServiceImpl implements CongeService {
 		return lstDto;
 	}
 
-	//methode d'ajout ou modification d'un congé
+	/**
+	 * Sauvegarde ou mise à jour d'un congé
+	 * 
+	 */
+	
 	@Override
 	public CongeDto saveOrUpdate(CongeDto cDto) {
 		Conge c = DtoTools.convert(cDto, Conge.class);
@@ -103,7 +125,12 @@ public class CongeServiceImpl implements CongeService {
 		return mapper.CongeToCongeDto(c);
 	}
 
-	//methode de suppression d'un congé
+	/**
+	 * Suppression d'un congé
+	 * 
+	 * @param id	Id concernant le congé
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		//n récupère le conge
@@ -120,7 +147,13 @@ public class CongeServiceImpl implements CongeService {
 		
 	}
 
-	//recuperartion des congé restant / acquis par id user
+	/**
+	 * recuperation des congé restant / acquis par id user
+	 * 
+	 * @param id	Id concernant l'utilisateur
+	 * @return result	congé acquis / restant de l'utilisateur
+	 */
+	
 	@Override
 	public double[] getAcquisDisponiblesRestantsByIdUtilisateur(long id) {
 				
@@ -133,7 +166,13 @@ public class CongeServiceImpl implements CongeService {
 		return result;
 	}
 
-	//recuperation des congé acquis
+	/**
+	 * recuperation des congés acquis avec l'id user
+	 * 
+	 * @param id	Id concernant l'utilisateur
+	 * @return result	congé acquis de l'utilisateur
+	 */
+	
 	private double getAcquis(long id) {	
 		
 		UtilisateurDto utilisateur = utilisateurService.getById(id);
@@ -184,7 +223,13 @@ public class CongeServiceImpl implements CongeService {
 		return result;
 	}
 
-	//recuperation des congés pris
+	/**
+	 * recuperation des congés pris par id user
+	 * 
+	 * @param id	Id concernant l'utilisateur
+	 * @return result	congé pris par l'utilisateur
+	 */
+
 	private double getPris(long id) {
 		
 		List<CongeDto> conges = utilisateurService.getAllCongesByIdUtilisateur(id);
@@ -209,14 +254,26 @@ public class CongeServiceImpl implements CongeService {
 		
 		return result;
 	}
-
-	//methode count
+	
+	/**
+	 * Recherche d'un congé par nom ou prenom utilisateur
+	 * 
+	 * @param search recherche par prenom ou nom
+	 */
+	
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(congeRepository.countByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(search, search));
 	}
 
-	//recuperation des congés par id user
+	/**
+	 * Récupération des congés en fonction de l'id user
+	 * 
+	 * @param id	id utilisateur
+	 * @return result	Liste des congés concernant l'utilisateur
+	 * 
+	 */
+
 	@Override
 	public List<CongeDto> getAllByIdUtilisateur(long id) {
 		List<CongeDto> result = new ArrayList<CongeDto>();

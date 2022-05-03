@@ -29,6 +29,12 @@ public class AdresseServiceImpl implements AdresseService{
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	/**
+	 * Récupération de toutes les adresses
+	 * 
+	 * @return lstDto	Liste des objets adresses
+	 */
+	
 	@Override
 	public List<AdresseDto> getAllAdresse() {
 		List<Adresse> lst = adresseRepository.findAll();
@@ -40,6 +46,11 @@ public class AdresseServiceImpl implements AdresseService{
 		return lstDto;
 	}
 
+	/**
+	 * Récupération des adresses en fonction de l'id
+	 * 
+	 */
+	
 	@Override
 	public AdresseDto getById(long id) {
 		Optional<Adresse> adresseOpt = adresseRepository.findById(id);
@@ -47,7 +58,17 @@ public class AdresseServiceImpl implements AdresseService{
 			return mapper.AdresseToAdresseDto(adresseOpt.get());
 		return null;
 	}
-
+	
+	/**
+	 * Va permettre de récupérer toutes les adresses avec pagination
+	 * recherche par ville ou rue
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search éléménts de l'adresse
+	 * @return LstDto Liste des objets adresse
+	 */
+	
 	@Override
 	public List<AdresseDto> getAllByPage(int page, int size, String search) {
 		List<Adresse> lst = adresseRepository.findAllByRueContainingOrVilleContaining(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -60,6 +81,11 @@ public class AdresseServiceImpl implements AdresseService{
 		}
 		return lstDto;
 	}
+	
+	/**
+	 * Sauvegarde ou mise à jour d'une adresse
+	 * 
+	 */
 
 	@Override
 	public AdresseDto saveOrUpdate(AdresseDto aDto) {
@@ -69,6 +95,12 @@ public class AdresseServiceImpl implements AdresseService{
 
 		return mapper.AdresseToAdresseDto(a);
 	}
+	
+	/**
+	 * Suppression d'une adresse
+	 * 
+	 * @param id	Id concernant l'adresse
+	 */
 
 	@Override
 	public void deleteById(long id) {
@@ -76,6 +108,12 @@ public class AdresseServiceImpl implements AdresseService{
 		
 	}
 
+	/**
+	 * Recherche d'une adresse
+	 * 
+	 * @param search recherche par rue ou ville 
+	 */
+	
 	@Override
 	public CountDto count(String search) {
 		
