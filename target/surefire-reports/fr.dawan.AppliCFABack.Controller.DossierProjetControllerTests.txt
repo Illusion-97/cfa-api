@@ -1,22 +1,22 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.DossierProjetControllerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.039 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.DossierProjetControllerTests
-testSave  Time elapsed: 0.006 s  <<< FAILURE!
+Tests run: 5, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.081 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.DossierProjetControllerTests
+testSave  Time elapsed: 0.02 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<405>
 	at fr.dawan.AppliCFABack.Controller.DossierProjetControllerTests.testSave(DossierProjetControllerTests.java:96)
 
-testFindById  Time elapsed: 0.01 s  <<< FAILURE!
+testFindById  Time elapsed: 0.015 s  <<< FAILURE!
 java.lang.AssertionError: No value at JSON path "$.nom"
 	at fr.dawan.AppliCFABack.Controller.DossierProjetControllerTests.testFindById(DossierProjetControllerTests.java:76)
 Caused by: java.lang.IllegalArgumentException: json can not be null or empty
 	at fr.dawan.AppliCFABack.Controller.DossierProjetControllerTests.testFindById(DossierProjetControllerTests.java:76)
 
-testDelete  Time elapsed: 0.006 s  <<< FAILURE!
+testDelete  Time elapsed: 0.018 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<202> but was:<405>
 	at fr.dawan.AppliCFABack.Controller.DossierProjetControllerTests.testDelete(DossierProjetControllerTests.java:136)
 
-testUpdate  Time elapsed: 0.005 s  <<< FAILURE!
-java.lang.AssertionError: Cannot invoke "fr.dawan.AppliCFABack.dto.DossierProjetDto.setNom(String)" because "dpDto" is null
-	at fr.dawan.AppliCFABack.Controller.DossierProjetControllerTests.testUpdate(DossierProjetControllerTests.java:125)
+testUpdate  Time elapsed: 0.025 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<405>
+	at fr.dawan.AppliCFABack.Controller.DossierProjetControllerTests.testUpdate(DossierProjetControllerTests.java:119)
 

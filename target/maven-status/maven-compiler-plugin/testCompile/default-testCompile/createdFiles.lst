@@ -1,6 +1,5 @@
 fr\dawan\AppliCFABack\services\JourneePlanningServiceTest.class
 fr\dawan\AppliCFABack\Controller\CursusControllerTests.class
-fr\dawan\AppliCFABack\services\CongeServiceTest.class
 fr\dawan\AppliCFABack\Controller\PassageExamenTests.class
 fr\dawan\AppliCFABack\Controller\AdresseControllerTests.class
 fr\dawan\AppliCFABack\Controller\CEFControllerTests.class
@@ -13,14 +12,18 @@ fr\dawan\AppliCFABack\Controller\NoteControllerTest.class
 fr\dawan\AppliCFABack\Controller\CongeControllerTests.class
 fr\dawan\AppliCFABack\Controller\GroupeEtudiantControllerTest.class
 fr\dawan\AppliCFABack\Controller\DossierProjetControllerTests.class
+fr\dawan\AppliCFABack\Controller\SupportCoursControllerTest.class
 fr\dawan\AppliCFABack\Controller\ProjetControllerTests.class
 fr\dawan\AppliCFABack\Controller\FichePosteControllerTests.class
 fr\dawan\AppliCFABack\Controller\DevoirControllerTest.class
+fr\dawan\AppliCFABack\Controller\ActiviteTypeControllerTests.class
+fr\dawan\AppliCFABack\Controller\CompetenceProfessionnelleControllerTestes.class
 fr\dawan\AppliCFABack\Controller\UtilisateurControllerTests.class
 fr\dawan\AppliCFABack\Controller\FicheEntrepriseControllerTests.class
 fr\dawan\AppliCFABack\InitDataBase.class
 fr\dawan\AppliCFABack\Controller\AbsenceControllerTests.class
 fr\dawan\AppliCFABack\AppliCfaBackApplicationTests.class
+fr\dawan\AppliCFABack\Controller\CerfaControllerTests.class
 fr\dawan\AppliCFABack\Controller\InterventionControllerTests.class
 fr\dawan\AppliCFABack\Controller\ExamenControllerTest.class
 fr\dawan\AppliCFABack\Controller\FormateurControllerTests.class

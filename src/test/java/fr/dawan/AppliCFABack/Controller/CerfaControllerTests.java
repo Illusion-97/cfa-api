@@ -3,8 +3,6 @@ package fr.dawan.AppliCFABack.Controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,7 +46,7 @@ public class CerfaControllerTests {
 	@Autowired
 	private EtudiantService etudiantService;
 
-	private long idCerfa;
+	//private long idCerfa;
 	
 	@BeforeAll
 	void init() {

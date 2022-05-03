@@ -1,14 +1,18 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.DevoirControllerTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.08 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.DevoirControllerTest
-testFindById  Time elapsed: 0.011 s  <<< FAILURE!
+Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.117 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.DevoirControllerTest
+testSave  Time elapsed: 0.05 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<500>
+	at fr.dawan.AppliCFABack.Controller.DevoirControllerTest.testSave(DevoirControllerTest.java:101)
+
+testFindById  Time elapsed: 0.02 s  <<< FAILURE!
 java.lang.AssertionError: No value at JSON path "$.enonce"
 	at fr.dawan.AppliCFABack.Controller.DevoirControllerTest.testFindById(DevoirControllerTest.java:78)
 Caused by: java.lang.IllegalArgumentException: json can not be null or empty
 	at fr.dawan.AppliCFABack.Controller.DevoirControllerTest.testFindById(DevoirControllerTest.java:78)
 
-testUpdate  Time elapsed: 0.006 s  <<< FAILURE!
-java.lang.AssertionError: Cannot invoke "fr.dawan.AppliCFABack.entities.Intervention.getFormation()" because the return value of "fr.dawan.AppliCFABack.entities.Devoir.getIntervention()" is null
-	at fr.dawan.AppliCFABack.Controller.DevoirControllerTest.testUpdate(DevoirControllerTest.java:134)
+testDelete  Time elapsed: 0.016 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<202> but was:<404>
+	at fr.dawan.AppliCFABack.Controller.DevoirControllerTest.testDelete(DevoirControllerTest.java:145)
 

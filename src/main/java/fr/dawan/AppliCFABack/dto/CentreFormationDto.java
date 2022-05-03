@@ -1,9 +1,9 @@
 package fr.dawan.AppliCFABack.dto;
 
-import javax.persistence.Column;
+import java.io.Serializable;
 
-public class CentreFormationDto {
-	private long id;
+@SuppressWarnings("serial")
+public class CentreFormationDto extends BaseEntityDto implements Serializable{
 	private long idDg2;
 	private String countryCode;
 	private String nom;
@@ -12,16 +12,7 @@ public class CentreFormationDto {
 
 	public CentreFormationDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-	
+	}	
 
 	public String getNom() {
 		return nom;

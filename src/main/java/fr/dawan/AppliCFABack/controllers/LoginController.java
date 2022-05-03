@@ -4,14 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.annotation.MultipartConfig;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import fr.dawan.AppliCFABack.dto.LoginDto;
 import fr.dawan.AppliCFABack.dto.LoginResponseDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;

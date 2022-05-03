@@ -1,12 +1,11 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
-
-public class ContratDto {
+@SuppressWarnings("serial")
+public class ContratDto extends BaseEntityDto implements Serializable{
 	
-	private long id;
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	private MaitreApprentissageDto maitreApprentissageDto;
@@ -14,14 +13,6 @@ public class ContratDto {
 	
 	public ContratDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public LocalDate getDateDebut() {

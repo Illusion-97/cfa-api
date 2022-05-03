@@ -8,12 +8,10 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,13 +47,13 @@ public class ExamenControllerTest {
 	@Autowired
 	private ExamenController examenController;
 	
-	@Autowired
-	private ObjectMapper objectMapper;
+//	@Autowired
+//	private ObjectMapper objectMapper;
 	
 	@MockBean
 	private ExamenService examenService;
 
-	private long idExamen;
+	//private long idExamen;
 	
 	private List<ExamenDto> examenDto = new ArrayList<ExamenDto>();
 	

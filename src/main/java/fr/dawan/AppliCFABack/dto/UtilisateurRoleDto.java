@@ -1,22 +1,16 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class UtilisateurRoleDto {
-	private long id;
+@SuppressWarnings("serial")
+public class UtilisateurRoleDto extends BaseEntityDto implements Serializable {
+
 	private String intitule;
 	List<UtilisateurDto> utilisateursDto;
 
 	public UtilisateurRoleDto() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getIntitule() {
@@ -37,10 +31,7 @@ public class UtilisateurRoleDto {
 
 	@Override
 	public String toString() {
-		return "UtilisateurRoleDto{" +
-				"id=" + id +
-				", intitule='" + intitule + '\'' +
-				", utilisateursDto=" + utilisateursDto +
-				'}';
+		return "UtilisateurRoleDto{" + "id=" + id + ", intitule='" + intitule + '\'' + ", utilisateursDto="
+				+ utilisateursDto + '}';
 	}
 }

@@ -1,9 +1,11 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CursusDto {
-	private long id;
+@SuppressWarnings("serial")
+public class CursusDto extends BaseEntityDto implements Serializable{
+	
 	private String titre;
 	private List<FormationDto> formationsDto;
     private String description;
@@ -11,14 +13,6 @@ public class CursusDto {
 
 	public CursusDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getTitre() {

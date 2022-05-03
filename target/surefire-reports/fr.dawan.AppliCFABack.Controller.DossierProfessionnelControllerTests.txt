@@ -1,22 +1,22 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.DossierProfessionnelControllerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.044 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.DossierProfessionnelControllerTests
-testSave  Time elapsed: 0.009 s  <<< FAILURE!
+Tests run: 5, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.111 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.DossierProfessionnelControllerTests
+testSave  Time elapsed: 0.033 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<405>
 	at fr.dawan.AppliCFABack.Controller.DossierProfessionnelControllerTests.testSave(DossierProfessionnelControllerTests.java:95)
 
-testFindById  Time elapsed: 0.007 s  <<< FAILURE!
+testFindById  Time elapsed: 0.018 s  <<< FAILURE!
 java.lang.AssertionError: No value at JSON path "$.nom"
 	at fr.dawan.AppliCFABack.Controller.DossierProfessionnelControllerTests.testFindById(DossierProfessionnelControllerTests.java:75)
 Caused by: java.lang.IllegalArgumentException: json can not be null or empty
 	at fr.dawan.AppliCFABack.Controller.DossierProfessionnelControllerTests.testFindById(DossierProfessionnelControllerTests.java:75)
 
-testDelete  Time elapsed: 0.005 s  <<< FAILURE!
+testDelete  Time elapsed: 0.02 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<202> but was:<405>
 	at fr.dawan.AppliCFABack.Controller.DossierProfessionnelControllerTests.testDelete(DossierProfessionnelControllerTests.java:135)
 
-testUpdate  Time elapsed: 0.005 s  <<< FAILURE!
-java.lang.AssertionError: Cannot invoke "fr.dawan.AppliCFABack.dto.DossierProfessionnelDto.setNom(String)" because "dpDto" is null
-	at fr.dawan.AppliCFABack.Controller.DossierProfessionnelControllerTests.testUpdate(DossierProfessionnelControllerTests.java:124)
+testUpdate  Time elapsed: 0.022 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<405>
+	at fr.dawan.AppliCFABack.Controller.DossierProfessionnelControllerTests.testUpdate(DossierProfessionnelControllerTests.java:118)
 

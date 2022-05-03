@@ -3,14 +3,9 @@ package fr.dawan.AppliCFABack.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.PassageExamenDto;
@@ -29,7 +24,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	//recuperation de la liste des passages d'examen
+	// recuperation de la liste des passages d'examen
 	@Override
 	public List<PassageExamenDto> getAllPassageExamen() {
 		List<PassageExamen> lst = passageExamenRepository.findAll();
@@ -41,7 +36,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		return lstDto;
 	}
 
-	//recuperation de la liste des passages d'examen avec pagination et recherche
+	// recuperation de la liste des passages d'examen avec pagination et recherche
 	@Override
 	public List<PassageExamenDto> getAllByPage(int page, int size, String search) {
 //		List<PassageExamen> lst = passageExamenRepository.findAllByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search,search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -58,29 +53,29 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		return null;
 	}
 
-	//count search
+	// count search
 	@Override
 	public CountDto count(String search) {
 //		return new CountDto(passageExamenRepository.countByExamenEnonceContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search));
 		return null;
 	}
 
-	//recuperation des passages d'examen par id
+	// recuperation des passages d'examen par id
 	@Override
 	public PassageExamenDto getById(long id) {
 		Optional<PassageExamen> pe = passageExamenRepository.findById(id);
 		if (!pe.isPresent())
 			return null;
-		
-		PassageExamenDto pDto =  mapper.PassageExamenToPassageExamenDto(pe.get());
+
+		PassageExamenDto pDto = mapper.PassageExamenToPassageExamenDto(pe.get());
 		pDto.setExamenDto(mapper.ExamenToExamenDto(pe.get().getExamen()));
 		pDto.setInterventionDto(mapper.InterventionToInterventionDto(pe.get().getIntervention()));
 //		pDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(pe.get().getExamen().getFormation()));
-	
+
 		return pDto;
 	}
 
-	//methode d'ajout ou modification d'un passage d'examen
+	// methode d'ajout ou modification d'un passage d'examen
 	@Override
 	public PassageExamenDto saveOrUpdate(PassageExamenDto peDto) {
 		PassageExamen pe = DtoTools.convert(peDto, PassageExamen.class);
@@ -90,13 +85,11 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		return mapper.PassageExamenToPassageExamenDto(pe);
 	}
 
-	//methode de suppression d'un passage d'examen
+	// methode de suppression d'un passage d'examen
 	@Override
 	public void deleteById(long id) {
 		passageExamenRepository.deleteById(id);
 
 	}
-
-	
 
 }

@@ -1,29 +1,21 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class RemunerationDto {
+@SuppressWarnings("serial")
+public class RemunerationDto extends BaseEntityDto implements Serializable {
 
-	private long id;
-	
 	private LocalDate dateDebut;
-	
+
 	private LocalDate dateFin;
-	
+
 	private String pourcentage;
-	
+
 	private String smicOuSmc;
 
 	public RemunerationDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public LocalDate getDateDebut() {
@@ -57,7 +49,5 @@ public class RemunerationDto {
 	public void setSmicOuSmc(String smicOuSmc) {
 		this.smicOuSmc = smicOuSmc;
 	}
-	
-	
-	
+
 }

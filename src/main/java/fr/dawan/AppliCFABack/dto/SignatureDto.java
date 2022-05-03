@@ -3,31 +3,11 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class SignatureDto implements Serializable {
+public class SignatureDto extends BaseEntityDto implements Serializable {
 
-	private long id;
-	
-	private int version;
-	
 	private String pieceJointe;
-	
+
 	private long utilisateurId;
-	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
 
 	public String getPieceJointe() {
 		return pieceJointe;
@@ -44,5 +24,5 @@ public class SignatureDto implements Serializable {
 	public void setUtilisateurId(long utilisateurId) {
 		this.utilisateurId = utilisateurId;
 	}
-	
+
 }

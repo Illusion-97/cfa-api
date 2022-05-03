@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @SuppressWarnings("serial")
-public class DevoirDto  implements Serializable {
-	private long id;
-
-	private int version;
+public class DevoirDto extends BaseEntityDto implements Serializable {
 
 	private String consigne;
 	
@@ -21,22 +18,6 @@ public class DevoirDto  implements Serializable {
 
 	public DevoirDto() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
 	}
 
 	public String getConsigne() {

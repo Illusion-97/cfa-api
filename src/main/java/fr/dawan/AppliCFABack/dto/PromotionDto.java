@@ -1,13 +1,15 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-import fr.dawan.AppliCFABack.entities.Examen;
 
-public class PromotionDto {
-	private long id;
+
+@SuppressWarnings("serial")
+public class PromotionDto extends BaseEntityDto implements Serializable{
+
 	private String nom;
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
@@ -21,14 +23,6 @@ public class PromotionDto {
 	
 	public PromotionDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getNom() {

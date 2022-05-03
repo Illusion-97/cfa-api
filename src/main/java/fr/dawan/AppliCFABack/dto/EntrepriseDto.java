@@ -1,7 +1,10 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class EntrepriseDto {
-	private long id;
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class EntrepriseDto  extends BaseEntityDto implements Serializable{
+	
 	private String raisonSociale;
 	private String siret;
 	private String naf;
@@ -11,14 +14,6 @@ public class EntrepriseDto {
 
 	public EntrepriseDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getRaisonSociale() {

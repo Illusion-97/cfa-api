@@ -2,13 +2,13 @@
 Test set: fr.dawan.AppliCFABack.Controller.CursusControllerTests
 -------------------------------------------------------------------------------
 Tests run: 6, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.078 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CursusControllerTests
-testFindById  Time elapsed: 0.008 s  <<< FAILURE!
+testFindById  Time elapsed: 0.037 s  <<< FAILURE!
 java.lang.AssertionError: No value at JSON path "$.titre"
 	at fr.dawan.AppliCFABack.Controller.CursusControllerTests.testFindById(CursusControllerTests.java:84)
 Caused by: java.lang.IllegalArgumentException: json can not be null or empty
 	at fr.dawan.AppliCFABack.Controller.CursusControllerTests.testFindById(CursusControllerTests.java:84)
 
-testDelete  Time elapsed: 0.009 s  <<< FAILURE!
+testDelete  Time elapsed: 0.024 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<202> but was:<404>
 	at fr.dawan.AppliCFABack.Controller.CursusControllerTests.testDelete(CursusControllerTests.java:144)
 

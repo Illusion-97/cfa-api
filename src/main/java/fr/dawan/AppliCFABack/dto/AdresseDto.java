@@ -1,7 +1,9 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class AdresseDto {
-	private long id;
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class AdresseDto extends BaseEntityDto implements Serializable {
 	private int numero;
 	private String rue;
 	private String ville;
@@ -9,14 +11,6 @@ public class AdresseDto {
 
 	public AdresseDto() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public int getNumero() {

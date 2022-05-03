@@ -1,9 +1,9 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class DossierProfessionnelDto {
-	
-	
-	private long id;
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class DossierProfessionnelDto extends BaseEntityDto implements Serializable{
 
 	private String nom;
 	
@@ -15,14 +15,6 @@ public class DossierProfessionnelDto {
 	public DossierProfessionnelDto(String nom) {
 		// TODO Auto-generated constructor stub
 		this.nom=nom;
-	}
-	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getNom() {

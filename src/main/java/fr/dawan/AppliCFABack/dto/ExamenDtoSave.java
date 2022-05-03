@@ -1,39 +1,30 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-public class ExamenDtoSave {
-
-	
-	private long id;
+@SuppressWarnings("serial")
+public class ExamenDtoSave extends BaseEntityDto implements Serializable {
 
 	private String titre;
-	
+
 	private String descriptif;
-	
+
 	private double duree;
-	
+
 	private String pieceJointe;
-	
-	private LocalDate dateExamen; 
-	
+
+	private LocalDate dateExamen;
+
 	private List<Long> activiteTypesId;
-	
+
 	private long promotionId;
-	
+
 	private Set<Long> competencesProfessionnellesId;
-	
+
 	private Set<Long> notesId;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getTitre() {
 		return titre;
@@ -75,8 +66,6 @@ public class ExamenDtoSave {
 		this.dateExamen = dateExamen;
 	}
 
-
-
 	public List<Long> getActiviteTypesId() {
 		return activiteTypesId;
 	}
@@ -108,7 +97,5 @@ public class ExamenDtoSave {
 	public void setNotesId(Set<Long> notesId) {
 		this.notesId = notesId;
 	}
-	
 
-	
 }

@@ -1,12 +1,11 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class ActiviteTypeDto {
-	
-
-	private long id;
+@SuppressWarnings("serial")
+public class ActiviteTypeDto extends BaseEntityDto implements Serializable{
 	
 	private String libelle;
 	
@@ -18,11 +17,9 @@ public class ActiviteTypeDto {
 	
 	private List<CompetenceProfessionnelleDto> competencesProfessionnellesDto;
 	
-	
 	public ActiviteTypeDto() {
 		super();
 	}
-
 
 	public ActiviteTypeDto(long id, String libelle, byte numeroFiche) {
 		super();
@@ -31,13 +28,6 @@ public class ActiviteTypeDto {
 		this.numeroFiche = numeroFiche;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getLibelle() {
 		return libelle;

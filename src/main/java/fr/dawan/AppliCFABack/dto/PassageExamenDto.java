@@ -1,9 +1,11 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class PassageExamenDto {
-	private long id;
+@SuppressWarnings("serial")
+public class PassageExamenDto extends BaseEntityDto implements Serializable {
+
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	private ExamenDto examenDto;
@@ -21,16 +23,6 @@ public class PassageExamenDto {
 		this.dateFin = dateFin;
 		this.examenDto = examenDto;
 		this.interventionDto = interventionDto;
-	}
-
-
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public LocalDate getDateDebut() {
@@ -65,5 +57,4 @@ public class PassageExamenDto {
 		this.interventionDto = interventionDto;
 	}
 
-	
 }
