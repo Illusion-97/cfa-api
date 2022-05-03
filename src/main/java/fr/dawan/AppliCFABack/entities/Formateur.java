@@ -1,28 +1,23 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class Formateur{
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
+public class Formateur extends BaseEntity implements Serializable {
+
 	@OneToOne
 	private Utilisateur utilisateur;
-	
+
 	@ManyToOne
 	private Entreprise entreprise;
-	
+
 	@ManyToMany(mappedBy = "formateurs")
 	private List<Intervention> interventions;
 
@@ -45,14 +40,5 @@ public class Formateur{
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 
 }

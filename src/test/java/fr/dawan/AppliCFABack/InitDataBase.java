@@ -297,7 +297,7 @@ public class InitDataBase {
 
 		// DEvoir
 		Devoir devoir = new Devoir();
-		devoir.setEnonce("Enonce du devoir numero ##");
+		devoir.setConsigne("Enonce du devoir numero ##");
 		devoir.setDateDebut(LocalDate.now());
 		devoir.setDateFin(LocalDate.now());
 

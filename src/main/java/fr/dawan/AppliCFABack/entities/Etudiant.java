@@ -1,60 +1,48 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class Etudiant{
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
+public class Etudiant extends BaseEntity implements Serializable {
+
 	@OneToOne
 	private Utilisateur utilisateur;
-	
+
 	@ManyToMany(mappedBy = "etudiants")
 	private List<Promotion> promotions;
-	
+
 	@ManyToMany(mappedBy = "etudiants")
 	private List<GroupeEtudiant> groupes;
-	
-	
+
 	@OneToMany(mappedBy = "etudiantNote", cascade = CascadeType.REMOVE)
 	private Set<Note> notes;
-	
-//	@ManyToOne
-//	private Utilisateur formateurReferent;
-	
-//	@ManyToOne
-//	private Utilisateur manager;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<DossierProfessionnel> dossierProfessionnel;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<DossierProjet> dossierProjet;
-
 
 	public Etudiant() {
 		super();
 	}
 
-	public Etudiant(List<Promotion> promotions, List<GroupeEtudiant> groupes,List<DossierProjet> dossierProjet, List<DossierProfessionnel> dossierProfessionnel) {
+	public Etudiant(List<Promotion> promotions, List<GroupeEtudiant> groupes, List<DossierProjet> dossierProjet,
+			List<DossierProfessionnel> dossierProfessionnel) {
 		super();
 		this.promotions = promotions;
 		this.groupes = groupes;
-		this.dossierProfessionnel=dossierProfessionnel;
-		this.dossierProjet=dossierProjet;
+		this.dossierProfessionnel = dossierProfessionnel;
+		this.dossierProjet = dossierProjet;
 	}
 
 	public List<Promotion> getPromotions() {
@@ -72,22 +60,6 @@ public class Etudiant{
 	public void setGroupes(List<GroupeEtudiant> groupes) {
 		this.groupes = groupes;
 	}
-
-//	public Utilisateur getFormateurReferent() {
-//		return formateurReferent;
-//	}
-//
-//	public void setFormateurReferent(Utilisateur formateurReferent) {
-//		this.formateurReferent = formateurReferent;
-//	}
-
-//	public Utilisateur getManager() {
-//		return manager;
-//	}
-//
-//	public void setManager(Utilisateur manager) {
-//		this.manager = manager;
-//	}
 
 	public List<DossierProfessionnel> getDossierProfessionnel() {
 		return dossierProfessionnel;
@@ -113,14 +85,4 @@ public class Etudiant{
 		this.utilisateur = utilisateur;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-	
-
-	
 }

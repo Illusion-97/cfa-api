@@ -1,23 +1,20 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class ActiviteType {
+public class ActiviteType extends BaseEntity implements Serializable{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
 	
 	@Column(nullable = false)
 	private String libelle;
@@ -25,7 +22,7 @@ public class ActiviteType {
 	@Column(nullable = false)
 	private byte numeroFiche;
 	
-	@OneToMany(mappedBy = "activiteTypes" ,cascade = CascadeType.ALL )
+	@ManyToMany(mappedBy = "activiteTypes" ,cascade = CascadeType.ALL )
 	private List<Examen> examens;
 	
 	@OneToMany(mappedBy = "activiteType")
@@ -33,14 +30,6 @@ public class ActiviteType {
 	
 	@ManyToOne 
 	private Cursus cursusActiviteType;	
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getLibelle() {
 		return libelle;

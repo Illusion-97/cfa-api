@@ -1,23 +1,18 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class Cursus { // cursus du catalogue Dev Full Stack
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+public class Cursus extends BaseEntity implements Serializable { // cursus du catalogue Dev Full Stack
 
 	@Column(nullable = false, length = 255)
 	private String titre;
@@ -27,12 +22,12 @@ public class Cursus { // cursus du catalogue Dev Full Stack
 
 	@OneToMany(mappedBy = "cursusActiviteType")
 	private Set<ActiviteType> activiteTypes;
-	
+
 	@Column(columnDefinition = "TEXT")
-    private String description;
-	
-    private int duree;
-	
+	private String description;
+
+	private int duree;
+
 	public Cursus() {
 		super();
 	}
@@ -41,14 +36,6 @@ public class Cursus { // cursus du catalogue Dev Full Stack
 		super();
 		this.titre = titre;
 		this.formations = formations;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getTitre() {
@@ -91,5 +78,4 @@ public class Cursus { // cursus du catalogue Dev Full Stack
 		this.duree = duree;
 	}
 
-	
 }

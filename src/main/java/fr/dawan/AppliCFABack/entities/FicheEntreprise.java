@@ -1,29 +1,22 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+@SuppressWarnings("serial")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class FicheEntreprise {
+public class FicheEntreprise extends BaseEntity implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
 	@ManyToOne
 	private Entreprise entreprise;
-	
-	// Logo
-	//private String Logo;
-	
+
 	@Column(nullable = true, length = 255)
 	private String historique;
 
@@ -32,13 +25,13 @@ public class FicheEntreprise {
 
 	@Column(nullable = true, length = 255)
 	private String secteurActivite;
-	
+
 	@Column(nullable = true, length = 255)
 	private String organisationType;
 
 	@Column(nullable = true, length = 255)
 	private String nbSalarie;
-	
+
 	@Column(nullable = true, length = 255)
 	private String chiffreAffaireAnnuel;
 
@@ -53,23 +46,13 @@ public class FicheEntreprise {
 
 	@Column(nullable = true, length = 255)
 	private String metiersExerces;
-	
+
 	@OneToOne
 	private Etudiant etudiant;
 
 	public FicheEntreprise() {
 		super();
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	
 
 	public Entreprise getEntreprise() {
 		return entreprise;

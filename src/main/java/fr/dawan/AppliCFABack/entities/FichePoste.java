@@ -1,53 +1,41 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 
+@SuppressWarnings("serial")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class FichePoste {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
+public class FichePoste extends BaseEntity implements Serializable {
+
 	@Column(nullable = true, length = 255)
 	private String intitule;
-	
+
 	@Column(nullable = true, length = 255)
 	private String nature;
-	
+
 	@Column(nullable = true, length = 255)
 	private String mission;
-	
+
 	@Column(nullable = true, length = 255)
 	private String compositionService;
-	
+
 	@Column(nullable = true, length = 255)
 	private String positionnement;
-	
+
 	@Column(nullable = true, length = 255)
 	private String missionPrincipale;
-	
+
 	@OneToOne
 	private Etudiant etudiant;
 
 	public FichePoste() {
 		super();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getIntitule() {
@@ -89,7 +77,6 @@ public class FichePoste {
 	public void setPositionnement(String positionnement) {
 		this.positionnement = positionnement;
 	}
-	
 
 	public String getMissionPrincipale() {
 		return missionPrincipale;
@@ -106,9 +93,5 @@ public class FichePoste {
 	public void setEtudiant(Etudiant etudiant) {
 		this.etudiant = etudiant;
 	}
-	
-	
-	
-	
 
 }
