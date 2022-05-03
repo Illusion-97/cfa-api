@@ -11,7 +11,7 @@ import fr.dawan.AppliCFABack.dto.SupportCoursDto;
 import fr.dawan.AppliCFABack.services.SupportCoursService;
 
 @RestController
-@RequestMapping("/supportsCours")
+@RequestMapping("/supportCours")
 public class SupportCoursController extends GenericController<SupportCoursDto> {
 
 	@Autowired	
