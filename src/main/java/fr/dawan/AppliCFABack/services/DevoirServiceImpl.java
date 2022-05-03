@@ -29,7 +29,12 @@ public class DevoirServiceImpl implements DevoirService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	//recuperation de la liste des devoirs
+	/**
+	 * Récupération de la liste des devoirs
+	 * 
+	 * @return lstDto	Liste des objets devoir
+	 */
+	
 	@Override
 	public List<DevoirDto> getAllDevoir() {
 		List<Devoir> lst = devoirRepository.findAll();
@@ -41,7 +46,16 @@ public class DevoirServiceImpl implements DevoirService {
 		return lstDto;
 	}
 
-	//recuperation de la liste des devoirs avec pagination et recherche
+	/**
+	 * Va permettre de récupérer toutes les adresses avec pagination
+	 * recherche par consigne et titre de l'intervention
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search éléménts du devoir
+	 * @return LstDto Liste des objets devoirs
+	 */
+	
 	@Override
 	public List<DevoirDto> getAllByPage(int page, int size, String search) {
 		List<Devoir> lst = devoirRepository.findAllByConsigneContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -56,13 +70,21 @@ public class DevoirServiceImpl implements DevoirService {
 		return lstDto;
 	}
 
-	//methode count
+	/**
+	 * Recherche d'un devoir
+	 * 
+	 * @param search recherche par consigne ou titre d'une intervention
+	 */
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(devoirRepository.countByConsigneContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search));
 	}
 
-	//recuperation des devoirs par id
+	/**
+	 * Récupération des Devoirs en fonction de l'id
+	 * 
+	 */
+	
 	@Override
 	public DevoirDto getById(long id) {
 		Optional<Devoir> d = devoirRepository.findById(id);
@@ -73,7 +95,11 @@ public class DevoirServiceImpl implements DevoirService {
 		return null;
 	}
 
-	//methode d'ajout ou modification d'un  devoir
+	/**
+	 * Sauvegarde ou mise à jour d'un devoir
+	 * 
+	 */
+	
 	@Override
 	public DevoirDto saveOrUpdate(DevoirDto dDto) {
 		Devoir d = DtoTools.convert(dDto, Devoir.class);
@@ -83,7 +109,12 @@ public class DevoirServiceImpl implements DevoirService {
 		return mapper.DevoirToDevoirDto(d);
 	}
 
-	//methode de suppression d'un devoir
+	/**
+	 * Suppression d'un devoir
+	 * 
+	 * @param id	Id concernant le devoir
+	 */
+	
 	@Override
 	public void delete(long id) {
 		devoirRepository.deleteById(id);

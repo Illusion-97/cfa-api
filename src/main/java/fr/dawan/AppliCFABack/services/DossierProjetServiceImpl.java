@@ -31,7 +31,12 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	@Autowired
 	private DtoMapper mapper;
 
-	//recuperation des dossiers projet
+	/**
+	 * Récupération de la liste des dossiers projets
+	 * 
+	 * @return lstDossierProjetDto	Liste des objets dossiers projets
+	 */
+	
 	@Override
 	public List<DossierProjetDto> getAll() {
 		// TODO Auto-generated method stub
@@ -47,7 +52,11 @@ public class DossierProjetServiceImpl implements DossierProjetService {
  		return lstDossierProjetDto;
 	}
 
-	//recuperation des dossiers projet par id
+	/**
+	 * Récupération des dossiers projets en fonction de l'id
+	 * 
+	 */
+	
 	@Override
 	public DossierProjetDto getById(long id) {
 		// TODO Auto-generated method stub
@@ -60,7 +69,16 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		return null;
 	}
 
-	//recuperation de la liste des dossiers projet avec pagination et recherche
+	/**
+	 * Va permettre de récupérer tous les dossier projets avec pagination
+	 * recherche par nom
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param string élémént du dossier projet
+	 * @return LstDto Liste des objets dossier projet
+	 */
+	
 	@Override
 	public List<DossierProjetDto> getAllByPage(int page, int size, String string) {
 		List<DossierProjet> lst = dossierProRepo
@@ -79,7 +97,12 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		return lstDto;
 	}
 	
-	//recuperation des dossiers projet par nom
+	/**
+	 * Recuperation du dossier projet par nom
+	 * 
+	 * @param nom	nom concernant le dossier projet
+	 */
+	
 	@Override
 	public DossierProjetDto getByName(String nom) {
 		DossierProjetDto dpDto = mapper.DossierProjetToDossierProjetDto(dossierProRepo.getByName(nom));
@@ -91,7 +114,11 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		return null;
 	}
 
-	//methode d'ajout ou de modification d'un dossier projet
+	/**
+	 * Sauvegarde ou mise à jour d'un dossier pro
+	 * 
+	 */
+	
 	@Override
 	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) {
 		DossierProjet d = DtoTools.convert(dpDto, DossierProjet.class);
@@ -99,7 +126,12 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		return mapper.DossierProjetToDossierProjetDto(d);
 	}
 
-	//methode de suppression d'un soddier projet
+	/**
+	 * Suppression d'un dossier projet
+	 * 
+	 * @param id	Id concernant le dossier projet
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		// TODO Auto-generated method stub
@@ -107,7 +139,13 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		
 	}
 
-	//recuperation des dossiers projet par id etudiant
+	/**
+	 * Recuperation du dossier projet de l'etudiant
+	 * 
+	 * @param id	Id concernant l'etudiant
+	 * @return dossier projet de l'etudiant concerné
+	 */
+	
 	@Override
 	public List<DossierProjetDto> getByIdEtudiant(long id) {
 

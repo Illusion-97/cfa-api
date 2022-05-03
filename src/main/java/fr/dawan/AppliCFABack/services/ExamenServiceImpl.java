@@ -50,7 +50,12 @@ public class ExamenServiceImpl implements ExamenService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	//recuperation de la liste des examens
+	/**
+	 * Récupération de la liste des examens
+	 * 
+	 * @return lstDto	Liste des objets examen
+	 */
+	
 	@Override
 	public List<ExamenDto> getAllExamen() {
 		List<Examen> lst = examenRepository.findAll();
@@ -81,6 +86,15 @@ public class ExamenServiceImpl implements ExamenService {
 	}
 
 	//recuperation de la liste des examens avec pagination et recherche
+	/**
+	 * Va permettre de récupérer tous les examens avec pagination
+	 * recherche par titre ou descriptif
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search	éléments examen (titre, descriptif)
+	 * @return lstDto Liste des objets examens
+	 */
 	@Override
 	public List<ExamenDto> getAllByPage(int page, int size, String search) {
 		List<Examen> lst = examenRepository.findAllByTitreContainingIgnoringCaseOrDescriptifContainingIgnoringCase(search,search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -99,6 +113,12 @@ public class ExamenServiceImpl implements ExamenService {
 	}
 
 	//methode count
+	/**
+	 * Recherche d'un examen
+	 * 
+	 * @param search recherche par titre ou descriptif
+	 */
+	
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(examenRepository.countByTitreContainingIgnoringCaseOrDescriptifContainingIgnoringCase(search, search));
@@ -106,6 +126,12 @@ public class ExamenServiceImpl implements ExamenService {
 		
 	}
 
+	/**
+	 * Récupération des examens en fonction de l'id
+	 * 
+	 * @param id	id de l'examen
+	 */
+	
 	@Override
 	public ExamenDto getById(long id) {
 		Optional<Examen> e = examenRepository.findById(id);
@@ -122,7 +148,11 @@ public class ExamenServiceImpl implements ExamenService {
 
 	}
 
-	//methode d'ajout ou modification d'un examen
+	/**
+	 * Sauvegarde ou mise à jour d'un examen
+	 * 
+	 */
+	
 	@Override
 	public ExamenDtoSave saveOrUpdate(ExamenDtoSave eDto) throws Exception {
 		
@@ -168,7 +198,12 @@ public class ExamenServiceImpl implements ExamenService {
 		
 	}
 
-	//methode de suppression d'un examen
+	/**
+	 * Suppression d'un examen
+	 * 
+	 * @param id	Id concernant l'entreprise
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		examenRepository.deleteById(id);

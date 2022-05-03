@@ -34,7 +34,12 @@ public class CursusServiceImpl implements CursusService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	//recuperation de la liste des cursus
+	/**
+	 * Récupération de la liste des cursus
+	 * 
+	 * @return lstDto	Liste des objets cursus
+	 */
+	
 	@Override
 	public List<CursusDto> getAll() {
 		List<Cursus> lst = cursusRepo.findAll();
@@ -45,7 +50,16 @@ public class CursusServiceImpl implements CursusService {
 		return lstDto;
 	}
 
-	//recuperation de la liste des cursus avec pagination et recherche
+	/**
+	 * Va permettre de récupérer tous les cursus avec pagination
+	 * recherche par titre ou formation
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search éléménts du cursus
+	 * @return LstDto Liste des objets cursus
+	 */
+	
 	@Override
 	public List<CursusDto> getAllByPage(int page, int size, String search) {
 		List<Cursus> lst = cursusRepo
@@ -69,14 +83,23 @@ public class CursusServiceImpl implements CursusService {
 		return lstDto;
 	}
 
-	//methode count
+	/**
+	 * Recherche d'un cursus
+	 * 
+	 * @param search recherche par titre ou titre d'une formation
+	 */
+	
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(
 				cursusRepo.countDistinctByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(search, search));
 	}
 
-	//methode d'ajout ou modification d'un cursus
+	/**
+	 * Sauvegarde ou mise à jour d'un cursus
+	 * 
+	 */
+	
 	@Override
 	public CursusDto saveOrUpdate(CursusDto cDto) {
 		Cursus c = DtoTools.convert(cDto, Cursus.class);
@@ -84,14 +107,23 @@ public class CursusServiceImpl implements CursusService {
 		return mapper.CursusToCursusDto(c);
 	}
 
-	//methode de suppression d'un cursus
+	/**
+	 * Suppression d'un cursus
+	 * 
+	 * @param id	Id concernant le cursus
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		cursusRepo.deleteById(id);
 
 	}
 
-	//recuperation des cursus par id
+	/**
+	 * Récupération des cursus en fonction de l'id
+	 * 
+	 */
+	
 	@Override
 	public CursusDto getById(long id) {
 		Optional<Cursus> c = cursusRepo.findById(id);
@@ -109,7 +141,12 @@ public class CursusServiceImpl implements CursusService {
 
 	}
 
-	//recuperation des cursus par id promotion
+	/**
+	 * Récupération des cursus en fonction de l'id de la promotion
+	 * 
+	 * @param id	id de la promotion
+	 * @return cDto	objet cursus
+	 */
 	@Override
 	public CursusDto getByIdPromotion(long id) {
 		// TODO Auto-generated method stub
@@ -118,6 +155,11 @@ public class CursusServiceImpl implements CursusService {
 		return cDto;
 	}
 
+	/**
+	 * Récupération des promo en fonction de l'id du cursus
+	 * 
+	 * @param id Id du cursus
+	 */
 	//recuperation des promo par id cursus
 	@Override
 	public List<PromotionDto> getPromotionsById(long id) {
