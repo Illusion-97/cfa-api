@@ -42,20 +42,6 @@ public class NoteController {
 		return noteService.getById(id);
 	}
 
-	@GetMapping(value = "/{page}/{size}", produces = "application/json")
-	public @ResponseBody List<NoteDto> getAllByPage(@PathVariable("page") int page,
-			@PathVariable(value = "size") int size) {
-		return noteService.getAllByPage(page, size, "");
-	}
-	
-	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
- 	public @ResponseBody List<NoteDto> getAllByPage(@PathVariable("page") int page,
- 			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
- 		if(search.isPresent())
- 			return noteService.getAllByPage(page, size, search.get());
- 		else
- 			return noteService.getAllByPage(page, size, "");
- 	}
 		
 	@GetMapping(value = "/count", produces = "application/json")
 	public CountDto count() {

@@ -30,7 +30,15 @@ import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository;
 import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
-
+/***
+ * 
+ * @author Feres BG Valentin C Nicolas P.
+ * @see fr.dawan.AppliCFABack.repositories.ExamenRepository
+ * @see fr.dawan.AppliCFABack.dto.ExamenDto
+ * @since 1.0
+ * @version 1.0
+ *
+ */
 @Service
 @Transactional
 public class ExamenServiceImpl implements ExamenService {
@@ -151,6 +159,10 @@ public class ExamenServiceImpl implements ExamenService {
 	/**
 	 * Sauvegarde ou mise à jour d'un examen
 	 * 
+	 * @param ExamenDtoSave
+	 * @return ExamenDtoSave
+	 * @throws Si l'activité types n'est pas précisé
+	 * @throws Si les competences professionnelles ne sont pas précisé
 	 */
 	
 	@Override

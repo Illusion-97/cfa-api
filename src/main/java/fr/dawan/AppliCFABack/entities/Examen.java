@@ -13,7 +13,16 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
+/***
+ * 
+ * @author Feres BG Valentin C.
+ * @see ActiviteType
+ * @see Promotion
+ * @see CompetenceProfessionnelle
+ * @since 1.0
+ * @version 1.0
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 public class Examen extends BaseEntity implements Serializable {
@@ -49,76 +58,132 @@ public class Examen extends BaseEntity implements Serializable {
 		return notes;
 	}
 
-	public void setNotes(Set<Note> notes) {
-		this.notes = notes;
-	}
-
-	public Promotion getPromotion() {
-		return promotion;
-	}
-
-	public void setPromotion(Promotion promotion) {
-		this.promotion = promotion;
-	}
-
-	public Examen() {
-		super();
-	}
-
+	/**
+	 * @return le titre
+	 */
 	public String getTitre() {
 		return titre;
 	}
 
+	/**
+	 * @param titre le titre à affecter
+	 * 
+	 */
 	public void setTitre(String titre) {
 		this.titre = titre;
 	}
 
+	/**
+	 * @return le descriptif
+	 */
 	public String getDescriptif() {
 		return descriptif;
 	}
 
+	/**
+	 * @param descriptif le descriptif à affecter
+	 * 
+	 */
 	public void setDescriptif(String descriptif) {
 		this.descriptif = descriptif;
 	}
 
+	/**
+	 * @return la duree
+	 */
 	public double getDuree() {
 		return duree;
 	}
 
+	/**
+	 * @param duree la duree à affecter
+	 * 
+	 */
 	public void setDuree(double duree) {
 		this.duree = duree;
 	}
 
+	/**
+	 * @return la pieceJointe
+	 */
 	public String getPieceJointe() {
 		return pieceJointe;
 	}
 
+	/**
+	 * @param pieceJointe la pieceJointe à affecter
+	 * 
+	 */
 	public void setPieceJointe(String pieceJointe) {
 		this.pieceJointe = pieceJointe;
 	}
 
+	/**
+	 * @return la dateExamen
+	 */
 	public LocalDate getDateExamen() {
 		return dateExamen;
 	}
 
+	/**
+	 * @param dateExamen la dateExamen à affecter
+	 * 
+	 */
 	public void setDateExamen(LocalDate dateExamen) {
 		this.dateExamen = dateExamen;
 	}
 
-	public List<ActiviteType> getActiviteType() {
-		return activiteTypes;
+	/**
+	 * @return la promotion
+	 */
+	public Promotion getPromotion() {
+		return promotion;
 	}
 
-	public void setActiviteType(List<ActiviteType> activiteType) {
-		this.activiteTypes = activiteType;
+	/**
+	 * @param promotion la promotion à affecter
+	 * 
+	 */
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
 	}
 
+	/**
+	 * @return les competencesProfessionnelles
+	 */
 	public Set<CompetenceProfessionnelle> getCompetencesProfessionnelles() {
 		return competencesProfessionnelles;
 	}
 
+	/**
+	 * @param competencesProfessionnelles les competencesProfessionnelles à affecter
+	 * 
+	 */
 	public void setCompetencesProfessionnelles(Set<CompetenceProfessionnelle> competencesProfessionnelles) {
 		this.competencesProfessionnelles = competencesProfessionnelles;
+	}
+
+	/**
+	 * @param notes les notes à affecter
+	 * 
+	 */
+	public void setNotes(Set<Note> notes) {
+		this.notes = notes;
+	}
+
+	/**
+	 * @return les activiteTypes
+	 */
+	public List<ActiviteType> getActiviteType() {
+		return activiteTypes;
+	}
+
+	/**
+	 * @param activiteTypes led activiteTypes à affecter
+	 * 
+	 */
+	public void setActiviteType(List<ActiviteType> activiteType) {
+		this.activiteTypes = activiteType;
 	}
 
 	public List<Long> getActiviteTypesId() {

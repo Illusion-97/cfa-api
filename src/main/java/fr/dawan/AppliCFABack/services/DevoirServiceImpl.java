@@ -18,7 +18,15 @@ import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
-
+/***
+ * 
+ * @author Feres BG Valentin C.
+ * @see fr.dawan.AppliCFABack.repositories.DevoirRepository
+ * @see fr.dawan.AppliCFABack.dto.DevoirDto
+ * @since 1.0
+ * @version 1.0
+ *
+ */
 @Service
 @Transactional
 public class DevoirServiceImpl implements DevoirService {
@@ -82,7 +90,8 @@ public class DevoirServiceImpl implements DevoirService {
 
 	/**
 	 * Récupération des Devoirs en fonction de l'id
-	 * 
+	 * @param id Devoir
+	 * @return Devoir DTO
 	 */
 	
 	@Override
@@ -97,7 +106,8 @@ public class DevoirServiceImpl implements DevoirService {
 
 	/**
 	 * Sauvegarde ou mise à jour d'un devoir
-	 * 
+	 * @param Devoir DTO
+	 * @return Devoir DTO
 	 */
 	
 	@Override
@@ -112,7 +122,7 @@ public class DevoirServiceImpl implements DevoirService {
 	/**
 	 * Suppression d'un devoir
 	 * 
-	 * @param id	Id concernant le devoir
+	 * @param Id concernant le devoir
 	 */
 	
 	@Override

@@ -5,7 +5,14 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-
+/***
+ * 
+ * @author Feres BG Valentin C.
+ * @see Utilisateur
+ * @since 1.0
+ * @version 1.0
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 public class Signature extends BaseEntity implements Serializable {
@@ -25,17 +32,20 @@ public class Signature extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @return the utilisateur
+	 * @return l'utilisateur
 	 */
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}
 
 	/**
-	 * @param utilisateur the utilisateur to set
+	 * @param utilisateur l'utilisateur à affecter
+	 
 	 */
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
+
+
 
 }

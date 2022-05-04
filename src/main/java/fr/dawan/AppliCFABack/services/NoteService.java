@@ -10,8 +10,6 @@ public interface NoteService {
 
 	List<NoteDto> getAllNote();
 
-	List<NoteDto> getAllByPage(int page, int size, String string);
-
 	CountDto count(String string);
 
 	NoteDto getById(long id);
