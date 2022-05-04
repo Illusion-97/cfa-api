@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
+
 /***
  * 
  * @author Feres BG,Valentin C.
@@ -16,43 +17,43 @@ import javax.persistence.Version;
  */
 @SuppressWarnings("serial")
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable{
+public abstract class BaseEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
-	
+
 	@Version
 	protected int version;
 
 	/**
-	 * @return the id
+	 * @return l'id
 	 */
 	public long getId() {
 		return id;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id l'id à affecter
+	 * 
 	 */
 	public void setId(long id) {
 		this.id = id;
 	}
 
 	/**
-	 * @return the version
+	 * @return la version
 	 */
 	public int getVersion() {
 		return version;
 	}
 
 	/**
-	 * @param version the version to set
+	 * @param version la version à affecter
+	 * 
 	 */
 	public void setVersion(int version) {
 		this.version = version;
 	}
 
-
-	
 }
