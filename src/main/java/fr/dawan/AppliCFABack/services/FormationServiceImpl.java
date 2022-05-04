@@ -50,7 +50,13 @@ public class FormationServiceImpl implements FormationService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	//recuperation de la liste des formations
+	/**
+	 * Récupération de la liste des formations
+	 * 
+	 * @return lstDto	Liste des objets formation
+	 */
+	
+	
 	@Override
 	public List<FormationDto> getAllFormation() {
 		List<Formation> lst = formationRepository.findAll();
@@ -73,7 +79,15 @@ public class FormationServiceImpl implements FormationService {
 		return lstDto;
 	}
 
-	//recuperation de la liste des formations avec pagination et recherche
+	/**
+	 * Va permettre de récupérer toutes les fiches entreprises avec pagination
+	 * et recherche par titre ou contenu
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search	éléments formation (titre, contenu)
+	 * @return lstDto Liste des objets formation
+	 */
 	@Override
 	public List<FormationDto> getAllByPage(int page, int size, String search) {
 		List<Formation> lst = formationRepository
@@ -95,14 +109,24 @@ public class FormationServiceImpl implements FormationService {
 		return lstDto;
 	}
 
-	//methode count
+	/**
+	 * Recherche d'une formation
+	 * 
+	 * @param search recherche par titre ou contenu
+	 */
+	
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(
 				formationRepository.countByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(search, search));
 	}
 
-	//methode de recuperation d'une formation en fonction de son id 
+	/**
+	 * Récupération des formations en fonction de l'id
+	 * 
+	 * @param id	id de la formation
+	 */
+	
 	@Override
 	public FormationDto getById(long id) {
 		Optional<Formation> f = formationRepository.findById(id);
@@ -123,7 +147,11 @@ public class FormationServiceImpl implements FormationService {
 		return null;
 	}
 
-	//methode d'ajout ou modification d'une formation
+	/**
+	 * Sauvegarde ou mise à jour d'une formation
+	 * 
+	 */
+	
 	@Override
 	public FormationDto saveOrUpdate(FormationDto fDto) {
 		Formation f = DtoTools.convert(fDto, Formation.class);
@@ -133,7 +161,12 @@ public class FormationServiceImpl implements FormationService {
 		return mapper.FormationToFormationDto(f);
 	}
 
-	//methode de suppression d'une formation
+	/**
+	 * Suppression d'une formation
+	 * 
+	 * @param id	Id concernant la formation
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		List<Intervention> lstInt = interventionRepository.findAllByFormationId(id);
@@ -144,7 +177,13 @@ public class FormationServiceImpl implements FormationService {
 
 	}
 
-	//recuperation de la liste des formations par id
+	/**
+	 * Récupération des interventions en fonction de l'id formation
+	 * 
+	 * @param id	id de la formation
+	 * @return lstInDto	Liste des interventions
+	 */
+	
 	@Override
 	public List<InterventionDto> findAllByFormationId(long id) {
 
@@ -156,6 +195,16 @@ public class FormationServiceImpl implements FormationService {
 		}
 		return lstIntDto;
 	}
+	
+	/**
+	 * Va récupérer toute les formations de DG2
+	 * 
+	 * @param email Email l'utilsateur dg2
+	 * @param password   Mot de passe de l'utlisateur dg2
+	 * 
+	 * @exception Exception retourne une exception,
+	 * si erreur dans la récupération des formations
+	 */
 	
 	//import des formations DG2
 	@Override

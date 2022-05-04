@@ -22,6 +22,13 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	/**
+	 * Récupération de la journee de planning en fonction de l'intervention
+	 * 
+	 * @param i	objet Intervention
+	 * @return result	return la journee de planning
+	 */
+	
 	//recuperation de la journée de planning en fonction de l'intervention
 	@Override
 	public List<JourneePlanningDto> getJourneePlanningFromIntervention(Intervention i) {
@@ -56,15 +63,22 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 		return result;
 	}
 	
+	/**
+	 * Détermination si la date donnée en argument est un jour ouvrable
+	 * 
+	 */
 	
-	//Pour déterminer si la date donnée en argulent est un jours ouvrable
 	@Override
 	public boolean EstJoursOuvrable(LocalDate date)
     {
         return !(EstFerie(date) || EstWeekEnd(date));
     }
 	
-	//Pour déterminer sila date donnée en argulent est un jours férié
+	/**
+	 * Détermination si la date donnée en argument est un jours férié
+	 * 
+	 */
+	
     private boolean EstFerie(LocalDate date)
     {
         List<LocalDate> JoursFeries = new ArrayList<LocalDate>();
@@ -90,7 +104,11 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
         return false;
     }
 
-	
+    /**
+	 * Déterminination si c'est le week end
+	 * 
+	 */
+    
 	//Pour déterminer si week end
     private boolean EstWeekEnd(LocalDate date)
     {
@@ -101,7 +119,12 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
         	return false;
     }
 	
-	//calcul des jours fériés liès à Pâques
+    /**
+	 * Calcul des jours fériés de Pâques
+	 * 
+	 * @param date	objet date
+	 * @return JourPaque	Retourne les jours de pâque férier
+	 */
     //Méthode trouvée sur Internet
     private List<LocalDate> CalculPaque(LocalDate date)
     {

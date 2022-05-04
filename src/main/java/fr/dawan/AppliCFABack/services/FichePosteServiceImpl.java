@@ -29,7 +29,12 @@ public class FichePosteServiceImpl implements FichePosteService{
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	//recuperation de la liste des fiches poste
+	/**
+	 * Récupération de la liste des fiches de postes
+	 * 
+	 * @return lstDto	Liste des objets fiches de postes
+	 */
+	
 	@Override
 	public List<FichePosteDto> getAllFichePoste() {
 		List<FichePoste> lst = fichePosteRepository.findAll();
@@ -43,7 +48,16 @@ public class FichePosteServiceImpl implements FichePosteService{
 		return lstDto;
 	}
 
-	//recuperation de la liste des fiches postes + pagination + recherche
+	/**
+	 * Va permettre de récupérer toutes les fiches de poste avec pagination
+	 * et recherche
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search	éléments fiche poste 
+	 * @return lstDto Liste des objets fiches poste
+	 */
+	
 	@Override
 	public List<FichePosteDto> getAllByPage(int page, int size, String search) {
 		List<FichePoste> lst = fichePosteRepository.findAllByIntituleContainingIgnoringCase(search,PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -57,13 +71,23 @@ public class FichePosteServiceImpl implements FichePosteService{
 		return lstDto;
 	}
 
-	//methode count
+	/**
+	 * Recherche d'une fiche de poste
+	 * 
+	 * @param search recherche par intitule
+	 */
+	
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(fichePosteRepository.countByIntituleContainingIgnoringCase(search));
 	}
 	
-	//recuperation fiches poste par id
+	/**
+	 * Récupération des fiches de postes en fonction de l'id
+	 * 
+	 * @param id	id de la fiche poste
+	 */
+	
 	@Override
 	public FichePosteDto getById(long id) {
 		Optional<FichePoste> e = fichePosteRepository.findById(id);
@@ -77,7 +101,11 @@ public class FichePosteServiceImpl implements FichePosteService{
 		return null;
 	}
 
-	//methode d'ajout ou modification d'une fiche de poste
+	/**
+	 * Sauvegarde ou mise à jour d'une fiche de poste
+	 * 
+	 */
+	
 	@Override
 	public FichePosteDto saveOrUpdate(FichePosteDto fDto) {
 		FichePoste u = DtoTools.convert(fDto, FichePoste.class);
@@ -87,14 +115,25 @@ public class FichePosteServiceImpl implements FichePosteService{
 		return mapper.FichePosteToFichePosteDto(u);
 	}
 
-	//methode de suppression d'une fiche de poste
+	/**
+	 * Suppression d'une fiche de poste
+	 * 
+	 * @param id	Id concernant la fiche poste
+	 */
+
 	@Override
 	public void deleteById(long id) {
 		fichePosteRepository.deleteById(id);
 		
 	}
 
-	//recuperation des fiches de poste par id etudiant
+	/**
+	 * Récupération des fiches de poste en fonction de l'id de l'étudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 * @return f	fiche de poste de l'étudiant
+	 */
+	
 	@Override
 	public FichePosteDto getByIdEtudiant(long id) {
 		List<FichePosteDto> lst = getAllFichePoste();

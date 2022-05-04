@@ -32,7 +32,11 @@ public class ProjetServiceImpl implements ProjetService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	//recuperation de la liste des projets
+	/**
+	 * Récupération de la liste des projets
+	 * 
+	 * @return lstDto	Liste des objets projets
+	 */
 	@Override
 	public List<ProjetDto> getAllProjet() {
 		List<Projet> lst = projetRepository.findAll();
@@ -46,7 +50,16 @@ public class ProjetServiceImpl implements ProjetService {
 		return lstDto;
 	}
 
-	//recuperation de la liste des projets avec pagination et recherche
+	/**
+	 * Va permettre de récupérer tous les projets avec pagination
+	 * et recherche
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search	éléments projets (nom, description, nom groupe) 
+	 * @return lstDto Liste des objets projet
+	 */
+	
 	@Override
 	public List<ProjetDto> getAllByPage(int page, int size, String search) {
 		List<Projet> lst = projetRepository.findAllByNomContainingIgnoringCaseOrDescriptionContainingIgnoringCaseOrGroupeNomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -61,13 +74,23 @@ public class ProjetServiceImpl implements ProjetService {
 		return lstDto;
 	}
 
-	//count search
+	/**
+	 * Recherche d'un projet / nb
+	 * 
+	 * @param search recherche par nom, description, nom groupe
+	 */
+	
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(projetRepository.countByNomContainingIgnoringCaseOrDescriptionContainingIgnoringCaseOrGroupeNomContainingIgnoringCase(search, search, search));
 	}
 
-	//recuperation des projets par id
+	/**
+	 * Récupération des projets en fonction de l'id
+	 * 
+	 * @param id	id du projet
+	 */
+	
 	@Override
 	public ProjetDto getById(long id) {
 		Optional<Projet> p = projetRepository.findById(id);
@@ -81,7 +104,11 @@ public class ProjetServiceImpl implements ProjetService {
 		return null;
 	}
 
-	//methode d'ajout ou modification d'un projet
+	/**
+	 * Sauvegarde ou mise à jour d'un projet
+	 * 
+	 */
+	
 	@Override
 	public ProjetDto saveOrUpdate(ProjetDto pDto) {
 		Projet p = DtoTools.convert(pDto, Projet.class);
@@ -93,14 +120,25 @@ public class ProjetServiceImpl implements ProjetService {
 		return mapper.ProjetToProjetDto(p);
 	}
 
-	//methode de suppression d'un projet
+	/**
+	 * Suppression d'un projet
+	 * 
+	 * @param id	Id concernant un projet
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		projetRepository.deleteById(id);
 		filesService.deleteDirectoryWithContent("projets/"+id);
 	}
 
-	//recuperation des projets par groupe id
+	/**
+	 * Récupération des projets en fonction de l'id du groupe
+	 * 
+	 * @param id	id du groupe
+	 * @return result	Liste de projet du groupe
+	 */
+	
 	@Override
 	public List<ProjetDto> getByGroupeId(long id) {
 		List<Projet> projets = projetRepository.findAllByGroupeId(id);	

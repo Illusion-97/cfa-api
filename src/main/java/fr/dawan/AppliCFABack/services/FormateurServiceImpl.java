@@ -38,7 +38,12 @@ public class FormateurServiceImpl implements FormateurService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	//recuperation de la lsite des formateurs
+	/**
+	 * Récupération de la liste des formateurs
+	 * 
+	 * @return lstDto	Liste des objets formateur
+	 */
+	
 	@Override
 	public List<FormateurDto> getAll() {
 		List<Formateur> lst = formateurRepository.findAll();
@@ -49,7 +54,15 @@ public class FormateurServiceImpl implements FormateurService {
 		return lstDto;
 	}
 
-	//recuperation des formateurs avec pagination
+	/**
+	 * Va permettre de récupérer tous les formateurs avec pagination
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @return LstDto Liste des objets formateurs
+	 */
+	
+	
 	@Override
 	public List<FormateurDto> getAllByPage(int page, int size) {
 		List<Formateur> lst = formateurRepository.findAll(PageRequest.of(page, size)).get()
@@ -61,7 +74,17 @@ public class FormateurServiceImpl implements FormateurService {
 		return lstDto;
 	}
 
-	//recuperation des formateurs avec pagination + recherche
+	/**
+	 * Va permettre de récupérer tous les formateurs avec pagination
+	 * recherche par bom ou prenom
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search éléménts de l'utilisateur formateur
+	 * @return LstDto Liste des objets formteurs
+	 */
+	
+	
 	@Override
 	public List<FormateurDto> getAllByPageWithKeyword(int page, int size, String search) {
 		List<Formateur> lstFor = formateurRepository
@@ -75,7 +98,12 @@ public class FormateurServiceImpl implements FormateurService {
 		return lstDto;
 	}
 
-	//recuperation des formateurs par id
+	/**
+	 * Récupération des formateurs en fonction de l'id
+	 * 
+	 * @param id	id du formateur
+	 */
+	
 	@Override
 	public FormateurDto getById(long id) {
 		Optional<Formateur> f = formateurRepository.findById(id);
@@ -88,7 +116,11 @@ public class FormateurServiceImpl implements FormateurService {
 		return null;
 	}
 
-	//methode d'ajout ou modification d'un formateur
+	/**
+	 * Sauvegarde ou mise à jour d'un formateur
+	 * 
+	 */
+	
 	@Override
 	public FormateurDto saveOrUpdate(FormateurDto fDto) {
 		Formateur formateur = DtoTools.convert(fDto, Formateur.class);
@@ -116,7 +148,12 @@ public class FormateurServiceImpl implements FormateurService {
 		return mapper.FormateurToFormateurDto(formateur);
 	}
 
-	//methode de suppression d'un formateur
+	/**
+	 * Suppression d'un formateur
+	 * 
+	 * @param id	Id concernant le formateur
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		Optional<Formateur> formateur = formateurRepository.findById(id);
@@ -156,6 +193,12 @@ public class FormateurServiceImpl implements FormateurService {
 		return lstDto;
 	}
 
+	/**
+	 * Recherche d'un formateur
+	 * 
+	 * @param search recherche par nom ou prenom
+	 */
+	
 	@Override // nb de formateur
 	public CountDto count(String search) {
 		return new CountDto(formateurRepository.countByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(search, search));
@@ -207,6 +250,15 @@ public class FormateurServiceImpl implements FormateurService {
 //		return null;
 //	}
 
+	/**
+	 * Recuperation des interventions du formateur avec pagination
+	 * 
+	 * @param id id du formateur
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @return lstInDto Liste des objets intervention
+	 */
+	
 	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++ **/
 	@Override // affiche toute les interventions du formateur
 	public List<InterventionDto> getAllInterventionsByFormateurIdPerPage(long id, int page, int size) {
@@ -226,6 +278,17 @@ public class FormateurServiceImpl implements FormateurService {
 		return lstInDto;
 	}
 
+	/**
+	 * Recuperation des interventions du formateur avec pagination
+	 * plus recherche 
+	 * 
+	 * @param id id du formateur
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search éléments de l'intervention
+	 * @return lstInDto Liste des objets intervention
+	 */
+	
 	@Override // affiche toute les interventions du formateur + recherche par mot clé
 	public List<InterventionDto> getAllInterventionsByFormateurIdPerPageByKeyword(long id, int page, int size,
 			String search) {
@@ -246,17 +309,36 @@ public class FormateurServiceImpl implements FormateurService {
 		return lstInDto;
 	}
 
-	@Override // nb d'intervention du formateur avec recherche par mot clé
+	/**
+	 * Nombre d'intervention du formateur avec recherche par mot clé
+	 * 
+	 * @param id 	id du formateur
+	 * @param search	recherche par id / titre de la formation
+	 */
+	
+	@Override
 	public CountDto countInterventionById(long id, String search) {
 		return new CountDto(
 				formateurRepository.countByIdAndInterventionsFormationTitreContainingAllIgnoreCase(id, search));
 	}
 
+	/**
+	 * Nombre d'intervention du formateur
+	 * 
+	 * @param id	id du formateur
+	 */
+	
 	@Override // nb interventions du formateur
 	public CountDto countInterventionById(long id) {
 		return new CountDto(interventionRepository.countByFormateursId(id));
 	}
 
+	/**
+	 * Planning du formateur
+	 * 
+	 * @param id	id du formateur
+	 * @return journeeDto	liste des objets planning du formateur
+	 */
 	//planning du formateur
 	@Override
 	public List<JourneePlanningDto> getAllJourneePlanningByIdFormateur(long id) {

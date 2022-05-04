@@ -29,7 +29,12 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
     @Autowired
     private DtoMapper mapper = new DtoMapperImpl();
 
-    //recuperation de la liste des roles user
+    /**
+	 * Récupération de la liste des roles utilisateurs
+	 * 
+	 * @return lstDto	Liste des objets role utilisateur
+	 */
+    
     @Override
     public List<UtilisateurRoleDto> getAllUtilisateurRole() {
         List<UtilisateurRole> lst = utilisateurRoleRepository.findAll();
@@ -41,7 +46,16 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
         return lstDto;
     }
 
-  //recuperation de la liste des roles user avec pagination et recherche
+    /**
+	 * Va permettre de récupérer tous les roles utilisateur avec pagination
+	 * et recherche
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search	élément role utilisateur (intitule)
+	 * @return lstDto Liste des objets roles utilisateur
+	 */
+	
     @Override
     public List<UtilisateurRoleDto> getAllByPage(int page, int size, String search) {
         List<UtilisateurRole> lst = utilisateurRoleRepository.findAllByIntituleContainingIgnoringCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -55,13 +69,23 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
         return lstDto;
     }
 
-    //count search
+    /**
+	 * Recherche de role utilisateur / nb
+	 * 
+	 * @param search recherche par intitule
+	 */
+    
     @Override
     public CountDto count(String search) {
         return new CountDto(utilisateurRoleRepository.countByIntituleContainingIgnoringCase(search));
     }
 
-    //recuperation des roles user par id
+    /**
+	 * Récupération des roles utilisateur en fonction de l'id
+	 * 
+	 * @param id	id du role utilisateur
+	 */
+	
     @Override
     public UtilisateurRoleDto getById(long id) {
         Optional<UtilisateurRole> e = utilisateurRoleRepository.findById(id);
@@ -74,7 +98,11 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
         return null;
     }
     
-    //methode d'ajout ou modification d'un role user
+	/**
+	 * Sauvegarde ou mise à jour d'un role utilisateur
+	 * 
+	 */
+	
     @Override
     public UtilisateurRoleDto saveOrUpdate(UtilisateurRoleDto uDto) {
         UtilisateurRole u = DtoTools.convert(uDto, UtilisateurRole.class);
@@ -84,7 +112,13 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
         return mapper.UtilisateurRoleToUtilisateurRoleDto(u);
     }
 
-    //recuperartion par intitule
+	/**
+	 * Recuperation du role utilisateur par intitule
+	 * 
+	 * @param Intitule	intitule du role
+	 * 
+	 */
+	
     @Override
     public UtilisateurRoleDto findByIntitule(String intitule) {
         UtilisateurRole role = utilisateurRoleRepository.findByIntituleContaining(intitule);
@@ -97,7 +131,12 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
         return utilisateurRoleRepository.findByIntituleContaining(intitule);
     }
 
-    //methode de suppression d'un role user
+    /**
+	 * Suppression d'un utilisateur role
+	 * 
+	 * @param id	Id concernant un utilisateur role
+	 */
+    
     @Override
     public void deleteById(long id) {
         utilisateurRoleRepository.deleteById(id);
