@@ -14,45 +14,79 @@ import org.springframework.web.bind.annotation.RequestBody;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.services.GenericService;
 
+/**
+ * @author Valentin C, Feres BG.
+ * @see fr.dawan.appliCFABack.controller
+ * @since 1.0
+ * @version 1.0
+ * @return Controller générique
+ */
 public abstract class GenericController<TDto> {
 
-    protected final GenericService<TDto> service;
-    
+	protected final GenericService<TDto> service;
+
 	public GenericController(GenericService<TDto> service) {
-        super();
-        this.service = service;
-    }
+		super();
+		this.service = service;
+	}
 
-    @GetMapping(value="/{id}", produces = "application/json")
-    public TDto findById(@PathVariable("id") long id){
-        return service.getById(id);
-    }
-    @DeleteMapping(value = "/{id}", produces = "text/plain")
-    public ResponseEntity<String> deleteById(@PathVariable(value = "id") long id) {
-        try {
-            service.delete(id);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
-        }
-    }
-    
-    @PostMapping(consumes = "application/json",produces = "application/json")
-    ResponseEntity<TDto> save( @RequestBody TDto tDto) throws Exception {
+	/**
+	 * 
+	 * @param id a rechercher
+	 * @return getById service
+	 */
+	@GetMapping(value = "/{id}", produces = "application/json")
+	public TDto findById(@PathVariable("id") long id) {
+		return service.getById(id);
+	}
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(service.saveOrUpdate(tDto));
-    }
-    @PutMapping(consumes = "application/json",produces = "application/json")
-    TDto update( @RequestBody TDto tDto) throws Exception {
-        return service.saveOrUpdate(tDto);
-    }
-    
-    @GetMapping(value = "/count/{search}", produces = "application/json")
-    public CountDto count(@PathVariable("search") Optional<String> search) {
-        if (search.isPresent())
-            return service.count(search.get());
-        return service.count("");
-    }
+	/**
+	 * 
+	 * @param id a supprimer
+	 * @return le status de la requête un message d'information
+	 */
+	@DeleteMapping(value = "/{id}", produces = "text/plain")
+	public ResponseEntity<String> deleteById(@PathVariable(value = "id") long id) {
+		try {
+			service.delete(id);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
+		}
+	}
+
+	/**
+	 * 
+	 * @param Dto à sauvegarder
+	 * @return le status et l'objet a enregistrer en base de données
+	 * @throws Exception
+	 */
+	@PostMapping(consumes = "application/json", produces = "application/json")
+	ResponseEntity<TDto> save(@RequestBody TDto tDto) throws Exception {
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.saveOrUpdate(tDto));
+	}
+
+	/**
+	 * 
+	 * @param Dto à sauvegarder
+	 * @return le détail de l'objet mis a jour
+	 * @throws Exception
+	 */
+	@PutMapping(consumes = "application/json", produces = "application/json")
+	TDto update(@RequestBody TDto tDto) throws Exception {
+		return service.saveOrUpdate(tDto);
+	}
+
+	/**
+	 * 
+	 * @param search dont on veut connaitre le nombre
+	 * @return le nombre de fois ou la valeur recherchée a été trouvée.
+	 */
+	@GetMapping(value = "/count/{search}", produces = "application/json")
+	public CountDto count(@PathVariable("search") Optional<String> search) {
+		if (search.isPresent())
+			return service.count(search.get());
+		return service.count("");
+	}
 }

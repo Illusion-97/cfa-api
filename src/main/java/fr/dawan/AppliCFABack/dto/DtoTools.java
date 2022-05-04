@@ -4,7 +4,14 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
 import fr.dawan.AppliCFABack.entities.Note;
-
+/**
+ * 
+ * @author Valentin C, Feres BG.
+ * @see fr.dawan.appliCFABack.dto
+ * @since 1.0
+ * @version 1.0
+ * @return classe de convertion d'une entité vers DTO & vice-versa
+ */
 public class DtoTools {
 	
 	private static ModelMapper myMapper = new ModelMapper(); 

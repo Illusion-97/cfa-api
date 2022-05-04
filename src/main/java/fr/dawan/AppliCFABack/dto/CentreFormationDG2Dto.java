@@ -3,7 +3,14 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+/**
+ * 
+ * 
+ * @see fr.dawan.appliCFABack.dto
+ * @since 1.0
+ * @version 1.0
+ * @return DTO de l'appel API DG2
+ */
 @SuppressWarnings("serial")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CentreFormationDG2Dto extends BaseEntityDto implements Serializable{
