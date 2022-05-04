@@ -27,6 +27,11 @@ public class SupportCoursServiceImpl implements SupportCoursService {
 	@Autowired
 	InterventionRepository interventionRepository;
 	
+	/**
+	 * Récupération des supprts de cours en fonction de l'id 
+	 * 
+	 * @param id	id du support de cours
+	 */
 	
 	@Override
 	public SupportCoursDto getById(long id) {
@@ -46,6 +51,13 @@ public class SupportCoursServiceImpl implements SupportCoursService {
 		return null;
 	}
 
+	/**
+	 * Sauvegarde ou mise à jour du support de cours
+	 * 
+	 * @param tDto	Objet support de cours
+	 * 
+	 */
+	
 	@Override
 	public SupportCoursDto saveOrUpdate(SupportCoursDto tDto) throws Exception {
 		if(tDto.getInterventionsId().isEmpty() || tDto.getInterventionsId() == null)
@@ -75,11 +87,23 @@ public class SupportCoursServiceImpl implements SupportCoursService {
 		return new CountDto(supportCoursRepository.countByTitreContaining(search));
 	}
 
+	/**
+	 * Suppression d'un support de cours
+	 * 
+	 * @param id	Id concernant le support de cours
+	 */
+	
 	@Override
 	public void delete(long id) {
 		supportCoursRepository.deleteById(id);
 	}
 
+	/**
+	 * Récupération de la liste des supports de cours
+	 * 
+	 * @return supportDto	Liste des objets supports de cours
+	 */
+	
 	@Override
 	public List<SupportCoursDto> getAll() {
 		List<SupportCours> supports = supportCoursRepository.findAll();

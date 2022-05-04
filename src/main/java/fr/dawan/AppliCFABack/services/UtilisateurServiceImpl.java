@@ -81,7 +81,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
-	// recuperation de la liste des user
+	/**
+	 * Récupération de la liste des utilisateurs
+	 * 
+	 * @return res	Liste des objets utilisateurs
+	 */
 	@Override
 	public List<UtilisateurDto> getAll() {
 		List<Utilisateur> users = utilisateurRepository.findAll();
@@ -101,7 +105,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return res;
 	}
 
-	// recuperation de la liste des user avec pagination et recherche
+	/**
+	 * Va permettre de récupérer tous les utilisateurs avec pagination
+	 * et recherche
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search	éléments utilisateurs (nom,prenom,login,adresse)
+	 * @return res Liste des objets utilisateurs
+	 */
+	
 	@Override
 	public List<UtilisateurDto> getAllUtilisateurs(int page, int size, String search) {
 
@@ -126,7 +139,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return res;
 	}
 
-	// count search
+	/**
+	 * Recherche d'un utilisateur / nb
+	 * 
+	 * @param search recherche par prenom / nom / login / adresse
+	 */
+	
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(utilisateurRepository
@@ -134,7 +152,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						search, search, search, search));
 	}
 
-	// recuperation des user par id
+	/**
+	 * Récupération des utilisateurs en fonction de l'id
+	 * 
+	 * @param id	id de l'utilisateur
+	 * @return uDto objet utilsateur
+	 */
+	
 	@Override
 	public UtilisateurDto getById(long id) {
 		System.out.println("id : " + id);
@@ -166,7 +190,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return null;
 	}
 
-	// recuperation des user par email
+	/**
+	 * Récupération des utilisateurs en fonction de l'email
+	 * 
+	 * @param email email utilisateur
+	 * @return utilisateurDto	objet utilisateur
+	 */
+	
 	@Override
 	public UtilisateurDto findByEmail(String email) {
 		Utilisateur user = utilisateurRepository.findByEmail(email);
@@ -194,7 +224,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateurDto;
 	}
 
-	// recuperation des user par name
+	/**
+	 * Récupération des utilisateurs en fonction du nom
+	 * 
+	 * @param name nom de l'utilisateur
+	 */
+	
 	@Override
 	public UtilisateurDto getName(String name) {
 		Utilisateur user = utilisateurRepository.findByName(name);
@@ -202,8 +237,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			return mapper.UtilisateurToUtilisateurDto(user);
 		return null;
 	}
-
-	// methode d'ajout ou modification d'un user
+	
+	/**
+	 * Sauvegarde ou mise à jour d'un utilisateur
+	 * 
+	 * @param uDto objet utilisateur
+	 * @return result objet utilisateur (nouveau ou modifier)
+	 * 
+	 */
+	
 	@Override
 	public UtilisateurDto insertUpdate(UtilisateurDto uDto) throws Exception {
 
@@ -372,7 +414,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return result;
 	}
 
-	// methode de suppression d'un user
+	/**
+	 * Suppression d'un utilisateur
+	 * 
+	 * @param id	Id concernant un utilisateur
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 
@@ -414,6 +461,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	// recuperation des user par adresse id
+	/**
+	 * Récupération des utilisateurs par adresse en fonction de la ville
+	 * 
+	 * @param ville	adresse etudiant
+	 * @return res	Liste utilisateur
+	 */
+	
 	@Override
 	public List<UtilisateurDto> findByAdresse(String ville) {
 		List<Utilisateur> users = utilisateurRepository.findByAdresse(ville);
@@ -434,7 +488,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 //		return res;
 //	}
 
-	// planning de l'user
+	/**
+	 * Planning de l'utilisateur
+	 * 
+	 * @param id	id de l'utilisateur
+	 * @return result	Liste journee planning de l'utilisateur
+	 */
 	@Override
 	public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id) {
 		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
@@ -458,7 +517,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return result;
 	}
 
-	// congé de l'user
+	/**
+	 * Congé de l'utilisateur
+	 * 
+	 * @param id	id de l'utilisateur
+	 * @return result	liste des objets conge de l'utilisateur
+	 */
+	
 	@Override
 	public List<CongeDto> getAllCongesByIdUtilisateur(long id) {
 		List<CongeDto> result = new ArrayList<CongeDto>();
@@ -472,6 +537,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return result;
 	}
 
+	/**
+	 * Récupération de l'adresse en fonction de l'id de l'utilisateur
+	 * 
+	 * @param id	id de l'utilisateur
+	 * @return l'adresse utilisateur
+	 */
+	
 	@Override
 	public AdresseDto getAdresseByIdUtilisateur(long id) {
 		return mapper.AdresseToAdresseDto(getUtilisateurById(id).getAdresse());
@@ -535,7 +607,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return null;
 	}
 
-	// recuperation des user par role
+	/**
+	 * Récupération des utilisateur pa role 
+	 * 
+	 * @param idRole	objet utilisateur role
+	 * @return resfinal		liste des utilisateurs en fonction du role
+	 */
+	
 	@Override
 	public List<UtilisateurDto> findByRole(long idRole) {
 		List<UtilisateurDto> res = getAll();
@@ -576,6 +654,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 //    }
 
 	// recuperation des user par role + pagination + recherche
+	/**
+	 * Va permettre de récupérer tous utilisateurs par role avec pagination
+	 * et recherche
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search	éléments role utilisateur (prenom, nom, login)
+	 * @return res	liste des utilisateurs du role concerné
+	 */
 	@Override
 	public List<UtilisateurDto> findAllByRoleByPage(int page, int size, String role, String search) {
 		List<Utilisateur> users = utilisateurRepository
@@ -590,15 +677,26 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return res;
 	}
 
-	// count par role comme plusieurs role
+	/**
+	 * Recherche par role / nombre
+	 * 
+	 * @param role	objet role utilisateur
+	 * @param search recherche par nom / prenom / login
+	 */
+	
 	@Override
 	public CountDto countByRole(String role, String search) {
 		return new CountDto(utilisateurRepository
 				.countByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
 						role, search, role, search, role, search));
 	}
-
-	// user referent ou non
+	
+	/**
+	 * Utilisateur referent ou non
+	 * 
+	 * @param id	id referent
+	 */
+	
 	@Override
 	public Boolean isReferent(long id) {
 		List<Promotion> result = promotionRespository.findAllByReferentPedagogiqueId(id);
@@ -609,7 +707,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			return false;
 	}
 
-	// file upload
+	/**
+	 * File upload
+	 * 
+	 */
+	
 	@Override
 	public void uploadFile(MultipartFile file, long idUser) throws Exception {
 // J'ai 'renforcé' la secu en mappant l'id de l'utilisateur. Seul l'admin pourra uplaod des fichier. A voir si je laisse
@@ -677,6 +779,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	// # UTILE #
 	// ##################################################
 
+	/**
+	 * Récupération de l'utilisateur en fonction de l'id
+	 * 
+	 * @param id	id de l'utilisateur
+	 */
 	private Utilisateur getUtilisateurById(long id) {
 		Optional<Utilisateur> e = utilisateurRepository.findById(id);
 
@@ -687,6 +794,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	}
 
+	/**
+	 * Génération du mot de passe
+	 * 
+	 * @return generatedString	mot de passe généré
+	 */
 	// generation pwd
 	private String generatePassword() {
 		int leftLimit = 48; // numeral '0'
@@ -705,6 +817,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return generatedString;
 	}
 
+	/**
+	 * Reset du mot de passe
+	 * 
+	 */
 	// reset pwd
 	@Override
 	public boolean resetPassword(ResetResponse reset) throws Exception {

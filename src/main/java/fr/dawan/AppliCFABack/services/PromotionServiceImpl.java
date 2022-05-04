@@ -49,7 +49,12 @@ public class PromotionServiceImpl implements PromotionService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	//recuperation de la liste des promo
+	/**
+	 * Récupération de la liste des promo
+	 * 
+	 * @return lstDto	Liste des objets promotion
+	 */
+	
 	@Override
 	public List<PromotionDto> getAll() {
 		List<Promotion> lst = promoRepo.findAll();
@@ -60,7 +65,13 @@ public class PromotionServiceImpl implements PromotionService {
 		return lstDto;
 	}
 
-	//recuperation de la liste des promo avec id
+	/**
+	 * Récupération des promotions en fonction de l'id
+	 * 
+	 * @param id	id de la promotion
+	 * @return pDto	la promo
+	 */
+	
 	@Override
 	public PromotionDto getById(long id) {
 		Promotion promo = promoRepo.getOne(id);
@@ -119,7 +130,11 @@ public class PromotionServiceImpl implements PromotionService {
 		return pDto;
 	}
 
-	//methode d'ajout ou modification d'une promo
+	/**
+	 * Sauvegarde ou mise à jour d'une promotion
+	 * 
+	 */
+	
 	@Override
 	public PromotionDto saveOrUpdate(PromotionDto pDto) {
 		Promotion p = DtoTools.convert(pDto, Promotion.class);
@@ -155,26 +170,49 @@ public class PromotionServiceImpl implements PromotionService {
 		return mapper.PromotionToPromotionDto(p);
 	}
 
-	//methode de suppression d'une promo
+	/**
+	 * Suppression d'une promotion
+	 * 
+	 * @param id	Id concernant la promotion
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		promoRepo.deleteById(id);
 		filesService.deleteDirectoryWithContent("promotions/"+id);
 	}
 
-	//recuperation du referent avec id
+	/**
+	 * Récuperation du referent avec id promo
+	 * 
+	 * @param id	Id de la promotion
+	 */
+	
 	@Override
 	public UtilisateurDto getReferentById(long id) {
 		return mapper.UtilisateurToUtilisateurDto(promoRepo.getOne(id).getReferentPedagogique());
 	}
 
-	//methode count search
+	/**
+	 * Recherche d'une promotion
+	 * 
+	 * @param search recherche par nom
+	 */
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(promoRepo.countByNomContaining(search));
 	}
 
-	//recuperation de la liste des promo avec pagination et recherche
+	/**
+	 * Va permettre de récupérer toutes les promotions avec pagination
+	 * et recherche
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search	éléments promotions (nom)
+	 * @return res Liste des objets promotions
+	 */
+	
 	@Override
 	public List<PromotionDto> getAllPromotions(int page, int size, String search) {
 		List<Promotion> promo = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -185,7 +223,12 @@ public class PromotionServiceImpl implements PromotionService {
 		return res;
 	}
 
-	//recuperation des etudiants par id
+	/**
+	 * Récupération des etudiants en fonction de l'id de la promotion
+	 * 
+	 * @param id	id de la promotion
+	 */
+	
 	@Override
 	public List<EtudiantDto> getEtudiantsById(long id) {
 		List<Etudiant> lst = promoRepo.getOne(id).getEtudiants();
@@ -203,7 +246,13 @@ public class PromotionServiceImpl implements PromotionService {
 		return lstDto;
 	}
 
-	//recuperation des cursus
+	/**
+	 * Récupération des promo en fonction de l'id du cursus
+	 * 
+	 * @param id	id du cursus
+	 * @return result	List des promotions
+	 */
+	
 	@Override
 	public List<PromotionDto> getAllByCursusId(long id) {
 		List<Promotion> lst = promoRepo.findAllByCursusId(id);
@@ -217,11 +266,23 @@ public class PromotionServiceImpl implements PromotionService {
 		return result;
 	}
 	
+	/**
+	 * Récupération du cef en fonction de l'id de la promotion
+	 * 
+	 * @param id	id de la promotion
+	 */
+	
 	@Override
     public UtilisateurDto getCefById(long id) {
         return mapper.UtilisateurToUtilisateurDto(promoRepo.getOne(id).getCef().getUtilisateur());
     }
 
+	/**
+	 * Récupération des promotions en fonction de l'id du cursus et de l'etudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 * @return result	Liste des promotions
+	 */
 	@Override
 	public List<PromotionDto> getPromotionByEtudiantIdAndByCursusId(long id) {
 		List<Promotion> promos = promoRepo.getByEtudiantId(id);
