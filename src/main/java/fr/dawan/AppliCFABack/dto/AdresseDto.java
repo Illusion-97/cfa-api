@@ -1,7 +1,14 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
-
+/**
+ * 
+ * @author Valentin C, Feres BG.
+ * @see fr.dawan.appliCFABack.dto
+ * @since 1.0
+ * @version 1.0
+ * @return DTO-Adresse Entity
+ */
 @SuppressWarnings("serial")
 public class AdresseDto extends BaseEntityDto implements Serializable {
 	private int numero;

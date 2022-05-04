@@ -3,6 +3,14 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * 
+ * @author Valentin C, Feres BG.
+ * @see fr.dawan.appliCFABack.dto
+ * @since 1.0
+ * @version 1.0
+ * @return DTO-Etudiant Entity
+ */
 @SuppressWarnings("serial")
 public class EtudiantDto extends BaseEntityDto implements Serializable {
 
@@ -16,44 +24,74 @@ public class EtudiantDto extends BaseEntityDto implements Serializable {
 		super();
 	}
 
-	public List<PromotionDto> getPromotionsDto() {
-		return promotionsDto;
-	}
-
-	public void setPromotionsDto(List<PromotionDto> promotionsDto) {
-		this.promotionsDto = promotionsDto;
-	}
-
-	public List<GroupeEtudiantDto> getGroupesDto() {
-		return groupesDto;
-	}
-
-	public void setGroupesDto(List<GroupeEtudiantDto> groupesDto) {
-		this.groupesDto = groupesDto;
-	}
-
-	public List<DossierProfessionnelDto> getDossierProfessionnel() {
-		return dossierProfessionnel;
-	}
-
-	public void setDossierProfessionnel(List<DossierProfessionnelDto> dossierProfessionnel) {
-		this.dossierProfessionnel = dossierProfessionnel;
-	}
-
-	public List<DossierProjetDto> getDossierProjet() {
-		return dossierProjet;
-	}
-
-	public void setDossierProjet(List<DossierProjetDto> dossierProjet) {
-		this.dossierProjet = dossierProjet;
-	}
-
+	/**
+	 * @return the utilisateurDto
+	 */
 	public UtilisateurDto getUtilisateurDto() {
 		return utilisateurDto;
 	}
 
+	/**
+	 * @param utilisateurDto the utilisateurDto to set
+	 */
 	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
 		this.utilisateurDto = utilisateurDto;
+	}
+
+	/**
+	 * @return the promotionsDto
+	 */
+	public List<PromotionDto> getPromotionsDto() {
+		return promotionsDto;
+	}
+
+	/**
+	 * @param promotionsDto the promotionsDto to set
+	 */
+	public void setPromotionsDto(List<PromotionDto> promotionsDto) {
+		this.promotionsDto = promotionsDto;
+	}
+
+	/**
+	 * @return the groupesDto
+	 */
+	public List<GroupeEtudiantDto> getGroupesDto() {
+		return groupesDto;
+	}
+
+	/**
+	 * @param groupesDto the groupesDto to set
+	 */
+	public void setGroupesDto(List<GroupeEtudiantDto> groupesDto) {
+		this.groupesDto = groupesDto;
+	}
+
+	/**
+	 * @return the dossierProfessionnel
+	 */
+	public List<DossierProfessionnelDto> getDossierProfessionnel() {
+		return dossierProfessionnel;
+	}
+
+	/**
+	 * @param dossierProfessionnel the dossierProfessionnel to set
+	 */
+	public void setDossierProfessionnel(List<DossierProfessionnelDto> dossierProfessionnel) {
+		this.dossierProfessionnel = dossierProfessionnel;
+	}
+
+	/**
+	 * @return the dossierProjet
+	 */
+	public List<DossierProjetDto> getDossierProjet() {
+		return dossierProjet;
+	}
+
+	/**
+	 * @param dossierProjet the dossierProjet to set
+	 */
+	public void setDossierProjet(List<DossierProjetDto> dossierProjet) {
+		this.dossierProjet = dossierProjet;
 	}
 
 }

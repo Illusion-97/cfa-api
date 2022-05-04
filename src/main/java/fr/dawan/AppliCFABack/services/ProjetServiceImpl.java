@@ -44,7 +44,7 @@ public class ProjetServiceImpl implements ProjetService {
 		List<ProjetDto> lstDto = new ArrayList<ProjetDto>();
 		for (Projet p : lst) {
 			ProjetDto pDto = mapper.ProjetToProjetDto(p);
-			pDto.setGroupe(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
+			pDto.setGroupeDto(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
 			lstDto.add(pDto);
 		}
 		return lstDto;
@@ -68,7 +68,7 @@ public class ProjetServiceImpl implements ProjetService {
 		List<ProjetDto> lstDto = new ArrayList<ProjetDto>();
 		for (Projet p : lst) {
 			ProjetDto pDto = mapper.ProjetToProjetDto(p);
-			pDto.setGroupe(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
+			pDto.setGroupeDto(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
 			lstDto.add(pDto);
 		}
 		return lstDto;
@@ -97,7 +97,7 @@ public class ProjetServiceImpl implements ProjetService {
 		if (p.isPresent()) {
 
 			ProjetDto pDto = mapper.ProjetToProjetDto(p.get());
-			pDto.setGroupe(mapper.GroupeEtudiantToGroupEtudiantDto(p.get().getGroupe()));
+			pDto.setGroupeDto(mapper.GroupeEtudiantToGroupEtudiantDto(p.get().getGroupe()));
 			return pDto;
 		}
 
@@ -146,7 +146,7 @@ public class ProjetServiceImpl implements ProjetService {
 		List<ProjetDto> result = new ArrayList<ProjetDto>();
 		for(Projet p : projets) {
 		ProjetDto pDto = mapper.ProjetToProjetDto(p);
-		pDto.setGroupe(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
+		pDto.setGroupeDto(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
 		result.add(pDto);
 		}
 		

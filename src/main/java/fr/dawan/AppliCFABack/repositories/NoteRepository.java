@@ -20,11 +20,11 @@ public interface NoteRepository extends JpaRepository<Note, Long>{
 //	Page<Note> findAllByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(
 //			String search, String search2, String search3, String search4, Pageable pageable);
 
-//	long countByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(
-//			String search, String search2, String search3, String search4);
-//
 	List<Note> findAllByEtudiantNoteId(long id);
 	
 	List<Note> findAllByExamenId(long id);
+
+	long countByEtudiantNoteUtilisateurPrenomContainingIgnoringCaseOrEtudiantNoteUtilisateurNomContainingIgnoringCaseOrExamenTitreContainingIgnoringCase(
+			String search, String search2, String search3);
 
 }

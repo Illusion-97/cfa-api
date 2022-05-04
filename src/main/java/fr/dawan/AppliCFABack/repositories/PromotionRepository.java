@@ -9,23 +9,53 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import fr.dawan.AppliCFABack.entities.Promotion;
 
+/**
+ * @author Valentin C, Feres BG.
+ * @see fr.dawan.appliCFABack.service
+ * @since 1.0
+ * @version 1.0
+ * @return Repository de l'entity Promotion
+ */
 @Repository
-public interface PromotionRepository extends JpaRepository<Promotion, Long>{
-
+public interface PromotionRepository extends JpaRepository<Promotion, Long> {
+	/**
+	 * 
+	 * @param champs de recherche
+	 * @return nombre d'occurence du champs de recherche
+	 */
 	long countByNomContaining(String nom);
-	
-	Page<Promotion> findAllByNomContainingAllIgnoreCase(String nom, Pageable pageable );
-	
+
+	/**
+	 * 
+	 * @param nom      de l'utilisateur
+	 * @param pageable pagination
+	 * @return toutes les promotions dont le nom contient le champs de recherche,
+	 *         paginé
+	 */
+	Page<Promotion> findAllByNomContainingAllIgnoreCase(String nom, Pageable pageable);
+
+	/**
+	 * 
+	 * @param id de l'intervention recherchée
+	 * @return toutes les promotions contenants l'id de l'intervention concercnée
+	 */
 	List<Promotion> findAllByInterventionsId(long id);
 
 	List<Promotion> findAllByReferentPedagogiqueId(long id);
 
+	/**
+	 * 
+	 * @param id du cursus recherché
+	 * @return toutes les promotions dont contenant le cursus id recherché
+	 */
 	List<Promotion> findAllByCursusId(long id);
-	
+
+	/**
+	 * 
+	 * @param id de l'étudiant recherché
+	 * @return la promotion de l'étudiant concerné
+	 */
 	@Query("FROM Promotion p JOIN p.etudiants e ON e.id = :id")
 	List<Promotion> getByEtudiantId(long id);
-    
-    
-
 
 }

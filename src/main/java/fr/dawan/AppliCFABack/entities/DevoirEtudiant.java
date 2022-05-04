@@ -6,6 +6,16 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+/***
+ * 
+ * @author Feres BG Valentin C.
+ * @see Etudiant
+ * @see Devoir
+ * @see Intervention
+ * @since 1.0
+ * @version 1.0
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 public class DevoirEtudiant extends BaseEntity implements Serializable {
@@ -20,36 +30,65 @@ public class DevoirEtudiant extends BaseEntity implements Serializable {
 
 	private String pieceJointe;
 
-	public Devoir getDevoir() {
-		return devoir;
-	}
-
-	public void setDevoir(Devoir devoir) {
-		this.devoir = devoir;
-	}
-
+	
+	/**
+	 * @return l'etudiant
+	 */
 	public Etudiant getEtudiant() {
 		return etudiant;
 	}
 
+	/**
+	 * @param etudiant l'etudiant à affecter
+	 * 
+	 */
 	public void setEtudiant(Etudiant etudiant) {
 		this.etudiant = etudiant;
 	}
 
+	/**
+	 * @return la dateRendu
+	 */
 	public LocalDateTime getDateRendu() {
 		return dateRendu;
 	}
 
+	/**
+	 * @param dateRendu la dateRendu à affecter
+	 * 
+	 */
 	public void setDateRendu(LocalDateTime dateRendu) {
 		this.dateRendu = dateRendu;
 	}
 
+	/**
+	 * @return la pieceJointe
+	 */
 	public String getPieceJointe() {
 		return pieceJointe;
 	}
 
+	/**
+	 * @param pieceJointe la pieceJointe à affecter
+	 * 
+	 */
 	public void setPieceJointe(String pieceJointe) {
 		this.pieceJointe = pieceJointe;
+	}
+
+	/**
+	 * @param devoir le devoir à affecter
+	 * 
+	 */
+	public void setDevoir(Devoir devoir) {
+		this.devoir = devoir;
+	}
+
+	/**
+	 * @return le devoir
+	 */
+	public Devoir getDevoir() {
+		return devoir;
 	}
 
 }
