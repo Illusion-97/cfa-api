@@ -25,8 +25,13 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
-
-	//recuperation de la liste des fiches entreprise
+	
+	/**
+	 * Récupération de la liste des fiches entreprises
+	 * 
+	 * @return lstDto	Liste des objets fiches entreprises
+	 */
+	
 	@Override
 	public List<FicheEntrepriseDto> getAllFicheEntreprise() {
 		List<FicheEntreprise> lst = ficheEntrepriseRepository.findAll();
@@ -43,7 +48,16 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 		return lstDto;
 	}
 
-	//recuperation de la liste des fiches entreprise avec pagination et recherche
+	/**
+	 * Va permettre de récupérer toutes les fiches entreprises avec pagination
+	 * et recherche
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search	éléments fiche entreprises 
+	 * @return lstDto Liste des objets fiches entreprises
+	 */
+	
 	@Override
 	public List<FicheEntrepriseDto> getAllByPage(int page, int size, String search) {
 		List<FicheEntreprise> lst = ficheEntrepriseRepository
@@ -67,7 +81,12 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 //		return new CountDto(ficheEntrepriseRepository.countByNomContainingIgnoringCase(search));
 //	}
 
-	//recuperation des fiches entreprise par id
+	/**
+	 * Récupération des fiches entreprises en fonction de l'id
+	 * 
+	 * @param id	id de la fiche entreprise
+	 */
+	
 	@Override
 	public FicheEntrepriseDto getById(long id) {
 		Optional<FicheEntreprise> e = ficheEntrepriseRepository.findById(id);
@@ -85,7 +104,11 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 		return null;
 	}
 
-	//methode d'ajout ou modification d'une fiche entreprise
+	/**
+	 * Sauvegarde ou mise à jour d'une fiche entreprise
+	 * 
+	 */
+	
 	@Override
 	public FicheEntrepriseDto saveOrUpdate(FicheEntrepriseDto fDto) {
 		FicheEntreprise u = DtoTools.convert(fDto, FicheEntreprise.class);
@@ -95,14 +118,25 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 		return mapper.FicheEntrepriseToFicheEntrepriseDto(u);
 	}
 
-	//methode de suppression d'une fiche entreprise
+	/**
+	 * Suppression d'une fiche entreprise
+	 * 
+	 * @param id	Id concernant la fiche entreprise
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		ficheEntrepriseRepository.deleteById(id);
 
 	}
 
-	//recuperation des fiches entreprise par id etudiant
+	/**
+	 * Récupération des fiches entreprises en fonction de l'id de l'étudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 * @return f	fiche entreprise de l'étudiant
+	 */
+	
 	@Override
 	public FicheEntrepriseDto getByIdEtudiant(long id) {
 		List<FicheEntrepriseDto> lst = getAllFicheEntreprise();

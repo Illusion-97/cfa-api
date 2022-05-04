@@ -25,6 +25,13 @@ public class NoteServiceImpl implements NoteService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	/**
+	 * Récupération de la liste des notes
+	 * 
+	 * @return lstDto	Liste des objets note
+	 */
+	
+	
 	@Override
 	public List<NoteDto> getAllNote() {
 		List<Note> lst = noteRepository.findAll();
@@ -36,7 +43,16 @@ public class NoteServiceImpl implements NoteService {
 		return lstDto;
 	}
 
-	// recuperation de la liste des notes avec pagination et recherche
+	/**
+	 * Va permettre de récupérer toutes les notes avec pagination
+	 * et recherche
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search	éléments notes
+	 * @return lstDto Liste des objets note
+	 */
+
 	@Override
 	public List<NoteDto> getAllByPage(int page, int size, String search) {
 //		List<Note> lst = noteRepository.findAllByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(search,search, search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -60,6 +76,12 @@ public class NoteServiceImpl implements NoteService {
 		return null;
 	}
 
+	/**
+	 * Récupération des notes en fonction de l'id
+	 * 
+	 * @param id	id de la note
+	 */
+	
 	@Override
 	public NoteDto getById(long id) {
 		Optional<Note> n = noteRepository.findById(id);
@@ -76,6 +98,11 @@ public class NoteServiceImpl implements NoteService {
 		return DtoTools.convert(n.get(), NoteDto.class);
 	}
 
+	/**
+	 * Sauvegarde ou mise à jour d'une note
+	 * 
+	 */
+	
 	@Override
 	public NoteDtoToSave saveOrUpdate(NoteDtoToSave nDto) {
 		Note n = DtoTools.convert(nDto, Note.class);
@@ -85,20 +112,35 @@ public class NoteServiceImpl implements NoteService {
 		return DtoTools.convert(n, NoteDtoToSave.class);
 	}
 
-	// nb note
+	/**
+	 * Nombre de note
+	 * 
+	 */
+	
 	@Override
 	public CountDto count() {
 		return new CountDto(noteRepository.count());
 	}
 
-	// methode de suppression d'une note
+	/**
+	 * Suppression d'une note
+	 * 
+	 * @param id	Id concernant la note
+	 */
+	
 	@Override
 	public void deleteById(long id) {
 		noteRepository.deleteById(id);
 
 	}
 
-	// recuperation des note par etudiant id
+	/**
+	 * Récupération des notes en fonction de l'id de l'étudiant
+	 * 
+	 * @param id	id de l'etudiant
+	 * @return result	Liste des notes de l'etudiant
+	 */
+
 	@Override
 	public List<NoteDto> getAllByIdEtudiant(long id) {
 		List<NoteDto> result = new ArrayList<NoteDto>();
@@ -115,6 +157,13 @@ public class NoteServiceImpl implements NoteService {
 
 	}
 
+	/**
+	 * Récupération des notes en fonction de l'id Examen
+	 * 
+	 * @param id	id de l'examen
+	 * @return result	Liste des notes de l'examen
+	 */
+	
 	@Override
 	public List<NoteDto> getAllByExamenId(long id) {
 		List<NoteDto> result = new ArrayList<NoteDto>();
