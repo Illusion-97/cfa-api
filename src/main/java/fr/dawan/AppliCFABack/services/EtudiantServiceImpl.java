@@ -433,7 +433,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 				etudiantDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
 				eDtos.add(etudiantDto);
 			}
-			gDto.setEtudiants(eDtos);
+			gDto.setEtudiantsDto(eDtos);
 			lstDto.add(gDto);
 		}
 

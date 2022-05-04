@@ -5,6 +5,14 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * 
+ * * @see fr.dawan.appliCFABack.dto
+ * 
+ * @since 1.0
+ * @version 1.0
+ * @return DTO-Intervention Entity
+ */
 @SuppressWarnings("serial")
 public class InterventionDto extends BaseEntityDto implements Serializable {
 
@@ -22,62 +30,107 @@ public class InterventionDto extends BaseEntityDto implements Serializable {
 
 	}
 
+	/**
+	 * @return the dateDebut
+	 */
 	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
+	/**
+	 * @param dateDebut the dateDebut to set
+	 */
 	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
+	/**
+	 * @return the dateFin
+	 */
 	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
+	/**
+	 * @param dateFin the dateFin to set
+	 */
 	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 
+	/**
+	 * @return the formationDto
+	 */
 	public FormationDto getFormationDto() {
 		return formationDto;
 	}
 
+	/**
+	 * @param formationDto the formationDto to set
+	 */
 	public void setFormationDto(FormationDto formationDto) {
 		this.formationDto = formationDto;
 	}
 
+	/**
+	 * @return the interventionMereDto
+	 */
 	public InterventionDto getInterventionMereDto() {
 		return interventionMereDto;
 	}
 
+	/**
+	 * @param interventionMereDto the interventionMereDto to set
+	 */
 	public void setInterventionMereDto(InterventionDto interventionMereDto) {
 		this.interventionMereDto = interventionMereDto;
 	}
 
+	/**
+	 * @return the promotionsDto
+	 */
 	public List<PromotionDto> getPromotionsDto() {
 		return promotionsDto;
 	}
 
+	/**
+	 * @param promotionsDto the promotionsDto to set
+	 */
 	public void setPromotionsDto(List<PromotionDto> promotionsDto) {
 		this.promotionsDto = promotionsDto;
 	}
 
+	/**
+	 * @return the formateursDto
+	 */
 	public List<FormateurDto> getFormateursDto() {
 		return formateursDto;
 	}
 
+	/**
+	 * @param formateursDto the formateursDto to set
+	 */
 	public void setFormateursDto(List<FormateurDto> formateursDto) {
 		this.formateursDto = formateursDto;
 	}
 
+	/**
+	 * @return the noteInfoPersonnel
+	 */
 	public String getNoteInfoPersonnel() {
 		return noteInfoPersonnel;
 	}
 
+	/**
+	 * @param noteInfoPersonnel the noteInfoPersonnel to set
+	 */
 	public void setNoteInfoPersonnel(String noteInfoPersonnel) {
 		this.noteInfoPersonnel = noteInfoPersonnel;
 	}
 
+	/**
+	 * @return the heuresDisponsees
+	 */
 	public long getHeuresDisponsees() {
 		return heuresDisponsees;
 	}
@@ -88,10 +141,6 @@ public class InterventionDto extends BaseEntityDto implements Serializable {
 					.between(this.getDateDebut().atStartOfDay(), this.getDateFin().atStartOfDay()).toDays() * 7;
 
 		}
-	}
-
-	public void setHeuresDisponsees(long heuresDisponsees) {
-		this.heuresDisponsees = heuresDisponsees;
 	}
 
 }

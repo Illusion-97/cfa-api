@@ -69,7 +69,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-03T16:43:44+0200",
+    date = "2022-05-04T11:08:01+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -254,11 +254,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         examenDto.setId( examen.getId() );
         examenDto.setVersion( examen.getVersion() );
-        examenDto.setDateExamen( examen.getDateExamen() );
+        examenDto.setTitre( examen.getTitre() );
         examenDto.setDescriptif( examen.getDescriptif() );
         examenDto.setDuree( examen.getDuree() );
         examenDto.setPieceJointe( examen.getPieceJointe() );
-        examenDto.setTitre( examen.getTitre() );
+        examenDto.setDateExamen( examen.getDateExamen() );
 
         return examenDto;
     }
@@ -306,7 +306,6 @@ public class DtoMapperImpl implements DtoMapper {
 
         groupeEtudiantDto.setId( groupeEtudiant.getId() );
         groupeEtudiantDto.setVersion( groupeEtudiant.getVersion() );
-        groupeEtudiantDto.setEtudiants( etudiantListToEtudiantDtoList( groupeEtudiant.getEtudiants() ) );
         groupeEtudiantDto.setNom( groupeEtudiant.getNom() );
 
         return groupeEtudiantDto;
@@ -372,7 +371,6 @@ public class DtoMapperImpl implements DtoMapper {
         projetDto.setId( projet.getId() );
         projetDto.setVersion( projet.getVersion() );
         projetDto.setDescription( projet.getDescription() );
-        projetDto.setGroupe( GroupeEtudiantToGroupEtudiantDto( projet.getGroupe() ) );
         projetDto.setNom( projet.getNom() );
 
         return projetDto;
@@ -805,19 +803,6 @@ public class DtoMapperImpl implements DtoMapper {
         List<DossierProjetDto> list1 = new ArrayList<DossierProjetDto>( list.size() );
         for ( DossierProjet dossierProjet : list ) {
             list1.add( DossierProjetToDossierProjetDto( dossierProjet ) );
-        }
-
-        return list1;
-    }
-
-    protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<EtudiantDto> list1 = new ArrayList<EtudiantDto>( list.size() );
-        for ( Etudiant etudiant : list ) {
-            list1.add( EtudiantToEtudiantDto( etudiant ) );
         }
 
         return list1;

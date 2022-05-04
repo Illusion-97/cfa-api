@@ -2,7 +2,14 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
+/**
+ * 
+ * 
+ * @see fr.dawan.appliCFABack.dto
+ * @since 1.0
+ * @version 1.0
+ * @return DTO-Cerfa Entity
+ */
 @SuppressWarnings("serial")
 public class CerfaDto extends BaseEntityDto implements Serializable {
 

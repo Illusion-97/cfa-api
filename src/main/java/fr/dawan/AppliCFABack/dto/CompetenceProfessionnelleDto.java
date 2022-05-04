@@ -3,6 +3,14 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * 
+ * @author Valentin C, Feres BG.
+ * @see fr.dawan.appliCFABack.dto
+ * @since 1.0
+ * @version 1.0
+ * @return DTO-Competence professionnelle Entity
+ */
 @SuppressWarnings("serial")
 public class CompetenceProfessionnelleDto extends BaseEntityDto implements Serializable {
 
@@ -15,6 +23,12 @@ public class CompetenceProfessionnelleDto extends BaseEntityDto implements Seria
 		super();
 	}
 
+	/**
+	 * @param libelle
+	 * @param numeroFiche
+	 * @param examensDto
+	 * @param activiteTypeId
+	 */
 	public CompetenceProfessionnelleDto(long id, String libelle, byte numeroFiche, long activiteTypeId) {
 		super();
 		this.id = id;
@@ -23,36 +37,60 @@ public class CompetenceProfessionnelleDto extends BaseEntityDto implements Seria
 		this.activiteTypeId = activiteTypeId;
 	}
 
-	public long getActiviteTypeId() {
-		return activiteTypeId;
-	}
-
-	public void setActiviteTypeId(long activiteTypeId) {
-		this.activiteTypeId = activiteTypeId;
-	}
-
+	/**
+	 * @return the libelle
+	 */
 	public String getLibelle() {
 		return libelle;
 	}
 
+	/**
+	 * @param libelle the libelle to set
+	 */
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
 
+	/**
+	 * @return the numeroFiche
+	 */
 	public byte getNumeroFiche() {
 		return numeroFiche;
 	}
 
+	/**
+	 * @param numeroFiche the numeroFiche to set
+	 */
 	public void setNumeroFiche(byte numeroFiche) {
 		this.numeroFiche = numeroFiche;
 	}
 
+	/**
+	 * @return the examensDto
+	 */
 	public List<ExamenDto> getExamensDto() {
 		return examensDto;
 	}
 
+	/**
+	 * @param examensDto the examensDto to set
+	 */
 	public void setExamensDto(List<ExamenDto> examensDto) {
 		this.examensDto = examensDto;
+	}
+
+	/**
+	 * @return the activiteTypeId
+	 */
+	public long getActiviteTypeId() {
+		return activiteTypeId;
+	}
+
+	/**
+	 * @param activiteTypeId the activiteTypeId to set
+	 */
+	public void setActiviteTypeId(long activiteTypeId) {
+		this.activiteTypeId = activiteTypeId;
 	}
 
 }

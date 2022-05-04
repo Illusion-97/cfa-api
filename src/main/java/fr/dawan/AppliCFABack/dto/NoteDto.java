@@ -4,6 +4,14 @@ import java.io.Serializable;
 
 import fr.dawan.AppliCFABack.entities.Note.Satisfaction;
 
+/**
+ * 
+ * 
+ * @see fr.dawan.appliCFABack.dto
+ * @since 1.0
+ * @version 1.0
+ * @return DTO-note Entity
+ */
 @SuppressWarnings("serial")
 public class NoteDto extends BaseEntityDto implements Serializable {
 	private double noteObtenue;
@@ -23,92 +31,88 @@ public class NoteDto extends BaseEntityDto implements Serializable {
 		this.etudiantNoteId = etudiantNoteId;
 	}
 
-	public String getEtudiantNoteUtilisateurNom() {
-		return etudiantNoteUtilisateurNom;
-	}
-
-	public void setEtudiantNoteUtilisateurNom(String etudiantNoteUtilisateurNom) {
-		this.etudiantNoteUtilisateurNom = etudiantNoteUtilisateurNom;
-	}
-
-	public String getEtudiantNoteUtilisateurPrenom() {
-		return etudiantNoteUtilisateurPrenom;
-	}
-
-	public void setEtudiantNoteUtilisateurPrenom(String etudiantNoteUtilisateurPrenom) {
-		this.etudiantNoteUtilisateurPrenom = etudiantNoteUtilisateurPrenom;
-	}
-
+	/**
+	 * @return the noteObtenue
+	 */
 	public double getNoteObtenue() {
 		return noteObtenue;
 	}
 
+	/**
+	 * @param noteObtenue the noteObtenue to set
+	 */
 	public void setNoteObtenue(double noteObtenue) {
 		this.noteObtenue = noteObtenue;
 	}
 
+	/**
+	 * @return the satisfaction
+	 */
 	public Satisfaction getSatisfaction() {
 		return satisfaction;
 	}
 
+	/**
+	 * @param satisfaction the satisfaction to set
+	 */
 	public void setSatisfaction(Satisfaction satisfaction) {
 		this.satisfaction = satisfaction;
 	}
 
+	/**
+	 * @return the etudiantNoteId
+	 */
 	public long getEtudiantNoteId() {
 		return etudiantNoteId;
 	}
 
+	/**
+	 * @param etudiantNoteId the etudiantNoteId to set
+	 */
 	public void setEtudiantNoteId(long etudiantNoteId) {
 		this.etudiantNoteId = etudiantNoteId;
 	}
 
+	/**
+	 * @return the examenId
+	 */
 	public long getExamenId() {
 		return examenId;
 	}
 
+	/**
+	 * @param examenId the examenId to set
+	 */
 	public void setExamenId(long examenId) {
 		this.examenId = examenId;
 	}
 
-//	public int getNoteObtenu() {
-//		return noteObtenu;
-//	}
-//
-//	public void setNoteObtenu(int noteObtenu) {
-//		this.noteObtenu = noteObtenu;
-//	}
-//
-//	public String getObservations() {
-//		return observations;
-//	}
-//
-//	public void setObservations(String observations) {
-//		this.observations = observations;
-//	}
-//
-//	public EtudiantDto getEtudiantDto() {
-//		return etudiantDto;
-//	}
-//
-//	public void setEtudiantDto(EtudiantDto etudiantDto) {
-//		this.etudiantDto = etudiantDto;
-//	}
-//
-//	public PassageExamenDto getExamenDto() {
-//		return examenDto;
-//	}
-//
-//	public void setExamenDto(PassageExamenDto examenDto) {
-//		this.examenDto = examenDto;
-//	}
-//
-//	public DevoirDto getDevoirDto() {
-//		return devoirDto;
-//	}
-//
-//	public void setDevoirDto(DevoirDto devoirDto) {
-//		this.devoirDto = devoirDto;
-//	}
+	/**
+	 * @return the etudiantNoteUtilisateurNom
+	 */
+	public String getEtudiantNoteUtilisateurNom() {
+		return etudiantNoteUtilisateurNom;
+	}
+
+	/**
+	 * @param etudiantNoteUtilisateurNom the etudiantNoteUtilisateurNom to set
+	 */
+	public void setEtudiantNoteUtilisateurNom(String etudiantNoteUtilisateurNom) {
+		this.etudiantNoteUtilisateurNom = etudiantNoteUtilisateurNom;
+	}
+
+	/**
+	 * @return the etudiantNoteUtilisateurPrenom
+	 */
+	public String getEtudiantNoteUtilisateurPrenom() {
+		return etudiantNoteUtilisateurPrenom;
+	}
+
+	/**
+	 * @param etudiantNoteUtilisateurPrenom the etudiantNoteUtilisateurPrenom to set
+	 */
+	public void setEtudiantNoteUtilisateurPrenom(String etudiantNoteUtilisateurPrenom) {
+		this.etudiantNoteUtilisateurPrenom = etudiantNoteUtilisateurPrenom;
+	}
 
 }

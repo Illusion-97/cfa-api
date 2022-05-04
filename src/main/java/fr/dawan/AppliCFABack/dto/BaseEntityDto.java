@@ -11,6 +11,7 @@ import javax.persistence.Version;
  * @see fr.dawan.appliCfaBack.entities
  * @since 1.0
  * @version 1.0
+ * @Return classe de factorisation des DTO pour leur ID & version, avec getters & setters
  *
  */
 public abstract class BaseEntityDto {

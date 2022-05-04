@@ -70,7 +70,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 				eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
 				etudiantsDto.add(eDto);
 			}
-			gDto.setEtudiants(etudiantsDto);
+			gDto.setEtudiantsDto(etudiantsDto);
 			lstDto.add(gDto);
 		}
 		return lstDto;
@@ -100,7 +100,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 			eDto.setPromotionsDto(pDtos);
 			etudiantsDto.add(eDto);
 		}
-		gDto.setEtudiants(etudiantsDto);
+		gDto.setEtudiantsDto(etudiantsDto);
 		
 		return gDto;
 	}
