@@ -180,7 +180,7 @@ public class PromotionServiceImpl implements PromotionService {
 		List<Promotion> promo = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<PromotionDto>();
 		for (Promotion p : promo) {
-			res.add(mapper.PromotionToPromotionDto(p));
+			res.add(DtoTools.convert(p, PromotionDto.class));
 		}
 		return res;
 	}
