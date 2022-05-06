@@ -3,7 +3,9 @@ package fr.dawan.AppliCFABack.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import fr.dawan.AppliCFABack.dto.NoteControleContinuDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -110,5 +112,13 @@ public class NoteController {
 	public NoteDtoToSave update(@RequestBody NoteDtoToSave nDto) {
 		return noteService.saveOrUpdate(nDto);
 	}
+
+	//getnoteetudiant
+
+	@GetMapping(value = "/note-etudiant/{id}", produces = "application/json")
+	public List<NoteControleContinuDto> getNotesByIdEtudiant(@PathVariable("id") long id) throws Exception {
+		return noteService.getNotesByIdEtudiant(id);
+	}
+
 
 }

@@ -7,14 +7,11 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -29,6 +26,9 @@ public class NoteServiceImpl implements NoteService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+
+	@Autowired
+	private DtoTools _mapper;
 
 	//recuperation de la liste des notes
 	@Override
@@ -122,6 +122,18 @@ public class NoteServiceImpl implements NoteService {
 		}
 		return result;
 		
+	}
+
+	@Override
+	public List<NoteControleContinuDto> getNotesByIdEtudiant(long id) throws Exception {
+		List<NoteControleContinuDto> result = new ArrayList<>();
+		List<Note> list = noteRepository.findAllByEtudiantNoteId(id);
+		for(Note n : list) {
+			//result.add(_mapper.NoteToNoteControleContinuDto(n));
+			result.add(DtoTools.convert(n, NoteControleContinuDto.class));
+		}
+		return result;
+
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
@@ -69,4 +70,5 @@ public interface EtudiantService {
 	List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size);
 
 	List<AbsenceDto> getAbsencesByIdEtudiant(long id, int page, int size);
+
 }

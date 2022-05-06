@@ -9,6 +9,7 @@ public class FormateurDto{
 	private EntrepriseDto entrepriseDto;
 	
 	public FormateurDto() {
+		super();
 	}
 	
 	public long getId() {

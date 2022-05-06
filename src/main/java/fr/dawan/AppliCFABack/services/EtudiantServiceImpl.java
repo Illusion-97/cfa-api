@@ -5,8 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -24,6 +26,8 @@ import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
@@ -37,6 +41,8 @@ import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Examen;
+import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Note;
@@ -49,6 +55,7 @@ import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.ContratRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.ExamenRepository;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
@@ -61,117 +68,119 @@ import fr.dawan.AppliCFABack.tools.HashTools;
 @Transactional
 public class EtudiantServiceImpl implements EtudiantService {
 
-	@Autowired
-	EtudiantRepository etudiantRepository;
+    @Autowired
+    EtudiantRepository etudiantRepository;
 
-	@Autowired
-	UtilisateurRepository utilisateurRepository;
+    @Autowired
+    UtilisateurRepository utilisateurRepository;
 
-	@Autowired
-	NoteRepository noteRepository;
+    @Autowired
+    NoteRepository noteRepository;
 
-	@Autowired
-	AbsenceRepository absenceRepository;
+    @Autowired
+    AbsenceRepository absenceRepository;
 
-	@Autowired
-	InterventionRepository interventionRepository;
+    @Autowired
+    InterventionRepository interventionRepository;
 
-	@Autowired
-	GroupeEtudiantRepository groupeEtudiantRepository;
+    @Autowired
+    GroupeEtudiantRepository groupeEtudiantRepository;
 
-	@Autowired
-	PromotionRepository promotionRepository;
+    @Autowired
+    PromotionRepository promotionRepository;
 
-	@Autowired
-	FormateurRepository formateurRepository;
+    @Autowired
+    FormateurRepository formateurRepository;
 
-	@Autowired
-	JourneePlanningService journeePlanningService;
+    @Autowired
+    JourneePlanningService journeePlanningService;
 
-	@Autowired
-	DevoirRepository devoirRepository;
-	
-	@Autowired
-	ContratRepository contratRepository;
-	
-	@Autowired
-	private DtoMapper mapper = new DtoMapperImpl();
+    @Autowired
+    DevoirRepository devoirRepository;
 
-	// ##################################################
-	// # CRUD #
-	// ##################################################
+    @Autowired
+    ContratRepository contratRepository;
 
-	//recuperation de la liste des etudiants
-	@Override
-	public List<EtudiantDto> getAll() {
-		List<Etudiant> lst = etudiantRepository.findAll();
-		List<EtudiantDto> res = new ArrayList<EtudiantDto>();
+    @Autowired
+    ExamenRepository examenRepository;
 
-		for (Etudiant e : lst) {
-			EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(e);
-			
-			UtilisateurDto Utilisateur = mapper.UtilisateurToUtilisateurDto(e.getUtilisateur());
-			etuDto.setUtilisateurDto(Utilisateur);
-			
-			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getUtilisateur().getAdresse());
+    @Autowired
+    private DtoMapper mapper = new DtoMapperImpl();
+
+    // ##################################################
+    // # CRUD #
+    // ##################################################
+
+    //recuperation de la liste des etudiants
+    @Override
+    public List<EtudiantDto> getAll() {
+        List<Etudiant> lst = etudiantRepository.findAll();
+        List<EtudiantDto> res = new ArrayList<EtudiantDto>();
+
+        for (Etudiant e : lst) {
+            EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(e);
+
+            UtilisateurDto Utilisateur = mapper.UtilisateurToUtilisateurDto(e.getUtilisateur());
+            etuDto.setUtilisateurDto(Utilisateur);
+
+            AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getUtilisateur().getAdresse());
 //			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
 
 
-			
-			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
-			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<GroupeEtudiantDto>();
-			for (GroupeEtudiant grp : lstGrpEtu) {
-				if (grp != null)
-					lstGrpEtuDto.add(mapper.GroupeEtudiantToGroupEtudiantDto(grp));
-			}
+            List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
+            List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<GroupeEtudiantDto>();
+            for (GroupeEtudiant grp : lstGrpEtu) {
+                if (grp != null)
+                    lstGrpEtuDto.add(mapper.GroupeEtudiantToGroupEtudiantDto(grp));
+            }
 
-			List<Promotion> lstPromo = e.getPromotions();
-			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
-			for (Promotion promotion : lstPromo) {
-				/** On convertis List<Promotion> en List<PromotionDto> **/
-				if (promotion != null)
-					lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
-			}
-			List<DossierProjet> lstDossierProjet = e.getDossierProjet();
-			List<DossierProjetDto> lstDossierProjetDto = new ArrayList<DossierProjetDto>();
-			for (DossierProjet dp : lstDossierProjet) {
-				DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
-				dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
-				lstDossierProjetDto.add(dpdto);
-		
-			}
-			
-			List<UtilisateurRoleDto> URDto = new ArrayList<UtilisateurRoleDto>();
-			for (UtilisateurRole r : e.getUtilisateur().getRoles()) {
-				URDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
-			}
-			
-			etuDto.getUtilisateurDto().setRolesDto(URDto);
-			
-			List<DossierProfessionnel>lstDossierProfessionnel = e.getDossierProfessionnel();
-			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
-			for(DossierProfessionnel dp : lstDossierProfessionnel) {
-				DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-				dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
-				lstDossierProfessionnelDto.add(dpDto);
-			}
-				
+            List<Promotion> lstPromo = e.getPromotions();
+            List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
+            for (Promotion promotion : lstPromo) {
+                /** On convertis List<Promotion> en List<PromotionDto> **/
+                if (promotion != null)
+                    lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
+            }
+            List<DossierProjet> lstDossierProjet = e.getDossierProjet();
+            List<DossierProjetDto> lstDossierProjetDto = new ArrayList<DossierProjetDto>();
+            for (DossierProjet dp : lstDossierProjet) {
+                DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
+                dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
+                lstDossierProjetDto.add(dpdto);
+
+            }
+
+            List<UtilisateurRoleDto> URDto = new ArrayList<UtilisateurRoleDto>();
+            for (UtilisateurRole r : e.getUtilisateur().getRoles()) {
+                URDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
+            }
+
+            etuDto.getUtilisateurDto().setRolesDto(URDto);
+
+            List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
+            List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
+            for (DossierProfessionnel dp : lstDossierProfessionnel) {
+                DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
+                dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
+                lstDossierProfessionnelDto.add(dpDto);
+            }
+
 
 //			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 
-			etuDto.getUtilisateurDto().setAdresseDto(addrDto);
-			etuDto.setGroupesDto(lstGrpEtuDto);
+            etuDto.getUtilisateurDto().setAdresseDto(addrDto);
+            etuDto.setGroupesDto(lstGrpEtuDto);
 //			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
-			etuDto.setPromotionsDto(lstPromoDto);
+            etuDto.setPromotionsDto(lstPromoDto);
 //			etuDto.setFormateurReferentDto(refDto);
-			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
-			etuDto.setDossierProjet(lstDossierProjetDto);
+            etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
+            etuDto.setDossierProjet(lstDossierProjetDto);
 
-			res.add(etuDto);
-		}
+            res.add(etuDto);
+        }
 
-		return res;
-	}
+        return res;
+    }
 
 //	@Override
 //	public List<EtudiantDto> getAllByPage(int page, int size, String search) {
@@ -197,108 +206,107 @@ public class EtudiantServiceImpl implements EtudiantService {
 //		return new CountDto(etudiantRepository.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search, search, search));
 //	}
 
-	//recuperation des etudiants par id
-	@Override
-	public EtudiantDto getById(long id) {
-		Optional<Etudiant> e = etudiantRepository.findById(id);
+    //recuperation des etudiants par id
+    @Override
+    public EtudiantDto getById(long id) {
+        Optional<Etudiant> e = etudiantRepository.findById(id);
 
-		if (!e.isPresent()) return null;
-		
-		EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e.get());
-		
-		eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.get().getUtilisateur()));
-		eDto.getUtilisateurDto().setAdresseDto(mapper.AdresseToAdresseDto(e.get().getUtilisateur().getAdresse()));
+        if (!e.isPresent()) return null;
+
+        EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e.get());
+
+        eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.get().getUtilisateur()));
+        eDto.getUtilisateurDto().setAdresseDto(mapper.AdresseToAdresseDto(e.get().getUtilisateur().getAdresse()));
 //		eDto.setFormateurReferentDto(mapper.UtilisateurToUtilisateurDto(e.get().getFormateurReferent()));
 //		eDto.setManagerDto(mapper.UtilisateurToUtilisateurDto(e.get().getManager()));
 
-		List<GroupeEtudiantDto> groupes = new ArrayList<GroupeEtudiantDto>();
-		for(GroupeEtudiant g : e.get().getGroupes()) {
-			groupes.add(mapper.GroupeEtudiantToGroupEtudiantDto(g));
-		}		
-		eDto.setGroupesDto(groupes);
-		
-		List<UtilisateurRoleDto> URDto = new ArrayList<UtilisateurRoleDto>();
-		for (UtilisateurRole r : e.get().getUtilisateur().getRoles()) {
-			URDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
-		}
-		eDto.getUtilisateurDto().setRolesDto(URDto);
-		
-		List<PromotionDto> promotions = new ArrayList<PromotionDto>();
-		for(Promotion p : e.get().getPromotions()) {
-			PromotionDto pDto = mapper.PromotionToPromotionDto(p);
-			List<InterventionDto> lstIDto = new ArrayList<>();
-			for (Intervention i : p.getInterventions()) {
-				InterventionDto iDto = mapper.InterventionToInterventionDto(i);
-				lstIDto.add(iDto);
-			}
-			pDto.setInterventionsDto(lstIDto);
-			promotions.add(pDto);
-		}
-		eDto.setPromotionsDto(promotions);
-		List<DossierProjet> lstDossierProjet = e.get().getDossierProjet();
-		List<DossierProjetDto> lstDossierProjetDto = new ArrayList<DossierProjetDto>();
-		for (DossierProjet dp : lstDossierProjet) {
-			DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
-			dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
-			lstDossierProjetDto.add(dpdto);
-		}
-		List<DossierProfessionnel>lstDossierProfessionnel = e.get().getDossierProfessionnel();
-		List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
-		for(DossierProfessionnel dp : lstDossierProfessionnel) {
-			DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-			dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
-			lstDossierProfessionnelDto.add(dpDto);
-		}
-		eDto.setDossierProfessionnel(lstDossierProfessionnelDto);
-		eDto.setDossierProjet(lstDossierProjetDto);
-		
-		
-		return eDto;
-	}
+        List<GroupeEtudiantDto> groupes = new ArrayList<GroupeEtudiantDto>();
+        for (GroupeEtudiant g : e.get().getGroupes()) {
+            groupes.add(mapper.GroupeEtudiantToGroupEtudiantDto(g));
+        }
+        eDto.setGroupesDto(groupes);
 
-	//methode d'ajout ou modification d'un etudiant
-	@Override
-	public EtudiantDto saveOrUpdate(EtudiantDto e) {
-		Etudiant etudiant = DtoTools.convert(e, Etudiant.class);		
+        List<UtilisateurRoleDto> URDto = new ArrayList<UtilisateurRoleDto>();
+        for (UtilisateurRole r : e.get().getUtilisateur().getRoles()) {
+            URDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
+        }
+        eDto.getUtilisateurDto().setRolesDto(URDto);
 
-		if(etudiant.getUtilisateur() != null) {
-			//HashTools throw Exception
-			try {
-				//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-				if(etudiant.getUtilisateur().getId() == 0) {
-					etudiant.getUtilisateur().setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
-				}else {
-					//Si on a modifié le mdp
-					Etudiant etudiantInDB = etudiantRepository.getOne(etudiant.getId());
-					if(!etudiantInDB.getUtilisateur().getPassword().equals(etudiant.getUtilisateur().getPassword())) {
-						etudiant.getUtilisateur().setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
-		            }
-				}	
-			}catch (Exception ex) {
-	            ex.printStackTrace();
-	        }
-			
-			//Pour le dossier
-			Path path = Paths.get("./src/main/resources/files/utilisateurs/" + etudiant.getUtilisateur().getId());
+        List<PromotionDto> promotions = new ArrayList<PromotionDto>();
+        for (Promotion p : e.get().getPromotions()) {
+            PromotionDto pDto = mapper.PromotionToPromotionDto(p);
+            List<InterventionDto> lstIDto = new ArrayList<>();
+            for (Intervention i : p.getInterventions()) {
+                InterventionDto iDto = mapper.InterventionToInterventionDto(i);
+                lstIDto.add(iDto);
+            }
+            pDto.setInterventionsDto(lstIDto);
+            promotions.add(pDto);
+        }
+        eDto.setPromotionsDto(promotions);
+        List<DossierProjet> lstDossierProjet = e.get().getDossierProjet();
+        List<DossierProjetDto> lstDossierProjetDto = new ArrayList<DossierProjetDto>();
+        for (DossierProjet dp : lstDossierProjet) {
+            DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
+            dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
+            lstDossierProjetDto.add(dpdto);
+        }
+        List<DossierProfessionnel> lstDossierProfessionnel = e.get().getDossierProfessionnel();
+        List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
+        for (DossierProfessionnel dp : lstDossierProfessionnel) {
+            DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
+            dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
+            lstDossierProfessionnelDto.add(dpDto);
+        }
+        eDto.setDossierProfessionnel(lstDossierProfessionnelDto);
+        eDto.setDossierProjet(lstDossierProjetDto);
 
-			try {
-				Files.createDirectories(path);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-		
-		
-		etudiant = etudiantRepository.saveAndFlush(etudiant);
-	
-		
 
-		return mapper.EtudiantToEtudiantDto(etudiant);
-	}
+        return eDto;
+    }
 
-	//methode de suppression d'un etudiant
-	@Override
-	public void deleteById(long id) {
+    //methode d'ajout ou modification d'un etudiant
+    @Override
+    public EtudiantDto saveOrUpdate(EtudiantDto e) {
+        Etudiant etudiant = DtoTools.convert(e, Etudiant.class);
+
+        if (etudiant.getUtilisateur() != null) {
+            //HashTools throw Exception
+            try {
+                //Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+                if (etudiant.getUtilisateur().getId() == 0) {
+                    etudiant.getUtilisateur().setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
+                } else {
+                    //Si on a modifié le mdp
+                    Etudiant etudiantInDB = etudiantRepository.getOne(etudiant.getId());
+                    if (!etudiantInDB.getUtilisateur().getPassword().equals(etudiant.getUtilisateur().getPassword())) {
+                        etudiant.getUtilisateur().setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            //Pour le dossier
+            Path path = Paths.get("./src/main/resources/files/utilisateurs/" + etudiant.getUtilisateur().getId());
+
+            try {
+                Files.createDirectories(path);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+
+        etudiant = etudiantRepository.saveAndFlush(etudiant);
+
+
+        return mapper.EtudiantToEtudiantDto(etudiant);
+    }
+
+    //methode de suppression d'un etudiant
+    @Override
+    public void deleteById(long id) {
 
 //		Etudiant etudiant = getEtudiantById(id);
 
@@ -373,75 +381,75 @@ public class EtudiantServiceImpl implements EtudiantService {
 //		// Les liens sont tous supprimés : on peut supprimé l'étudiant
 //
 //		etudiantRepository.delete(etudiant);
-	}
+    }
 
-	// ##################################################
-	// # 1er Niveau #
-	// ##################################################
+    // ##################################################
+    // # 1er Niveau #
+    // ##################################################
 
-	//recuperartion des promo par id etudiant
-	@Override
-	public List<PromotionDto> getPromotionsByIdEtudiant(long id) {
-		List<Promotion> lst = getEtudiantById(id).getPromotions();
-		List<PromotionDto> lstDto = new ArrayList<PromotionDto>();
+    //recuperartion des promo par id etudiant
+    @Override
+    public List<PromotionDto> getPromotionsByIdEtudiant(long id) {
+        List<Promotion> lst = getEtudiantById(id).getPromotions();
+        List<PromotionDto> lstDto = new ArrayList<PromotionDto>();
 
-		for (Promotion p : lst) {
-			// Quand on convertit en Dto, on perd les objets contenu
-			// On récupère le referent pedagogiue que l'on redonne a promotionDto
+        for (Promotion p : lst) {
+            // Quand on convertit en Dto, on perd les objets contenu
+            // On récupère le referent pedagogiue que l'on redonne a promotionDto
 
-			UtilisateurDto referentPedagogique = mapper.UtilisateurToUtilisateurDto(p.getReferentPedagogique());
-			PromotionDto promotion = mapper.PromotionToPromotionDto(p);
+            UtilisateurDto referentPedagogique = mapper.UtilisateurToUtilisateurDto(p.getReferentPedagogique());
+            PromotionDto promotion = mapper.PromotionToPromotionDto(p);
 
-			promotion.setReferentPedagogiqueDto(referentPedagogique);
+            promotion.setReferentPedagogiqueDto(referentPedagogique);
 
-			lstDto.add(promotion);
-		}
+            lstDto.add(promotion);
+        }
 
-		return lstDto;
-	}
+        return lstDto;
+    }
 
-	//recuperation des groupes par id etudiant
-	@Override
-	public List<GroupeEtudiantDto> getGroupesByIdEtudiant(long id) {
-		List<GroupeEtudiant> lst = getEtudiantById(id).getGroupes();
-		List<GroupeEtudiantDto> lstDto = new ArrayList<GroupeEtudiantDto>();
-		for (GroupeEtudiant g : lst) {
-			GroupeEtudiantDto gDto = mapper.GroupeEtudiantToGroupEtudiantDto(g);
-			List<EtudiantDto> eDtos = new ArrayList<EtudiantDto>();
-			for(Etudiant e : g.getEtudiants()) {
-				EtudiantDto etudiantDto = mapper.EtudiantToEtudiantDto(e);
-				etudiantDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
-				eDtos.add(etudiantDto);
-			}
-			gDto.setEtudiants(eDtos);
-			lstDto.add(gDto);
-		}
+    //recuperation des groupes par id etudiant
+    @Override
+    public List<GroupeEtudiantDto> getGroupesByIdEtudiant(long id) {
+        List<GroupeEtudiant> lst = getEtudiantById(id).getGroupes();
+        List<GroupeEtudiantDto> lstDto = new ArrayList<GroupeEtudiantDto>();
+        for (GroupeEtudiant g : lst) {
+            GroupeEtudiantDto gDto = mapper.GroupeEtudiantToGroupEtudiantDto(g);
+            List<EtudiantDto> eDtos = new ArrayList<EtudiantDto>();
+            for (Etudiant e : g.getEtudiants()) {
+                EtudiantDto etudiantDto = mapper.EtudiantToEtudiantDto(e);
+                etudiantDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
+                eDtos.add(etudiantDto);
+            }
+            gDto.setEtudiants(eDtos);
+            lstDto.add(gDto);
+        }
 
-		return lstDto;
-	}
+        return lstDto;
+    }
 
-	//recuperation des entreprises par id etudiant
-	@Override
-	public EntrepriseDto getEntrepriseByIdEtudiant(long id) {
-		//ATTENTION : L'etudiant a potentiellement une liste de contrat => une liste d'entreprise
-		Contrat contrat = contratRepository.findByEtudiantId(id);
-		return mapper.EntrepriseToEntrepriseDto(contrat.getMaitreApprentissage().getEntreprise());
-	}
+    //recuperation des entreprises par id etudiant
+    @Override
+    public EntrepriseDto getEntrepriseByIdEtudiant(long id) {
+        //ATTENTION : L'etudiant a potentiellement une liste de contrat => une liste d'entreprise
+        Contrat contrat = contratRepository.findByEtudiantId(id);
+        return mapper.EntrepriseToEntrepriseDto(contrat.getMaitreApprentissage().getEntreprise());
+    }
 
-	//recuperation des adresses par id etudiant
-	@Override
-	public AdresseDto getAdresseByIdEtudiant(long id) {
-		return mapper.AdresseToAdresseDto(getEtudiantById(id).getUtilisateur().getAdresse());
-	}
+    //recuperation des adresses par id etudiant
+    @Override
+    public AdresseDto getAdresseByIdEtudiant(long id) {
+        return mapper.AdresseToAdresseDto(getEtudiantById(id).getUtilisateur().getAdresse());
+    }
 
-	// ##################################################
-	// # 2eme Niveau #
-	// ##################################################
+    // ##################################################
+    // # 2eme Niveau #
+    // ##################################################
 
-	
-	//recuperation des notes par id etudiants + pagination
-	@Override
-	public List<NoteDto> getNotesByIdEtudiant(long id, int page, int size) {
+
+    //recuperation des notes par id etudiants + pagination
+    @Override
+    public List<NoteDto> getNotesByIdEtudiant(long id, int page, int size) {
 //		List<Note> lst = noteRepository.getNotesByIdEtudiant(id, PageRequest.of(page, size)).get()
 //				.collect(Collectors.toList());
 //		List<NoteDto> res = new ArrayList<NoteDto>();
@@ -457,117 +465,117 @@ public class EtudiantServiceImpl implements EtudiantService {
 //		}
 //		
 
-		return null;
-	}
+        return null;
+    }
 
-	//recuperation des notes par id etudiants
-	public List<NoteDto> getNotesByIdEtudiant(long id) {
+    //recuperation des notes par id etudiants
+    public List<NoteDto> getNotesByIdEtudiant(long id) {
 //		List<Note> lst = noteRepository.getNotesByIdEtudiant(id);
 //		List<NoteDto> res = new ArrayList<NoteDto>();
 //
 //		for (Note n : lst)
 //			res.add(mapper.NoteToNoteDto(n));
 
-		return null;
-	}
+        return null;
+    }
 
-	//recuperation des absences par id etudiants
-	@Override
-	public List<AbsenceDto> getAbsencesByIdEtudiant(long id) {
-		List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id);
-		List<AbsenceDto> res = new ArrayList<AbsenceDto>();
+    //recuperation des absences par id etudiants
+    @Override
+    public List<AbsenceDto> getAbsencesByIdEtudiant(long id) {
+        List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id);
+        List<AbsenceDto> res = new ArrayList<AbsenceDto>();
 
-		for (Absence n : lst)
-			res.add(mapper.AbsenceToAbsenceDto(n));
+        for (Absence n : lst)
+            res.add(mapper.AbsenceToAbsenceDto(n));
 
-		return res;
-	}
+        return res;
+    }
 
-	//recuperation des absences par id etudiants + pagination
-	@Override
-	public List<AbsenceDto> getAbsencesByIdEtudiant(long id, int page, int size) {
-		List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id, PageRequest.of(page, size)).get()
-				.collect(Collectors.toList());
-		List<AbsenceDto> res = new ArrayList<AbsenceDto>();
+    //recuperation des absences par id etudiants + pagination
+    @Override
+    public List<AbsenceDto> getAbsencesByIdEtudiant(long id, int page, int size) {
+        List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id, PageRequest.of(page, size)).get()
+                .collect(Collectors.toList());
+        List<AbsenceDto> res = new ArrayList<AbsenceDto>();
 
-		for (Absence n : lst)
-			res.add(mapper.AbsenceToAbsenceDto(n));
+        for (Absence n : lst)
+            res.add(mapper.AbsenceToAbsenceDto(n));
 
-		return res;
-	}
+        return res;
+    }
 
-	// ##################################################
-	// # 3eme Niveau #
-	// ##################################################
+    // ##################################################
+    // # 3eme Niveau #
+    // ##################################################
 
-	
-	//recuperation des interventions par id etudiants 
-	@Override
-	public List<InterventionDto> getIntervenionByIdEtudiant(long id) {
-		List<Intervention> interventions = new ArrayList<Intervention>();
-		List<InterventionDto> res = new ArrayList<InterventionDto>();
 
-		for (Promotion p : getEtudiantById(id).getPromotions())
-			interventions.addAll(interventionRepository.getInterventionsByIdPromotion(p.getId()));
+    //recuperation des interventions par id etudiants
+    @Override
+    public List<InterventionDto> getIntervenionByIdEtudiant(long id) {
+        List<Intervention> interventions = new ArrayList<Intervention>();
+        List<InterventionDto> res = new ArrayList<InterventionDto>();
 
-		for (Intervention i : interventions)
-			res.add(mapper.InterventionToInterventionDto(i));
+        for (Promotion p : getEtudiantById(id).getPromotions())
+            interventions.addAll(interventionRepository.getInterventionsByIdPromotion(p.getId()));
 
-		return res;
-	}
+        for (Intervention i : interventions)
+            res.add(mapper.InterventionToInterventionDto(i));
 
-	// ##################################################
-	// # UTILE #
-	// ##################################################
+        return res;
+    }
 
-	//recuperation des etudiants par id etudiants 
-	private Etudiant getEtudiantById(long id) {
-		Optional<Etudiant> e = etudiantRepository.findById(id);
+    // ##################################################
+    // # UTILE #
+    // ##################################################
 
-		if (e.isPresent()) 
-			return e.get();
+    //recuperation des etudiants par id etudiants
+    private Etudiant getEtudiantById(long id) {
+        Optional<Etudiant> e = etudiantRepository.findById(id);
 
-		return null;
-	}
+        if (e.isPresent())
+            return e.get();
 
-	//recuperation du planning par id etudiants 
-	@Override
-	public List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id) {
-		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
+        return null;
+    }
 
-		List<Intervention> interventions = new ArrayList<Intervention>();
+    //recuperation du planning par id etudiants
+    @Override
+    public List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id) {
+        List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
 
-		//On récupère l'étudiant
-		Etudiant e = getEtudiantById(id);
+        List<Intervention> interventions = new ArrayList<Intervention>();
 
-		List<Promotion> promotions = e.getPromotions();
+        //On récupère l'étudiant
+        Etudiant e = getEtudiantById(id);
 
-		//on récupère toutes les interventions de l'étudiant.
-		for (Promotion p : promotions)
-			interventions.addAll(interventionRepository.getInterventionsByIdPromotion(p.getId()));
+        List<Promotion> promotions = e.getPromotions();
 
-		//pour chaque intervention, on récupère les JourneePlannignDto
-		for (Intervention i : interventions)
-			result.addAll(journeePlanningService.getJourneePlanningFromIntervention(i));
+        //on récupère toutes les interventions de l'étudiant.
+        for (Promotion p : promotions)
+            interventions.addAll(interventionRepository.getInterventionsByIdPromotion(p.getId()));
 
-		return result;
-	}
+        //pour chaque intervention, on récupère les JourneePlannignDto
+        for (Intervention i : interventions)
+            result.addAll(journeePlanningService.getJourneePlanningFromIntervention(i));
 
-	//recuperation du formateur referent par id etudiants 
-	@Override
-	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
-		Contrat contrat = contratRepository.findByEtudiantId(id);
-		return mapper.UtilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
-	}
+        return result;
+    }
+
+    //recuperation du formateur referent par id etudiants
+    @Override
+    public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
+        Contrat contrat = contratRepository.findByEtudiantId(id);
+        return mapper.UtilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
+    }
 
 //	@Override
 //	public UtilisateurDto getManagerByIdEtudiant(long id) {
 //		return mapper.UtilisateurToUtilisateurDto(getEtudiantById(id).getManager());
 //	}
 
-	//recuperation des devoirs par id etudiants + pagination
-	@Override
-	public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
+    //recuperation des devoirs par id etudiants + pagination
+    @Override
+    public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
 
 //		List<DevoirDto> lstdDto =  new ArrayList<DevoirDto>();
 //		EtudiantDto eDto = getById(id);
@@ -587,92 +595,91 @@ public class EtudiantServiceImpl implements EtudiantService {
 //		}
 //		
 //		return lstdDto;
-		
-		List<Devoir> lst = devoirRepository.findAllByInterventionPromotionsEtudiantsId(id, PageRequest.of(page, size)).get().collect(Collectors.toList());
-		List<DevoirDto> res = new ArrayList<DevoirDto>();
-		
-		for(Devoir d : lst) {
-			DevoirDto dDto = mapper.DevoirToDevoirDto(d);			
-			dDto.setInterventionDto(mapper.InterventionToInterventionDto(d.getIntervention()));
-			dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(d.getIntervention().getFormation()));			
-			res.add(dDto);
-		}
-		
-		return res;
-	}
 
-	//methode count
-	@Override
-	public CountDto count(String search) {
-		// TODO Auto-generated method stub
-		return new CountDto(etudiantRepository
-				.countDistinctByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContaining(
-						search, search, search, search));
-	}
+        List<Devoir> lst = devoirRepository.findAllByInterventionPromotionsEtudiantsId(id, PageRequest.of(page, size)).get().collect(Collectors.toList());
+        List<DevoirDto> res = new ArrayList<DevoirDto>();
 
-	//recuperation de la liste des etudiants avec pagination et recherche
-	@Override
-	public List<EtudiantDto> getAllByPage(int page, int size, String search) {
-		List<Etudiant> lstStud = etudiantRepository
-				.findDistinctAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContaining(
-						search, search, search, search, PageRequest.of(page, size))
-				.get().collect(Collectors.toList());
-		List<EtudiantDto> res = new ArrayList<EtudiantDto>();
+        for (Devoir d : lst) {
+            DevoirDto dDto = mapper.DevoirToDevoirDto(d);
+            dDto.setInterventionDto(mapper.InterventionToInterventionDto(d.getIntervention()));
+            dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(d.getIntervention().getFormation()));
+            res.add(dDto);
+        }
 
-		for (Etudiant e : lstStud) {
-			EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(e);
-			UtilisateurDto pDto =  mapper.UtilisateurToUtilisateurDto(e.getUtilisateur());
-			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getUtilisateur().getAdresse());
+        return res;
+    }
+
+    //methode count
+    @Override
+    public CountDto count(String search) {
+        // TODO Auto-generated method stub
+        return new CountDto(etudiantRepository
+                .countDistinctByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContaining(
+                        search, search, search, search));
+    }
+
+    //recuperation de la liste des etudiants avec pagination et recherche
+    @Override
+    public List<EtudiantDto> getAllByPage(int page, int size, String search) {
+        List<Etudiant> lstStud = etudiantRepository
+                .findDistinctAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContaining(
+                        search, search, search, search, PageRequest.of(page, size))
+                .get().collect(Collectors.toList());
+        List<EtudiantDto> res = new ArrayList<EtudiantDto>();
+
+        for (Etudiant e : lstStud) {
+            EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(e);
+            UtilisateurDto pDto = mapper.UtilisateurToUtilisateurDto(e.getUtilisateur());
+            AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getUtilisateur().getAdresse());
 //			EntrepriseDto entDto =mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
 //			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 //			UtilisateurDto managDto = mapper.UtilisateurToUtilisateurDto(e.getManager());
 
-			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
-			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<GroupeEtudiantDto>();
-			for (GroupeEtudiant grp : lstGrpEtu) {
-				if (grp != null)
-					lstGrpEtuDto.add(mapper.GroupeEtudiantToGroupEtudiantDto(grp));
-			}
+            List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
+            List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<GroupeEtudiantDto>();
+            for (GroupeEtudiant grp : lstGrpEtu) {
+                if (grp != null)
+                    lstGrpEtuDto.add(mapper.GroupeEtudiantToGroupEtudiantDto(grp));
+            }
 
-			List<Promotion> lstPromo = e.getPromotions();
-			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
-			for (Promotion promotion : lstPromo) {
-				/** On convertis List<Promotion> en List<PromotionDto> **/
-				if (promotion != null)
-					lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
-			}
-			List<DossierProjet> lstDossierProjet = e.getDossierProjet();
-			List<DossierProjetDto> lstDossierProjetDto = new ArrayList<DossierProjetDto>();
-			for (DossierProjet dp : lstDossierProjet) {
-				DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
-				dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
-				lstDossierProjetDto.add(dpdto);
-		
-			}
-			List<DossierProfessionnel>lstDossierProfessionnel = e.getDossierProfessionnel();
-			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
-			for(DossierProfessionnel dp : lstDossierProfessionnel) {
-				DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-				dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
-				lstDossierProfessionnelDto.add(dpDto);
-			}
-			
-			
-			etuDto.setUtilisateurDto(pDto);
-			etuDto.getUtilisateurDto().setAdresseDto(addrDto);
-			etuDto.setGroupesDto(lstGrpEtuDto);
+            List<Promotion> lstPromo = e.getPromotions();
+            List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
+            for (Promotion promotion : lstPromo) {
+                /** On convertis List<Promotion> en List<PromotionDto> **/
+                if (promotion != null)
+                    lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
+            }
+            List<DossierProjet> lstDossierProjet = e.getDossierProjet();
+            List<DossierProjetDto> lstDossierProjetDto = new ArrayList<DossierProjetDto>();
+            for (DossierProjet dp : lstDossierProjet) {
+                DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
+                dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
+                lstDossierProjetDto.add(dpdto);
+
+            }
+            List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
+            List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
+            for (DossierProfessionnel dp : lstDossierProfessionnel) {
+                DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
+                dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
+                lstDossierProfessionnelDto.add(dpDto);
+            }
+
+
+            etuDto.setUtilisateurDto(pDto);
+            etuDto.getUtilisateurDto().setAdresseDto(addrDto);
+            etuDto.setGroupesDto(lstGrpEtuDto);
 //			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
-			etuDto.setPromotionsDto(lstPromoDto);
+            etuDto.setPromotionsDto(lstPromoDto);
 //			etuDto.setFormateurReferentDto(refDto);
 //			etuDto.setManagerDto(managDto);
-			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
-			etuDto.setDossierProjet(lstDossierProjetDto);
-			res.add(etuDto);
-		}
+            etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
+            etuDto.setDossierProjet(lstDossierProjetDto);
+            res.add(etuDto);
+        }
 
-		return res;
-	}
+        return res;
+    }
 
-	
 
 }

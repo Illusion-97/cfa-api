@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import fr.dawan.AppliCFABack.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.PromotionService;
 
 @RestController
@@ -106,5 +103,10 @@ public class PromotionController {
 	@GetMapping(value = "/{id}/etudiants/cursus", produces = "application/json")
 	public List<PromotionDto> getPromotionByEtudiantIdAndByCursusId(@PathVariable("id") long id) {
 		return promoService.getPromotionByEtudiantIdAndByCursusId(id);
+	}
+
+	@GetMapping(value = "/cursus-etudiant/{id}", produces = "application/json")
+	public List<PromotionEtudiantDto> getCursusByIdEtudiant(@PathVariable("id") long id) {
+		return promoService.getCursusByIdEtudiant(id);
 	}
 }

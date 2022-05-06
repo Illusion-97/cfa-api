@@ -30,6 +30,16 @@ public class Formateur{
 		super();
 	}
 
+	public Formateur(long id, Utilisateur utilisateur, Entreprise entreprise, List<Intervention> interventions) {
+		super();
+		this.id = id;
+		this.utilisateur = utilisateur;
+		this.entreprise = entreprise;
+		this.interventions = interventions;
+	}
+
+
+
 	public List<Intervention> getInterventions() {
 		return interventions;
 	}

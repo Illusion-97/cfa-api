@@ -108,9 +108,11 @@ public interface DtoMapper {
 	EtudiantDto EtudiantToEtudiantDto(Etudiant etudiant);
 
 	@Mapping(source = ".", target = ".")
+	@Mapping(source = "promotion.id", target = "promotionId")
 	ExamenDto ExamenToExamenDto(Examen examen);
 
 	@Mapping(source = ".", target = ".")
+	@Mapping(source = "utilisateur", target = "utilisateurDto")
 	FormateurDto FormateurToFormateurDto(Formateur formateur);
 
 	@Mapping(source = ".", target = ".")
@@ -132,6 +134,7 @@ public interface DtoMapper {
 	ProjetDto ProjetToProjetDto(Projet projet);
 
 	@Mapping(source = ".", target = ".")
+	@Mapping(source = "cursus", target = "cursusDto")
 	PromotionDto PromotionToPromotionDto(Promotion promotion);
 
 	@Mapping(source = ".", target = ".")
@@ -190,7 +193,18 @@ public interface DtoMapper {
 	@Mapping(target = "id", ignore = true)
 	CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
 
-	PromotionDto PromotionToPromotionDto(PromotionDto pDto);
+
+
+
+
+
+	
+
+	
+
+	
+
+
 
 	
 

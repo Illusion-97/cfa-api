@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
 
@@ -26,6 +27,7 @@ public interface NoteService {
 	
 	List<NoteDto> getAllByExamenId(long id);
 
+	List<NoteControleContinuDto> getNotesByIdEtudiant(long id) throws Exception;
 	
 
 }
