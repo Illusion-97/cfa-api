@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
+import fr.dawan.AppliCFABack.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -33,13 +34,14 @@ public class NoteServiceImpl implements NoteService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
+	@Autowired
+	private DtoTools _mapper;
+
 	/**
 	 * Récupération de la liste des notes
 	 * 
 	 * @return lstDto	Liste des objets note
 	 */
-	
-	
 
 	@Override
 	public List<NoteDto> getAllNote() {
@@ -54,7 +56,7 @@ public class NoteServiceImpl implements NoteService {
 
 	/***
 	 * Compte le nombre de Notes en fonction de l'élément de la recherche
-	 * @param Élément de la recherche
+	 * @param search Élément de la recherche
 	 * @return Count DTO
 	 */
 	
@@ -150,6 +152,18 @@ public class NoteServiceImpl implements NoteService {
 	 * @param id Examen
 	 * @return NoteDto Liste des objets NoteDto
 	 */
+
+	@Override
+	public List<NoteControleContinuDto> getNotesByIdEtudiant(long id) throws Exception {
+		List<NoteControleContinuDto> result = new ArrayList<>();
+		List<Note> list = noteRepository.findAllByEtudiantNoteId(id);
+		for(Note n : list) {
+			//result.add(_mapper.NoteToNoteControleContinuDto(n));
+			result.add(DtoTools.convert(n, NoteControleContinuDto.class));
+		}
+		return result;
+
+	}
 
 	@Override
 	public List<NoteDto> getAllByExamenId(long id) {

@@ -27,6 +27,10 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 	private Set<CompetenceProfessionnelleDto> competencesProfessionnellesDto;
 	private Set<NoteDto> notesDto;
 
+	private List<Byte> blocksConcernee;
+	private PromotionDto promotionDto;
+
+
 	public ExamenDto() {
 		super();
 	}
@@ -167,5 +171,19 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 		this.notesDto = notesDto;
 	}
 
-	
+	public List<Byte> getBlocksConcernee() {
+		return blocksConcernee;
+	}
+	private void setBlocksConcernee(List<Byte> blocksConcernee) {
+		this.blocksConcernee = blocksConcernee;
+	}
+
+	public PromotionDto getPromotionDto() {
+		return promotionDto;
+	}
+
+	public void setPromotionDto(PromotionDto promotionDto) {
+		this.promotionDto = promotionDto;
+	}
+
 }

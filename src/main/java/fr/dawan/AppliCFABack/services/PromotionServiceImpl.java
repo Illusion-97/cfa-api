@@ -8,20 +8,11 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
-import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.ExamenDto;
-import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
-import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Etudiant;
@@ -33,6 +24,8 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @Transactional
@@ -48,13 +41,15 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+	@Autowired
+	private DtoTools _mapper;
 
 	/**
 	 * Récupération de la liste des promo
 	 * 
 	 * @return lstDto	Liste des objets promotion
 	 */
-	
+	//recuperation de la liste des promo
 	@Override
 	public List<PromotionDto> getAll() {
 		List<Promotion> lst = promoRepo.findAll();
@@ -290,10 +285,22 @@ public class PromotionServiceImpl implements PromotionService {
 		
 		for(Promotion p : promos) {
 			PromotionDto pDto = mapper.PromotionToPromotionDto(p);
-			pDto.setCursusDto(mapper.CursusToCursusDto(p.getCursus()));
-			result.add(mapper.PromotionToPromotionDto(pDto));
+			result.add(pDto);
 		}
 		return result;
 	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id) {
+		List<Promotion> promotions = promoRepo.getByEtudiantId(id);
+
+		return promotions.stream().map(p -> _mapper.PromotionToPromotionEtudiantDto(p)).collect(Collectors.toList());
+	}
+
+
 
 }

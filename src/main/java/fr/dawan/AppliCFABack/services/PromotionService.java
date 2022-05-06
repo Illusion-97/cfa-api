@@ -1,10 +1,13 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
+
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.*;
+
 
 public interface PromotionService {
 
@@ -30,4 +33,5 @@ public interface PromotionService {
 
 	UtilisateurDto getCefById(long id);
 
+	List<PromotionEtudiantDto> getCursusByIdEtudiant(long id);
 }

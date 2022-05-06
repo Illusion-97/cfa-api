@@ -19,6 +19,7 @@ public class FormateurDto extends BaseEntityDto implements Serializable {
 	private EntrepriseDto entrepriseDto;
 
 	public FormateurDto() {
+		super();
 	}
 
 	/**
