@@ -67,13 +67,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-<<<<<<< HEAD
-    date = "2022-05-04T12:15:37+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
-=======
-    date = "2022-05-04T16:50:50+0200",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_322 (Amazon.com Inc.)"
->>>>>>> remy-william
+    date = "2022-05-17T17:06:07+0200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -358,10 +353,7 @@ public class DtoMapperImpl implements DtoMapper {
         PassageExamenDto passageExamenDto = new PassageExamenDto();
 
         passageExamenDto.setId( passageExamen.getId() );
-<<<<<<< HEAD
         passageExamenDto.setVersion( passageExamen.getVersion() );
-=======
->>>>>>> remy-william
         passageExamenDto.setDateDebut( passageExamen.getDateDebut() );
         passageExamenDto.setDateFin( passageExamen.getDateFin() );
 
@@ -758,42 +750,6 @@ public class DtoMapperImpl implements DtoMapper {
         return centreFormation;
     }
 
-<<<<<<< HEAD
-    @Override
-    public PromotionDto PromotionToPromotionDto(PromotionDto pDto) {
-        if ( pDto == null ) {
-            return null;
-        }
-
-        PromotionDto promotionDto = new PromotionDto();
-
-        promotionDto.setId( pDto.getId() );
-        promotionDto.setVersion( pDto.getVersion() );
-        promotionDto.setNom( pDto.getNom() );
-        promotionDto.setDateDebut( pDto.getDateDebut() );
-        promotionDto.setDateFin( pDto.getDateFin() );
-        promotionDto.setCefDto( pDto.getCefDto() );
-        List<EtudiantDto> list = pDto.getEtudiantsDto();
-        if ( list != null ) {
-            promotionDto.setEtudiantsDto( new ArrayList<EtudiantDto>( list ) );
-        }
-        List<InterventionDto> list1 = pDto.getInterventionsDto();
-        if ( list1 != null ) {
-            promotionDto.setInterventionsDto( new ArrayList<InterventionDto>( list1 ) );
-        }
-        Set<ExamenDto> set = pDto.getExamensDto();
-        if ( set != null ) {
-            promotionDto.setExamensDto( new HashSet<ExamenDto>( set ) );
-        }
-        promotionDto.setCentreFormationDto( pDto.getCentreFormationDto() );
-        promotionDto.setReferentPedagogiqueDto( pDto.getReferentPedagogiqueDto() );
-        promotionDto.setCursusDto( pDto.getCursusDto() );
-
-        return promotionDto;
-    }
-
-=======
->>>>>>> remy-william
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {
         if ( list == null ) {
             return null;
@@ -819,8 +775,6 @@ public class DtoMapperImpl implements DtoMapper {
 
         return list1;
     }
-<<<<<<< HEAD
-=======
 
     private long examenPromotionId(Examen examen) {
         if ( examen == null ) {
@@ -833,18 +787,4 @@ public class DtoMapperImpl implements DtoMapper {
         long id = promotion.getId();
         return id;
     }
-
-    protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<EtudiantDto> list1 = new ArrayList<EtudiantDto>( list.size() );
-        for ( Etudiant etudiant : list ) {
-            list1.add( EtudiantToEtudiantDto( etudiant ) );
-        }
-
-        return list1;
-    }
->>>>>>> remy-william
 }

@@ -26,7 +26,7 @@ public class PromotionDto extends BaseEntityDto implements Serializable {
 	private CentreFormationDto centreFormationDto;
 	private UtilisateurDto referentPedagogiqueDto;
 	private CursusDto cursusDto;
-
+	private String centreFormationAdresseVille;
 	public PromotionDto() {
 		super();
 	}
@@ -169,6 +169,21 @@ public class PromotionDto extends BaseEntityDto implements Serializable {
 	 */
 	public void setCursusDto(CursusDto cursusDto) {
 		this.cursusDto = cursusDto;
+	}
+
+	/**
+	 * @return le centreFormationAdresseVille
+	 */
+	public String getCentreFormationAdresseVille() {
+		return centreFormationAdresseVille;
+	}
+
+	/**
+	 * @param centreFormationAdresseVille le centreFormationAdresseVille à affecter
+	 
+	 */
+	public void setCentreFormationAdresseVille(String centreFormationAdresseVille) {
+		this.centreFormationAdresseVille = centreFormationAdresseVille;
 	}
 
 }
