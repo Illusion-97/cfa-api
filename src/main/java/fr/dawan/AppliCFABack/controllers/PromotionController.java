@@ -94,7 +94,10 @@ public class PromotionController {
 	public List<EtudiantDto> getEtudiantsById(@PathVariable("id") long id) {
 		return promoService.getEtudiantsById(id);
 	}
-	
+
+	/**
+	 * Erreur méthodes controller-service-repo à refaire avec un dto custom pour l'accueil entier
+	 */
 	@GetMapping(value = "/{id}/cefs",produces = "application/json")
     public UtilisateurDto getCefById(@PathVariable("id") long id) {
         return promoService.getCefById(id);
@@ -105,6 +108,10 @@ public class PromotionController {
 		return promoService.getPromotionByEtudiantIdAndByCursusId(id);
 	}
 
+	/**
+	 * @param id de l'étudiant
+	 * @return dans un get, le service qui va récupérer les données nécessaires pour afficher la section Cursus de l'espace étudiant partie front
+	 */
 	@GetMapping(value = "/cursus-etudiant/{id}", produces = "application/json")
 	public List<PromotionEtudiantDto> getCursusByIdEtudiant(@PathVariable("id") long id) {
 		return promoService.getCursusByIdEtudiant(id);

@@ -195,6 +195,10 @@ public class EtudiantController {
 		return etudiantService.getIntervenionByIdEtudiant(id);
 	}
 
+	/**
+	 * @param id de l'étudiant
+	 * @return dans un get, le service qui permet de récupérer le formateur référent de l'étudiant (tuteur) et ses infos personnelles
+	 */
 	@GetMapping(value = "/{id}/formateurReferent", produces = "application/json")
 	public UtilisateurDto getFormateurReferentByIdEtudiant(@PathVariable("id") long id) {
 		return etudiantService.getFormateurReferentByIdEtudiant(id);

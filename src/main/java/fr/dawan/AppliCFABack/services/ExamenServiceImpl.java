@@ -219,6 +219,16 @@ public class ExamenServiceImpl implements ExamenService {
 
 	}
 
+	/**
+	 * @param id de l'étudiant
+	 * utilise l'ExamenRepository pour récupérer une liste d'examens par id de l'étudiant
+	 * @return toutes les données nécessaires pour remplir la section livret Evaluation du front partie étudiant par le mapper (DtoTools) :
+	 * 			- nom promotion
+	 * 			- titre examen
+	 * 			- liste de compétences
+	 * 			- liste de satisfactions
+	 * 			- liste d'observations
+	 */
 	@Override
 	public List<LivretEvaluationDto> getLivretEvaluation(long id) {
 		List<LivretEvaluationDto> result = new ArrayList<>();

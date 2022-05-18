@@ -591,7 +591,11 @@ public class EtudiantServiceImpl implements EtudiantService {
         return result;
     }
 
-	//recuperation du formateur referent par id etudiants 
+	/**
+	 * @param id de l'étudiant
+	 * utilise le ContratRepository pour récupérer le formateur par id de l'étudiant
+	 * @return le formateur référent (tuteur) de l'étudiant et ses informations personnelles par le mapper (DtoMapper)
+	 */
 	@Override
 	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
 		Contrat contrat = contratRepository.findByEtudiantId(id);

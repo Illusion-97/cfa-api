@@ -22,9 +22,18 @@ public class DtoTools {
 
     private static ModelMapper myMapper = new ModelMapper();
 
+    /**
+     * @param obj
+     * @param clazz
+     * @param <TSource>
+     * @param <TDestination>
+     * @return l'objet de l'entité mappé en Dto de manière générique ou avec un Dto custom
+     *          ou
+     *          un objet dto mappé en un objet d'une entité
+     */
     public static <TSource, TDestination> TDestination convert(TSource obj, Class<TDestination> clazz) {
 
-        // TODO ajout de config pour personnaliser le mapping dto<>entity
+
         myMapper.typeMap(Note.class, NoteControleContinuDto.class).addMappings(mapper -> {
             mapper.map(src -> src.getId(), NoteControleContinuDto::setId);
             mapper.map(src -> src.getEtudiantNote().getId(), NoteControleContinuDto::setEtudiantId);
@@ -52,11 +61,13 @@ public class DtoTools {
         return mapper.map(obj, clazz);
     }
 
+    /**
+     * permet de mapper un objet Promotion en PromotionEtudiantDto (dto customisé) -
+     * return l'objet dto custom mappé
+     */
     Converter<Promotion, PromotionEtudiantDto> PromotionToPromotionEtudiantDtoConverter = context -> {
 
         Promotion p = context.getSource();
-        //CursusEtudiantDto cDto = convert(c, CursusEtudiantDto.class);
-
         PromotionEtudiantDto cDto = new PromotionEtudiantDto();
 
         cDto.setCursusTitre(p.getCursus().getTitre());
@@ -73,13 +84,22 @@ public class DtoTools {
         return cDto;
     };
 
+    /**
+     * méthode appelée dans le PromotionServiceImpl
+     * @param promotion
+     * @return l'objet dto custom mappé
+     */
     public PromotionEtudiantDto PromotionToPromotionEtudiantDto(Promotion promotion) {
         return convert(promotion, PromotionEtudiantDto.class, PromotionToPromotionEtudiantDtoConverter);
     }
 
+    /**
+     * permet de mapper un objet Examen en LivretEvaluationDto (dto customisé) -
+     * return l'objet dto custom mappé
+     */
     Converter<Examen, LivretEvaluationDto> ExamenToLivretEvaluationDtoConverter = context -> {
-        Examen e = context.getSource();
 
+        Examen e = context.getSource();
         LivretEvaluationDto leDto = new LivretEvaluationDto();
 
         leDto.setPromotion(e.getPromotion().getNom());
@@ -103,6 +123,11 @@ public class DtoTools {
         return leDto;
     };
 
+    /**
+     * méthode appelée dans l'ExamenServiceImpl
+     * @param examen
+     * @return l'objet dto custom mappé
+     */
     public LivretEvaluationDto ExamenToLivretEvaluationDto(Examen examen) {
         return convert(examen, LivretEvaluationDto.class, ExamenToLivretEvaluationDtoConverter);
     }

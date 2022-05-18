@@ -51,6 +51,10 @@ public interface EtudiantService {
 
 	List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id);
 
+	/**
+	 * @param id de l'étudiant
+	 * @return le formateur référent (tuteur) de l'étudiant et ses informations personnelles dans le service implémenté
+	 */
 	UtilisateurDto getFormateurReferentByIdEtudiant(long id);
 
 //	UtilisateurDto getManagerByIdEtudiant(long id);

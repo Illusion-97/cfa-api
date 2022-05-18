@@ -262,8 +262,9 @@ public class PromotionServiceImpl implements PromotionService {
 	}
 	
 	/**
+	 * Erreur méthodes controller-service-repo à refaire avec un dto custom pour l'accueil entier
 	 * Récupération du cef en fonction de l'id de la promotion
-	 * 
+	 *
 	 * @param id	id de la promotion
 	 */
 	
@@ -291,8 +292,15 @@ public class PromotionServiceImpl implements PromotionService {
 	}
 
 	/**
-	 * @param id
-	 * @return
+	 * @param id de l'étudiant
+	 * utilise le PromotionRepository pour récupérer toutes les promotions par id de l'étudiant
+	 * @return toutes les données nécessaires pour remplir la section Cursus du front partie étudiant par le mapper (DtoTools) :
+	 * 			- titre du cursus
+	 * 			- description du cursus
+	 * 			- durée du cursus
+	 * 			- nom de la promotion
+	 * 			- dates de début et de fin de la promotion
+	 * 			- plannings de l'étudiant par rapport à ses promotions
 	 */
 	@Override
 	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id) {
