@@ -45,6 +45,10 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 		this.dateExamen = dateExamen;
 	}
 
+	public ExamenDto(String titre) {
+		super();
+	}
+
 	/**
 	 * @return the titre
 	 */

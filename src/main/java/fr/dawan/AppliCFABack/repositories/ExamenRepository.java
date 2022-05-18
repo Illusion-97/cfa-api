@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.Intervention;
 
+import java.util.List;
+
 /**
  * @author Valentin C, Feres BG.
  * @see fr.dawan.appliCFABack.service
@@ -30,5 +32,8 @@ public interface ExamenRepository extends JpaRepository<Examen, Long> {
 			Pageable pageable);
 
 	long countByTitreContainingIgnoringCaseOrDescriptifContainingIgnoringCase(String titre, String descriptif);
+
+	@Query("SELECT DISTINCT e FROM Examen e JOIN Note n ON n.etudiantNote.id =:id")
+	List<Examen> findallByEtudiantId(@Param("id") long id);
 
 }

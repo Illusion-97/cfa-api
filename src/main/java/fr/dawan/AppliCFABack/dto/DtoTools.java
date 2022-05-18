@@ -7,7 +7,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
 import fr.dawan.AppliCFABack.entities.Note;
 /**
- * 
+ *
  * @author Valentin C, Feres BG.
  * @see fr.dawan.appliCFABack.dto
  * @since 1.0
@@ -16,6 +16,7 @@ import fr.dawan.AppliCFABack.entities.Note;
  */
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Component
 public class DtoTools {
 
@@ -74,6 +75,36 @@ public class DtoTools {
 
     public PromotionEtudiantDto PromotionToPromotionEtudiantDto(Promotion promotion) {
         return convert(promotion, PromotionEtudiantDto.class, PromotionToPromotionEtudiantDtoConverter);
+    }
+
+    Converter<Examen, LivretEvaluationDto> ExamenToLivretEvaluationDtoConverter = context -> {
+        Examen e = context.getSource();
+
+        LivretEvaluationDto leDto = new LivretEvaluationDto();
+
+        leDto.setPromotion(e.getPromotion().getNom());
+        leDto.setExamen(e.getTitre());
+
+        leDto.setCompetences(e.getCompetencesProfessionnelles().stream().map(c -> {
+            String competence = c.getLibelle();
+            return competence;
+        }).collect(Collectors.toList()));
+
+        leDto.setSatisfactions(e.getNotes().stream().map(s -> {
+            Note.Satisfaction satisfaction = s.getSatisfaction();
+            return satisfaction;
+        }).collect(Collectors.toList()));
+
+        leDto.setObservations(e.getNotes().stream().map(n -> {
+            String observation = n.getObservation();
+            return observation;
+        }).collect(Collectors.toList()));
+
+        return leDto;
+    };
+
+    public LivretEvaluationDto ExamenToLivretEvaluationDto(Examen examen) {
+        return convert(examen, LivretEvaluationDto.class, ExamenToLivretEvaluationDtoConverter);
     }
 
 

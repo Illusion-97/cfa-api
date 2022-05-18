@@ -5,6 +5,7 @@ import java.util.List;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
+import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 
 public interface ExamenService {
 
@@ -20,6 +21,6 @@ public interface ExamenService {
 
 	void deleteById(long id);
 
-	
 
+    List<LivretEvaluationDto> getLivretEvaluation(long id);
 }

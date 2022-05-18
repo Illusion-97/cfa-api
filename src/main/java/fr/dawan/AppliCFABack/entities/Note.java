@@ -39,6 +39,9 @@ public class Note extends BaseEntity implements Serializable {
 		OUI, NON
 	}
 
+	@Column(columnDefinition = "TEXT")
+	private String observation;
+
 	/**
 	 * @return la noteObtenue
 	 */
@@ -99,4 +102,11 @@ public class Note extends BaseEntity implements Serializable {
 		this.etudiantNote = etudiantNote;
 	}
 
+	public String getObservation() {
+		return observation;
+	}
+
+	public void setObservation(String observation) {
+		this.observation = observation;
+	}
 }

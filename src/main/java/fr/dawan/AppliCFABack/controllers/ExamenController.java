@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Optional;
 
+import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -129,5 +130,10 @@ public class ExamenController {
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public ExamenDtoSave update(@RequestBody ExamenDtoSave eDto) throws Exception {
 		return examenService.saveOrUpdate(eDto);
+	}
+
+	@GetMapping(value = "/livret-evaluation/{id}", produces = "application/json")
+	public List<LivretEvaluationDto> getLivretEvaluation(@PathVariable("id") long id) {
+		return examenService.getLivretEvaluation(id);
 	}
 }

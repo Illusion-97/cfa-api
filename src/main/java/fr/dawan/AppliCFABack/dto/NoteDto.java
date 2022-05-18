@@ -20,6 +20,7 @@ public class NoteDto extends BaseEntityDto implements Serializable {
 	private long examenId;
 	private String etudiantNoteUtilisateurNom;
 	private String etudiantNoteUtilisateurPrenom;
+	private String observation;
 
 	public NoteDto() {
 		super();
@@ -29,6 +30,14 @@ public class NoteDto extends BaseEntityDto implements Serializable {
 		super();
 		this.noteObtenue = noteObtenue;
 		this.etudiantNoteId = etudiantNoteId;
+	}
+
+	public NoteDto(Satisfaction satisfaction) {
+		super();
+	}
+
+	public NoteDto(String observation) {
+		super();
 	}
 
 	/**
@@ -115,4 +124,11 @@ public class NoteDto extends BaseEntityDto implements Serializable {
 		this.etudiantNoteUtilisateurPrenom = etudiantNoteUtilisateurPrenom;
 	}
 
+	public String getObservation() {
+		return observation;
+	}
+
+	public void setObservation(String observation) {
+		this.observation = observation;
+	}
 }
