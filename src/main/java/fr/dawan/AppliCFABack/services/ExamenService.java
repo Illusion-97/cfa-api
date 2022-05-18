@@ -21,5 +21,9 @@ public interface ExamenService {
 
 	void deleteById(long id);
 
+	/**
+	 * @param id de l'étudiant
+	 * @return toutes les données nécessaires pour remplir la section livret d'évaluation dans le front partie étudiant, par le service implémenté
+	 */
     List<LivretEvaluationDto> getLivretEvaluation(long id);
 }

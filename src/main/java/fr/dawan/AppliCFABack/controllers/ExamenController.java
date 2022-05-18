@@ -132,6 +132,10 @@ public class ExamenController {
 		return examenService.saveOrUpdate(eDto);
 	}
 
+	/**
+	 * @param id de l'étudiant
+	 * @return dans un get, le service qui va chercher toutes les données nécessaires pour remplir la section livret Evaluation du front partie étudiant
+	 */
 	@GetMapping(value = "/livret-evaluation/{id}", produces = "application/json")
 	public List<LivretEvaluationDto> getLivretEvaluation(@PathVariable("id") long id) {
 		return examenService.getLivretEvaluation(id);

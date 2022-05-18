@@ -99,10 +99,13 @@ public class NoteController {
 		return noteService.saveOrUpdate(nDto);
 	}
 
-	//getnoteetudiant
-
+	/**
+	 * @param id de l'étudiant
+	 * @return dans un get, le service qui va récupérer toutes les informations nécessaires pour remplir la section Contrôles Continus
+	 * de l'espace étudiant partie front
+	 */
 	@GetMapping(value = "/note-etudiant/{id}", produces = "application/json")
-	public List<NoteControleContinuDto> getNotesByIdEtudiant(@PathVariable("id") long id) throws Exception {
+	public List<NoteControleContinuDto> getNotesByIdEtudiant(@PathVariable("id") long id) {
 		return noteService.getNotesByIdEtudiant(id);
 	}
 

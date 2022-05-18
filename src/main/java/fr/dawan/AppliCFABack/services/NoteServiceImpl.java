@@ -146,19 +146,21 @@ public class NoteServiceImpl implements NoteService {
 
 	}
 
-	/***
-	 * Récupération des Notes en fonction de l'id de l'examen
-	 * 
-	 * @param id Examen
-	 * @return NoteDto Liste des objets NoteDto
+	/**
+	 * @param id de l'étudiant
+	 * utilise le NoteRepository pour récupérer toutes les notes par id de l'étudiant
+	 * @return toutes les données nécessaires pour remplir la section Contrôles Continus du front partie étudiant par le mapper (DtoTools) :
+	 * 			- id de la note
+	 * 			- id de l'étudiant par rapport à la note
+	 * 			- titre de l'examen en rapport avec la note
+	 * 			- date de l'examen
+	 * 			- nom de la promotion de l'étudiant
 	 */
-
 	@Override
-	public List<NoteControleContinuDto> getNotesByIdEtudiant(long id) throws Exception {
+	public List<NoteControleContinuDto> getNotesByIdEtudiant(long id) {
 		List<NoteControleContinuDto> result = new ArrayList<>();
 		List<Note> list = noteRepository.findAllByEtudiantNoteId(id);
 		for(Note n : list) {
-			//result.add(_mapper.NoteToNoteControleContinuDto(n));
 			result.add(DtoTools.convert(n, NoteControleContinuDto.class));
 		}
 		return result;
