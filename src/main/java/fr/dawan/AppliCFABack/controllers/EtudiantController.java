@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
@@ -24,6 +26,7 @@ import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 
 @RestController
@@ -170,6 +173,9 @@ public class EtudiantController {
 		return etudiantService.getDevoirsByIdEtudiant(id, page, size);
 	}
 
+	/*
+	 * On récupère les absences de l'étudiant à partir de son id
+	 */
 //	@GetMapping(value = "/{id}/absences/{page}/{size}", produces = "application/json")
 //	public List<AbsenceDto> getAbsencesByIdEtudiant(@PathVariable("id") long id, @PathVariable("page") int page,
 //			@PathVariable(value = "size") int size) {
@@ -189,10 +195,10 @@ public class EtudiantController {
 		return etudiantService.getIntervenionByIdEtudiant(id);
 	}
 
-//	@GetMapping(value = "/{id}/formateurReferent", produces = "application/json")
-//	public UtilisateurDto getFormateurReferentByIdEtudiant(@PathVariable("id") long id) {
-//		return etudiantService.getFormateurReferentByIdEtudiant(id);
-//	}
+	@GetMapping(value = "/{id}/formateurReferent", produces = "application/json")
+	public UtilisateurDto getFormateurReferentByIdEtudiant(@PathVariable("id") long id) {
+		return etudiantService.getFormateurReferentByIdEtudiant(id);
+	}
 
 //	@GetMapping(value = "/{id}/manager", produces = "application/json")
 //	public UtilisateurDto getManagerByIdEtudiant(@PathVariable("id") long id) {

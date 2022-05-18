@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
+import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -35,6 +37,10 @@ public class CompetenceProfessionnelleDto extends BaseEntityDto implements Seria
 		this.libelle = libelle;
 		this.numeroFiche = numeroFiche;
 		this.activiteTypeId = activiteTypeId;
+	}
+
+	public CompetenceProfessionnelleDto(String competence) {
+		super();
 	}
 
 	/**

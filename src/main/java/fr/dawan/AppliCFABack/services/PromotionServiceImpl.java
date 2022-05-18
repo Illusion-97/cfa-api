@@ -42,7 +42,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	@Autowired
-	private DtoTools _mapper;
+	private DtoTools mapperTools;
 
 	/**
 	 * Récupération de la liste des promo
@@ -298,7 +298,7 @@ public class PromotionServiceImpl implements PromotionService {
 	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id) {
 		List<Promotion> promotions = promoRepo.getByEtudiantId(id);
 
-		return promotions.stream().map(p -> _mapper.PromotionToPromotionEtudiantDto(p)).collect(Collectors.toList());
+		return promotions.stream().map(p -> mapperTools.PromotionToPromotionEtudiantDto(p)).collect(Collectors.toList());
 	}
 
 

@@ -1,17 +1,8 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
-import fr.dawan.AppliCFABack.dto.AdresseDto;
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DevoirDto;
-import fr.dawan.AppliCFABack.dto.EntrepriseDto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.ExamenDto;
-import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
-import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
-import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.PromotionDto;
+
+import fr.dawan.AppliCFABack.dto.*;
 
 public interface EtudiantService {
 
@@ -60,7 +51,7 @@ public interface EtudiantService {
 
 	List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id);
 
-//	UtilisateurDto getFormateurReferentByIdEtudiant(long id);
+	UtilisateurDto getFormateurReferentByIdEtudiant(long id);
 
 //	UtilisateurDto getManagerByIdEtudiant(long id);
 

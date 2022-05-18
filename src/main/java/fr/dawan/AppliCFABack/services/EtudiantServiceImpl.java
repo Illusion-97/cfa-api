@@ -592,11 +592,11 @@ public class EtudiantServiceImpl implements EtudiantService {
     }
 
 	//recuperation du formateur referent par id etudiants 
-//	@Override
-//	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
-//		Contrat contrat = contratRepository.findByEtudiantId(id);
-//		return mapper.UtilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
-//	}
+	@Override
+	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
+		Contrat contrat = contratRepository.findByEtudiantId(id);
+		return mapper.UtilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
+	}
 
 //	@Override
 //	public UtilisateurDto getManagerByIdEtudiant(long id) {

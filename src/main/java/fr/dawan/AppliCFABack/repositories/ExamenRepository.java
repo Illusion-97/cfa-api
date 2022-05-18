@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import fr.dawan.AppliCFABack.entities.Examen;
-import fr.dawan.AppliCFABack.entities.Intervention;
+
+import java.util.List;
 
 /**
  * @author Valentin C, Feres BG.
@@ -30,5 +31,8 @@ public interface ExamenRepository extends JpaRepository<Examen, Long> {
 			Pageable pageable);
 
 	long countByTitreContainingIgnoringCaseOrDescriptifContainingIgnoringCase(String titre, String descriptif);
+
+	@Query("SELECT DISTINCT e FROM Examen e JOIN Note n ON n.etudiantNote.id =:id")
+	List<Examen> findallByEtudiantId(@Param("id") long id);
 
 }

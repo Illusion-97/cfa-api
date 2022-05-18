@@ -9,17 +9,11 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.ExamenDto;
-import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
-import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Etudiant;
@@ -57,6 +51,9 @@ public class ExamenServiceImpl implements ExamenService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+
+	@Autowired
+	private DtoTools mapperTools;
 
 	/**
 	 * Récupération de la liste des examens
@@ -222,6 +219,17 @@ public class ExamenServiceImpl implements ExamenService {
 
 	}
 
-	
+	@Override
+	public List<LivretEvaluationDto> getLivretEvaluation(long id) {
+		List<LivretEvaluationDto> result = new ArrayList<>();
+		List<Examen> list = examenRepository.findallByEtudiantId(id);
+
+		for(Examen e : list) {
+			result.add(mapperTools.ExamenToLivretEvaluationDto(e));
+		}
+		return result;
+	}
+
+
 
 }
