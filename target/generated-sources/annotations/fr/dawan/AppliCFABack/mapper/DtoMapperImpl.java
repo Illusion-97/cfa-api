@@ -16,6 +16,7 @@ import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
 import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
@@ -47,6 +48,7 @@ import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
+import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.FicheEntreprise;
 import fr.dawan.AppliCFABack.entities.FichePoste;
 import fr.dawan.AppliCFABack.entities.Formateur;
@@ -67,8 +69,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-18T11:09:30+0200",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_322 (Amazon.com Inc.)"
+    date = "2022-05-23T18:11:54+0200",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.14.1 (Amazon.com Inc.)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -749,6 +751,24 @@ public class DtoMapperImpl implements DtoMapper {
         centreFormation.setVersion( centreFormationDG2Dto.getVersion() );
 
         return centreFormation;
+    }
+
+    @Override
+    public ExperienceProfessionnelleDto ExperienceProfessionnelleToExperienceProfessionnelleDto(ExperienceProfessionnelle experienceProfessionnelle) {
+        if ( experienceProfessionnelle == null ) {
+            return null;
+        }
+
+        ExperienceProfessionnelleDto experienceProfessionnelleDto = new ExperienceProfessionnelleDto();
+
+        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
+        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
+        experienceProfessionnelleDto.setCollaborateur( experienceProfessionnelle.getCollaborateur() );
+        experienceProfessionnelleDto.setContexte( experienceProfessionnelle.getContexte() );
+        experienceProfessionnelleDto.setInformation( experienceProfessionnelle.getInformation() );
+        experienceProfessionnelleDto.setId( experienceProfessionnelle.getId() );
+
+        return experienceProfessionnelleDto;
     }
 
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {

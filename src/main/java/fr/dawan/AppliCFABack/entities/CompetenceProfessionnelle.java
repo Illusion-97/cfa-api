@@ -3,10 +3,7 @@ package fr.dawan.AppliCFABack.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /***
  * 
@@ -32,6 +29,9 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 
 	@ManyToOne
 	private ActiviteType activiteType;
+
+	@OneToOne
+	private ExperienceProfessionnelle experienceProfessionnelle;
 
 	/**
 	 * @return le libelle
@@ -93,4 +93,11 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 		this.activiteType = activiteType;
 	}
 
+	public ExperienceProfessionnelle getExperienceProfessionnelle() {
+		return experienceProfessionnelle;
+	}
+
+	public void setExperienceProfessionnelle(ExperienceProfessionnelle experienceProfessionnelle) {
+		this.experienceProfessionnelle = experienceProfessionnelle;
+	}
 }

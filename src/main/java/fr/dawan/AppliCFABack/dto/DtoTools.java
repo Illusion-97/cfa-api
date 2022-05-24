@@ -3,7 +3,6 @@ package fr.dawan.AppliCFABack.dto;
 import fr.dawan.AppliCFABack.entities.*;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
 import fr.dawan.AppliCFABack.entities.Note;
 /**
@@ -14,7 +13,10 @@ import fr.dawan.AppliCFABack.entities.Note;
  * @version 1.0
  * @return classe de convertion d'une entité vers DTO & vice-versa
  */
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -32,7 +34,6 @@ public class DtoTools {
      *          un objet dto mappé en un objet d'une entité
      */
     public static <TSource, TDestination> TDestination convert(TSource obj, Class<TDestination> clazz) {
-
 
         myMapper.typeMap(Note.class, NoteControleContinuDto.class).addMappings(mapper -> {
             mapper.map(src -> src.getId(), NoteControleContinuDto::setId);
@@ -131,6 +132,35 @@ public class DtoTools {
     public LivretEvaluationDto ExamenToLivretEvaluationDto(Examen examen) {
         return convert(examen, LivretEvaluationDto.class, ExamenToLivretEvaluationDtoConverter);
     }
+
+//    Converter<DossierProfessionnel, DossierProEtudiantDto> DossierProfessionnelToDossierProEtudiantConverter = context -> {
+//
+//        DossierProfessionnel dp = context.getSource();
+//        DossierProEtudiantDto dpDto = new DossierProEtudiantDto();
+//
+//        dpDto.setId(dp.getId());
+//        dpDto.setNom(dp.getCursus().getTitre());
+//        dpDto.setCursus(dp.getCursus().getActiviteTypes().stream().map(at -> {
+//            String activiteType = at.getLibelle();
+//            return activiteType;
+//        }).collect(Collectors.toList()));
+//
+//        Set<ActiviteType> activites = dp.getCursus().getActiviteTypes();
+//        List<CompetenceProfessionnelle> result = new ArrayList<>();
+//        for (ActiviteType a : activites
+//             ) {
+//            a.getCompetenceProfessionnelles();
+//            });
+//        }
+//        dpDto.setCompetenceProLibelle(result);
+//
+//
+//        dpDto.setTacheRealisee();
+//
+//
+//            return dpDto;
+//    };
+
 
 
 }

@@ -2,70 +2,11 @@ package fr.dawan.AppliCFABack.mapper;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.entities.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
-import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
-import fr.dawan.AppliCFABack.dto.AdresseDto;
-import fr.dawan.AppliCFABack.dto.CEFDto;
-import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
-import fr.dawan.AppliCFABack.dto.CentreFormationDto;
-import fr.dawan.AppliCFABack.dto.CerfaDto;
-import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
-import fr.dawan.AppliCFABack.dto.CongeDto;
-import fr.dawan.AppliCFABack.dto.ContratDto;
-import fr.dawan.AppliCFABack.dto.CursusDto;
-import fr.dawan.AppliCFABack.dto.DevoirDto;
-import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
-import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.dto.EntrepriseDto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.ExamenDto;
-import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
-import fr.dawan.AppliCFABack.dto.FichePosteDto;
-import fr.dawan.AppliCFABack.dto.FormateurDto;
-import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
-import fr.dawan.AppliCFABack.dto.FormationDto;
-import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
-import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
-import fr.dawan.AppliCFABack.dto.MaitreApprentissageDto;
-import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.PassageExamenDto;
-import fr.dawan.AppliCFABack.dto.ProjetDto;
-import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.RemunerationDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
-import fr.dawan.AppliCFABack.entities.ActiviteType;
-import fr.dawan.AppliCFABack.entities.Adresse;
-import fr.dawan.AppliCFABack.entities.CEF;
-import fr.dawan.AppliCFABack.entities.CentreFormation;
-import fr.dawan.AppliCFABack.entities.Cerfa;
-import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
-import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.Contrat;
-import fr.dawan.AppliCFABack.entities.Cursus;
-import fr.dawan.AppliCFABack.entities.Devoir;
-import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
-import fr.dawan.AppliCFABack.entities.DossierProjet;
-import fr.dawan.AppliCFABack.entities.Entreprise;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Examen;
-import fr.dawan.AppliCFABack.entities.FicheEntreprise;
-import fr.dawan.AppliCFABack.entities.FichePoste;
-import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Formation;
-import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
-import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
-import fr.dawan.AppliCFABack.entities.Note;
-import fr.dawan.AppliCFABack.entities.PassageExamen;
-import fr.dawan.AppliCFABack.entities.Projet;
-import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Remuneration;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 
 @Mapper
 @Component
@@ -190,16 +131,7 @@ public interface DtoMapper {
 	CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
 
 
-
-
-
-
-	
-
-	
-
-	
-
-
-
+	@Mapping(source = ".", target = ".")
+	ExperienceProfessionnelleDto ExperienceProfessionnelleToExperienceProfessionnelleDto(
+			ExperienceProfessionnelle experienceProfessionnelle);
 }
