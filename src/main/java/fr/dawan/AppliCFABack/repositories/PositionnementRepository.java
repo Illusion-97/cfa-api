@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -34,5 +35,12 @@ public interface PositionnementRepository  extends JpaRepository<Positionnement,
 	 * @return retourne le nombre d'occurence du champs recherché
 	 */
 	long countByEtudiantUtilisateurNomContainingOrEtudiantUtilisateurPrenomContaining(String nom,String prenom);
-
+	
+	/***
+	 * 
+	 * @param idIntervention : identifiant de l'intervention 
+	 * @param idEtudiant : identifiant de l'etudaint
+	 * @return retourne un possitionnement s'il existe.
+	 */
+	 Optional<Positionnement> getDistinctByInterventionIdAndEtudiantId(long idIntervention,long idEtudiant );
 }

@@ -2,93 +2,150 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import fr.dawan.AppliCFABack.entities.Absence.TypeAbsence;
 
 @SuppressWarnings("serial")
 public class AbsenceDto extends BaseEntityDto implements Serializable{
 	
-	private LocalDate dateDebut;
-	private LocalDate dateFin;
+
+	private LocalDateTime dateDebut;
+	
+	private LocalDateTime dateFin;
+
+
 	private String justificatif;
-	private EtudiantDto etudiantDto;
+
+
+	private long etudiantId;
+	
+
 	private long interventionId;
-	private String typeAbsence;
+	
+
+	private TypeAbsence typeAbsence;
+	
+
 
 	public AbsenceDto() {
 		super();
 	}
-	
-	public AbsenceDto(long id, int version, LocalDate dateDebut, LocalDate dateFin, String justificatif,
-			EtudiantDto etudiantDto, long interventionId, String typeAbsence) {
-		super();
-		this.id = id;
-		this.version = version;
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
-		this.justificatif = justificatif;
-		this.etudiantDto = etudiantDto;
-		this.interventionId = interventionId;
-		this.typeAbsence = typeAbsence;
-	}
-	
-	public AbsenceDto(long id, int version, LocalDate dateDebut, LocalDate dateFin, String justificatif,
-			long interventionId, String typeAbsence) {
-		super();
-		this.id = id;
-		this.version = version;
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
-		this.justificatif = justificatif;
-		this.interventionId = interventionId;
-		this.typeAbsence = typeAbsence;
-	}
 
 
-	public String getTypeAbsence() {
-		return typeAbsence;
-	}
 
-	public void setTypeAbsence(String typeAbsence) {
-		this.typeAbsence = typeAbsence;
-	}
-
-	public LocalDate getDateDebut() {
+	/**
+	 * @return le dateDebut
+	 */
+	public LocalDateTime getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(LocalDate dateDebut) {
+
+
+	/**
+	 * @param dateDebut le dateDebut à affecter
+	 
+	 */
+	public void setDateDebut(LocalDateTime dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public LocalDate getDateFin() {
+
+
+	/**
+	 * @return le dateFin
+	 */
+	public LocalDateTime getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(LocalDate dateFin) {
+
+
+	/**
+	 * @param dateFin le dateFin à affecter
+	 
+	 */
+	public void setDateFin(LocalDateTime dateFin) {
 		this.dateFin = dateFin;
 	}
 
+
+
+	/**
+	 * @return le justificatif
+	 */
 	public String getJustificatif() {
 		return justificatif;
 	}
 
+
+
+	/**
+	 * @param justificatif le justificatif à affecter
+	 
+	 */
 	public void setJustificatif(String justificatif) {
 		this.justificatif = justificatif;
 	}
 
-	public EtudiantDto getEtudiantDto() {
-		return etudiantDto;
+
+
+	/**
+	 * @return le etudiantId
+	 */
+	public long getEtudiantId() {
+		return etudiantId;
 	}
 
-	public void setEtudiantDto(EtudiantDto etudiantDto) {
-		this.etudiantDto = etudiantDto;
+
+
+	/**
+	 * @param etudiantId le etudiantId à affecter
+	 
+	 */
+	public void setEtudiantId(long etudiantId) {
+		this.etudiantId = etudiantId;
 	}
 
+
+
+	/**
+	 * @return le interventionId
+	 */
 	public long getInterventionId() {
 		return interventionId;
 	}
 
+
+
+	/**
+	 * @param interventionId le interventionId à affecter
+	 
+	 */
 	public void setInterventionId(long interventionId) {
 		this.interventionId = interventionId;
 	}
+
+
+
+	/**
+	 * @return le typeAbsence
+	 */
+	public TypeAbsence getTypeAbsence() {
+		return typeAbsence;
+	}
+
+
+
+	/**
+	 * @param typeAbsence le typeAbsence à affecter
+	 
+	 */
+	public void setTypeAbsence(TypeAbsence typeAbsence) {
+		this.typeAbsence = typeAbsence;
+	}
+
+
 	
 }

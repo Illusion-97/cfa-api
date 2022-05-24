@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +15,9 @@ import javax.persistence.ManyToOne;
 public class Absence extends BaseEntity implements Serializable {
 
 	@Column(nullable = false)
-	private LocalDate dateDebut;
+	private LocalDateTime dateDebut;
 	
-	private LocalDate dateFin;
+	private LocalDateTime dateFin;
 
 	@Column(length = 255)
 	private String justificatif;
@@ -40,19 +41,19 @@ public class Absence extends BaseEntity implements Serializable {
 		super();
 	}
 
-	public LocalDate getDateDebut() {
+	public LocalDateTime getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(LocalDate dateDebut) {
+	public void setDateDebut(LocalDateTime dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public LocalDate getDateFin() {
+	public LocalDateTime getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(LocalDate dateFin) {
+	public void setDateFin(LocalDateTime dateFin) {
 		this.dateFin = dateFin;
 	}
 

@@ -1,10 +1,13 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
+import java.util.Optional;
+
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
+import fr.dawan.AppliCFABack.dto.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
@@ -68,6 +71,6 @@ public interface EtudiantService {
 
 //	List<AbsenceDto> getAbsencesByIdEtudiant(long id, int page, int size);
 
-
+	List<EtudiantAbsencesDevoirsDto> getEtudiantsByInterventionId(long idIntervention ,String search);
 
 }

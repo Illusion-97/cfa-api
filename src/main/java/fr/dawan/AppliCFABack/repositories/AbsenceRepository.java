@@ -59,6 +59,12 @@ public interface AbsenceRepository extends JpaRepository<Absence, Long> {
 	@Query("SELECT COUNT(a) FROM Absence a JOIN a.etudiant e JOIN e.utilisateur u WHERE u.nom LIKE :search OR u.prenom LIKE :search")
 	long countByUtilisateurEtudiantNomOrPrenomContaining(String search);
 	
+	/**
+	 * 
+	 * @param Identifiant de l'etudiant , identifiant de l'intervention
+	 * @return list d'absence par etudiant dans une Intervention
+	 */
+	List<Absence> findAllByEtudiantIdAndInterventionId(long etudiantId, long interventionId);
 	
 	
 //	long countByEtudiantUtilisateurNomContainingOrEtudiantUtilisateurPrenomContainingAllIgnoreCase(String prenom, String nom);

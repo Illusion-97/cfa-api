@@ -83,8 +83,8 @@ public abstract class GenericController<TDto> {
 	 * @param search dont on veut connaitre le nombre
 	 * @return le nombre de fois ou la valeur recherchée a été trouvée.
 	 */
-	@GetMapping(value = "/count/{search}", produces = "application/json")
-	public CountDto count(@PathVariable("search") Optional<String> search) {
+	@GetMapping(value = {"/count/{search}","/count"}, produces = "application/json")
+	public CountDto count(@PathVariable(value = "search" ,required = false) Optional<String> search) {
 		if (search.isPresent())
 			return service.count(search.get());
 		return service.count("");
