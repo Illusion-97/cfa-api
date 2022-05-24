@@ -10,6 +10,7 @@ public interface DevoirService extends GenericService<DevoirDto> {
 	
 	List<DevoirDto> getAllByPage(int page, int size, String string);
 
+	List<DevoirDto> getAllByInterventionId(long id);
 
 
 

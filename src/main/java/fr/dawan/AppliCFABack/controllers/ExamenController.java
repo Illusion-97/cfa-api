@@ -85,6 +85,11 @@ public class ExamenController {
 		else
 			return examenService.count("");
 	}
+    
+	@GetMapping(value = "/interventions/{id}", produces = "application/json")
+	public List<ExamenDto> findExamensByInterventionId (@PathVariable(value = "id") long id){
+		return examenService.findExamensByInterventionId(id);
+	}
 
 
 	// ##################################################
@@ -130,4 +135,6 @@ public class ExamenController {
 	public ExamenDtoSave update(@RequestBody ExamenDtoSave eDto) throws Exception {
 		return examenService.saveOrUpdate(eDto);
 	}
+	
+
 }

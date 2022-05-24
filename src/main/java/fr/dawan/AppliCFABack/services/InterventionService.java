@@ -3,7 +3,6 @@ package fr.dawan.AppliCFABack.services;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
@@ -31,8 +30,6 @@ public interface InterventionService {
 	List<EtudiantDto> findAllByPromotionInterventionsId(long id);
 
 	List<PromotionDto> findPromotionsByInterventionId(long id);
-
-	List<DevoirDto> findDevoirsByInterventionId(long id);
 
 	List<FormateurDto> findFormateursByInterventionsId(long id);
 	

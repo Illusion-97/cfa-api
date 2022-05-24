@@ -112,11 +112,9 @@ public class DevoirServiceImpl implements DevoirService {
 	
 	@Override
 	public DevoirDto saveOrUpdate(DevoirDto dDto) {
-		Devoir d = DtoTools.convert(dDto, Devoir.class);
-
-		d = devoirRepository.saveAndFlush(d);
-
-		return mapper.DevoirToDevoirDto(d);
+		Devoir devoir = DtoTools.convert(dDto, Devoir.class);
+		Devoir devoirDb = devoirRepository.saveAndFlush(devoir);
+		return DtoTools.convert(devoirDb, DevoirDto.class);
 	}
 
 	/**
@@ -131,10 +129,15 @@ public class DevoirServiceImpl implements DevoirService {
 
 	}
 
-
-
-	
-
+	@Override
+	public List<DevoirDto> getAllByInterventionId(long id) {
+		List<Devoir> devoirs = devoirRepository.findAllByInterventionId(id);
+		List<DevoirDto> result = new ArrayList<DevoirDto>();
+		for(Devoir d: devoirs) {
+			result.add(DtoTools.convert(d, DevoirDto.class));
+		}
+		return result;
+	}
 
 
 }

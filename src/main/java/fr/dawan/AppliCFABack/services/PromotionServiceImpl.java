@@ -107,7 +107,7 @@ public class PromotionServiceImpl implements PromotionService {
 			}
 			eDto.setCompetencesProfessionnellesDto(competenceProfessionnellesDto);
 			
-			List<ActiviteType> activiteTypes = examen.getActiviteType();
+			List<ActiviteType> activiteTypes = examen.getActiviteTypes();
 			List<ActiviteTypeDto> activiteTypesDto = new ArrayList<ActiviteTypeDto>();
 			for (ActiviteType at : activiteTypes) {
 				activiteTypesDto.add(mapper.ActiviteTypeToActiviteDto(at));

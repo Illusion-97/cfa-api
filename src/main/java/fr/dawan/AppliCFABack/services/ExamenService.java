@@ -19,6 +19,8 @@ public interface ExamenService {
 	ExamenDtoSave saveOrUpdate(ExamenDtoSave eDto) throws Exception;
 
 	void deleteById(long id);
+	
+	List<ExamenDto> findExamensByInterventionId(long id);
 
 	
 
