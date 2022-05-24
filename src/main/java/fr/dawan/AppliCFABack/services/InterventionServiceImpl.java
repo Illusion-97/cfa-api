@@ -22,7 +22,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
@@ -312,26 +311,6 @@ public class InterventionServiceImpl implements InterventionService {
 				lstPromDto.add(mapper.PromotionToPromotionDto(prom));
 		}
 		return lstPromDto;
-	}
-
-	/**
-	 * Va permettre de récupérer les devoirs 
-	 * en fonction de l'id de l'intervention
-	 * 
-	 * @param Id	Id concernant l'intervention
-	 * @return List Liste des devoirs concerné
-	 */
-	
-	@Override
-	public List<DevoirDto> findDevoirsByInterventionId(long id) {
-		List<Devoir> lsDev = devoirRepository.findAllByInterventionId(id);
-		List<DevoirDto> lsDevDto = new ArrayList<DevoirDto>();
-
-		for (Devoir dev : lsDev) {
-			if (dev != null)
-				lsDevDto.add(mapper.DevoirToDevoirDto(dev));
-		}
-		return lsDevDto;
 	}
 
 	/**

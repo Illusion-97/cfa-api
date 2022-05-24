@@ -99,11 +99,6 @@ public class InterventionController {
 		return interventionService.findPromotionsByInterventionId(id);
 	}
 
-	@GetMapping(value = "/{id}/devoirs", produces = "application/json")
-	public List<DevoirDto> findAllDevoirsByInterventionId(@PathVariable("id") long id) {
-		return interventionService.findDevoirsByInterventionId(id);
-	}
-
 	@GetMapping(value = "/{id}/formateurs", produces = "application/json")
 	public List<FormateurDto> findAllFormateursByInterventionId(@PathVariable("id") long id) {
 		return interventionService.findFormateursByInterventionsId(id);

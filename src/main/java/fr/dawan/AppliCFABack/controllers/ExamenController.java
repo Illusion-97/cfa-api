@@ -86,6 +86,11 @@ public class ExamenController {
 		else
 			return examenService.count("");
 	}
+    
+	@GetMapping(value = "/interventions/{id}", produces = "application/json")
+	public List<ExamenDto> findExamensByInterventionId (@PathVariable(value = "id") long id){
+		return examenService.findExamensByInterventionId(id);
+	}
 
 
 	// ##################################################
@@ -136,4 +141,5 @@ public class ExamenController {
 	public List<LivretEvaluationDto> getLivretEvaluation(@PathVariable("id") long id) {
 		return examenService.getLivretEvaluation(id);
 	}
+
 }

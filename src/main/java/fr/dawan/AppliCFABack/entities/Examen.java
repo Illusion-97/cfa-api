@@ -40,6 +40,16 @@ public class Examen extends BaseEntity implements Serializable {
 	@ManyToMany
 	private List<ActiviteType> activiteTypes;
 
+
+
+	/**
+	 * @param activiteTypes le activiteTypes à affecter
+	 
+	 */
+	public void setActiviteTypes(List<ActiviteType> activiteTypes) {
+		this.activiteTypes = activiteTypes;
+	}
+
 	@ManyToOne
 	private Promotion promotion;
 
@@ -169,9 +179,7 @@ public class Examen extends BaseEntity implements Serializable {
 	/**
 	 * @return les activiteTypes
 	 */
-	public List<ActiviteType> getActiviteType() {
-		return activiteTypes;
-	}
+
 
 	/**
 	 * @param activiteTypes led activiteTypes à affecter
@@ -190,6 +198,13 @@ public class Examen extends BaseEntity implements Serializable {
 			}
 		}
 		return activityteTypesId;
+	}
+
+	/**
+	 * @return le activiteTypes
+	 */
+	public List<ActiviteType> getActiviteTypes() {
+		return activiteTypes;
 	}
 
 	public List<Long> getCompetencesProfessionnellesId() {
