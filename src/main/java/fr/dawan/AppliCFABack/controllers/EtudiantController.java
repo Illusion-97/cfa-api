@@ -20,6 +20,7 @@ import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
+import fr.dawan.AppliCFABack.dto.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
@@ -154,6 +155,19 @@ public class EtudiantController {
 		return etudiantService.getAdresseByIdEtudiant(id);
 	}
 
+	/***
+	 * 
+	 * @param idIntervention : identifiant de l'intervention
+	 * @return List de EtudiantAbsencesDevoirsDto
+	 */
+	@GetMapping(value = {"/{idIntervention}/etudiants-abcences-devoirs/{search}" ,"/{idIntervention}/etudiants-abcences-devoirs" })
+	public List<EtudiantAbsencesDevoirsDto> getAllByInterventionId(@PathVariable("idIntervention") long idIntervention,
+			@PathVariable(value = "search", required = false) Optional<String> search) {
+		if (search.isPresent()) {
+			return etudiantService.getEtudiantsByInterventionId(idIntervention,search.get());
+		}
+		return etudiantService.getEtudiantsByInterventionId(idIntervention,"");
+	}
 	// ##################################################
 	// # Get : 2eme Niveau #
 	// ##################################################

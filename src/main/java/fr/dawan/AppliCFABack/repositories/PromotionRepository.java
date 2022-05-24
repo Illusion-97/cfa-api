@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,5 +58,14 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	 */
 	@Query("FROM Promotion p JOIN p.etudiants e ON e.id = :id")
 	List<Promotion> getByEtudiantId(long id);
+	
+	/***
+	 * 
+	 * @param etudiantId : identifiant de l'etudiant
+	 * @param interventionId : identifiant de l'intervention
+	 * @return return une promotion si elle existe
+	 */
+	Optional<Promotion> getByEtudiantsIdAndInterventionsId( long etudiantId, long interventionId);
+	
 
 }

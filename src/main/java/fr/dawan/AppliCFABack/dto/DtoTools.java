@@ -1,22 +1,29 @@
 package fr.dawan.AppliCFABack.dto;
 
-import fr.dawan.AppliCFABack.entities.*;
+import java.util.stream.Collectors;
+
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
+
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.Note;
-/**
- *
- * @author Valentin C, Feres BG.
- * @see fr.dawan.appliCFABack.dto
- * @since 1.0
- * @version 1.0
- * @return classe de convertion d'une entité vers DTO & vice-versa
- */
+
 import java.util.List;
 import java.util.stream.Collectors;
 
+import fr.dawan.AppliCFABack.entities.Positionnement;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+/**
+*
+* @author Valentin C, Feres BG.
+* @see fr.dawan.appliCFABack.dto
+* @since 1.0
+* @version 1.0
+* @return classe de convertion d'une entité vers DTO & vice-versa
+*/
 @Component
 public class DtoTools {
 
@@ -41,7 +48,12 @@ public class DtoTools {
 //            mapper.map(src -> src.getEtudiantNoteId(), (dest, v) -> dest.getEtudiantNote().setId((long) v));
 //
 //        });
-
+        	
+        myMapper.typeMap(Etudiant.class, EtudiantInfoInterventionDto.class).addMappings(m ->{
+        	m.map(src -> src.getId(), EtudiantInfoInterventionDto::setIdEtudiant);
+        	m.map(src -> src.getUtilisateur().getNom(), EtudiantInfoInterventionDto::setNom);
+        	m.map(src -> src.getUtilisateur().getPrenom(), EtudiantInfoInterventionDto::setPrenom);
+        });
         if (obj == null) return null;
         return myMapper.map(obj, clazz);
     }
@@ -51,6 +63,24 @@ public class DtoTools {
         mapper.createTypeMap(obj.getClass(), clazz).setConverter(converter);
         return mapper.map(obj, clazz);
     }
+
+    @SuppressWarnings("unchecked")
+	public static <TSource, TDestination> TDestination enumConvert(TSource Enum, Class<TDestination> clazz, Converter converter) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.createTypeMap(Enum, clazz).setConverter(converter);
+        return mapper.map(Enum, clazz);
+    }
+    Converter<Positionnement.Niveau, NiveauDto> NiveauEnumToNiveauDtoConverter = context -> {
+    	
+    	Positionnement.Niveau niveau =  context.getSource();
+    	
+    	NiveauDto ndto = new NiveauDto();
+    	ndto.setValeur(niveau.getValeur());
+    	ndto.setCodeCouleur(niveau.getCodeCouleur());
+    	ndto.setDescreption(niveau.getDescription());
+		return ndto;
+    	
+    };
 
     Converter<Promotion, PromotionEtudiantDto> PromotionToPromotionEtudiantDtoConverter = context -> {
 
@@ -73,8 +103,14 @@ public class DtoTools {
         return cDto;
     };
 
+
     public PromotionEtudiantDto PromotionToPromotionEtudiantDto(Promotion promotion) {
         return convert(promotion, PromotionEtudiantDto.class, PromotionToPromotionEtudiantDtoConverter);
+    };
+    
+    public NiveauDto NiveauToNiveauDto (Positionnement.Niveau niveau) {
+    	
+    	return enumConvert(niveau, NiveauDto.class, NiveauEnumToNiveauDtoConverter);
     }
 
     Converter<Examen, LivretEvaluationDto> ExamenToLivretEvaluationDtoConverter = context -> {

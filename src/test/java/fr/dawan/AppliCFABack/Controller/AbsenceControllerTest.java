@@ -59,8 +59,8 @@ public class AbsenceControllerTest {
 	public void beforeAll() throws Exception {
 		when(tokenInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		
-		absencesDto.add(new AbsenceDto(1L, 1, LocalDate.now(), LocalDate.now().plusDays(1), "bouchons", 1L, "RETARD"));
-		absencesDto.add(new AbsenceDto(2L, 1, LocalDate.now(), LocalDate.now().plusDays(1), "bouchons", 1L, "RETARD"));
+//		absencesDto.add(new AbsenceDto(1L, 1, LocalDate.now(), LocalDate.now().plusDays(1), "bouchons", 1L, "RETARD"));
+//		absencesDto.add(new AbsenceDto(2L, 1, LocalDate.now(), LocalDate.now().plusDays(1), "bouchons", 1L, "RETARD"));
 	}
 	
 	@Test

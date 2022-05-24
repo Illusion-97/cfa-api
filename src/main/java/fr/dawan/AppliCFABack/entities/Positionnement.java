@@ -6,15 +6,21 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @SuppressWarnings("serial")
 @Entity
 public class Positionnement extends BaseEntity implements Serializable {
 
-	@Enumerated(EnumType.STRING)
+	@Min(0)
+	@Max(5)
+	@Enumerated(EnumType.ORDINAL)
 	private Niveau niveauDebut;
-
-	@Enumerated(EnumType.STRING)
+	
+	@Min(0)
+	@Max(5)
+	@Enumerated(EnumType.ORDINAL)
 	private Niveau niveauFin;
 
 	public enum Niveau {
@@ -22,9 +28,74 @@ public class Positionnement extends BaseEntity implements Serializable {
 		NOTIONS(2, "#FF3300", "Notions"), ENCOURSDACQUISITION(3, "#FFCC00", "En cours d'acquisition"),
 		ACQUIS(4, "#FFFF66", "Acquis"), NIVEAUAVANCE(5, "#00FF66", "Niveau avancé");
 
-		Niveau(int i, String string, String string2) {
-			// TODO Auto-generated constructor stub
+		private int valeur;
+		
+		private String codeCouleur;
+		
+		private String description;
+		
+
+		private Niveau() {
 		}
+
+
+		private Niveau(int valeur, String codeCouleur, String description) {
+			this.valeur = valeur;
+			this.codeCouleur = codeCouleur;
+			this.description = description;
+		}
+
+
+		/**
+		 * @return le valeur
+		 */
+		public int getValeur() {
+			return valeur;
+		}
+
+
+		/**
+		 * @param valeur le valeur à affecter
+		 
+		 */
+		public void setValeur(int valeur) {
+			this.valeur = valeur;
+		}
+
+
+		/**
+		 * @return le codeCouleur
+		 */
+		public String getCodeCouleur() {
+			return codeCouleur;
+		}
+
+
+		/**
+		 * @param codeCouleur le codeCouleur à affecter
+		 
+		 */
+		public void setCodeCouleur(String codeCouleur) {
+			this.codeCouleur = codeCouleur;
+		}
+
+
+		/**
+		 * @return le description
+		 */
+		public String getDescription() {
+			return description;
+		}
+
+
+		/**
+		 * @param description le description à affecter
+		 
+		 */
+		public void setDescription(String description) {
+			this.description = description;
+		}
+		
 	}
 
 	@ManyToOne
