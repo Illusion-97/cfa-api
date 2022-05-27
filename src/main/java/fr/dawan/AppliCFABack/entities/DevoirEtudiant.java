@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /***
  * 
@@ -18,11 +20,11 @@ import javax.persistence.ManyToOne;
  */
 @SuppressWarnings("serial")
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"devoir_id", "etudiant_id" })  )
 public class DevoirEtudiant extends BaseEntity implements Serializable {
 
 	@ManyToOne
 	private Devoir devoir;
-
 	@ManyToOne
 	private Etudiant etudiant;
 
