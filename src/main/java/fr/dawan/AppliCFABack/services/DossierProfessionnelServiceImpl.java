@@ -7,15 +7,14 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
+import fr.dawan.AppliCFABack.repositories.ExperienceProfessionnelleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.entities.Cursus;
-import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
 
@@ -30,6 +29,12 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
 	@Autowired
 	private DtoMapper mapper;
+
+	@Autowired
+	private ExperienceProfessionnelleRepository experienceProfessionnelleRepository;
+
+	@Autowired
+	private CompetenceProfessionnelleRepository competenceProfessionnelleRepository;
 	
 	/**
 	 * Récupération de la liste des dossiers professionnes
@@ -153,5 +158,49 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 		}
 		return null;
 	}
+
+	@Override
+	public DossierProEtudiantDto saveOrUpdateDossierPro(DossierProEtudiantDto dpDto) {
+		DossierProfessionnel dp = DtoTools.convert(dpDto, DossierProfessionnel.class);
+
+		for (ActiviteType at : dp.getCursus().getActiviteTypes()) {
+			for (CompetenceProfessionnelle cp :  at.getCompetenceProfessionnelles()) {
+				if(cp.getExperienceProfessionnelle() != null) {
+					ExperienceProfessionnelle ex = cp.getExperienceProfessionnelle();
+					cp.setExperienceProfessionnelle(experienceProfessionnelleRepository.save(ex));
+					ActiviteType at2 = at;
+					at2.setVersion(1);
+					cp.setActiviteType(at2);
+
+					competenceProfessionnelleRepository.save(cp);
+				}
+			}
+		}
+		DossierProfessionnel dpDb = dossierProRepo.save(dp);
+		return DtoTools.convert(dpDb, DossierProEtudiantDto.class);
+	}
+
+	@Override
+	public List<DossierProEtudiantDto> getAllDossierPro() {
+		List<DossierProfessionnel> lstDossierProfessionnel= dossierProRepo.findAll();
+		List<DossierProEtudiantDto> lstDossierProfessionnelDto= new ArrayList<>();
+
+		for (DossierProfessionnel dp : lstDossierProfessionnel) {
+			DossierProEtudiantDto dpDto = DtoTools.convert(dp, DossierProEtudiantDto.class);
+			lstDossierProfessionnelDto.add(dpDto);
+		}
+		return lstDossierProfessionnelDto;
+	}
+
+	@Override
+	public DossierProEtudiantDto getDossierProById(long id) {
+		Optional<DossierProfessionnel> dp = dossierProRepo.findById(id);
+		if(dp.isPresent()) {
+			DossierProEtudiantDto dpDto =DtoTools.convert(dp, DossierProEtudiantDto.class);
+			return dpDto;
+		}
+		return null;
+	}
+
 
 }

@@ -11,7 +11,7 @@ public class ExperienceProfessionnelleDto implements Serializable {
     private String collaborateur;
     private String contexte;
     private String information;
-    private CompetenceProfessionnelleDto competenceProfessionnelleDto;
+    private int version;
 
     public String getTacheRealisee() {
         return tacheRealisee;
@@ -53,14 +53,6 @@ public class ExperienceProfessionnelleDto implements Serializable {
         this.information = information;
     }
 
-    public CompetenceProfessionnelleDto getCompetenceProfessionnelleDto() {
-        return competenceProfessionnelleDto;
-    }
-
-    public void setCompetenceProfessionnelleDto(CompetenceProfessionnelleDto competenceProfessionnelleDto) {
-        this.competenceProfessionnelleDto = competenceProfessionnelleDto;
-    }
-
     public long getId() {
         return id;
     }
@@ -68,4 +60,13 @@ public class ExperienceProfessionnelleDto implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
 }

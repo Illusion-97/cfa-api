@@ -2,7 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
 import java.util.List;
-
+import javax.persistence.OneToOne;
 import javax.persistence.*;
 
 /***
@@ -24,10 +24,10 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 	@Column(nullable = false)
 	private byte numeroFiche;
 
-	@ManyToMany(mappedBy = "competencesProfessionnelles")
+	@ManyToMany(mappedBy = "competencesProfessionnelles", fetch = FetchType.LAZY)
 	private List<Examen> examens;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private ActiviteType activiteType;
 
 	@OneToOne

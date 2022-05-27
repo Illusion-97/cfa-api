@@ -69,7 +69,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-23T18:11:54+0200",
+    date = "2022-05-25T17:54:02+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.14.1 (Amazon.com Inc.)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -82,10 +82,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto();
 
-        competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
-        competenceProfessionnelleDto.setVersion( competenceProfessionnelle.getVersion() );
         competenceProfessionnelleDto.setLibelle( competenceProfessionnelle.getLibelle() );
         competenceProfessionnelleDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
+        competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
 
         return competenceProfessionnelleDto;
     }
@@ -682,10 +681,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto();
 
-        competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
-        competenceProfessionnelleDto.setVersion( competenceProfessionnelle.getVersion() );
         competenceProfessionnelleDto.setLibelle( competenceProfessionnelle.getLibelle() );
         competenceProfessionnelleDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
+        competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
 
         return competenceProfessionnelleDto;
     }
@@ -767,6 +765,7 @@ public class DtoMapperImpl implements DtoMapper {
         experienceProfessionnelleDto.setContexte( experienceProfessionnelle.getContexte() );
         experienceProfessionnelleDto.setInformation( experienceProfessionnelle.getInformation() );
         experienceProfessionnelleDto.setId( experienceProfessionnelle.getId() );
+        experienceProfessionnelleDto.setVersion( experienceProfessionnelle.getVersion() );
 
         return experienceProfessionnelleDto;
     }

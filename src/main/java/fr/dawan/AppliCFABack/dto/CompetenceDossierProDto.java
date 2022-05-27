@@ -1,6 +1,9 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class CompetenceDossierProDto {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class CompetenceDossierProDto implements Serializable {
 
     private long id;
 

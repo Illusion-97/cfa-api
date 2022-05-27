@@ -107,5 +107,23 @@ public class DossierProfessionnelController {
 		return dp;
 	}
 
+	@PostMapping(value = "/save/etudiant", consumes = "application/json", produces = "application/json")
+	public DossierProEtudiantDto saveDossierPro(@RequestBody DossierProEtudiantDto dpDto) {
+		return dossierProService.saveOrUpdateDossierPro(dpDto);
+	}
 
+	@GetMapping(value = "/etudiant",produces = "application/json")
+	public List<DossierProEtudiantDto> getAllDossierPro() {
+		return dossierProService.getAllDossierPro();
+	}
+
+	@GetMapping(value = "/etudiant-dossier-pro/{id}", produces = "application/json")
+	public DossierProEtudiantDto getDossierProById(@PathVariable("id") long id) {
+		return dossierProService.getDossierProById(id);
+	}
+
+	@PutMapping(value = "/update/etudiant/{id}", consumes = "application/json", produces = "application/json")
+	public DossierProEtudiantDto updateDossier(@PathVariable("id") long id, @RequestBody DossierProEtudiantDto dpDto) {
+		return dossierProService.saveOrUpdateDossierPro(dpDto);
+	}
 }

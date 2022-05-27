@@ -1,8 +1,9 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class ActiviteTypeDossierProDto {
+public class ActiviteTypeDossierProDto implements Serializable {
 
     private long id;
     private String libelle;

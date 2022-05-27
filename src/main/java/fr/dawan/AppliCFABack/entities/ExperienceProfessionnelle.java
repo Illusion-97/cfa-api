@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 

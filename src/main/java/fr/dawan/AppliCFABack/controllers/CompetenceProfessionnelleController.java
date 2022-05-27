@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.CompetenceDossierProDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

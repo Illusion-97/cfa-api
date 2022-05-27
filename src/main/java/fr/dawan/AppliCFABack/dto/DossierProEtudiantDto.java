@@ -8,7 +8,7 @@ public class DossierProEtudiantDto implements Serializable {
 
     private long id;
     private String nom;
-    private List<CursusDossierProDto> cursus;
+    private CursusDossierProDto cursus;
 
     public long getId() {
         return id;
@@ -26,11 +26,11 @@ public class DossierProEtudiantDto implements Serializable {
         this.nom = nom;
     }
 
-    public List<CursusDossierProDto> getCursus() {
+    public CursusDossierProDto getCursus() {
         return cursus;
     }
 
-    public void setCursus(List<CursusDossierProDto> cursus) {
+    public void setCursus(CursusDossierProDto cursus) {
         this.cursus = cursus;
     }
 }

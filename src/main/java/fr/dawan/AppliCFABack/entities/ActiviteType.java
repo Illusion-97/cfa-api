@@ -34,7 +34,7 @@ public class ActiviteType extends BaseEntity implements Serializable {
 	@ManyToMany(mappedBy = "activiteTypes", cascade = CascadeType.ALL)
 	private List<Examen> examens;
 
-	@OneToMany(mappedBy = "activiteType")
+	@OneToMany(mappedBy = "activiteType", cascade = CascadeType.ALL)
 	private Set<CompetenceProfessionnelle> competenceProfessionnelles;
 
 	@ManyToOne

@@ -1,12 +1,14 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
-public class CursusDossierProDto {
+public class CursusDossierProDto implements Serializable {
 
     private long id;
     private String titre;
-    private List<ActiviteTypeDossierProDto> activites;
+    private Set<ActiviteTypeDossierProDto> activiteTypes;
 
     public String getTitre() {
         return titre;
@@ -16,12 +18,12 @@ public class CursusDossierProDto {
         this.titre = titre;
     }
 
-    public List<ActiviteTypeDossierProDto> getActivites() {
-        return activites;
+    public Set<ActiviteTypeDossierProDto> getActiviteTypes() {
+        return activiteTypes;
     }
 
-    public void setActivites(List<ActiviteTypeDossierProDto> activites) {
-        this.activites = activites;
+    public void setActiviteTypes(Set<ActiviteTypeDossierProDto> activiteTypes) {
+        this.activiteTypes = activiteTypes;
     }
 
     public long getId() {
