@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import fr.dawan.AppliCFABack.dto.BaseEntityDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.services.GenericService;
 
@@ -21,7 +22,7 @@ import fr.dawan.AppliCFABack.services.GenericService;
  * @version 1.0
  * @return Controller générique
  */
-public abstract class GenericController<TDto> {
+public abstract class GenericController<TDto extends BaseEntityDto> {
 
 	protected final GenericService<TDto> service;
 

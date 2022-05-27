@@ -41,7 +41,7 @@ public interface DevoirEtudiantRepository extends JpaRepository<DevoirEtudiant, 
 	 * @param etudiantId : identifiant de l'etudiant 
 	 * @return  list des devoirsEtudiant par intervention et etudiant
 	 */
-	@Query("SELECT de FROM DevoirEtudiant de JOIN Devoir d ON d.intervention.id = :interventionId JOIN Etudiant e  ON e.id = :etudiantId")
+	@Query("SELECT DISTINCT de FROM DevoirEtudiant de JOIN Devoir d ON d.intervention.id = :interventionId JOIN Etudiant e  ON e.id = :etudiantId")
 	List<DevoirEtudiant> getAllDevoirsEtudiantByInterventionId(long interventionId, long etudiantId);
 	
 }

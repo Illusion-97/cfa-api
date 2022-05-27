@@ -19,11 +19,28 @@ public class EtudiantAbsencesDevoirsDto implements Serializable {
 	private List<AbsenceDto> absences;
 	
 	private List<DevoirEtudiantDto> devoirs;
+	
+	private PositionnementDto positionnement;
 
 	private NiveauDto niveauDebut;
 	
 	private NiveauDto niveauFin;
 	
+	
+	/**
+	 * @return le positionnement
+	 */
+	public PositionnementDto getPositionnement() {
+		return positionnement;
+	}
+
+	/**
+	 * @param positionnement le positionnement à affecter
+	 
+	 */
+	public void setPositionnement(PositionnementDto positionnement) {
+		this.positionnement = positionnement;
+	}
 
 	/**
 	 * @return le niveauDebut

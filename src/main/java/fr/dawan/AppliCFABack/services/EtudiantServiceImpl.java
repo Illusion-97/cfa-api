@@ -779,6 +779,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 				Positionnement.Niveau nDebut = positionnement.get().getNiveauDebut();
 				Positionnement.Niveau nFin = positionnement.get().getNiveauFin();
 				DtoTools mappeur = new DtoTools();
+				etudiantAbsencesDevoirsDto.setPositionnement(DtoTools.convert(positionnement, PositionnementDto.class));
 				etudiantAbsencesDevoirsDto.setNiveauDebut(mappeur.NiveauToNiveauDto(nDebut));
 				etudiantAbsencesDevoirsDto.setNiveauFin(mappeur.NiveauToNiveauDto(nFin));
 			}
