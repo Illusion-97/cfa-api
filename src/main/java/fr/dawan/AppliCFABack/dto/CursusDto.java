@@ -17,7 +17,7 @@ public class CursusDto extends BaseEntityDto implements Serializable {
 	private String titre;
 	private List<FormationDto> formationsDto;
 	private String description;
-	private int duree;
+	private String duree;
 
 	public CursusDto() {
 		super();
@@ -68,14 +68,14 @@ public class CursusDto extends BaseEntityDto implements Serializable {
 	/**
 	 * @return the duree
 	 */
-	public int getDuree() {
+	public String getDuree() {
 		return duree;
 	}
 
 	/**
 	 * @param duree the duree to set
 	 */
-	public void setDuree(int duree) {
+	public void setDuree(String duree) {
 		this.duree = duree;
 	}
 

@@ -9,7 +9,7 @@ public class PromotionEtudiantDto {
 
     private String cursusDescription;
 
-    private int cursusDuree;
+    private String cursusDuree;
 
     private String nom;
 
@@ -35,11 +35,11 @@ public class PromotionEtudiantDto {
         this.cursusDescription = cursusDescription;
     }
 
-    public int getCursusDuree() {
+    public String getCursusDuree() {
         return cursusDuree;
     }
 
-    public void setCursusDuree(int cursusDuree) {
+    public void setCursusDuree(String cursusDuree) {
         this.cursusDuree = cursusDuree;
     }
 

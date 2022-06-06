@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +15,7 @@ public interface CursusRepository extends JpaRepository<Cursus, Long> {
 	Page<Cursus> findDistinctByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(String search, String search2, Pageable pageable);
 
 	long countDistinctByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(String search, String search2);
+	
+	Optional<Cursus> findByIdDg2(long cursusId);
 
 }
