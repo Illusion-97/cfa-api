@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Cursus extends BaseEntity implements Serializable { // cursus du catalogue Dev Full Stack
 
-	@Column(nullable = false, length = 255)
+	@Column(nullable = false, length = 255) //title dg2
 	private String titre;
 
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -26,7 +26,14 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 	@Column(columnDefinition = "TEXT")
 	private String description;
 
-	private int duree;
+	@Column(nullable = false, length = 255) // attribut de dg2
+	private String duree;
+	
+	@Column(nullable = false, length = 255, unique = true) // attribut de dg2
+	private String slug;
+	
+	@Column(nullable = true) // pour recupérer l'id dg2
+	private long idDg2;
 
 	public Cursus() {
 		super();
@@ -36,6 +43,19 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 		super();
 		this.titre = titre;
 		this.formations = formations;
+	}
+	
+
+	public Cursus(String titre, List<Formation> formations, Set<ActiviteType> activiteTypes, String description,
+			String duree, String slug, long idDg2) {
+		super();
+		this.titre = titre;
+		this.formations = formations;
+		this.activiteTypes = activiteTypes;
+		this.description = description;
+		this.duree = duree;
+		this.slug = slug;
+		this.idDg2 = idDg2;
 	}
 
 	public String getTitre() {
@@ -70,12 +90,75 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 		this.description = description;
 	}
 
-	public int getDuree() {
+	public String getDuree() {
 		return duree;
 	}
 
-	public void setDuree(int duree) {
+	public void setDuree(String duree) {
 		this.duree = duree;
 	}
+
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((duree == null) ? 0 : duree.hashCode());
+		result = prime * result + ((formations == null) ? 0 : formations.hashCode());
+		result = prime * result + ((slug == null) ? 0 : slug.hashCode());
+		result = prime * result + ((titre == null) ? 0 : titre.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cursus other = (Cursus) obj;
+		if (duree == null) {
+			if (other.duree != null)
+				return false;
+		} else if (!duree.equals(other.duree))
+			return false;
+		if (formations == null) {
+			if (other.formations != null)
+				return false;
+		} else if (!formations.equals(other.formations))
+			return false;
+		if (slug == null) {
+			if (other.slug != null)
+				return false;
+		} else if (!slug.equals(other.slug))
+			return false;
+		if (titre == null) {
+			if (other.titre != null)
+				return false;
+		} else if (!titre.equals(other.titre))
+			return false;
+		return true;
+	}
+	
+	
+	
+	
 
 }

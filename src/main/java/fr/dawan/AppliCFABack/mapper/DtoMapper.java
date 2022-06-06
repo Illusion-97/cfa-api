@@ -14,6 +14,7 @@ import fr.dawan.AppliCFABack.dto.CerfaDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.ContratDto;
+import fr.dawan.AppliCFABack.dto.CursusDG2Dto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
@@ -174,10 +175,18 @@ public interface DtoMapper {
 	@Mapping(source = "title", target = "titre")
 	@Mapping(source = "duration", target = "duration")
 	Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
-
+	
+	@Mapping(target = "activiteTypes", ignore = true)
+	@Mapping(target = "description", ignore = true)
 	@Mapping(target = "formations", ignore = true)
-	@Mapping(source = "slug", target = "titre")
-	Cursus cursusDG2DtoToCursus(InterventionDG2Dto cursusDG2Dto);
+	@Mapping(source = "id", target = "idDg2")
+	@Mapping(source = "title", target = "titre")
+	@Mapping(source = "duration", target = "duree")
+	Cursus cursusDG2DtoToCursus(CursusDG2Dto cursusDG2Dto);
+
+//	@Mapping(target = "formations", ignore = true)
+//	@Mapping(source = "slug", target = "titre")
+//	Cursus cursusDG2DtoToCursus(InterventionDG2Dto cursusDG2Dto);
 
 	List<Cursus> lstCursusDG2DtoToListCursus(List<InterventionDG2Dto> lstCurusDto);
 

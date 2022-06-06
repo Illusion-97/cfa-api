@@ -24,4 +24,6 @@ public interface CursusService {
 
 	List<PromotionDto> getPromotionsById(long id);
 
+	void fetchDG2Cursus(String email, String password) throws Exception;
+
 }

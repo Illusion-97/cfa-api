@@ -9,6 +9,7 @@ import fr.dawan.AppliCFABack.dto.CerfaDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.ContratDto;
+import fr.dawan.AppliCFABack.dto.CursusDG2Dto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
@@ -67,8 +68,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-24T15:33:45+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
+    date = "2022-06-06T14:50:22+0200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -114,10 +115,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         adresseDto.setId( adresse.getId() );
         adresseDto.setVersion( adresse.getVersion() );
+        adresseDto.setCodePostal( adresse.getCodePostal() );
         adresseDto.setNumero( adresse.getNumero() );
         adresseDto.setRue( adresse.getRue() );
         adresseDto.setVille( adresse.getVille() );
-        adresseDto.setCodePostal( adresse.getCodePostal() );
 
         return adresseDto;
     }
@@ -146,8 +147,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         centreFormationDto.setId( centreFormation.getId() );
         centreFormationDto.setVersion( centreFormation.getVersion() );
-        centreFormationDto.setIdDg2( centreFormation.getIdDg2() );
         centreFormationDto.setCountryCode( centreFormation.getCountryCode() );
+        centreFormationDto.setIdDg2( centreFormation.getIdDg2() );
         centreFormationDto.setNom( centreFormation.getNom() );
 
         return centreFormationDto;
@@ -165,10 +166,10 @@ public class DtoMapperImpl implements DtoMapper {
         congeDto.setVersion( conge.getVersion() );
         congeDto.setDateDebut( conge.getDateDebut() );
         congeDto.setDateFin( conge.getDateFin() );
-        congeDto.setMotif( conge.getMotif() );
-        congeDto.setType( conge.getType() );
-        congeDto.setStatus( conge.getStatus() );
         congeDto.setJustificatif( conge.getJustificatif() );
+        congeDto.setMotif( conge.getMotif() );
+        congeDto.setStatus( conge.getStatus() );
+        congeDto.setType( conge.getType() );
 
         return congeDto;
     }
@@ -183,9 +184,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         cursusDto.setId( cursus.getId() );
         cursusDto.setVersion( cursus.getVersion() );
-        cursusDto.setTitre( cursus.getTitre() );
         cursusDto.setDescription( cursus.getDescription() );
         cursusDto.setDuree( cursus.getDuree() );
+        cursusDto.setTitre( cursus.getTitre() );
 
         return cursusDto;
     }
@@ -217,11 +218,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         entrepriseDto.setId( entreprise.getId() );
         entrepriseDto.setVersion( entreprise.getVersion() );
-        entrepriseDto.setRaisonSociale( entreprise.getRaisonSociale() );
-        entrepriseDto.setSiret( entreprise.getSiret() );
-        entrepriseDto.setNaf( entreprise.getNaf() );
         entrepriseDto.setEffectifTotal( entreprise.getEffectifTotal() );
         entrepriseDto.setEmployeurType( entreprise.getEmployeurType() );
+        entrepriseDto.setNaf( entreprise.getNaf() );
+        entrepriseDto.setRaisonSociale( entreprise.getRaisonSociale() );
+        entrepriseDto.setSiret( entreprise.getSiret() );
 
         return entrepriseDto;
     }
@@ -253,11 +254,11 @@ public class DtoMapperImpl implements DtoMapper {
         examenDto.setPromotionId( examenPromotionId( examen ) );
         examenDto.setId( examen.getId() );
         examenDto.setVersion( examen.getVersion() );
-        examenDto.setTitre( examen.getTitre() );
+        examenDto.setDateExamen( examen.getDateExamen() );
         examenDto.setDescriptif( examen.getDescriptif() );
         examenDto.setDuree( examen.getDuree() );
         examenDto.setPieceJointe( examen.getPieceJointe() );
-        examenDto.setDateExamen( examen.getDateExamen() );
+        examenDto.setTitre( examen.getTitre() );
 
         return examenDto;
     }
@@ -287,11 +288,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         formationDto.setId( formation.getId() );
         formationDto.setVersion( formation.getVersion() );
-        formationDto.setTitre( formation.getTitre() );
         formationDto.setContenu( formation.getContenu() );
-        formationDto.setIdDg2( formation.getIdDg2() );
         formationDto.setDuration( formation.getDuration() );
+        formationDto.setIdDg2( formation.getIdDg2() );
         formationDto.setSlug( formation.getSlug() );
+        formationDto.setTitre( formation.getTitre() );
 
         return formationDto;
     }
@@ -339,8 +340,8 @@ public class DtoMapperImpl implements DtoMapper {
         noteDto.setId( note.getId() );
         noteDto.setVersion( note.getVersion() );
         noteDto.setNoteObtenue( note.getNoteObtenue() );
-        noteDto.setSatisfaction( note.getSatisfaction() );
         noteDto.setObservation( note.getObservation() );
+        noteDto.setSatisfaction( note.getSatisfaction() );
 
         return noteDto;
     }
@@ -371,8 +372,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         projetDto.setId( projet.getId() );
         projetDto.setVersion( projet.getVersion() );
-        projetDto.setNom( projet.getNom() );
         projetDto.setDescription( projet.getDescription() );
+        projetDto.setNom( projet.getNom() );
 
         return projetDto;
     }
@@ -388,9 +389,9 @@ public class DtoMapperImpl implements DtoMapper {
         promotionDto.setCursusDto( CursusToCursusDto( promotion.getCursus() ) );
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
-        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
+        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }
@@ -405,12 +406,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         utilisateurDto.setId( utilisateur.getId() );
         utilisateurDto.setVersion( utilisateur.getVersion() );
-        utilisateurDto.setLogin( utilisateur.getLogin() );
-        utilisateurDto.setPassword( utilisateur.getPassword() );
-        utilisateurDto.setPrenom( utilisateur.getPrenom() );
-        utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setCivilite( utilisateur.getCivilite() );
         utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
+        utilisateurDto.setLogin( utilisateur.getLogin() );
+        utilisateurDto.setNom( utilisateur.getNom() );
+        utilisateurDto.setPassword( utilisateur.getPassword() );
+        utilisateurDto.setPrenom( utilisateur.getPrenom() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
 
         return utilisateurDto;
@@ -441,12 +442,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         fichePosteDto.setId( fichePoste.getId() );
         fichePosteDto.setVersion( fichePoste.getVersion() );
-        fichePosteDto.setIntitule( fichePoste.getIntitule() );
-        fichePosteDto.setNature( fichePoste.getNature() );
-        fichePosteDto.setMission( fichePoste.getMission() );
         fichePosteDto.setCompositionService( fichePoste.getCompositionService() );
-        fichePosteDto.setPositionnement( fichePoste.getPositionnement() );
+        fichePosteDto.setIntitule( fichePoste.getIntitule() );
+        fichePosteDto.setMission( fichePoste.getMission() );
         fichePosteDto.setMissionPrincipale( fichePoste.getMissionPrincipale() );
+        fichePosteDto.setNature( fichePoste.getNature() );
+        fichePosteDto.setPositionnement( fichePoste.getPositionnement() );
 
         return fichePosteDto;
     }
@@ -492,16 +493,16 @@ public class DtoMapperImpl implements DtoMapper {
 
         ficheEntrepriseDto.setId( FicheEntreprise.getId() );
         ficheEntrepriseDto.setVersion( FicheEntreprise.getVersion() );
-        ficheEntrepriseDto.setHistorique( FicheEntreprise.getHistorique() );
-        ficheEntrepriseDto.setNomDirigeant( FicheEntreprise.getNomDirigeant() );
-        ficheEntrepriseDto.setSecteurActivite( FicheEntreprise.getSecteurActivite() );
-        ficheEntrepriseDto.setOrganisationType( FicheEntreprise.getOrganisationType() );
-        ficheEntrepriseDto.setNbSalarie( FicheEntreprise.getNbSalarie() );
-        ficheEntrepriseDto.setChiffreAffaireAnnuel( FicheEntreprise.getChiffreAffaireAnnuel() );
         ficheEntrepriseDto.setActiviteDescription( FicheEntreprise.getActiviteDescription() );
+        ficheEntrepriseDto.setChiffreAffaireAnnuel( FicheEntreprise.getChiffreAffaireAnnuel() );
         ficheEntrepriseDto.setClientType( FicheEntreprise.getClientType() );
         ficheEntrepriseDto.setFormationProfil( FicheEntreprise.getFormationProfil() );
+        ficheEntrepriseDto.setHistorique( FicheEntreprise.getHistorique() );
         ficheEntrepriseDto.setMetiersExerces( FicheEntreprise.getMetiersExerces() );
+        ficheEntrepriseDto.setNbSalarie( FicheEntreprise.getNbSalarie() );
+        ficheEntrepriseDto.setNomDirigeant( FicheEntreprise.getNomDirigeant() );
+        ficheEntrepriseDto.setOrganisationType( FicheEntreprise.getOrganisationType() );
+        ficheEntrepriseDto.setSecteurActivite( FicheEntreprise.getSecteurActivite() );
 
         return ficheEntrepriseDto;
     }
@@ -546,94 +547,94 @@ public class DtoMapperImpl implements DtoMapper {
 
         cerfaDto.setId( cerfa.getId() );
         cerfaDto.setVersion( cerfa.getVersion() );
-        cerfaDto.setModeContractuelApprentissage( cerfa.getModeContractuelApprentissage() );
-        cerfaDto.setComplementEmployeur( cerfa.getComplementEmployeur() );
-        cerfaDto.setEmployeurType( cerfa.getEmployeurType() );
-        cerfaDto.setAssuranceChomage( cerfa.getAssuranceChomage() );
-        cerfaDto.setComplementApprentit( cerfa.getComplementApprentit() );
-        cerfaDto.setComplementRepresentant( cerfa.getComplementRepresentant() );
-        cerfaDto.setEgilibiliteFonction( cerfa.getEgilibiliteFonction() );
-        cerfaDto.setComplementResponsable( cerfa.getComplementResponsable() );
-        cerfaDto.setFaitA( cerfa.getFaitA() );
-        cerfaDto.setEmployeurPriveOuPublic( cerfa.getEmployeurPriveOuPublic() );
-        cerfaDto.setNomEmployeur( cerfa.getNomEmployeur() );
-        cerfaDto.setPrenomEmployeur( cerfa.getPrenomEmployeur() );
-        cerfaDto.setAdresseEmployeur( AdresseToAdresseDto( cerfa.getAdresseEmployeur() ) );
-        cerfaDto.setTelEmployeur( cerfa.getTelEmployeur() );
-        cerfaDto.setEmailEmployeur( cerfa.getEmailEmployeur() );
-        cerfaDto.setSiretEtablissement( cerfa.getSiretEtablissement() );
-        cerfaDto.setEmployeurSpecifique( cerfa.getEmployeurSpecifique() );
-        cerfaDto.setNaf( cerfa.getNaf() );
-        cerfaDto.setEffectifEntreprise( cerfa.getEffectifEntreprise() );
-        cerfaDto.setConventionCollectiveApplicable( cerfa.getConventionCollectiveApplicable() );
-        cerfaDto.setCodeIdccConvention( cerfa.getCodeIdccConvention() );
-        cerfaDto.setNomNaissanceApprenti( cerfa.getNomNaissanceApprenti() );
-        cerfaDto.setPrenomApprenti( cerfa.getPrenomApprenti() );
-        cerfaDto.setNirApprenti( cerfa.getNirApprenti() );
-        cerfaDto.setDateDeNaissance( cerfa.getDateDeNaissance() );
-        cerfaDto.setSexe( cerfa.getSexe() );
         cerfaDto.setAdresseApprenti( AdresseToAdresseDto( cerfa.getAdresseApprenti() ) );
-        cerfaDto.setDepartementNaissance( cerfa.getDepartementNaissance() );
+        cerfaDto.setAdresseEmployeur( AdresseToAdresseDto( cerfa.getAdresseEmployeur() ) );
+        cerfaDto.setAdresseRepresentant( AdresseToAdresseDto( cerfa.getAdresseRepresentant() ) );
+        cerfaDto.setAdresseResponsable( AdresseToAdresseDto( cerfa.getAdresseResponsable() ) );
+        cerfaDto.setAssuranceChomage( cerfa.getAssuranceChomage() );
+        cerfaDto.setAutre( cerfa.getAutre() );
+        cerfaDto.setCaisseDeRetraite( cerfa.getCaisseDeRetraite() );
+        cerfaDto.setCfaEntreprise( cerfa.getCfaEntreprise() );
+        cerfaDto.setCfaResponsable( cerfa.getCfaResponsable() );
+        cerfaDto.setCfaSiret( cerfa.getCfaSiret() );
+        cerfaDto.setCfaUai( cerfa.getCfaUai() );
+        cerfaDto.setCodeIdccConvention( cerfa.getCodeIdccConvention() );
+        cerfaDto.setCodeRncp( cerfa.getCodeRncp() );
         cerfaDto.setCommuneNaissance( cerfa.getCommuneNaissance() );
-        cerfaDto.setTelApprenti( cerfa.getTelApprenti() );
-        cerfaDto.setEmailApprenti( cerfa.getEmailApprenti() );
-        cerfaDto.setNationalite( cerfa.getNationalite() );
-        cerfaDto.setRegimeSocial( cerfa.getRegimeSocial() );
-        cerfaDto.setSportifs( cerfa.getSportifs() );
-        cerfaDto.setHandicape( cerfa.getHandicape() );
-        cerfaDto.setSituationAvantContrat( cerfa.getSituationAvantContrat() );
+        cerfaDto.setComplementApprentit( cerfa.getComplementApprentit() );
+        cerfaDto.setComplementEmployeur( cerfa.getComplementEmployeur() );
+        cerfaDto.setComplementRepresentant( cerfa.getComplementRepresentant() );
+        cerfaDto.setComplementResponsable( cerfa.getComplementResponsable() );
+        cerfaDto.setContratNum( cerfa.getContratNum() );
+        cerfaDto.setContratType( cerfa.getContratType() );
+        cerfaDto.setConventionCollectiveApplicable( cerfa.getConventionCollectiveApplicable() );
+        cerfaDto.setDateAvenant( cerfa.getDateAvenant() );
+        cerfaDto.setDateConclusion( cerfa.getDateConclusion() );
+        cerfaDto.setDateDeNaissance( cerfa.getDateDeNaissance() );
+        cerfaDto.setDateDeNaissanceDeuxiemeTuteur( cerfa.getDateDeNaissanceDeuxiemeTuteur() );
+        cerfaDto.setDateDeNaissancePremierTuteur( cerfa.getDateDeNaissancePremierTuteur() );
+        cerfaDto.setDateDebutContrat( cerfa.getDateDebutContrat() );
+        cerfaDto.setDateDebutFormation( cerfa.getDateDebutFormation() );
+        cerfaDto.setDateDecision( cerfa.getDateDecision() );
+        cerfaDto.setDateExamen( cerfa.getDateExamen() );
+        cerfaDto.setDateFinContrat( cerfa.getDateFinContrat() );
+        cerfaDto.setDepartementNaissance( cerfa.getDepartementNaissance() );
         cerfaDto.setDernierDiplome( cerfa.getDernierDiplome() );
         cerfaDto.setDerniereClasseSuivi( cerfa.getDerniereClasseSuivi() );
-        cerfaDto.setIntitulePrecisDernierDiplome( cerfa.getIntitulePrecisDernierDiplome() );
-        cerfaDto.setDiplomeLePlusEleveObtenu( cerfa.getDiplomeLePlusEleveObtenu() );
-        cerfaDto.setNomRepresentant( cerfa.getNomRepresentant() );
-        cerfaDto.setPrenomRepresentant( cerfa.getPrenomRepresentant() );
-        cerfaDto.setAdresseRepresentant( AdresseToAdresseDto( cerfa.getAdresseRepresentant() ) );
-        cerfaDto.setNomPremierTuteur( cerfa.getNomPremierTuteur() );
-        cerfaDto.setPrenomPremierTuteur( cerfa.getPrenomPremierTuteur() );
-        cerfaDto.setDateDeNaissancePremierTuteur( cerfa.getDateDeNaissancePremierTuteur() );
-        cerfaDto.setNomDeuxiemeTuteur( cerfa.getNomDeuxiemeTuteur() );
-        cerfaDto.setPrenomDeuxiemeTuteur( cerfa.getPrenomDeuxiemeTuteur() );
-        cerfaDto.setDateDeNaissanceDeuxiemeTuteur( cerfa.getDateDeNaissanceDeuxiemeTuteur() );
-        cerfaDto.setContratType( cerfa.getContratType() );
         cerfaDto.setDerogationType( cerfa.getDerogationType() );
-        cerfaDto.setContratNum( cerfa.getContratNum() );
-        cerfaDto.setDateConclusion( cerfa.getDateConclusion() );
-        cerfaDto.setDateDebutContrat( cerfa.getDateDebutContrat() );
-        cerfaDto.setDateAvenant( cerfa.getDateAvenant() );
-        cerfaDto.setDateFinContrat( cerfa.getDateFinContrat() );
+        cerfaDto.setDiplomeCode( cerfa.getDiplomeCode() );
+        cerfaDto.setDiplomeLePlusEleveObtenu( cerfa.getDiplomeLePlusEleveObtenu() );
+        cerfaDto.setDiplomeVise( cerfa.getDiplomeVise() );
+        cerfaDto.setEffectifEntreprise( cerfa.getEffectifEntreprise() );
+        cerfaDto.setEgilibiliteFonction( cerfa.getEgilibiliteFonction() );
+        cerfaDto.setEmailApprenti( cerfa.getEmailApprenti() );
+        cerfaDto.setEmailEmployeur( cerfa.getEmailEmployeur() );
+        cerfaDto.setEmployeurPriveOuPublic( cerfa.getEmployeurPriveOuPublic() );
+        cerfaDto.setEmployeurSpecifique( cerfa.getEmployeurSpecifique() );
+        cerfaDto.setEmployeurType( cerfa.getEmployeurType() );
+        cerfaDto.setEtudiant( EtudiantToEtudiantDto( cerfa.getEtudiant() ) );
+        cerfaDto.setFaitA( cerfa.getFaitA() );
+        cerfaDto.setFormationDuree( cerfa.getFormationDuree() );
+        cerfaDto.setHandicape( cerfa.getHandicape() );
         cerfaDto.setHeureTravail( cerfa.getHeureTravail() );
-        cerfaDto.setMinuteTravail( cerfa.getMinuteTravail() );
+        cerfaDto.setIntitulePrecisDernierDiplome( cerfa.getIntitulePrecisDernierDiplome() );
+        cerfaDto.setIntitulePrecisDiplomeVise( cerfa.getIntitulePrecisDiplomeVise() );
+        cerfaDto.setLogement( cerfa.getLogement() );
         cerfaDto.setMachineRisque( cerfa.getMachineRisque() );
+        cerfaDto.setMinuteTravail( cerfa.getMinuteTravail() );
+        cerfaDto.setModeContractuelApprentissage( cerfa.getModeContractuelApprentissage() );
+        cerfaDto.setNaf( cerfa.getNaf() );
+        cerfaDto.setNationalite( cerfa.getNationalite() );
+        cerfaDto.setNirApprenti( cerfa.getNirApprenti() );
+        cerfaDto.setNomDeuxiemeTuteur( cerfa.getNomDeuxiemeTuteur() );
+        cerfaDto.setNomEmployeur( cerfa.getNomEmployeur() );
+        cerfaDto.setNomNaissanceApprenti( cerfa.getNomNaissanceApprenti() );
+        cerfaDto.setNomOrganisme( cerfa.getNomOrganisme() );
+        cerfaDto.setNomPremierTuteur( cerfa.getNomPremierTuteur() );
+        cerfaDto.setNomRepresentant( cerfa.getNomRepresentant() );
+        cerfaDto.setNourriture( cerfa.getNourriture() );
+        cerfaDto.setNumAvenant( cerfa.getNumAvenant() );
+        cerfaDto.setNumDepot( cerfa.getNumDepot() );
+        cerfaDto.setPrenomApprenti( cerfa.getPrenomApprenti() );
+        cerfaDto.setPrenomDeuxiemeTuteur( cerfa.getPrenomDeuxiemeTuteur() );
+        cerfaDto.setPrenomEmployeur( cerfa.getPrenomEmployeur() );
+        cerfaDto.setPrenomPremierTuteur( cerfa.getPrenomPremierTuteur() );
+        cerfaDto.setPrenomRepresentant( cerfa.getPrenomRepresentant() );
+        cerfaDto.setReceptionDossier( cerfa.getReceptionDossier() );
+        cerfaDto.setRegimeSocial( cerfa.getRegimeSocial() );
         cerfaDto.setRemuneration1( RemunerationTORemunerationDto( cerfa.getRemuneration1() ) );
         cerfaDto.setRemuneration2( RemunerationTORemunerationDto( cerfa.getRemuneration2() ) );
         cerfaDto.setRemuneration3( RemunerationTORemunerationDto( cerfa.getRemuneration3() ) );
         cerfaDto.setRemuneration4( RemunerationTORemunerationDto( cerfa.getRemuneration4() ) );
         cerfaDto.setSalaireBrut( cerfa.getSalaireBrut() );
-        cerfaDto.setCaisseDeRetraite( cerfa.getCaisseDeRetraite() );
-        cerfaDto.setNourriture( cerfa.getNourriture() );
-        cerfaDto.setLogement( cerfa.getLogement() );
-        cerfaDto.setAutre( cerfa.getAutre() );
-        cerfaDto.setCfaEntreprise( cerfa.getCfaEntreprise() );
-        cerfaDto.setCfaResponsable( cerfa.getCfaResponsable() );
-        cerfaDto.setDiplomeVise( cerfa.getDiplomeVise() );
-        cerfaDto.setIntitulePrecisDiplomeVise( cerfa.getIntitulePrecisDiplomeVise() );
-        cerfaDto.setCfaUai( cerfa.getCfaUai() );
-        cerfaDto.setCfaSiret( cerfa.getCfaSiret() );
-        cerfaDto.setDiplomeCode( cerfa.getDiplomeCode() );
-        cerfaDto.setCodeRncp( cerfa.getCodeRncp() );
-        cerfaDto.setAdresseResponsable( AdresseToAdresseDto( cerfa.getAdresseResponsable() ) );
-        cerfaDto.setDateDebutFormation( cerfa.getDateDebutFormation() );
-        cerfaDto.setDateExamen( cerfa.getDateExamen() );
-        cerfaDto.setFormationDuree( cerfa.getFormationDuree() );
-        cerfaDto.setValidationEmployeur( cerfa.getValidationEmployeur() );
-        cerfaDto.setNomOrganisme( cerfa.getNomOrganisme() );
+        cerfaDto.setSexe( cerfa.getSexe() );
+        cerfaDto.setSiretEtablissement( cerfa.getSiretEtablissement() );
         cerfaDto.setSiretOrganisme( cerfa.getSiretOrganisme() );
-        cerfaDto.setReceptionDossier( cerfa.getReceptionDossier() );
-        cerfaDto.setDateDecision( cerfa.getDateDecision() );
-        cerfaDto.setNumDepot( cerfa.getNumDepot() );
-        cerfaDto.setNumAvenant( cerfa.getNumAvenant() );
-        cerfaDto.setEtudiant( EtudiantToEtudiantDto( cerfa.getEtudiant() ) );
+        cerfaDto.setSituationAvantContrat( cerfa.getSituationAvantContrat() );
+        cerfaDto.setSportifs( cerfa.getSportifs() );
+        cerfaDto.setTelApprenti( cerfa.getTelApprenti() );
+        cerfaDto.setTelEmployeur( cerfa.getTelEmployeur() );
+        cerfaDto.setValidationEmployeur( cerfa.getValidationEmployeur() );
 
         return cerfaDto;
     }
@@ -707,16 +708,19 @@ public class DtoMapperImpl implements DtoMapper {
     }
 
     @Override
-    public Cursus cursusDG2DtoToCursus(InterventionDG2Dto cursusDG2Dto) {
+    public Cursus cursusDG2DtoToCursus(CursusDG2Dto cursusDG2Dto) {
         if ( cursusDG2Dto == null ) {
             return null;
         }
 
         Cursus cursus = new Cursus();
 
-        cursus.setTitre( cursusDG2Dto.getSlug() );
+        cursus.setIdDg2( cursusDG2Dto.getId() );
+        cursus.setTitre( cursusDG2Dto.getTitle() );
+        cursus.setDuree( cursusDG2Dto.getDuration() );
         cursus.setId( cursusDG2Dto.getId() );
         cursus.setVersion( cursusDG2Dto.getVersion() );
+        cursus.setSlug( cursusDG2Dto.getSlug() );
 
         return cursus;
     }
@@ -729,7 +733,7 @@ public class DtoMapperImpl implements DtoMapper {
 
         List<Cursus> list = new ArrayList<Cursus>( lstCurusDto.size() );
         for ( InterventionDG2Dto interventionDG2Dto : lstCurusDto ) {
-            list.add( cursusDG2DtoToCursus( interventionDG2Dto ) );
+            list.add( interventionDG2DtoToCursus( interventionDG2Dto ) );
         }
 
         return list;
@@ -787,5 +791,19 @@ public class DtoMapperImpl implements DtoMapper {
         }
         long id = promotion.getId();
         return id;
+    }
+
+    protected Cursus interventionDG2DtoToCursus(InterventionDG2Dto interventionDG2Dto) {
+        if ( interventionDG2Dto == null ) {
+            return null;
+        }
+
+        Cursus cursus = new Cursus();
+
+        cursus.setId( interventionDG2Dto.getId() );
+        cursus.setVersion( interventionDG2Dto.getVersion() );
+        cursus.setSlug( interventionDG2Dto.getSlug() );
+
+        return cursus;
     }
 }
