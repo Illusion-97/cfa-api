@@ -18,6 +18,8 @@ public class CursusDto extends BaseEntityDto implements Serializable {
 	private List<FormationDto> formationsDto;
 	private String description;
 	private String duree;
+	private String slug;
+	private long idDg2;
 
 	public CursusDto() {
 		super();
@@ -77,6 +79,22 @@ public class CursusDto extends BaseEntityDto implements Serializable {
 	 */
 	public void setDuree(String duree) {
 		this.duree = duree;
+	}
+
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
 	}
 
 }
