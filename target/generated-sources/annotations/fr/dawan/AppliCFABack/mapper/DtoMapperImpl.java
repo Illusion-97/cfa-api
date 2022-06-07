@@ -20,7 +20,6 @@ import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
 import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
-import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
@@ -68,7 +67,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-06-06T14:50:22+0200",
+    date = "2022-06-06T17:21:51+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -289,9 +288,6 @@ public class DtoMapperImpl implements DtoMapper {
         formationDto.setId( formation.getId() );
         formationDto.setVersion( formation.getVersion() );
         formationDto.setContenu( formation.getContenu() );
-        formationDto.setDuration( formation.getDuration() );
-        formationDto.setIdDg2( formation.getIdDg2() );
-        formationDto.setSlug( formation.getSlug() );
         formationDto.setTitre( formation.getTitre() );
 
         return formationDto;
@@ -687,24 +683,6 @@ public class DtoMapperImpl implements DtoMapper {
         competenceProfessionnelleDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
 
         return competenceProfessionnelleDto;
-    }
-
-    @Override
-    public Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto) {
-        if ( formationDG2Dto == null ) {
-            return null;
-        }
-
-        Formation formation = new Formation();
-
-        formation.setIdDg2( formationDG2Dto.getId() );
-        formation.setTitre( formationDG2Dto.getTitle() );
-        formation.setDuration( formationDG2Dto.getDuration() );
-        formation.setId( formationDG2Dto.getId() );
-        formation.setVersion( formationDG2Dto.getVersion() );
-        formation.setSlug( formationDG2Dto.getSlug() );
-
-        return formation;
     }
 
     @Override

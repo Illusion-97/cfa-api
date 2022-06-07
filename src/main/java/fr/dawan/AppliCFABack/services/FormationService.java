@@ -21,6 +21,6 @@ public interface FormationService {
 
 	List<InterventionDto> findAllByFormationId(long id);
 
-	void fetchDG2Formations(String email, String password) throws Exception;
+	//void fetchDG2Formations(String email, String password) throws Exception;
 
 }

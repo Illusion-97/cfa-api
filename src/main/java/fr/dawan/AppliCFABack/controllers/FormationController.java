@@ -154,19 +154,19 @@ public class FormationController {
 	// ##################################################
 	// # FETCH Dawan webservice #
 	// ##################################################
-	@GetMapping(value = "/dg2", produces = "application/json")
-	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers) {
-		String userDG2 = headers.get("x-auth-token");
-		String[] splitUserDG2String = userDG2.split(":");
-
-		try {
-			formationService.fetchDG2Formations(splitUserDG2String[0], splitUserDG2String[1]);
-			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error while fetching data from the webservice DG2");
-		}
-	}
+//	@GetMapping(value = "/dg2", produces = "application/json")
+//	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers) {
+//		String userDG2 = headers.get("x-auth-token");
+//		String[] splitUserDG2String = userDG2.split(":");
+//
+//		try {
+//			formationService.fetchDG2Formations(splitUserDG2String[0], splitUserDG2String[1]);
+//			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
+//		} catch (Exception e) {
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//					.body("Error while fetching data from the webservice DG2");
+//		}
+//	}
 
 
 	

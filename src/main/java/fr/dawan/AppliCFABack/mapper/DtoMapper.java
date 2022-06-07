@@ -169,12 +169,12 @@ public interface DtoMapper {
 	CompetenceProfessionnelleDto CompetenceProfessionnelleToCompetenceProfessionnelleDto(
 			CompetenceProfessionnelle competenceProfessionnelle);
 
-	@Mapping(target = "contenu", ignore = true)
-	@Mapping(target = "cursusLst", ignore = true)
-	@Mapping(source = "id", target = "idDg2")
-	@Mapping(source = "title", target = "titre")
-	@Mapping(source = "duration", target = "duration")
-	Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
+//	@Mapping(target = "contenu", ignore = true)
+//	@Mapping(target = "cursusLst", ignore = true)
+//	@Mapping(source = "id", target = "idDg2")
+//	@Mapping(source = "title", target = "titre")
+//	@Mapping(source = "duration", target = "duration")
+//	Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
 	
 	@Mapping(target = "activiteTypes", ignore = true)
 	@Mapping(target = "description", ignore = true)
