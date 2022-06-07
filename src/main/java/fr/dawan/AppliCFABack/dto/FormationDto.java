@@ -17,9 +17,6 @@ public class FormationDto extends BaseEntityDto implements Serializable {
 	private String titre;
 	private String contenu;
 	private List<CursusDto> cursusLstDto;
-	private long idDg2;
-	private String duration;
-	private String slug;
 
 	public FormationDto() {
 		super();
@@ -65,48 +62,6 @@ public class FormationDto extends BaseEntityDto implements Serializable {
 	 */
 	public void setCursusLstDto(List<CursusDto> cursusLstDto) {
 		this.cursusLstDto = cursusLstDto;
-	}
-
-	/**
-	 * @return the idDg2
-	 */
-	public long getIdDg2() {
-		return idDg2;
-	}
-
-	/**
-	 * @param idDg2 the idDg2 to set
-	 */
-	public void setIdDg2(long idDg2) {
-		this.idDg2 = idDg2;
-	}
-
-	/**
-	 * @return the duration
-	 */
-	public String getDuration() {
-		return duration;
-	}
-
-	/**
-	 * @param duration the duration to set
-	 */
-	public void setDuration(String duration) {
-		this.duration = duration;
-	}
-
-	/**
-	 * @return the slug
-	 */
-	public String getSlug() {
-		return slug;
-	}
-
-	/**
-	 * @param slug the slug to set
-	 */
-	public void setSlug(String slug) {
-		this.slug = slug;
 	}
 
 }
