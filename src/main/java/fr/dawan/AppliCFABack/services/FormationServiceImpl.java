@@ -47,8 +47,8 @@ public class FormationServiceImpl implements FormationService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	
-	@Autowired
-	private RestTemplate restTemplate;
+//	@Autowired
+//	private RestTemplate restTemplate;
 
 	/**
 	 * Récupération de la liste des formations
@@ -207,62 +207,62 @@ public class FormationServiceImpl implements FormationService {
 	 */
 	
 	//import des formations DG2
-	@Override
-	public void fetchDG2Formations(String email, String password) throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-		List<FormationDG2Dto> fResJson = new ArrayList<>();
-		
-		//url dg2 qui concerne la recupération des formations
-		URI url = new URI("https://dawan.org/api2/cfa/trainings");
-
-		//recupérartion des headers / email / password dg2
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("x-auth-token", email + ":" + password);
-
-		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-
-		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-
-		if (repWs.getStatusCode() == HttpStatus.OK) {
-			String json = repWs.getBody();
-			
-			try {
-				//recuperation des values en json et lecture
-				fResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() { 
-				});
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for (FormationDG2Dto fDG2 : fResJson) {
-				Formation formationImport = mapper.formationDG2DtoToFormation(fDG2);
-				Optional<Formation> optFormation = formationRepository.findByIdDg2(formationImport.getIdDg2());
-				if (optFormation.isPresent()) {
-					if (optFormation.get().equals(formationImport))
-						continue;
-					else if (!optFormation.get().equals(formationImport)) {
-						formationImport.setTitre(optFormation.get().getTitre());
-						formationImport.setId(optFormation.get().getId());
-					}
-					try {
-						formationRepository.saveAndFlush(formationImport);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				} else {
-					try {
-						formationRepository.saveAndFlush(formationImport);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		} else {
-			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
-		}
-
-
-	}
+//	@Override
+//	public void fetchDG2Formations(String email, String password) throws Exception {
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		List<FormationDG2Dto> fResJson = new ArrayList<>();
+//		
+//		//url dg2 qui concerne la recupération des formations
+//		URI url = new URI("https://dawan.org/api2/cfa/trainings");
+//
+//		//recupérartion des headers / email / password dg2
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("x-auth-token", email + ":" + password);
+//
+//		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+//
+//		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+//
+//		if (repWs.getStatusCode() == HttpStatus.OK) {
+//			String json = repWs.getBody();
+//			
+//			try {
+//				//recuperation des values en json et lecture
+//				fResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() { 
+//				});
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			for (FormationDG2Dto fDG2 : fResJson) {
+//				Formation formationImport = mapper.formationDG2DtoToFormation(fDG2);
+//				Optional<Formation> optFormation = formationRepository.findByIdDg2(formationImport.getIdDg2());
+//				if (optFormation.isPresent()) {
+//					if (optFormation.get().equals(formationImport))
+//						continue;
+//					else if (!optFormation.get().equals(formationImport)) {
+//						formationImport.setTitre(optFormation.get().getTitre());
+//						formationImport.setId(optFormation.get().getId());
+//					}
+//					try {
+//						formationRepository.saveAndFlush(formationImport);
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				} else {
+//					try {
+//						formationRepository.saveAndFlush(formationImport);
+//					} catch (Exception e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		} else {
+//			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+//		}
+//
+//
+//	}
 
 }
