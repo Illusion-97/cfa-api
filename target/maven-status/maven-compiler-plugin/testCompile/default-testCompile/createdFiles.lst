@@ -21,7 +21,6 @@ fr\dawan\AppliCFABack\Controller\CompetenceProfessionnelleControllerTestes.class
 fr\dawan\AppliCFABack\Controller\UtilisateurControllerTests.class
 fr\dawan\AppliCFABack\Controller\FicheEntrepriseControllerTests.class
 fr\dawan\AppliCFABack\InitDataBase.class
-fr\dawan\AppliCFABack\Controller\AbsenceControllerTests.class
 fr\dawan\AppliCFABack\AppliCfaBackApplicationTests.class
 fr\dawan\AppliCFABack\Controller\CerfaControllerTests.class
 fr\dawan\AppliCFABack\Controller\InterventionControllerTests.class

@@ -112,7 +112,6 @@ fr\dawan\AppliCFABack\tools\MediaTypeUtils.class
 fr\dawan\AppliCFABack\entities\Note$Satisfaction.class
 fr\dawan\AppliCFABack\services\NoteService.class
 fr\dawan\AppliCFABack\repositories\EtudiantRepository.class
-fr\dawan\AppliCFABack\entities\Presence.class
 fr\dawan\AppliCFABack\dto\DossierProfessionnelDto.class
 fr\dawan\AppliCFABack\repositories\DossierProfessionnelRepository.class
 fr\dawan\AppliCFABack\interceptors\TokenInterceptor.class
