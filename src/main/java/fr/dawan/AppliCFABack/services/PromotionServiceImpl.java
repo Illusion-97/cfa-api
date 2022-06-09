@@ -301,6 +301,22 @@ public class PromotionServiceImpl implements PromotionService {
 		return promotions.stream().map(p -> mapperTools.PromotionToPromotionEtudiantDto(p)).collect(Collectors.toList());
 	}
 
+	/**
+	 * @param idIntervention identifiant de l'intervention
+	 * @return liste de promotions (seulement avec l'id le version et le nom)  pour le select de promotions
+	 */
+	@Override
+	public List<PromotionForSelectDto> getPromotionByInterventionIdForSelect(long idIntervention) {
+		List<PromotionForSelectDto> result = new ArrayList<PromotionForSelectDto>();
+		List<Promotion> promotions = promoRepo.findAllByInterventionsId(idIntervention);
+		
+		for (Promotion promotion : promotions) {
+			result.add(DtoTools.convert(promotion, PromotionForSelectDto.class));
+		}
+		
+		return result;
+	}
+
 
 
 }

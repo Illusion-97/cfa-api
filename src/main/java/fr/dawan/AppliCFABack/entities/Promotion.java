@@ -40,7 +40,7 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 	@ManyToOne
 	private Cursus cursus; // Dev Full Stack
 
-	@OneToMany(mappedBy = "promotion")
+	@ManyToMany(mappedBy = "promotions")
 	private Set<Examen> examens;
 
 	public Promotion() {

@@ -4,14 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,50 +17,24 @@ import fr.dawan.AppliCFABack.services.DevoirService;
 @RequestMapping("/devoirs")
 public class DevoirController extends GenericController<DevoirDto> {
 
-	
 	@Autowired
 	public DevoirController(DevoirService service) {
 		super(service);
 	}
-
 
 	@GetMapping(produces = "application/json")
 	public List<DevoirDto> getAll() {
 		return ((DevoirService) service).getAllDevoir();
 	}
 
-
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
- 	public @ResponseBody List<DevoirDto> getAllByPage(@PathVariable("page") int page,
- 			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
- 		if(search.isPresent())
- 			return ((DevoirService) service).getAllByPage(page, size, search.get());
- 		else
- 			return ((DevoirService) service).getAllByPage(page, size, "");
- 	}
-	
-	@GetMapping(value= "/intervention/{interventionId}", produces = "application/json")
-	public List<DevoirDto> getAllByInterventionId(@PathVariable("interventionId") long id){
-		return ((DevoirService) service).getAllByInterventionId(id);
+	public @ResponseBody List<DevoirDto> getAllByPage(@PathVariable("page") int page,
+			@PathVariable(value = "size") int size,
+			@PathVariable(value = "search", required = false) Optional<String> search) {
+		if (search.isPresent())
+			return ((DevoirService) service).getAllByPage(page, size, search.get());
+		else
+			return ((DevoirService) service).getAllByPage(page, size, "");
 	}
-	
-	@PostMapping(consumes="application/json", produces="application/json")
-	public ResponseEntity<DevoirDto> save (@RequestBody DevoirDto dDto) throws Exception{
-		DevoirDto result = ((DevoirService) service).saveOrUpdate(dDto);
-		return ResponseEntity.status(HttpStatus.CREATED).body(result);
-	}
-	
-	@PutMapping(consumes="application/json", produces="application/json")
-	public DevoirDto update(@RequestBody DevoirDto dDto) throws Exception {
-		return ((DevoirService) service).saveOrUpdate(dDto);
-	}
-	
-	@DeleteMapping(value="/{id}")
-	public ResponseEntity<String> delete(@PathVariable("id") long id){
-		((DevoirService) service).delete(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Le devoir " +id+ " a bien été supprimé");
-	}
-
- 
 
 }

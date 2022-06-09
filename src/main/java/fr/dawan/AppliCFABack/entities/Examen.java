@@ -36,28 +36,22 @@ public class Examen extends BaseEntity implements Serializable {
 
 	@Column(nullable = false)
 	private LocalDate dateExamen;
+	
+	@ManyToOne
+	private Intervention intervention;
 
 	@ManyToMany
 	private List<ActiviteType> activiteTypes;
 
-
-
-	/**
-	 * @param activiteTypes le activiteTypes à affecter
-	 
-	 */
-	public void setActiviteTypes(List<ActiviteType> activiteTypes) {
-		this.activiteTypes = activiteTypes;
-	}
-
-	@ManyToOne
-	private Promotion promotion;
+	@ManyToMany
+	private Set<Promotion> promotions;
 
 	@ManyToMany
 	private Set<CompetenceProfessionnelle> competencesProfessionnelles;
 
 	@OneToMany(mappedBy = "examen", cascade = CascadeType.ALL)
 	private Set<Note> notes;
+	
 
 	public Set<Note> getNotes() {
 		return notes;
@@ -139,18 +133,19 @@ public class Examen extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @return la promotion
+	 * @return les promotions
+	 * @
 	 */
-	public Promotion getPromotion() {
-		return promotion;
+	public Set<Promotion> getPromotions() {
+		return promotions;
 	}
 
 	/**
-	 * @param promotion la promotion à affecter
-	 * 
+	 * @param promotions les promotions à affecter
+	 
 	 */
-	public void setPromotion(Promotion promotion) {
-		this.promotion = promotion;
+	public void setPromotions(Set<Promotion> promotions) {
+		this.promotions = promotions;
 	}
 
 	/**
@@ -176,10 +171,21 @@ public class Examen extends BaseEntity implements Serializable {
 		this.notes = notes;
 	}
 
-	/**
-	 * @return les activiteTypes
-	 */
 
+	/**
+	 * @return le intervention
+	 */
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	/**
+	 * @param intervention le intervention à affecter
+	 
+	 */
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
+	}
 
 	/**
 	 * @param activiteTypes led activiteTypes à affecter

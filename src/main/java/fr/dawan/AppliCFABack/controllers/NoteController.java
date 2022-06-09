@@ -66,6 +66,16 @@ public class NoteController {
 	public @ResponseBody List<NoteDto> getAllByExamenId(@PathVariable("id") long id) {
 		return noteService.getAllByExamenId(id);
 	}
+    @GetMapping(value = "/promotion-examen/{idPromotion}/{idExamen}" ,produces = "application/json")
+    public List<NoteDto> getAllByPromotionId(@PathVariable("idPromotion") long idPromotion , @PathVariable("idExamen") long idExamen){
+    	return noteService.getAllByPromotionIdAndExamenId(idPromotion,idExamen);
+    }
+    @GetMapping(value = {"/intervention-examen/{idIntervention}/{idExamen}/{search}" ,"/intervention-examen/{idIntervention}/{idExamen}" } ,produces = "application/json")
+    public List<NoteDto> getAllByInterventionId(@PathVariable("idIntervention") long idIntervention, @PathVariable("idExamen") long idExamen
+    		,@PathVariable("search") Optional<String> search){
+    	
+    	return noteService.getAllByInterventionIdAndExamenId(idIntervention,idExamen, search.isPresent()?search.get():"");
+    }
 	// ##################################################
 	// # POST #
 	// ##################################################

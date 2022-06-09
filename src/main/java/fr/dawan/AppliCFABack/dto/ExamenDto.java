@@ -23,10 +23,10 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 	private String pieceJointe;
 	private LocalDate dateExamen;
 	private List<ActiviteTypeDto> activiteTypesDto;
-	private long promotionId;
+	private Set<PromotionDto> promotionsDto;
 	private Set<CompetenceProfessionnelleDto> competencesProfessionnellesDto;
 	private Set<NoteDto> notesDto;
-
+	private long intreventionId;
 	private List<Byte> blocksConcernee;
 	private PromotionDto promotionDto;
 
@@ -133,18 +133,20 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 		this.activiteTypesDto = activiteTypesDto;
 	}
 
+
 	/**
-	 * @return the promotionId
+	 * @return le promotionsDto
 	 */
-	public long getPromotionId() {
-		return promotionId;
+	public Set<PromotionDto> getPromotionsDto() {
+		return promotionsDto;
 	}
 
 	/**
-	 * @param promotionId the promotionId to set
+	 * @param promotionsDto le promotionsDto à affecter
+	 
 	 */
-	public void setPromotionId(long promotionId) {
-		this.promotionId = promotionId;
+	public void setPromotionsDto(Set<PromotionDto> promotionsDto) {
+		this.promotionsDto = promotionsDto;
 	}
 
 	/**
@@ -173,6 +175,21 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 	 */
 	public void setNotesDto(Set<NoteDto> notesDto) {
 		this.notesDto = notesDto;
+	}
+
+	/**
+	 * @return le intreventionId
+	 */
+	public long getIntreventionId() {
+		return intreventionId;
+	}
+
+	/**
+	 * @param intreventionId le intreventionId à affecter
+	 
+	 */
+	public void setIntreventionId(long intreventionId) {
+		this.intreventionId = intreventionId;
 	}
 
 	public List<Byte> getBlocksConcernee() {

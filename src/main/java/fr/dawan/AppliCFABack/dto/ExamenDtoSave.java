@@ -28,11 +28,28 @@ public class ExamenDtoSave extends BaseEntityDto implements Serializable {
 
 	private List<Long> activiteTypesId;
 
-	private long promotionId;
+	private Set<Long> promotionsId;
 
 	private Set<Long> competencesProfessionnellesId;
 
 	private Set<Long> notesId;
+	
+	private long interventionId;
+
+	/**
+	 * @return le interventionId
+	 */
+	public long getInterventionId() {
+		return interventionId;
+	}
+
+	/**
+	 * @param interventionId le interventionId à affecter
+	 
+	 */
+	public void setInterventionId(long interventionId) {
+		this.interventionId = interventionId;
+	}
 
 	/**
 	 * @return the titre
@@ -118,25 +135,27 @@ public class ExamenDtoSave extends BaseEntityDto implements Serializable {
 		this.activiteTypesId = activiteTypesId;
 	}
 
-	/**
-	 * @return the promotionId
-	 */
-	public long getPromotionId() {
-		return promotionId;
-	}
-
-	/**
-	 * @param promotionId the promotionId to set
-	 */
-	public void setPromotionId(long promotionId) {
-		this.promotionId = promotionId;
-	}
 
 	/**
 	 * @return the competencesProfessionnellesId
 	 */
 	public Set<Long> getCompetencesProfessionnellesId() {
 		return competencesProfessionnellesId;
+	}
+
+	/**
+	 * @return le promotionsId
+	 */
+	public Set<Long> getPromotionsId() {
+		return promotionsId;
+	}
+
+	/**
+	 * @param promotionsId le promotionsId à affecter
+	 
+	 */
+	public void setPromotionsId(Set<Long> promotionsId) {
+		this.promotionsId = promotionsId;
 	}
 
 	/**
@@ -159,5 +178,8 @@ public class ExamenDtoSave extends BaseEntityDto implements Serializable {
 	public void setNotesId(Set<Long> notesId) {
 		this.notesId = notesId;
 	}
+
+	
+	
 
 }

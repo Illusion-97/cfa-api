@@ -16,7 +16,7 @@ public class Absence extends BaseEntity implements Serializable {
 
 	@Column(nullable = false)
 	private LocalDateTime dateDebut;
-	
+	@Column(nullable = false)
 	private LocalDateTime dateFin;
 
 	@Column(length = 255)

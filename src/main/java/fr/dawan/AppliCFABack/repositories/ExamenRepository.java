@@ -36,13 +36,10 @@ public interface ExamenRepository extends JpaRepository<Examen, Long> {
 
 	long countByTitreContainingIgnoringCaseOrDescriptifContainingIgnoringCase(String titre, String descriptif);
 	
-//	//Sélectionner le(s) examens(s) d'une intervention
-//	@Query("FROM Examen e JOIN e.promotion p JOIN p.interventions i WHERE i.id = :interventionId")
-//	List<Examen> findExamensByInterventionId (long interventionId);
 	
-	//Sélectionner le(s) examens(s) d'une intervention et récupérer leurs Acttypes & compsProT
-		@Query("FROM Examen e JOIN e.promotion p JOIN p.interventions i "
-				+ "WHERE i.id = :interventionId")
+//	//Sélectionner le(s) examens(s) d'une intervention et récupérer leurs Acttypes & compsProT
+//		@Query("FROM Examen e JOIN e.promotions p JOIN p.interventions i "
+//				+ "WHERE i.id = :interventionId")
 		List<Examen> findExamensByInterventionId (long interventionId);
 
 	@Query("SELECT DISTINCT e FROM Examen e JOIN Note n ON n.etudiantNote.id =:id")

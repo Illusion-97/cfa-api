@@ -26,11 +26,13 @@ import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.Note;
+import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository;
 import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 /***
  * 
  * @author Feres BG Valentin C Nicolas P.
@@ -55,6 +57,10 @@ public class ExamenServiceImpl implements ExamenService {
 	
 	@Autowired
 	CompetenceProfessionnelleRepository competenceProfessionnelleRepository;
+	
+	@Autowired
+	PromotionRepository promotionRepository;
+	
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
@@ -167,11 +173,18 @@ public class ExamenServiceImpl implements ExamenService {
 	 * @return ExamenDtoSave
 	 * @throws Si l'activité types n'est pas précisé
 	 * @throws Si les competences professionnelles ne sont pas précisé
+	 * @throws Si les promotions ne sont pas précisé.
 	 */
 	
 	@Override
 	public ExamenDtoSave saveOrUpdate(ExamenDtoSave eDto) throws Exception {
 		
+		if (eDto.getPromotionsId().isEmpty() || eDto.getPromotionsId() == null) 
+			throw new Exception("Promotions manquante");
+		Set<Promotion> promotions = new HashSet<Promotion>();
+		for (long idP : eDto.getPromotionsId()) {
+			promotions.add(promotionRepository.getOne(idP));
+		}
 		if (eDto.getActiviteTypesId().isEmpty() || eDto.getActiviteTypesId() == null) 
 			throw new Exception("Activites Types manquante");
 
@@ -190,22 +203,26 @@ public class ExamenServiceImpl implements ExamenService {
 		Examen e = DtoTools.convert(eDto, Examen.class);
 		e.setActiviteType(activiteTypes);
 		e.setCompetencesProfessionnelles(competenceProfessionnelles);
+		e.setPromotions(promotions);
 		if (eDto.getId() != 0) {
 			return  DtoTools.convert(examenRepository.saveAndFlush(e),ExamenDtoSave.class);
 		}
 		else {
 			Examen exDb =  examenRepository.saveAndFlush(e);
-			//Ajout list de notes vide avec les etudiants 
-			List<EtudiantDto> etudiantsParPromo = promotionService.getEtudiantsById(exDb.getPromotion().getId());
 			Set<Note> Notes =  new HashSet<Note>();
-			for (EtudiantDto etudiantDto : etudiantsParPromo) {
-				Note note = new Note();
-				note.setEtudiantNote(DtoTools.convert(etudiantDto, Etudiant.class));
-				note.setNoteObtenue(0.0);
-				note.setExamen(exDb);
-				Notes.add(note);
+			//Ajout list de notes vide avec les etudiants 
+			for (Promotion promo : exDb.getPromotions()) {
+				List<EtudiantDto> etudiantsParPromo = promotionService.getEtudiantsById(promo.getId());
+				for (EtudiantDto etudiantDto : etudiantsParPromo) {
+					Note note = new Note();
+					note.setEtudiantNote(DtoTools.convert(etudiantDto, Etudiant.class));
+					note.setNoteObtenue(0.0);
+					note.setExamen(exDb);
+					Notes.add(note);
+				}
 			}
-			exDb.setNotes(Notes);
+			
+			exDb.setNotes(Notes);			
 			
 			 return DtoTools.convert(examenRepository.saveAndFlush(exDb),ExamenDtoSave.class);
 			
