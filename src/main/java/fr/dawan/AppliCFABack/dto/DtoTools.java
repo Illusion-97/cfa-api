@@ -37,7 +37,7 @@ public class DtoTools {
             mapper.map(src -> src.getEtudiantNote().getId(), NoteControleContinuDto::setEtudiantId);
             mapper.map(src -> src.getExamen().getTitre(), NoteControleContinuDto::setExamen);
             mapper.map(src -> src.getExamen().getDateExamen(), NoteControleContinuDto::setDate);
-            mapper.map(src -> src.getExamen().getPromotion().getNom(), NoteControleContinuDto::setPromotion);
+//            mapper.map(src -> src.getExamen().getPromotions().getNom(), NoteControleContinuDto::setPromotion);
         });
 
 //        myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -118,7 +118,7 @@ public class DtoTools {
 
         LivretEvaluationDto leDto = new LivretEvaluationDto();
 
-        leDto.setPromotion(e.getPromotion().getNom());
+//        leDto.setPromotion(e.getPromotion().getNom());
         leDto.setExamen(e.getTitre());
 
         leDto.setCompetences(e.getCompetencesProfessionnelles().stream().map(c -> {

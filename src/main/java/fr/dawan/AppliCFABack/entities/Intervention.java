@@ -24,6 +24,7 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 
 	@ManyToOne
 	private Intervention interventionMere; // Java init+appro
+	
 
 	@ManyToMany
 	private List<Promotion> promotions; // CDA 2021
@@ -114,5 +115,7 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 	public void setNoteInfoPersonnel(String noteInfoPersonnel) {
 		this.noteInfoPersonnel = noteInfoPersonnel;
 	}
+
+	
 
 }

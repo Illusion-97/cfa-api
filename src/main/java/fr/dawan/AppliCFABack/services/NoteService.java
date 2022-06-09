@@ -16,16 +16,19 @@ public interface NoteService {
 	NoteDto getById(long id);
 
 	CountDto count();
-	
+
 	NoteDtoToSave saveOrUpdate(NoteDtoToSave nDto);
 
 	void deleteById(long id);
 
 	List<NoteDto> getAllByIdEtudiant(long id);
-	
+
 	List<NoteDto> getAllByExamenId(long id);
 
 	List<NoteControleContinuDto> getNotesByIdEtudiant(long id) throws Exception;
-	
+
+	List<NoteDto> getAllByPromotionIdAndExamenId(long idPromotion, long idExamen);
+
+	List<NoteDto> getAllByInterventionIdAndExamenId(long idIntervention, long idExamen, String search);
 
 }

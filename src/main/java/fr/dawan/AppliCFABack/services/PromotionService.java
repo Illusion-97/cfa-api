@@ -34,4 +34,6 @@ public interface PromotionService {
 	UtilisateurDto getCefById(long id);
 
 	List<PromotionEtudiantDto> getCursusByIdEtudiant(long id);
+	
+	List<PromotionForSelectDto> getPromotionByInterventionIdForSelect(long idIntervention);
 }

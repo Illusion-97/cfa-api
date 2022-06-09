@@ -1,20 +1,20 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.ExamenControllerTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 2.473 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.ExamenControllerTest
-testFindAll  Time elapsed: 0.009 s  <<< ERROR!
+Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 2.053 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.ExamenControllerTest
+testFindAll  Time elapsed: 0.005 s  <<< ERROR!
 java.time.DateTimeException: Invalid value for MonthOfYear (valid values 1 - 12): 29
-	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:68)
+	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:66)
 
-testFindById  Time elapsed: 0.005 s  <<< ERROR!
+testFindById  Time elapsed: 0.004 s  <<< ERROR!
 java.time.DateTimeException: Invalid value for MonthOfYear (valid values 1 - 12): 29
-	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:68)
+	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:66)
 
-contextLoads  Time elapsed: 0.006 s  <<< ERROR!
+contextLoads  Time elapsed: 0.004 s  <<< ERROR!
 java.time.DateTimeException: Invalid value for MonthOfYear (valid values 1 - 12): 29
-	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:68)
+	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:66)
 
-testDelete  Time elapsed: 0.004 s  <<< ERROR!
+testDelete  Time elapsed: 0.007 s  <<< ERROR!
 java.time.DateTimeException: Invalid value for MonthOfYear (valid values 1 - 12): 29
-	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:68)
+	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:66)
 

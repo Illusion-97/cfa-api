@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: fr.dawan.AppliCFABack.Controller.AbsenceControllerTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 2.85 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.AbsenceControllerTest
+testSave  Time elapsed: 0.01 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at fr.dawan.AppliCFABack.Controller.AbsenceControllerTest.testSave(AbsenceControllerTest.java:93)
+
+testFindById  Time elapsed: 0.003 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at fr.dawan.AppliCFABack.Controller.AbsenceControllerTest.testFindById(AbsenceControllerTest.java:74)
+
+testDelete  Time elapsed: 0.004 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at fr.dawan.AppliCFABack.Controller.AbsenceControllerTest.testDelete(AbsenceControllerTest.java:108)
+

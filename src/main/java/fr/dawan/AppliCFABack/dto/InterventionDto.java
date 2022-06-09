@@ -24,6 +24,7 @@ public class InterventionDto extends BaseEntityDto implements Serializable {
 	private List<FormateurDto> formateursDto;
 	private String noteInfoPersonnel;
 	private long heuresDisponsees;
+	
 
 	public InterventionDto() {
 		// TODO Auto-generated constructor stub

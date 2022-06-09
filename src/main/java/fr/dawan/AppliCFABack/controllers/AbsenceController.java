@@ -22,9 +22,7 @@ import fr.dawan.AppliCFABack.services.GenericService;
 public class AbsenceController extends GenericController<AbsenceDto> {
 	
 	@Autowired
-	AbsenceService absenceService;
-	
-	public AbsenceController(GenericService<AbsenceDto> service) {
+	public AbsenceController(AbsenceService service) {
 		super(service);
 		// TODO Auto-generated constructor stub
 	}

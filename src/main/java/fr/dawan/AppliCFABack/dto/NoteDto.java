@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import fr.dawan.AppliCFABack.entities.Note.Satisfaction;
 
@@ -21,7 +22,8 @@ public class NoteDto extends BaseEntityDto implements Serializable {
 	private String etudiantNoteUtilisateurNom;
 	private String etudiantNoteUtilisateurPrenom;
 	private String observation;
-
+	private String ville;
+	
 	public NoteDto() {
 		super();
 	}
@@ -131,4 +133,23 @@ public class NoteDto extends BaseEntityDto implements Serializable {
 	public void setObservation(String observation) {
 		this.observation = observation;
 	}
+
+	/**
+	 * @return la ville
+	 */
+	public String getVille() {
+		return ville;
+	}
+
+	/**
+	 * @param ville la ville à affecter
+	 
+	 */
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+
+
+	
 }
