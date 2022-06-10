@@ -2,10 +2,14 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /***
  * 
@@ -23,12 +27,15 @@ public class Devoir extends BaseEntity implements Serializable {
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String consigne;
 
-	private LocalDate dateDebut;
+	private LocalDateTime dateDebut;
 
-	private LocalDate dateFin;
+	private LocalDateTime dateFin;
 
 	@ManyToOne
 	private Intervention intervention;
+	
+	@OneToMany(mappedBy = "devoir", cascade = CascadeType.ALL)
+	private Set<DevoirEtudiant> devoirsEtudiant;
 
 	/**
 	 * @return la consigne
@@ -45,33 +52,50 @@ public class Devoir extends BaseEntity implements Serializable {
 		this.consigne = consigne;
 	}
 
+
+
 	/**
-	 * @return la dateDebut
+	 * @return le devoirsEtudiant
 	 */
-	public LocalDate getDateDebut() {
+	public Set<DevoirEtudiant> getDevoirsEtudiant() {
+		return devoirsEtudiant;
+	}
+
+	/**
+	 * @param devoirsEtudiant le devoirsEtudiant à affecter
+	 
+	 */
+	public void setDevoirsEtudiant(Set<DevoirEtudiant> devoirsEtudiant) {
+		this.devoirsEtudiant = devoirsEtudiant;
+	}
+
+	/**
+	 * @return le dateDebut
+	 */
+	public LocalDateTime getDateDebut() {
 		return dateDebut;
 	}
 
 	/**
-	 * @param dateDebut la dateDebut à affecter
-	 * 
+	 * @param dateDebut le dateDebut à affecter
+	 
 	 */
-	public void setDateDebut(LocalDate dateDebut) {
+	public void setDateDebut(LocalDateTime dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
 	/**
-	 * @return la dateFin
+	 * @return le dateFin
 	 */
-	public LocalDate getDateFin() {
+	public LocalDateTime getDateFin() {
 		return dateFin;
 	}
 
 	/**
-	 * @param dateFin la dateFin à affecter
-	 * 
+	 * @param dateFin le dateFin à affecter
+	 
 	 */
-	public void setDateFin(LocalDate dateFin) {
+	public void setDateFin(LocalDateTime dateFin) {
 		this.dateFin = dateFin;
 	}
 

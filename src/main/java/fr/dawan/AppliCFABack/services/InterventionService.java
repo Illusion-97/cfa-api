@@ -27,7 +27,7 @@ public interface InterventionService {
 
 	CountDto count(String string);
 
-	List<EtudiantDto> findAllByPromotionInterventionsId(long id);
+	List<EtudiantDto> findAllEtudiantsByPromotionInterventionsId(long id);
 
 	List<PromotionDto> findPromotionsByInterventionId(long id);
 

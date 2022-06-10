@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
@@ -91,7 +90,7 @@ public class InterventionController {
 	
 	@GetMapping(value = "/{id}/etudiants-promotion", produces = "application/json")
 	public List<EtudiantDto> findAllByPromotionInterventionsId(@PathVariable("id") long id) {
-		return interventionService.findAllByPromotionInterventionsId(id);
+		return interventionService.findAllEtudiantsByPromotionInterventionsId(id);
 	}
 
 	@GetMapping(value = "/{id}/promotions", produces = "application/json")

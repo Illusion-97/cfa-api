@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -89,8 +90,8 @@ public class DevoirControllerTest {
 		try {
 			DevoirDto eToInsert = new DevoirDto();
 			eToInsert.setConsigne("enonce save");
-			eToInsert.setDateDebut(LocalDate.now());
-			eToInsert.setDateFin(LocalDate.now());
+			eToInsert.setDateDebut(LocalDateTime.now());
+			eToInsert.setDateFin(LocalDateTime.now());
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
@@ -114,8 +115,8 @@ public class DevoirControllerTest {
 		try {
 			DevoirDto eDto = devoirController.findById(idDevoir +1);
 			eDto.setConsigne("enonce update");
-			eDto.setDateDebut(LocalDate.now());
-			eDto.setDateFin(LocalDate.now());
+			eDto.setDateDebut(LocalDateTime.now());
+			eDto.setDateFin(LocalDateTime.now());
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eDto);

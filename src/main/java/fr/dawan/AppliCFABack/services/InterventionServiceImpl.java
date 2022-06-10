@@ -281,7 +281,7 @@ public class InterventionServiceImpl implements InterventionService {
 	 */
 	
 	@Override
-	public List<EtudiantDto> findAllByPromotionInterventionsId(long id) {
+	public List<EtudiantDto> findAllEtudiantsByPromotionInterventionsId(long id) {
 		List<Etudiant> lstEtu = etudiantRepository.findAllDistinctByPromotionsInterventionsId(id);
 		List<EtudiantDto> lstEtuDto = new ArrayList<EtudiantDto>();
 		for (Etudiant etu : lstEtu) {

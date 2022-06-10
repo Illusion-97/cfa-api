@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
@@ -288,8 +290,8 @@ public class InitDataBase {
 		// DEvoir
 		Devoir devoir = new Devoir();
 		devoir.setConsigne("Enonce du devoir numero ##");
-		devoir.setDateDebut(LocalDate.now());
-		devoir.setDateFin(LocalDate.now());
+		devoir.setDateDebut(LocalDateTime.now());
+		devoir.setDateFin(LocalDateTime.now());
 
 		// Examen
 		Examen exam = new Examen();
