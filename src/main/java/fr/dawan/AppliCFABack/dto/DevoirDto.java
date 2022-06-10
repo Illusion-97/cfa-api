@@ -1,7 +1,8 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * 
@@ -15,12 +16,10 @@ import java.time.LocalDate;
 public class DevoirDto extends BaseEntityDto implements Serializable {
 
 	private String consigne;
-
-	private LocalDate dateDebut;
-
-	private LocalDate dateFin;
-
+	private LocalDateTime dateDebut;
+	private LocalDateTime dateFin;
 	private long interventionId;
+	private Set<DevoirEtudiantDto> devoirsEtudiantDto;
 
 	/**
 	 * @return the consigne
@@ -36,31 +35,34 @@ public class DevoirDto extends BaseEntityDto implements Serializable {
 		this.consigne = consigne;
 	}
 
+
 	/**
-	 * @return the dateDebut
+	 * @return le dateDebut
 	 */
-	public LocalDate getDateDebut() {
+	public LocalDateTime getDateDebut() {
 		return dateDebut;
 	}
 
 	/**
-	 * @param dateDebut the dateDebut to set
+	 * @param dateDebut le dateDebut à affecter
+	 
 	 */
-	public void setDateDebut(LocalDate dateDebut) {
+	public void setDateDebut(LocalDateTime dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
 	/**
-	 * @return the dateFin
+	 * @return le dateFin
 	 */
-	public LocalDate getDateFin() {
+	public LocalDateTime getDateFin() {
 		return dateFin;
 	}
 
 	/**
-	 * @param dateFin the dateFin to set
+	 * @param dateFin le dateFin à affecter
+	 
 	 */
-	public void setDateFin(LocalDate dateFin) {
+	public void setDateFin(LocalDateTime dateFin) {
 		this.dateFin = dateFin;
 	}
 
@@ -77,5 +79,21 @@ public class DevoirDto extends BaseEntityDto implements Serializable {
 	public void setInterventionId(long interventionId) {
 		this.interventionId = interventionId;
 	}
+
+	/**
+	 * @return le devoirsEtudiantDto
+	 */
+	public Set<DevoirEtudiantDto> getDevoirsEtudiantDto() {
+		return devoirsEtudiantDto;
+	}
+
+	/**
+	 * @param devoirsEtudiantDto le devoirsEtudiantDto à affecter
+	 
+	 */
+	public void setDevoirsEtudiantDto(Set<DevoirEtudiantDto> devoirsEtudiantDto) {
+		this.devoirsEtudiantDto = devoirsEtudiantDto;
+	}
+	
 
 }

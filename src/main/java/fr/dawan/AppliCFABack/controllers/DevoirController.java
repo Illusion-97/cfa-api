@@ -50,11 +50,7 @@ public class DevoirController extends GenericController<DevoirDto> {
 		return ((DevoirService) service).getAllByInterventionId(id);
 	}
 	
-	@PostMapping(consumes="application/json", produces="application/json")
-	public ResponseEntity<DevoirDto> save (@RequestBody DevoirDto dDto) throws Exception{
-		DevoirDto result = ((DevoirService) service).saveOrUpdate(dDto);
-		return ResponseEntity.status(HttpStatus.CREATED).body(result);
-	}
+
 	
 	@PutMapping(consumes="application/json", produces="application/json")
 	public DevoirDto update(@RequestBody DevoirDto dDto) throws Exception {
