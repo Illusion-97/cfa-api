@@ -1,5 +1,9 @@
 package fr.dawan.AppliCFABack.dto;
 
+import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.entities.*;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -14,9 +18,6 @@ import fr.dawan.AppliCFABack.entities.Note;
  * @return classe de convertion d'une entité vers DTO & vice-versa
  */
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -120,7 +121,6 @@ public class DtoTools {
             String observation = n.getObservation();
             return observation;
         }).collect(Collectors.toList()));
-
         return leDto;
     };
 

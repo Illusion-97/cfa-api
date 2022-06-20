@@ -1,7 +1,8 @@
-package fr.dawan.AppliCFABack.dto;
+package fr.dawan.AppliCFABack.dto.customdtos;
+
+import fr.dawan.AppliCFABack.dto.customdtos.ActiviteTypeDossierProDto;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 public class CursusDossierProDto implements Serializable {
@@ -9,6 +10,8 @@ public class CursusDossierProDto implements Serializable {
     private long id;
     private String titre;
     private Set<ActiviteTypeDossierProDto> activiteTypes;
+
+    private int version;
 
     public String getTitre() {
         return titre;
@@ -32,5 +35,13 @@ public class CursusDossierProDto implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

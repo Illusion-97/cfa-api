@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface DossierProfessionnelRepository extends JpaRepository<DossierProfessionnel, Long> {
 
@@ -14,7 +17,13 @@ public interface DossierProfessionnelRepository extends JpaRepository<DossierPro
 
 	@Query("SELECT d FROM DossierProfessionnel d where nom = :nom")
 	DossierProfessionnel getByName(String nom);
+
+	@Query("SELECT DISTINCT d FROM DossierProfessionnel d")
+	List<DossierProfessionnel> findAllDossierPro();
+
 //	@Query("SELECT dp FROM DossierProfessionnel dp WHERE dp.etudiant.id = :id")
 //	List<DossierProfessionnel> findByIdEtudiant(long id);
+
+
 
 }

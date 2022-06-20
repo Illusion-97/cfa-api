@@ -6,8 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import fr.dawan.AppliCFABack.dto.CompetenceDossierProDto;
-import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
 import fr.dawan.AppliCFABack.repositories.ExperienceProfessionnelleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

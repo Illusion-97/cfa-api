@@ -5,7 +5,7 @@ import java.util.List;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
-import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
 
 public interface ExamenService {
 

@@ -1,10 +1,9 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
@@ -15,6 +14,9 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 
 	@OneToOne
 	private Cursus cursus;
+
+	@OneToMany(mappedBy = "dossierProfessionnel", cascade = CascadeType.ALL)
+	private List<ExperienceProfessionnelle> experienceProfessionnelles;
 
 	public String getNom() {
 		return nom;
@@ -32,4 +34,11 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 		this.cursus = cursus;
 	}
 
+	public List<ExperienceProfessionnelle> getExperienceProfessionnelles() {
+		return experienceProfessionnelles;
+	}
+
+	public void setExperienceProfessionnelles(List<ExperienceProfessionnelle> experienceProfessionnelles) {
+		this.experienceProfessionnelles = experienceProfessionnelles;
+	}
 }

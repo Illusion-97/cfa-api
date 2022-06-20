@@ -2,7 +2,6 @@ package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
 
-import fr.dawan.AppliCFABack.dto.CompetenceDossierProDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 
 public interface CompetenceProfessionnelleService {

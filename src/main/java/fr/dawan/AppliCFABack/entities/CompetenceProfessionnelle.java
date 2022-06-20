@@ -27,11 +27,11 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 	@ManyToMany(mappedBy = "competencesProfessionnelles", fetch = FetchType.LAZY)
 	private List<Examen> examens;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	private ActiviteType activiteType;
 
-	@OneToOne
-	private ExperienceProfessionnelle experienceProfessionnelle;
+	@OneToMany(mappedBy = "competenceProfessionnelle", cascade = CascadeType.ALL)
+	private List<ExperienceProfessionnelle> experienceProfessionnelles;
 
 	/**
 	 * @return le libelle
@@ -93,11 +93,11 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 		this.activiteType = activiteType;
 	}
 
-	public ExperienceProfessionnelle getExperienceProfessionnelle() {
-		return experienceProfessionnelle;
+	public List<ExperienceProfessionnelle> getExperienceProfessionnelles() {
+		return experienceProfessionnelles;
 	}
 
-	public void setExperienceProfessionnelle(ExperienceProfessionnelle experienceProfessionnelle) {
-		this.experienceProfessionnelle = experienceProfessionnelle;
+	public void setExperienceProfessionnelles(List<ExperienceProfessionnelle> experienceProfessionnelles) {
+		this.experienceProfessionnelles = experienceProfessionnelles;
 	}
 }

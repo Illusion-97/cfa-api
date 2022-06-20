@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 
 public interface EtudiantService {
 
@@ -62,6 +63,10 @@ public interface EtudiantService {
 	List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size);
 
 //	List<AbsenceDto> getAbsencesByIdEtudiant(long id, int page, int size);
+
+	EtudiantDossierDto getByEtudiantIdForDossierPro(long id);
+	EtudiantDossierDto saveOrUpdateEtudiantDossier(EtudiantDossierDto e);
+
 
 
 

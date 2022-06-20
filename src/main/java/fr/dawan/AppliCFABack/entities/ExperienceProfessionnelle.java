@@ -1,9 +1,8 @@
 package fr.dawan.AppliCFABack.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
+import org.hibernate.mapping.ToOne;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -44,6 +43,12 @@ public class ExperienceProfessionnelle extends BaseEntity implements Serializabl
      */
     @Column(columnDefinition = "TEXT")
     private String information;
+
+    @ManyToOne
+    private DossierProfessionnel dossierProfessionnel;
+
+    @ManyToOne
+    private CompetenceProfessionnelle competenceProfessionnelle;
 
     /**
      * @return la tâche réalisée
@@ -109,5 +114,19 @@ public class ExperienceProfessionnelle extends BaseEntity implements Serializabl
         this.information = information;
     }
 
+    public DossierProfessionnel getDossierProfessionnel() {
+        return dossierProfessionnel;
+    }
 
+    public void setDossierProfessionnel(DossierProfessionnel dossierProfessionnel) {
+        this.dossierProfessionnel = dossierProfessionnel;
+    }
+
+    public CompetenceProfessionnelle getCompetenceProfessionnelle() {
+        return competenceProfessionnelle;
+    }
+
+    public void setCompetenceProfessionnelle(CompetenceProfessionnelle competenceProfessionnelle) {
+        this.competenceProfessionnelle = competenceProfessionnelle;
+    }
 }

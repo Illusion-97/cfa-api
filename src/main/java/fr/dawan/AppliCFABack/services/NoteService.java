@@ -3,7 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.NoteControleContinuDto;
+import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
 

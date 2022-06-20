@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
+import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
+
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
@@ -12,6 +14,9 @@ public class ExperienceProfessionnelleDto implements Serializable {
     private String contexte;
     private String information;
     private int version;
+    private long dossierProfessionnelId;
+    private long competenceProfessionnelleId;
+
 
     public String getTacheRealisee() {
         return tacheRealisee;
@@ -69,4 +74,19 @@ public class ExperienceProfessionnelleDto implements Serializable {
         this.version = version;
     }
 
+    public long getDossierProfessionnelId() {
+        return dossierProfessionnelId;
+    }
+
+    public void setDossierProfessionnelId(long dossierProfessionnelId) {
+        this.dossierProfessionnelId = dossierProfessionnelId;
+    }
+
+    public long getCompetenceProfessionnelleId() {
+        return competenceProfessionnelleId;
+    }
+
+    public void setCompetenceProfessionnelleId(long competenceProfessionnelleId) {
+        this.competenceProfessionnelleId = competenceProfessionnelleId;
+    }
 }

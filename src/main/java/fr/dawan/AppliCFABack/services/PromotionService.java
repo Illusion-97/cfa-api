@@ -6,7 +6,7 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 
 
 public interface PromotionService {

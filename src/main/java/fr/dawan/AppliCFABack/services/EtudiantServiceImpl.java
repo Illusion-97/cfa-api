@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -648,6 +650,53 @@ public class EtudiantServiceImpl implements EtudiantService {
 		}
 		
 		return res;
+	}
+
+	@Override
+	public EtudiantDossierDto getByEtudiantIdForDossierPro(long id) {
+		Optional<Etudiant> e = etudiantRepository.findById(id);
+		if (!e.isPresent()) return null;
+		EtudiantDossierDto eDto = DtoTools.convert(e, EtudiantDossierDto.class);
+		return eDto;
+	}
+
+	@Override
+	public EtudiantDossierDto saveOrUpdateEtudiantDossier(EtudiantDossierDto e) {
+		Etudiant etudiant = DtoTools.convert(e, Etudiant.class);
+
+		if(etudiant.getUtilisateur() != null) {
+			//HashTools throw Exception
+			try {
+				//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+				if(etudiant.getUtilisateur().getId() == 0) {
+					etudiant.getUtilisateur().setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
+				}else {
+					//Si on a modifié le mdp
+					Etudiant etudiantInDB = etudiantRepository.getOne(etudiant.getId());
+					if(!etudiantInDB.getUtilisateur().getPassword().equals(etudiant.getUtilisateur().getPassword())) {
+						etudiant.getUtilisateur().setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
+					}
+				}
+			}catch (Exception ex) {
+				ex.printStackTrace();
+			}
+
+			//Pour le dossier
+			Path path = Paths.get("./src/main/resources/files/utilisateurs/" + etudiant.getUtilisateur().getId());
+
+			try {
+				Files.createDirectories(path);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+
+		etudiant = etudiantRepository.saveAndFlush(etudiant);
+
+
+		return DtoTools.convert(etudiant,EtudiantDossierDto.class);
+		//return mapper.EtudiantToEtudiantDto(etudiant);
 	}
 
 	/**

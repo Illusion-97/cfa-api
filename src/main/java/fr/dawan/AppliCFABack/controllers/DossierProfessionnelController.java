@@ -1,9 +1,12 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import fr.dawan.AppliCFABack.dto.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.customdtos.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -107,23 +110,18 @@ public class DossierProfessionnelController {
 		return dp;
 	}
 
-	@PostMapping(value = "/save/etudiant", consumes = "application/json", produces = "application/json")
-	public DossierProEtudiantDto saveDossierPro(@RequestBody DossierProEtudiantDto dpDto) {
-		return dossierProService.saveOrUpdateDossierPro(dpDto);
+	@PostMapping(value = "/save/etudiant/{id}", consumes = "application/json", produces = "application/json")
+	public DossierProEtudiantDto saveDossierProfessionnel(@RequestBody DossierProEtudiantDto dpDto, @PathVariable("id") long id) {
+		return dossierProService.saveOrUpdateDossierProfessionnel(dpDto, id);
 	}
 
 	@GetMapping(value = "/etudiant",produces = "application/json")
-	public List<DossierProEtudiantDto> getAllDossierPro() {
-		return dossierProService.getAllDossierPro();
-	}
-
-	@GetMapping(value = "/etudiant-dossier-pro/{id}", produces = "application/json")
-	public DossierProEtudiantDto getDossierProById(@PathVariable("id") long id) {
-		return dossierProService.getDossierProById(id);
+	public List<DossierProEtudiantDto> getAllDossierProfessionnel() {
+		return dossierProService.getAllDossierProfessionnel();
 	}
 
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "application/json", produces = "application/json")
-	public DossierProEtudiantDto updateDossier(@PathVariable("id") long id, @RequestBody DossierProEtudiantDto dpDto) {
-		return dossierProService.saveOrUpdateDossierPro(dpDto);
+	public DossierProEtudiantDto updateDossierProfessionnel(@PathVariable("id") long id, @RequestBody DossierProEtudiantDto dpDto) {
+		return dossierProService.saveOrUpdateDossierProfessionnel(dpDto, id);
 	}
 }
