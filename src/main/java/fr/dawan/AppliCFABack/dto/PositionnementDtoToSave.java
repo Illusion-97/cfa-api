@@ -1,6 +1,5 @@
 package fr.dawan.AppliCFABack.dto;
 
-import fr.dawan.AppliCFABack.entities.Positionnement.Niveau;
 
 public class PositionnementDtoToSave {
 

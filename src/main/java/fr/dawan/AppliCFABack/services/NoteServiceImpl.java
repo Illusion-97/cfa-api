@@ -161,7 +161,7 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public List<NoteControleContinuDto> getNotesByIdEtudiant(long id) throws Exception {
+	public List<NoteControleContinuDto> getNotesByIdEtudiant(long id)  {
 		List<NoteControleContinuDto> result = new ArrayList<>();
 		List<Note> list = noteRepository.findAllByEtudiantNoteId(id);
 		for (Note n : list) {

@@ -25,7 +25,7 @@ public interface NoteService {
 
 	List<NoteDto> getAllByExamenId(long id);
 
-	List<NoteControleContinuDto> getNotesByIdEtudiant(long id) throws Exception;
+	List<NoteControleContinuDto> getNotesByIdEtudiant(long id) ;
 
 	List<NoteDto> getAllByPromotionIdAndExamenId(long idPromotion, long idExamen);
 

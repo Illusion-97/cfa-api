@@ -3,12 +3,15 @@ package fr.dawan.AppliCFABack.controllers;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
-import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,7 +32,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
+import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.services.ExamenService;
+import fr.dawan.AppliCFABack.services.FileService;
 
 @RestController
 @RequestMapping("/examens")
@@ -40,6 +45,9 @@ public class ExamenController {
 	
 	@Autowired
 	ExamenService examenService;
+	
+	@Autowired
+	FileService fileSevice;
 	
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -92,6 +100,24 @@ public class ExamenController {
 		return examenService.findExamensByInterventionId(id);
 	}
 
+	@GetMapping(value = "/file/{idExamen}")
+	public ResponseEntity<Resource> getFileExamen(@PathVariable("idExamen") long idExamen){
+		ExamenDto exaDto = examenService.getById(idExamen);
+		
+		try {
+			Resource file =  fileSevice.download(exaDto.getPieceJointe());
+			
+			Path path = file.getFile().toPath();
+			
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(path))
+					.header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\""+file.getFilename()+"\"").body(file);
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 
 	// ##################################################
 	// # POST #
