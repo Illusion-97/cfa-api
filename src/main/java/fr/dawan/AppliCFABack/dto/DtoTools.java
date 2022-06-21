@@ -51,6 +51,8 @@ public class DtoTools {
             mapper.map(src -> src.getExamen().getDateExamen(), NoteControleContinuDto::setDate);
 //            mapper.map(src -> src.getExamen().getPromotions().getNom(), NoteControleContinuDto::setPromotion);
         });
+        
+       
 
 //        myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 //        myMapper.getConfiguration().setAmbiguityIgnored(true);
@@ -69,6 +71,7 @@ public class DtoTools {
         if (obj == null) return null;
         return myMapper.map(obj, clazz);
     }
+    
 
     public static <TSource, TDestination> TDestination convert(TSource obj, Class<TDestination> clazz, Converter converter) {
         ModelMapper mapper = new ModelMapper();
@@ -94,6 +97,18 @@ public class DtoTools {
 
     };
 
+    Converter<PromotionDG2Dto, Promotion> PromotionDG2DtoToPromotionConverter = context -> {
+    	PromotionDG2Dto pDG2 = context.getSource();
+    	Promotion promo = new Promotion();
+
+    	promo.setIdDG2(pDG2.getId());
+    	promo.setDateDebut(pDG2.getDateStart().toLocalDate());
+    	promo.setDateFin(pDG2.getDateEnd().toLocalDate());
+    	promo.setNom(pDG2.getSlug());
+    	return promo;
+    };
+    
+    
     /**
      * permet de mapper un objet Promotion en PromotionEtudiantDto (dto customisé) -
      * return l'objet dto custom mappé
@@ -129,6 +144,10 @@ public class DtoTools {
     public NiveauDto NiveauToNiveauDto (Positionnement.Niveau niveau) {
 
     	return enumConvert(niveau, NiveauDto.class, NiveauEnumToNiveauDtoConverter);
+    }
+    
+    public Promotion PromotionDG2DtoToPromotion(PromotionDG2Dto promoDG2Dto) {
+    	return convert(promoDG2Dto, Promotion.class, PromotionDG2DtoToPromotionConverter);
     }
 
     /**

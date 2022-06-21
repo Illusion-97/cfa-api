@@ -69,7 +69,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-06-21T09:38:33+0200",
+    date = "2022-06-21T12:48:36+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -744,12 +744,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExperienceProfessionnelleDto experienceProfessionnelleDto = new ExperienceProfessionnelleDto();
 
-        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
-        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
         experienceProfessionnelleDto.setCollaborateur( experienceProfessionnelle.getCollaborateur() );
         experienceProfessionnelleDto.setContexte( experienceProfessionnelle.getContexte() );
-        experienceProfessionnelleDto.setInformation( experienceProfessionnelle.getInformation() );
         experienceProfessionnelleDto.setId( experienceProfessionnelle.getId() );
+        experienceProfessionnelleDto.setInformation( experienceProfessionnelle.getInformation() );
+        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
+        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
         experienceProfessionnelleDto.setVersion( experienceProfessionnelle.getVersion() );
 
         return experienceProfessionnelleDto;

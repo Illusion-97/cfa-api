@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -21,6 +22,8 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 	private LocalDate dateDebut; // 01/01/2021
 
 	private LocalDate dateFin; // 31/12/2021
+	
+	private long idDG2;
 
 	@ManyToOne
 	private CEF cef;
@@ -142,5 +145,42 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 	public void setExamens(Set<Examen> examens) {
 		this.examens = examens;
 	}
+
+	/**
+	 * @return le idDG2
+	 */
+	public long getIdDG2() {
+		return idDG2;
+	}
+
+	/**
+	 * @param idDG2 le idDG2 à affecter
+	 
+	 */
+	public void setIdDG2(long idDG2) {
+		this.idDG2 = idDG2;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(centreFormation, cursus, dateDebut, dateFin, nom);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Promotion other = (Promotion) obj;
+		return Objects.equals(centreFormation, other.centreFormation) && Objects.equals(cursus, other.cursus)
+				&& Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
+				&& Objects.equals(nom, other.nom);
+	}
+	
+	
+	
 
 }

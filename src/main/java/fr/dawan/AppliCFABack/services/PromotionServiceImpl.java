@@ -1,21 +1,46 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import fr.dawan.AppliCFABack.dto.*;
-import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
+import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.PromotionDG2Dto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.PromotionForSelectDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
+import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
+import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
@@ -23,6 +48,8 @@ import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
+import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 
@@ -37,6 +64,14 @@ public class PromotionServiceImpl implements PromotionService {
 	FilesService filesService;
 	@Autowired
 	InterventionRepository interventionRepository;
+	@Autowired
+	CursusRepository cursusRepository;
+	@Autowired
+	CentreFormationRepository centreFormationRepository;
+	@Autowired
+	PromotionRepository promotionRepository;
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
@@ -321,6 +356,72 @@ public class PromotionServiceImpl implements PromotionService {
 			result.add(DtoTools.convert(promotion, PromotionForSelectDto.class));
 		}
 		
+		return result;
+	}
+
+	@Override
+	public int fetchDGPromotion(String email, String password) throws Exception {
+		List<Cursus> cursus = new ArrayList<Cursus>();
+		List<Promotion> promoLst = new ArrayList<Promotion>();
+		cursus = cursusRepository.findAll();
+		for(Cursus c: cursus) {
+			promoLst.addAll(getPromotionDG2ByIdCursus(email, password, c.getId()));
+		}
+		for(Promotion p : promoLst) {
+			try {
+				promotionRepository.saveAndFlush(p);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return promoLst.size();
+	}
+	
+	public List<Promotion> getPromotionDG2ByIdCursus(String email, String password, long idCursus) throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		List<PromotionDG2Dto> fetchResJson = new ArrayList<>(); 
+		List<Promotion> result = new ArrayList<Promotion>();
+		
+		URI url = new URI("https://dawan.org/api2/cfa/trainings/" +idCursus+ "/sessions");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("x-auth-toekn", email+ ":" +password);
+		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+		if(rep.getStatusCode()  == HttpStatus.OK) {
+			String json = rep.getBody();
+			
+			try {
+				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionDG2Dto>>() {} );
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			for(PromotionDG2Dto pDtoDG2 : fetchResJson) {
+				Optional<Promotion> promoDb = promotionRepository.findByIdDG2(pDtoDG2.getId());
+				
+				DtoTools dtoTools = new DtoTools();
+				Promotion promotionDG2 = dtoTools.PromotionDG2DtoToPromotion(pDtoDG2);
+				Optional<CentreFormation> cfOpt = centreFormationRepository.findById(pDtoDG2.getLocationId());
+				if(cfOpt.isPresent()) {
+					promotionDG2.setCentreFormation(cfOpt.get());
+				}
+				Optional<Cursus> cursusOpt = cursusRepository.findById(pDtoDG2.getCourseId());
+				if(cursusOpt.isPresent()) {
+					promotionDG2.setCursus(cursusOpt.get());
+				}
+				
+				//comparer voir sil existe en BDD
+				if(!promoDb.isPresent()) {
+					result.add(promotionDG2);
+					//si existe en BDD -> comparer tous les champs et si différents -> faire update
+				} else if(!promoDb.get().equals(promotionDG2)) {
+					result.add(promotionDG2);
+				}	
+			}
+		} else {
+			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+		}
 		return result;
 	}
 

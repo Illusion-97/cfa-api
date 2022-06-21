@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
+import fr.dawan.AppliCFABack.entities.Promotion;
 
 
 public interface PromotionService {
@@ -40,4 +41,8 @@ public interface PromotionService {
 	List<PromotionEtudiantDto> getCursusByIdEtudiant(long id);
 	
 	List<PromotionForSelectDto> getPromotionByInterventionIdForSelect(long idIntervention);
+	
+	int fetchDGPromotion(String email, String password) throws Exception;
+	
+	List<Promotion> getPromotionDG2ByIdCursus(String email, String password, long idCursis) throws Exception;
 }
