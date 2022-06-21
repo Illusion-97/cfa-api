@@ -25,11 +25,13 @@ public interface NoteService {
 
 	List<NoteDto> getAllByExamenId(long id);
 
+
 	/**
 	 * @param id de l'étudiant
 	 * @return toutes les données nécessaires pour remplir la section Contrôles Continus dans le front partie étudiant, par le service implémenté
 	 */
-	List<NoteControleContinuDto> getNotesByIdEtudiant(long id);
+
+	List<NoteControleContinuDto> getNotesByIdEtudiant(long id) ;
 
 	List<NoteDto> getAllByPromotionIdAndExamenId(long idPromotion, long idExamen);
 

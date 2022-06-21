@@ -1,4 +1,4 @@
-package fr.dawan.AppliCFABack.dto;
+package fr.dawan.AppliCFABack.dto.customdtos;
 
 import java.io.Serializable;
 

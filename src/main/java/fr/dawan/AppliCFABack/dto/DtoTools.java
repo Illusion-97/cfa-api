@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
 import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;

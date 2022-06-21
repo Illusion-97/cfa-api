@@ -11,7 +11,10 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,9 +29,7 @@ import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
-import fr.dawan.AppliCFABack.dto.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.EtudiantInfoInterventionDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;

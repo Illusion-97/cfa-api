@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -26,6 +27,7 @@ import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
+import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
@@ -33,6 +35,7 @@ import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository;
 import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 /***
  * 
@@ -62,6 +65,8 @@ public class ExamenServiceImpl implements ExamenService {
 	@Autowired
 	PromotionRepository promotionRepository;
 	
+	@Autowired
+	InterventionRepository interventionRepository;
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
@@ -177,13 +182,25 @@ public class ExamenServiceImpl implements ExamenService {
 	 * @throws Si les promotions ne sont pas précisé.
 	 */
 	
+	
 	@Override
 	public ExamenDtoSave saveOrUpdate(ExamenDtoSave eDto) throws Exception {
 		
-		if (eDto.getPromotionsId().isEmpty() || eDto.getPromotionsId() == null) 
-			throw new Exception("Promotions manquante");
 		Set<Promotion> promotions = new HashSet<Promotion>();
-		for (long idP : eDto.getPromotionsId()) {
+		Set<Long>  promotionsId = null;
+		if (eDto.getPromotionsId().isEmpty() || eDto.getPromotionsId() == null) 
+		{
+			Optional<Intervention> intervention =  interventionRepository.findById(eDto.getInterventionId());
+			
+			if (!intervention.isPresent()) 
+				throw new Exception("Intervention Types manquante");
+			
+			  promotionsId =  intervention.get().getPromotions().stream().map(p -> p.getId()).collect(Collectors.toSet());
+		}
+		else {
+			promotionsId = eDto.getPromotionsId();
+		}
+		for (long idP : promotionsId ) {
 			promotions.add(promotionRepository.getOne(idP));
 		}
 		if (eDto.getActiviteTypesId().isEmpty() || eDto.getActiviteTypesId() == null) 

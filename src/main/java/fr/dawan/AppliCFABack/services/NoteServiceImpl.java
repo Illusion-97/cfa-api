@@ -167,8 +167,9 @@ public class NoteServiceImpl implements NoteService {
 	 * 			- date de l'examen
 	 * 			- nom de la promotion de l'étudiant
 	 */
-	@Override
-	public List<NoteControleContinuDto> getNotesByIdEtudiant(long id) {
+
+	public List<NoteControleContinuDto> getNotesByIdEtudiant(long id)  {
+
 		List<NoteControleContinuDto> result = new ArrayList<>();
 		List<Note> list = noteRepository.findAllByEtudiantNoteId(id);
 		for(Note n : list) {
