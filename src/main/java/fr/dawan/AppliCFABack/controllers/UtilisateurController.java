@@ -37,18 +37,18 @@ public class UtilisateurController {
             @RequestParam(defaultValue = "", required = false) Optional<String> search) {
 
         if (role.isPresent())
-            return utilisateurService.findAllByRoleByPage(page, size, role.get().toString(), search.get().toString());
+            return utilisateurService.findAllByRoleByPage(page, size, role.get(), search.get());
         else
-            return utilisateurService.getAllUtilisateurs(page, size, search.get().toString());
+            return utilisateurService.getAllUtilisateurs(page, size, search.get());
     }
 
     @GetMapping(value = "/count", produces = "application/json")
     public CountDto count(@RequestParam(required = false) Optional<String> role,
                           @RequestParam(defaultValue = "", required = false) Optional<String> search) {
         if (role.isPresent())
-            return utilisateurService.countByRole(role.get().toString(), search.get().toString());
+            return utilisateurService.countByRole(role.get(), search.get());
         else
-            return utilisateurService.count(search.get().toString());
+            return utilisateurService.count(search.get());
     }
     
     // GET: /AppliCFABack/utilisateurs/{id}

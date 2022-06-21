@@ -51,12 +51,12 @@ public class DevoirController extends GenericController<DevoirDto> {
 	
 	@PutMapping(consumes="application/json", produces="application/json")
 	public DevoirDto update(@RequestBody DevoirDto dDto) throws Exception {
-		return ((DevoirService) service).saveOrUpdate(dDto);
+		return service.saveOrUpdate(dDto);
 	}
 	
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") long id){
-		((DevoirService) service).delete(id);
+		service.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("Le devoir " +id+ " a bien été supprimé");
 	}
 

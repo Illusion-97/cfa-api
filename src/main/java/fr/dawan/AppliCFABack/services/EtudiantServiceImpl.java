@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -108,7 +109,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Autowired
 	private DevoirEtudiantRepository devoirEtudiantRepository;
-	
+
 	@Autowired
 	private PositionnementRepository positionnementRepository;
 
@@ -604,7 +605,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return result;
 	}
 
-	//recuperation du formateur referent par id etudiants 
+	/**
+	 * @param id de l'étudiant
+	 * utilise le ContratRepository pour récupérer le formateur par id de l'étudiant
+	 * @return le formateur référent (tuteur) de l'étudiant et ses informations personnelles par le mapper (DtoMapper)
+	 */
 	@Override
 	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
 		Contrat contrat = contratRepository.findByEtudiantId(id);
@@ -665,6 +670,53 @@ public class EtudiantServiceImpl implements EtudiantService {
 		}
 
 		return res;
+	}
+
+	@Override
+	public EtudiantDossierDto getByEtudiantIdForDossierPro(long id) {
+		Optional<Etudiant> e = etudiantRepository.findById(id);
+		if (!e.isPresent()) return null;
+		EtudiantDossierDto eDto = DtoTools.convert(e, EtudiantDossierDto.class);
+		return eDto;
+	}
+
+	@Override
+	public EtudiantDossierDto saveOrUpdateEtudiantDossier(EtudiantDossierDto e) {
+		Etudiant etudiant = DtoTools.convert(e, Etudiant.class);
+
+		if(etudiant.getUtilisateur() != null) {
+			//HashTools throw Exception
+			try {
+				//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+				if(etudiant.getUtilisateur().getId() == 0) {
+					etudiant.getUtilisateur().setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
+				}else {
+					//Si on a modifié le mdp
+					Etudiant etudiantInDB = etudiantRepository.getOne(etudiant.getId());
+					if(!etudiantInDB.getUtilisateur().getPassword().equals(etudiant.getUtilisateur().getPassword())) {
+						etudiant.getUtilisateur().setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
+					}
+				}
+			}catch (Exception ex) {
+				ex.printStackTrace();
+			}
+
+			//Pour le dossier
+			Path path = Paths.get("./src/main/resources/files/utilisateurs/" + etudiant.getUtilisateur().getId());
+
+			try {
+				Files.createDirectories(path);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+
+		etudiant = etudiantRepository.saveAndFlush(etudiant);
+
+
+		return DtoTools.convert(etudiant,EtudiantDossierDto.class);
+		//return mapper.EtudiantToEtudiantDto(etudiant);
 	}
 
 	/**
@@ -755,26 +807,26 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Override
 	public List<EtudiantAbsencesDevoirsDto> getEtudiantsByInterventionId(long idIntervention, String search) {
-		
+
 		List<EtudiantAbsencesDevoirsDto> etudiantAbsencesDevoirsDtos = new ArrayList<EtudiantAbsencesDevoirsDto>();
 		List<Etudiant> etudiants = etudiantRepository.findAllDistinctByPromotionsInterventionsId(idIntervention,search);
 		for (Etudiant etudiant : etudiants) {
-			
+
 			EtudiantAbsencesDevoirsDto etudiantAbsencesDevoirsDto = new EtudiantAbsencesDevoirsDto();
-			
+
 			Optional<Promotion> promotion = promotionRepository.getByEtudiantsIdAndInterventionsId(etudiant.getId(), idIntervention);
-			
+
 			EtudiantInfoInterventionDto aInfoIdto = DtoTools.convert(etudiant, EtudiantInfoInterventionDto.class);
-				
+
 			if (promotion.isPresent()) {
-				
+
 				aInfoIdto.setNomCentreFormation(promotion.get().getCentreFormation().getNom());
 			}
 			etudiantAbsencesDevoirsDto.setEtudiant(aInfoIdto);
-			
-		
+
+
 			Optional<Positionnement> positionnement = positionnementRepository.getDistinctByInterventionIdAndEtudiantId(idIntervention, etudiant.getId());
-			
+
 			if (positionnement.isPresent()) {
 				Positionnement.Niveau nDebut = positionnement.get().getNiveauDebut();
 				Positionnement.Niveau nFin = positionnement.get().getNiveauFin();
@@ -783,22 +835,22 @@ public class EtudiantServiceImpl implements EtudiantService {
 				etudiantAbsencesDevoirsDto.setNiveauDebut(mappeur.NiveauToNiveauDto(nDebut));
 				etudiantAbsencesDevoirsDto.setNiveauFin(mappeur.NiveauToNiveauDto(nFin));
 			}
-			
+
 			List<Absence> absences = absenceRepository.findAllByEtudiantIdAndInterventionId(etudiant.getId(),
 					idIntervention);
-			
+
 			if ( !absences.isEmpty() ||absences != null ) {
 				List<AbsenceDto> absencesDto = new ArrayList<AbsenceDto>();
 				for (Absence absence : absences) {
 					absencesDto.add(DtoTools.convert(absence, AbsenceDto.class));
 				}
 				etudiantAbsencesDevoirsDto.setAbsences(absencesDto);
-				
+
 			}
 			List<DevoirEtudiant> devoirsEtudiant = devoirEtudiantRepository.getAllDevoirsEtudiantByInterventionId(idIntervention, etudiant.getId());
 
 			if ( !devoirsEtudiant.isEmpty()|| devoirsEtudiant != null) {
-				
+
 				List<DevoirEtudiantDto> devoirsEDto = new ArrayList<DevoirEtudiantDto>();
 
 				for (DevoirEtudiant dE : devoirsEtudiant) {
@@ -806,11 +858,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 				}
 				etudiantAbsencesDevoirsDto.setDevoirs(devoirsEDto);
 			}
-			
+
 			etudiantAbsencesDevoirsDtos.add(etudiantAbsencesDevoirsDto);
-			
+
 		}
-		
+
 		return etudiantAbsencesDevoirsDtos;
 	}
 

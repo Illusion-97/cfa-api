@@ -1,8 +1,12 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.customdtos.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -104,5 +108,20 @@ public class DossierProfessionnelController {
 		eDto.getDossierProfessionnel().add(dp);
 		etudiantService.saveOrUpdate(eDto);
 		return dp;
+	}
+
+	@PostMapping(value = "/save/etudiant/{id}", consumes = "application/json", produces = "application/json")
+	public DossierProEtudiantDto saveDossierProfessionnel(@RequestBody DossierProEtudiantDto dpDto, @PathVariable("id") long id) {
+		return dossierProService.saveOrUpdateDossierProfessionnel(dpDto, id);
+	}
+
+	@GetMapping(value = "/etudiant",produces = "application/json")
+	public List<DossierProEtudiantDto> getAllDossierProfessionnel() {
+		return dossierProService.getAllDossierProfessionnel();
+	}
+
+	@PutMapping(value = "/update/etudiant/{id}", consumes = "application/json", produces = "application/json")
+	public DossierProEtudiantDto updateDossierProfessionnel(@PathVariable("id") long id, @RequestBody DossierProEtudiantDto dpDto) {
+		return dossierProService.saveOrUpdateDossierProfessionnel(dpDto, id);
 	}
 }

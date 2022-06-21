@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Optional;
 
-import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -137,6 +137,10 @@ public class ExamenController {
 		return examenService.saveOrUpdate(eDto);
 	}
 
+	/**
+	 * @param id de l'étudiant
+	 * @return dans un get, le service qui va chercher toutes les données nécessaires pour remplir la section livret Evaluation du front partie étudiant
+	 */
 	@GetMapping(value = "/livret-evaluation/{id}", produces = "application/json")
 	public List<LivretEvaluationDto> getLivretEvaluation(@PathVariable("id") long id) {
 		return examenService.getLivretEvaluation(id);

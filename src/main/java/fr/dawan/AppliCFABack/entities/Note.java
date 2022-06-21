@@ -102,10 +102,16 @@ public class Note extends BaseEntity implements Serializable {
 		this.etudiantNote = etudiantNote;
 	}
 
+	/**
+	 * @return l'observation
+	 */
 	public String getObservation() {
 		return observation;
 	}
 
+	/**
+	 * @param observation l'observation à affecter
+	 */
 	public void setObservation(String observation) {
 		this.observation = observation;
 	}

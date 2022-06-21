@@ -57,8 +57,8 @@ public class SupportCoursControllerTest {
 //	@Autowired
 //	private ObjectMapper objectMapper;
 	
-	private List<SupportCoursDto> supportsCoursDto = new ArrayList<SupportCoursDto>();
-	private List<Long> interventionsId = new ArrayList<Long>();
+	private final List<SupportCoursDto> supportsCoursDto = new ArrayList<SupportCoursDto>();
+	private final List<Long> interventionsId = new ArrayList<Long>();
 	
 
 	

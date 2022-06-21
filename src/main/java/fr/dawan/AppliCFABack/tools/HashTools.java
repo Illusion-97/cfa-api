@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.tools;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 public class HashTools {
@@ -13,7 +14,7 @@ public class HashTools {
 		md.reset();
 		
 		//application de l'algorithme de hachage à la chaine en entrée
-		byte[] messageDigestArray = md.digest(input.getBytes("utf-8"));
+		byte[] messageDigestArray = md.digest(input.getBytes(StandardCharsets.UTF_8));
 		
 		//conversion du messageDigestArray en une réprésentation numérique signée
 		BigInteger bi = new BigInteger(1, messageDigestArray);

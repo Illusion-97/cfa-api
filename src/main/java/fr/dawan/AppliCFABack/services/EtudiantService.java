@@ -14,6 +14,8 @@ import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 
 public interface EtudiantService {
 
@@ -62,6 +64,10 @@ public interface EtudiantService {
 
 	List<JourneePlanningDto> getAllJourneePlanningByIdEtudiant(long id);
 
+	/**
+	 * @param id de l'étudiant
+	 * @return le formateur référent (tuteur) de l'étudiant et ses informations personnelles dans le service implémenté
+	 */
 	UtilisateurDto getFormateurReferentByIdEtudiant(long id);
 
 //	UtilisateurDto getManagerByIdEtudiant(long id);
@@ -71,5 +77,10 @@ public interface EtudiantService {
 //	List<AbsenceDto> getAbsencesByIdEtudiant(long id, int page, int size);
 
 	List<EtudiantAbsencesDevoirsDto> getEtudiantsByInterventionId(long idIntervention ,String search);
+	EtudiantDossierDto getByEtudiantIdForDossierPro(long id);
+	EtudiantDossierDto saveOrUpdateEtudiantDossier(EtudiantDossierDto e);
+
+
+
 
 }

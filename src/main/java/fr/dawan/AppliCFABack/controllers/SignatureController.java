@@ -52,7 +52,7 @@ public class SignatureController extends GenericController<SignatureDto> {
 		}
 		SignatureDto  sDto = objectMapper.readValue(signatureStr,SignatureDto.class);
 		sDto.setPieceJointe(file.getOriginalFilename());
-		SignatureDto result = ((SignatureService) service).saveOrUpdate(sDto);
+		SignatureDto result = service.saveOrUpdate(sDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(result);
 	}
 

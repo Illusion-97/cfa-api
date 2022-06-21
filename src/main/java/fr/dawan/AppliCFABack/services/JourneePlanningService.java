@@ -9,5 +9,5 @@ import fr.dawan.AppliCFABack.entities.Intervention;
 public interface JourneePlanningService {
 
 	List<JourneePlanningDto> getJourneePlanningFromIntervention(Intervention i);
-	public boolean EstJoursOuvrable(LocalDate date);
+	boolean EstJoursOuvrable(LocalDate date);
 }

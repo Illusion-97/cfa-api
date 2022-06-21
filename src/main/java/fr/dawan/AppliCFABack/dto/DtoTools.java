@@ -1,7 +1,10 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.util.stream.Collectors;
-
+import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
+import fr.dawan.AppliCFABack.entities.*;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -27,11 +30,19 @@ import fr.dawan.AppliCFABack.entities.Utilisateur;
 @Component
 public class DtoTools {
 
-    private static ModelMapper myMapper = new ModelMapper();
+    private static final ModelMapper myMapper = new ModelMapper();
 
+    /**
+     * @param obj
+     * @param clazz
+     * @param <TSource>
+     * @param <TDestination>
+     * @return l'objet de l'entité mappé en Dto de manière générique ou avec un Dto custom
+     *          ou
+     *          un objet dto mappé en un objet d'une entité
+     */
     public static <TSource, TDestination> TDestination convert(TSource obj, Class<TDestination> clazz) {
 
-        // TODO ajout de config pour personnaliser le mapping dto<>entity
         myMapper.typeMap(Note.class, NoteControleContinuDto.class).addMappings(mapper -> {
             mapper.map(src -> src.getId(), NoteControleContinuDto::setId);
             mapper.map(src -> src.getEtudiantNote().getId(), NoteControleContinuDto::setEtudiantId);
@@ -48,7 +59,7 @@ public class DtoTools {
 //            mapper.map(src -> src.getEtudiantNoteId(), (dest, v) -> dest.getEtudiantNote().setId((long) v));
 //
 //        });
-        	
+
         myMapper.typeMap(Etudiant.class, EtudiantInfoInterventionDto.class).addMappings(m ->{
         	m.map(src -> src.getId(), EtudiantInfoInterventionDto::setIdEtudiant);
         	m.map(src -> src.getUtilisateur().getNom(), EtudiantInfoInterventionDto::setNom);
@@ -71,22 +82,24 @@ public class DtoTools {
         return mapper.map(Enum, clazz);
     }
     Converter<Positionnement.Niveau, NiveauDto> NiveauEnumToNiveauDtoConverter = context -> {
-    	
+
     	Positionnement.Niveau niveau =  context.getSource();
-    	
+
     	NiveauDto ndto = new NiveauDto();
     	ndto.setValeur(niveau.getValeur());
     	ndto.setCodeCouleur(niveau.getCodeCouleur());
     	ndto.setDescreption(niveau.getDescription());
 		return ndto;
-    	
+
     };
 
+    /**
+     * permet de mapper un objet Promotion en PromotionEtudiantDto (dto customisé) -
+     * return l'objet dto custom mappé
+     */
     Converter<Promotion, PromotionEtudiantDto> PromotionToPromotionEtudiantDtoConverter = context -> {
 
         Promotion p = context.getSource();
-        //CursusEtudiantDto cDto = convert(c, CursusEtudiantDto.class);
-
         PromotionEtudiantDto cDto = new PromotionEtudiantDto();
 
         cDto.setCursusTitre(p.getCursus().getTitre());
@@ -103,19 +116,27 @@ public class DtoTools {
         return cDto;
     };
 
-
+    /**
+     * méthode appelée dans le PromotionServiceImpl
+     * @param promotion
+     * @return l'objet dto custom mappé
+     */
     public PromotionEtudiantDto PromotionToPromotionEtudiantDto(Promotion promotion) {
         return convert(promotion, PromotionEtudiantDto.class, PromotionToPromotionEtudiantDtoConverter);
-    };
-    
+    }
+
     public NiveauDto NiveauToNiveauDto (Positionnement.Niveau niveau) {
-    	
+
     	return enumConvert(niveau, NiveauDto.class, NiveauEnumToNiveauDtoConverter);
     }
 
+    /**
+     * permet de mapper un objet Examen en LivretEvaluationDto (dto customisé) -
+     * return l'objet dto custom mappé
+     */
     Converter<Examen, LivretEvaluationDto> ExamenToLivretEvaluationDtoConverter = context -> {
-        Examen e = context.getSource();
 
+        Examen e = context.getSource();
         LivretEvaluationDto leDto = new LivretEvaluationDto();
 
 //        leDto.setPromotion(e.getPromotion().getNom());
@@ -135,13 +156,20 @@ public class DtoTools {
             String observation = n.getObservation();
             return observation;
         }).collect(Collectors.toList()));
-
         return leDto;
     };
 
+    /**
+     * méthode appelée dans l'ExamenServiceImpl
+     * @param examen
+     * @return l'objet dto custom mappé
+     */
     public LivretEvaluationDto ExamenToLivretEvaluationDto(Examen examen) {
         return convert(examen, LivretEvaluationDto.class, ExamenToLivretEvaluationDtoConverter);
     }
+
+
+
 
 
 }

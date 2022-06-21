@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.customdtos.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 
 public interface DossierProfessionnelService {
@@ -15,8 +16,13 @@ public interface DossierProfessionnelService {
 
 	void deleteById(long id);
 	
-	public List<DossierProfessionnelDto> getByIdEtudiant(long id);
+	List<DossierProfessionnelDto> getByIdEtudiant(long id);
 
 	DossierProfessionnelDto getByName(String nom);
+
+
+	DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id);
+
+	List<DossierProEtudiantDto> getAllDossierProfessionnel();
 
 }

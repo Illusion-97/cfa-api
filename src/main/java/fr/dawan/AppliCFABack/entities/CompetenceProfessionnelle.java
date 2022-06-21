@@ -2,11 +2,8 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /***
  * 
@@ -27,11 +24,14 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 	@Column(nullable = false)
 	private byte numeroFiche;
 
-	@ManyToMany(mappedBy = "competencesProfessionnelles")
+	@ManyToMany(mappedBy = "competencesProfessionnelles", fetch = FetchType.LAZY)
 	private List<Examen> examens;
 
 	@ManyToOne
 	private ActiviteType activiteType;
+
+	@OneToMany(mappedBy = "competenceProfessionnelle", cascade = CascadeType.ALL)
+	private List<ExperienceProfessionnelle> experienceProfessionnelles;
 
 	/**
 	 * @return le libelle
@@ -93,4 +93,11 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 		this.activiteType = activiteType;
 	}
 
+	public List<ExperienceProfessionnelle> getExperienceProfessionnelles() {
+		return experienceProfessionnelles;
+	}
+
+	public void setExperienceProfessionnelles(List<ExperienceProfessionnelle> experienceProfessionnelles) {
+		this.experienceProfessionnelles = experienceProfessionnelles;
+	}
 }

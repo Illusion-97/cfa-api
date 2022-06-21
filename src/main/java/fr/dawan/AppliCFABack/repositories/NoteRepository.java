@@ -21,6 +21,10 @@ public interface NoteRepository extends JpaRepository<Note, Long>{
 //	Page<Note> findAllByEtudiantUtilisateurPrenomContainingIgnoringCaseOrEtudiantUtilisateurNomContainingIgnoringCaseOrExamenExamenEnonceContainingIgnoringCaseOrDevoirEnonceContainingIgnoringCase(
 //			String search, String search2, String search3, String search4, Pageable pageable);
 
+	/**
+	 * @param id de l'étudiant
+	 * @return une liste de notes par id de l'étudiant
+	 */
 	List<Note> findAllByEtudiantNoteId(long id);
 	
 	List<Note> findAllByExamenId(long id);

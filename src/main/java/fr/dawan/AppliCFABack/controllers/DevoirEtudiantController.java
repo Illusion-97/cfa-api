@@ -54,7 +54,7 @@ public class DevoirEtudiantController extends GenericController<DevoirEtudiantDt
 		}
 		DevoirEtudiantDto  dEDto = objectMapper.readValue(DevoirStr, DevoirEtudiantDto.class);
 		dEDto.setPieceJointe(file.getOriginalFilename());
-		dEDto = ((DevoirEtudiantService) service).saveOrUpdate(dEDto);
+		dEDto = service.saveOrUpdate(dEDto);
 		return ResponseEntity.accepted().body(dEDto);
 	}
 

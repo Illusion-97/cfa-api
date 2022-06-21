@@ -17,6 +17,7 @@ import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
 import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
@@ -47,6 +48,7 @@ import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
+import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.FicheEntreprise;
 import fr.dawan.AppliCFABack.entities.FichePoste;
 import fr.dawan.AppliCFABack.entities.Formateur;
@@ -732,6 +734,25 @@ public class DtoMapperImpl implements DtoMapper {
         centreFormation.setVersion( centreFormationDG2Dto.getVersion() );
 
         return centreFormation;
+    }
+
+    @Override
+    public ExperienceProfessionnelleDto ExperienceProfessionnelleToExperienceProfessionnelleDto(ExperienceProfessionnelle experienceProfessionnelle) {
+        if ( experienceProfessionnelle == null ) {
+            return null;
+        }
+
+        ExperienceProfessionnelleDto experienceProfessionnelleDto = new ExperienceProfessionnelleDto();
+
+        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
+        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
+        experienceProfessionnelleDto.setCollaborateur( experienceProfessionnelle.getCollaborateur() );
+        experienceProfessionnelleDto.setContexte( experienceProfessionnelle.getContexte() );
+        experienceProfessionnelleDto.setInformation( experienceProfessionnelle.getInformation() );
+        experienceProfessionnelleDto.setId( experienceProfessionnelle.getId() );
+        experienceProfessionnelleDto.setVersion( experienceProfessionnelle.getVersion() );
+
+        return experienceProfessionnelleDto;
     }
 
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {

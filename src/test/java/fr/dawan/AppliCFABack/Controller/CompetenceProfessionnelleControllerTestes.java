@@ -52,7 +52,7 @@ public class CompetenceProfessionnelleControllerTestes {
 	@MockBean 
 	private CompetenceProfessionnelleService competenceProfessionnelleService;
 	
-	private List<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new ArrayList<CompetenceProfessionnelleDto>();
+	private final List<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new ArrayList<CompetenceProfessionnelleDto>();
 	
 	@BeforeEach 
 	public void beforeEach() throws Exception {

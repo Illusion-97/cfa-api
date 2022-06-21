@@ -53,7 +53,7 @@ public class AbsenceControllerTest {
 	@MockBean
 	private TokenInterceptor tokenInterceptor;
 	
-	private List<AbsenceDto> absencesDto = new ArrayList<AbsenceDto>();
+	private final List<AbsenceDto> absencesDto = new ArrayList<AbsenceDto>();
 	
 	@BeforeAll
 	public void beforeAll() throws Exception {

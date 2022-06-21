@@ -116,11 +116,8 @@ public class CentreFormation extends BaseEntity implements Serializable{
 		if (idDg2 != other.idDg2)
 			return false;
 		if (nom == null) {
-			if (other.nom != null)
-				return false;
-		} else if (!nom.equals(other.nom))
-			return false;
-		return true;
+			return other.nom == null;
+		} else return nom.equals(other.nom);
 	}
 	
 	

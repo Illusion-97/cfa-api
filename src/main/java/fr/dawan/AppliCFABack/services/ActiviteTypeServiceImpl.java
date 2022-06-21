@@ -24,7 +24,7 @@ import fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository;
  * 
  * @author Feres BG Valentin C.
  * @see fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository
- * @see fr.dawan.AppliCFABack.dto..ActiviteTypeDto
+ * @see fr.dawan.AppliCFABack.dto.ActiviteTypeDto
  * @since 1.0
  * @version 1.0
  *

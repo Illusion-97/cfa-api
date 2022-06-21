@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,6 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @Transactional
@@ -262,8 +261,9 @@ public class PromotionServiceImpl implements PromotionService {
 	}
 	
 	/**
+	 * Erreur méthodes controller-service-repo à refaire avec un dto custom pour l'accueil entier
 	 * Récupération du cef en fonction de l'id de la promotion
-	 * 
+	 *
 	 * @param id	id de la promotion
 	 */
 	
@@ -291,8 +291,15 @@ public class PromotionServiceImpl implements PromotionService {
 	}
 
 	/**
-	 * @param id
-	 * @return
+	 * @param id de l'étudiant
+	 * utilise le PromotionRepository pour récupérer toutes les promotions par id de l'étudiant
+	 * @return toutes les données nécessaires pour remplir la section Cursus du front partie étudiant par le mapper (DtoTools) :
+	 * 			- titre du cursus
+	 * 			- description du cursus
+	 * 			- durée du cursus
+	 * 			- nom de la promotion
+	 * 			- dates de début et de fin de la promotion
+	 * 			- plannings de l'étudiant par rapport à ses promotions
 	 */
 	@Override
 	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id) {

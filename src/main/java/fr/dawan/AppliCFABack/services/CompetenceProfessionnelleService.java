@@ -9,5 +9,8 @@ public interface CompetenceProfessionnelleService {
 	 CompetenceProfessionnelleDto getById(long id);
 	 CompetenceProfessionnelleDto saveOrUpdate( CompetenceProfessionnelleDto cpDto);
 	void deleteById(long id);
-	
+
+//	CompetenceDossierProDto getById2(long id);
+//
+//	CompetenceDossierProDto saveOrUpdate2(CompetenceDossierProDto cpDto);
 }

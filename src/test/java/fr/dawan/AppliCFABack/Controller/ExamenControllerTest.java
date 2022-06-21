@@ -55,7 +55,7 @@ public class ExamenControllerTest {
 
 	//private long idExamen;
 	
-	private List<ExamenDto> examenDto = new ArrayList<ExamenDto>();
+	private final List<ExamenDto> examenDto = new ArrayList<ExamenDto>();
 	
 	@MockBean
 	private TokenInterceptor tokenInterceptor;

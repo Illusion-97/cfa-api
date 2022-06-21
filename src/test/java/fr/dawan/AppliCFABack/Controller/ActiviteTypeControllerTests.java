@@ -51,7 +51,7 @@ private ActiviteTypeService activiteTypeService;
 @Autowired
 private ObjectMapper objectMapper;
 
-private List<ActiviteTypeDto> activiteTypesDto = new ArrayList<ActiviteTypeDto>();
+private final List<ActiviteTypeDto> activiteTypesDto = new ArrayList<ActiviteTypeDto>();
 
 @BeforeEach 
 public void beforeEach() throws Exception {

@@ -7,7 +7,7 @@ public interface GenericService<TDto extends BaseEntityDto > {
 
     TDto getById(long id);
 
-    abstract TDto saveOrUpdate(TDto tDto) throws Exception;
+    TDto saveOrUpdate(TDto tDto) throws Exception;
 
     CountDto count(String search);
     

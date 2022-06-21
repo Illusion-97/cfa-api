@@ -3,7 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.NoteControleContinuDto;
+import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
 
@@ -25,7 +25,11 @@ public interface NoteService {
 
 	List<NoteDto> getAllByExamenId(long id);
 
-	List<NoteControleContinuDto> getNotesByIdEtudiant(long id) throws Exception;
+	/**
+	 * @param id de l'étudiant
+	 * @return toutes les données nécessaires pour remplir la section Contrôles Continus dans le front partie étudiant, par le service implémenté
+	 */
+	List<NoteControleContinuDto> getNotesByIdEtudiant(long id);
 
 	List<NoteDto> getAllByPromotionIdAndExamenId(long idPromotion, long idExamen);
 

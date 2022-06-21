@@ -11,7 +11,11 @@ public interface ContratRepository extends JpaRepository<Contrat, Long>{
 
 	Page<Contrat> findAllByMaitreApprentissageUtilisateurPrenomContainingIgnoringCaseOrMaitreApprentissageUtilisateurNomContainingIgnoringCase(
 			String prenom, String nom, PageRequest pageable);
-	
+
+	/**
+	 * @param id de l'étudiant
+	 * @return le contrat par rapport à l'id de l'étudiant
+	 */
 	Contrat findByEtudiantId(long id);
 
 }

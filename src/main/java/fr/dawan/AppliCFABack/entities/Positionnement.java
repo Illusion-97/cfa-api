@@ -35,11 +35,11 @@ public class Positionnement extends BaseEntity implements Serializable {
 		private String description;
 		
 
-		private Niveau() {
+		Niveau() {
 		}
 
 
-		private Niveau(int valeur, String codeCouleur, String description) {
+		Niveau(int valeur, String codeCouleur, String description) {
 			this.valeur = valeur;
 			this.codeCouleur = codeCouleur;
 			this.description = description;

@@ -701,10 +701,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public Boolean isReferent(long id) {
 		List<Promotion> result = promotionRespository.findAllByReferentPedagogiqueId(id);
 
-		if (result.size() != 0)
-			return true;
-		else
-			return false;
+		return result.size() != 0;
 	}
 
 	/**

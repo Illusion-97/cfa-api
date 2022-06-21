@@ -113,10 +113,7 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
     private boolean EstWeekEnd(LocalDate date)
     {
     	//getValue() : @return the day-of-week, from 1 (Monday) to 7 (Sunday)
-        if ((int)date.getDayOfWeek().getValue() == 6 || (int)date.getDayOfWeek().getValue()  == 7) 
-        	return true;
-        else 
-        	return false;
+		return date.getDayOfWeek().getValue() == 6 || date.getDayOfWeek().getValue() == 7;
     }
 	
     /**
@@ -130,24 +127,24 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
     {
         //Calcul du jour de pâques (algorithme de Oudin (1940))
         //Calcul du nombre d'or - 1
-        int intGoldNumber = (int)(date.getYear() % 19);
+        int intGoldNumber = date.getYear() % 19;
         // Année divisé par cent
-        int intAnneeDiv100 = (int)(date.getYear() / 100);
+        int intAnneeDiv100 = date.getYear() / 100;
         // intEpacte est = 23 - Epacte (modulo 30)
-        int intEpacte = (int)((intAnneeDiv100 - intAnneeDiv100 / 4 - (8 * intAnneeDiv100 + 13) / 25 + (
-        19 * intGoldNumber) + 15) % 30);
+        int intEpacte = (intAnneeDiv100 - intAnneeDiv100 / 4 - (8 * intAnneeDiv100 + 13) / 25 + (
+        19 * intGoldNumber) + 15) % 30;
         //Le nombre de jours à partir du 21 mars pour atteindre la pleine lune Pascale
-        int intDaysEquinoxeToMoonFull = (int)(intEpacte - (intEpacte / 28) * (1 - (intEpacte / 28) * (29 / (intEpacte + 1)) * ((21 - intGoldNumber) / 11)));
+        int intDaysEquinoxeToMoonFull = intEpacte - (intEpacte / 28) * (1 - (intEpacte / 28) * (29 / (intEpacte + 1)) * ((21 - intGoldNumber) / 11));
         //Jour de la semaine pour la pleine lune Pascale (0=dimanche)
-        int intWeekDayMoonFull = (int)((date.getYear() + date.getYear() / 4 + intDaysEquinoxeToMoonFull +
-              2 - intAnneeDiv100 + intAnneeDiv100 / 4) % 7);
+        int intWeekDayMoonFull = (date.getYear() + date.getYear() / 4 + intDaysEquinoxeToMoonFull +
+              2 - intAnneeDiv100 + intAnneeDiv100 / 4) % 7;
         // Nombre de jours du 21 mars jusqu'au dimanche de ou 
         // avant la pleine lune Pascale (un nombre entre -6 et 28)
         int intDaysEquinoxeBeforeFullMoon = intDaysEquinoxeToMoonFull - intWeekDayMoonFull;
         // mois de pâques
-        int intMonthPaques = (int)(3 + (intDaysEquinoxeBeforeFullMoon + 40) / 44);
+        int intMonthPaques = 3 + (intDaysEquinoxeBeforeFullMoon + 40) / 44;
         // jour de pâques
-        int intDayPaques = (int)(intDaysEquinoxeBeforeFullMoon + 28 - 31 * (intMonthPaques / 4));
+        int intDayPaques = intDaysEquinoxeBeforeFullMoon + 28 - 31 * (intMonthPaques / 4);
         // lundi de pâques
 //        LocalDate dtMondayPaques = new LocalDate(date.getYear(), intMonthPaques, intDayPaques + 1);
         LocalDate dtMondayPaques = LocalDate.of(date.getYear(), intMonthPaques, intDayPaques + 1);

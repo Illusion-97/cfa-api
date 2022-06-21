@@ -1,4 +1,4 @@
-package fr.dawan.AppliCFABack.dto;
+package fr.dawan.AppliCFABack.dto.customdtos;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -42,6 +42,10 @@ public interface ExamenRepository extends JpaRepository<Examen, Long> {
 //				+ "WHERE i.id = :interventionId")
 		List<Examen> findExamensByInterventionId (long interventionId);
 
+	/**
+	 * @param id de l'étudiant
+	 * @return tous les examens par id de l'étudiant en utilisant le mot clé DISTINCT pour éviter les doublons
+	 */
 	@Query("SELECT DISTINCT e FROM Examen e JOIN Note n ON n.etudiantNote.id =:id")
 	List<Examen> findallByEtudiantId(@Param("id") long id);
 

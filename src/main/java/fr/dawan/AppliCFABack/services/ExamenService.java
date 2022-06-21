@@ -5,7 +5,7 @@ import java.util.List;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
-import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
 
 public interface ExamenService {
 
@@ -23,5 +23,9 @@ public interface ExamenService {
 	
 	List<ExamenDto> findExamensByInterventionId(long id);
 
+	/**
+	 * @param id de l'étudiant
+	 * @return toutes les données nécessaires pour remplir la section livret d'évaluation dans le front partie étudiant, par le service implémenté
+	 */
     List<LivretEvaluationDto> getLivretEvaluation(long id);
 }

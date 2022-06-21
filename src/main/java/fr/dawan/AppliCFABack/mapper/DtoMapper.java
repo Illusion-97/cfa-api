@@ -2,6 +2,8 @@ package fr.dawan.AppliCFABack.mapper;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.entities.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
@@ -174,7 +176,7 @@ public interface DtoMapper {
 //	@Mapping(source = "title", target = "titre")
 //	@Mapping(source = "duration", target = "duration")
 //	Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
-	
+
 	@Mapping(target = "activiteTypes", ignore = true)
 	@Mapping(target = "description", ignore = true)
 	@Mapping(target = "formations", ignore = true)
@@ -198,16 +200,7 @@ public interface DtoMapper {
 	CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
 
 
-
-
-
-
-	
-
-	
-
-	
-
-
-
+	@Mapping(source = ".", target = ".")
+	ExperienceProfessionnelleDto ExperienceProfessionnelleToExperienceProfessionnelleDto(
+			ExperienceProfessionnelle experienceProfessionnelle);
 }
