@@ -44,5 +44,5 @@ public interface PromotionService {
 	
 	int fetchDGPromotion(String email, String password) throws Exception;
 	
-	List<Promotion> getPromotionDG2ByIdCursus(String email, String password, long idCursis) throws Exception;
+	List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursis) throws Exception;
 }
