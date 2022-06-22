@@ -9,11 +9,10 @@ public class PromotionDG2Dto implements Serializable {
 
 	private long id;
 	private long locationId;
-	private LocalDateTime dateStart;
-	private LocalDateTime dateEnd;
+	private String dateStart;
+	private String dateEnd;
 	private String slug;
 	private long courseId;
-	@JsonIgnore
 	private String type;
 	@JsonIgnore
 	private long nbParticipants;
@@ -46,34 +45,42 @@ public class PromotionDG2Dto implements Serializable {
 	/**
 	 * @return le dateStart
 	 */
-	public LocalDateTime getDateStart() {
+
+	/**
+	 * @param dateEnd le dateEnd à affecter
+	 
+
+	/**
+	 * @return le slug
+	 */
+	public String getSlug() {
+		return slug;
+	}
+	/**
+	 * @return le dateStart
+	 */
+	public String getDateStart() {
 		return dateStart;
 	}
 	/**
 	 * @param dateStart le dateStart à affecter
 	 
 	 */
-	public void setDateStart(LocalDateTime dateStart) {
+	public void setDateStart(String dateStart) {
 		this.dateStart = dateStart;
 	}
 	/**
 	 * @return le dateEnd
 	 */
-	public LocalDateTime getDateEnd() {
+	public String getDateEnd() {
 		return dateEnd;
 	}
 	/**
 	 * @param dateEnd le dateEnd à affecter
 	 
 	 */
-	public void setDateEnd(LocalDateTime dateEnd) {
+	public void setDateEnd(String dateEnd) {
 		this.dateEnd = dateEnd;
-	}
-	/**
-	 * @return le slug
-	 */
-	public String getSlug() {
-		return slug;
 	}
 	/**
 	 * @param slug le slug à affecter

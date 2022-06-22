@@ -1,25 +1,23 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.util.stream.Collectors;
+
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
+
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
 import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
-import fr.dawan.AppliCFABack.entities.*;
-import org.modelmapper.Converter;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
-
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.Note;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 import fr.dawan.AppliCFABack.entities.Positionnement;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.tools.DateConverter;
 /**
 *
 * @author Valentin C, Feres BG.
@@ -97,13 +95,14 @@ public class DtoTools {
 
     };
 
+    
     Converter<PromotionDG2Dto, Promotion> PromotionDG2DtoToPromotionConverter = context -> {
     	PromotionDG2Dto pDG2 = context.getSource();
     	Promotion promo = new Promotion();
 
     	promo.setIdDG2(pDG2.getId());
-    	promo.setDateDebut(pDG2.getDateStart().toLocalDate());
-    	promo.setDateFin(pDG2.getDateEnd().toLocalDate());
+    	promo.setDateDebut(DateConverter.convertToLocalDate(pDG2.getDateStart()));
+    	promo.setDateFin(DateConverter.convertToLocalDate(pDG2.getDateEnd()));
     	promo.setNom(pDG2.getSlug());
     	return promo;
     };

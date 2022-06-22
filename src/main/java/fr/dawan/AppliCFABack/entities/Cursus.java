@@ -152,10 +152,8 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 		if (titre == null) {
 			return other.titre == null;
 		} else return titre.equals(other.titre);
+		
+		//vérifie uniquement l'id du cursus
+		
 	}
-	
-	
-	
-	
-
 }

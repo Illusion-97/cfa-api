@@ -365,7 +365,7 @@ public class PromotionServiceImpl implements PromotionService {
 		List<Promotion> promoLst = new ArrayList<Promotion>();
 		cursus = cursusRepository.findAll();
 		for(Cursus c: cursus) {
-			promoLst.addAll(getPromotionDG2ByIdCursus(email, password, c.getId()));
+			promoLst.addAll(getPromotionDG2ByIdCursusDG2(email, password, c.getIdDg2()));
 		}
 		for(Promotion p : promoLst) {
 			try {
@@ -377,7 +377,7 @@ public class PromotionServiceImpl implements PromotionService {
 		return promoLst.size();
 	}
 	
-	public List<Promotion> getPromotionDG2ByIdCursus(String email, String password, long idCursus) throws Exception {
+	public List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursus) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		List<PromotionDG2Dto> fetchResJson = new ArrayList<>(); 
@@ -385,9 +385,10 @@ public class PromotionServiceImpl implements PromotionService {
 		
 		URI url = new URI("https://dawan.org/api2/cfa/trainings/" +idCursus+ "/sessions");
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("x-auth-toekn", email+ ":" +password);
+		headers.add("x-auth-token", email+ ":" +password);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+
 		if(rep.getStatusCode()  == HttpStatus.OK) {
 			String json = rep.getBody();
 			
@@ -401,12 +402,17 @@ public class PromotionServiceImpl implements PromotionService {
 				Optional<Promotion> promoDb = promotionRepository.findByIdDG2(pDtoDG2.getId());
 				
 				DtoTools dtoTools = new DtoTools();
-				Promotion promotionDG2 = dtoTools.PromotionDG2DtoToPromotion(pDtoDG2);
+				Promotion promotionDG2 = new Promotion();
+				try {
+					 promotionDG2 = dtoTools.PromotionDG2DtoToPromotion(pDtoDG2);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				Optional<CentreFormation> cfOpt = centreFormationRepository.findById(pDtoDG2.getLocationId());
 				if(cfOpt.isPresent()) {
 					promotionDG2.setCentreFormation(cfOpt.get());
 				}
-				Optional<Cursus> cursusOpt = cursusRepository.findById(pDtoDG2.getCourseId());
+				Optional<Cursus> cursusOpt = cursusRepository.findByIdDg2(pDtoDG2.getCourseId());
 				if(cursusOpt.isPresent()) {
 					promotionDG2.setCursus(cursusOpt.get());
 				}
@@ -415,8 +421,11 @@ public class PromotionServiceImpl implements PromotionService {
 				if(!promoDb.isPresent()) {
 					result.add(promotionDG2);
 					//si existe en BDD -> comparer tous les champs et si différents -> faire update
-				} else if(!promoDb.get().equals(promotionDG2)) {
-					result.add(promotionDG2);
+				} else {
+					if(!promoDb.get().equals(promotionDG2)) {
+//						promotionDG2.setVersion(promotionDG2.getVersion() +1);
+						result.add(promotionDG2);
+					}	
 				}	
 			}
 		} else {

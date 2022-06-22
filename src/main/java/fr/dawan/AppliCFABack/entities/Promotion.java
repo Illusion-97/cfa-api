@@ -175,12 +175,8 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 		if (getClass() != obj.getClass())
 			return false;
 		Promotion other = (Promotion) obj;
-		return Objects.equals(centreFormation, other.centreFormation) && Objects.equals(cursus, other.cursus)
+		return centreFormation.getId() == other.centreFormation.getId() && cursus.getId() == other.cursus.getId()
 				&& Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
 				&& Objects.equals(nom, other.nom);
 	}
-	
-	
-	
-
 }
