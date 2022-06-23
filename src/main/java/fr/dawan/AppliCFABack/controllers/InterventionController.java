@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -146,9 +148,24 @@ public class InterventionController {
 	// ##################################################
 	// # FETCH Dawan webservice #
 	// ##################################################
-	//TODO controller à faire et test la methode
-	//@GetMapping(value = "/dg2", produces = "application/json")
-//	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers) {
-//		
-//	}
+	@GetMapping(value = {"/dg2", "/dg2/{idPromotion}"}, produces="application/json")
+	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers, @PathVariable(value = "idPromotion" ,required = false) Optional<Long> idPromotion ){
+		String userDG2 = headers.get("x-auth-token");
+		String[] splitUser = userDG2.split(":");
+		
+		try {
+			int nb = 0;
+			if (idPromotion.isPresent()) {
+				 nb = interventionService.fetchDGInterventions(splitUser[0], splitUser[1],idPromotion.get());
+			}
+			else {
+				nb = interventionService.fetchDGInterventions(splitUser[0], splitUser[1]);
+			}
+			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Promotions updated :" +nb);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error while fetching data from the webservice DG2");
+		}
+	}
 }

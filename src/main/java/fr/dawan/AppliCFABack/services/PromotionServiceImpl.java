@@ -32,7 +32,7 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
-import fr.dawan.AppliCFABack.dto.PromotionDG2Dto;
+import fr.dawan.AppliCFABack.dto.PromotionOrInterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.PromotionForSelectDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
@@ -380,7 +380,7 @@ public class PromotionServiceImpl implements PromotionService {
 	public List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursus) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-		List<PromotionDG2Dto> fetchResJson = new ArrayList<>(); 
+		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>(); 
 		List<Promotion> result = new ArrayList<Promotion>();
 		
 		URI url = new URI("https://dawan.org/api2/cfa/trainings/" +idCursus+ "/sessions");
@@ -393,18 +393,18 @@ public class PromotionServiceImpl implements PromotionService {
 			String json = rep.getBody();
 			
 			try {
-				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionDG2Dto>>() {} );
+				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {} );
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
-			for(PromotionDG2Dto pDtoDG2 : fetchResJson) {
-				Optional<Promotion> promoDb = promotionRepository.findByIdDG2(pDtoDG2.getId());
+			for(PromotionOrInterventionDG2Dto pDtoDG2 : fetchResJson) {
+				Optional<Promotion> promoDb = promotionRepository.findByIdDg2(pDtoDG2.getId());
 				
 				DtoTools dtoTools = new DtoTools();
 				Promotion promotionDG2 = new Promotion();
 				try {
-					 promotionDG2 = dtoTools.PromotionDG2DtoToPromotion(pDtoDG2);
+					 promotionDG2 = dtoTools.PromotionOrInterventionDG2DtoToPromotion(pDtoDG2);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

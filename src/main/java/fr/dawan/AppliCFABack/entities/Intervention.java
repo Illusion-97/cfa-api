@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,12 +14,17 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Intervention extends BaseEntity implements Serializable { // intervention prévue
 
-//	@Temporal(value = TemporalType.DATE)
+
+
+	//	@Temporal(value = TemporalType.DATE)
 	private LocalDate dateDebut; // 12/03
 
 //	@Temporal(value = TemporalType.DATE)
 	private LocalDate dateFin; // 18/03
 
+	@Column(nullable = true) // id dans dg2
+	private long idDg2;
+	
 	@ManyToOne
 	private Formation formation; // Java init
 
@@ -116,6 +122,38 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 		this.noteInfoPersonnel = noteInfoPersonnel;
 	}
 
-	
+	/**
+	 * @return le idDg2
+	 */
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	/**
+	 * @param idDg2 le idDg2 à affecter
+	 
+	 */
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dateDebut, dateFin, formation, idDg2);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Intervention other = (Intervention) obj;
+		return Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
+//				&& formation.getIdDg2()== other.formation.getIdDg2() 
+				&& idDg2 == other.idDg2;
+	}
 
 }

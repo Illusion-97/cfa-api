@@ -21,7 +21,9 @@ public class Formation extends BaseEntity implements Serializable {
 	@ManyToMany(mappedBy = "formations", cascade = CascadeType.ALL)
 	private List<Cursus> cursusLst;
 
-
+	@Column(nullable = true) // id dans dg2
+	private long idDg2;
+	
 	public Formation() {
 		super();
 	}
@@ -58,6 +60,22 @@ public class Formation extends BaseEntity implements Serializable {
 		this.cursusLst = cursusLst;
 	}
 
+	
+
+	/**
+	 * @return le idDg2
+	 */
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	/**
+	 * @param idDg2 le idDg2 à affecter
+	 
+	 */
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
+	}
 
 	@Override
 	public int hashCode() {

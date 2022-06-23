@@ -8,6 +8,7 @@ import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.entities.Intervention;
 
 public interface InterventionService {
 
@@ -32,7 +33,11 @@ public interface InterventionService {
 	List<PromotionDto> findPromotionsByInterventionId(long id);
 
 	List<FormateurDto> findFormateursByInterventionsId(long id);
-	
-	List<InterventionDG2Dto> fetchDG2Interventions(long id, String email, String password) throws Exception;
+
+	List<Intervention> getInerventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
+			throws Exception;
+	int fetchDGInterventions(String email, String password) throws Exception;
+
+	int fetchDGInterventions(String email, String password, long idPrmotionDg2) throws Exception;
 
 }
