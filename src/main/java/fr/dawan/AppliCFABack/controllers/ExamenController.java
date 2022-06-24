@@ -105,7 +105,7 @@ public class ExamenController {
 		ExamenDto exaDto = examenService.getById(idExamen);
 
 		try {
-			Resource file = fileSevice.download(exaDto.getPieceJointe());
+			Resource file = fileSevice.download(exaDto.getPieceJointe(),"examens");
 
 			Path path = file.getFile().toPath();
 

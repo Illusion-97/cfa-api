@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -29,14 +30,19 @@ import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.PromotionOrInterventionDG2Dto;
+import fr.dawan.AppliCFABack.entities.CentreFormation;
+import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
@@ -69,17 +75,21 @@ public class InterventionServiceImpl implements InterventionService {
 	FilesService filesService;
 
 	@Autowired
+	CentreFormationRepository centreFormationRepository;
+
+
+	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
 
 	/**
 	 * Récupération de toutes les interventions
 	 * 
-	 * @return lstDto	Liste des objets interevention
+	 * @return lstDto Liste des objets interevention
 	 */
-	
+
 	@Override
 	public List<InterventionDto> getAllIntervention() {
 		List<Intervention> lst = interventionRepository.findAll();
@@ -89,7 +99,7 @@ public class InterventionServiceImpl implements InterventionService {
 			InterventionDto interventionDto = mapper.InterventionToInterventionDto(i);
 			interventionDto.setHeuresDisponsees();
 			lstDto.add(interventionDto);
-			
+
 		}
 		return lstDto;
 	}
@@ -97,8 +107,8 @@ public class InterventionServiceImpl implements InterventionService {
 	/**
 	 * Va permettre de récupérer toutes les interventions
 	 * 
-	 * @param page	numero de la page
-	 * @param size	éléments sur la page
+	 * @param page numero de la page
+	 * @param size éléments sur la page
 	 * @return LstDto Liste des objets interventions
 	 */
 	@Override
@@ -121,12 +131,12 @@ public class InterventionServiceImpl implements InterventionService {
 	/**
 	 * Va permettre de récupérer toutes les interventions avec pagination
 	 * 
-	 * @param page	numero de page
-	 * @param size	nombre d'éléments
+	 * @param page   numero de page
+	 * @param size   nombre d'éléments
 	 * @param search éléménts de l'intervention
 	 * @return List Liste des devoirs concerné
 	 */
-	
+
 	@Override
 	public List<InterventionDto> getAllByPage(int page, int size, String search) {
 		List<Intervention> lstIn = interventionRepository
@@ -171,7 +181,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 			// On ajoute la liste des formateurs a l'intervention
 			interventionDto.setFormateursDto(lstFormDto);
-			
+
 			// On ajoute la liste de promotions a l'intervention
 			interventionDto.setPromotionsDto(lstPromoDto);
 			// On ajoute l'intervention a la liste d'intervention
@@ -180,10 +190,11 @@ public class InterventionServiceImpl implements InterventionService {
 		}
 		return lstDto;
 	}
+
 	/**
 	 * Va permettre de récupérer l'intervention en fonction de son id
 	 * 
-	 * @param Id	Id concernant l'intervention
+	 * @param Id Id concernant l'intervention
 	 * @return interventionDto l'objet intervention
 	 */
 
@@ -222,24 +233,24 @@ public class InterventionServiceImpl implements InterventionService {
 	 * Sauvegarde ou mise à jour d'une intervention
 	 * 
 	 */
-	
+
 	@Override
 	public InterventionDto saveOrUpdate(InterventionDto iDto) {
 		Intervention i = DtoTools.convert(iDto, Intervention.class);
 
 		i = interventionRepository.saveAndFlush(i);
-		
+
 		filesService.createDirectory("interventions/" + i.getId());
 
 		return mapper.InterventionToInterventionDto(i);
 	}
-	
+
 	/**
 	 * Suppression d'une intervention
 	 * 
-	 * @param Id	Id concernant l'intervention
+	 * @param Id Id concernant l'intervention
 	 */
-	
+
 	@Override
 	public void deleteById(long id) {
 		// On regarde si un devoir est lié à une intervention
@@ -249,7 +260,7 @@ public class InterventionServiceImpl implements InterventionService {
 			dev.setIntervention(null);
 		// Meme chose : on regarde si un passage d'examen est lié une intervention
 //		PassageExamen passExam = passageExamenRepository.findByInterventionId(id);
-		PassageExamen passExam= null;
+		PassageExamen passExam = null;
 		// Si c'est le cas : on enleve sa liaison en rendant l'intervention à null
 		if (passExam != null)
 			passExam.setIntervention(null);
@@ -263,7 +274,7 @@ public class InterventionServiceImpl implements InterventionService {
 	 * 
 	 * @param search recherche par titre formation ou promo
 	 */
-	
+
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(interventionRepository
@@ -271,15 +282,14 @@ public class InterventionServiceImpl implements InterventionService {
 						search));
 	}
 
-	
 	/**
-	 * Va permettre de récupérer la liste des etudiants de la promotion 
-	 * en fonction de l'id de l'intervention
+	 * Va permettre de récupérer la liste des etudiants de la promotion en fonction
+	 * de l'id de l'intervention
 	 * 
-	 * @param Id	Id concernant l'intervention
+	 * @param Id Id concernant l'intervention
 	 * @return List Liste des etudiants concerné
 	 */
-	
+
 	@Override
 	public List<EtudiantDto> findAllEtudiantsByPromotionInterventionsId(long id) {
 		List<Etudiant> lstEtu = etudiantRepository.findAllDistinctByPromotionsInterventionsId(id);
@@ -289,19 +299,19 @@ public class InterventionServiceImpl implements InterventionService {
 				EtudiantDto eDto = mapper.EtudiantToEtudiantDto(etu);
 				eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(etu.getUtilisateur()));
 				lstEtuDto.add(eDto);
-			}				
+			}
 		}
 		return lstEtuDto;
 	}
-	
+
 	/**
-	 * Va permettre de récupérer les promotions 
-	 * en fonction de l'id de l'intervention
+	 * Va permettre de récupérer les promotions en fonction de l'id de
+	 * l'intervention
 	 * 
-	 * @param Id	Id concernant l'intervention
+	 * @param Id Id concernant l'intervention
 	 * @return List Liste des promotions concerné
 	 */
-	
+
 	@Override
 	public List<PromotionDto> findPromotionsByInterventionId(long id) {
 		List<Promotion> lstProm = promoRepository.findAllByInterventionsId(id);
@@ -316,10 +326,10 @@ public class InterventionServiceImpl implements InterventionService {
 	/**
 	 * Va permettre de recupérer le formateur en fonction de l'intervention
 	 * 
-	 * @param Id	Id concernant l'intervention
+	 * @param Id Id concernant l'intervention
 	 * @return List Liste des formateurs concerné
 	 */
-	
+
 	@Override
 	public List<FormateurDto> findFormateursByInterventionsId(long id) {
 		List<Formateur> lstForm = formateurRepository.findByInterventionsId(id);
@@ -328,44 +338,112 @@ public class InterventionServiceImpl implements InterventionService {
 			if (form != null) {
 				FormateurDto fDto = mapper.FormateurToFormateurDto(form);
 				fDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(form.getUtilisateur()));
-				lstFormDto.add(fDto);				
+				lstFormDto.add(fDto);
 			}
 		}
 		return lstFormDto;
 	}
+
 	/**
 	 * Va permettre l'import des intervention de Dg2
 	 * 
-	 * @param Id	Id concernant la session
-	 * @param email Email l'utilsateur dg2
-	 * @param password   Mot de passe de l'utlisateur dg2
+	 * @param Id       Id concernant la session
+	 * @param email    Email l'utilsateur dg2
+	 * @param password Mot de passe de l'utlisateur dg2
 	 * @return List Liste des interventions
 	 */
 
-		//import InterventionDG2 interventions prévues pour une formation 
-		@Override
-		public List<InterventionDG2Dto> fetchDG2Interventions(long id, String email, String password) throws Exception{
-			List<InterventionDG2Dto> lst = new ArrayList<>();
-			ObjectMapper objectMapper = new ObjectMapper();
-			
-			URI urlSession = new URI("https://dawan.org/api2/cfa/trainings/"+ id +"/sessions");
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("x-auth-token", email + ":" + password);
+	@Override
+	public int fetchDGInterventions(String email, String password) throws Exception {
+		List<Intervention> interventions = new ArrayList<Intervention>();
+		List<Promotion> promoLst = new ArrayList<Promotion>();
+		promoLst = promoRepository.findAll();
+		for (Promotion p : promoLst) {
+			interventions.addAll(getInerventionDG2ByIdPromotionDG2(email, password, p.getIdDg2()));
+		}
+		for (Intervention i : interventions) {
+			try {
+				interventionRepository.saveAndFlush(i);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return interventions.size();
+	}
 
-			HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-			ResponseEntity<String> repSessionWs = restTemplate.exchange(urlSession, HttpMethod.GET, httpEntity, String.class);
-			if (repSessionWs.getStatusCode() == HttpStatus.OK) {
-				String json2 = repSessionWs.getBody();
-				
+	@Override
+	public int fetchDGInterventions(String email, String password, long idPrmotionDg2) throws Exception {
+		List<Intervention> interventions = new ArrayList<Intervention>();
+		interventions.addAll(getInerventionDG2ByIdPromotionDG2(email, password, idPrmotionDg2));
+		for (Intervention i : interventions) {
+			try {
+				interventionRepository.saveAndFlush(i);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return interventions.size();
+	}
+
+	@Override
+	public List<Intervention> getInerventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
+			throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>();
+		List<Intervention> result = new ArrayList<Intervention>();
+
+		URI url = new URI("https://dawan.org/api2/cfa/sessions/" + idPrmotionDg2 + "/children");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("x-auth-token", email + ":" + password);
+		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+
+		if (rep.getStatusCode() == HttpStatus.OK) {
+			String json = rep.getBody();
+
+			try {
+				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {
+				});
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
+				Optional<Intervention> interventionDb = interventionRepository.findByIdDg2(iDtoDG2.getId());
+
+				DtoTools dtoTools = new DtoTools();
+				Intervention interventionDG2 = new Intervention();
 				try {
-					lst = objectMapper.readValue(json2, new TypeReference<List<InterventionDG2Dto>>() { 
-					});
+					interventionDG2 = dtoTools.PromotionOrInterventionDG2DtoToIntervention(iDtoDG2);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
+				Optional<Formation> formationOpt = formationRepository.findByIdDg2(iDtoDG2.getCourseId());
+				if (formationOpt.isPresent()) {
+					interventionDG2.setFormation(formationOpt.get());
+				}
+
+				// comparer voir sil existe en BDD
+				if (!interventionDb.isPresent()) {
+					result.add(interventionDG2);
+					// si existe en BDD -> comparer tous les champs et si différents -> faire update
+				} else {
+					if (!interventionDb.get().equals(interventionDG2)) {
+						interventionDG2.setId(interventionDb.get().getId());
+						interventionDG2.setVersion(interventionDb.get().getVersion());
+
+						result.add(interventionDG2);
+					}
+				}
 			}
-			return lst;
+		} else {
+			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
+		return result;
+	}
+
+
 
 }

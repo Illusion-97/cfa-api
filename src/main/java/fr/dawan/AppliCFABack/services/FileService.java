@@ -11,13 +11,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class FileService {
 
-	@Value("${examensFolder}")
+	@Value("${app.storagefolder}")
 	private String filePath; 
 	
-	public Resource download(String fileName) throws Exception {
+	public Resource download(String fileName, String sousPath) throws Exception {
 		try {
+			String fullPath = filePath + sousPath;
 			
-			Path file = Paths.get(filePath).resolve(fileName);
+			Path file = Paths.get(fullPath).resolve(fileName);
 			
 			Resource resource = new UrlResource(file.toUri());
 			if (resource.exists()) {

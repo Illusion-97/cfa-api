@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,14 +18,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class InterventionDG2Dto extends BaseEntityDto implements Serializable {
 
-	// private long locationId;
+	private long locationId;
 	private String dateStart;
 	private String dateEnd;
 	private String slug;
-	// private long courseId;
+	private long courseId;
 	@JsonProperty("shared")
 	private boolean type;
-	private String nbParticipants;
+	@JsonIgnore
+	private int nbParticipants;
 
 	public InterventionDG2Dto() {
 		super();
@@ -87,17 +89,49 @@ public class InterventionDG2Dto extends BaseEntityDto implements Serializable {
 	}
 
 	/**
-	 * @return the nbParticipants
+	 * @return le locationId
 	 */
-	public String getNbParticipants() {
+	public long getLocationId() {
+		return locationId;
+	}
+
+	/**
+	 * @param locationId le locationId à affecter
+	 
+	 */
+	public void setLocationId(long locationId) {
+		this.locationId = locationId;
+	}
+
+	/**
+	 * @return le courseId
+	 */
+	public long getCourseId() {
+		return courseId;
+	}
+
+	/**
+	 * @param courseId le courseId à affecter
+	 
+	 */
+	public void setCourseId(long courseId) {
+		this.courseId = courseId;
+	}
+
+	/**
+	 * @return le nbParticipants
+	 */
+	public int getNbParticipants() {
 		return nbParticipants;
 	}
 
 	/**
-	 * @param nbParticipants the nbParticipants to set
+	 * @param nbParticipants le nbParticipants à affecter
+	 
 	 */
-	public void setNbParticipants(String nbParticipants) {
+	public void setNbParticipants(int nbParticipants) {
 		this.nbParticipants = nbParticipants;
 	}
 
+	
 }

@@ -6,7 +6,8 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SuppressWarnings("serial")
-public class PromotionDG2Dto implements Serializable {
+
+public class PromotionOrInterventionDG2Dto implements Serializable {
 
 	private long id;
 	private long locationId;

@@ -16,7 +16,9 @@ public interface FormationRepository extends JpaRepository<Formation, Long>{
 	Page<Formation> findAllByTitreContainingIgnoringCase(String search, Pageable pageable);
 
 	long countByTitreContainingIgnoringCase(String search);
+//	long countByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(String search, String search2);
+
+	Optional<Formation> findByIdDg2(long idDg2);
 	
-	Optional<Formation> findByIdDg2(long id);
 
 }

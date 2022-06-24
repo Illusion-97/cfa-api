@@ -1,11 +1,18 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +25,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.core.io.Resource;
+
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.PromotionForSelectDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
+import fr.dawan.AppliCFABack.services.FileService;
 import fr.dawan.AppliCFABack.services.PromotionService;
 
 @RestController
@@ -33,6 +44,9 @@ public class PromotionController {
 	
 	@Autowired
 	private PromotionService promoService;
+	
+	@Autowired
+	FileService fileSevice; 
 	
 	@GetMapping(produces = "application/json")
 	public List<PromotionDto> getAll() {
@@ -140,5 +154,45 @@ public class PromotionController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error while fetching data from the webservice DG2");
 		}
+	}
+	@GetMapping(value = "/grillePositionnement/{idPromotion}",  produces = "application/octet-stream")
+	public ResponseEntity<Resource> getGrillePositionnement(@PathVariable("idPromotion") long idPromotion) throws Exception {
+		
+		String outpoutPath = promoService.getGrillePositionnement(idPromotion);
+		File f = new File(outpoutPath);
+		
+		Path path = Paths.get(f.getAbsolutePath());
+		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+		
+		//Pour afficher un boite de téléchargement dans une réponse web au lieu de changer de page, nous devons
+		//spécifier un header : Content-Disposition, attachment;filename=app.log
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=app.log");
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		headers.add("Expires", "0");
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=app.log");
+		
+		return ResponseEntity.ok()
+				.headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+	}
+	@GetMapping(value = "grillePositionnement/file/{idPromotion}")
+	public ResponseEntity<Resource> getFileGrillePositionnement(@PathVariable("idPromotion") long idPromotion) {
+		PromotionDto promotionDto = promoService.getById(idPromotion);
+
+		try {
+			Resource file = fileSevice.download("GrillePositionnement " +promotionDto.getNom()+".pdf","grillePositionnements");
+
+			Path path = file.getFile().toPath();
+
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(path))
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+					.body(file);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 }

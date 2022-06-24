@@ -13,7 +13,10 @@ import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
+
 import fr.dawan.AppliCFABack.entities.Formation;
+
+import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Positionnement;
 import fr.dawan.AppliCFABack.entities.Promotion;
@@ -91,16 +94,16 @@ public class DtoTools {
     	NiveauDto ndto = new NiveauDto();
     	ndto.setValeur(niveau.getValeur());
     	ndto.setCodeCouleur(niveau.getCodeCouleur());
-    	ndto.setDescreption(niveau.getDescription());
+    	ndto.setDescription(niveau.getDescription());
 		return ndto;
 
     };
 
     
-    Converter<PromotionDG2Dto, Promotion> PromotionDG2DtoToPromotionConverter = context -> {
-    	PromotionDG2Dto pDG2 = context.getSource();
+    Converter<PromotionOrInterventionDG2Dto, Promotion> PromotionDG2DtoToPromotionConverter = context -> {
+    	PromotionOrInterventionDG2Dto pDG2 = context.getSource();
     	Promotion promo = new Promotion();
-    	promo.setIdDG2(pDG2.getId());
+    	promo.setIdDg2(pDG2.getId());
     	promo.setDateDebut(DateConverter.convertToLocalDate(pDG2.getDateStart()));
     	promo.setDateFin(DateConverter.convertToLocalDate(pDG2.getDateEnd()));
     	promo.setNom(pDG2.getSlug());
@@ -120,6 +123,16 @@ public class DtoTools {
     	return formation;
     };
     
+    Converter<PromotionOrInterventionDG2Dto, Intervention> PromotionDG2DtoToInterventionConverter = context -> {
+    	PromotionOrInterventionDG2Dto pDG2 = context.getSource();
+    	Intervention intervention = new Intervention();
+
+    	intervention.setIdDg2(pDG2.getId());
+    	intervention.setDateDebut(DateConverter.convertToLocalDate(pDG2.getDateStart()));
+    	intervention.setDateFin(DateConverter.convertToLocalDate(pDG2.getDateEnd()));
+    	return intervention;
+    };
+
     
     /**
      * permet de mapper un objet Promotion en PromotionEtudiantDto (dto customisé) -
@@ -158,7 +171,7 @@ public class DtoTools {
     	return enumConvert(niveau, NiveauDto.class, NiveauEnumToNiveauDtoConverter);
     }
     
-    public Promotion PromotionDG2DtoToPromotion(PromotionDG2Dto promoDG2Dto) {
+    public Promotion PromotionOrInterventionDG2DtoToPromotion(PromotionOrInterventionDG2Dto promoDG2Dto) {
     	return convert(promoDG2Dto, Promotion.class, PromotionDG2DtoToPromotionConverter);
     }
     
@@ -166,6 +179,9 @@ public class DtoTools {
     	return convert(formationDG2Dto, Formation.class, FormationDG2DtoToFormationConverter);
     }
 
+    public Intervention PromotionOrInterventionDG2DtoToIntervention(PromotionOrInterventionDG2Dto promoDG2Dto) {
+    	return convert(promoDG2Dto, Intervention.class, PromotionDG2DtoToInterventionConverter);
+    }
     /**
      * permet de mapper un objet Examen en LivretEvaluationDto (dto customisé) -
      * return l'objet dto custom mappé

@@ -23,8 +23,8 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 
 	private LocalDate dateFin; // 31/12/2021
 	
-	@Column(nullable = false)
-	private long idDG2;
+
+	private long idDg2;
 
 	@ManyToOne
 	private CEF cef;
@@ -150,16 +150,16 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 	/**
 	 * @return le idDG2
 	 */
-	public long getIdDG2() {
-		return idDG2;
+	public long getIdDg2() {
+		return idDg2;
 	}
 
 	/**
 	 * @param idDG2 le idDG2 à affecter
 	 
 	 */
-	public void setIdDG2(long idDG2) {
-		this.idDG2 = idDG2;
+	public void setIdDg2(long idDG2) {
+		this.idDg2 = idDG2;
 	}
 
 	@Override

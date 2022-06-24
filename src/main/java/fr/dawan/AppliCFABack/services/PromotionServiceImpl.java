@@ -2,8 +2,10 @@ package fr.dawan.AppliCFABack.services;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -11,6 +13,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,12 +21,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -32,10 +37,12 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
-import fr.dawan.AppliCFABack.dto.PromotionDG2Dto;
+import fr.dawan.AppliCFABack.dto.NiveauDto;
+import fr.dawan.AppliCFABack.dto.PromotionOrInterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.PromotionForSelectDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.customdtos.GrillePositionnementDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
@@ -43,15 +50,20 @@ import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
+import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.Positionnement;
+import fr.dawan.AppliCFABack.entities.Positionnement.Niveau;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.tools.ToPdf;
 
 @Service
 @Transactional
@@ -70,6 +82,16 @@ public class PromotionServiceImpl implements PromotionService {
 	CentreFormationRepository centreFormationRepository;
 	@Autowired
 	PromotionRepository promotionRepository;
+	@Autowired
+	PositionnementRepository positionnementRepository;
+	
+	@Autowired
+	NiveauService niveauService;
+	@Value("${app.storagefolder}")
+	private String storageFolder;
+	
+	@Autowired
+	private Configuration freemarkerConfig;
 	@Autowired
 	private RestTemplate restTemplate;
 
@@ -386,7 +408,7 @@ public class PromotionServiceImpl implements PromotionService {
 	public List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursusDg2) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-		List<PromotionDG2Dto> fetchResJson = new ArrayList<>(); 
+		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>(); 
 		List<Promotion> result = new ArrayList<Promotion>();
 		
 		URI url = new URI("https://dawan.org/api2/cfa/trainings/" +idCursusDg2+ "/sessions");
@@ -399,19 +421,19 @@ public class PromotionServiceImpl implements PromotionService {
 			String json = rep.getBody();
 			
 			try {
-				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionDG2Dto>>() {} );
+				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {} );
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
-			for(PromotionDG2Dto pDtoDG2 : fetchResJson) {
-				System.out.println(pDtoDG2.getId());
-				Optional<Promotion> promoDb = promotionRepository.findByIdDG2(pDtoDG2.getId());
+			
+			for(PromotionOrInterventionDG2Dto pDtoDG2 : fetchResJson) {
+				Optional<Promotion> promoDb = promotionRepository.findByIdDg2(pDtoDG2.getId());
 				
 				DtoTools dtoTools = new DtoTools();
 				Promotion promotionDG2 = new Promotion();
 				try {
-					 promotionDG2 = dtoTools.PromotionDG2DtoToPromotion(pDtoDG2);
+					 promotionDG2 = dtoTools.PromotionOrInterventionDG2DtoToPromotion(pDtoDG2);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -444,4 +466,57 @@ public class PromotionServiceImpl implements PromotionService {
 		
 		
 	}
+
+	
+	@Override
+	public String getGrillePositionnement(long idPromotion) throws Exception {
+		Optional<Promotion> promotion = promotionRepository.findById(idPromotion);
+
+		if (!promotion.isPresent())
+			throw new Exception("Promotion non trouvé");
+
+		List<Intervention> interventions = interventionRepository.getInterventionsByIdPromotion(idPromotion);
+
+		if (interventions.isEmpty() || interventions == null)
+			throw new Exception("Pas d'interventions encore pour cette promotion non trouvé");
+
+		Map<String, List<?>> gp = new HashMap<String, List<?>>();
+		List<GrillePositionnementDto> grillesPositionnements = new ArrayList<GrillePositionnementDto>();
+		for (Intervention i : interventions) {
+
+			GrillePositionnementDto gpd = new GrillePositionnementDto();
+			gpd.setDateDebut(i.getDateDebut());
+			gpd.setDateFin(i.getDateFin());
+			Formation f = i.getFormation();
+			gpd.setModule(f.getTitre());
+//			gpd.setObjectifPedagogiques(f.getObjectifsPedagogique());
+			gpd.setObjectifPedagogiques("A définir");
+			List<String> formateursNomPrenom = i.getFormateurs().stream().map(
+					fr -> fr.getUtilisateur().getNom() + " " + fr.getUtilisateur().getPrenom()
+					).collect(Collectors.toList());
+			gpd.setFormateurs(formateursNomPrenom);
+
+			Map<String, Positionnement> etudiantsPositionnement = new HashMap<String, Positionnement>();
+			List<Positionnement> positionnements =  positionnementRepository.getAllByInterventionId(i.getId());
+			for (Positionnement p : positionnements) {
+				etudiantsPositionnement.put(p.getEtudiant().getUtilisateur().getNom() + " " +p.getEtudiant().getUtilisateur().getPrenom(), p);
+			}
+			gpd.setEtudiantsPositionnements(etudiantsPositionnement);
+			grillesPositionnements.add(gpd);
+		}
+		gp.put("interventions", grillesPositionnements);
+		List<NiveauDto> niveaux = niveauService.getAllNiveaux();;
+		gp.put("niveaux", niveaux);
+		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+		Template template = freemarkerConfig.getTemplate("GrillePositionnement.ftl");
+
+		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, gp);
+
+		String outputPdf = storageFolder + "grillePositionnements/GrillePositionnement "+promotion.get().getNom()+".pdf";
+		ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+
+		return outputPdf;
+	}
+
+
 }

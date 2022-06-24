@@ -119,7 +119,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public List<UtilisateurDto> getAllUtilisateurs(int page, int size, String search) {
 
 		List<Utilisateur> users = utilisateurRepository
-				.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCase(
+				.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseLibelleContainingIgnoringCase(
 						search, search, search, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
 
@@ -148,7 +148,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(utilisateurRepository
-				.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCase(
+				.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseLibelleContainingIgnoringCase(
 						search, search, search, search));
 	}
 
@@ -470,7 +470,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	@Override
 	public List<UtilisateurDto> findByAdresse(String ville) {
-		List<Utilisateur> users = utilisateurRepository.findByAdresse(ville);
+		List<Utilisateur> users = utilisateurRepository.findByAdresseVille(ville);
 		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
 		for (Utilisateur u : users) {
 			res.add(mapper.UtilisateurToUtilisateurDto(u));

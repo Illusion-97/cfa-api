@@ -19,16 +19,15 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	@Query("FROM Utilisateur u WHERE u.login=:email")
 	Utilisateur findByEmail(String email);
 
-	@Query("FROM Utilisateur u WHERE u.adresse.ville=:ville")
-	List<Utilisateur> findByAdresse(@Param("ville") String ville);
+	List<Utilisateur> findByAdresseVille(@Param("ville") String ville);
 
 //	@Query("FROM Utilisateur u WHERE u.entreprise.id=:entrepriseId")
 //	List<Utilisateur> findByEntreprise(@Param("entrepriseId") long entrepriseId);
 
-	Page<Utilisateur> findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCase(String prenom, String nom,
-			String login, String adresseRue, Pageable pageable );
+	Page<Utilisateur> findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseLibelleContainingIgnoringCase(String prenom, String nom,
+			String login, String adresseLibelle, Pageable pageable );
 
-	long countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseRueContainingIgnoringCase(String prenom, String nom, String login, String search);
+	long countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseLibelleContainingIgnoringCase(String prenom, String nom, String login, String search);
 
 
 	

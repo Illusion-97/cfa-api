@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,4 +39,6 @@ public interface InterventionRepository extends JpaRepository<Intervention, Long
 
 	/** ++++++++++++++ INTERVENTION FORMATION ++++++++++++++ **/
 	List<Intervention> findAllByFormationId(long id);
+
+	Optional<Intervention> findByIdDg2(long id);
 }

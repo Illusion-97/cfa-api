@@ -14,9 +14,11 @@ import fr.dawan.AppliCFABack.entities.Adresse;
 public interface AdresseRepository extends JpaRepository<Adresse, Long>{
 
 
-	Page<Adresse> findAllByRueContainingOrVilleContaining(String rue,String ville, Pageable pageable);
+	Page<Adresse> findAllByLibelleContainingOrVilleContaining(String rue,String ville, Pageable pageable);
 
-	long countByRueContainingOrVilleContaining(String rue, String ville);
+	long countByLibelleContainingOrVilleContaining(String rue, String ville);
+
+	Adresse findByIdDg2(int idDg2);
 
 	
 

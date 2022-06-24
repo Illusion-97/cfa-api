@@ -9,12 +9,12 @@ import javax.persistence.Entity;
 @Entity
 public class Adresse extends BaseEntity implements Serializable {
 
+
+	@Column(nullable = true) // id dans dg2
+	private long idDg2;
 	
 	@Column(nullable = false, length = 255)
-	private int numero;
-
-	@Column(nullable = false, length = 255)
-	private String rue;
+	private String libelle;
 
 	@Column(nullable = false, length = 255)
 	private String ville;
@@ -26,21 +26,12 @@ public class Adresse extends BaseEntity implements Serializable {
 		super();
 	}
 
-
-	public int getNumero() {
-		return numero;
+	public String getLibelle() {
+		return libelle;
 	}
 
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-
-	public String getRue() {
-		return rue;
-	}
-
-	public void setRue(String rue) {
-		this.rue = rue;
+	public void setLibelle(String rue) {
+		this.libelle = rue;
 	}
 
 	public String getVille() {
@@ -58,5 +49,21 @@ public class Adresse extends BaseEntity implements Serializable {
 	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
 	}
+
+	/**
+	 * @return le idDg2
+	 */
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	/**
+	 * @param idDg2 le idDg2 à affecter
+	 
+	 */
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
+	}
+	
 
 }

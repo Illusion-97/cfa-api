@@ -29,12 +29,20 @@ public class Formation extends BaseEntity implements Serializable {
 	private String prerequis;
 	
 	private String plan;
+	
 
 	@ManyToMany(mappedBy = "formations", cascade = CascadeType.ALL)
 	private List<Cursus> cursusLst;
 
+
 	public String getTitre() {
 		return titre;
+	}
+
+	
+	public Formation() {
+		super();
+
 	}
 
 	public void setTitre(String titre) {
@@ -93,6 +101,7 @@ public class Formation extends BaseEntity implements Serializable {
 	public void setCursusLst(List<Cursus> cursusLst) {
 		this.cursusLst = cursusLst;
 	}
+
 
 
 	/**
