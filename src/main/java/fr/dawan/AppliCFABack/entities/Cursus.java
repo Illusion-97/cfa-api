@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -116,13 +117,7 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((duree == null) ? 0 : duree.hashCode());
-		result = prime * result + ((formations == null) ? 0 : formations.hashCode());
-		result = prime * result + ((slug == null) ? 0 : slug.hashCode());
-		result = prime * result + ((titre == null) ? 0 : titre.hashCode());
-		return result;
+		return Objects.hash(duree, idDg2, slug, titre);
 	}
 
 	@Override
@@ -134,26 +129,7 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 		if (getClass() != obj.getClass())
 			return false;
 		Cursus other = (Cursus) obj;
-		if (duree == null) {
-			if (other.duree != null)
-				return false;
-		} else if (!duree.equals(other.duree))
-			return false;
-		if (formations == null) {
-			if (other.formations != null)
-				return false;
-		} else if (!formations.equals(other.formations))
-			return false;
-		if (slug == null) {
-			if (other.slug != null)
-				return false;
-		} else if (!slug.equals(other.slug))
-			return false;
-		if (titre == null) {
-			return other.titre == null;
-		} else return titre.equals(other.titre);
-		
-		//vérifie uniquement l'id du cursus
-		
+		return Objects.equals(duree, other.duree) && idDg2 == other.idDg2 && Objects.equals(slug, other.slug)
+				&& Objects.equals(titre, other.titre);
 	}
 }

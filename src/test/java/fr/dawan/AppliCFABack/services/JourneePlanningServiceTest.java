@@ -53,11 +53,11 @@ public class JourneePlanningServiceTest {
 		formateur2.setUtilisateur(monFormateur2);
 		
 		Formation formation1 = new Formation();
-		formation1.setContenu("formation 1 contenu");
+//		formation1.setContenu("formation 1 contenu");
 		formation1.setTitre("formation 1 titre");
 		
 		Formation formation2 = new Formation();
-		formation2.setContenu("formation 2 contenu");
+//		formation2.setContenu("formation 2 contenu");
 		formation2.setTitre("formation 2 titre");
 		
 		List<Formateur> formateurs = new ArrayList<Formateur>();

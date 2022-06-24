@@ -365,7 +365,12 @@ public class PromotionServiceImpl implements PromotionService {
 		List<Promotion> promoLst = new ArrayList<Promotion>();
 		cursus = cursusRepository.findAll();
 		for(Cursus c: cursus) {
-			promoLst.addAll(getPromotionDG2ByIdCursusDG2(email, password, c.getIdDg2()));
+			List<Promotion> promoDg2 = new ArrayList<Promotion>();
+			promoDg2 = getPromotionDG2ByIdCursusDG2(email, password, c.getIdDg2());
+			if(promoDg2.size() != 0) {
+				promoLst.addAll(promoDg2);
+				System.out.println(c.getId()+ "Liste non vide ");
+			}
 		}
 		for(Promotion p : promoLst) {
 			try {
@@ -377,13 +382,14 @@ public class PromotionServiceImpl implements PromotionService {
 		return promoLst.size();
 	}
 	
-	public List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursus) throws Exception {
+	@Override
+	public List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursusDg2) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		List<PromotionDG2Dto> fetchResJson = new ArrayList<>(); 
 		List<Promotion> result = new ArrayList<Promotion>();
 		
-		URI url = new URI("https://dawan.org/api2/cfa/trainings/" +idCursus+ "/sessions");
+		URI url = new URI("https://dawan.org/api2/cfa/trainings/" +idCursusDg2+ "/sessions");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email+ ":" +password);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
@@ -399,6 +405,7 @@ public class PromotionServiceImpl implements PromotionService {
 			}
 			
 			for(PromotionDG2Dto pDtoDG2 : fetchResJson) {
+				System.out.println(pDtoDG2.getId());
 				Optional<Promotion> promoDb = promotionRepository.findByIdDG2(pDtoDG2.getId());
 				
 				DtoTools dtoTools = new DtoTools();
@@ -408,7 +415,8 @@ public class PromotionServiceImpl implements PromotionService {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				Optional<CentreFormation> cfOpt = centreFormationRepository.findById(pDtoDG2.getLocationId());
+				Optional<CentreFormation> cfOpt = centreFormationRepository.findByIdDg2(pDtoDG2.getLocationId());
+				System.out.println(pDtoDG2.getId() + ":" +pDtoDG2.getLocationId());
 				if(cfOpt.isPresent()) {
 					promotionDG2.setCentreFormation(cfOpt.get());
 				}
@@ -421,19 +429,19 @@ public class PromotionServiceImpl implements PromotionService {
 				if(!promoDb.isPresent()) {
 					result.add(promotionDG2);
 					//si existe en BDD -> comparer tous les champs et si différents -> faire update
-				} else {
+				} else {	
 					if(!promoDb.get().equals(promotionDG2)) {
-//						promotionDG2.setVersion(promotionDG2.getVersion() +1);
+						promotionDG2.setId(promoDb.get().getId());
+						promotionDG2.setVersion(promoDb.get().getVersion());
 						result.add(promotionDG2);
-					}	
+					} 
 				}	
 			}
+			return result;
 		} else {
 			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
-		return result;
+		
+		
 	}
-
-
-
 }

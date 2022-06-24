@@ -23,6 +23,7 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 
 	private LocalDate dateFin; // 31/12/2021
 	
+	@Column(nullable = false)
 	private long idDG2;
 
 	@ManyToOne
@@ -175,7 +176,17 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 		if (getClass() != obj.getClass())
 			return false;
 		Promotion other = (Promotion) obj;
-		return centreFormation.getId() == other.centreFormation.getId() && cursus.getId() == other.cursus.getId()
+//		System.out.println("CE : " +(centreFormation == null));
+//		System.out.println(this.getIdDG2());
+//		System.out.println("CEOther : " +(other.centreFormation == null));
+//		System.out.println(other.getIdDG2());
+//		System.out.println(centreFormation.getIdDg2() == other.centreFormation.getIdDg2());
+//		System.out.println(cursus.getIdDg2() == other.cursus.getIdDg2());
+//		System.out.println(Objects.equals(dateDebut, other.dateDebut));
+//		System.out.println(Objects.equals(dateFin, other.dateFin));
+//		System.out.println(Objects.equals(nom, other.nom));
+
+		return centreFormation.getIdDg2() == other.centreFormation.getIdDg2() && cursus.getIdDg2() == other.cursus.getIdDg2()
 				&& Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
 				&& Objects.equals(nom, other.nom);
 	}
