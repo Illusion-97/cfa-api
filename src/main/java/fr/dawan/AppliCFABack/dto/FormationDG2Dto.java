@@ -2,8 +2,8 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 
@@ -16,23 +16,89 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @SuppressWarnings("serial")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FormationDG2Dto extends BaseEntityDto implements Serializable {
-	private String title; // titre pro ...
-	private String duration; // durée en h/j
-	private String slug; // slug
-	@JsonProperty("published")
-	private boolean state; // status
+	private long id;
+	private String title;
+	private double duration;
+	private String slug;
+	private String objectives;
+	private String prerequisites;
+	private String plan;
 
-	public FormationDG2Dto() {
-		super();
+	
+	/**
+	 * @return le id
+	 */
+	public long getId() {
+		return id;
 	}
 
-	public FormationDG2Dto(long id, String title, String duration, String slug, boolean state) {
-		super();
+	/**
+	 * @param id le id à affecter
+	 
+	 */
+	public void setId(long id) {
 		this.id = id;
-		this.title = title;
+	}
+
+	/**
+	 * @return le duration
+	 */
+	public double getDuration() {
+		return duration;
+	}
+
+	/**
+	 * @param duration le duration à affecter
+	 
+	 */
+	public void setDuration(double duration) {
 		this.duration = duration;
-		this.slug = slug;
-		this.state = state;
+	}
+
+
+	/**
+	 * @return le objectives
+	 */
+	public String getObjectives() {
+		return objectives;
+	}
+
+	/**
+	 * @param objectives le objectives à affecter
+	 
+	 */
+	public void setObjectives(String objectives) {
+		this.objectives = objectives;
+	}
+
+	/**
+	 * @return le prerequisites
+	 */
+	public String getPrerequisites() {
+		return prerequisites;
+	}
+
+	/**
+	 * @param prerequisites le prerequisites à affecter
+	 
+	 */
+	public void setPrerequisites(String prerequisites) {
+		this.prerequisites = prerequisites;
+	}
+
+	/**
+	 * @return le plan
+	 */
+	public String getPlan() {
+		return plan;
+	}
+
+	/**
+	 * @param plan le plan à affecter
+	 
+	 */
+	public void setPlan(String plan) {
+		this.plan = plan;
 	}
 
 	/**
@@ -50,20 +116,6 @@ public class FormationDG2Dto extends BaseEntityDto implements Serializable {
 	}
 
 	/**
-	 * @return the duration
-	 */
-	public String getDuration() {
-		return duration;
-	}
-
-	/**
-	 * @param duration the duration to set
-	 */
-	public void setDuration(String duration) {
-		this.duration = duration;
-	}
-
-	/**
 	 * @return the slug
 	 */
 	public String getSlug() {
@@ -77,18 +129,5 @@ public class FormationDG2Dto extends BaseEntityDto implements Serializable {
 		this.slug = slug;
 	}
 
-	/**
-	 * @return the state
-	 */
-	public boolean isState() {
-		return state;
-	}
-
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(boolean state) {
-		this.state = state;
-	}
 
 }

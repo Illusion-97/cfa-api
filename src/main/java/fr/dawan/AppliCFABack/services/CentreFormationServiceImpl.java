@@ -205,6 +205,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 						continue;
 					else if (!optCentre.get().equals(centreImport)) {
 						centreImport.setId(optCentre.get().getId());
+						centreImport.setVersion(optCentre.get().getVersion());
 					}
 					centreFormationRepository.saveAndFlush(centreImport);
 				} else {

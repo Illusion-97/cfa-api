@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -43,6 +45,8 @@ public class FormationServiceImpl implements FormationService {
 	FormationRepository formationRepository;
 	@Autowired
 	InterventionRepository interventionRepository;
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
@@ -91,7 +95,7 @@ public class FormationServiceImpl implements FormationService {
 	@Override
 	public List<FormationDto> getAllByPage(int page, int size, String search) {
 		List<Formation> lst = formationRepository
-				.findAllByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(search, search,
+				.findAllByTitreContainingIgnoringCase(search,
 						PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
 
@@ -118,7 +122,7 @@ public class FormationServiceImpl implements FormationService {
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(
-				formationRepository.countByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(search, search));
+				formationRepository.countByTitreContainingIgnoringCase(search));
 	}
 
 	/**
@@ -194,6 +198,71 @@ public class FormationServiceImpl implements FormationService {
 				lstIntDto.add(mapper.InterventionToInterventionDto(itv));
 		}
 		return lstIntDto;
+	}
+
+	@Override
+	public int fetchDG2Formations(String email, String password) throws Exception {
+		List<Formation> result = new ArrayList<Formation>();
+		List<FormationDG2Dto> fetchResJson = new ArrayList<FormationDG2Dto>();
+		int nbChangement = 0;
+		
+		//Récupérer la liste formation DG2
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		
+		//Ma requête
+		URI url = new URI("https://dawan.org/api2/cfa/trainings");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("x-auth-token", email+ ":" +password);
+		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+		
+		//si statusCode OK
+		if(rep.getStatusCode() == HttpStatus.OK) {
+			String json = rep.getBody();
+			
+			try {
+				fetchResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() {} );
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//Comparer formationsDG2 & formationsDB
+		for (FormationDG2Dto fDtoDG2 : fetchResJson) {
+			//chercher en BDD <Optional> findByIdDg2
+			Optional<Formation> formationDb = formationRepository.findByIdDg2(fDtoDG2.getId());
+			
+			DtoTools dtoTools = new DtoTools();
+			Formation formationDG2 = new Formation();
+			
+			try {
+				formationDG2 = dtoTools.FormationDG2DtoToFormation(fDtoDG2);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			//Si !isPresent() alors ajout
+			if(!formationDb.isPresent()) {
+				result.add(formationDG2);
+			} else {
+				//Si != modif
+				if(!formationDb.get().equals(formationDG2)) {
+					formationDG2.setVersion(formationDb.get().getVersion());
+					formationDG2.setId(formationDb.get().getVersion());
+					result.add(formationDG2);
+				}
+			}
+		}
+		for(Formation f: result) {
+			try {
+				formationRepository.saveAndFlush(f);
+				nbChangement ++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return nbChangement;
 	}
 	
 	/**

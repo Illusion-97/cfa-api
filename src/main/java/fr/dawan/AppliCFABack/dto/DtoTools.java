@@ -13,6 +13,7 @@ import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
+import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Positionnement;
 import fr.dawan.AppliCFABack.entities.Promotion;
@@ -99,12 +100,24 @@ public class DtoTools {
     Converter<PromotionDG2Dto, Promotion> PromotionDG2DtoToPromotionConverter = context -> {
     	PromotionDG2Dto pDG2 = context.getSource();
     	Promotion promo = new Promotion();
-
     	promo.setIdDG2(pDG2.getId());
     	promo.setDateDebut(DateConverter.convertToLocalDate(pDG2.getDateStart()));
     	promo.setDateFin(DateConverter.convertToLocalDate(pDG2.getDateEnd()));
     	promo.setNom(pDG2.getSlug());
     	return promo;
+    };
+    
+    Converter<FormationDG2Dto, Formation> FormationDG2DtoToFormationConverter = context -> {
+    	FormationDG2Dto fDG2 = context.getSource();
+    	Formation formation = new Formation();
+    	formation.setTitre(fDG2.getTitle());
+    	formation.setIdDg2(fDG2.getId());
+    	formation.setSlug(fDG2.getSlug());
+    	formation.setDuration(fDG2.getDuration());
+    	formation.setObjectif(fDG2.getObjectives());
+    	formation.setPrerequis(fDG2.getPrerequisites());
+    	formation.setPlan(fDG2.getPlan());
+    	return formation;
     };
     
     
@@ -147,6 +160,10 @@ public class DtoTools {
     
     public Promotion PromotionDG2DtoToPromotion(PromotionDG2Dto promoDG2Dto) {
     	return convert(promoDG2Dto, Promotion.class, PromotionDG2DtoToPromotionConverter);
+    }
+    
+    public Formation FormationDG2DtoToFormation(FormationDG2Dto formationDG2Dto) {
+    	return convert(formationDG2Dto, Formation.class, FormationDG2DtoToFormationConverter);
     }
 
     /**

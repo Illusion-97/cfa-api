@@ -243,20 +243,20 @@ public class InitDataBase {
 		Formation formation = new Formation();
 
 		formation.setTitre("JAVA");
-		formation.setContenu(
-				"La formation : Java Initiation + Approfondissement représente le point de départ de votre apprentissage. Elle s'adresse à des développeurs ayant déjà des bases d'algorithmique et des connaissances sur un langage de programmation.");
+//		formation.setContenu(
+//				"La formation : Java Initiation + Approfondissement représente le point de départ de votre apprentissage. Elle s'adresse à des développeurs ayant déjà des bases d'algorithmique et des connaissances sur un langage de programmation.");
 
 		Formation formation2 = new Formation();
 		formation2.setTitre("Usine logicielle");
-		formation2.setContenu("Initiation gitlab / ligne de commande bash linux");
+//		formation2.setContenu("Initiation gitlab / ligne de commande bash linux");
 
 		Formation formation3 = new Formation();
 		formation3.setTitre("Postgres SQL");
-		formation3.setContenu("Administration Postgres");
+//		formation3.setContenu("Administration Postgres");
 
 		Formation formation4 = new Formation();
 		formation4.setTitre("Spring MVC");
-		formation4.setContenu("");
+//		formation4.setContenu("");
 
 		Intervention intervention = new Intervention();
 		intervention.setDateDebut(date);

@@ -14,25 +14,24 @@ public class Formation extends BaseEntity implements Serializable {
 
 	@Column(nullable = false, length = 255) // title dans dg2
 	private String titre;
-
-	@Column(nullable = true, length = 1024)
-	private String contenu;
+	
+	@Column(nullable = false)
+	private long idDg2;
+	
+	private String slug;
+	
+	@Column(nullable = false)
+	private double duration;
+	
+	@Column(nullable = true)
+	private String objectif;
+	
+	private String prerequis;
+	
+	private String plan;
 
 	@ManyToMany(mappedBy = "formations", cascade = CascadeType.ALL)
 	private List<Cursus> cursusLst;
-
-
-	public Formation() {
-		super();
-	}
-
-	public Formation(String titre, String contenu, List<Cursus> cursusLst) {
-		super();
-		this.titre = titre;
-		this.contenu = contenu;
-		this.cursusLst = cursusLst;
-	}
-
 
 	public String getTitre() {
 		return titre;
@@ -42,12 +41,49 @@ public class Formation extends BaseEntity implements Serializable {
 		this.titre = titre;
 	}
 
-	public String getContenu() {
-		return contenu;
+	/**
+	 * @return le idDg2
+	 */
+	public long getIdDg2() {
+		return idDg2;
 	}
 
-	public void setContenu(String contenu) {
-		this.contenu = contenu;
+	/**
+	 * @param idDg2 le idDg2 à affecter
+	 
+	 */
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
+	}
+
+	/**
+	 * @return le slug
+	 */
+	public String getSlug() {
+		return slug;
+	}
+
+	/**
+	 * @param slug le slug à affecter
+	 
+	 */
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+
+	/**
+	 * @return le duration
+	 */
+	public double getDuration() {
+		return duration;
+	}
+
+	/**
+	 * @param duration le duration à affecter
+	 
+	 */
+	public void setDuration(double duration) {
+		this.duration = duration;
 	}
 
 	public List<Cursus> getCursusLst() {
@@ -58,6 +94,51 @@ public class Formation extends BaseEntity implements Serializable {
 		this.cursusLst = cursusLst;
 	}
 
+
+	/**
+	 * @return le objectif
+	 */
+	public String getObjectif() {
+		return objectif;
+	}
+
+	/**
+	 * @param objectif le objectif à affecter
+	 
+	 */
+	public void setObjectif(String objectif) {
+		this.objectif = objectif;
+	}
+
+	/**
+	 * @return le prerequis
+	 */
+	public String getPrerequis() {
+		return prerequis;
+	}
+
+	/**
+	 * @param prerequis le prerequis à affecter
+	 
+	 */
+	public void setPrerequis(String prerequis) {
+		this.prerequis = prerequis;
+	}
+
+	/**
+	 * @return le plan
+	 */
+	public String getPlan() {
+		return plan;
+	}
+
+	/**
+	 * @param plan le plan à affecter
+	 
+	 */
+	public void setPlan(String plan) {
+		this.plan = plan;
+	}
 
 	@Override
 	public int hashCode() {

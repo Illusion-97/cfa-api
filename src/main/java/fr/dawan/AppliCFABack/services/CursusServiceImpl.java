@@ -197,7 +197,7 @@ public class CursusServiceImpl implements CursusService {
 		List<CursusDG2Dto> fResJson = new ArrayList<>();
 		
 		//url dg2 qui concerne la recupération des cursus
-		URI url = new URI("https://dawan.org/api2/cfa/trainings");
+		URI url = new URI("https://dawan.org/api2/cfa/pro-titles");
 		
 		//recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();
@@ -205,46 +205,51 @@ public class CursusServiceImpl implements CursusService {
 
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
-		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-		
-		if (repWs.getStatusCode() == HttpStatus.OK) {
-			String json = repWs.getBody();
-			
-			try {
-				//recuperation des values en json et lecture
-				fResJson = objectMapper.readValue(json, new TypeReference<List<CursusDG2Dto>>() { 
-				});
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for (CursusDG2Dto cDG2 : fResJson) {
-				Cursus cursusImport = mapper.cursusDG2DtoToCursus(cDG2);
-				Optional<Cursus> optCursus = cursusRepo.findByIdDg2(cursusImport.getIdDg2());
-				if (optCursus.isPresent()) {
-					if (optCursus.get().equals(cursusImport))
-						continue;
-					else if (!optCursus.get().equals(cursusImport)) {
-						cursusImport.setTitre(optCursus.get().getTitre());
-						cursusImport.setId(optCursus.get().getId());
-					}
-					try {
-						cursusRepo.saveAndFlush(cursusImport);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				} else {
-					try {
-						cursusRepo.saveAndFlush(cursusImport);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+		try {
+			ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+			if (repWs.getStatusCode() == HttpStatus.OK) {
+				String json = repWs.getBody();
+				
+				try {
+					//recuperation des values en json et lecture
+					fResJson = objectMapper.readValue(json, new TypeReference<List<CursusDG2Dto>>() { 
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for (CursusDG2Dto cDG2 : fResJson) {
+					Cursus cursusImport = mapper.cursusDG2DtoToCursus(cDG2);
+					Optional<Cursus> optCursus = cursusRepo.findByIdDg2(cursusImport.getIdDg2());
+					if (optCursus.isPresent()) {
+						if (optCursus.get().equals(cursusImport))
+							continue;
+						else if (!optCursus.get().equals(cursusImport)) {
+							cursusImport.setTitre(optCursus.get().getTitre());
+							cursusImport.setVersion(optCursus.get().getVersion());
+							cursusImport.setId(optCursus.get().getId());
+						}
+						try {
+							cursusRepo.saveAndFlush(cursusImport);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						try {
+							cursusRepo.saveAndFlush(cursusImport);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
+			} else {
+				throw new Exception("ResponseEntity from the webservice WDG2 not correct");
 			}
-		} else {
-			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
 		
 	}
 

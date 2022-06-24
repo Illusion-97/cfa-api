@@ -13,10 +13,10 @@ import fr.dawan.AppliCFABack.entities.Formation;
 @Repository
 public interface FormationRepository extends JpaRepository<Formation, Long>{
 
-	Page<Formation> findAllByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(String search, String search2, Pageable pageable);
+	Page<Formation> findAllByTitreContainingIgnoringCase(String search, Pageable pageable);
 
-	long countByTitreContainingIgnoringCaseOrContenuContainingIgnoringCase(String search, String search2);
+	long countByTitreContainingIgnoringCase(String search);
 	
-	//Optional<Formation> findByIdDg2(long formationId);
+	Optional<Formation> findByIdDg2(long id);
 
 }
