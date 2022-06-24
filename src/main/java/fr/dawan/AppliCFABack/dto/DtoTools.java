@@ -91,7 +91,7 @@ public class DtoTools {
     	NiveauDto ndto = new NiveauDto();
     	ndto.setValeur(niveau.getValeur());
     	ndto.setCodeCouleur(niveau.getCodeCouleur());
-    	ndto.setDescreption(niveau.getDescription());
+    	ndto.setDescription(niveau.getDescription());
 		return ndto;
 
     };

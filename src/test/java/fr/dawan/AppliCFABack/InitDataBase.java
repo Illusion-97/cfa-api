@@ -228,14 +228,12 @@ public class InitDataBase {
 
 
 		Adresse adresse = new Adresse();
-		adresse.setNumero(12);
-		adresse.setRue("rue Gaetan Rondeau");
+		adresse.setLibelle("rue Gaetan Rondeau");
 		adresse.setVille("Nantes");
 		adresse.setCodePostal("44200");
 
 		Adresse adresse2 = new Adresse();
-		adresse2.setNumero(11);
-		adresse2.setRue("rue Antoine Bourdelle");
+		adresse2.setLibelle("rue Antoine Bourdelle");
 		adresse2.setVille("Paris");
 		adresse2.setCodePostal("75015");
 

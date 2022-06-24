@@ -11,29 +11,21 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class AdresseDto extends BaseEntityDto implements Serializable {
-	private int numero;
-	private String rue;
+	private String libelle;
 	private String ville;
 	private String codePostal;
+	private long idDg2;
 
 	public AdresseDto() {
 		super();
 	}
 
-	public int getNumero() {
-		return numero;
+	public String getLibelle() {
+		return libelle;
 	}
 
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-
-	public String getRue() {
-		return rue;
-	}
-
-	public void setRue(String rue) {
-		this.rue = rue;
+	public void setLibelle(String rue) {
+		this.libelle = rue;
 	}
 
 	public String getVille() {
@@ -50,6 +42,21 @@ public class AdresseDto extends BaseEntityDto implements Serializable {
 
 	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
+	}
+
+	/**
+	 * @return le idDg2
+	 */
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	/**
+	 * @param idDg2 le idDg2 à affecter
+	 
+	 */
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
 	}
 
 }

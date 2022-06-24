@@ -60,8 +60,6 @@ public class Formation extends BaseEntity implements Serializable {
 		this.cursusLst = cursusLst;
 	}
 
-	
-
 	/**
 	 * @return le idDg2
 	 */

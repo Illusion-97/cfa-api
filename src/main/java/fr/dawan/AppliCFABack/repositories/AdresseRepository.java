@@ -18,6 +18,8 @@ public interface AdresseRepository extends JpaRepository<Adresse, Long>{
 
 	long countByRueContainingOrVilleContaining(String rue, String ville);
 
+	Adresse findByIdDg2(int idDg2);
+
 	
 
 }

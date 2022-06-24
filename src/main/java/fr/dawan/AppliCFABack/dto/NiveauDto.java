@@ -6,7 +6,7 @@ public class NiveauDto {
 	
 	private String codeCouleur;
 	
-	private String descreption;
+	private String description;
 
 	/**
 	 * @return le valeur
@@ -41,16 +41,16 @@ public class NiveauDto {
 	/**
 	 * @return le descreption
 	 */
-	public String getDescreption() {
-		return descreption;
+	public String getDescription() {
+		return description;
 	}
 
 	/**
 	 * @param descreption le descreption à affecter
 	 
 	 */
-	public void setDescreption(String descreption) {
-		this.descreption = descreption;
+	public void setDescription(String descreption) {
+		this.description = descreption;
 	}
 	
 	

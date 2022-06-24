@@ -85,8 +85,7 @@ public class AdresseControllerTests {
 	void testSave() {
 		try {
 			AdresseDto eToInsert = new AdresseDto();
-			eToInsert.setNumero(3);
-			eToInsert.setRue("rue save");
+			eToInsert.setLibelle("rue save");
 			eToInsert.setVille("ville save");
 			eToInsert.setCodePostal("code postal save");
 
