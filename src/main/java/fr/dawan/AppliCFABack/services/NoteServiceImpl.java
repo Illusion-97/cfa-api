@@ -1,9 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
@@ -46,6 +43,9 @@ public class NoteServiceImpl implements NoteService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+
+	@Autowired
+	private DtoTools mapperTools;
 
 	/**
 	 * Récupération de la liste des notes
@@ -134,7 +134,6 @@ public class NoteServiceImpl implements NoteService {
 	@Override
 	public void deleteById(long id) {
 		noteRepository.deleteById(id);
-
 	}
 
 	/***
@@ -159,24 +158,23 @@ public class NoteServiceImpl implements NoteService {
 
 	/**
 	 * @param id de l'étudiant
-	 * utilise le NoteRepository pour récupérer toutes les notes par id de l'étudiant
+	 *           utilise le NoteRepository pour récupérer toutes les notes par id de l'étudiant
 	 * @return toutes les données nécessaires pour remplir la section Contrôles Continus du front partie étudiant par le mapper (DtoTools) :
-	 * 			- id de la note
-	 * 			- id de l'étudiant par rapport à la note
-	 * 			- titre de l'examen en rapport avec la note
-	 * 			- date de l'examen
-	 * 			- nom de la promotion de l'étudiant
+	 * - id de la note
+	 * - id de l'étudiant par rapport à la note
+	 * - titre de l'examen en rapport avec la note
+	 * - date de l'examen
+	 * - nom de la promotion de l'étudiant
 	 */
 
-	public List<NoteControleContinuDto> getNotesByIdEtudiant(long id)  {
+	public Map<Set<String>, List<NoteControleContinuDto>> getNotesByIdEtudiant(long id)  {
 
 		List<NoteControleContinuDto> result = new ArrayList<>();
 		List<Note> list = noteRepository.findAllByEtudiantNoteId(id);
 		for(Note n : list) {
-			result.add(DtoTools.convert(n, NoteControleContinuDto.class));
+			result.add(mapperTools.NoteToNoteControleContinuDto(n));
 		}
-		return result;
-
+		return result.stream().collect(Collectors.groupingBy(NoteControleContinuDto::getPromotions));
 	}
 
 	/***

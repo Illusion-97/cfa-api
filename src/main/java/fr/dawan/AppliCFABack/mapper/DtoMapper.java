@@ -27,7 +27,6 @@ import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
 import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
-import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
@@ -203,4 +202,14 @@ public interface DtoMapper {
 	@Mapping(source = ".", target = ".")
 	ExperienceProfessionnelleDto ExperienceProfessionnelleToExperienceProfessionnelleDto(
 			ExperienceProfessionnelle experienceProfessionnelle);
+
+
+	@Mapping(source = "personId", target = "idDg2")
+	@Mapping(target = "utilisateur", ignore = true)
+	@Mapping(target = "promotions", ignore = true)
+	@Mapping(target = "groupes", ignore = true)
+	@Mapping(target = "notes", ignore = true)
+	@Mapping(target = "dossierProfessionnel", ignore = true)
+	@Mapping(target = "dossierProjet", ignore = true)
+    Etudiant etudiantUtilisateurDG2DtoToEtudiant(EtudiantUtilisateurDG2Dto eDG2);
 }

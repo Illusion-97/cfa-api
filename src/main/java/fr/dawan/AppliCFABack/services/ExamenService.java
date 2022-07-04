@@ -5,6 +5,7 @@ import java.util.List;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
+import fr.dawan.AppliCFABack.dto.customdtos.DoubleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
 
 public interface ExamenService {
@@ -28,4 +29,12 @@ public interface ExamenService {
 	 * @return toutes les données nécessaires pour remplir la section livret d'évaluation dans le front partie étudiant, par le service implémenté
 	 */
     List<LivretEvaluationDto> getLivretEvaluation(long id);
+
+	String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws Exception;
+
+	DoubleDto getAvgByEtudiantIdAndActiviteTypeId(long etudiantId, long activiteTypeId) throws Exception;
+
+	DoubleDto getAvgByPromoIdAndActiviteTypeId(long promotionId, long activiteTypeId) throws Exception;
+
+	DoubleDto getAvgByPromotionId(long promotionId) throws Exception;
 }

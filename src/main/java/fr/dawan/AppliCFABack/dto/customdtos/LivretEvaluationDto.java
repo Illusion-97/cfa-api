@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LivretEvaluationDto {
-    private String promotion;
+    private List<String> promotions;
     private String examen;
     private List<String> competences = new ArrayList<>();
     private List<Note.Satisfaction> satisfactions = new ArrayList<>();
@@ -15,12 +15,12 @@ public class LivretEvaluationDto {
     public LivretEvaluationDto() {
     }
 
-    public String getPromotion() {
-        return promotion;
+    public List<String> getPromotions() {
+        return promotions;
     }
 
-    public void setPromotion(String promotion) {
-        this.promotion = promotion;
+    public void setPromotions(List<String> promotions) {
+        this.promotions = promotions;
     }
 
     public String getExamen() {

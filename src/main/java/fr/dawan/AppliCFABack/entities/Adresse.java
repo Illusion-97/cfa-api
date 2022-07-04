@@ -26,6 +26,12 @@ public class Adresse extends BaseEntity implements Serializable {
 		super();
 	}
 
+	public Adresse(int numero, String rue, String ville, String codePostal) {
+		this.numero = numero;
+		this.rue = rue;
+		this.ville = ville;
+		this.codePostal = codePostal;
+	}
 
 	public int getNumero() {
 		return numero;

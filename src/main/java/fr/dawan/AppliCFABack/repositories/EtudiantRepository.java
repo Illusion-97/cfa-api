@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,4 +29,6 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 	List<Etudiant> findAllDistinctByPromotionsInterventionsId(long id, String search);
 
 	List<Etudiant> findAllDistinctByPromotionsInterventionsId(long id);
+
+    Optional<Etudiant> findByIdDg2(long idDg2);
 }

@@ -1,18 +1,17 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collector;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.dto.customdtos.DoubleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EvalByBlocDto;
 import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.repositories.*;
+import fr.dawan.AppliCFABack.tools.PdfTools;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
@@ -32,11 +31,10 @@ import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository;
-import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
-import fr.dawan.AppliCFABack.repositories.ExamenRepository;
-import fr.dawan.AppliCFABack.repositories.InterventionRepository;
-import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+
 /***
  * 
  * @author Feres BG Valentin C Nicolas P.
@@ -73,6 +71,18 @@ public class ExamenServiceImpl implements ExamenService {
 
 	@Autowired
 	private DtoTools mapperTools;
+
+	@Autowired
+	private EtudiantRepository etudiantRepository;
+
+	@Autowired
+	private Configuration freemarkerConfig;
+
+	@Value("${backend.url}")
+	private String backendUrl;
+
+	@Value("src/main/resources/files/bulletinsEvaluations")
+	private String storageFolder;
 
 	/**
 	 * Récupération de la liste des examens
@@ -280,6 +290,82 @@ public class ExamenServiceImpl implements ExamenService {
 			result.add(mapperTools.ExamenToLivretEvaluationDto(e));
 		}
 		return result;
+	}
+
+	@Override
+	public String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws Exception {
+		Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
+		if (etuOpt.isPresent()) {
+			freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+			Template template = freemarkerConfig.getTemplate("bulletineval.ftl");
+
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("backendUrl", backendUrl);
+
+			Etudiant etu = etuOpt.get();
+			model.put("etudiant", etu);
+
+			Optional<Promotion> promoOpt = promotionRepository.findById(promotionId);
+			if (promoOpt.isPresent()) {
+				Promotion promo = promoOpt.get();
+				model.put("promo", promo);
+				model.put("promoAnnee", promo.getDateDebut().getYear());
+				model.put("titrePro", promo.getCursus().getTitre());
+
+				List<ActiviteType> activiteTypes = activiteTypeRepository
+						.findAllByCursusActiviteTypeId(promo.getCursus().getId());
+
+				List<EvalByBlocDto> evalList = new ArrayList<EvalByBlocDto>();
+				double s = 0;
+				for (ActiviteType at : activiteTypes) {
+					EvalByBlocDto evalByBlocDto = new EvalByBlocDto();
+					evalByBlocDto.setActiviteType(at);
+					try {
+						System.out.println("etuId = "+etudiantId);
+						System.out.println("atId = "+ at.getId());
+						double moyB = getAvgByEtudiantIdAndActiviteTypeId(etudiantId, at.getId()).getResult();
+						evalByBlocDto.setMoyenne(moyB);
+						s += moyB;
+					} catch (Exception e) {
+						//TODO 0 par défaut ou afficher un message
+						e.printStackTrace();
+						System.out.println("L'étudiant n'a pas de note associée à cette activité type");
+					}
+
+					try {
+						evalByBlocDto.setMoyennePromo(getAvgByPromoIdAndActiviteTypeId(promotionId, at.getId()).getResult());
+					} catch (Exception e) {
+						// 0 par défaut //TODO ajouter un message pour dire note manquante
+						e.printStackTrace();
+					}
+					evalList.add(evalByBlocDto);
+				}
+				model.put("evalList", evalList);
+				model.put("moyEtudiant", (s/activiteTypes.size()));
+				model.put("moyPromo",getAvgByPromotionId(promotionId).getResult());
+			}
+			String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+			String outputPdf = storageFolder + "/bulletin-" + etudiantId + "-promo-" + promotionId + ".pdf";
+			PdfTools.generatePdfFromHtml(outputPdf, htmlContent);
+
+			return outputPdf;
+		}
+		return null;
+	}
+
+	@Override
+	public DoubleDto getAvgByEtudiantIdAndActiviteTypeId(long etudiantId, long activiteTypeId) throws Exception {
+		return new DoubleDto(examenRepository.getAvgByEtudiantIdAndActiviteTypeId(etudiantId, activiteTypeId));
+	}
+
+	@Override
+	public DoubleDto getAvgByPromoIdAndActiviteTypeId(long promotionId, long activiteTypeId) throws Exception {
+		return new DoubleDto(examenRepository.getAvgByPromoIdAndActiviteTypeId(promotionId, activiteTypeId));
+	}
+
+	@Override
+	public DoubleDto getAvgByPromotionId(long promotionId) throws Exception {
+		return new DoubleDto(examenRepository.getAvgByPromotionId(promotionId));
 	}
 
 	@Override

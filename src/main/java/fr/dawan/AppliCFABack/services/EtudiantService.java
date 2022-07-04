@@ -69,7 +69,6 @@ public interface EtudiantService {
 	EtudiantDossierDto getByEtudiantIdForDossierPro(long id);
 	EtudiantDossierDto saveOrUpdateEtudiantDossier(EtudiantDossierDto e);
 
-
-
+    void fetchAllEtudiantDG2(String email, String password) throws Exception;
 
 }

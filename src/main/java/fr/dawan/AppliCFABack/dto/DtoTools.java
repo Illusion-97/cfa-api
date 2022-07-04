@@ -44,16 +44,6 @@ public class DtoTools {
      */
     public static <TSource, TDestination> TDestination convert(TSource obj, Class<TDestination> clazz) {
 
-        myMapper.typeMap(Note.class, NoteControleContinuDto.class).addMappings(mapper -> {
-            mapper.map(src -> src.getId(), NoteControleContinuDto::setId);
-            mapper.map(src -> src.getEtudiantNote().getId(), NoteControleContinuDto::setEtudiantId);
-            mapper.map(src -> src.getExamen().getTitre(), NoteControleContinuDto::setExamen);
-            mapper.map(src -> src.getExamen().getDateExamen(), NoteControleContinuDto::setDate);
-//            mapper.map(src -> src.getExamen().getPromotions().getNom(), NoteControleContinuDto::setPromotion);
-        });
-        
-       
-
 //        myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 //        myMapper.getConfiguration().setAmbiguityIgnored(true);
 //        myMapper.typeMap(NoteDto.class, Note.class).addMappings(mapper -> {
@@ -159,7 +149,11 @@ public class DtoTools {
         Examen e = context.getSource();
         LivretEvaluationDto leDto = new LivretEvaluationDto();
 
-//        leDto.setPromotion(e.getPromotion().getNom());
+        leDto.setPromotions(e.getPromotions().stream().map(p -> {
+            String promotion = p.getNom();
+            return promotion;
+        }).collect(Collectors.toList()));
+
         leDto.setExamen(e.getTitre());
 
         leDto.setCompetences(e.getCompetencesProfessionnelles().stream().map(c -> {
@@ -186,6 +180,41 @@ public class DtoTools {
      */
     public LivretEvaluationDto ExamenToLivretEvaluationDto(Examen examen) {
         return convert(examen, LivretEvaluationDto.class, ExamenToLivretEvaluationDtoConverter);
+    }
+
+    /**
+     * permet de mapper un objet Note en NoteControleContinuDto (dto customisé) -
+     * return l'objet dto custom mappé
+     */
+    Converter<Note, NoteControleContinuDto> NoteToNoteControleContinuDtoConverter = context -> {
+        Note n = context.getSource();
+        NoteControleContinuDto nDto = new NoteControleContinuDto();
+
+        nDto.setId(n.getId());
+
+        nDto.setEtudiantId(n.getEtudiantNote().getId());
+
+        nDto.setNoteObtenue(n.getNoteObtenue());
+
+        nDto.setExamen(n.getExamen().getTitre());
+
+        nDto.setDate(n.getExamen().getDateExamen());
+
+        nDto.setPromotions(n.getExamen().getPromotions().stream().map(p -> {
+            String promotion = p.getNom();
+            return promotion;
+        }).collect(Collectors.toSet()));
+
+        return nDto;
+    };
+
+    /**
+     * méthode appelée dans NoteServiceImpl
+     * @param note
+     * @return l'objet dto custom mappé
+     */
+    public NoteControleContinuDto NoteToNoteControleContinuDto(Note note){
+        return convert(note, NoteControleContinuDto.class, NoteToNoteControleContinuDtoConverter);
     }
 
 
