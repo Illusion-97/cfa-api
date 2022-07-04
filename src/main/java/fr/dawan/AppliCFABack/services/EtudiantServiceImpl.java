@@ -476,7 +476,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		// ATTENTION : L'etudiant a potentiellement une liste de contrat => une liste
 		// d'entreprise
 		Contrat contrat = contratRepository.findByEtudiantId(id);
-		return mapper.EntrepriseToEntrepriseDto(contrat.getMaitreApprentissage().getEntreprise());
+		return mapper.EntrepriseToEntrepriseDto(contrat.getMaitreApprentissage().getEtudiant().getUtilisateur().getEntreprise());
 	}
 
 	/**

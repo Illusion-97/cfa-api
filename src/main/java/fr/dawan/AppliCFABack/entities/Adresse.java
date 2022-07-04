@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 public class Adresse extends BaseEntity implements Serializable {
 
 
-
-	
 	@Column(nullable = false, length = 255)
 	private String libelle;
 

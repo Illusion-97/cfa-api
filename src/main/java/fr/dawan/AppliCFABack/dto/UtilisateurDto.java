@@ -23,12 +23,11 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 	private LocalDate dateDeNaissance;
 	private String telephone;
 	private AdresseDto adresseDto;
-	// private EntrepriseDto entrepriseDto;
+	private long entrepriseId;
 	private List<UtilisateurRoleDto> rolesDto;
 	private EtudiantDto etudiantDto;
 	private FormateurDto formateurDto;
 	private CEFDto cefDto;
-	private MaitreApprentissageDto maitreApprentissageDto;
 
 	public UtilisateurDto() {
 		super();
@@ -203,17 +202,18 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 	}
 
 	/**
-	 * @return the maitreApprentissageDto
+	 * @return le entrepriseId
 	 */
-	public MaitreApprentissageDto getMaitreApprentissageDto() {
-		return maitreApprentissageDto;
+	public long getEntrepriseId() {
+		return entrepriseId;
 	}
 
 	/**
-	 * @param maitreApprentissageDto the maitreApprentissageDto to set
+	 * @param entrepriseId le entrepriseId à affecter
+	 
 	 */
-	public void setMaitreApprentissageDto(MaitreApprentissageDto maitreApprentissageDto) {
-		this.maitreApprentissageDto = maitreApprentissageDto;
+	public void setEntrepriseId(long entrepriseId) {
+		this.entrepriseId = entrepriseId;
 	}
 
 	@Override
@@ -222,6 +222,6 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 				+ ", prenom='" + prenom + '\'' + ", nom='" + nom + '\'' + ", civilite='" + civilite + '\''
 				+ ", dateDeNaissance=" + dateDeNaissance + ", telephone='" + telephone + '\'' + ", adresseDto="
 				+ adresseDto + ", rolesDto=" + rolesDto + ", etudiantDto=" + etudiantDto + ", formateurDto="
-				+ formateurDto + ", cefDto=" + cefDto + ", maitreApprentissageDto=" + maitreApprentissageDto + '}';
+				+ formateurDto + ", cefDto=" + cefDto +'}';
 	}
 }

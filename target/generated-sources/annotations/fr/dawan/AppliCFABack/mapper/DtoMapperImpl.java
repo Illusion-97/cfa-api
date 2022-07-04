@@ -69,7 +69,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-06-28T17:25:29+0200",
+    date = "2022-07-04T14:55:29+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -166,10 +166,10 @@ public class DtoMapperImpl implements DtoMapper {
         congeDto.setVersion( conge.getVersion() );
         congeDto.setDateDebut( conge.getDateDebut() );
         congeDto.setDateFin( conge.getDateFin() );
-        congeDto.setJustificatif( conge.getJustificatif() );
         congeDto.setMotif( conge.getMotif() );
-        congeDto.setStatus( conge.getStatus() );
         congeDto.setType( conge.getType() );
+        congeDto.setStatus( conge.getStatus() );
+        congeDto.setJustificatif( conge.getJustificatif() );
 
         return congeDto;
     }
@@ -386,9 +386,9 @@ public class DtoMapperImpl implements DtoMapper {
         promotionDto.setCursusDto( CursusToCursusDto( promotion.getCursus() ) );
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
+        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
-        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }
@@ -742,12 +742,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExperienceProfessionnelleDto experienceProfessionnelleDto = new ExperienceProfessionnelleDto();
 
-        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
-        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
         experienceProfessionnelleDto.setCollaborateur( experienceProfessionnelle.getCollaborateur() );
         experienceProfessionnelleDto.setContexte( experienceProfessionnelle.getContexte() );
-        experienceProfessionnelleDto.setInformation( experienceProfessionnelle.getInformation() );
         experienceProfessionnelleDto.setId( experienceProfessionnelle.getId() );
+        experienceProfessionnelleDto.setInformation( experienceProfessionnelle.getInformation() );
+        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
+        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
         experienceProfessionnelleDto.setVersion( experienceProfessionnelle.getVersion() );
 
         return experienceProfessionnelleDto;

@@ -1,77 +1,57 @@
-package fr.dawan.AppliCFABack.entities;
+package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-/***
- * 
- * @author Feres BG Valentin C.
- * @see LivretEvaluation,ActiviteType,CompetenceProfessionnelle,Intervention
- * @since 1.0
- * @version 1.0
- */
+
 @SuppressWarnings("serial")
-@Entity
-public class EvaluationFormation extends BaseEntity implements Serializable {
+public class EvaluationFormationDto  extends BaseEntityDto implements Serializable{
 
-	@ManyToOne
-	private LivretEvaluation livretEvaluation;
+	
+	private long livretEvaluationId;
 
-	@ManyToOne
-	private ActiviteType activiteType;
-
-	@Column(columnDefinition = "TEXT", nullable = false)
+	private long activiteTypeId;
 
 	private String contenu;
 
-	@ManyToMany
-	private List<CompetenceProfessionnelle> competencesEvaluees;
+	private List<Long> competencesEvaluees;
 
 	private boolean criteresSatisfaits;
 
-	@Column(columnDefinition = "TEXT")
-
 	private String commentaireInsatisfaction;
-
-	@Column(columnDefinition = "TEXT")
 
 	private String commentaireEvaluationsComplementaires;
 
-	@ManyToMany
-	private List<Intervention> interventions;
+	private List<Long> interventions;
 
 	/**
-	 * @return l' livretEvaluation
+	 * @return le livretEvaluationId
 	 */
-	public LivretEvaluation getLivretEvaluation() {
-		return livretEvaluation;
+	public long getLivretEvaluationId() {
+		return livretEvaluationId;
 	}
 
 	/**
-	 * @param livretEvaluation l' livretEvaluation à affecter
+	 * @param livretEvaluationId le livretEvaluationId à affecter
 	 
 	 */
-	public void setLivretEvaluation(LivretEvaluation livretEvaluation) {
-		this.livretEvaluation = livretEvaluation;
+	public void setLivretEvaluationId(long livretEvaluationId) {
+		this.livretEvaluationId = livretEvaluationId;
 	}
 
 	/**
-	 * @return le activiteType
+	 * @return le activiteTypeId
 	 */
-	public ActiviteType getActiviteType() {
-		return activiteType;
+	public long getActiviteTypeId() {
+		return activiteTypeId;
 	}
 
 	/**
-	 * @param activiteType le activiteType à affecter
+	 * @param activiteTypeId le activiteTypeId à affecter
 	 
 	 */
-	public void setActiviteType(ActiviteType activiteType) {
-		this.activiteType = activiteType;
+	public void setActiviteTypeId(long activiteTypeId) {
+		this.activiteTypeId = activiteTypeId;
 	}
 
 	/**
@@ -92,7 +72,7 @@ public class EvaluationFormation extends BaseEntity implements Serializable {
 	/**
 	 * @return le competencesEvaluees
 	 */
-	public List<CompetenceProfessionnelle> getCompetencesEvaluees() {
+	public List<Long> getCompetencesEvaluees() {
 		return competencesEvaluees;
 	}
 
@@ -100,7 +80,7 @@ public class EvaluationFormation extends BaseEntity implements Serializable {
 	 * @param competencesEvaluees le competencesEvaluees à affecter
 	 
 	 */
-	public void setCompetencesEvaluees(List<CompetenceProfessionnelle> competencesEvaluees) {
+	public void setCompetencesEvaluees(List<Long> competencesEvaluees) {
 		this.competencesEvaluees = competencesEvaluees;
 	}
 
@@ -152,7 +132,7 @@ public class EvaluationFormation extends BaseEntity implements Serializable {
 	/**
 	 * @return le interventions
 	 */
-	public List<Intervention> getInterventions() {
+	public List<Long> getInterventions() {
 		return interventions;
 	}
 
@@ -160,10 +140,9 @@ public class EvaluationFormation extends BaseEntity implements Serializable {
 	 * @param interventions le interventions à affecter
 	 
 	 */
-	public void setInterventions(List<Intervention> interventions) {
+	public void setInterventions(List<Long> interventions) {
 		this.interventions = interventions;
 	}
 	
-
-
+	
 }
