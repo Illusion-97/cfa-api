@@ -873,18 +873,19 @@ public class EtudiantServiceImpl implements EtudiantService {
 						continue;
 					else if(!optEtudiant.get().equals(etudiant)) {
 						etudiant.setId(optEtudiant.get().getId());
+						etudiant.setUtilisateur(optEtudiant.get().getUtilisateur());
 						etudiant.getUtilisateur().setPrenom(eDG2.getFirstName());
 						etudiant.getUtilisateur().setNom(eDG2.getLastName());
 						etudiant.getUtilisateur().setLogin(eDG2.getEmail());
 					}
 
-					etudiantRepository.saveAndFlush(etudiant);
+					//etudiantRepository.saveAndFlush(etudiant);
 				} else {
 					Utilisateur utilisateur = new Utilisateur();
 					utilisateur.setPrenom(eDG2.getFirstName());
 					utilisateur.setNom(eDG2.getLastName());
 					utilisateur.setLogin(eDG2.getEmail());
-					utilisateur.setPassword("pwd");
+					utilisateur.setPassword("password");
 					utilisateur.setEtudiant(etudiant);
 					utilisateur.setCivilite("MR");
 					utilisateur.setAdresse(new Adresse("1 rue","ville","codePostal"));

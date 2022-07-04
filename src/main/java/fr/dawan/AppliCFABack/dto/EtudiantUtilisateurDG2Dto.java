@@ -1,12 +1,15 @@
 package fr.dawan.AppliCFABack.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 
 import java.io.Serializable;
 
 public class EtudiantUtilisateurDG2Dto implements Serializable {
     @JsonProperty(value = "registration_id")
     private long registrationId;
+
+    private String state;
 
     @JsonProperty(value = "person_id")
     private long personId;
@@ -18,6 +21,8 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
     private String lastName;
 
     private String email;
+
+    private Utilisateur utilisateur;
 
     private int version;
 
@@ -61,4 +66,27 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
         this.email = email;
     }
 
+    public long getRegistrationId() {
+        return registrationId;
+    }
+
+    public void setRegistrationId(long registrationId) {
+        this.registrationId = registrationId;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
 }

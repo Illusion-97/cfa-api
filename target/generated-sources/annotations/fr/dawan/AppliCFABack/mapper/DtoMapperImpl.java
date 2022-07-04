@@ -70,7 +70,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-07-04T10:36:46+0200",
+    date = "2022-07-04T12:05:45+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.14.1 (Amazon.com Inc.)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -764,6 +764,7 @@ public class DtoMapperImpl implements DtoMapper {
 
         etudiant.setIdDg2( eDG2.getPersonId() );
         etudiant.setVersion( eDG2.getVersion() );
+        etudiant.setUtilisateur( eDG2.getUtilisateur() );
 
         return etudiant;
     }

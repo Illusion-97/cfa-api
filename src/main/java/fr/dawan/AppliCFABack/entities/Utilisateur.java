@@ -4,13 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
@@ -37,7 +31,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 255)
 	private String telephone;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Adresse adresse;
 
 	@ManyToMany
@@ -46,7 +40,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 //	@ManyToOne
 //	private Entreprise entreprise;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Etudiant etudiant;
 	@OneToOne
 	private Formateur formateur;
