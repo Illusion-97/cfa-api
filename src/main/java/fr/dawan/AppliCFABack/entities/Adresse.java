@@ -8,13 +8,6 @@ import javax.persistence.Entity;
 @SuppressWarnings("serial")
 @Entity
 public class Adresse extends BaseEntity implements Serializable {
-	
-	@Column(nullable = false, length = 255)
-	private int numero;
-
-	@Column(nullable = false, length = 255)
-	private String rue;
-
 
 	@Column(nullable = false, length = 255)
 	private String libelle;
@@ -28,32 +21,19 @@ public class Adresse extends BaseEntity implements Serializable {
 	public Adresse() {
 		super();
 	}
-	
-	public String getLibelle() {
-		return libelle;
-	}
-	
-	public Adresse(int numero, String rue, String ville, String codePostal) {
-		this.numero = numero;
-		this.rue = rue;
+
+	public Adresse(String libelle, String ville, String codePostal) {
+		this.libelle = libelle;
 		this.ville = ville;
 		this.codePostal = codePostal;
 	}
 
-	public int getNumero() {
-		return numero;
+	public String getLibelle() {
+		return libelle;
 	}
 
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-
-	public String getRue() {
-		return rue;
-	}
-
-	public void setLibelle(String rue) {
-		this.libelle = rue;
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
 	}
 
 	public String getVille() {
@@ -73,6 +53,6 @@ public class Adresse extends BaseEntity implements Serializable {
 	}
 
 
-	
+
 
 }

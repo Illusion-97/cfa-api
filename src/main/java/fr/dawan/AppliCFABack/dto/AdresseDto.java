@@ -24,8 +24,8 @@ public class AdresseDto extends BaseEntityDto implements Serializable {
 		return libelle;
 	}
 
-	public void setLibelle(String rue) {
-		this.libelle = rue;
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
 	}
 
 	public String getVille() {

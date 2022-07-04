@@ -887,7 +887,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 					utilisateur.setPassword("pwd");
 					utilisateur.setEtudiant(etudiant);
 					utilisateur.setCivilite("MR");
-					utilisateur.setAdresse(new Adresse(1,"rue","ville","codePostal"));
+					utilisateur.setAdresse(new Adresse("1 rue","ville","codePostal"));
 					utilisateur.setDateDeNaissance(LocalDate.of(1990,05,05));
 					utilisateur.setTelephone("0606060606");
 					List<UtilisateurRole> roles = new ArrayList<>();
