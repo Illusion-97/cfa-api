@@ -1,7 +1,9 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +116,7 @@ public class NoteController {
 	 * de l'espace étudiant partie front
 	 */
 	@GetMapping(value = "/note-etudiant/{id}", produces = "application/json")
-	public List<NoteControleContinuDto> getNotesByIdEtudiant(@PathVariable("id") long id) {
+	public Map<Set<String>, List<NoteControleContinuDto>> getNotesByIdEtudiant(@PathVariable("id") long id) {
 		return noteService.getNotesByIdEtudiant(id);
 	}
 

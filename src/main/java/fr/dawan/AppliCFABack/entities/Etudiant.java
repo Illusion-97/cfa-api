@@ -2,17 +2,17 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
 public class Etudiant extends BaseEntity implements Serializable {
+
+	@Column(nullable = true)
+	private long idDg2;
 
 	@OneToOne
 	private Utilisateur utilisateur;
@@ -85,4 +85,19 @@ public class Etudiant extends BaseEntity implements Serializable {
 		this.utilisateur = utilisateur;
 	}
 
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
+	}
+
+	public Set<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(Set<Note> notes) {
+		this.notes = notes;
+	}
 }

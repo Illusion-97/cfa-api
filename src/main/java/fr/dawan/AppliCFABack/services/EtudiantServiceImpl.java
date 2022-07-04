@@ -1,56 +1,29 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
 
+import fr.dawan.AppliCFABack.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.AbsenceDto;
-import fr.dawan.AppliCFABack.dto.AdresseDto;
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DevoirDto;
-import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
-import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
-import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EntrepriseDto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
-import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
-import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.PositionnementDto;
-import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
-import fr.dawan.AppliCFABack.entities.Absence;
-import fr.dawan.AppliCFABack.entities.Contrat;
-import fr.dawan.AppliCFABack.entities.Devoir;
-import fr.dawan.AppliCFABack.entities.DevoirEtudiant;
-import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
-import fr.dawan.AppliCFABack.entities.DossierProjet;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
-import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.Positionnement;
-import fr.dawan.AppliCFABack.entities.Positionnement.Niveau;
-import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
@@ -67,6 +40,7 @@ import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.HashTools;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @Transactional
@@ -116,6 +90,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+
+	@Autowired
+	private RestTemplate restTemplate;
 
 	// ##################################################
 	// # CRUD #
@@ -866,5 +843,71 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		return etudiantAbsencesDevoirsDtos;
 	}
+
+	//TODO
+	@Override
+	public void fetchAllEtudiantDG2(String email, String password) throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+		List<EtudiantUtilisateurDG2Dto> cResJson;
+
+		URI url = new URI("https://dawan.org/api2/cfa/sessions/552228/registrations");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("x-auth-token", email + ":" + password);
+
+		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET,httpEntity, String.class);
+
+		if(repWs.getStatusCode() == HttpStatus.OK) {
+			String json = repWs.getBody();
+			cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {
+			});
+
+			for(EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
+				Etudiant etudiant = mapper.etudiantUtilisateurDG2DtoToEtudiant(eDG2);
+				Optional<Etudiant> optEtudiant = etudiantRepository.findByIdDg2(etudiant.getIdDg2());
+
+				if(optEtudiant.isPresent()) {
+					if(optEtudiant.get().equals(etudiant))
+						continue;
+					else if(!optEtudiant.get().equals(etudiant)) {
+						etudiant.setId(optEtudiant.get().getId());
+						etudiant.getUtilisateur().setPrenom(eDG2.getFirstName());
+						etudiant.getUtilisateur().setNom(eDG2.getLastName());
+						etudiant.getUtilisateur().setLogin(eDG2.getEmail());
+					}
+
+					etudiantRepository.saveAndFlush(etudiant);
+				} else {
+					Utilisateur utilisateur = new Utilisateur();
+					utilisateur.setPrenom(eDG2.getFirstName());
+					utilisateur.setNom(eDG2.getLastName());
+					utilisateur.setLogin(eDG2.getEmail());
+					utilisateur.setPassword("pwd");
+					utilisateur.setEtudiant(etudiant);
+					utilisateur.setCivilite("MR");
+					utilisateur.setAdresse(new Adresse(1,"rue","ville","codePostal"));
+					utilisateur.setDateDeNaissance(LocalDate.of(1990,05,05));
+					utilisateur.setTelephone("0606060606");
+					List<UtilisateurRole> roles = new ArrayList<>();
+					for (UtilisateurRole role : roles
+						 ) {
+						role.setUtilisateurs((List<Utilisateur>) utilisateur);
+					}
+					utilisateur.setRoles(roles);
+					etudiant.setUtilisateur(utilisateur);
+					utilisateurRepository.saveAndFlush(utilisateur);
+					etudiantRepository.saveAndFlush(etudiant);
+				}
+			}
+		} else {
+			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+		}
+	}
+
+
+
+
 
 }

@@ -1,19 +1,21 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
@@ -223,4 +225,22 @@ public class EtudiantController {
 //		return etudiantService.getManagerByIdEtudiant(id);
 //	}
 
+	// ##################################################
+	// # FETCH Dawan webservice #
+	// ##################################################
+
+	@GetMapping(value = "/dg2", produces = "application/json")
+	public ResponseEntity<String> fetchAllEtudiantDG2(@RequestHeader Map<String, String> headers) {
+		String userDG2 = headers.get("x-auth-token");
+		String[] splitUserDG2String = userDG2.split(":");
+
+		try{
+			etudiantService.fetchAllEtudiantDG2(splitUserDG2String[0], splitUserDG2String[1]);
+			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
+		} catch(Exception e){
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body
+					("Error while fetching data from the webservice DG2");
+		}
+	}
 }

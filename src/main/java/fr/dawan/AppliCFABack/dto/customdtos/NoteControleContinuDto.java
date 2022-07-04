@@ -1,12 +1,13 @@
 package fr.dawan.AppliCFABack.dto.customdtos;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class NoteControleContinuDto {
     private long id;
     private double noteObtenue;
     private String examen;
-    private String promotion;
+    private Set<String> promotions;
     private LocalDate date;
     private long etudiantId;
 
@@ -34,12 +35,12 @@ public class NoteControleContinuDto {
         this.examen = examen;
     }
 
-    public String getPromotion() {
-        return promotion;
+    public Set<String> getPromotions() {
+        return promotions;
     }
 
-    public void setPromotion(String promotion) {
-        this.promotion = promotion;
+    public void setPromotions(Set<String> promotions) {
+        this.promotions = promotions;
     }
 
     public LocalDate getDate() {

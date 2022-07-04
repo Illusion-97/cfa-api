@@ -5,14 +5,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -171,6 +174,23 @@ public class ExamenController {
 	@GetMapping(value = "/livret-evaluation/{id}", produces = "application/json")
 	public List<LivretEvaluationDto> getLivretEvaluation(@PathVariable("id") long id) {
 		return examenService.getLivretEvaluation(id);
+	}
+
+	@GetMapping(value = "/bulletin-etudiant/{etudiantId}/{promotionId}", produces = "application/octet-stream")
+	public ResponseEntity<Resource> generateBulletinByStudentAndPromo(@PathVariable("etudiantId") long etudiantId, @PathVariable("promotionId") long promotionId) throws Exception {
+		String outputhPdfPath = examenService.generateBulletinPdfByStudentAndPromo(etudiantId, promotionId);
+
+		File f = new File(outputhPdfPath);
+		Path path = Paths.get(f.getAbsolutePath());
+		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=bulletinEtudiant" + etudiantId + "-promo" + promotionId + ".pdf");
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		headers.add("Expires", "0");
+
+		return ResponseEntity.ok().headers(headers).contentLength(f.length())
+				.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 	}
 
 }
