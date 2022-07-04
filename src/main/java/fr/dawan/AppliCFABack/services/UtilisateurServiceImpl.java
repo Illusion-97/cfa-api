@@ -298,7 +298,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Boolean isEtudiant = false;
 		Boolean isFormateur = false;
 		Boolean isCEF = false;
-		Boolean isMaitreApprentissage = false;
+		Boolean isPrestataireExterne = false;
 		if (user.getRoles() != null) {
 
 			for (UtilisateurRole role : user.getRoles()) {
@@ -311,8 +311,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				if (role.getIntitule().equals("CEF")) {
 					isCEF = true;
 				}
-				if (role.getIntitule().equals("MAITREAPPRENTISSAGE")) {
-					isMaitreApprentissage = true;
+				if (role.getIntitule().equals("PRESTATAIREEXTERNE")) {
+					isPrestataireExterne = true;
 				}
 			}
 		}
@@ -345,13 +345,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			cef = cefRepository.saveAndFlush(cef);
 		}
-		if (isMaitreApprentissage && user.getMaitreApprentissage() == null) {
-			MaitreApprentissage MaApp = new MaitreApprentissage();
-			MaApp = maitreApprentissageRepository.saveAndFlush(MaApp);
-			user.setMaitreApprentissage(MaApp);
-			MaApp.setUtilisateur(user);
-
-			MaApp = maitreApprentissageRepository.saveAndFlush(MaApp);
+		if (isPrestataireExterne ) {
+			Utilisateur UserExterne = new Utilisateur();
+			UserExterne = utilisateurRepository.saveAndFlush(user);
+		
 		}
 
 		// Si on supprime un role
@@ -385,17 +382,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			// On delete l'etudiant ?
 //			cefService.deleteById(cef.getId());	
 		}
-		if (!isMaitreApprentissage && user.getMaitreApprentissage() != null) {
-			MaitreApprentissage maitreApprentissage = maitreApprentissageRepository
-					.getOne(user.getMaitreApprentissage().getUtilisateur().getId());
-			maitreApprentissage.setUtilisateur(null);
-			user.setMaitreApprentissage(null);
 
-			maitreApprentissage = maitreApprentissageRepository.saveAndFlush(maitreApprentissage);
-
-			// On delete l'etudiant ?
-//			maitreApprentissageService.deleteById(maitreApprentissage.getId());	
-		}
 
 		user = utilisateurRepository.saveAndFlush(user);
 
@@ -408,8 +395,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		result.setEtudiantDto(mapper.EtudiantToEtudiantDto(user.getEtudiant()));
 		result.setFormateurDto(mapper.FormateurToFormateurDto(user.getFormateur()));
 		result.setCefDto(mapper.CEFToCEFDto(user.getCef()));
-		result.setMaitreApprentissageDto(
-				mapper.MaitreApprentissageToMaitreApprentissageDto(user.getMaitreApprentissage()));
 
 		return result;
 	}
@@ -446,14 +431,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 //    		cefRepository.save(cef);
 			cefRepository.delete(cef);
 		}
-		if (utilisateur.getMaitreApprentissage() != null) {
-			MaitreApprentissage maitreApprentissage = maitreApprentissageRepository
-					.getOne(utilisateur.getMaitreApprentissage().getId());
-			maitreApprentissage.setUtilisateur(null);
-			utilisateur.setMaitreApprentissage(null);
-//    		maitreApprentissageRepository.save(maitreApprentissage);
-			maitreApprentissageRepository.delete(maitreApprentissage);
-		}
+//		if (utilisateur.getMaitreApprentissage() != null) {
+//			MaitreApprentissage maitreApprentissage = maitreApprentissageRepository
+//					.getOne(utilisateur.getMaitreApprentissage().getId());
+//			maitreApprentissage.setUtilisateur(null);
+//			utilisateur.setMaitreApprentissage(null);
+////    		maitreApprentissageRepository.save(maitreApprentissage);
+//			maitreApprentissageRepository.delete(maitreApprentissage);
+//		}
 
 		utilisateurRepository.deleteById(id);
 

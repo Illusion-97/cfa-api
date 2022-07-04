@@ -11,8 +11,6 @@ import javax.persistence.ManyToOne;
  * 
  * @author Feres BG Valentin C.
  * @see LivretEvaluation,ActiviteType,CompetenceProfessionnelle,Intervention
- * @see CompetenceProfessionnelle
- * @see Cursus
  * @since 1.0
  * @version 1.0
  */

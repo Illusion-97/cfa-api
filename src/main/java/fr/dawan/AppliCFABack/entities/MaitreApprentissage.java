@@ -5,37 +5,49 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+/***
+ * 
+ * @author Feres BG Valentin C.
+ * @see Etudiant,Utilisateur
+ * @since 1.0
+ * @version 1.0
+ */
 @SuppressWarnings("serial")
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"utilisateur_id", "etudiant_id" })  )
 public class MaitreApprentissage extends BaseEntity implements Serializable {
 
 	@ManyToOne
-	private Entreprise entreprise;
-	@OneToOne
+	private Etudiant etudiant;
+	@ManyToOne
 	private Utilisateur utilisateur;
-
-	public MaitreApprentissage() {
-		super();
+	
+	/**
+	 * @return le etudiant
+	 */
+	public Etudiant getEtudiant() {
+		return etudiant;
 	}
-
-	public MaitreApprentissage(Entreprise entreprise) {
-		super();
-		this.entreprise = entreprise;
+	/**
+	 * @param etudiant le etudiant à affecter
+	 
+	 */
+	public void setEtudiant(Etudiant etudiant) {
+		this.etudiant = etudiant;
 	}
-
-	public Entreprise getEntreprise() {
-		return entreprise;
-	}
-
-	public void setEntreprise(Entreprise entreprise) {
-		this.entreprise = entreprise;
-	}
-
+	/**
+	 * @return le utilisateur
+	 */
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}
-
+	/**
+	 * @param utilisateur le utilisateur à affecter
+	 
+	 */
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}

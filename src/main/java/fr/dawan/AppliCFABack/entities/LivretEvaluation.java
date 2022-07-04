@@ -8,15 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import fr.dawan.AppliCFABack.entities.Validation.Etat;
-
-
 /***
  * 
  * @author Feres BG Valentin C.
  * @see Cursus,CentreFormation,Etudiant,Formateur
- * @see CompetenceProfessionnelle
- * @see Cursus
  * @since 1.0
  * @version 1.0
  *
@@ -37,9 +32,9 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 
 	@OneToOne
 	private Validation validation;
-	
+
 	@Column(columnDefinition = "TEXT", nullable = false)
-	
+
 	private String observations;
 
 	@ManyToOne
@@ -56,7 +51,7 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 
 	/**
 	 * @param etudiant l' etudiant à affecter
-	 
+	 * 
 	 */
 	public void setEtudiant(Etudiant etudiant) {
 		this.etudiant = etudiant;
@@ -71,7 +66,7 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 
 	/**
 	 * @param titreProfessionnel le titreProfessionnel à affecter
-	 
+	 * 
 	 */
 	public void setTitreProfessionnel(Cursus titreProfessionnel) {
 		this.titreProfessionnel = titreProfessionnel;
@@ -86,7 +81,7 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 
 	/**
 	 * @param organismeFormation l' organismeFormation à affecter
-	 
+	 * 
 	 */
 	public void setOrganismeFormation(CentreFormation organismeFormation) {
 		this.organismeFormation = organismeFormation;
@@ -101,7 +96,7 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 
 	/**
 	 * @param observations le observations à affecter
-	 
+	 * 
 	 */
 	public void setObservations(String observations) {
 		this.observations = observations;
@@ -116,7 +111,7 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 
 	/**
 	 * @param formateurEvaluateur le formateurEvaluateur à affecter
-	 
+	 * 
 	 */
 	public void setFormateurEvaluateur(Formateur formateurEvaluateur) {
 		this.formateurEvaluateur = formateurEvaluateur;
@@ -131,7 +126,7 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 
 	/**
 	 * @param dateSignature le dateSignature à affecter
-	 
+	 * 
 	 */
 	public void setDateSignature(LocalDate dateSignature) {
 		this.dateSignature = dateSignature;
@@ -146,11 +141,10 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 
 	/**
 	 * @param validation le validation à affecter
-	 
+	 * 
 	 */
 	public void setValidation(Validation validation) {
 		this.validation = validation;
 	}
-
 
 }
