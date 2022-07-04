@@ -69,7 +69,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-06-24T16:09:59+0200",
+    date = "2022-06-28T17:25:29+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -117,7 +117,6 @@ public class DtoMapperImpl implements DtoMapper {
         adresseDto.setId( adresse.getId() );
         adresseDto.setVersion( adresse.getVersion() );
         adresseDto.setCodePostal( adresse.getCodePostal() );
-        adresseDto.setIdDg2( adresse.getIdDg2() );
         adresseDto.setLibelle( adresse.getLibelle() );
         adresseDto.setVille( adresse.getVille() );
 
@@ -743,12 +742,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExperienceProfessionnelleDto experienceProfessionnelleDto = new ExperienceProfessionnelleDto();
 
+        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
+        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
         experienceProfessionnelleDto.setCollaborateur( experienceProfessionnelle.getCollaborateur() );
         experienceProfessionnelleDto.setContexte( experienceProfessionnelle.getContexte() );
-        experienceProfessionnelleDto.setId( experienceProfessionnelle.getId() );
         experienceProfessionnelleDto.setInformation( experienceProfessionnelle.getInformation() );
-        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
-        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
+        experienceProfessionnelleDto.setId( experienceProfessionnelle.getId() );
         experienceProfessionnelleDto.setVersion( experienceProfessionnelle.getVersion() );
 
         return experienceProfessionnelleDto;

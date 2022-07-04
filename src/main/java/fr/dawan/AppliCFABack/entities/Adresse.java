@@ -10,8 +10,7 @@ import javax.persistence.Entity;
 public class Adresse extends BaseEntity implements Serializable {
 
 
-	@Column(nullable = true) // id dans dg2
-	private long idDg2;
+
 	
 	@Column(nullable = false, length = 255)
 	private String libelle;
@@ -50,20 +49,7 @@ public class Adresse extends BaseEntity implements Serializable {
 		this.codePostal = codePostal;
 	}
 
-	/**
-	 * @return le idDg2
-	 */
-	public long getIdDg2() {
-		return idDg2;
-	}
 
-	/**
-	 * @param idDg2 le idDg2 à affecter
-	 
-	 */
-	public void setIdDg2(long idDg2) {
-		this.idDg2 = idDg2;
-	}
 	
 
 }
