@@ -37,8 +37,8 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@ManyToMany
 	private List<UtilisateurRole> roles;
 
-//	@ManyToOne
-//	private Entreprise entreprise;
+	@ManyToOne
+	private Entreprise entreprise;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Etudiant etudiant;
@@ -46,8 +46,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	private Formateur formateur;
 	@OneToOne
 	private CEF cef;
-	@OneToOne
-	private MaitreApprentissage maitreApprentissage;
+
 
 	public Utilisateur() {
 		super();
@@ -101,13 +100,6 @@ public class Utilisateur extends BaseEntity implements Serializable {
 		this.roles = roles;
 	}
 
-//	public Entreprise getEntreprise() {
-//		return entreprise;
-//	}
-//
-//	public void setEntreprise(Entreprise entreprise) {
-//		this.entreprise = entreprise;
-//	}
 
 	public String getCivilite() {
 		return civilite;
@@ -157,12 +149,20 @@ public class Utilisateur extends BaseEntity implements Serializable {
 		this.cef = cef;
 	}
 
-	public MaitreApprentissage getMaitreApprentissage() {
-		return maitreApprentissage;
+	/**
+	 * @return le entreprise
+	 */
+	public Entreprise getEntreprise() {
+		return entreprise;
 	}
 
-	public void setMaitreApprentissage(MaitreApprentissage maitreApprentissage) {
-		this.maitreApprentissage = maitreApprentissage;
+	/**
+	 * @param entreprise le entreprise à affecter
+	 
+	 */
+	public void setEntreprise(Entreprise entreprise) {
+		this.entreprise = entreprise;
 	}
+
 
 }

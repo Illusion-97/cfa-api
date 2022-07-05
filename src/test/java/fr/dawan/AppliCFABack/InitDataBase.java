@@ -501,7 +501,7 @@ public class InitDataBase {
 		monFormateur.setFormateur(formateur);
 		
 		mApprentissage.setUtilisateur(monFormateur);
-		monFormateur.setMaitreApprentissage(mApprentissage);
+		//monFormateur.setMaitreApprentissage(mApprentissage);
 
 		formateur.setInterventions(lstInterventions);
 		formateur.setUtilisateur(monFormateur);

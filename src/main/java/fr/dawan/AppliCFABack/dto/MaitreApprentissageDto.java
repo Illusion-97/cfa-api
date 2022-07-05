@@ -4,48 +4,47 @@ import java.io.Serializable;
 
 /**
  * 
- * 
+ * @author Valentin C, Feres BG.
  * @see fr.dawan.appliCFABack.dto
  * @since 1.0
- * @version 1.0
+ * @version 2.0
  * @return DTO-maitre apprentissage Entity
  */
 @SuppressWarnings("serial")
 public class MaitreApprentissageDto extends BaseEntityDto implements Serializable {
 
-	private EntrepriseDto entrepriseDto;
-	private UtilisateurDto utilisateurDto;
+	private long etudiantId;
 
-	public MaitreApprentissageDto() {
-		super();
+	private long utilisateurId;
+
+	/**
+	 * @return le etudiantId
+	 */
+	public long getEtudiantId() {
+		return etudiantId;
 	}
 
 	/**
-	 * @return the entrepriseDto
+	 * @param etudiantId le etudiantId à affecter
+	 * 
 	 */
-	public EntrepriseDto getEntrepriseDto() {
-		return entrepriseDto;
+	public void setEtudiantId(long etudiantId) {
+		this.etudiantId = etudiantId;
 	}
 
 	/**
-	 * @param entrepriseDto the entrepriseDto to set
+	 * @return le utilisateurId
 	 */
-	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
-		this.entrepriseDto = entrepriseDto;
+	public long getUtilisateurId() {
+		return utilisateurId;
 	}
 
 	/**
-	 * @return the utilisateurDto
+	 * @param utilisateurId le utilisateurId à affecter
+	 * 
 	 */
-	public UtilisateurDto getUtilisateurDto() {
-		return utilisateurDto;
+	public void setUtilisateurId(long utilisateurId) {
+		this.utilisateurId = utilisateurId;
 	}
 
-	/**
-	 * @param utilisateurDto the utilisateurDto to set
-	 */
-	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
-		this.utilisateurDto = utilisateurDto;
-	}
-
-	}
+}
