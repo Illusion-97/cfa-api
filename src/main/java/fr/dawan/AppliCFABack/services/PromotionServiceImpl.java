@@ -358,14 +358,21 @@ public class PromotionServiceImpl implements PromotionService {
 	 * 			- dates de début et de fin de la promotion
 	 * 			- plannings de l'étudiant par rapport à ses promotions
 	 */
+//	@Override
+//	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id){
+//		List<PromotionEtudiantDto> result = new ArrayList<>();
+//		List<Promotion> promotions = promoRepo.getByEtudiantId(id);
+//		for(Promotion p : promotions){
+//			result.add(DtoTools.convert(p, PromotionEtudiantDto.class));
+//		}
+//		return result;
+//	}
+
 	@Override
-	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id){
-		List<PromotionEtudiantDto> result = new ArrayList<>();
+	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id) {
 		List<Promotion> promotions = promoRepo.getByEtudiantId(id);
-		for(Promotion p : promotions){
-			result.add(DtoTools.convert(p, PromotionEtudiantDto.class));
-		}
-		return result;
+
+		return promotions.stream().map(p -> mapperTools.PromotionToPromotionEtudiantDto(p)).collect(Collectors.toList());
 	}
 
 	/**

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
@@ -55,6 +56,11 @@ public class AppliCfaBackApplication {
 			public void addInterceptors(InterceptorRegistry registry) {
 				//registry.addInterceptor(tokenInterceptor);
 
+			}
+
+			@Override
+			public void addResourceHandlers(ResourceHandlerRegistry registry){
+				registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
 			}
 
 		};

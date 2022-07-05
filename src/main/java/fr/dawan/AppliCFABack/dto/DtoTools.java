@@ -1,5 +1,8 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.Converter;

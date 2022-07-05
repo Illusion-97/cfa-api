@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="${backendUrl}src/main/resources/static.css/bulletineval.css" />
+    <link rel="stylesheet" href="static.css" />
 </head>
 <body>
 <img class="logo" src="../templates/../pictures/institutionnel-logo.png" alt="Logo Dawan">
@@ -10,11 +10,14 @@ Bulletin d’évaluation (fixe)
 
 ${titrePro}
 <br />
-Nom : ${etudiant.utilisateur.nom}
-<br />
-Prénom : ${etudiant.utilisateur.prenom}
-<br />
-Année d'étude : ${promoAnnee}
+<div class="redColor">
+    <p class="redColor">Nom : ${etudiant.utilisateur.nom}</p>
+    <br />
+    Prénom : ${etudiant.utilisateur.prenom}
+    <br />
+    Année d'étude : ${promoAnnee}
+</div>
+
 
 <br />Filière : Informatique
 <br />

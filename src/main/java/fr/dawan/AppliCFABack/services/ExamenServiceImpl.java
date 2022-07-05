@@ -297,7 +297,7 @@ public class ExamenServiceImpl implements ExamenService {
 		Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
 		if (etuOpt.isPresent()) {
 			freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
-			Template template = freemarkerConfig.getTemplate("bulletineval.ftl");
+			Template template = freemarkerConfig.getTemplate("BulletinEval.ftl");
 
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("backendUrl", backendUrl);
