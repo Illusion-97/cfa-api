@@ -190,4 +190,20 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 				&& Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
 				&& Objects.equals(nom, other.nom);
 	}
+
+	@Override
+	public String toString() {
+		return "Promotion{" +
+				"nom='" + nom + '\'' +
+				", dateDebut=" + dateDebut +
+				", dateFin=" + dateFin +
+				", cef=" + cef +
+				", etudiants=" + etudiants +
+				", interventions=" + interventions +
+				", centreFormation=" + centreFormation +
+				", referentPedagogique=" + referentPedagogique +
+				", cursus=" + cursus +
+				", examens=" + examens +
+				'}';
+	}
 }

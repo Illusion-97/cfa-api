@@ -1,57 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="static.css" />
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="${backendUrl}css/bulletinEval.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+
 </head>
 <body>
-<img class="logo" src="../templates/../pictures/institutionnel-logo.png" alt="Logo Dawan">
-Bulletin d’évaluation (fixe)
-
-${titrePro}
-<br />
-<div class="redColor">
-    <p class="redColor">Nom : ${etudiant.utilisateur.nom}</p>
-    <br />
-    Prénom : ${etudiant.utilisateur.prenom}
-    <br />
-    Année d'étude : ${promoAnnee}
-</div>
-
-
-<br />Filière : Informatique
-<br />
-Pied de page
-<br />
-pageBreak
-<br />
-Logo Dawan
-<br />
-<h2 class="red">CONTROLE CONTINU</h2>
-
-<table border="1">
-    <tr>
-        <th>Bloc de compétences</th>
-        <th>Moyenne de l'étudiant</th>
-        <th>Moyenne de la promotion</th>
-    </tr>
-    <#list evalList as evalByBloc>
+<div class="mainDiv">
+    <div class="divLogo">
+        <img class="logo" src="${backendUrl}pictures/institutionnel-logo.png" alt="Logo Dawan">
+    </div>
+    <h1>Bulletin d'évaluation</h1>
+    <h4>${titrePro}</h4>
+    <ul>
+        <li>${etudiant.utilisateur.prenom} ${etudiant.utilisateur.nom}</li>
+        <li>Année d'étude : ${promoAnnee}</li>
+    </ul>
+    <h2 id="red">Contrôle continu</h2>
+    <table>
         <tr>
-            <td>
-                ${evalByBloc.activiteType.libelle}
-            </td>
-            <td>${evalByBloc.moyenne?string["0.##"]}</td>
-            <td>${evalByBloc.moyennePromo?string["0.##"]}</td>
+            <th>Bloc de compétences</th>
+            <th>Moyenne de l'étudiant</th>
+            <th>Moyenne de la promotion</th>
         </tr>
-    </#list>
-</table>
-Moyenne générale de l'étudiant :	${moyEtudiant?string["0.##"]}
-<br />
-Moyenne générale de la promotion : 	${moyPromo?string["0.##"]}
-
-piedPage
-
-
+        <#list evalList as evalByBloc>
+            <tr>
+                <td class="tdLibelle">
+                    ${evalByBloc.activiteType.libelle}
+                </td>
+                <td>${evalByBloc.moyenne?string["0.##"]}</td>
+                <td>${evalByBloc.moyennePromo?string["0.##"]}</td>
+            </tr>
+        </#list>
+    </table>
+    <ul class="ulMoyenne">
+        <li class="liMoyenne">Moyenne générale de l'étudiant : ${moyEtudiant?string["0.##"]}/20</li>
+        <li>Moyenne générale de la promotion : ${moyPromo?string["0.##"]}/20</li>
+    </ul>
+</div>
 </body>
 </html>
 
