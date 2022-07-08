@@ -309,7 +309,8 @@ public class ExamenServiceImpl implements ExamenService {
 			if (promoOpt.isPresent()) {
 				Promotion promo = promoOpt.get();
 				model.put("promo", promo);
-				model.put("promoAnnee", promo.getDateDebut().getYear());
+				String promoAnnee = String.valueOf(promo.getDateDebut().getYear()).trim();
+				model.put("promoAnnee", promoAnnee);
 				model.put("titrePro", promo.getCursus().getTitre());
 
 				List<ActiviteType> activiteTypes = activiteTypeRepository
