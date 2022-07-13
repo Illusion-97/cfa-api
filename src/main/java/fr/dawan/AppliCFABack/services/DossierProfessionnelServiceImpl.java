@@ -1,9 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -14,13 +11,19 @@ import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.entities.*;
 import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.ExperienceProfessionnelleRepository;
+import fr.dawan.AppliCFABack.tools.PdfTools;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 @Service
 @Transactional
@@ -39,6 +42,18 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Autowired
     private CompetenceProfessionnelleRepository competenceProfessionnelleRepository;
+
+    @Autowired
+    private EtudiantRepository etudiantRepository;
+
+    @Autowired
+    private Configuration freemarkerConfig;
+
+    @Value("${backend.url}")
+    private String backendUrl;
+
+    @Value("src/main/resources/files/bulletinsEvaluations")
+    private String storageFolder;
 
     /**
      * Récupération de la liste des dossiers professionnes
@@ -192,6 +207,27 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         return lstDossierProfessionnelDto;
     }
 
+    @Override
+    public String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws Exception {
+        Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
+        if(etuOpt.isPresent()) {
+            freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+
+            Template template = freemarkerConfig.getTemplate("DossierPro.ftl");
+
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("backendUrl", backendUrl);
+
+            String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+
+            String outputPdf = storageFolder + "/dossier-" + etudiantId + "-pro-" + promotionId + ".pdf";
+
+            PdfTools.generatePdfFromHtml(outputPdf, htmlContent);
+
+            return outputPdf;
+        }
+        return null;
+    }
 
 
 }

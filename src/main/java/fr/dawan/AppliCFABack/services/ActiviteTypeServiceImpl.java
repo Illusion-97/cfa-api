@@ -146,4 +146,23 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 		return activiteTypeDto;
 	}
 
+	@Override
+	public List<ActiviteTypeDto> getAllActiviteTypesByCursus(long id) {
+
+		List<ActiviteType> activiteTypes = activiteTypeRepo.getActiviteTypesByCursus(id);
+		List<ActiviteTypeDto> activiteTypeDto = new ArrayList<ActiviteTypeDto>();
+		for (ActiviteType activiteType : activiteTypes) {
+
+			ActiviteTypeDto atDto = mapper.ActiviteTypeToActiviteDto(activiteType);
+			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<CompetenceProfessionnelleDto>();
+
+			for (CompetenceProfessionnelle cp : activiteType.getCompetenceProfessionnelles()) {
+				cpDto.add(mapper.CompetenceProfessionnelleToCompetenceProfessionnelleDto(cp));
+				atDto.setCompetenceProfessionnellesDto(cpDto);
+			}
+			activiteTypeDto.add(atDto);
+		}
+		return activiteTypeDto;
+	}
+
 }
