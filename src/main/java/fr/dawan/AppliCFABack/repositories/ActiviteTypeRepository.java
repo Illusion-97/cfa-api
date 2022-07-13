@@ -26,4 +26,9 @@ public interface ActiviteTypeRepository extends JpaRepository<ActiviteType, Long
 	List<ActiviteType> getActiviteTypesByPromotionId(@Param("id") long id);
 
 	List<ActiviteType> findAllByCursusActiviteTypeId(long id);
+
+	@Query(nativeQuery = true, value = "SELECT * \r\n"
+			+ "FROM activite_type \r\n"
+			+ "WHERE activite_type.cursus_activite_type_id = :id")
+	List<ActiviteType> getActiviteTypesByCursus(@Param("id") long id);
 }

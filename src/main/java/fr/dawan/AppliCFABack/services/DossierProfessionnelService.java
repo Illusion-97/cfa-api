@@ -25,4 +25,5 @@ public interface DossierProfessionnelService {
 
 	List<DossierProEtudiantDto> getAllDossierProfessionnel();
 
+    String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws Exception;
 }

@@ -97,4 +97,9 @@ public class ActiviteTypeController {
 		}
 
 	}
+
+	@GetMapping(value = "/cursus/{id}", produces = "application/json")
+	List<ActiviteTypeDto> getAllByCursus(@PathVariable("id") long id) {
+		return activiteTypeService.getAllActiviteTypesByCursus(id);
+	}
 }
