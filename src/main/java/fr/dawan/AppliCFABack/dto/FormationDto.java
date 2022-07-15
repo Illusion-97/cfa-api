@@ -3,6 +3,9 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Lob;
+
 /**
  * 
  * 
@@ -15,7 +18,12 @@ import java.util.List;
 public class FormationDto extends BaseEntityDto implements Serializable {
 
 	private String titre;
-	private String contenu;
+	private long idDg2;
+	private String slug;
+	private String duration;
+	private String objectif;
+	private String prerequis;
+	private String plan;
 	private List<CursusDto> cursusLstDto;
 
 	public FormationDto() {
@@ -37,20 +45,6 @@ public class FormationDto extends BaseEntityDto implements Serializable {
 	}
 
 	/**
-	 * @return the contenu
-	 */
-	public String getContenu() {
-		return contenu;
-	}
-
-	/**
-	 * @param contenu the contenu to set
-	 */
-	public void setContenu(String contenu) {
-		this.contenu = contenu;
-	}
-
-	/**
 	 * @return the cursusLstDto
 	 */
 	public List<CursusDto> getCursusLstDto() {
@@ -63,5 +57,54 @@ public class FormationDto extends BaseEntityDto implements Serializable {
 	public void setCursusLstDto(List<CursusDto> cursusLstDto) {
 		this.cursusLstDto = cursusLstDto;
 	}
+
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
+	}
+
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+	public String getObjectif() {
+		return objectif;
+	}
+
+	public void setObjectif(String objectif) {
+		this.objectif = objectif;
+	}
+
+	public String getPrerequis() {
+		return prerequis;
+	}
+
+	public void setPrerequis(String prerequis) {
+		this.prerequis = prerequis;
+	}
+
+	public String getPlan() {
+		return plan;
+	}
+
+	public void setPlan(String plan) {
+		this.plan = plan;
+	}
+	
 
 }

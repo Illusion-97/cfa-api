@@ -39,6 +39,7 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
@@ -169,12 +170,12 @@ public interface DtoMapper {
 	CompetenceProfessionnelleDto CompetenceProfessionnelleToCompetenceProfessionnelleDto(
 			CompetenceProfessionnelle competenceProfessionnelle);
 
-//	@Mapping(target = "contenu", ignore = true)
-//	@Mapping(target = "cursusLst", ignore = true)
-//	@Mapping(source = "id", target = "idDg2")
-//	@Mapping(source = "title", target = "titre")
-//	@Mapping(source = "duration", target = "duration")
-//	Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
+	@Mapping(target = "cursusLst", ignore = true)
+	@Mapping(source = "id", target = "idDg2")
+	@Mapping(source = "title", target = "titre")
+	@Mapping(source = "objectives", target = "objectif")
+	@Mapping(source = "prerequisites", target = "prerequis")
+	Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
 
 	@Mapping(target = "activiteTypes", ignore = true)
 	@Mapping(target = "description", ignore = true)
@@ -211,4 +212,8 @@ public interface DtoMapper {
 	@Mapping(target = "dossierProfessionnel", ignore = true)
 	@Mapping(target = "dossierProjet", ignore = true)
     Etudiant etudiantUtilisateurDG2DtoToEtudiant(EtudiantUtilisateurDG2Dto eDG2);
+	
+//	@Mapping(source = ".", target = ".")
+//	@Mapping(source = "cursus", target = "cursusDescription")
+//	PromotionEtudiantDto PromotionToPromotionEtudiantDto(Promotion promotion);
 }

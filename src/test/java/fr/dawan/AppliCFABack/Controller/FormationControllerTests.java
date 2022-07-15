@@ -86,7 +86,7 @@ public class FormationControllerTests {
 		try {
 			FormationDto eToInsert = new FormationDto();
 			eToInsert.setTitre("titre save");
-			eToInsert.setContenu("contenu save");
+			//eToInsert.setContenu("contenu save");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(eToInsert);
@@ -110,7 +110,7 @@ public class FormationControllerTests {
 		try {
 			FormationDto fDto = formationController.getById(idFormation+1);
 			fDto.setTitre("titre update");
-			fDto.setContenu("contenu update");
+			//fDto.setContenu("contenu update");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(fDto);
@@ -123,7 +123,7 @@ public class FormationControllerTests {
 			FormationDto res = objectMapper.readValue(jsonReponse, FormationDto.class);
 			assertEquals(res.getId(), fDto.getId());
 			assertEquals(res.getTitre(),fDto.getTitre());
-			assertEquals(res.getContenu(),fDto.getContenu());
+			//assertEquals(res.getContenu(),fDto.getContenu());
 
 		} catch (Exception e) {
 			fail(e.getMessage());

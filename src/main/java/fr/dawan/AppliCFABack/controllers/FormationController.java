@@ -164,5 +164,20 @@ public class FormationController {
 					.body("Error while fetching data from the webservice DG2");
 		}
 	}
+	
+	@GetMapping(value="/dg2test", produces="application/json")
+	public ResponseEntity<String> fetchAllDG22(@RequestHeader Map<String, String> headers) {
+		String userDG2 = headers.get("x-auth-token");
+		String[] splitUser = userDG2.split(":");
+			
+		try {
+			formationService.fetchDG2Formations2(splitUser[0], splitUser[1]);
+			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Formations updated !");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error while fetching data from the webservice DG2");
+		}
+	}
 }
 

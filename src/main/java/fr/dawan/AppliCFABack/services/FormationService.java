@@ -23,4 +23,6 @@ public interface FormationService {
 
 	int fetchDG2Formations(String email, String password) throws Exception;
 
+	void fetchDG2Formations2(String email, String password) throws Exception;
+
 }

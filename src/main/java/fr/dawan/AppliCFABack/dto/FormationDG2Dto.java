@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class FormationDG2Dto extends BaseEntityDto implements Serializable {
 	private long id;
 	private String title;
-	private double duration;
+	private String duration;
 	private String slug;
 	private String objectives;
 	private String prerequisites;
@@ -43,7 +43,7 @@ public class FormationDG2Dto extends BaseEntityDto implements Serializable {
 	/**
 	 * @return le duration
 	 */
-	public double getDuration() {
+	public String getDuration() {
 		return duration;
 	}
 
@@ -51,7 +51,7 @@ public class FormationDG2Dto extends BaseEntityDto implements Serializable {
 	 * @param duration le duration à affecter
 	 
 	 */
-	public void setDuration(double duration) {
+	public void setDuration(String duration) {
 		this.duration = duration;
 	}
 
