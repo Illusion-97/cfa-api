@@ -42,7 +42,9 @@ public interface PromotionService {
 	
 	List<PromotionForSelectDto> getPromotionByInterventionIdForSelect(long idIntervention);
 	
-	int fetchDGPromotion(String email, String password) throws Exception;
+	int fetchDGPromotions(String email, String password) throws Exception;
+	int fetchDGPromotions(String email, String password, long idCursusDg2) throws Exception;
+
 	
 	List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursis) throws Exception;
 

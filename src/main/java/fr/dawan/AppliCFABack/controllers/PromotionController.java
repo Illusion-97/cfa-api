@@ -34,6 +34,7 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.PromotionForSelectDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
+import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.services.FileService;
 import fr.dawan.AppliCFABack.services.PromotionService;
 
@@ -141,13 +142,22 @@ public class PromotionController {
 	public List<PromotionForSelectDto> getPromotionsByInterventionIdForSelect(@PathVariable("idIntervention") long idIntervention ){
 		return promoService.getPromotionByInterventionIdForSelect(idIntervention);
 	}
-	@GetMapping(value = "/dg2", produces="application/json")
-	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers){
+	@GetMapping(value = {"/dg2" ,"/dg2/{idCursusDg2}" }, produces="application/json")
+	public ResponseEntity<String> fetchAllDG2(@PathVariable("idCursusDg2") Optional<Long> idCursusDg2, @RequestHeader Map<String, String> headers){
 		String userDG2 = headers.get("x-auth-token");
 		String[] splitUser = userDG2.split(":");
 		
 		try {
-			int nb = promoService.fetchDGPromotion(splitUser[0], splitUser[1]);
+			int nb = 0;
+			if (idCursusDg2.isPresent()) {
+				
+				nb= promoService.fetchDGPromotions(splitUser[0], splitUser[1],idCursusDg2.get());
+				
+			}
+			else {
+				 nb = promoService.fetchDGPromotions(splitUser[0], splitUser[1]);
+
+			}
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Promotions updated :" +nb);
 		} catch (Exception e) {
 			e.printStackTrace();
