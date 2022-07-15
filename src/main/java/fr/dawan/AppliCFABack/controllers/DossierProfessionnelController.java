@@ -1,5 +1,9 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +12,11 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.customdtos.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -123,5 +131,21 @@ public class DossierProfessionnelController {
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "application/json", produces = "application/json")
 	public DossierProEtudiantDto updateDossierProfessionnel(@PathVariable("id") long id, @RequestBody DossierProEtudiantDto dpDto) {
 		return dossierProService.saveOrUpdateDossierProfessionnel(dpDto, id);
+	}
+
+	@GetMapping(value="/dossier-professionnel/{etudiantId}/{promotionId}", produces="application/octet-stream")
+	public ResponseEntity<Resource> generateDossierProByStudentAndPromo(@PathVariable("etudiantId") long etudiantId, @PathVariable("promotionId") long promotionId) throws Exception {
+		String outputpdfPath = dossierProService.generateDossierProByStudentAndPromo(etudiantId, promotionId);
+
+		File f = new File(outputpdfPath);
+		Path path = Paths.get(f.getAbsolutePath());
+		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + etudiantId + "-promo" + promotionId + ".pdf");
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		headers.add("Expires","0");
+
+		return ResponseEntity.ok().headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 	}
 }

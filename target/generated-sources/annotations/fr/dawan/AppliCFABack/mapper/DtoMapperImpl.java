@@ -71,7 +71,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-07-15T11:11:48+0200",
+    date = "2022-07-15T11:27:00+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -186,11 +186,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         cursusDto.setId( cursus.getId() );
         cursusDto.setVersion( cursus.getVersion() );
-        cursusDto.setTitre( cursus.getTitre() );
         cursusDto.setDescription( cursus.getDescription() );
         cursusDto.setDuree( cursus.getDuree() );
-        cursusDto.setSlug( cursus.getSlug() );
         cursusDto.setIdDg2( cursus.getIdDg2() );
+        cursusDto.setSlug( cursus.getSlug() );
+        cursusDto.setTitre( cursus.getTitre() );
 
         return cursusDto;
     }
@@ -291,13 +291,13 @@ public class DtoMapperImpl implements DtoMapper {
 
         formationDto.setId( formation.getId() );
         formationDto.setVersion( formation.getVersion() );
-        formationDto.setDuration( formation.getDuration() );
-        formationDto.setIdDg2( formation.getIdDg2() );
-        formationDto.setObjectif( formation.getObjectif() );
-        formationDto.setPlan( formation.getPlan() );
-        formationDto.setPrerequis( formation.getPrerequis() );
-        formationDto.setSlug( formation.getSlug() );
         formationDto.setTitre( formation.getTitre() );
+        formationDto.setIdDg2( formation.getIdDg2() );
+        formationDto.setSlug( formation.getSlug() );
+        formationDto.setDuration( formation.getDuration() );
+        formationDto.setObjectif( formation.getObjectif() );
+        formationDto.setPrerequis( formation.getPrerequis() );
+        formationDto.setPlan( formation.getPlan() );
 
         return formationDto;
     }
