@@ -392,7 +392,7 @@ public class PromotionServiceImpl implements PromotionService {
 	}
 
 	@Override
-	public int fetchDGPromotion(String email, String password) throws Exception {
+	public int fetchDGPromotions(String email, String password) throws Exception {
 		List<Cursus> cursus = new ArrayList<Cursus>();
 		List<Promotion> promoLst = new ArrayList<Promotion>();
 		cursus = cursusRepository.findAll();
@@ -404,6 +404,19 @@ public class PromotionServiceImpl implements PromotionService {
 				System.out.println(c.getId()+ "Liste non vide ");
 			}
 		}
+		for(Promotion p : promoLst) {
+			try {
+				promotionRepository.saveAndFlush(p);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return promoLst.size();
+	}
+	@Override
+	public int fetchDGPromotions(String email, String password, long idCursusDg2) throws Exception {
+		List<Promotion> promoLst = getPromotionDG2ByIdCursusDG2(email, password, idCursusDg2);
+		
 		for(Promotion p : promoLst) {
 			try {
 				promotionRepository.saveAndFlush(p);
@@ -444,14 +457,16 @@ public class PromotionServiceImpl implements PromotionService {
 				Promotion promotionDG2 = new Promotion();
 				try {
 					 promotionDG2 = dtoTools.PromotionOrInterventionDG2DtoToPromotion(pDtoDG2);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				Optional<CentreFormation> cfOpt = centreFormationRepository.findByIdDg2(pDtoDG2.getLocationId());
-				System.out.println(pDtoDG2.getId() + ":" +pDtoDG2.getLocationId());
-				if(cfOpt.isPresent()) {
-					promotionDG2.setCentreFormation(cfOpt.get());
-				}
+//				Optional<CentreFormation> cfOpt = centreFormationRepository.findByIdDg2(pDtoDG2.getLocationId());
+//				// valeur null centre de formation Id cause le problem
+//				System.out.println(">>>>>>>>>" + pDtoDG2.getId() + ":" +pDtoDG2.getLocationId());
+//				if(cfOpt.isPresent()) {
+//					promotionDG2.setCentreFormation(cfOpt.get());
+//				}
 				Optional<Cursus> cursusOpt = cursusRepository.findByIdDg2(pDtoDG2.getCourseId());
 				if(cursusOpt.isPresent()) {
 					promotionDG2.setCursus(cursusOpt.get());
@@ -527,6 +542,8 @@ public class PromotionServiceImpl implements PromotionService {
 
 		return outputPdf;
 	}
+
+
 
 
 }

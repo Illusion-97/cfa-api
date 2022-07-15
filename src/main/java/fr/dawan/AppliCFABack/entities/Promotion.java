@@ -186,7 +186,8 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 //		System.out.println(Objects.equals(dateFin, other.dateFin));
 //		System.out.println(Objects.equals(nom, other.nom));
 
-		return centreFormation.getIdDg2() == other.centreFormation.getIdDg2() && cursus.getIdDg2() == other.cursus.getIdDg2()
+		return centreFormation.getIdDg2() == other.centreFormation.getIdDg2() &&
+				cursus.getIdDg2() == other.cursus.getIdDg2()
 				&& Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
 				&& Objects.equals(nom, other.nom);
 	}
