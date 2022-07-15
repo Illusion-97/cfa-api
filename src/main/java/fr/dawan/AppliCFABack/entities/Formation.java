@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 
 @SuppressWarnings("serial")
@@ -18,16 +19,22 @@ public class Formation extends BaseEntity implements Serializable {
 	@Column(nullable = false)
 	private long idDg2;
 	
+	@Column(nullable = true)
 	private String slug;
 	
-	@Column(nullable = false)
-	private double duration;
+	@Column(nullable = true)
+	private String duration;
 	
+	@Lob
 	@Column(nullable = true)
 	private String objectif;
 	
+	@Lob
+	@Column(nullable = true)
 	private String prerequis;
 	
+	@Lob
+	@Column(nullable = true)
 	private String plan;
 	
 
@@ -44,6 +51,19 @@ public class Formation extends BaseEntity implements Serializable {
 		super();
 
 	}
+	
+	public Formation(String titre, long idDg2, String slug, String duration, String objectif, String prerequis,
+			String plan) {
+		super();
+		this.titre = titre;
+		this.idDg2 = idDg2;
+		this.slug = slug;
+		this.duration = duration;
+		this.objectif = objectif;
+		this.prerequis = prerequis;
+		this.plan = plan;
+	}
+
 
 	public void setTitre(String titre) {
 		this.titre = titre;
@@ -82,7 +102,7 @@ public class Formation extends BaseEntity implements Serializable {
 	/**
 	 * @return le duration
 	 */
-	public double getDuration() {
+	public String getDuration() {
 		return duration;
 	}
 
@@ -90,7 +110,7 @@ public class Formation extends BaseEntity implements Serializable {
 	 * @param duration le duration à affecter
 	 
 	 */
-	public void setDuration(double duration) {
+	public void setDuration(String duration) {
 		this.duration = duration;
 	}
 
@@ -154,9 +174,16 @@ public class Formation extends BaseEntity implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cursusLst == null) ? 0 : cursusLst.hashCode());
+		result = prime * result + ((duration == null) ? 0 : duration.hashCode());
+		result = prime * result + (int) (idDg2 ^ (idDg2 >>> 32));
+		result = prime * result + ((objectif == null) ? 0 : objectif.hashCode());
+		result = prime * result + ((plan == null) ? 0 : plan.hashCode());
+		result = prime * result + ((prerequis == null) ? 0 : prerequis.hashCode());
+		result = prime * result + ((slug == null) ? 0 : slug.hashCode());
 		result = prime * result + ((titre == null) ? 0 : titre.hashCode());
 		return result;
 	}
+	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -172,9 +199,39 @@ public class Formation extends BaseEntity implements Serializable {
 				return false;
 		} else if (!cursusLst.equals(other.cursusLst))
 			return false;
+		if (duration == null) {
+			if (other.duration != null)
+				return false;
+		} else if (!duration.equals(other.duration))
+			return false;
+		if (idDg2 != other.idDg2)
+			return false;
+		if (objectif == null) {
+			if (other.objectif != null)
+				return false;
+		} else if (!objectif.equals(other.objectif))
+			return false;
+		if (plan == null) {
+			if (other.plan != null)
+				return false;
+		} else if (!plan.equals(other.plan))
+			return false;
+		if (prerequis == null) {
+			if (other.prerequis != null)
+				return false;
+		} else if (!prerequis.equals(other.prerequis))
+			return false;
+		if (slug == null) {
+			if (other.slug != null)
+				return false;
+		} else if (!slug.equals(other.slug))
+			return false;
 		if (titre == null) {
-			return other.titre == null;
-		} else return titre.equals(other.titre);
+			if (other.titre != null)
+				return false;
+		} else if (!titre.equals(other.titre))
+			return false;
+		return true;
 	}
 
 
