@@ -111,7 +111,9 @@ public class PromotionServiceImpl implements PromotionService {
 		List<Promotion> lst = promoRepo.findAll();
 		List<PromotionDto> lstDto = new ArrayList<PromotionDto>();
 		for (Promotion promo : lst) {
-			lstDto.add(mapper.PromotionToPromotionDto(promo));
+			PromotionDto pDto = mapper.PromotionToPromotionDto(promo);
+			pDto.setCentreFormationDto(mapper.CentreFormationToCentreFormationDto(promo.getCentreFormation()));
+			lstDto.add(pDto);
 		}
 		return lstDto;
 	}
@@ -133,6 +135,7 @@ public class PromotionServiceImpl implements PromotionService {
 		pDto.setReferentPedagogiqueDto(mapper.UtilisateurToUtilisateurDto(promo.getReferentPedagogique()));
 		pDto.setCefDto(mapper.CEFToCEFDto(promo.getCef()));		
 		pDto.getCefDto().setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(promo.getCef().getUtilisateur()));
+		pDto.setCentreFormationDto(mapper.CentreFormationToCentreFormationDto(promo.getCentreFormation()));
 		
 		List<Etudiant> etudiants = promo.getEtudiants();
 		List<EtudiantDto> eDtos = new ArrayList<EtudiantDto>();	
