@@ -28,11 +28,20 @@ public class Utilisateur extends BaseEntity implements Serializable {
 
 	private LocalDate dateDeNaissance;
 
-	@Column(nullable = false, length = 255)
+	@Column(nullable = true, length = 255)
 	private String telephone;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Adresse adresse;
+	
+	@Column(nullable = true, length = 255)
+	private String address2;
+	
+	@Column(nullable = true, length = 255)
+	private String address3;
+	
+	@Column(nullable = true, length = 255)
+	private String country;
 
 	@ManyToMany
 	private List<UtilisateurRole> roles;
@@ -163,6 +172,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
+
 
 
 }

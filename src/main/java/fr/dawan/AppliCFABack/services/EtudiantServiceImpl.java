@@ -850,7 +850,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<EtudiantUtilisateurDG2Dto> cResJson;
 
-		URI url = new URI("https://dawan.org/api2/cfa/sessions/552228/registrations");
+		URI url = new URI("https://dawan.org/api2/cfa/sessions/603037/registrations"); // get all de l'id 603037 promotion et non pas de tous les étudiants
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
@@ -877,6 +877,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 						etudiant.getUtilisateur().setPrenom(eDG2.getFirstName());
 						etudiant.getUtilisateur().setNom(eDG2.getLastName());
 						etudiant.getUtilisateur().setLogin(eDG2.getEmail());
+						etudiant.getUtilisateur().setCivilite(eDG2.getHonorific());
+						etudiant.getUtilisateur().setTelephone(eDG2.getMobile());
 					}
 
 					//etudiantRepository.saveAndFlush(etudiant);
@@ -885,12 +887,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 					utilisateur.setPrenom(eDG2.getFirstName());
 					utilisateur.setNom(eDG2.getLastName());
 					utilisateur.setLogin(eDG2.getEmail());
-					utilisateur.setPassword("password");
+					utilisateur.setPassword("password");//hasher le mdp en base + demande modification du mdp avant la premiere connexion
 					utilisateur.setEtudiant(etudiant);
-					utilisateur.setCivilite("MR");
-					utilisateur.setAdresse(new Adresse("1 rue","ville","codePostal"));
+					utilisateur.setCivilite(eDG2.getHonorific());
+					utilisateur.setAdresse(new Adresse(eDG2.getStreet(),eDG2.getCity(),eDG2.getPostcode()));
 					utilisateur.setDateDeNaissance(LocalDate.of(1990,05,05));
-					utilisateur.setTelephone("0606060606");
+					utilisateur.setTelephone(eDG2.getMobile());
 					List<UtilisateurRole> roles = new ArrayList<>();
 					for (UtilisateurRole role : roles
 						 ) {

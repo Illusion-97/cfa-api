@@ -5,6 +5,7 @@ import fr.dawan.AppliCFABack.entities.Utilisateur;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class EtudiantUtilisateurDG2Dto implements Serializable {
     @JsonProperty(value = "registration_id")
     private long registrationId;
@@ -13,14 +14,27 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
 
     @JsonProperty(value = "person_id")
     private long personId;
+    
+    private String honorific;
 
     @JsonProperty(value = "first_name")
     private String firstName;
 
     @JsonProperty(value = "last_name")
     private String lastName;
+    
+    private String landline;
+    
+    private String mobile;
 
     private String email;
+    
+    private String street;
+    private String address2;
+    private String address3;
+    private String postcode;
+    private String city;
+    private String country;
 
     private Utilisateur utilisateur;
 
@@ -89,4 +103,78 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
     }
+
+	public String getHonorific() {
+		return honorific;
+	}
+
+	public void setHonorific(String honorific) {
+		this.honorific = honorific;
+	}
+
+	public String getLandline() {
+		return landline;
+	}
+
+	public void setLandline(String landline) {
+		this.landline = landline;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public String getAddress3() {
+		return address3;
+	}
+
+	public void setAddress3(String address3) {
+		this.address3 = address3;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+    
+    
 }
