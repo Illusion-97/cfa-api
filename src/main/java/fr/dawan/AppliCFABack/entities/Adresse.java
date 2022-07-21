@@ -53,6 +53,18 @@ public class Adresse extends BaseEntity implements Serializable {
 		this.codePostal = codePostal;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Adresse [libelle=");
+		builder.append(libelle);
+		builder.append(", ville=");
+		builder.append(ville);
+		builder.append(", codePostal=");
+		builder.append(codePostal);
+		builder.append("]");
+		return builder.toString();
+	}
 
 
 

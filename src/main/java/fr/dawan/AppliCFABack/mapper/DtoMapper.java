@@ -211,6 +211,9 @@ public interface DtoMapper {
 	@Mapping(target = "notes", ignore = true)
 	@Mapping(target = "dossierProfessionnel", ignore = true)
 	@Mapping(target = "dossierProjet", ignore = true)
+//	@Mapping(target = "address2", ignore = true)
+//	@Mapping(target = "adresse3", ignore = true)
+//	@Mapping(target = "country", ignore = true)
     Etudiant etudiantUtilisateurDG2DtoToEtudiant(EtudiantUtilisateurDG2Dto eDG2);
 	
 //	@Mapping(source = ".", target = ".")
