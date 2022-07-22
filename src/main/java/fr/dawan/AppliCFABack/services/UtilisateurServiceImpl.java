@@ -26,6 +26,7 @@ import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
@@ -36,6 +37,7 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
@@ -75,6 +77,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	EmailService emailService;
 	@Autowired
 	UtilisateurRoleService utilisateurRoleService;
+	@Autowired
+	EntrepriseRepository entrepriseRepository;
+	
 	@Autowired
 	private DtoMapper mapper;
 
@@ -291,6 +296,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			Adresse adresseRepop = adresseRepository.getOne(adresse.getId());
 			user.setAdresse(adresseRepop);
+		}
+		// On save l'entreprise avant de save l'utilisateur
+		if (uDto.getEntrepriseDto() != null && uDto.getEntrepriseDto().getId() == 0) {
+			Entreprise entreprise = DtoTools.convert(uDto.getEntrepriseDto(), Entreprise.class);
+			entrepriseRepository.saveAndFlush(entreprise);
+
+			Entreprise entrepriseRepop = entrepriseRepository.getOne(entreprise.getId());
+			user.setEntreprise(entrepriseRepop);
 		}
 
 		// On save les roles
