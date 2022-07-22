@@ -71,7 +71,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-07-21T11:18:11+0200",
+    date = "2022-07-22T11:52:21+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -168,10 +168,10 @@ public class DtoMapperImpl implements DtoMapper {
         congeDto.setVersion( conge.getVersion() );
         congeDto.setDateDebut( conge.getDateDebut() );
         congeDto.setDateFin( conge.getDateFin() );
-        congeDto.setJustificatif( conge.getJustificatif() );
         congeDto.setMotif( conge.getMotif() );
-        congeDto.setStatus( conge.getStatus() );
         congeDto.setType( conge.getType() );
+        congeDto.setStatus( conge.getStatus() );
+        congeDto.setJustificatif( conge.getJustificatif() );
 
         return congeDto;
     }
@@ -394,9 +394,9 @@ public class DtoMapperImpl implements DtoMapper {
         promotionDto.setCursusDto( CursusToCursusDto( promotion.getCursus() ) );
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
+        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
-        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }

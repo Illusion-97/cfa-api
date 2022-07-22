@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import fr.dawan.AppliCFABack.entities.Entreprise;
+
 /**
  * 
  * 
@@ -23,7 +25,7 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 	private LocalDate dateDeNaissance;
 	private String telephone;
 	private AdresseDto adresseDto;
-	private long entrepriseId;
+	private Entreprise entrepriseDto;
 	private List<UtilisateurRoleDto> rolesDto;
 	private EtudiantDto etudiantDto;
 	private FormateurDto formateurDto;
@@ -201,19 +203,14 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 		this.cefDto = cefDto;
 	}
 
-	/**
-	 * @return le entrepriseId
-	 */
-	public long getEntrepriseId() {
-		return entrepriseId;
+	
+	public void setEntrepriseDto(Entreprise entrepriseDto) {
+		this.entrepriseDto = entrepriseDto;
 	}
 
-	/**
-	 * @param entrepriseId le entrepriseId à affecter
-	 
-	 */
-	public void setEntrepriseId(long entrepriseId) {
-		this.entrepriseId = entrepriseId;
+	
+	public Entreprise getEntrepriseDto() {
+		return entrepriseDto;
 	}
 
 	@Override
@@ -221,7 +218,8 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 		return "UtilisateurDto{" + "id=" + id + ", login='" + login + '\'' + ", password='" + password + '\''
 				+ ", prenom='" + prenom + '\'' + ", nom='" + nom + '\'' + ", civilite='" + civilite + '\''
 				+ ", dateDeNaissance=" + dateDeNaissance + ", telephone='" + telephone + '\'' + ", adresseDto="
-				+ adresseDto + ", rolesDto=" + rolesDto + ", etudiantDto=" + etudiantDto + ", formateurDto="
+				+ adresseDto + ", entrepriseDto=" + entrepriseDto + ", rolesDto=" + rolesDto + ", etudiantDto=" + etudiantDto + ", formateurDto="
 				+ formateurDto + ", cefDto=" + cefDto +'}';
 	}
+
 }
