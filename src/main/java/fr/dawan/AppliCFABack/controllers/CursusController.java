@@ -74,8 +74,8 @@ public class CursusController {
 	@GetMapping(value = "/etudiant/{id}",produces = "application/json")
 	public List<CursusDto> getByIdEtudiant(@PathVariable("id") long id) {
 		List<PromotionDto> lstpDto = etudiantService.getPromotionsByIdEtudiant(id);
-		List<CursusDto> lstCursus = new ArrayList<CursusDto>();
-		List<CursusDto> lstCursusMostRecent = new ArrayList<CursusDto>();
+		List<CursusDto> lstCursus = new ArrayList<>();
+		List<CursusDto> lstCursusMostRecent = new ArrayList<>();
 		for (PromotionDto pDto : lstpDto) {
 			CursusDto cdto = cursusService.getByIdPromotion(pDto.getId());
 			lstCursus.add(cdto);
@@ -89,8 +89,8 @@ public class CursusController {
 	public List<CursusDto> getByIdEtudiant(@PathVariable("id") long id,@PathVariable("page") int page,
  			@PathVariable(value = "size") int size) {
 		List<PromotionDto> lstpDto = etudiantService.getPromotionsByIdEtudiant(id);
-		List<CursusDto> lstCursus = new ArrayList<CursusDto>();
-		List<CursusDto> lstCursusMostRecent = new ArrayList<CursusDto>();
+		List<CursusDto> lstCursus = new ArrayList<>();
+		List<CursusDto> lstCursusMostRecent = new ArrayList<>();
 		for (PromotionDto pDto : lstpDto) {
 			CursusDto cdto = cursusService.getByIdPromotion(pDto.getId());
 			lstCursus.add(cdto);
@@ -98,7 +98,7 @@ public class CursusController {
 		for( int i=lstCursus.size()-1;i>=0;i--) {
 			lstCursusMostRecent.add(lstCursus.get(i));
 		}
-		List<CursusDto> lstPaginate =  new ArrayList<CursusDto>();
+		List<CursusDto> lstPaginate =  new ArrayList<>();
 		
 		if(lstCursusMostRecent.size() >= (page*size)) {
 			for (int i=(page)*size;i <(page+1)*size;i++) {
@@ -115,8 +115,8 @@ public class CursusController {
 	@GetMapping(value = "/CurrentCursus/{id}",produces = "application/json")
 	public CursusDto getCurrentCursusByIdEtudiant(@PathVariable("id") long id) {
 		List<CursusDto> lstCursusDto = getByIdEtudiant(id);
-		CursusDto cdto = lstCursusDto.get(0);
-		return cdto;
+		//CursusDto cdto = lstCursusDto.get(0);
+		return lstCursusDto.get(0);
 	}
 
 		

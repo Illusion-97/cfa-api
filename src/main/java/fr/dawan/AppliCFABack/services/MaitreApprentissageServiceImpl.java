@@ -40,7 +40,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 	public List<MaitreApprentissageDto> getAllMaitreApprentissage() {
 		List<MaitreApprentissage> lst = maitreApprentissageRepository.findAll();
 
-		List<MaitreApprentissageDto> lstDto = new ArrayList<MaitreApprentissageDto>();
+		List<MaitreApprentissageDto> lstDto = new ArrayList<>();
 		for (MaitreApprentissage ma : lst) {
 			lstDto.add(mapper.MaitreApprentissageToMaitreApprentissageDto(ma));
 		}
@@ -60,7 +60,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 		List<MaitreApprentissage> lst = maitreApprentissageRepository.findAll(PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<MaitreApprentissageDto> lstDto = new ArrayList<MaitreApprentissageDto>();
+		List<MaitreApprentissageDto> lstDto = new ArrayList<>();
 		for (MaitreApprentissage ma : lst) {
 			lstDto.add(mapper.MaitreApprentissageToMaitreApprentissageDto(ma));
 		}

@@ -49,7 +49,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 	@Override
 	public List<AbsenceDto> getAllByInterventionId(long id) {
 		List<Absence> absences = absenceRepository.findAllByInterventionId(id);
-		List<AbsenceDto> result = new ArrayList<AbsenceDto>();
+		List<AbsenceDto> result = new ArrayList<>();
 		for (Absence a : absences) {
 			result.add(DtoTools.convert(a, AbsenceDto.class));
 		}
@@ -81,7 +81,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 	@Override
 	public List<AbsenceDto> getAllByEtudiantId(long id) {
 		List<Absence> absences = absenceRepository.findAllByEtudiantId(id);
-		List<AbsenceDto> result = new ArrayList<AbsenceDto>();
+		List<AbsenceDto> result = new ArrayList<>();
 		for (Absence a : absences) {
 			result.add(DtoTools.convert(a, AbsenceDto.class));
 		}
@@ -97,7 +97,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 		List<Absence> absences = absenceRepository
 				.findByEtudiantUtilisateurNomContainingOrEtudiantUtilisateurPrenomContainingAllIgnoreCase(
 						"%" + search + "%");
-		List<AbsenceDto> result = new ArrayList<AbsenceDto>();
+		List<AbsenceDto> result = new ArrayList<>();
 		for (Absence a : absences) {
 			result.add(DtoTools.convert(a, AbsenceDto.class));
 		}

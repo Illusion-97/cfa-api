@@ -47,10 +47,10 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 	@Override
 	public List<ActiviteTypeDto> getAllActiviteType() {
 		List<ActiviteType> activiteTypes = activiteTypeRepo.findAll();
-		List<ActiviteTypeDto> activiteTypesDto = new ArrayList<ActiviteTypeDto>();
+		List<ActiviteTypeDto> activiteTypesDto = new ArrayList<>();
 		for (ActiviteType activiteType : activiteTypes) {
 			ActiviteTypeDto atDto = mapper.ActiviteTypeToActiviteTypeDto(activiteType);
-			List<ExamenDto> examensDto = new ArrayList<ExamenDto>();
+			List<ExamenDto> examensDto = new ArrayList<>();
 			for (Examen ex : activiteType.getExamens()) {
 				examensDto.add(mapper.ExamenToExamenDto(ex));
 
@@ -68,7 +68,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 	 */
 	@Override
 	public List<ActiviteTypeDto> getAllActiviteType(int page, int size, String string) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -85,7 +85,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 		if (act.isPresent()) {
 			ActiviteTypeDto atDto = mapper.ActiviteTypeToActiviteTypeDto(act.get());
 			List<Examen> examens = act.get().getExamens();
-			List<ExamenDto> examensDto = new ArrayList<ExamenDto>();
+			List<ExamenDto> examensDto = new ArrayList<>();
 			for (Examen examen : examens) {
 				examensDto.add(mapper.ExamenToExamenDto(examen));
 			}
@@ -133,10 +133,10 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 	public List<ActiviteTypeDto> getAllActiviteTypesByPromotionId(long id) {
 
 		List<ActiviteType> activiteTypes = activiteTypeRepo.getActiviteTypesByPromotionId(id);
-		List<ActiviteTypeDto> activiteTypeDto = new ArrayList<ActiviteTypeDto>();
+		List<ActiviteTypeDto> activiteTypeDto = new ArrayList<>();
 		for (ActiviteType activiteType : activiteTypes) {
 			ActiviteTypeDto atDto = mapper.ActiviteTypeToActiviteDto(activiteType);
-			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<CompetenceProfessionnelleDto>();
+			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<>();
 			for (CompetenceProfessionnelle cp : activiteType.getCompetenceProfessionnelles()) {
 				cpDto.add(mapper.CompetenceProfessionnelleToCompetenceProfessionnelleDto(cp));
 				atDto.setCompetenceProfessionnellesDto(cpDto);
@@ -150,11 +150,11 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 	public List<ActiviteTypeDto> getAllActiviteTypesByCursus(long id) {
 
 		List<ActiviteType> activiteTypes = activiteTypeRepo.getActiviteTypesByCursus(id);
-		List<ActiviteTypeDto> activiteTypeDto = new ArrayList<ActiviteTypeDto>();
+		List<ActiviteTypeDto> activiteTypeDto = new ArrayList<>();
 		for (ActiviteType activiteType : activiteTypes) {
 
 			ActiviteTypeDto atDto = mapper.ActiviteTypeToActiviteDto(activiteType);
-			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<CompetenceProfessionnelleDto>();
+			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<>();
 
 			for (CompetenceProfessionnelle cp : activiteType.getCompetenceProfessionnelles()) {
 				cpDto.add(mapper.CompetenceProfessionnelleToCompetenceProfessionnelleDto(cp));

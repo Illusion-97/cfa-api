@@ -9,5 +9,9 @@ import fr.dawan.AppliCFABack.entities.Intervention;
 public interface JourneePlanningService {
 
 	List<JourneePlanningDto> getJourneePlanningFromIntervention(Intervention i);
-	boolean EstJoursOuvrable(LocalDate date);
+	/**
+	 * Détermination si la date donnée en argument est un jour ouvrable
+	 * 
+	 */
+	boolean estJoursOuvrable(LocalDate date);
 }

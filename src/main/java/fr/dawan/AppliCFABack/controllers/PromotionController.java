@@ -7,9 +7,12 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,16 +28,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.core.io.Resource;
-
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.PromotionForSelectDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
-import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.services.FileService;
 import fr.dawan.AppliCFABack.services.PromotionService;
 
@@ -48,6 +47,8 @@ public class PromotionController {
 	
 	@Autowired
 	FileService fileSevice; 
+	
+	private static Logger logger = Logger.getGlobal();
 	
 	@GetMapping(produces = "application/json")
 	public List<PromotionDto> getAll() {
@@ -160,7 +161,7 @@ public class PromotionController {
 			}
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Promotions updated :" +nb);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Failed Response Entity ERROR FETCH", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error while fetching data from the webservice DG2");
 		}
@@ -200,7 +201,7 @@ public class PromotionController {
 					.body(file);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Failed Response Entity ? file ? path", e);
 			return null;
 		}
 

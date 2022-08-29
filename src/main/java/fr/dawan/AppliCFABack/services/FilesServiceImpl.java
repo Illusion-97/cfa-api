@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 
@@ -30,6 +32,8 @@ public class FilesServiceImpl implements FilesService{
 	@Value("${app.storagefolder}")
 	private String PARENT_DIRECTORY;
 	
+	private static Logger logger = Logger.getGlobal();
+	
 	@Override
 	public boolean createDirectory(String path) {
 		
@@ -39,7 +43,7 @@ public class FilesServiceImpl implements FilesService{
 			Files.createDirectories(test);
 			return true;
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "create failed", e);
 		}
 		return false;
 	}
@@ -81,7 +85,7 @@ public class FilesServiceImpl implements FilesService{
 			}
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "postFile failed", e);
 			return false;
 		}
 		
@@ -98,7 +102,7 @@ public class FilesServiceImpl implements FilesService{
 		try {
 			data = Files.readAllBytes(path);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "getFile failed", e);
 		}
 
 		ByteArrayResource resource = new ByteArrayResource(data);		

@@ -28,12 +28,17 @@ public class FilesController {
 
 	@Value("${app.storagefolder}")
 	private String PARENT_DIRECTORY;
+	
+	private String users = "utilisateur";
+	private String promotions = "promotions";
+	private String projets = "projets";
+	
 
 	@GetMapping(value = "/{directory}/{id}", produces = "application/json")
 	public String[] getAllNamesByDirectoryAndId(@PathVariable("directory") String directory,
 			@PathVariable("id") long id) {
 
-		if (!directory.equals("promotions") && !directory.equals("utilisateurs") && !directory.equals("projets"))
+		if (!directory.equals(promotions) && !directory.equals(users) && !directory.equals(projets))
 			return null;
 		
 		return fileService.getAllNamesByDirectory(directory + "/" + id);	
@@ -42,7 +47,7 @@ public class FilesController {
 	public String[] getAllNamesByDirectoryAndIdAndDirectory(@PathVariable("directory") String directory,@PathVariable("directory2") String directory2,
 			@PathVariable("id") long id) {
 
-		if (!directory.equals("promotions") && !directory.equals("utilisateurs") && !directory.equals("projets"))
+		if (!directory.equals(promotions) && !directory.equals(users) && !directory.equals(projets))
 			return null;
 		
 		return fileService.getAllNamesByDirectory(directory + "/" + id +"/"+directory2);	
@@ -53,7 +58,7 @@ public class FilesController {
 			@PathVariable("directory") String directory, @PathVariable("id") long id,
 			@PathVariable("fileName") String fileName) {
 
-		if (!directory.equals("promotions") && !directory.equals("utilisateurs") && !directory.equals("projets"))
+		if (!directory.equals(promotions) && !directory.equals(users) && !directory.equals(projets))
 			return null;
 
 		String workingDirectory = directory + "/" + id + "/";
@@ -65,7 +70,7 @@ public class FilesController {
 			@PathVariable("directory") String directory,@PathVariable("directory2") String directory2, @PathVariable("id") long id,
 			@PathVariable("fileName") String fileName) {
 
-		if (!directory.equals("promotions") && !directory.equals("utilisateurs") && !directory.equals("projets"))
+		if (!directory.equals(promotions) && !directory.equals(users) && !directory.equals(projets))
 			return null;
 
 		String workingDirectory = directory + "/" + id + "/" + directory2 + "/";

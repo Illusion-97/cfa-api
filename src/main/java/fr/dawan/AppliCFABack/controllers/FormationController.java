@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +43,8 @@ public class FormationController {
 	
 	@Autowired
 	CursusService cursusService;
+	
+	private static Logger logger = Logger.getGlobal();
 
 	// ##################################################
 	// # GET #
@@ -159,7 +163,7 @@ public class FormationController {
 			int nb = formationService.fetchDG2Formations(splitUser[0], splitUser[1]);
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Formations updated :" +nb);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Failed Response Entity ERROR fetch DG2", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error while fetching data from the webservice DG2");
 		}
@@ -174,7 +178,7 @@ public class FormationController {
 			formationService.fetchDG2Formations2(splitUser[0], splitUser[1]);
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Formations updated !");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Failed Response Entity ERROR fetch DG2", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error while fetching data from the webservice DG2");
 		}

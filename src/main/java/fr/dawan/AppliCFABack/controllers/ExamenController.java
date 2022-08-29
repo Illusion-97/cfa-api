@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,6 +56,8 @@ public class ExamenController {
 
 	@Autowired
 	private ObjectMapper objectMapper;
+	
+	private static Logger logger = Logger.getGlobal();
 
 	// ##################################################
 	// # GET #
@@ -117,7 +121,7 @@ public class ExamenController {
 					.body(file);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Failed Response Entity ? file ? path", e);
 			return null;
 		}
 

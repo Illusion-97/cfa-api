@@ -39,7 +39,7 @@ public class FichePosteServiceImpl implements FichePosteService{
 	public List<FichePosteDto> getAllFichePoste() {
 		List<FichePoste> lst = fichePosteRepository.findAll();
 		
-		List<FichePosteDto> lstDto = new ArrayList<FichePosteDto>();
+		List<FichePosteDto> lstDto = new ArrayList<>();
 		for (FichePoste n : lst) {
 			FichePosteDto fDto =mapper.FichePosteToFichePosteDto(n);
 			fDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.getEtudiant()));
@@ -63,7 +63,7 @@ public class FichePosteServiceImpl implements FichePosteService{
 		List<FichePoste> lst = fichePosteRepository.findAllByIntituleContainingIgnoringCase(search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<FichePosteDto> lstDto = new ArrayList<FichePosteDto>();
+		List<FichePosteDto> lstDto = new ArrayList<>();
 		for (FichePoste c : lst) {
 			FichePosteDto fDto =mapper.FichePosteToFichePosteDto(c);
 			lstDto.add(fDto);

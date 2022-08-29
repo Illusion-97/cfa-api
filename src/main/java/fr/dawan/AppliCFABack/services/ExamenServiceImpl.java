@@ -1,6 +1,8 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -10,6 +12,8 @@ import fr.dawan.AppliCFABack.dto.customdtos.EvalByBlocDto;
 import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.repositories.*;
 import fr.dawan.AppliCFABack.tools.PdfTools;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -83,6 +87,8 @@ public class ExamenServiceImpl implements ExamenService {
 
 	@Value("src/main/resources/files/bulletinsEvaluations")
 	private String storageFolder;
+	
+	private static Logger logger = Logger.getGlobal();
 
 	/**
 	 * Récupération de la liste des examens
@@ -93,19 +99,19 @@ public class ExamenServiceImpl implements ExamenService {
 	@Override
 	public List<ExamenDto> getAllExamen() {
 		List<Examen> lst = examenRepository.findAll();
-		List<ExamenDto> lstDto = new ArrayList<ExamenDto>();
+		List<ExamenDto> lstDto = new ArrayList<>();
 		for (Examen e : lst) {
 			ExamenDto eDto = mapper.ExamenToExamenDto(e);
 			
 			Set<CompetenceProfessionnelle> lstCp = e.getCompetencesProfessionnelles();
-			Set<CompetenceProfessionnelleDto> lstCpDto = new HashSet<CompetenceProfessionnelleDto>();
+			Set<CompetenceProfessionnelleDto> lstCpDto = new HashSet<>();
 			for (CompetenceProfessionnelle cp : lstCp) {
 				if (cp != null)
 					lstCpDto.add(mapper.CompetenceProfessionnelleDto(cp));
 			}
 			
 			Set<Note> lstNotes = e.getNotes();
-			Set<NoteDto> lstNoteDto = new HashSet<NoteDto>();
+			Set<NoteDto> lstNoteDto = new HashSet<>();
 			for (Note note : lstNotes) {
 				if(note != null) {
 					NoteDto noteDto = DtoTools.convert(note, NoteDto.class);
@@ -134,7 +140,7 @@ public class ExamenServiceImpl implements ExamenService {
 		List<Examen> lst = examenRepository.findAllByTitreContainingIgnoringCaseOrDescriptifContainingIgnoringCase(search,search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<ExamenDto> lstDto = new ArrayList<ExamenDto>();
+		List<ExamenDto> lstDto = new ArrayList<>();
 		for (Examen e : lst) {
 			ExamenDto eDto = mapper.ExamenToExamenDto(e);
 			
@@ -194,16 +200,16 @@ public class ExamenServiceImpl implements ExamenService {
 	
 	
 	@Override
-	public ExamenDtoSave saveOrUpdate(ExamenDtoSave eDto) throws Exception {
+	public ExamenDtoSave saveOrUpdate(ExamenDtoSave eDto) throws SaveInvalidException {
 		
-		Set<Promotion> promotions = new HashSet<Promotion>();
+		Set<Promotion> promotions = new HashSet<>();
 		Set<Long>  promotionsId = null;
 		if (eDto.getPromotionsId().isEmpty() || eDto.getPromotionsId() == null) 
 		{
 			Optional<Intervention> intervention =  interventionRepository.findById(eDto.getInterventionId());
 			
 			if (!intervention.isPresent()) 
-				throw new Exception("Intervention Types manquante");
+				throw new SaveInvalidException("Intervention Types manquante");
 			
 			  promotionsId =  intervention.get().getPromotions().stream().map(p -> p.getId()).collect(Collectors.toSet());
 		}
@@ -214,16 +220,16 @@ public class ExamenServiceImpl implements ExamenService {
 			promotions.add(promotionRepository.getOne(idP));
 		}
 		if (eDto.getActiviteTypesId().isEmpty() || eDto.getActiviteTypesId() == null) 
-			throw new Exception("Activites Types manquante");
+			throw new SaveInvalidException("Activites Types manquante");
 
-		List<ActiviteType> activiteTypes = new ArrayList<ActiviteType>();
+		List<ActiviteType> activiteTypes = new ArrayList<>();
 		for(long idA : eDto.getActiviteTypesId()) {
 			activiteTypes.add(activiteTypeRepository.getOne(idA));
 		}
 		if (eDto.getCompetencesProfessionnellesId().isEmpty() || eDto.getCompetencesProfessionnellesId() == null) 
-				throw new Exception("Compétences Professionnelles manquante");
+				throw new SaveInvalidException("Compétences Professionnelles manquante");
 			
-		Set<CompetenceProfessionnelle> competenceProfessionnelles = new HashSet<CompetenceProfessionnelle>();
+		Set<CompetenceProfessionnelle> competenceProfessionnelles = new HashSet<>();
 		for(long idC : eDto.getCompetencesProfessionnellesId() ) {
 			competenceProfessionnelles.add(competenceProfessionnelleRepository.getOne(idC));
 		}
@@ -237,7 +243,7 @@ public class ExamenServiceImpl implements ExamenService {
 		}
 		else {
 			Examen exDb =  examenRepository.saveAndFlush(e);
-			Set<Note> Notes =  new HashSet<Note>();
+			Set<Note> Notes =  new HashSet<>();
 			//Ajout list de notes vide avec les etudiants 
 			for (Promotion promo : exDb.getPromotions()) {
 				List<EtudiantDto> etudiantsParPromo = promotionService.getEtudiantsById(promo.getId());
@@ -299,7 +305,7 @@ public class ExamenServiceImpl implements ExamenService {
 			freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
 			Template template = freemarkerConfig.getTemplate("BulletinEval.ftl");
 
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<>();
 			model.put("backendUrl", backendUrl);
 
 			Etudiant etu = etuOpt.get();
@@ -316,7 +322,7 @@ public class ExamenServiceImpl implements ExamenService {
 				List<ActiviteType> activiteTypes = activiteTypeRepository
 						.findAllByCursusActiviteTypeId(promo.getCursus().getId());
 
-				List<EvalByBlocDto> evalList = new ArrayList<EvalByBlocDto>();
+				List<EvalByBlocDto> evalList = new ArrayList<>();
 				double s = 0;
 				for (ActiviteType at : activiteTypes) {
 					EvalByBlocDto evalByBlocDto = new EvalByBlocDto();
@@ -328,16 +334,20 @@ public class ExamenServiceImpl implements ExamenService {
 						evalByBlocDto.setMoyenne(moyB);
 						s += moyB;
 					} catch (Exception e) {
-						//TODO 0 par défaut ou afficher un message
-						e.printStackTrace();
+						//0 par défaut ou afficher un message
+						logger.log(Level.WARNING, "error : pas d'activité type", e);
 						System.out.println("L'étudiant n'a pas de note associée à cette activité type");
+						throw new Exception("L'étudiant n'a pas de note associée à cette activité type"); 
+						
 					}
 
 					try {
 						evalByBlocDto.setMoyennePromo(getAvgByPromoIdAndActiviteTypeId(promotionId, at.getId()).getResult());
 					} catch (Exception e) {
-						// 0 par défaut //TODO ajouter un message pour dire note manquante
-						e.printStackTrace();
+						// 0 par défaut //ajouter un message pour dire note manquante
+						logger.log(Level.WARNING, "note manquante", e);
+						System.out.println("note manquante");
+						throw new Exception("note manquante");
 					}
 					evalList.add(evalByBlocDto);
 				}
@@ -372,16 +382,16 @@ public class ExamenServiceImpl implements ExamenService {
 	@Override
 	public List<ExamenDto> findExamensByInterventionId(long id) {
 		List<Examen> examens = examenRepository.findExamensByInterventionId(id);
-		List<ExamenDto> result = new ArrayList<ExamenDto>();
+		List<ExamenDto> result = new ArrayList<>();
 		for(Examen e : examens) {	
 			ExamenDto exDto = DtoTools.convert(e, ExamenDto.class);
 			
-			Set<CompetenceProfessionnelleDto> cpDto = new HashSet<CompetenceProfessionnelleDto>();
+			Set<CompetenceProfessionnelleDto> cpDto = new HashSet<>();
 			for (CompetenceProfessionnelle cp : e.getCompetencesProfessionnelles()) {
 				cpDto.add(DtoTools.convert(cp, CompetenceProfessionnelleDto.class));
 			}
 			
-			List<ActiviteTypeDto> actDto = new ArrayList<ActiviteTypeDto>();
+			List<ActiviteTypeDto> actDto = new ArrayList<>();
 			for(ActiviteType at : e.getActiviteTypes()) {
 				actDto.add(DtoTools.convert(at, ActiviteTypeDto.class));
 			}
