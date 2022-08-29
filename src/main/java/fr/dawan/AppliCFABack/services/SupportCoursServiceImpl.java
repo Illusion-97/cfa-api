@@ -17,6 +17,7 @@ import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.SupportCours;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.repositories.SupportCoursRepository;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 @Service
 @Transactional
@@ -40,7 +41,7 @@ public class SupportCoursServiceImpl implements SupportCoursService {
 		if (support.isPresent()) {
 			SupportCoursDto supportDto = DtoTools.convert(support.get(), SupportCoursDto.class);
 			List<Intervention> interventions = support.get().getInterventions();
-			List<InterventionDto> interventionsDto = new ArrayList<InterventionDto>();
+			List<InterventionDto> interventionsDto = new ArrayList<>();
 			for(Intervention i: interventions) {
 				interventionsDto.add(DtoTools.convert(i, InterventionDto.class));
 			}
@@ -59,11 +60,11 @@ public class SupportCoursServiceImpl implements SupportCoursService {
 	 */
 	
 	@Override
-	public SupportCoursDto saveOrUpdate(SupportCoursDto tDto) throws Exception {
+	public SupportCoursDto saveOrUpdate(SupportCoursDto tDto) throws SaveInvalidException {
 		if(tDto.getInterventionsId().isEmpty() || tDto.getInterventionsId() == null)
-			throw new Exception ("Pas d'intervention ID rentrée");
+			throw new SaveInvalidException ("Pas d'intervention ID rentrée");
 	
-		List<Intervention> interventions = new ArrayList<Intervention>();
+		List<Intervention> interventions = new ArrayList<>();
 		for(long interventionId : tDto.getInterventionsId()) {
 			interventions.add(interventionRepository.getOne(interventionId));
 		}
@@ -107,7 +108,7 @@ public class SupportCoursServiceImpl implements SupportCoursService {
 	@Override
 	public List<SupportCoursDto> getAll() {
 		List<SupportCours> supports = supportCoursRepository.findAll();
-		List<SupportCoursDto> supportDto = new ArrayList<SupportCoursDto>();
+		List<SupportCoursDto> supportDto = new ArrayList<>();
 		for (SupportCours sc: supports) {
 			supportDto.add(DtoTools.convert(sc, SupportCoursDto.class));
 		}

@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.services.AbsenceService;
-import fr.dawan.AppliCFABack.services.GenericService;
 /**
  * @author Valentin C, Feres BG.
  * @see fr.dawan.appliCFABack.service
@@ -24,7 +24,6 @@ public class AbsenceController extends GenericController<AbsenceDto> {
 	@Autowired
 	public AbsenceController(AbsenceService service) {
 		super(service);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

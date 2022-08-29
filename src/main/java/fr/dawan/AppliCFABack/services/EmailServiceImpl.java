@@ -110,7 +110,7 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	public void sendMailForResetPassword(UtilisateurDto uDto) throws Exception {
-		Map<String, Object> claims = new HashMap<String, Object>();
+		Map<String, Object> claims = new HashMap<>();
 		claims.put("name", uDto.getNom());
 
 		String token = jwtTokenUtil.doGenerateToken(claims, uDto.getLogin());

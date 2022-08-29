@@ -57,7 +57,7 @@ public class CongeServiceImpl implements CongeService {
 	public List<CongeDto> getAllConge() {
 		List<Conge> lst = congeRepository.findAll();
 
-		List<CongeDto> lstDto = new ArrayList<CongeDto>();
+		List<CongeDto> lstDto = new ArrayList<>();
 		for (Conge c : lst) {
 			lstDto.add(mapper.CongeToCongeDto(c));
 		}
@@ -95,7 +95,7 @@ public class CongeServiceImpl implements CongeService {
 		List<Conge> lst = congeRepository.findAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<CongeDto> lstDto = new ArrayList<CongeDto>();
+		List<CongeDto> lstDto = new ArrayList<>();
 		for (Conge c : lst) {
 			CongeDto cDto = mapper.CongeToCongeDto(c);
 			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(c.getUtilisateur());
@@ -246,7 +246,7 @@ public class CongeServiceImpl implements CongeService {
 			LocalDate temp = c.getDateDebut();
 			
 			while(temp.compareTo(c.getDateFin()) <= 0) {
-				if(journeePlanningService.EstJoursOuvrable(temp))
+				if(journeePlanningService.estJoursOuvrable(temp))
 					result++;
 				temp = temp.plusDays(1);
 			}
@@ -276,7 +276,7 @@ public class CongeServiceImpl implements CongeService {
 
 	@Override
 	public List<CongeDto> getAllByIdUtilisateur(long id) {
-		List<CongeDto> result = new ArrayList<CongeDto>();
+		List<CongeDto> result = new ArrayList<>();
 		List<Conge> list = congeRepository.findAllByUtilisateurId(id);
 		for(Conge c : list) {
 			result.add(mapper.CongeToCongeDto(c));

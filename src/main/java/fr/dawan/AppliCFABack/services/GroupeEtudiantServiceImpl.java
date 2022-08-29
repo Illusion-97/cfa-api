@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -38,6 +39,8 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	
+	private static Logger logger = Logger.getGlobal();
+	
 	/**
 	 * Récupération de la liste des groupes
 	 * 
@@ -48,7 +51,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	public List<GroupeEtudiantDto> getAllGroupeEtudiant() {
 		List<GroupeEtudiant> lst = groupeEtudiantRepository.findAll();
 		
-		List<GroupeEtudiantDto> lstDto = new ArrayList<GroupeEtudiantDto>();
+		List<GroupeEtudiantDto> lstDto = new ArrayList<>();
 		for (GroupeEtudiant g : lst) {
 			lstDto.add(mapper.GroupeEtudiantToGroupEtudiantDto(g));
 		}
@@ -70,13 +73,13 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		List<GroupeEtudiant> lst = groupeEtudiantRepository.findAllByNomContainingIgnoringCaseOrEtudiantsUtilisateurNomContainingIgnoringCaseOrEtudiantsUtilisateurPrenomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<GroupeEtudiantDto> lstDto = new ArrayList<GroupeEtudiantDto>();
+		List<GroupeEtudiantDto> lstDto = new ArrayList<>();
 		for (GroupeEtudiant g : lst) {
 			GroupeEtudiantDto gDto = mapper.GroupeEtudiantToGroupEtudiantDto(g);
-			List<EtudiantDto> etudiantsDto = new ArrayList<EtudiantDto>();
+			List<EtudiantDto> etudiantsDto = new ArrayList<>();
 			for(Etudiant e : g.getEtudiants()) {
 				EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
-				List<PromotionDto> pDtos = new ArrayList<PromotionDto>();
+				List<PromotionDto> pDtos = new ArrayList<>();
 				for(Promotion p : e.getPromotions()) {
 					pDtos.add(mapper.PromotionToPromotionDto(p));
 				}
@@ -114,10 +117,10 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		if(!g.isPresent()) return null;
 		
 		GroupeEtudiantDto gDto = mapper.GroupeEtudiantToGroupEtudiantDto(g.get());
-		List<EtudiantDto> etudiantsDto = new ArrayList<EtudiantDto>();
+		List<EtudiantDto> etudiantsDto = new ArrayList<>();
 		for(Etudiant e : g.get().getEtudiants()) {
 			EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
-			List<PromotionDto> pDtos = new ArrayList<PromotionDto>();
+			List<PromotionDto> pDtos = new ArrayList<>();
 			for(Promotion p : e.getPromotions()) {
 				pDtos.add(mapper.PromotionToPromotionDto(p));
 			}
@@ -136,7 +139,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	
 	@Override
 	public GroupeEtudiantDto saveOrUpdate(GroupeEtudiantDto gDto) {
-		System.out.println("GroupeEtudiantDto saveOrUpdate");
+		logger.info("GroupeEtudiantDto saveOrUpdate");
 		GroupeEtudiant g = groupeEtudiantRepository.saveAndFlush(DtoTools.convert(gDto, GroupeEtudiant.class));
 		return mapper.GroupeEtudiantToGroupEtudiantDto(g);
 	}
@@ -179,10 +182,10 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		if(!g.isPresent())
 			return null;
 		
-		List<EtudiantDto> result = new ArrayList<EtudiantDto>();
+		List<EtudiantDto> result = new ArrayList<>();
 		for(Etudiant e : g.get().getEtudiants()) {
 			EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
-			List<PromotionDto> pDtos = new ArrayList<PromotionDto>();
+			List<PromotionDto> pDtos = new ArrayList<>();
 			for(Promotion p : e.getPromotions()) {
 				pDtos.add(mapper.PromotionToPromotionDto(p));
 			}

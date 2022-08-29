@@ -41,7 +41,7 @@ public class ProjetServiceImpl implements ProjetService {
 	public List<ProjetDto> getAllProjet() {
 		List<Projet> lst = projetRepository.findAll();
 
-		List<ProjetDto> lstDto = new ArrayList<ProjetDto>();
+		List<ProjetDto> lstDto = new ArrayList<>();
 		for (Projet p : lst) {
 			ProjetDto pDto = mapper.ProjetToProjetDto(p);
 			pDto.setGroupeDto(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
@@ -65,7 +65,7 @@ public class ProjetServiceImpl implements ProjetService {
 		List<Projet> lst = projetRepository.findAllByNomContainingIgnoringCaseOrDescriptionContainingIgnoringCaseOrGroupeNomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<ProjetDto> lstDto = new ArrayList<ProjetDto>();
+		List<ProjetDto> lstDto = new ArrayList<>();
 		for (Projet p : lst) {
 			ProjetDto pDto = mapper.ProjetToProjetDto(p);
 			pDto.setGroupeDto(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
@@ -143,7 +143,7 @@ public class ProjetServiceImpl implements ProjetService {
 	public List<ProjetDto> getByGroupeId(long id) {
 		List<Projet> projets = projetRepository.findAllByGroupeId(id);	
 		
-		List<ProjetDto> result = new ArrayList<ProjetDto>();
+		List<ProjetDto> result = new ArrayList<>();
 		for(Projet p : projets) {
 		ProjetDto pDto = mapper.ProjetToProjetDto(p);
 		pDto.setGroupeDto(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));

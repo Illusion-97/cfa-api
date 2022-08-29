@@ -1,8 +1,5 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.Converter;
@@ -16,9 +13,7 @@ import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
-
 import fr.dawan.AppliCFABack.entities.Formation;
-
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Positionnement;

@@ -39,9 +39,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	
 	@Override
 	public List<DossierProjetDto> getAll() {
-		// TODO Auto-generated method stub
 		List<DossierProjet> lstDossierProjets= dossierProRepo.findAll();
-		List<DossierProjetDto> lstDossierProjetDto= new ArrayList<DossierProjetDto>();
+		List<DossierProjetDto> lstDossierProjetDto= new ArrayList<>();
 		
 		for (DossierProjet dossierProjet : lstDossierProjets) {
 			DossierProjetDto dpDto =mapper.DossierProjetToDossierProjetDto(dossierProjet);
@@ -59,7 +58,6 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	
 	@Override
 	public DossierProjetDto getById(long id) {
-		// TODO Auto-generated method stub
 		Optional<DossierProjet> dp = dossierProRepo.findById(id);
 		if(dp.isPresent()) {
 			DossierProjetDto dpDto = mapper.DossierProjetToDossierProjetDto(dp.get());
@@ -87,7 +85,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 				.get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<DossierProjetDto> lstDto = new ArrayList<DossierProjetDto>();
+		List<DossierProjetDto> lstDto = new ArrayList<>();
 		for (DossierProjet dp : lst) {
 			DossierProjetDto dpDto = mapper.DossierProjetToDossierProjetDto(dp);
 			dpDto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
@@ -134,7 +132,6 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	
 	@Override
 	public void deleteById(long id) {
-		// TODO Auto-generated method stub
 		dossierProRepo.deleteById(id);
 		
 	}
@@ -148,7 +145,6 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	
 	@Override
 	public List<DossierProjetDto> getByIdEtudiant(long id) {
-
 		EtudiantDto e = etudiantService.getById(id);
 		return e.getDossierProjet();
 	}

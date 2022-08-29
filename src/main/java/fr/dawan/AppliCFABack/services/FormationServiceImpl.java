@@ -1,9 +1,12 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -35,6 +38,7 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.FormationRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 
 @Service
 @Transactional
@@ -52,6 +56,8 @@ public class FormationServiceImpl implements FormationService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	
+	private static Logger logger = Logger.getGlobal();
+	
 //	@Autowired
 //	private RestTemplate restTemplate;
 
@@ -66,12 +72,12 @@ public class FormationServiceImpl implements FormationService {
 	public List<FormationDto> getAllFormation() {
 		List<Formation> lst = formationRepository.findAll();
 
-		List<FormationDto> lstDto = new ArrayList<FormationDto>();
+		List<FormationDto> lstDto = new ArrayList<>();
 		for (Formation f : lst) {
 			FormationDto formationDto = mapper.FormationToFormationDto(f);
 
 			List<Cursus> lstCursus = f.getCursusLst();
-			List<CursusDto> lstCursusDto = new ArrayList<CursusDto>();
+			List<CursusDto> lstCursusDto = new ArrayList<>();
 
 			for (Cursus cursus : lstCursus) {
 				if (cursus != null)
@@ -101,10 +107,10 @@ public class FormationServiceImpl implements FormationService {
 				.get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<FormationDto> lstDto = new ArrayList<FormationDto>();
+		List<FormationDto> lstDto = new ArrayList<>();
 		for (Formation c : lst) {
 			FormationDto cDto = mapper.FormationToFormationDto(c);
-			List<CursusDto> cursusLstDto = new ArrayList<CursusDto>();
+			List<CursusDto> cursusLstDto = new ArrayList<>();
 			for (Cursus cursus : c.getCursusLst()) {
 				cursusLstDto.add(mapper.CursusToCursusDto(cursus));
 			}
@@ -138,7 +144,7 @@ public class FormationServiceImpl implements FormationService {
 		if (f.isPresent()) {
 			FormationDto formationDto = mapper.FormationToFormationDto(f.get());
 			List<Cursus> lstCursus = f.get().getCursusLst();
-			List<CursusDto> lstCursusDto = new ArrayList<CursusDto>();
+			List<CursusDto> lstCursusDto = new ArrayList<>();
 
 			for (Cursus cursus : lstCursus) {
 				if (cursus != null)
@@ -193,7 +199,7 @@ public class FormationServiceImpl implements FormationService {
 	public List<InterventionDto> findAllByFormationId(long id) {
 
 		List<Intervention> lstInt = interventionRepository.findAllByFormationId(id);
-		List<InterventionDto> lstIntDto = new ArrayList<InterventionDto>();
+		List<InterventionDto> lstIntDto = new ArrayList<>();
 		for (Intervention itv : lstInt) {
 			if (itv != null)
 				lstIntDto.add(mapper.InterventionToInterventionDto(itv));
@@ -204,7 +210,7 @@ public class FormationServiceImpl implements FormationService {
 	@Override
 	public int fetchDG2Formations(String email, String password) throws Exception {
 		List<Formation> result = new ArrayList<Formation>();
-		List<FormationDG2Dto> fetchResJson = new ArrayList<FormationDG2Dto>();
+		List<FormationDG2Dto> fetchResJson = new ArrayList<>();
 		int nbChangement = 0;
 		
 		//Récupérer la liste formation DG2
@@ -225,7 +231,7 @@ public class FormationServiceImpl implements FormationService {
 			try {
 				fetchResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() {} );
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.WARNING, "objectMapper failed", e);
 			}
 		}
 		
@@ -240,7 +246,7 @@ public class FormationServiceImpl implements FormationService {
 			try {
 				formationDG2 = dtoTools.FormationDG2DtoToFormation(fDtoDG2);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.WARNING, "mapper failed", e);
 			}
 			
 			//Si !isPresent() alors ajout
@@ -260,7 +266,7 @@ public class FormationServiceImpl implements FormationService {
 				formationRepository.saveAndFlush(f);
 				nbChangement ++;
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.WARNING, "save and fush failed", e);
 			}
 		}
 		return nbChangement;
@@ -271,14 +277,16 @@ public class FormationServiceImpl implements FormationService {
 	 * 
 	 * @param email Email l'utilsateur dg2
 	 * @param password   Mot de passe de l'utlisateur dg2
+	 * @throws URISyntaxException 
 	 * 
-	 * @exception Exception retourne une exception,
-	 * si erreur dans la récupération des formations
+	 * @exception FetchDG2Exception retourne une exception,
+	 * 								si erreur dans la récupération des formations
+	 * 			  
 	 */
 	
 	//import des formations DG2
 	@Override
-	public void fetchDG2Formations2(String email, String password) throws Exception {
+	public void fetchDG2Formations2(String email, String password) throws FetchDG2Exception, URISyntaxException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<FormationDG2Dto> fResJson = new ArrayList<>();
 		
@@ -301,8 +309,7 @@ public class FormationServiceImpl implements FormationService {
 				fResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() { 
 				});
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log(Level.WARNING, "objectMapper failed", e);
 			}
 			for (FormationDG2Dto fDG2 : fResJson) {
 				Formation formationImport = mapper.formationDG2DtoToFormation(fDG2);
@@ -319,19 +326,18 @@ public class FormationServiceImpl implements FormationService {
 					try {
 						formationRepository.saveAndFlush(formationImport);
 					} catch (Exception e) {
-						e.printStackTrace();
+						logger.log(Level.WARNING, "save failed", e);
 					}
 				} else {
 					try {
 						formationRepository.saveAndFlush(formationImport);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.log(Level.WARNING, "save2 failed", e);
 					}
 				}
 			}
 		} else {
-			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 
 

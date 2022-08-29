@@ -1,6 +1,8 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -27,8 +30,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
+
 import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -38,14 +40,13 @@ import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.NiveauDto;
-import fr.dawan.AppliCFABack.dto.PromotionOrInterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.PromotionForSelectDto;
+import fr.dawan.AppliCFABack.dto.PromotionOrInterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.customdtos.GrillePositionnementDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
-import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Etudiant;
@@ -54,7 +55,6 @@ import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Positionnement;
-import fr.dawan.AppliCFABack.entities.Positionnement.Niveau;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -63,7 +63,15 @@ import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+import fr.dawan.AppliCFABack.tools.GrilleException;
 import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.core.ParseException;
+import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 @Service
 @Transactional
@@ -100,6 +108,8 @@ public class PromotionServiceImpl implements PromotionService {
 	@Autowired
 	private DtoTools mapperTools;
 
+	private static Logger logger = Logger.getGlobal();
+	
 	/**
 	 * Récupération de la liste des promo
 	 * 
@@ -109,7 +119,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public List<PromotionDto> getAll() {
 		List<Promotion> lst = promoRepo.findAll();
-		List<PromotionDto> lstDto = new ArrayList<PromotionDto>();
+		List<PromotionDto> lstDto = new ArrayList<>();
 		for (Promotion promo : lst) {
 			PromotionDto pDto = mapper.PromotionToPromotionDto(promo);
 			pDto.setCentreFormationDto(mapper.CentreFormationToCentreFormationDto(promo.getCentreFormation()));
@@ -138,10 +148,10 @@ public class PromotionServiceImpl implements PromotionService {
 		pDto.setCentreFormationDto(mapper.CentreFormationToCentreFormationDto(promo.getCentreFormation()));
 		
 		List<Etudiant> etudiants = promo.getEtudiants();
-		List<EtudiantDto> eDtos = new ArrayList<EtudiantDto>();	
+		List<EtudiantDto> eDtos = new ArrayList<>();	
 		for(Etudiant e : etudiants) {
 			EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
-			List<GroupeEtudiantDto> gDtos = new ArrayList<GroupeEtudiantDto>();
+			List<GroupeEtudiantDto> gDtos = new ArrayList<>();
 			for(GroupeEtudiant g : e.getGroupes()) {
 				gDtos.add(mapper.GroupeEtudiantToGroupEtudiantDto(g));
 			}
@@ -152,7 +162,7 @@ public class PromotionServiceImpl implements PromotionService {
 		pDto.setEtudiantsDto(eDtos);
 		
 		List<Intervention> interventions = promo.getInterventions();
-		List<InterventionDto> iDtos = new ArrayList<InterventionDto>();	
+		List<InterventionDto> iDtos = new ArrayList<>();	
 		for(Intervention i : interventions) {
 			InterventionDto iDto =mapper.InterventionToInterventionDto(i);
 			iDto.setFormationDto(mapper.FormationToFormationDto(i.getFormation()));
@@ -166,14 +176,14 @@ public class PromotionServiceImpl implements PromotionService {
 		for (Examen examen : examens) {
 			ExamenDto eDto = mapper.ExamenToExamenDto(examen);
 			Set<CompetenceProfessionnelle>competenceProfessionnelles = examen.getCompetencesProfessionnelles();
-			Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new HashSet<CompetenceProfessionnelleDto>();
+			Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new HashSet<>();
 			for (CompetenceProfessionnelle cptP : competenceProfessionnelles) {
 				competenceProfessionnellesDto.add(mapper.CompetenceProfessionnelleDto(cptP));
 			}
 			eDto.setCompetencesProfessionnellesDto(competenceProfessionnellesDto);
 			
 			List<ActiviteType> activiteTypes = examen.getActiviteTypes();
-			List<ActiviteTypeDto> activiteTypesDto = new ArrayList<ActiviteTypeDto>();
+			List<ActiviteTypeDto> activiteTypesDto = new ArrayList<>();
 			for (ActiviteType at : activiteTypes) {
 				activiteTypesDto.add(mapper.ActiviteTypeToActiviteDto(at));
 			}
@@ -270,7 +280,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public List<PromotionDto> getAllPromotions(int page, int size, String search) {
 		List<Promotion> promo = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
-		List<PromotionDto> res = new ArrayList<PromotionDto>();
+		List<PromotionDto> res = new ArrayList<>();
 		for (Promotion p : promo) {
 			res.add(DtoTools.convert(p, PromotionDto.class));
 		}
@@ -286,9 +296,9 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public List<EtudiantDto> getEtudiantsById(long id) {
 		List<Etudiant> lst = promoRepo.getOne(id).getEtudiants();
-		List<EtudiantDto> lstDto = new ArrayList<EtudiantDto>();
+		List<EtudiantDto> lstDto = new ArrayList<>();
 		for (Etudiant e : lst) {
-			List<PromotionDto> promoList = new ArrayList<PromotionDto>();
+			List<PromotionDto> promoList = new ArrayList<>();
 			for(Promotion p : e.getPromotions()) {
 				promoList.add(mapper.PromotionToPromotionDto(p));
 			}
@@ -311,7 +321,7 @@ public class PromotionServiceImpl implements PromotionService {
 	public List<PromotionDto> getAllByCursusId(long id) {
 		List<Promotion> lst = promoRepo.findAllByCursusId(id);
 		
-		List<PromotionDto> result = new ArrayList<PromotionDto>();
+		List<PromotionDto> result = new ArrayList<>();
 		
 		for(Promotion p : lst) {
 			result.add(mapper.PromotionToPromotionDto(p));
@@ -341,7 +351,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public List<PromotionDto> getPromotionByEtudiantIdAndByCursusId(long id) {
 		List<Promotion> promos = promoRepo.getByEtudiantId(id);
-		List<PromotionDto> result = new ArrayList<PromotionDto>();
+		List<PromotionDto> result = new ArrayList<>();
 		
 		for(Promotion p : promos) {
 			PromotionDto pDto = mapper.PromotionToPromotionDto(p);
@@ -384,7 +394,7 @@ public class PromotionServiceImpl implements PromotionService {
 	 */
 	@Override
 	public List<PromotionForSelectDto> getPromotionByInterventionIdForSelect(long idIntervention) {
-		List<PromotionForSelectDto> result = new ArrayList<PromotionForSelectDto>();
+		List<PromotionForSelectDto> result = new ArrayList<>();
 		List<Promotion> promotions = promoRepo.findAllByInterventionsId(idIntervention);
 		
 		for (Promotion promotion : promotions) {
@@ -396,15 +406,15 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Override
 	public int fetchDGPromotions(String email, String password) throws Exception {
-		List<Cursus> cursus = new ArrayList<Cursus>();
-		List<Promotion> promoLst = new ArrayList<Promotion>();
+		List<Cursus> cursus = new ArrayList<>();
+		List<Promotion> promoLst = new ArrayList<>();
 		cursus = cursusRepository.findAll();
 		for(Cursus c: cursus) {
-			List<Promotion> promoDg2 = new ArrayList<Promotion>();
+			List<Promotion> promoDg2 = new ArrayList<>();
 			promoDg2 = getPromotionDG2ByIdCursusDG2(email, password, c.getIdDg2());
-			if(promoDg2.size() != 0) {
+			if(promoDg2.isEmpty()  || promoDg2.size() != 0) {
 				promoLst.addAll(promoDg2);
-				System.out.println(c.getId()+ "Liste non vide ");
+				logger.info(c.getId()+"Liste non vide");
 			}
 		}
 		for(Promotion p : promoLst) {
@@ -431,7 +441,7 @@ public class PromotionServiceImpl implements PromotionService {
 	}
 	
 	@Override
-	public List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursusDg2) throws Exception {
+	public List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>(); 
@@ -489,7 +499,7 @@ public class PromotionServiceImpl implements PromotionService {
 			}
 			return result;
 		} else {
-			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 		
 		
@@ -497,19 +507,19 @@ public class PromotionServiceImpl implements PromotionService {
 
 	
 	@Override
-	public String getGrillePositionnement(long idPromotion) throws Exception {
+	public String getGrillePositionnement(long idPromotion) throws GrilleException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		Optional<Promotion> promotion = promotionRepository.findById(idPromotion);
 
 		if (!promotion.isPresent())
-			throw new Exception("Promotion non trouvé");
+			throw new GrilleException("Promotion non trouvé");
 
 		List<Intervention> interventions = interventionRepository.getInterventionsByIdPromotion(idPromotion);
 
 		if (interventions.isEmpty() || interventions == null)
-			throw new Exception("Pas d'interventions encore pour cette promotion non trouvé");
+			throw new GrilleException("Pas d'interventions encore pour cette promotion non trouvé");
 
 		Map<String, List<?>> gp = new HashMap<String, List<?>>();
-		List<GrillePositionnementDto> grillesPositionnements = new ArrayList<GrillePositionnementDto>();
+		List<GrillePositionnementDto> grillesPositionnements = new ArrayList<>();
 		for (Intervention i : interventions) {
 
 			GrillePositionnementDto gpd = new GrillePositionnementDto();
@@ -524,7 +534,7 @@ public class PromotionServiceImpl implements PromotionService {
 					).collect(Collectors.toList());
 			gpd.setFormateurs(formateursNomPrenom);
 
-			Map<String, Positionnement> etudiantsPositionnement = new HashMap<String, Positionnement>();
+			Map<String, Positionnement> etudiantsPositionnement = new HashMap<>();
 			List<Positionnement> positionnements =  positionnementRepository.getAllByInterventionId(i.getId());
 			for (Positionnement p : positionnements) {
 				etudiantsPositionnement.put(p.getEtudiant().getUtilisateur().getNom() + " " +p.getEtudiant().getUtilisateur().getPrenom(), p);
@@ -541,7 +551,11 @@ public class PromotionServiceImpl implements PromotionService {
 		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, gp);
 
 		String outputPdf = storageFolder + "grillePositionnements/GrillePositionnement "+promotion.get().getNom()+".pdf";
-		ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+		try {
+			ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return outputPdf;
 	}

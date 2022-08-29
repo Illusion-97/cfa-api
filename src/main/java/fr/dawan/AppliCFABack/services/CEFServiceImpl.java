@@ -3,6 +3,8 @@ package fr.dawan.AppliCFABack.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -28,6 +30,8 @@ public class CEFServiceImpl implements CEFService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+	
+	private static Logger logger = Logger.getGlobal();
 
 	/**
 	 * Récupération de tous les CEF
@@ -39,7 +43,7 @@ public class CEFServiceImpl implements CEFService {
 	public List<CEFDto> getAllCef() {
 		List<CEF> lst = cefRepository.findAll();
 
-		List<CEFDto> lstDto = new ArrayList<CEFDto>();
+		List<CEFDto> lstDto = new ArrayList<>();
 		for (CEF c : lst) {
 			lstDto.add(mapper.CEFToCEFDto(c));
 		}
@@ -59,7 +63,7 @@ public class CEFServiceImpl implements CEFService {
 		List<CEF> lst = cefRepository.findAll(PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<CEFDto> lstDto = new ArrayList<CEFDto>();
+		List<CEFDto> lstDto = new ArrayList<>();
 		for (CEF c : lst) {
 			CEFDto cDto = mapper.CEFToCEFDto(c);
 			cDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(c.getUtilisateur()));
@@ -109,7 +113,7 @@ public class CEFServiceImpl implements CEFService {
 		            }
 				}	
 			}catch (Exception e) {
-	            e.printStackTrace();
+	            logger.log(Level.WARNING, "Save failed", e);
 	        }
 		}		
 

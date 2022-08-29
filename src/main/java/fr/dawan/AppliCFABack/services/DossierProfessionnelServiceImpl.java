@@ -1,29 +1,37 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import fr.dawan.AppliCFABack.dto.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
-import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
-import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.entities.Cursus;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
+import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.ExperienceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.tools.PdfTools;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 @Service
 @Transactional
@@ -63,9 +71,8 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Override
     public List<DossierProfessionnelDto> getAll() {
-        // TODO Auto-generated method stub
         List<DossierProfessionnel> lstDossierProfessionnel = dossierProRepo.findAll();
-        List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<DossierProfessionnelDto>();
+        List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
 
         for (DossierProfessionnel dp : lstDossierProfessionnel) {
             DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
@@ -81,7 +88,6 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
      */
     @Override
     public DossierProfessionnelDto getById(long id) {
-        // TODO Auto-generated method stub
         Optional<DossierProfessionnel> dp = dossierProRepo.findById(id);
         if (dp.isPresent()) {
             DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp.get());
@@ -106,7 +112,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         List<DossierProfessionnel> lst = dossierProRepo.findByNomContaining(string, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
         // conversion vers Dto
-        List<DossierProfessionnelDto> lstDto = new ArrayList<DossierProfessionnelDto>();
+        List<DossierProfessionnelDto> lstDto = new ArrayList<>();
         for (DossierProfessionnel dp : lst) {
             DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
             dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
@@ -135,7 +141,6 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Override
     public void deleteById(long id) {
-        // TODO Auto-generated method stub
 
         dossierProRepo.deleteById(id);
 
@@ -150,7 +155,6 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Override
     public List<DossierProfessionnelDto> getByIdEtudiant(long id) {
-        // TODO Auto-generated method stub
         EtudiantDto e = etudiantService.getById(id);
 
         return e.getDossierProfessionnel();
@@ -163,7 +167,6 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
      */
     @Override
     public DossierProfessionnelDto getByName(String nom) {
-        // TODO Auto-generated method stub
         DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dossierProRepo.getByName(nom));
         if (dpDto != null) {
             if (dossierProRepo.getByName(nom).getCursus() == null)

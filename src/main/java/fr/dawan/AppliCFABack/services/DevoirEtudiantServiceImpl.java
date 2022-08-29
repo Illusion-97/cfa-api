@@ -14,6 +14,7 @@ import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.DevoirEtudiant;
 import fr.dawan.AppliCFABack.repositories.DevoirEtudiantRepository;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 /***
  * 
@@ -55,9 +56,9 @@ public class DevoirEtudiantServiceImpl implements DevoirEtudiantService {
 	 * @return DevoirEtudiant DTO
 	 */
 	@Override
-	public DevoirEtudiantDto saveOrUpdate(DevoirEtudiantDto tDto) throws Exception {
+	public DevoirEtudiantDto saveOrUpdate(DevoirEtudiantDto tDto) throws SaveInvalidException {
 		if (tDto.getDevoirId() == 0 || tDto.getEtudiantId() == 0)
-			throw new Exception("Inmposible de persister etudiant ou devoir invalide");
+			throw new SaveInvalidException("Inmposible de persister etudiant ou devoir invalide");
 		DevoirEtudiant dE = DtoTools.convert(tDto, DevoirEtudiant.class);
 		dE = devoirEtudiantRepository.saveAndFlush(dE);
 
@@ -100,7 +101,7 @@ public class DevoirEtudiantServiceImpl implements DevoirEtudiantService {
 	public List<DevoirEtudiantDto> getAllByEtudiantId(long id) {
 
 		List<DevoirEtudiant> devoirsEtudiants = devoirEtudiantRepository.getAllByEtudiantId(id);
-		List<DevoirEtudiantDto> result = new ArrayList<DevoirEtudiantDto>();
+		List<DevoirEtudiantDto> result = new ArrayList<>();
 
 		for (DevoirEtudiant devoirEtudiant : devoirsEtudiants) {
 			result.add(DtoTools.convert(devoirEtudiant, DevoirEtudiantDto.class));
@@ -118,7 +119,7 @@ public class DevoirEtudiantServiceImpl implements DevoirEtudiantService {
 	@Override
 	public List<DevoirEtudiantDto> getAllByDevoirId(long id) {
 		List<DevoirEtudiant> devoirsEtudiants = devoirEtudiantRepository.getAllByDevoirId(id);
-		List<DevoirEtudiantDto> result = new ArrayList<DevoirEtudiantDto>();
+		List<DevoirEtudiantDto> result = new ArrayList<>();
 
 		for (DevoirEtudiant devoirEtudiant : devoirsEtudiants) {
 			result.add(DtoTools.convert(devoirEtudiant, DevoirEtudiantDto.class));

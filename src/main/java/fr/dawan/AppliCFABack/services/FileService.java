@@ -8,13 +8,15 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.tools.FileException;
+
 @Service
 public class FileService {
 
 	@Value("${app.storagefolder}")
 	private String filePath; 
 	
-	public Resource download(String fileName, String sousPath) throws Exception {
+	public Resource download(String fileName, String sousPath) throws FileException  {
 		try {
 			String fullPath = filePath + sousPath;
 			
@@ -25,11 +27,11 @@ public class FileService {
 				return resource;
 			}
 			else {
-				throw new Exception("File not found");
+				throw new FileException("File not found");
 			}
 			
 		} catch (Exception e) {
-			throw new Exception("File not found");
+			throw new FileException("File not found");
 		}
 		
 		

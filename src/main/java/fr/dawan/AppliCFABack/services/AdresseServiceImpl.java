@@ -9,18 +9,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.LocationDto;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -46,7 +39,7 @@ public class AdresseServiceImpl implements AdresseService{
 	public List<AdresseDto> getAllAdresse() {
 		List<Adresse> lst = adresseRepository.findAll();
 		
-		List<AdresseDto> lstDto = new ArrayList<AdresseDto>();
+		List<AdresseDto> lstDto = new ArrayList<>();
 		for (Adresse a : lst) {
 			lstDto.add(mapper.AdresseToAdresseDto(a));
 		}
@@ -81,7 +74,7 @@ public class AdresseServiceImpl implements AdresseService{
 		List<Adresse> lst = adresseRepository.findAllByLibelleContainingOrVilleContaining(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<AdresseDto> lstDto = new ArrayList<AdresseDto>();
+		List<AdresseDto> lstDto = new ArrayList<>();
 		for (Adresse a : lst) {
 			AdresseDto aDto =mapper.AdresseToAdresseDto(a);
 			lstDto.add(aDto);
@@ -130,7 +123,7 @@ public class AdresseServiceImpl implements AdresseService{
 	@Override
 	public List<AdresseDto> getAllAdresses(int page, int size, String search) {
 		List<Adresse> adresses = adresseRepository.findAllByLibelleContainingOrVilleContaining(search, search,PageRequest.of(page, size)).get().collect(Collectors.toList());
-		List<AdresseDto> res = new ArrayList<AdresseDto>();
+		List<AdresseDto> res = new ArrayList<>();
 		for (Adresse a : adresses) {
 			res.add(mapper.AdresseToAdresseDto(a));
 		}

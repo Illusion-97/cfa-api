@@ -1,29 +1,29 @@
 package fr.dawan.AppliCFABack.controllers;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
@@ -38,6 +38,8 @@ public class EtudiantController {
 
 	@Autowired
 	EtudiantService etudiantService;
+	
+	private static Logger logger = Logger.getGlobal();
 
 	// ##################################################
 	// # CRUD #
@@ -79,7 +81,7 @@ public class EtudiantController {
 	 */
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public EtudiantDto save(@RequestBody EtudiantDto eDto) {
-		System.out.println("Controller @@PostMapping");
+		logger.info("Controller @@PostMapping");
 		return etudiantService.saveOrUpdate(eDto);
 	}
 
@@ -115,7 +117,7 @@ public class EtudiantController {
 	 */
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public EtudiantDto update(@RequestBody EtudiantDto eDto) {
-		System.out.println("Controller @PutMapping");
+		logger.info("Controller @PutMapping");
 		return etudiantService.saveOrUpdate(eDto);
 	}
 
@@ -238,7 +240,7 @@ public class EtudiantController {
 			etudiantService.fetchAllEtudiantDG2(splitUserDG2String[0], splitUserDG2String[1]);
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
 		} catch(Exception e){
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Failed to fetch data from webservice DG2", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body
 					("Error while fetching data from the webservice DG2");
 		}

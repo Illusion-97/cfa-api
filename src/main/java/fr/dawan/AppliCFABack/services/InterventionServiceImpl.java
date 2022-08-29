@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -27,12 +29,9 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
-import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.PromotionOrInterventionDG2Dto;
-import fr.dawan.AppliCFABack.entities.CentreFormation;
-import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Formateur;
@@ -83,6 +82,8 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	private static Logger logger = Logger.getGlobal();
 
 	/**
 	 * Récupération de toutes les interventions
@@ -365,7 +366,7 @@ public class InterventionServiceImpl implements InterventionService {
 			try {
 				interventionRepository.saveAndFlush(i);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.WARNING, "save and flush intervention failed", e);
 			}
 		}
 		return interventions.size();
@@ -379,7 +380,7 @@ public class InterventionServiceImpl implements InterventionService {
 			try {
 				interventionRepository.saveAndFlush(i);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.WARNING, "save and flush intervention dg2 failed", e);
 			}
 		}
 		return interventions.size();
@@ -406,7 +407,7 @@ public class InterventionServiceImpl implements InterventionService {
 				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {
 				});
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.WARNING, "json intervention dg2 failed", e);
 			}
 
 			for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
@@ -417,7 +418,7 @@ public class InterventionServiceImpl implements InterventionService {
 				try {
 					interventionDG2 = dtoTools.PromotionOrInterventionDG2DtoToIntervention(iDtoDG2);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.log(Level.WARNING, "mapper intervention dg2 failed", e);
 				}
 
 				Optional<Formation> formationOpt = formationRepository.findByIdDg2(iDtoDG2.getCourseId());
