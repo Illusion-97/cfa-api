@@ -16,7 +16,6 @@ public class CursusDto extends BaseEntityDto implements Serializable {
 
 	private String titre;
 	private List<FormationDto> formationsDto;
-	private String description;
 	private String duree;
 	private String slug;
 	private long idDg2;
@@ -56,16 +55,6 @@ public class CursusDto extends BaseEntityDto implements Serializable {
 	/**
 	 * @return the description
 	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	/**
 	 * @return the duree

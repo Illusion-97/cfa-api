@@ -33,6 +33,7 @@ import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.FormationRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 
@@ -42,26 +43,28 @@ public class FormationServiceImpl implements FormationService {
 
 	@Autowired
 	FormationRepository formationRepository;
-	
+
 	@Autowired
 	InterventionRepository interventionRepository;
+
+	@Autowired
+	CursusRepository cursusRepository;
 	
 	@Autowired
 	private RestTemplate restTemplate;
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
-	
+
 //	@Autowired
 //	private RestTemplate restTemplate;
 
 	/**
 	 * Récupération de la liste des formations
 	 * 
-	 * @return lstDto	Liste des objets formation
+	 * @return lstDto Liste des objets formation
 	 */
-	
-	
+
 	@Override
 	public List<FormationDto> getAllFormation() {
 		List<Formation> lst = formationRepository.findAll();
@@ -85,20 +88,19 @@ public class FormationServiceImpl implements FormationService {
 	}
 
 	/**
-	 * Va permettre de récupérer toutes les fiches entreprises avec pagination
-	 * et recherche par titre ou contenu
+	 * Va permettre de récupérer toutes les fiches entreprises avec pagination et
+	 * recherche par titre ou contenu
 	 * 
-	 * @param page	numero de la page
-	 * @param size	éléments sur la page
-	 * @param search	éléments formation (titre, contenu)
+	 * @param page   numero de la page
+	 * @param size   éléments sur la page
+	 * @param search éléments formation (titre, contenu)
 	 * @return lstDto Liste des objets formation
 	 */
 	@Override
 	public List<FormationDto> getAllByPage(int page, int size, String search) {
 		List<Formation> lst = formationRepository
-				.findAllByTitreContainingIgnoringCase(search,
-						PageRequest.of(page, size))
-				.get().collect(Collectors.toList());
+				.findAllByTitreContainingIgnoringCase(search, PageRequest.of(page, size)).get()
+				.collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<FormationDto> lstDto = new ArrayList<FormationDto>();
@@ -119,19 +121,18 @@ public class FormationServiceImpl implements FormationService {
 	 * 
 	 * @param search recherche par titre ou contenu
 	 */
-	
+
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(
-				formationRepository.countByTitreContainingIgnoringCase(search));
+		return new CountDto(formationRepository.countByTitreContainingIgnoringCase(search));
 	}
 
 	/**
 	 * Récupération des formations en fonction de l'id
 	 * 
-	 * @param id	id de la formation
+	 * @param id id de la formation
 	 */
-	
+
 	@Override
 	public FormationDto getById(long id) {
 		Optional<Formation> f = formationRepository.findById(id);
@@ -156,7 +157,7 @@ public class FormationServiceImpl implements FormationService {
 	 * Sauvegarde ou mise à jour d'une formation
 	 * 
 	 */
-	
+
 	@Override
 	public FormationDto saveOrUpdate(FormationDto fDto) {
 		Formation f = DtoTools.convert(fDto, Formation.class);
@@ -169,9 +170,9 @@ public class FormationServiceImpl implements FormationService {
 	/**
 	 * Suppression d'une formation
 	 * 
-	 * @param id	Id concernant la formation
+	 * @param id Id concernant la formation
 	 */
-	
+
 	@Override
 	public void deleteById(long id) {
 		List<Intervention> lstInt = interventionRepository.findAllByFormationId(id);
@@ -185,10 +186,10 @@ public class FormationServiceImpl implements FormationService {
 	/**
 	 * Récupération des interventions en fonction de l'id formation
 	 * 
-	 * @param id	id de la formation
-	 * @return lstInDto	Liste des interventions
+	 * @param id id de la formation
+	 * @return lstInDto Liste des interventions
 	 */
-	
+
 	@Override
 	public List<InterventionDto> findAllByFormationId(long id) {
 
@@ -206,86 +207,87 @@ public class FormationServiceImpl implements FormationService {
 		List<Formation> result = new ArrayList<Formation>();
 		List<FormationDG2Dto> fetchResJson = new ArrayList<FormationDG2Dto>();
 		int nbChangement = 0;
-		
-		//Récupérer la liste formation DG2
+
+		// Récupérer la liste formation DG2
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-		
-		//Ma requête
+
+		// Ma requête
 		URI url = new URI("https://dawan.org/api2/cfa/trainings");
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("x-auth-token", email+ ":" +password);
+		headers.add("x-auth-token", email + ":" + password);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-		
-		//si statusCode OK
-		if(rep.getStatusCode() == HttpStatus.OK) {
+
+		// si statusCode OK
+		if (rep.getStatusCode() == HttpStatus.OK) {
 			String json = rep.getBody();
-			
+
 			try {
-				fetchResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() {} );
+				fetchResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() {
+				});
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-		//Comparer formationsDG2 & formationsDB
+
+		// Comparer formationsDG2 & formationsDB
 		for (FormationDG2Dto fDtoDG2 : fetchResJson) {
-			//chercher en BDD <Optional> findByIdDg2
+			// chercher en BDD <Optional> findByIdDg2
 			Optional<Formation> formationDb = formationRepository.findByIdDg2(fDtoDG2.getId());
-			
+
 			DtoTools dtoTools = new DtoTools();
 			Formation formationDG2 = new Formation();
-			
+
 			try {
 				formationDG2 = dtoTools.FormationDG2DtoToFormation(fDtoDG2);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			//Si !isPresent() alors ajout
-			if(!formationDb.isPresent()) {
+
+			// Si !isPresent() alors ajout
+			if (!formationDb.isPresent()) {
 				result.add(formationDG2);
 			} else {
-				//Si != modif
-				if(!formationDb.get().equals(formationDG2)) {
+				// Si != modif
+				if (!formationDb.get().equals(formationDG2)) {
 					formationDG2.setVersion(formationDb.get().getVersion());
 					formationDG2.setId(formationDb.get().getVersion());
 					result.add(formationDG2);
 				}
 			}
 		}
-		for(Formation f: result) {
+		for (Formation f : result) {
 			try {
 				formationRepository.saveAndFlush(f);
-				nbChangement ++;
+				nbChangement++;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		return nbChangement;
 	}
-	
+
 	/**
 	 * Va récupérer toute les formations de DG2
 	 * 
-	 * @param email Email l'utilsateur dg2
-	 * @param password   Mot de passe de l'utlisateur dg2
+	 * @param email    Email l'utilsateur dg2
+	 * @param password Mot de passe de l'utlisateur dg2
 	 * 
-	 * @exception Exception retourne une exception,
-	 * si erreur dans la récupération des formations
+	 * @exception Exception retourne une exception, si erreur dans la récupération
+	 *                      des formations
 	 */
-	
-	//import des formations DG2
+
+	// import des formations DG2
 	@Override
 	public void fetchDG2Formations2(String email, String password) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<FormationDG2Dto> fResJson = new ArrayList<>();
-		
-		//url dg2 qui concerne la recupération des formations
+
+		// url dg2 qui concerne la recupération des formations
 		URI url = new URI("https://dawan.org/api2/cfa/trainings");
 
-		//recupération des headers / email / password dg2
+		// recupération des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
 
@@ -295,10 +297,10 @@ public class FormationServiceImpl implements FormationService {
 
 		if (repWs.getStatusCode() == HttpStatus.OK) {
 			String json = repWs.getBody();
-			
+
 			try {
-				//recuperation des values en json et lecture
-				fResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() { 
+				// recuperation des values en json et lecture
+				fResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() {
 				});
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -307,6 +309,7 @@ public class FormationServiceImpl implements FormationService {
 			for (FormationDG2Dto fDG2 : fResJson) {
 				Formation formationImport = mapper.formationDG2DtoToFormation(fDG2);
 				Optional<Formation> optFormation = formationRepository.findByIdDg2(formationImport.getIdDg2());
+			
 				if (optFormation.isPresent()) {
 					if (optFormation.get().equals(formationImport))
 						continue;
@@ -333,7 +336,6 @@ public class FormationServiceImpl implements FormationService {
 		} else {
 			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
-
 
 	}
 

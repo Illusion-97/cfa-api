@@ -7,8 +7,6 @@ public class PromotionEtudiantDto {
 
     private String cursusTitre;
 
-    private String cursusDescription;
-
     private String cursusDuree;
 
     private String nom;
@@ -25,14 +23,6 @@ public class PromotionEtudiantDto {
 
     public void setCursusTitre(String cursusTitre) {
         this.cursusTitre = cursusTitre;
-    }
-
-    public String getCursusDescription() {
-        return cursusDescription;
-    }
-
-    public void setCursusDescription(String cursusDescription) {
-        this.cursusDescription = cursusDescription;
     }
 
     public String getCursusDuree() {
