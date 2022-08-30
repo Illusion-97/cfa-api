@@ -71,18 +71,8 @@ public class FormationServiceImpl implements FormationService {
 
 		List<FormationDto> lstDto = new ArrayList<FormationDto>();
 		for (Formation f : lst) {
-			FormationDto formationDto = mapper.FormationToFormationDto(f);
-
-			List<Cursus> lstCursus = f.getCursusLst();
-			List<CursusDto> lstCursusDto = new ArrayList<CursusDto>();
-
-			for (Cursus cursus : lstCursus) {
-				if (cursus != null)
-					lstCursusDto.add(mapper.CursusToCursusDto(cursus));
-			}
-
-			formationDto.setCursusLstDto(lstCursusDto);
-			lstDto.add(formationDto);
+		
+			lstDto.add(DtoTools.convert(f, FormationDto.class));
 		}
 		return lstDto;
 	}
@@ -104,14 +94,9 @@ public class FormationServiceImpl implements FormationService {
 
 		// conversion vers Dto
 		List<FormationDto> lstDto = new ArrayList<FormationDto>();
-		for (Formation c : lst) {
-			FormationDto cDto = mapper.FormationToFormationDto(c);
-			List<CursusDto> cursusLstDto = new ArrayList<CursusDto>();
-			for (Cursus cursus : c.getCursusLst()) {
-				cursusLstDto.add(mapper.CursusToCursusDto(cursus));
-			}
-			cDto.setCursusLstDto(cursusLstDto);
-			lstDto.add(cDto);
+		for (Formation f : lst) {
+			
+			lstDto.add(DtoTools.convert(f, FormationDto.class));
 		}
 		return lstDto;
 	}
@@ -137,17 +122,7 @@ public class FormationServiceImpl implements FormationService {
 	public FormationDto getById(long id) {
 		Optional<Formation> f = formationRepository.findById(id);
 		if (f.isPresent()) {
-			FormationDto formationDto = mapper.FormationToFormationDto(f.get());
-			List<Cursus> lstCursus = f.get().getCursusLst();
-			List<CursusDto> lstCursusDto = new ArrayList<CursusDto>();
-
-			for (Cursus cursus : lstCursus) {
-				if (cursus != null)
-					lstCursusDto.add(mapper.CursusToCursusDto(cursus));
-			}
-
-			formationDto.setCursusLstDto(lstCursusDto);
-			return formationDto;
+			return DtoTools.convert(f.get(), FormationDto.class);
 		}
 
 		return null;
@@ -160,11 +135,22 @@ public class FormationServiceImpl implements FormationService {
 
 	@Override
 	public FormationDto saveOrUpdate(FormationDto fDto) {
-		Formation f = DtoTools.convert(fDto, Formation.class);
+		
+		Formation formation = DtoTools.convert(fDto, Formation.class);
+		
+		if (fDto.getCursusLstId() != null ) {
+			for (long id : fDto.getCursusLstId()) {
+				Optional<Cursus> cursusOpt = cursusRepository.findById(id);
+				if (cursusOpt.isPresent()) {
+					formation.getCursusLst().add(cursusOpt.get());
+					cursusOpt.get().getFormations().add(formation);
+				}
+				
+			}
+		}
+		formation = formationRepository.saveAndFlush(formation);
 
-		f = formationRepository.saveAndFlush(f);
-
-		return mapper.FormationToFormationDto(f);
+		return DtoTools.convert(formation, FormationDto.class);
 	}
 
 	/**
@@ -201,19 +187,95 @@ public class FormationServiceImpl implements FormationService {
 		}
 		return lstIntDto;
 	}
-
+	/**
+	 *  Sauvegarde toute les formations à partir d'une liste de formation
+	 * 
+	 * @param email    Email l'utilsateur dg2
+	 * @param password Mot de passe de l'utlisateur dg2
+	 * @return nombre de formation sauvgardé ou mise à jour 
+	 * @exception Exception retourne une exception, si erreur dans la sauvgarde
+	 *                      des formations
+	 */
 	@Override
 	public int fetchDG2Formations(String email, String password) throws Exception {
+		List<Long> cursusDg2Ids = cursusRepository.findAll().stream().map(c -> c.getIdDg2()).collect(Collectors.toList());
+		
+		List<Formation> formations = new ArrayList<Formation>();
+		
+		cursusDg2Ids.forEach( idCursus ->
+				{
+					try {
+						formations.addAll( getFormationDG2ByIdCursus(email,password,idCursus));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				});
+				
+		for (Formation formation : formations) {
+			try {
+				saveOrUpdate(DtoTools.convert(formation, FormationDto.class));
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return formations.size();
+		
+	}
+	/**
+	 *  Sauvegarde toute les formations à partir d'une liste de formation
+	 * 
+	 * @param email    Email l'utilsateur dg2
+	 * @param password Mot de passe de l'utlisateur dg2
+	 * @param idCursusDg2 Identifiant du cursus 
+	 * @return nombre de formation sauvgardé ou mise à jour 
+	 * @exception Exception retourne une exception, si erreur dans la sauvgarde
+	 *                      des formations
+	 */
+	@Override
+	public int fetchDG2Formations(String email, String password, long idCursusDg2) throws Exception {
+		
+		List<Formation> formations = new ArrayList<Formation>();
+		
+		formations.addAll(getFormationDG2ByIdCursus(email,password,idCursusDg2));
+				
+		for (Formation formation : formations) {
+			try {
+				saveOrUpdate(DtoTools.convert(formation, FormationDto.class));
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return formations.size();		
+	}
+	/**
+	 *  Récupére toute les formations de DG2
+	 * 
+	 * @param email    Email l'utilsateur dg2
+	 * @param password Mot de passe de l'utlisateur dg2
+	 * @return Liste de formation à partir de DG2
+	 * @exception Exception retourne une exception, si erreur dans la récupération
+	 *                      des formations
+	 */
+	@Override
+	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2 ) throws Exception {
+		
+		 Optional<Cursus> cursusDb =  cursusRepository.findByIdDg2(idCursusDg2);
+		 
+		 if (!cursusDb.isPresent()) {
+			throw new Exception("Crsus non présent dans la BDD veiller mettre à jour les cursus");
+		}
+		 
 		List<Formation> result = new ArrayList<Formation>();
 		List<FormationDG2Dto> fetchResJson = new ArrayList<FormationDG2Dto>();
-		int nbChangement = 0;
 
 		// Récupérer la liste formation DG2
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 
 		// Ma requête
-		URI url = new URI("https://dawan.org/api2/cfa/trainings");
+		URI url = new URI("https://dawan.org/api2/cfa/pro-titles/" + idCursusDg2 + "/children");
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
@@ -247,9 +309,20 @@ public class FormationServiceImpl implements FormationService {
 
 			// Si !isPresent() alors ajout
 			if (!formationDb.isPresent()) {
+				
+				List<Cursus> newCursusDb = new ArrayList<Cursus>();
+				newCursusDb.add(cursusDb.get());
+				formationDG2.setCursusLst(newCursusDb);
 				result.add(formationDG2);
 			} else {
 				// Si != modif
+				List<Cursus> cursus = formationDb.get().getCursusLst();
+				formationDG2.setCursusLst(cursus);
+				// Si la liste ne contient pas le cursus en cours on le rajoute
+				if (!formationDG2.getCursusLst().contains(cursusDb.get())) {
+					cursus.add(cursusDb.get());
+					formationDG2.setCursusLst(cursus);
+				}
 				if (!formationDb.get().equals(formationDG2)) {
 					formationDG2.setVersion(formationDb.get().getVersion());
 					formationDG2.setId(formationDb.get().getVersion());
@@ -257,86 +330,10 @@ public class FormationServiceImpl implements FormationService {
 				}
 			}
 		}
-		for (Formation f : result) {
-			try {
-				formationRepository.saveAndFlush(f);
-				nbChangement++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return nbChangement;
+		
+		return result;
 	}
 
-	/**
-	 * Va récupérer toute les formations de DG2
-	 * 
-	 * @param email    Email l'utilsateur dg2
-	 * @param password Mot de passe de l'utlisateur dg2
-	 * 
-	 * @exception Exception retourne une exception, si erreur dans la récupération
-	 *                      des formations
-	 */
-
-	// import des formations DG2
-	@Override
-	public void fetchDG2Formations2(String email, String password) throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-		List<FormationDG2Dto> fResJson = new ArrayList<>();
-
-		// url dg2 qui concerne la recupération des formations
-		URI url = new URI("https://dawan.org/api2/cfa/trainings");
-
-		// recupération des headers / email / password dg2
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("x-auth-token", email + ":" + password);
-
-		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-
-		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-
-		if (repWs.getStatusCode() == HttpStatus.OK) {
-			String json = repWs.getBody();
-
-			try {
-				// recuperation des values en json et lecture
-				fResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() {
-				});
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for (FormationDG2Dto fDG2 : fResJson) {
-				Formation formationImport = mapper.formationDG2DtoToFormation(fDG2);
-				Optional<Formation> optFormation = formationRepository.findByIdDg2(formationImport.getIdDg2());
-			
-				if (optFormation.isPresent()) {
-					if (optFormation.get().equals(formationImport))
-						continue;
-					else if (!optFormation.get().equals(formationImport)) {
-						formationImport.setTitre(optFormation.get().getTitre());
-						formationImport.setId(optFormation.get().getId());
-						formationImport.setSlug(optFormation.get().getSlug());
-						formationImport.setVersion(optFormation.get().getVersion());
-					}
-					try {
-						formationRepository.saveAndFlush(formationImport);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				} else {
-					try {
-						formationRepository.saveAndFlush(formationImport);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		} else {
-			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
-		}
-
-	}
+	
 
 }

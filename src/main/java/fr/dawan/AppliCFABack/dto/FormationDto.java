@@ -24,7 +24,7 @@ public class FormationDto extends BaseEntityDto implements Serializable {
 	private String objectif;
 	private String prerequis;
 	private String plan;
-	private List<CursusDto> cursusLstDto;
+	private List<Long> cursusLstId;
 
 	public FormationDto() {
 		super();
@@ -44,18 +44,20 @@ public class FormationDto extends BaseEntityDto implements Serializable {
 		this.titre = titre;
 	}
 
+
 	/**
-	 * @return the cursusLstDto
+	 * @return le cursusLstId
 	 */
-	public List<CursusDto> getCursusLstDto() {
-		return cursusLstDto;
+	public List<Long> getCursusLstId() {
+		return cursusLstId;
 	}
 
 	/**
-	 * @param cursusLstDto the cursusLstDto to set
+	 * @param cursusLstId le cursusLstId à affecter
+	 
 	 */
-	public void setCursusLstDto(List<CursusDto> cursusLstDto) {
-		this.cursusLstDto = cursusLstDto;
+	public void setCursusLstId(List<Long> cursusLstId) {
+		this.cursusLstId = cursusLstId;
 	}
 
 	public long getIdDg2() {

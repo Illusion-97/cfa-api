@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -168,6 +169,19 @@ public class Formation extends BaseEntity implements Serializable {
 	public void setPlan(String plan) {
 		this.plan = plan;
 	}
+	/**
+	 * 
+	 * @return liste des cursus Ids à partir de la liste des cursus
+	 */
+	public List<Long> getCursusLstId(){
+		List<Long> cursusId = new ArrayList<Long>();
+		if (cursusLst != null) {
+			for(Cursus cursus : cursusLst) {
+				cursusId.add(cursus.getId());
+			}
+		}
+		return cursusId;
+}
 
 	@Override
 	public int hashCode() {
@@ -194,11 +208,11 @@ public class Formation extends BaseEntity implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Formation other = (Formation) obj;
-		if (cursusLst == null) {
-			if (other.cursusLst != null)
-				return false;
-		} else if (!cursusLst.equals(other.cursusLst))
-			return false;
+//		if (cursusLst == null) {
+//			if (other.cursusLst != null)
+//				return false;
+//		} else if (!cursusLst.equals(other.cursusLst))
+//			return false;
 		if (duration == null) {
 			if (other.duration != null)
 				return false;
