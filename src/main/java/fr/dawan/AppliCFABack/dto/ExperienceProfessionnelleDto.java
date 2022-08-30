@@ -1,7 +1,5 @@
 package fr.dawan.AppliCFABack.dto;
 
-import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
-
 import java.io.Serializable;
 
 @SuppressWarnings("serial")

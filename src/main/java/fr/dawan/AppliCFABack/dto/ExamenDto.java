@@ -46,7 +46,7 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 	}
 
 	public ExamenDto(String titre) {
-		super();
+		this.titre = titre;
 	}
 
 	/**
@@ -195,6 +195,7 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 	public List<Byte> getBlocksConcernee() {
 		return blocksConcernee;
 	}
+	@SuppressWarnings("unused")
 	private void setBlocksConcernee(List<Byte> blocksConcernee) {
 		this.blocksConcernee = blocksConcernee;
 	}

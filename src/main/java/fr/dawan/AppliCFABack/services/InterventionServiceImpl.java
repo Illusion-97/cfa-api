@@ -416,7 +416,7 @@ public class InterventionServiceImpl implements InterventionService {
 				DtoTools dtoTools = new DtoTools();
 				Intervention interventionDG2 = new Intervention();
 				try {
-					interventionDG2 = dtoTools.PromotionOrInterventionDG2DtoToIntervention(iDtoDG2);
+					interventionDG2 = dtoTools.promotionOrInterventionDG2DtoToIntervention(iDtoDG2);
 				} catch (Exception e) {
 					logger.log(Level.WARNING, "mapper intervention dg2 failed", e);
 				}

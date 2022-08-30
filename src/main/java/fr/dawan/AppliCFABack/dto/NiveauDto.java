@@ -1,6 +1,13 @@
 package fr.dawan.AppliCFABack.dto;
 
-public class NiveauDto {
+import java.io.Serializable;
+
+public class NiveauDto implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -689766726713914376L;
 
 	private int valeur;
 	

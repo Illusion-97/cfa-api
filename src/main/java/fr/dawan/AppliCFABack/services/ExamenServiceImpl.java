@@ -293,7 +293,7 @@ public class ExamenServiceImpl implements ExamenService {
 		List<Examen> list = examenRepository.findallByEtudiantId(id);
 
 		for(Examen e : list) {
-			result.add(mapperTools.ExamenToLivretEvaluationDto(e));
+			result.add(mapperTools.examenToLivretEvaluationDto(e));
 		}
 		return result;
 	}
