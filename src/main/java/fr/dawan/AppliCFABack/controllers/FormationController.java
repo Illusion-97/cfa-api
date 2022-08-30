@@ -100,7 +100,7 @@ public class FormationController {
 
 		PromotionDto promotion = promotionService.getById(id);
 		List<InterventionDto> lstintervention = promotion.getInterventionsDto();
-		List<FormationDto> lstFormation = new ArrayList<FormationDto>();
+		List<FormationDto> lstFormation = new ArrayList<>();
 		for (InterventionDto i : lstintervention) {
 			lstFormation.add(i.getFormationDto());
 		}
@@ -112,7 +112,7 @@ public class FormationController {
 	public List<FormationDto> getFormationByCursusId(@PathVariable(value = "id") long id) {
 
 		CursusDto cDto = cursusService.getById(id);
-		List<FormationDto> lstFormation = new ArrayList<FormationDto>();
+		List<FormationDto> lstFormation = new ArrayList<>();
 
 		for (FormationDto formationDto : cDto.getFormationsDto()) {
 			lstFormation.add(formationDto);

@@ -338,7 +338,7 @@ public class Cerfa extends BaseEntity implements Serializable {
 		return egilibiliteFonction;
 	}
 
-	public void setÉegilibiliteFonction(String egilibiliteFonction) {
+	public void setEgilibiliteFonction(String egilibiliteFonction) {
 		this.egilibiliteFonction = egilibiliteFonction;
 	}
 
@@ -365,10 +365,12 @@ public class Cerfa extends BaseEntity implements Serializable {
 		super();
 	}
 
+	@Override
 	public long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}

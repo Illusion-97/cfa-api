@@ -22,7 +22,7 @@ public class NiveauServiceImpl implements  NiveauService {
 		Niveau[] niveaux = 	Niveau.values();
 		
 		for (Niveau niveau : niveaux) {
-			niveauxDto.add(mappeur.NiveauToNiveauDto(niveau));
+			niveauxDto.add(mappeur.niveauToNiveauDto(niveau));
 		}
 	
 		return niveauxDto;

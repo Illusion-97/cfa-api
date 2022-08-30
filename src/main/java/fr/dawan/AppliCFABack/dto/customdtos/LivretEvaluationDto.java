@@ -13,6 +13,7 @@ public class LivretEvaluationDto {
     private List<String> observations = new ArrayList<>();
 
     public LivretEvaluationDto() {
+    	super();
     }
 
     public List<String> getPromotions() {

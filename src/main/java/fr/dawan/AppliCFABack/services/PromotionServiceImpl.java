@@ -385,7 +385,7 @@ public class PromotionServiceImpl implements PromotionService {
 	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id) {
 		List<Promotion> promotions = promoRepo.getByEtudiantId(id);
 
-		return promotions.stream().map(p -> mapperTools.PromotionToPromotionEtudiantDto(p)).collect(Collectors.toList());
+		return promotions.stream().map(p -> mapperTools.promotionToPromotionEtudiantDto(p)).collect(Collectors.toList());
 	}
 
 	/**
@@ -469,7 +469,7 @@ public class PromotionServiceImpl implements PromotionService {
 				DtoTools dtoTools = new DtoTools();
 				Promotion promotionDG2 = new Promotion();
 				try {
-					 promotionDG2 = dtoTools.PromotionOrInterventionDG2DtoToPromotion(pDtoDG2);
+					 promotionDG2 = dtoTools.promotionOrInterventionDG2DtoToPromotion(pDtoDG2);
 					
 				} catch (Exception e) {
 					e.printStackTrace();

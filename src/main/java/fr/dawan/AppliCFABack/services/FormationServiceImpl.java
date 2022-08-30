@@ -244,7 +244,7 @@ public class FormationServiceImpl implements FormationService {
 			Formation formationDG2 = new Formation();
 			
 			try {
-				formationDG2 = dtoTools.FormationDG2DtoToFormation(fDtoDG2);
+				formationDG2 = dtoTools.formationDG2DtoToFormation(fDtoDG2);
 			} catch (Exception e) {
 				logger.log(Level.WARNING, "mapper failed", e);
 			}

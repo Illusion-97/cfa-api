@@ -196,7 +196,7 @@ public class Examen extends BaseEntity implements Serializable {
 	}
 
 	public List<Long> getActiviteTypesId() {
-		List<Long> activityteTypesId = new ArrayList<Long>();
+		List<Long> activityteTypesId = new ArrayList<>();
 		for (ActiviteType at : activiteTypes) {
 
 			if (at != null) {
@@ -214,7 +214,7 @@ public class Examen extends BaseEntity implements Serializable {
 	}
 
 	public List<Long> getCompetencesProfessionnellesId() {
-		List<Long> competencesProId = new ArrayList<Long>();
+		List<Long> competencesProId = new ArrayList<>();
 		for (CompetenceProfessionnelle cp : competencesProfessionnelles) {
 
 			if (cp != null) {

@@ -816,8 +816,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 				Positionnement.Niveau nFin = positionnement.get().getNiveauFin();
 				DtoTools mappeur = new DtoTools();
 				etudiantAbsencesDevoirsDto.setPositionnement(DtoTools.convert(positionnement, PositionnementDto.class));
-				etudiantAbsencesDevoirsDto.setNiveauDebut(mappeur.NiveauToNiveauDto(nDebut));
-				etudiantAbsencesDevoirsDto.setNiveauFin(mappeur.NiveauToNiveauDto(nFin));
+				etudiantAbsencesDevoirsDto.setNiveauDebut(mappeur.niveauToNiveauDto(nDebut));
+				etudiantAbsencesDevoirsDto.setNiveauFin(mappeur.niveauToNiveauDto(nFin));
 			}
 
 			List<Absence> absences = absenceRepository.findAllByEtudiantIdAndInterventionId(etudiant.getId(),

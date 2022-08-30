@@ -18,7 +18,7 @@ public class DossierProfessionnelDto extends BaseEntityDto implements Serializab
 	private CursusDto cursusDto;
 
 	public DossierProfessionnelDto() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public DossierProfessionnelDto(String nom) {

@@ -2,7 +2,6 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -28,6 +27,7 @@ public class FormationDG2Dto extends BaseEntityDto implements Serializable {
 	/**
 	 * @return le id
 	 */
+	@Override
 	public long getId() {
 		return id;
 	}
@@ -36,6 +36,7 @@ public class FormationDG2Dto extends BaseEntityDto implements Serializable {
 	 * @param id le id à affecter
 	 
 	 */
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}

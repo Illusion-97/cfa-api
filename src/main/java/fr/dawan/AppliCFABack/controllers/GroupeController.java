@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,8 @@ public class GroupeController {
 
 	@Autowired
 	GroupeEtudiantService groupeEtudiantService;
+	
+	private static Logger logger = Logger.getGlobal();
 
 	// ##################################################
 	// # GET #
@@ -34,7 +37,7 @@ public class GroupeController {
 
 	@GetMapping(produces = "application/json")
 	public List<GroupeEtudiantDto> getAll() {
-		System.out.println("Controller getAll");
+		logger.info("Controller getAll");
 		return groupeEtudiantService.getAllGroupeEtudiant();
 	}
 
@@ -74,7 +77,7 @@ public class GroupeController {
     
     @GetMapping(value = "/{id}/etudiants", produces = "application/json")
 	public List<EtudiantDto> getEtudiantsByGroupeId(@PathVariable("id") long id) {
-    	System.out.println("getEtudiantsByGroupeId : " + id);
+    	logger.info("getEtudiantsByGroupeId : " + id);
 		return groupeEtudiantService.getEtudiantsByGroupeId(id);
 	}
 
@@ -84,7 +87,7 @@ public class GroupeController {
 
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public GroupeEtudiantDto save(@RequestBody GroupeEtudiantDto gDto) {
-		System.out.println("Controller @PostMapping");
+		logger.info("Controller @PostMapping");
 		return groupeEtudiantService.saveOrUpdate(gDto);
 	}
 
@@ -109,7 +112,7 @@ public class GroupeController {
 
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public GroupeEtudiantDto update(@RequestBody GroupeEtudiantDto eDto) {
-		System.out.println("Controller @PutMapping");
+		logger.info("Controller @PutMapping");
 		return groupeEtudiantService.saveOrUpdate(eDto);
 	}
 

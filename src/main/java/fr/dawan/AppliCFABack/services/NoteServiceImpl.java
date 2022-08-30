@@ -172,7 +172,7 @@ public class NoteServiceImpl implements NoteService {
 		List<NoteControleContinuDto> result = new ArrayList<>();
 		List<Note> list = noteRepository.findAllByEtudiantNoteId(id);
 		for(Note n : list) {
-			result.add(mapperTools.NoteToNoteControleContinuDto(n));
+			result.add(mapperTools.noteToNoteControleContinuDto(n));
 		}
 		return result.stream().collect(Collectors.groupingBy(NoteControleContinuDto::getPromotions));
 	}
