@@ -1,9 +1,11 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 /***
  * 
@@ -20,6 +22,9 @@ public class Signature extends BaseEntity implements Serializable {
 	@Column(nullable = false)
 	private String pieceJointe;
 
+	@OneToMany(mappedBy = "signature")
+	private Set<Validation> validations;
+	
 	@OneToOne
 	private Utilisateur utilisateur;
 
