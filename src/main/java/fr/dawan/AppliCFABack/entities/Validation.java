@@ -27,7 +27,7 @@ public class Validation extends BaseEntity implements Serializable {
 	@ManyToOne
 	private Signature signature;
 
-	@OneToOne
+	@OneToOne(mappedBy = "validation")
 	private LivretEvaluation livretEvaluation;
 
 	public enum Etat {
