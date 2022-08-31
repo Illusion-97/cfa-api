@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -18,14 +19,12 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 	@Column(nullable = false, length = 255) //title dg2
 	private String titre;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	private List<Formation> formations;
 
 	@OneToMany(mappedBy = "cursusActiviteType", cascade = CascadeType.ALL)
 	private Set<ActiviteType> activiteTypes;
 
-	@Column(columnDefinition = "TEXT")
-	private String description;
 
 	@Column(nullable = false, length = 255) // attribut de dg2
 	private String duree;
@@ -53,7 +52,6 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 		this.titre = titre;
 		this.formations = formations;
 		this.activiteTypes = activiteTypes;
-		this.description = description;
 		this.duree = duree;
 		this.slug = slug;
 		this.idDg2 = idDg2;
@@ -81,14 +79,6 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 
 	public void setActiviteTypes(Set<ActiviteType> activiteTypes) {
 		this.activiteTypes = activiteTypes;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public String getDuree() {

@@ -867,7 +867,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			for(EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
 				Etudiant etudiant = mapper.etudiantUtilisateurDG2DtoToEtudiant(eDG2);
 				Optional<Etudiant> optEtudiant = etudiantRepository.findByIdDg2(etudiant.getIdDg2());
-
+				
 				if(optEtudiant.isPresent()) {
 					if(optEtudiant.get().equals(etudiant))
 						continue;

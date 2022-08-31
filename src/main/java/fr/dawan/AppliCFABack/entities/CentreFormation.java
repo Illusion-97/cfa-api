@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -13,13 +14,11 @@ public class CentreFormation extends BaseEntity implements Serializable{
 	@Column(nullable = true) // id dans dg2
 	private long idDg2;
 	
-	@Column(nullable = false, length = 4) // country dans dg2
-	private String countryCode;
 	
 	@Column(nullable = true, length = 255) // name dans dg2
 	private String nom;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private Adresse adresse;
 
 	@ManyToOne
@@ -42,7 +41,6 @@ public class CentreFormation extends BaseEntity implements Serializable{
 		super();
 		this.id = id;
 		this.idDg2 = idDg2;
-		this.countryCode = countryCode;
 		this.nom = nom;
 		this.adresse = adresse;
 		this.entreprise = entreprise;
@@ -81,19 +79,12 @@ public class CentreFormation extends BaseEntity implements Serializable{
 		this.idDg2 = idDg2;
 	}
 
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((countryCode == null) ? 0 : countryCode.hashCode());
+//		result = prime * result + ((countryCode == null) ? 0 : countryCode.hashCode());
 		result = prime * result + (int) (idDg2 ^ (idDg2 >>> 32));
 		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
 		return result;
@@ -108,11 +99,6 @@ public class CentreFormation extends BaseEntity implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		CentreFormation other = (CentreFormation) obj;
-		if (countryCode == null) {
-			if (other.countryCode != null)
-				return false;
-		} else if (!countryCode.equals(other.countryCode))
-			return false;
 		if (idDg2 != other.idDg2)
 			return false;
 		if (nom == null) {

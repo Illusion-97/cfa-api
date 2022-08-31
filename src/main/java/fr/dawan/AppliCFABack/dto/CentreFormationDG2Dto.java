@@ -18,18 +18,28 @@ public class CentreFormationDG2Dto extends BaseEntityDto implements Serializable
 	private String name;
 	private boolean published;
 	private String country;
+	private String address;
+	private String zipCode;
+	private String city;
+
 	
 	public CentreFormationDG2Dto() {
 		super();
 	}
 
-	public CentreFormationDG2Dto(long id, String name, boolean published, String country) {
+
+	public CentreFormationDG2Dto(String name, boolean published, String country, String address, String zipCode,
+			String city) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.published = published;
 		this.country = country;
+		this.address = address;
+		this.zipCode = zipCode;
+		this.city = city;
 	}
+
+
 
 	public String getName() {
 		return name;
@@ -54,5 +64,51 @@ public class CentreFormationDG2Dto extends BaseEntityDto implements Serializable
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
+	/**
+	 * @return le address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address le address à affecter
+	 
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	/**
+	 * @return le zipCode
+	 */
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	/**
+	 * @param zipCode le zipCode à affecter
+	 
+	 */
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	/**
+	 * @return le city
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
+	 * @param city le city à affecter
+	 
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
 	
 }

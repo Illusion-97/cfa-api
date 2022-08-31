@@ -137,7 +137,6 @@ public class DtoTools {
         PromotionEtudiantDto cDto = new PromotionEtudiantDto();
 
         cDto.setCursusTitre(p.getCursus().getTitre());
-        cDto.setCursusDescription(p.getCursus().getDescription());
         cDto.setCursusDuree(p.getCursus().getDuree());
         cDto.setNom(p.getNom());
         cDto.setDateDebut(p.getDateDebut());

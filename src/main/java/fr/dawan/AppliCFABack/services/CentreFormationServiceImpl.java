@@ -25,9 +25,11 @@ import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
 
 @Service
@@ -37,6 +39,9 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	@Autowired
 	CentreFormationRepository centreFormationRepository;
 
+	@Autowired
+	AdresseRepository adresseRepository;
+	
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	
@@ -199,7 +204,27 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 			for (CentreFormationDG2Dto cDG2 : cResJson) {
 				CentreFormation centreImport = mapper.centreFormationDG2DtoToCentreFormation(cDG2);
 				Optional<CentreFormation> optCentre = centreFormationRepository.findByIdDg2(centreImport.getIdDg2());
-
+				//Vérification et ajout de l'adresse 
+				if ( cDG2.getAddress() != null && !cDG2.getAddress().trim().isEmpty()) {
+					
+					Adresse  adresse = new Adresse();
+					adresse.setLibelle(cDG2.getAddress());
+					adresse.setCodePostal(cDG2.getZipCode());
+					adresse.setVille(cDG2.getCity());
+					adresse.setCountryCode(cDG2.getCountry());
+					if (optCentre.isPresent()) {
+						if (!adresse.equals(optCentre.get().getAdresse())) {
+							adresse.setId(optCentre.get().getAdresse().getId());
+							adresse.setVersion(optCentre.get().getAdresse().getVersion());
+							adresseRepository.saveAndFlush(adresse);
+						}
+					}
+					else {
+						centreImport.setAdresse(adresse);
+					}
+					
+				}
+				
 				if (optCentre.isPresent()) {
 					if (optCentre.get().equals(centreImport))
 						continue;

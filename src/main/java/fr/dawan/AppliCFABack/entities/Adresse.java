@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -18,6 +17,9 @@ public class Adresse extends BaseEntity implements Serializable {
 
 	@Column(nullable = false, length = 255)
 	private String codePostal;
+	
+	@Column(nullable = false, length = 4) // country dans dg2
+	private String countryCode;
 
 	public Adresse() {
 		super();
@@ -53,7 +55,65 @@ public class Adresse extends BaseEntity implements Serializable {
 		this.codePostal = codePostal;
 	}
 
+	/**
+	 * @return le countryCode
+	 */
+	public String getCountryCode() {
+		return countryCode;
+	}
 
+	/**
+	 * @param countryCode le countryCode à affecter
+	 
+	 */
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((countryCode == null) ? 0 : countryCode.hashCode());
+		result = prime * result + ((codePostal== null) ? 0 : codePostal.hashCode());
+		result = prime * result + ((libelle== null) ? 0 : libelle.hashCode());
+		result = prime * result + ((ville== null) ? 0 : ville.hashCode());
+
+
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Adresse other = (Adresse) obj;
+		if (countryCode == null) {
+			if (other.countryCode != null)
+				return false;
+		} else if (!countryCode.equals(other.countryCode))
+			return false;
+		if (codePostal == null) {
+			if (other.codePostal != null)
+				return false;
+		} else if (!codePostal.equals(other.codePostal))
+			return false;
+		if (libelle == null) {
+			if (other.libelle != null)
+				return false;
+		} else if (!libelle.equals(other.libelle))
+			return false;
+		if (ville == null) {
+			if (other.ville != null)
+				return false;
+		} else if (!ville.equals(other.ville))
+			return false;
+		return true;
+	}
 
 
 }

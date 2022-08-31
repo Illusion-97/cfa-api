@@ -150,13 +150,20 @@ public class FormationController {
 		return formationService.saveOrUpdate(fDto);
 	}
 	
-	@GetMapping(value="/dg2", produces="application/json")
-	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers) {
+	@GetMapping(value={"/dg2","/dg2/{idCursusDg2}"}, produces="application/json")
+	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers, @PathVariable(value = "idCursusDg2", required = false)Optional<Long> idCursusDg2) {
 		String userDG2 = headers.get("x-auth-token");
 		String[] splitUser = userDG2.split(":");
 			
 		try {
-			int nb = formationService.fetchDG2Formations(splitUser[0], splitUser[1]);
+			int nb = 0;
+			if (idCursusDg2.isPresent()) {
+				nb = formationService.fetchDG2Formations(splitUser[0], splitUser[1], idCursusDg2.get());
+			}
+			else {
+				 nb = formationService.fetchDG2Formations(splitUser[0], splitUser[1]);
+
+			}
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Formations updated :" +nb);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -165,19 +172,6 @@ public class FormationController {
 		}
 	}
 	
-	@GetMapping(value="/dg2test", produces="application/json")
-	public ResponseEntity<String> fetchAllDG22(@RequestHeader Map<String, String> headers) {
-		String userDG2 = headers.get("x-auth-token");
-		String[] splitUser = userDG2.split(":");
-			
-		try {
-			formationService.fetchDG2Formations2(splitUser[0], splitUser[1]);
-			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Formations updated !");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error while fetching data from the webservice DG2");
-		}
-	}
+
 }
 

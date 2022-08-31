@@ -178,7 +178,6 @@ public interface DtoMapper {
 	Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
 
 	@Mapping(target = "activiteTypes", ignore = true)
-	@Mapping(target = "description", ignore = true)
 	@Mapping(target = "formations", ignore = true)
 	@Mapping(source = "id", target = "idDg2")
 	@Mapping(source = "title", target = "titre")
@@ -195,7 +194,6 @@ public interface DtoMapper {
 	@Mapping(target = "entreprise", ignore = true)
 	@Mapping(source = "name", target = "nom")
 	@Mapping(source = "id", target = "idDg2")
-	@Mapping(source = "country", target = "countryCode")
 	@Mapping(target = "id", ignore = true)
 	CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
 

@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -238,6 +239,17 @@ public class InterventionServiceImpl implements InterventionService {
 	public InterventionDto saveOrUpdate(InterventionDto iDto) {
 		Intervention i = DtoTools.convert(iDto, Intervention.class);
 
+		if (iDto.getPromotionsId() !=  null) {
+			for (long id : iDto.getPromotionsId()) {
+				Optional<Promotion> promoOpt =  promoRepository.findById(id);
+				if (promoOpt.isPresent()) {
+					//subtilité sur update si promo déja présent
+					i.getPromotions().add(promoOpt.get());
+					promoOpt.get().getInterventions().add(i);
+				}
+			}
+		}
+		
 		i = interventionRepository.saveAndFlush(i);
 
 		filesService.createDirectory("interventions/" + i.getId());
@@ -355,20 +367,14 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Override
 	public int fetchDGInterventions(String email, String password) throws Exception {
-		List<Intervention> interventions = new ArrayList<Intervention>();
 		List<Promotion> promoLst = new ArrayList<Promotion>();
 		promoLst = promoRepository.findAll();
+		int result = 0;
 		for (Promotion p : promoLst) {
-			interventions.addAll(getInerventionDG2ByIdPromotionDG2(email, password, p.getIdDg2()));
+			result += fetchDGInterventions(email, password, p.getIdDg2());
 		}
-		for (Intervention i : interventions) {
-			try {
-				interventionRepository.saveAndFlush(i);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return interventions.size();
+		
+		return result;
 	}
 
 	@Override
@@ -378,6 +384,7 @@ public class InterventionServiceImpl implements InterventionService {
 		for (Intervention i : interventions) {
 			try {
 				interventionRepository.saveAndFlush(i);
+				//saveOrUpdate(DtoTools.convert(i, InterventionDto.class));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -388,6 +395,12 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public List<Intervention> getInerventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
 			throws Exception {
+		Optional<Promotion> promotionOpt = promoRepository.findByIdDg2(idPrmotionDg2);
+		
+		if (!promotionOpt.isPresent()) {
+			throw new Exception("Promotion introuvable veuiller mettre à jour les promotions");
+		}
+		
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>();
@@ -423,13 +436,21 @@ public class InterventionServiceImpl implements InterventionService {
 				Optional<Formation> formationOpt = formationRepository.findByIdDg2(iDtoDG2.getCourseId());
 				if (formationOpt.isPresent()) {
 					interventionDG2.setFormation(formationOpt.get());
+//					throw new Exception("Formation introuvable veuiller mettre à jour les formations");
 				}
-
-				// comparer voir sil existe en BDD
 				if (!interventionDb.isPresent()) {
+					List<Promotion> promotions = new ArrayList<Promotion>(); 
+
+					promotions.add(promotionOpt.get());
+					interventionDG2.setPromotions(promotions);
 					result.add(interventionDG2);
 					// si existe en BDD -> comparer tous les champs et si différents -> faire update
 				} else {
+						List<Promotion> promotions = interventionDb.get().getPromotions();
+						interventionDG2.setPromotions(promotions);
+						if (!interventionDG2.getPromotions().contains(promotionOpt.get())) {
+							interventionDG2.getPromotions().add(promotionOpt.get());
+						}
 					if (!interventionDb.get().equals(interventionDG2)) {
 						interventionDG2.setId(interventionDb.get().getId());
 						interventionDG2.setVersion(interventionDb.get().getVersion());
