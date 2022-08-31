@@ -471,7 +471,10 @@ public class PromotionServiceImpl implements PromotionService {
 				if(cursusOpt.isPresent()) {
 					promotionDG2.setCursus(cursusOpt.get());
 				}
-				
+				Optional<CentreFormation> centreDeFormationOptional = centreFormationRepository.findByIdDg2(pDtoDG2.getLocationId());
+				if (centreDeFormationOptional.isPresent()) {
+					promotionDG2.setCentreFormation(centreDeFormationOptional.get());
+				}
 				//comparer voir sil existe en BDD
 				if(!promoDb.isPresent()) {
 					result.add(promotionDG2);
