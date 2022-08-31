@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -137,6 +138,15 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 		this.idDg2 = idDg2;
 	}
 
+	public List<Long> getPromotionId(){
+		List<Long> promotionsId = new ArrayList<Long>();
+		if (promotions != null) {
+			for(Promotion p : promotions) {
+				promotionsId.add(p.getId());
+			}
+		}
+		return promotionsId;
+}
 	@Override
 	public int hashCode() {
 		return Objects.hash(dateDebut, dateFin, formation, idDg2);

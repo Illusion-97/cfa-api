@@ -22,6 +22,7 @@ public class InterventionDto extends BaseEntityDto implements Serializable {
 	private InterventionDto interventionMereDto; // Java init+appro
 	private List<PromotionDto> promotionsDto; // CDA 2021
 	private List<FormateurDto> formateursDto;
+	private List<Long> promotionsId;
 	private String noteInfoPersonnel;
 	private long heuresDisponsees;
 	
@@ -134,6 +135,20 @@ public class InterventionDto extends BaseEntityDto implements Serializable {
 	 */
 	public long getHeuresDisponsees() {
 		return heuresDisponsees;
+	}
+	/**
+	 * @return le promotionsId
+	 */
+	public List<Long> getPromotionsId() {
+		return promotionsId;
+	}
+
+	/**
+	 * @param promotionsId le promotionsId à affecter
+	 
+	 */
+	public void setPromotionsId(List<Long> promotionsId) {
+		this.promotionsId = promotionsId;
 	}
 
 	public void setHeuresDisponsees() {

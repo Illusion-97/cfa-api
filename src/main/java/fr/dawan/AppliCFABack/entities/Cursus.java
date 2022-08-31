@@ -19,7 +19,7 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 	@Column(nullable = false, length = 255) //title dg2
 	private String titre;
 
-	@ManyToMany()
+	@ManyToMany
 	private List<Formation> formations;
 
 	@OneToMany(mappedBy = "cursusActiviteType", cascade = CascadeType.ALL)
