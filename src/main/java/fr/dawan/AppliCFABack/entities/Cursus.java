@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -18,7 +19,7 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 	@Column(nullable = false, length = 255) //title dg2
 	private String titre;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany()
 	private List<Formation> formations;
 
 	@OneToMany(mappedBy = "cursusActiviteType", cascade = CascadeType.ALL)

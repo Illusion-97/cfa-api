@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,7 +40,7 @@ public class Formation extends BaseEntity implements Serializable {
 	private String plan;
 	
 
-	@ManyToMany(mappedBy = "formations", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "formations", cascade = CascadeType.PERSIST)
 	private List<Cursus> cursusLst;
 
 
@@ -183,11 +184,15 @@ public class Formation extends BaseEntity implements Serializable {
 		return cursusId;
 }
 
+
+
+
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cursusLst == null) ? 0 : cursusLst.hashCode());
+		//result = prime * result + ((cursusLst == null) ? 0 : cursusLst.hashCode());
 		result = prime * result + ((duration == null) ? 0 : duration.hashCode());
 		result = prime * result + (int) (idDg2 ^ (idDg2 >>> 32));
 		result = prime * result + ((objectif == null) ? 0 : objectif.hashCode());

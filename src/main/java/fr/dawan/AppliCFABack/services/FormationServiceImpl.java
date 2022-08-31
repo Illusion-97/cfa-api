@@ -199,27 +199,30 @@ public class FormationServiceImpl implements FormationService {
 	@Override
 	public int fetchDG2Formations(String email, String password) throws Exception {
 		List<Long> cursusDg2Ids = cursusRepository.findAll().stream().map(c -> c.getIdDg2()).collect(Collectors.toList());
-		
-		List<Formation> formations = new ArrayList<Formation>();
-		
-		cursusDg2Ids.forEach( idCursus ->
-				{
-					try {
-						formations.addAll( getFormationDG2ByIdCursus(email,password,idCursus));
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				});
-				
-		for (Formation formation : formations) {
-			try {
-				saveOrUpdate(DtoTools.convert(formation, FormationDto.class));
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
+		int result = 0;
+		for (Long idCursus : cursusDg2Ids) {
+			result += fetchDG2Formations(email,password ,idCursus);
 		}
-		return formations.size();
+	//	List<Formation> formations = new ArrayList<Formation>();
+		
+//		cursusDg2Ids.forEach( idCursus ->
+//				{
+//					try {
+//						formations.addAll( getFormationDG2ByIdCursus(email,password,idCursus));
+//					} catch (Exception e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				});
+//				
+//		for (Formation formation : formations) {
+//			try {
+//				saveOrUpdate(DtoTools.convert(formation, FormationDto.class));
+//			} catch (Exception e2) {
+//				// TODO: handle exception
+//			}
+//		}
+		return result;
 		
 	}
 	/**
@@ -263,7 +266,7 @@ public class FormationServiceImpl implements FormationService {
 		 Optional<Cursus> cursusDb =  cursusRepository.findByIdDg2(idCursusDg2);
 		 
 		 if (!cursusDb.isPresent()) {
-			throw new Exception("Crsus non présent dans la BDD veiller mettre à jour les cursus");
+			throw new Exception("Cursus non présent dans la BDD veuiller mettre à jour les cursus");
 		}
 		 
 		List<Formation> result = new ArrayList<Formation>();
@@ -325,7 +328,7 @@ public class FormationServiceImpl implements FormationService {
 				}
 				if (!formationDb.get().equals(formationDG2)) {
 					formationDG2.setVersion(formationDb.get().getVersion());
-					formationDG2.setId(formationDb.get().getVersion());
+					formationDG2.setId(formationDb.get().getId());
 					result.add(formationDG2);
 				}
 			}
