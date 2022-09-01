@@ -34,7 +34,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 	public List<PassageExamenDto> getAllPassageExamen() {
 		List<PassageExamen> lst = passageExamenRepository.findAll();
 
-		List<PassageExamenDto> lstDto = new ArrayList<PassageExamenDto>();
+		List<PassageExamenDto> lstDto = new ArrayList<>();
 		for (PassageExamen pe : lst) {
 			lstDto.add(mapper.PassageExamenToPassageExamenDto(pe));
 		}

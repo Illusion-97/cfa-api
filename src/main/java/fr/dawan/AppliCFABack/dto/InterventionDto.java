@@ -28,7 +28,6 @@ public class InterventionDto extends BaseEntityDto implements Serializable {
 	
 
 	public InterventionDto() {
-		// TODO Auto-generated constructor stub
 
 	}
 

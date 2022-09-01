@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.controllers;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
@@ -123,8 +125,7 @@ public class InterventionController {
 			interventionService.deleteById(id);
 //			int status = ResponseEntity.status(HttpStatus.ACCEPTED).build().getStatusCodeValue();
 			HttpStatus status = ResponseEntity.status(HttpStatus.ACCEPTED).build().getStatusCode();
-			ResponseEntity<?> response = ResponseEntity.status(status).header("Status", status.toString()).build();
-			return response;
+			return ResponseEntity.status(status).header("Status", status.toString()).build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
 		}
@@ -163,7 +164,6 @@ public class InterventionController {
 			}
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Promotions updated :" +nb);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error while fetching data from the webservice DG2");
 		}

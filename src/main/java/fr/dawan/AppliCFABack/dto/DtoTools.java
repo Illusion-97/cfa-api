@@ -1,8 +1,5 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.Converter;
@@ -16,9 +13,7 @@ import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
-
 import fr.dawan.AppliCFABack.entities.Formation;
-
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Positionnement;
@@ -80,7 +75,7 @@ public class DtoTools {
         mapper.createTypeMap(Enum, clazz).setConverter(converter);
         return mapper.map(Enum, clazz);
     }
-    Converter<Positionnement.Niveau, NiveauDto> NiveauEnumToNiveauDtoConverter = context -> {
+    Converter<Positionnement.Niveau, NiveauDto> niveauEnumToNiveauDtoConverter = context -> {
 
     	Positionnement.Niveau niveau =  context.getSource();
 
@@ -93,7 +88,7 @@ public class DtoTools {
     };
 
     
-    Converter<PromotionOrInterventionDG2Dto, Promotion> PromotionDG2DtoToPromotionConverter = context -> {
+    Converter<PromotionOrInterventionDG2Dto, Promotion> promotionDG2DtoToPromotionConverter = context -> {
     	PromotionOrInterventionDG2Dto pDG2 = context.getSource();
     	Promotion promo = new Promotion();
     	promo.setIdDg2(pDG2.getId());
@@ -103,7 +98,7 @@ public class DtoTools {
     	return promo;
     };
     
-    Converter<FormationDG2Dto, Formation> FormationDG2DtoToFormationConverter = context -> {
+    Converter<FormationDG2Dto, Formation> formationDG2DtoToFormationConverter = context -> {
     	FormationDG2Dto fDG2 = context.getSource();
     	Formation formation = new Formation();
     	formation.setTitre(fDG2.getTitle());
@@ -116,7 +111,7 @@ public class DtoTools {
     	return formation;
     };
     
-    Converter<PromotionOrInterventionDG2Dto, Intervention> PromotionDG2DtoToInterventionConverter = context -> {
+    Converter<PromotionOrInterventionDG2Dto, Intervention> promotionDG2DtoToInterventionConverter = context -> {
     	PromotionOrInterventionDG2Dto pDG2 = context.getSource();
     	Intervention intervention = new Intervention();
 
@@ -131,7 +126,7 @@ public class DtoTools {
      * permet de mapper un objet Promotion en PromotionEtudiantDto (dto customisé) -
      * return l'objet dto custom mappé
      */
-    Converter<Promotion, PromotionEtudiantDto> PromotionToPromotionEtudiantDtoConverter = context -> {
+    Converter<Promotion, PromotionEtudiantDto> promotionToPromotionEtudiantDtoConverter = context -> {
 
         Promotion p = context.getSource();
         PromotionEtudiantDto cDto = new PromotionEtudiantDto();
@@ -154,45 +149,43 @@ public class DtoTools {
      * @param promotion
      * @return l'objet dto custom mappé
      */
-    public PromotionEtudiantDto PromotionToPromotionEtudiantDto(Promotion promotion) {
-        return convert(promotion, PromotionEtudiantDto.class, PromotionToPromotionEtudiantDtoConverter);
+    public PromotionEtudiantDto promotionToPromotionEtudiantDto(Promotion promotion) {
+        return convert(promotion, PromotionEtudiantDto.class, promotionToPromotionEtudiantDtoConverter);
     }
 
-    public NiveauDto NiveauToNiveauDto (Positionnement.Niveau niveau) {
+    public NiveauDto niveauToNiveauDto (Positionnement.Niveau niveau) {
 
-    	return enumConvert(niveau, NiveauDto.class, NiveauEnumToNiveauDtoConverter);
+    	return enumConvert(niveau, NiveauDto.class, niveauEnumToNiveauDtoConverter);
     }
     
-    public Promotion PromotionOrInterventionDG2DtoToPromotion(PromotionOrInterventionDG2Dto promoDG2Dto) {
-    	return convert(promoDG2Dto, Promotion.class, PromotionDG2DtoToPromotionConverter);
+    public Promotion promotionOrInterventionDG2DtoToPromotion(PromotionOrInterventionDG2Dto promoDG2Dto) {
+    	return convert(promoDG2Dto, Promotion.class, promotionDG2DtoToPromotionConverter);
     }
     
-    public Formation FormationDG2DtoToFormation(FormationDG2Dto formationDG2Dto) {
-    	return convert(formationDG2Dto, Formation.class, FormationDG2DtoToFormationConverter);
+    public Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto) {
+    	return convert(formationDG2Dto, Formation.class, formationDG2DtoToFormationConverter);
     }
 
-    public Intervention PromotionOrInterventionDG2DtoToIntervention(PromotionOrInterventionDG2Dto promoDG2Dto) {
-    	return convert(promoDG2Dto, Intervention.class, PromotionDG2DtoToInterventionConverter);
+    public Intervention promotionOrInterventionDG2DtoToIntervention(PromotionOrInterventionDG2Dto promoDG2Dto) {
+    	return convert(promoDG2Dto, Intervention.class, promotionDG2DtoToInterventionConverter);
     }
     /**
      * permet de mapper un objet Examen en LivretEvaluationDto (dto customisé) -
      * return l'objet dto custom mappé
      */
-    Converter<Examen, LivretEvaluationDto> ExamenToLivretEvaluationDtoConverter = context -> {
+    Converter<Examen, LivretEvaluationDto> examenToLivretEvaluationDtoConverter = context -> {
 
         Examen e = context.getSource();
         LivretEvaluationDto leDto = new LivretEvaluationDto();
 
         leDto.setPromotions(e.getPromotions().stream().map(p -> {
-            String promotion = p.getNom();
-            return promotion;
+            return p.getNom();
         }).collect(Collectors.toList()));
 
         leDto.setExamen(e.getTitre());
 
         leDto.setCompetences(e.getCompetencesProfessionnelles().stream().map(c -> {
-            String competence = c.getLibelle();
-            return competence;
+            return c.getLibelle();
         }).collect(Collectors.toList()));
 
         leDto.setSatisfactions(e.getNotes().stream().map(s -> {
@@ -200,9 +193,8 @@ public class DtoTools {
             return satisfaction;
         }).collect(Collectors.toList()));
 
-        leDto.setObservations(e.getNotes().stream().map(n -> {
-            String observation = n.getObservation();
-            return observation;
+        leDto.setObservations(e.getNotes().stream().map(o -> {
+            return o.getObservation();
         }).collect(Collectors.toList()));
         return leDto;
     };
@@ -212,15 +204,15 @@ public class DtoTools {
      * @param examen
      * @return l'objet dto custom mappé
      */
-    public LivretEvaluationDto ExamenToLivretEvaluationDto(Examen examen) {
-        return convert(examen, LivretEvaluationDto.class, ExamenToLivretEvaluationDtoConverter);
+    public LivretEvaluationDto examenToLivretEvaluationDto(Examen examen) {
+        return convert(examen, LivretEvaluationDto.class, examenToLivretEvaluationDtoConverter);
     }
 
     /**
      * permet de mapper un objet Note en NoteControleContinuDto (dto customisé) -
      * return l'objet dto custom mappé
      */
-    Converter<Note, NoteControleContinuDto> NoteToNoteControleContinuDtoConverter = context -> {
+    Converter<Note, NoteControleContinuDto> noteToNoteControleContinuDtoConverter = context -> {
         Note n = context.getSource();
         NoteControleContinuDto nDto = new NoteControleContinuDto();
 
@@ -235,8 +227,7 @@ public class DtoTools {
         nDto.setDate(n.getExamen().getDateExamen());
 
         nDto.setPromotions(n.getExamen().getPromotions().stream().map(p -> {
-            String promotion = p.getNom();
-            return promotion;
+            return p.getNom();
         }).collect(Collectors.toSet()));
 
         return nDto;
@@ -247,8 +238,8 @@ public class DtoTools {
      * @param note
      * @return l'objet dto custom mappé
      */
-    public NoteControleContinuDto NoteToNoteControleContinuDto(Note note){
-        return convert(note, NoteControleContinuDto.class, NoteToNoteControleContinuDtoConverter);
+    public NoteControleContinuDto noteToNoteControleContinuDto(Note note){
+        return convert(note, NoteControleContinuDto.class, noteToNoteControleContinuDtoConverter);
     }
 
 

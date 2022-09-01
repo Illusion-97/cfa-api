@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import fr.dawan.AppliCFABack.entities.Absence.TypeAbsence;

@@ -32,14 +32,14 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 	//recuperation de la journée de planning en fonction de l'intervention
 	@Override
 	public List<JourneePlanningDto> getJourneePlanningFromIntervention(Intervention i) {
-		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
+		List<JourneePlanningDto> result = new ArrayList<>();
 		
 		LocalDate compteur = i.getDateDebut();
 		
 		while(compteur.compareTo(i.getDateFin()) <= 0) {
-			if(EstJoursOuvrable(compteur)) {
+			if(estJoursOuvrable(compteur)) {
 				
-				List<FormateurDto> formateurs = new ArrayList<FormateurDto>();
+				List<FormateurDto> formateurs = new ArrayList<>();
 								
 				for(Formateur f : i.getFormateurs()) {
 					FormateurDto formDto = mapper.FormateurToFormateurDto(f);
@@ -69,9 +69,9 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 	 */
 	
 	@Override
-	public boolean EstJoursOuvrable(LocalDate date)
+	public boolean estJoursOuvrable(LocalDate date)
     {
-        return !(EstFerie(date) || EstWeekEnd(date));
+        return !(estFerie(date) || estWeekEnd(date));
     }
 	
 	/**
@@ -79,9 +79,9 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 	 * 
 	 */
 	
-    private boolean EstFerie(LocalDate date)
+    private boolean estFerie(LocalDate date)
     {
-        List<LocalDate> JoursFeries = new ArrayList<LocalDate>();
+        List<LocalDate> JoursFeries = new ArrayList<>();
         JoursFeries.add(LocalDate.of(date.getYear(),1,1));// 01 Janvier
         JoursFeries.add(LocalDate.of(date.getYear(), 5, 1));// 01 Mai
         JoursFeries.add(LocalDate.of(date.getYear(), 5, 8));// 08 Mai
@@ -93,7 +93,7 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 
         //  --  Calcul de pâque
         //  --  Trouver sur internet : 
-        JoursFeries.addAll(CalculPaque(date));
+        JoursFeries.addAll(calculPaque(date));
 
         for(LocalDate d : JoursFeries)
             //date.compareTo(date2) : j'ai peur d'avoir des erreurs avec d'éventuelle heures ou autres ?
@@ -110,7 +110,7 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 	 */
     
 	//Pour déterminer si week end
-    private boolean EstWeekEnd(LocalDate date)
+    private boolean estWeekEnd(LocalDate date)
     {
     	//getValue() : @return the day-of-week, from 1 (Monday) to 7 (Sunday)
 		return date.getDayOfWeek().getValue() == 6 || date.getDayOfWeek().getValue() == 7;
@@ -123,7 +123,7 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 	 * @return JourPaque	Retourne les jours de pâque férier
 	 */
     //Méthode trouvée sur Internet
-    private List<LocalDate> CalculPaque(LocalDate date)
+    private List<LocalDate> calculPaque(LocalDate date)
     {
         //Calcul du jour de pâques (algorithme de Oudin (1940))
         //Calcul du nombre d'or - 1
@@ -153,12 +153,12 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
         //Pentecote
         LocalDate dtMondayPentecote = dtMondayPaques.plusDays(49);
 
-        List<LocalDate> JoursPaque = new ArrayList<LocalDate>();
-        JoursPaque.add(dtMondayPaques);
-        JoursPaque.add(dtAscension);
-        JoursPaque.add(dtMondayPentecote);
+        List<LocalDate> joursPaque = new ArrayList<>();
+        joursPaque.add(dtMondayPaques);
+        joursPaque.add(dtAscension);
+        joursPaque.add(dtMondayPentecote);
 
-        return JoursPaque;
+        return joursPaque;
     }
 
 }

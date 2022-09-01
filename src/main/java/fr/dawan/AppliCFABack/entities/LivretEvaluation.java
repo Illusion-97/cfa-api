@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -30,12 +31,12 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 	@ManyToOne
 	private CentreFormation organismeFormation;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private Validation validation;
 
 	@Column(columnDefinition = "TEXT", nullable = false)
-
-	private String observations;
+	
+	private String observation;
 
 	@ManyToOne
 	private Formateur formateurEvaluateur;
@@ -90,16 +91,16 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 	/**
 	 * @return le observations
 	 */
-	public String getObservations() {
-		return observations;
+	public String getObservation() {
+		return observation;
 	}
 
 	/**
 	 * @param observations le observations à affecter
 	 * 
 	 */
-	public void setObservations(String observations) {
-		this.observations = observations;
+	public void setObservation(String observation) {
+		this.observation = observation;
 	}
 
 	/**

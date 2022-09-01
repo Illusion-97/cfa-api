@@ -36,7 +36,7 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 	public List<FicheEntrepriseDto> getAllFicheEntreprise() {
 		List<FicheEntreprise> lst = ficheEntrepriseRepository.findAll();
 
-		List<FicheEntrepriseDto> lstDto = new ArrayList<FicheEntrepriseDto>();
+		List<FicheEntrepriseDto> lstDto = new ArrayList<>();
 		for (FicheEntreprise n : lst) {
 			FicheEntrepriseDto fDto = mapper.FicheEntrepriseToFicheEntrepriseDto(n);
 			fDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.getEtudiant()));
@@ -64,7 +64,7 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 				.findAll();
 
 		// conversion vers Dto
-		List<FicheEntrepriseDto> lstDto = new ArrayList<FicheEntrepriseDto>();
+		List<FicheEntrepriseDto> lstDto = new ArrayList<>();
 		for (FicheEntreprise c : lst) {
 			FicheEntrepriseDto fDto = mapper.FicheEntrepriseToFicheEntrepriseDto(c);
 			fDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(c.getEntreprise()));
@@ -77,7 +77,7 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 
 //	@Override
 //	public CountDto count(String search) {
-//		// TODO Auto-generated method stub
+//		
 //		return new CountDto(ficheEntrepriseRepository.countByNomContainingIgnoringCase(search));
 //	}
 

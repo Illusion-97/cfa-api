@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,9 +12,9 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.PositionnementDto;
-import fr.dawan.AppliCFABack.dto.customdtos.PositionnementDtoToSave;
 import fr.dawan.AppliCFABack.entities.Positionnement;
 import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 /***
  * 
  * @author Feres BG Valentin C.
@@ -55,9 +54,9 @@ public class PositionnementServiceImpl implements PositionnementService {
 	 * @return Positionnement DTO
 	 */
 	@Override
-	public PositionnementDto saveOrUpdate(PositionnementDto tDto) throws Exception {
+	public PositionnementDto saveOrUpdate(PositionnementDto tDto) throws SaveInvalidException {
 		if (tDto.getEtudiantId() == 0 || tDto.getInterventionId() == 0)
-			throw new Exception("Inmposible de persister etudiant ou intervention invalide");
+			throw new SaveInvalidException("Inmposible de persister etudiant ou intervention invalide");
 		
 		Positionnement p = DtoTools.convert(tDto, Positionnement.class);
 		p = positionnementRepository.saveAndFlush(p);
@@ -96,7 +95,7 @@ public class PositionnementServiceImpl implements PositionnementService {
 	@Override
 	public List<PositionnementDto> getAllByPromotionId(long idPromotion) {
 		List<Positionnement> positionnements = positionnementRepository.getAllByPromotionId(idPromotion);
-		List<PositionnementDto> result = new ArrayList<PositionnementDto>();
+		List<PositionnementDto> result = new ArrayList<>();
 		for (Positionnement p : positionnements) {
 			result.add(DtoTools.convert(p, PositionnementDto.class));
 		}
@@ -112,7 +111,7 @@ public class PositionnementServiceImpl implements PositionnementService {
 	@Override
 	public List<PositionnementDto> getAllByInterventionId(long idIntervention) {
 		List<Positionnement> positionnements = positionnementRepository.getAllByInterventionId(idIntervention);
-		List<PositionnementDto> result = new ArrayList<PositionnementDto>();
+		List<PositionnementDto> result = new ArrayList<>();
 		for (Positionnement p : positionnements) {
 			result.add(DtoTools.convert(p, PositionnementDto.class));
 		}

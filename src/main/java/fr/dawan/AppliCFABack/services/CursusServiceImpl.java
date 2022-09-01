@@ -1,9 +1,12 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,7 @@ import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 
 @Transactional
 @Service
@@ -47,6 +51,8 @@ public class CursusServiceImpl implements CursusService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	private static Logger logger = Logger.getGlobal();
 
 	/**
 	 * Récupération de la liste des cursus
@@ -57,7 +63,7 @@ public class CursusServiceImpl implements CursusService {
 	@Override
 	public List<CursusDto> getAll() {
 		List<Cursus> lst = cursusRepo.findAll();
-		List<CursusDto> lstDto = new ArrayList<CursusDto>();
+		List<CursusDto> lstDto = new ArrayList<>();
 		for (Cursus c : lst) {
 			lstDto.add(mapper.CursusToCursusDto(c));
 		}
@@ -82,11 +88,11 @@ public class CursusServiceImpl implements CursusService {
 				.get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<CursusDto> lstDto = new ArrayList<CursusDto>();
+		List<CursusDto> lstDto = new ArrayList<>();
 		for (Cursus c : lst) {
 			CursusDto cDto = mapper.CursusToCursusDto(c);
 			List<Formation> lstForm = c.getFormations();
-			List<FormationDto> lstFormDto = new ArrayList<FormationDto>();
+			List<FormationDto> lstFormDto = new ArrayList<>();
 			for (Formation form : lstForm) {
 				if (form != null)
 					lstFormDto.add(mapper.FormationToFormationDto(form));
@@ -144,7 +150,7 @@ public class CursusServiceImpl implements CursusService {
 		if (c.isPresent()) {
 
 			CursusDto cDto = mapper.CursusToCursusDto(c.get());
-			List<FormationDto> lst = new ArrayList<FormationDto>();
+			List<FormationDto> lst = new ArrayList<>();
 			for (Formation f : c.get().getFormations()) {
 				lst.add(mapper.FormationToFormationDto(f));
 			}
@@ -163,10 +169,9 @@ public class CursusServiceImpl implements CursusService {
 	 */
 	@Override
 	public CursusDto getByIdPromotion(long id) {
-		// TODO Auto-generated method stub
 		PromotionDto pDto = promoService.getById(id);
-		CursusDto cDto = getById(pDto.getCursusDto().getId());
-		return cDto;
+		//CursusDto cDto = getById(pDto.getCursusDto().getId());
+		return getById(pDto.getCursusDto().getId());
 	}
 
 	/**
@@ -185,6 +190,7 @@ public class CursusServiceImpl implements CursusService {
 	 * 
 	 * @param email Email l'utilisateur dg2
 	 * @param password   Mot de passe de l'utlisateur dg2
+	 * @throws URISyntaxException 
 	 * 
 	 * @exception Exception retourne une exception,
 	 * si erreur dans la récupération des cursus
@@ -192,7 +198,7 @@ public class CursusServiceImpl implements CursusService {
 	
 	//import des cursus DG2
 	@Override
-	public void fetchDG2Cursus(String email, String password) throws Exception {
+	public void fetchDG2Cursus(String email, String password) throws FetchDG2Exception, URISyntaxException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<CursusDG2Dto> fResJson = new ArrayList<>();
 		
@@ -215,8 +221,7 @@ public class CursusServiceImpl implements CursusService {
 					fResJson = objectMapper.readValue(json, new TypeReference<List<CursusDG2Dto>>() { 
 					});
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.log(Level.WARNING, "failed json", e);
 				}
 				for (CursusDG2Dto cDG2 : fResJson) {
 					Cursus cursusImport = mapper.cursusDG2DtoToCursus(cDG2);
@@ -232,22 +237,22 @@ public class CursusServiceImpl implements CursusService {
 						try {
 							cursusRepo.saveAndFlush(cursusImport);
 						} catch (Exception e) {
-							e.printStackTrace();
+							logger.log(Level.SEVERE, "Failed save dg2", e);
 						}
 					} else {
 						try {
 							cursusRepo.saveAndFlush(cursusImport);
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+			
+							logger.log(Level.SEVERE, "Failed save dg2", e);
 						}
 					}
 				}
 			} else {
-				throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+				throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed fetch dg2", e);
 		}
 		
 		

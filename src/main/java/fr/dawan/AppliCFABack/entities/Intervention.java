@@ -11,8 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.BatchSize;
+
 @SuppressWarnings("serial")
 @Entity
+@BatchSize(size = 20) //permet un gain de temps à tester
 public class Intervention extends BaseEntity implements Serializable { // intervention prévue
 
 

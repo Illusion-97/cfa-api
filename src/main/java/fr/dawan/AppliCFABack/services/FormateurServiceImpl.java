@@ -3,6 +3,8 @@ package fr.dawan.AppliCFABack.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -37,6 +39,8 @@ public class FormateurServiceImpl implements FormateurService {
 	JourneePlanningService journeePlanningService;
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+	
+	private static Logger logger = Logger.getGlobal();
 
 	/**
 	 * Récupération de la liste des formateurs
@@ -47,7 +51,7 @@ public class FormateurServiceImpl implements FormateurService {
 	@Override
 	public List<FormateurDto> getAll() {
 		List<Formateur> lst = formateurRepository.findAll();
-		List<FormateurDto> lstDto = new ArrayList<FormateurDto>();
+		List<FormateurDto> lstDto = new ArrayList<>();
 		for (Formateur f : lst) {
 			lstDto.add(mapper.FormateurToFormateurDto(f));
 		}
@@ -67,7 +71,7 @@ public class FormateurServiceImpl implements FormateurService {
 	public List<FormateurDto> getAllByPage(int page, int size) {
 		List<Formateur> lst = formateurRepository.findAll(PageRequest.of(page, size)).get()
 				.collect(Collectors.toList());
-		List<FormateurDto> lstDto = new ArrayList<FormateurDto>();
+		List<FormateurDto> lstDto = new ArrayList<>();
 		for (Formateur f : lst) {
 			lstDto.add(mapper.FormateurToFormateurDto(f));
 		}
@@ -90,7 +94,7 @@ public class FormateurServiceImpl implements FormateurService {
 		List<Formateur> lstFor = formateurRepository
 				.findAllByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(search, search, PageRequest.of(page, size)).get()
 				.collect(Collectors.toList());
-		List<FormateurDto> lstDto = new ArrayList<FormateurDto>();
+		List<FormateurDto> lstDto = new ArrayList<>();
 
 		for (Formateur f : lstFor) {
 			lstDto.add(mapper.FormateurToFormateurDto(f));
@@ -139,7 +143,7 @@ public class FormateurServiceImpl implements FormateurService {
 		            }
 				}	
 			}catch (Exception e) {
-	            e.printStackTrace();
+	            logger.log(Level.WARNING, "save or update failed", e);
 	        }
 		}
 		
@@ -174,14 +178,14 @@ public class FormateurServiceImpl implements FormateurService {
 	@Override
 	public List<FormateurDto> getAllWithObject() {
 		List<Formateur> lstFor = formateurRepository.findAll();
-		List<FormateurDto> lstDto = new ArrayList<FormateurDto>();
+		List<FormateurDto> lstDto = new ArrayList<>();
 
 		for (Formateur formateur : lstFor) {
 
 			FormateurDto formateurDto = mapper.FormateurToFormateurDto(formateur);
 
 			List<Intervention> lstInter = formateur.getInterventions();
-			List<InterventionDto> lstInterDto = new ArrayList<InterventionDto>();
+			List<InterventionDto> lstInterDto = new ArrayList<>();
 			for (Intervention intervention : lstInter) {
 				if (intervention != null)
 					lstInterDto.add(mapper.InterventionToInterventionDto(intervention));
@@ -264,7 +268,7 @@ public class FormateurServiceImpl implements FormateurService {
 	public List<InterventionDto> getAllInterventionsByFormateurIdPerPage(long id, int page, int size) {
 		List<Intervention> lstIn = interventionRepository.findAllByFormateursId(id, PageRequest.of(page, size)).get()
 				.collect(Collectors.toList());
-		List<InterventionDto> lstInDto = new ArrayList<InterventionDto>();
+		List<InterventionDto> lstInDto = new ArrayList<>();
 		for (Intervention intervention : lstIn) {
 			if (intervention != null) {
 				InterventionDto interDto = mapper.InterventionToInterventionDto(intervention);
@@ -295,7 +299,7 @@ public class FormateurServiceImpl implements FormateurService {
 		List<Intervention> lstIn = interventionRepository
 				.findByFormateursIdAndFormationTitreContainingAllIgnoreCase(id, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
-		List<InterventionDto> lstInDto = new ArrayList<InterventionDto>();
+		List<InterventionDto> lstInDto = new ArrayList<>();
 		for (Intervention intervention : lstIn) {
 			if (intervention != null) {
 				InterventionDto interDto = mapper.InterventionToInterventionDto(intervention);
@@ -342,8 +346,8 @@ public class FormateurServiceImpl implements FormateurService {
 	//planning du formateur
 	@Override
 	public List<JourneePlanningDto> getAllJourneePlanningByIdFormateur(long id) {
-		List<JourneePlanningDto> journeeDto = new ArrayList<JourneePlanningDto>();
-		List<Intervention> interventions = new ArrayList<Intervention>();
+		List<JourneePlanningDto> journeeDto = new ArrayList<>();
+		List<Intervention> interventions = new ArrayList<>();
 
 		interventions.addAll(interventionRepository.findAllByFormateursId(id));
 		for (Intervention i : interventions)

@@ -41,11 +41,11 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 	@Override
 	public List<CompetenceProfessionnelleDto> getAllCompetenceProfessionnelle() {
 		List<CompetenceProfessionnelle> competenceProfessionnelles = competenceProfessionnelleRepository.findAll();
-		List<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new ArrayList<CompetenceProfessionnelleDto>();
+		List<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new ArrayList<>();
 		for (CompetenceProfessionnelle competenceProfessionnelle : competenceProfessionnelles) {
 			CompetenceProfessionnelleDto cptDto = DtoTools.convert(competenceProfessionnelle,
 					CompetenceProfessionnelleDto.class);
-			List<ExamenDto> examensDto = new ArrayList<ExamenDto>();
+			List<ExamenDto> examensDto = new ArrayList<>();
 			for (Examen ex : competenceProfessionnelle.getExamens()) {
 
 				examensDto.add(mapper.ExamenToExamenDto(ex));

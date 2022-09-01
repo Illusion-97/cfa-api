@@ -58,7 +58,7 @@ public class DevoirServiceImpl implements DevoirService {
 	public List<DevoirDto> getAllDevoir() {
 		List<Devoir> lst = devoirRepository.findAll();
 
-		List<DevoirDto> lstDto = new ArrayList<DevoirDto>();
+		List<DevoirDto> lstDto = new ArrayList<>();
 		for (Devoir d : lst) {
 			lstDto.add(mapper.DevoirToDevoirDto(d));
 		}
@@ -80,7 +80,7 @@ public class DevoirServiceImpl implements DevoirService {
 		List<Devoir> lst = devoirRepository.findAllByConsigneContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<DevoirDto> lstDto = new ArrayList<DevoirDto>();
+		List<DevoirDto> lstDto = new ArrayList<>();
 		for (Devoir d : lst) {
 			DevoirDto dDto = DtoTools.convert(d, DevoirDto.class);
 		
@@ -133,7 +133,7 @@ public class DevoirServiceImpl implements DevoirService {
 			Devoir devoirDb = devoirRepository.saveAndFlush(devoir);
 			//On créer des champs vides dans devoirs_etudiant
 			List<EtudiantDto> allEtuByIntervention = interventionServiceImpl.findAllEtudiantsByPromotionInterventionsId(devoirDb.getIntervention().getId());
-			Set<DevoirEtudiant> devoirsEtudiantLst = new HashSet<DevoirEtudiant>();
+			Set<DevoirEtudiant> devoirsEtudiantLst = new HashSet<>();
 			for (EtudiantDto e: allEtuByIntervention) {
 				DevoirEtudiant devoirEtudiant = new DevoirEtudiant();
 				devoirEtudiant.setEtudiant(DtoTools.convert(e, Etudiant.class));
@@ -162,7 +162,7 @@ public class DevoirServiceImpl implements DevoirService {
 	@Override
 	public List<DevoirDto> getAllByInterventionId(long id) {
 		List<Devoir> devoirs = devoirRepository.findAllByInterventionId(id);
-		List<DevoirDto> result = new ArrayList<DevoirDto>();
+		List<DevoirDto> result = new ArrayList<>();
 		for(Devoir d: devoirs) {
 			result.add(DtoTools.convert(d, DevoirDto.class));
 		}

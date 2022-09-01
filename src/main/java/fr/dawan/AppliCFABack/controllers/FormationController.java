@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,9 +40,11 @@ public class FormationController {
 
 	@Autowired
 	PromotionService promotionService;
-	
+
 	@Autowired
 	CursusService cursusService;
+
+	private static Logger logger = Logger.getGlobal();
 
 	// ##################################################
 	// # GET #
@@ -96,19 +100,19 @@ public class FormationController {
 
 		PromotionDto promotion = promotionService.getById(id);
 		List<InterventionDto> lstintervention = promotion.getInterventionsDto();
-		List<FormationDto> lstFormation = new ArrayList<FormationDto>();
+		List<FormationDto> lstFormation = new ArrayList<>();
 		for (InterventionDto i : lstintervention) {
 			lstFormation.add(i.getFormationDto());
 		}
 		return lstFormation;
 
 	}
-	
+
 	@GetMapping(value = "/getFormationByCursusId/{id}", produces = "application/json")
 	public List<FormationDto> getFormationByCursusId(@PathVariable(value = "id") long id) {
 
 		CursusDto cDto = cursusService.getById(id);
-		List<FormationDto> lstFormation = new ArrayList<FormationDto>();
+		List<FormationDto> lstFormation = new ArrayList<>();
 
 		for (FormationDto formationDto : cDto.getFormationsDto()) {
 			lstFormation.add(formationDto);
@@ -149,29 +153,27 @@ public class FormationController {
 	public FormationDto update(@RequestBody FormationDto fDto) {
 		return formationService.saveOrUpdate(fDto);
 	}
-	
-	@GetMapping(value={"/dg2","/dg2/{idCursusDg2}"}, produces="application/json")
-	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers, @PathVariable(value = "idCursusDg2", required = false)Optional<Long> idCursusDg2) {
+
+	@GetMapping(value = { "/dg2", "/dg2/{idCursusDg2}" }, produces = "application/json")
+	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers,
+			@PathVariable(value = "idCursusDg2", required = false) Optional<Long> idCursusDg2) {
 		String userDG2 = headers.get("x-auth-token");
 		String[] splitUser = userDG2.split(":");
-			
+
 		try {
 			int nb = 0;
 			if (idCursusDg2.isPresent()) {
 				nb = formationService.fetchDG2Formations(splitUser[0], splitUser[1], idCursusDg2.get());
-			}
-			else {
-				 nb = formationService.fetchDG2Formations(splitUser[0], splitUser[1]);
+			} else {
+				nb = formationService.fetchDG2Formations(splitUser[0], splitUser[1]);
 
 			}
-			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Formations updated :" +nb);
+			return ResponseEntity.status(HttpStatus.OK)
+					.body("Succeed to fetch data from the webservice DG2. Formations updated :" + nb);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Failed Response Entity ERROR fetch DG2", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error while fetching data from the webservice DG2");
 		}
 	}
-	
-
 }
-

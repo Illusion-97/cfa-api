@@ -55,6 +55,7 @@ public class Adresse extends BaseEntity implements Serializable {
 		this.codePostal = codePostal;
 	}
 
+
 	/**
 	 * @return le countryCode
 	 */
@@ -78,10 +79,21 @@ public class Adresse extends BaseEntity implements Serializable {
 		result = prime * result + ((codePostal== null) ? 0 : codePostal.hashCode());
 		result = prime * result + ((libelle== null) ? 0 : libelle.hashCode());
 		result = prime * result + ((ville== null) ? 0 : ville.hashCode());
+		return result;}
 
-
-		return result;
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Adresse [libelle=");
+		builder.append(libelle);
+		builder.append(", ville=");
+		builder.append(ville);
+		builder.append(", codePostal=");
+		builder.append(codePostal);
+		builder.append("]");
+		return builder.toString();
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {

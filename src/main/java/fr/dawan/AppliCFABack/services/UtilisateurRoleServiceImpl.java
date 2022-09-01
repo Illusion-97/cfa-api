@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -28,6 +29,8 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
 
     @Autowired
     private DtoMapper mapper = new DtoMapperImpl();
+    
+    private static Logger logger = Logger.getGlobal();
 
     /**
 	 * Récupération de la liste des roles utilisateurs
@@ -39,7 +42,7 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
     public List<UtilisateurRoleDto> getAllUtilisateurRole() {
         List<UtilisateurRole> lst = utilisateurRoleRepository.findAll();
 
-        List<UtilisateurRoleDto> lstDto = new ArrayList<UtilisateurRoleDto>();
+        List<UtilisateurRoleDto> lstDto = new ArrayList<>();
         for (UtilisateurRole n : lst) {
             lstDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(n));
         }
@@ -61,7 +64,7 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
         List<UtilisateurRole> lst = utilisateurRoleRepository.findAllByIntituleContainingIgnoringCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
         // conversion vers Dto
-        List<UtilisateurRoleDto> lstDto = new ArrayList<UtilisateurRoleDto>();
+        List<UtilisateurRoleDto> lstDto = new ArrayList<>();
         for (UtilisateurRole c : lst) {
             UtilisateurRoleDto uDto = mapper.UtilisateurRoleToUtilisateurRoleDto(c);
             lstDto.add(uDto);
@@ -90,9 +93,9 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
     public UtilisateurRoleDto getById(long id) {
         Optional<UtilisateurRole> e = utilisateurRoleRepository.findById(id);
         if (e.isPresent()) {
-            UtilisateurRoleDto uDto = mapper.UtilisateurRoleToUtilisateurRoleDto(e.get());
+            //UtilisateurRoleDto uDto = mapper.UtilisateurRoleToUtilisateurRoleDto(e.get());
 
-            return uDto;
+            return mapper.UtilisateurRoleToUtilisateurRoleDto(e.get());
         }
 
         return null;

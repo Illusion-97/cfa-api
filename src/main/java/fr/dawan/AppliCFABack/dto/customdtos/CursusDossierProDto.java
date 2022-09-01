@@ -1,10 +1,9 @@
 package fr.dawan.AppliCFABack.dto.customdtos;
 
-import fr.dawan.AppliCFABack.dto.customdtos.ActiviteTypeDossierProDto;
-
 import java.io.Serializable;
 import java.util.Set;
 
+@SuppressWarnings("serial")
 public class CursusDossierProDto implements Serializable {
 
     private long id;

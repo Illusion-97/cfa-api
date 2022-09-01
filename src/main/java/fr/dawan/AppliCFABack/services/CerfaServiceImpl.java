@@ -39,13 +39,13 @@ public class CerfaServiceImpl implements CerfaService {
 	
 	@Override
 	public CountDto count(String string) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public List<CerfaDto> getAllByPage(int page, int size, String string) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 	
@@ -56,7 +56,7 @@ public class CerfaServiceImpl implements CerfaService {
 
 	@Override
 	public CerfaDto getById(long id) {
-		// TODO Auto-generated method stub
+		
 		Optional<Cerfa> c = cerfaRepo.findById(id);
 		CerfaDto cDto = mapper.CerfaToCerfaDto(c.get());
 		cDto.setRemuneration1(mapper.RemunerationTORemunerationDto(c.get().getRemuneration1()));
@@ -107,7 +107,7 @@ public class CerfaServiceImpl implements CerfaService {
 	
 	@Override
 	public void deleteById(long id) {
-		// TODO Auto-generated method stub
+		
 		Cerfa c = cerfaRepo.getOne(id);
 //		adresseRepo.deleteById(c.getAdresseApprenti().getId());
 //		adresseRepo.deleteById(c.getAdresseEmployeur().getId());
@@ -128,7 +128,6 @@ public class CerfaServiceImpl implements CerfaService {
 	
 	@Override
 	public CerfaDto saveOrUpdate(CerfaDto cDto) {
-		// TODO Auto-generated method stub
 		Cerfa c = DtoTools.convert(cDto, Cerfa.class);
 		
 		 if (cDto.getRemuneration1() != null && cDto.getRemuneration1().getId() == 0) {

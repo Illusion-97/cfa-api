@@ -18,11 +18,10 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 	private ProjetDto projet;
 
 	public DossierProjetDto() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public DossierProjetDto(String nom) {
-		// TODO Auto-generated constructor stub
 		this.nom = nom;
 	}
 

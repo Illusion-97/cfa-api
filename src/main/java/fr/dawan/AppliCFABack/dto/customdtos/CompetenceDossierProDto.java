@@ -1,11 +1,9 @@
 package fr.dawan.AppliCFABack.dto.customdtos;
 
-import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
-import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
-
-import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.List;
+
+import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 
 @SuppressWarnings("serial")
 public class CompetenceDossierProDto implements Serializable {

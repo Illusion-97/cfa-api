@@ -58,7 +58,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	public List<CentreFormationDto> getAllCentreFormation() {
 		List<CentreFormation> lst = centreFormationRepository.findAll();
 
-		List<CentreFormationDto> lstDto = new ArrayList<CentreFormationDto>();
+		List<CentreFormationDto> lstDto = new ArrayList<>();
 		for (CentreFormation cf : lst) {
 			CentreFormationDto cDto = mapper.CentreFormationToCentreFormationDto(cf);
 			cDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(cf.getEntreprise()));
@@ -82,7 +82,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 				.collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<CentreFormationDto> lstDto = new ArrayList<CentreFormationDto>();
+		List<CentreFormationDto> lstDto = new ArrayList<>();
 		for (CentreFormation cf : lst) {
 			CentreFormationDto cDto = mapper.CentreFormationToCentreFormationDto(cf);
 			cDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(cf.getEntreprise()));
@@ -159,7 +159,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	@Override
 	public List<CentreFormationDto> getAllCentreFormations(int page, int size, String search) {
 		List<CentreFormation> cf = centreFormationRepository.findAllByNomContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
-		List<CentreFormationDto> res = new ArrayList<CentreFormationDto>();
+		List<CentreFormationDto> res = new ArrayList<>();
 		for (CentreFormation c : cf) {
 			CentreFormationDto cfDto = mapper.CentreFormationToCentreFormationDto(c);
 			cfDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(c.getEntreprise()));

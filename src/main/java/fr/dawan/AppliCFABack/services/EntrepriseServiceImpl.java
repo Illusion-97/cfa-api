@@ -39,7 +39,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	public List<EntrepriseDto> getAllEntreprise() {
 		List<Entreprise> lst = entrepriseRepository.findAll();
 
-		List<EntrepriseDto> lstDto = new ArrayList<EntrepriseDto>();
+		List<EntrepriseDto> lstDto = new ArrayList<>();
 		for (Entreprise e : lst) {
 			EntrepriseDto eDto = mapper.EntrepriseToEntrepriseDto(e);
 			eDto.setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.getAdresseSiege()));
@@ -62,7 +62,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 				.collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<EntrepriseDto> lstDto = new ArrayList<EntrepriseDto>();
+		List<EntrepriseDto> lstDto = new ArrayList<>();
 		for (Entreprise e : lst) {
 			EntrepriseDto eDto = mapper.EntrepriseToEntrepriseDto(e);
 			eDto.setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.getAdresseSiege()));
@@ -140,7 +140,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	@Override
 	public List<EntrepriseDto> getAllEntreprises(int page, int size, String search) {
 		List<Entreprise> entreprises = entrepriseRepository.findAllByRaisonSocialeContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
-		List<EntrepriseDto> res = new ArrayList<EntrepriseDto>();
+		List<EntrepriseDto> res = new ArrayList<>();
 		for (Entreprise e : entreprises) {
 			EntrepriseDto eDto = mapper.EntrepriseToEntrepriseDto(e);
 			eDto.setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.getAdresseSiege()));

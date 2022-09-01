@@ -1,20 +1,26 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.univocity.parsers.common.record.Record;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
+
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -26,9 +32,9 @@ import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
@@ -36,13 +42,16 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.tools.FileException;
 import fr.dawan.AppliCFABack.tools.HashTools;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 @Service
 @Transactional
@@ -76,10 +85,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	UtilisateurRoleService utilisateurRoleService;
 	@Autowired
+	EntrepriseRepository entrepriseRepository;
+	
+	@Autowired
 	private DtoMapper mapper;
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	
+	private static Logger logger = Logger.getGlobal();
 
 	/**
 	 * Récupération de la liste des utilisateurs
@@ -89,11 +103,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public List<UtilisateurDto> getAll() {
 		List<Utilisateur> users = utilisateurRepository.findAll();
-		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
+		List<UtilisateurDto> res = new ArrayList<>();
 
 		for (Utilisateur u : users) {
 
-			List<UtilisateurRoleDto> role = new ArrayList<UtilisateurRoleDto>();
+			List<UtilisateurRoleDto> role = new ArrayList<>();
 			for (UtilisateurRole r : u.getRoles()) {
 				role.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
 			}
@@ -123,11 +137,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						search, search, search, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
 
-		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
+		List<UtilisateurDto> res = new ArrayList<>();
 		for (Utilisateur u : users) {
 			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(u);
 			uDto.setAdresseDto(mapper.AdresseToAdresseDto(u.getAdresse()));
-			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
+			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<>();
 			for (UtilisateurRole ur : u.getRoles()) {
 				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
 			}
@@ -161,7 +175,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	@Override
 	public UtilisateurDto getById(long id) {
-		System.out.println("id : " + id);
+		logger.info("id : " + id);
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (userOpt.isPresent()) {
 			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(userOpt.get());
@@ -171,7 +185,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 //			if(userOpt.get().getEntreprise().getAdresseSiege() != null) uDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(userOpt.get().getEntreprise().getAdresseSiege()));
 
-			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<UtilisateurRoleDto>();
+			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<>();
 			for (UtilisateurRole ur : userOpt.get().getRoles()) {
 				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
 			}
@@ -210,7 +224,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		utilisateurDto.setAdresseDto(adresseDto);
 
 		List<UtilisateurRole> lstUsrRole = user.getRoles();
-		List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
+		List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<>();
 		for (UtilisateurRole utilisateurRole : lstUsrRole) {
 			if (utilisateurRole != null)
 				lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
@@ -243,18 +257,19 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	 * 
 	 * @param uDto objet utilisateur
 	 * @return result objet utilisateur (nouveau ou modifier)
+	 * @throws SaveInvalidException 
 	 * 
 	 */
 	
 	@Override
-	public UtilisateurDto insertUpdate(UtilisateurDto uDto) throws Exception {
+	public UtilisateurDto insertUpdate(UtilisateurDto uDto) throws SaveInvalidException {
 
 		// Refus d'insertion :
 		// Si uDto n'est pas déjà en base (getId() == 0) => creation
 		// Si un utilisateur a la même adresse mail => throw Exception
 
 		if (uDto.getId() == 0 && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
-			throw new Exception("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin()
+			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin()
 					+ " findByEmail " + findByEmail(uDto.getLogin()).toString());
 		}
 
@@ -292,6 +307,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			Adresse adresseRepop = adresseRepository.getOne(adresse.getId());
 			user.setAdresse(adresseRepop);
 		}
+		// On save l'entreprise avant de save l'utilisateur
+		if (uDto.getEntrepriseDto() != null && uDto.getEntrepriseDto().getId() == 0) {
+			Entreprise entreprise = DtoTools.convert(uDto.getEntrepriseDto(), Entreprise.class);
+			entrepriseRepository.saveAndFlush(entreprise);
+
+			Entreprise entrepriseRepop = entrepriseRepository.getOne(entreprise.getId());
+			user.setEntreprise(entrepriseRepop);
+		}
 
 		// On save les roles
 		// Changement de role, on créer l'entité associée
@@ -326,7 +349,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			user.setEtudiant(etudiant);
 			etudiant.setUtilisateur(user);
 
-			etudiant = etudiantRepository.saveAndFlush(etudiant);
+			//etudiant = etudiantRepository.saveAndFlush(etudiant);
+			etudiantRepository.saveAndFlush(etudiant);
 
 		}
 		if (isFormateur && user.getFormateur() == null) {
@@ -335,19 +359,20 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			user.setFormateur(formateur);
 			formateur.setUtilisateur(user);
 
-			formateur = formateurRepository.saveAndFlush(formateur);
+			//formateur = formateurRepository.saveAndFlush(formateur);
+			formateurRepository.saveAndFlush(formateur);
 		}
 		if (isCEF && user.getCef() == null) {
 			CEF cef = new CEF();
 			cef = cefRepository.saveAndFlush(cef);
 			user.setCef(cef);
 			cef.setUtilisateur(user);
-
-			cef = cefRepository.saveAndFlush(cef);
+			
+			cefRepository.saveAndFlush(cef);
 		}
 		if (isPrestataireExterne ) {
-			Utilisateur UserExterne = new Utilisateur();
-			UserExterne = utilisateurRepository.saveAndFlush(user);
+			Utilisateur userExterne = new Utilisateur();
+			userExterne = utilisateurRepository.saveAndFlush(user);
 		
 		}
 
@@ -357,7 +382,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			etudiant.setUtilisateur(null);
 			user.setEtudiant(null);
 
-			etudiant = etudiantRepository.saveAndFlush(etudiant);
+			//etudiant = etudiantRepository.saveAndFlush(etudiant);
+			etudiantRepository.saveAndFlush(etudiant);
 
 			// On delete l'etudiant ?
 //			etudiantService.deleteById(etudiant.getId());			
@@ -367,7 +393,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			formateur.setUtilisateur(null);
 			user.setFormateur(null);
 
-			formateur = formateurRepository.saveAndFlush(formateur);
+			//formateur = formateurRepository.saveAndFlush(formateur);
+			formateurRepository.saveAndFlush(formateur);
 
 			// On delete l'etudiant ?
 //			formateurService.deleteById(formateur.getId());		
@@ -377,7 +404,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			cef.setUtilisateur(null);
 			user.setCef(null);
 
-			cef = cefRepository.saveAndFlush(cef);
+			//cef = cefRepository.saveAndFlush(cef);
+			cefRepository.saveAndFlush(cef);
 
 			// On delete l'etudiant ?
 //			cefService.deleteById(cef.getId());	
@@ -456,7 +484,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public List<UtilisateurDto> findByAdresse(String ville) {
 		List<Utilisateur> users = utilisateurRepository.findByAdresseVille(ville);
-		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
+		List<UtilisateurDto> res = new ArrayList<>();
 		for (Utilisateur u : users) {
 			res.add(mapper.UtilisateurToUtilisateurDto(u));
 		}
@@ -481,7 +509,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	 */
 	@Override
 	public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id) {
-		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
+		List<JourneePlanningDto> result = new ArrayList<>();
 
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (!userOpt.isPresent())
@@ -511,7 +539,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	@Override
 	public List<CongeDto> getAllCongesByIdUtilisateur(long id) {
-		List<CongeDto> result = new ArrayList<CongeDto>();
+		List<CongeDto> result = new ArrayList<>();
 
 		List<Conge> conges = congeRepository.findByIdUtilisateur(id);
 
@@ -537,7 +565,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public List<UtilisateurDto> getAllWithObject() {
 		List<Utilisateur> lstUsr = utilisateurRepository.findAll();
-		List<UtilisateurDto> lstUsrDto = new ArrayList<UtilisateurDto>();
+		List<UtilisateurDto> lstUsrDto = new ArrayList<>();
 
 		for (Utilisateur utilisateur : lstUsr) {
 			UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
@@ -546,7 +574,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			utilisateurDto.setAdresseDto(adresseDto);
 
 			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
-			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
+			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<>();
 			for (UtilisateurRole utilisateurRole : lstUsrRole) {
 				if (utilisateurRole != null)
 					lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
@@ -575,7 +603,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			utilisateurDto.setAdresseDto(adresseDto);
 
 			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
-			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<UtilisateurRoleDto>();
+			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<>();
 			for (UtilisateurRole utilisateurRole : lstUsrRole) {
 				if (utilisateurRole != null)
 					lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
@@ -602,7 +630,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public List<UtilisateurDto> findByRole(long idRole) {
 		List<UtilisateurDto> res = getAll();
-		List<UtilisateurDto> resfinal = new ArrayList<UtilisateurDto>();
+		List<UtilisateurDto> resfinal = new ArrayList<>();
 
 		for (UtilisateurDto u : res) {
 			List<UtilisateurRoleDto> userRole = u.getRolesDto();
@@ -655,7 +683,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						role, search, role, search, role, search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
 
-		List<UtilisateurDto> res = new ArrayList<UtilisateurDto>();
+		List<UtilisateurDto> res = new ArrayList<>();
 		for (Utilisateur u : users) {
 			res.add(mapper.UtilisateurToUtilisateurDto(u));
 		}
@@ -691,11 +719,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * File upload
+	 * @throws FileException IOException 
 	 * 
 	 */
 	
 	@Override
-	public void uploadFile(MultipartFile file, long idUser) throws Exception {
+	public void uploadFile(MultipartFile file, long idUser) throws FileException, IOException {
 // J'ai 'renforcé' la secu en mappant l'id de l'utilisateur. Seul l'admin pourra uplaod des fichier. A voir si je laisse
 		Utilisateur user = getUtilisateurById(idUser);
 		for (UtilisateurRole role : user.getRoles()) {
@@ -703,7 +732,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			if (role.getIntitule().equals("ADMIN")) { // Verifie si l'utilisateur a un role admin
 
 				if (file.isEmpty()) { // Si aucun fichier n'a été importé
-					throw new Exception("Fichier introuvable");
+					throw new FileException("Fichier introuvable");
 				}
 
 				InputStream inputStream = file.getInputStream(); // recupere le stream du fichier pour lire son contenu
@@ -749,10 +778,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						}
 					});
 				} else { // sinon => ERROR
-					throw new Exception("Extension de fichier incorrecte");
+					throw new FileException("Extension de fichier incorrecte");
 				}
 			} else {
-				throw new Exception("Acces refusé : Vous n'avez pas les autorisations requises");
+				throw new FileException("Acces refusé : Vous n'avez pas les autorisations requises");
 			}
 		}
 	}
@@ -786,7 +815,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		int leftLimit = 48; // numeral '0'
 		int rightLimit = 122; // letter 'z'
 		int targetStringLength = 10;
-		Random random = new Random();
+		//Random random = new Random();
+		SecureRandom random = new SecureRandom();
 
 		// Genere un mot de passe aleatoire de 0 à 9 et de A à Z(Majuscule/minuscule
 		// compris) en caractere ASCII

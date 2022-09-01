@@ -1,11 +1,14 @@
 package fr.dawan.AppliCFABack.dto.customdtos;
 
+import fr.dawan.AppliCFABack.dto.BaseEntityDto;
 import fr.dawan.AppliCFABack.entities.Note;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LivretEvaluationDto {
+@SuppressWarnings("serial")
+public class LivretEvaluationDto extends BaseEntityDto implements Serializable {
     private List<String> promotions;
     private String examen;
     private List<String> competences = new ArrayList<>();
@@ -13,6 +16,7 @@ public class LivretEvaluationDto {
     private List<String> observations = new ArrayList<>();
 
     public LivretEvaluationDto() {
+    	super();
     }
 
     public List<String> getPromotions() {

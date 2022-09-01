@@ -57,7 +57,7 @@ public class NoteServiceImpl implements NoteService {
 	public List<NoteDto> getAllNote() {
 		List<Note> lst = noteRepository.findAll();
 
-		List<NoteDto> lstDto = new ArrayList<NoteDto>();
+		List<NoteDto> lstDto = new ArrayList<>();
 		for (Note n : lst) {
 			lstDto.add(mapper.NoteToNoteDto(n));
 		}
@@ -145,7 +145,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public List<NoteDto> getAllByIdEtudiant(long id) {
-		List<NoteDto> result = new ArrayList<NoteDto>();
+		List<NoteDto> result = new ArrayList<>();
 		List<Note> list = noteRepository.findAllByEtudiantNoteId(id);
 		for (Note n : list) {
 
@@ -172,7 +172,7 @@ public class NoteServiceImpl implements NoteService {
 		List<NoteControleContinuDto> result = new ArrayList<>();
 		List<Note> list = noteRepository.findAllByEtudiantNoteId(id);
 		for(Note n : list) {
-			result.add(mapperTools.NoteToNoteControleContinuDto(n));
+			result.add(mapperTools.noteToNoteControleContinuDto(n));
 		}
 		return result.stream().collect(Collectors.groupingBy(NoteControleContinuDto::getPromotions));
 	}
@@ -185,7 +185,7 @@ public class NoteServiceImpl implements NoteService {
 	 */
 	@Override
 	public List<NoteDto> getAllByExamenId(long id) {
-		List<NoteDto> result = new ArrayList<NoteDto>();
+		List<NoteDto> result = new ArrayList<>();
 		List<Note> list = noteRepository.findAllByExamenId(id);
 		for (Note note : list) {
 			NoteDto nDto = DtoTools.convert(note, NoteDto.class);
