@@ -14,6 +14,9 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
     @JsonProperty(value = "person_id")
     private long personId;
 
+    @JsonProperty(value = "honorific")
+    private String civilite;
+
     @JsonProperty(value = "first_name")
     private String firstName;
 
@@ -21,6 +24,22 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
     private String lastName;
 
     private String email;
+
+    private String landline;
+
+    private String mobile;
+
+    private String street;
+
+    private String postcode;
+
+    private String city;
+
+    private String country;
+
+    private String address2;
+
+    private String address3;
 
     private Utilisateur utilisateur;
 
@@ -88,5 +107,77 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
 
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
+    }
+
+    public String getCivilite() {
+        return civilite;
+    }
+
+    public void setCivilite(String civilite) {
+        this.civilite = civilite;
+    }
+
+    public String getLandline() {
+        return landline;
+    }
+
+    public void setLandline(String landline) {
+        this.landline = landline;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getAddress3() {
+        return address3;
+    }
+
+    public void setAddress3(String address3) {
+        this.address3 = address3;
     }
 }

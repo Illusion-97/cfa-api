@@ -51,4 +51,6 @@ public interface UtilisateurService {
 
 	boolean resetPassword(ResetResponse reset) throws Exception;
 
+	String generatePassword();
+
 }

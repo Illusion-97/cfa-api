@@ -19,14 +19,18 @@ public class Adresse extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 255)
 	private String codePostal;
 
+	@Column(nullable = false, length = 255)
+	private String country;
+
 	public Adresse() {
 		super();
 	}
 
-	public Adresse(String libelle, String ville, String codePostal) {
+	public Adresse(String libelle, String ville, String codePostal, String country) {
 		this.libelle = libelle;
 		this.ville = ville;
 		this.codePostal = codePostal;
+		this.country = country;
 	}
 
 	public String getLibelle() {
@@ -53,7 +57,11 @@ public class Adresse extends BaseEntity implements Serializable {
 		this.codePostal = codePostal;
 	}
 
+	public String getCountry() {
+		return country;
+	}
 
-
-
+	public void setCountry(String country) {
+		this.country = country;
+	}
 }

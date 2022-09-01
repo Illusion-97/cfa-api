@@ -4,6 +4,7 @@ import fr.dawan.AppliCFABack.entities.Formateur;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class PlanningEtudiantDto {
 
@@ -61,5 +62,16 @@ public class PlanningEtudiantDto {
         this.formateurNom = formateurNom;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PlanningEtudiantDto)) return false;
+        PlanningEtudiantDto that = (PlanningEtudiantDto) o;
+        return Objects.equals(getInterventionDateDebut(), that.getInterventionDateDebut()) && Objects.equals(getInterventionDateFin(), that.getInterventionDateFin()) && Objects.equals(getFormationTitre(), that.getFormationTitre()) && Objects.equals(getFormateurNom(), that.getFormateurNom());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getInterventionDateDebut(), getInterventionDateFin(), getFormationTitre(), getFormateurNom());
+    }
 }

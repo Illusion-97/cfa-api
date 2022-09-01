@@ -19,9 +19,10 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 	private String password;
 	private String prenom;
 	private String nom;
-	private String civilite;
+	protected String civilite;
 	private LocalDate dateDeNaissance;
 	private String telephone;
+	private String telephoneFixe;
 	private AdresseDto adresseDto;
 	private long entrepriseId;
 	private List<UtilisateurRoleDto> rolesDto;
@@ -129,6 +130,14 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 	 */
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public String getTelephoneFixe() {
+		return telephoneFixe;
+	}
+
+	public void setTelephoneFixe(String telephoneFixe) {
+		this.telephoneFixe = telephoneFixe;
 	}
 
 	/**

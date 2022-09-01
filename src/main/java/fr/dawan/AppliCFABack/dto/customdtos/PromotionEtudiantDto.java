@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.dto.customdtos;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class PromotionEtudiantDto {
 
@@ -18,6 +19,19 @@ public class PromotionEtudiantDto {
     private LocalDate dateFin;
 
     private List<PlanningEtudiantDto> planningsEtudiantDto;
+
+    public PromotionEtudiantDto() {
+    }
+
+    public PromotionEtudiantDto(String cursusTitre, String cursusDescription, String cursusDuree, String nom, LocalDate dateDebut, LocalDate dateFin, List<PlanningEtudiantDto> planningsEtudiantDto) {
+        this.cursusTitre = cursusTitre;
+        this.cursusDescription = cursusDescription;
+        this.cursusDuree = cursusDuree;
+        this.nom = nom;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.planningsEtudiantDto = planningsEtudiantDto;
+    }
 
     public String getCursusTitre() {
         return cursusTitre;
@@ -73,5 +87,18 @@ public class PromotionEtudiantDto {
 
     public void setPlanningsEtudiantDto(List<PlanningEtudiantDto> planningsEtudiantDto) {
         this.planningsEtudiantDto = planningsEtudiantDto;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PromotionEtudiantDto)) return false;
+        PromotionEtudiantDto that = (PromotionEtudiantDto) o;
+        return Objects.equals(getCursusTitre(), that.getCursusTitre()) && Objects.equals(getCursusDescription(), that.getCursusDescription()) && Objects.equals(getCursusDuree(), that.getCursusDuree()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getDateDebut(), that.getDateDebut()) && Objects.equals(getDateFin(), that.getDateFin()) && Objects.equals(getPlanningsEtudiantDto(), that.getPlanningsEtudiantDto());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCursusTitre(), getCursusDescription(), getCursusDuree(), getNom(), getDateDebut(), getDateFin(), getPlanningsEtudiantDto());
     }
 }
