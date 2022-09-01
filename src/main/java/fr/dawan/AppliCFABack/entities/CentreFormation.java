@@ -18,7 +18,7 @@ public class CentreFormation extends BaseEntity implements Serializable{
 	@Column(nullable = true, length = 255) // name dans dg2
 	private String nom;
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Adresse adresse;
 
 	@ManyToOne

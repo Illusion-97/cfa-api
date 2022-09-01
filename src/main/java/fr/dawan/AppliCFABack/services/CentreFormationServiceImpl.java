@@ -234,7 +234,13 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 					}
 					centreFormationRepository.saveAndFlush(centreImport);
 				} else {
-					centreFormationRepository.saveAndFlush(centreImport);
+					try {
+						centreFormationRepository.saveAndFlush(centreImport);
+
+					} catch (Exception e) {
+						e.printStackTrace();
+						// TODO: handle exception
+					}
 				}
 			}
 		} else {
