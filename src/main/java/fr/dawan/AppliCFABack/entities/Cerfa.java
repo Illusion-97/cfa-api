@@ -7,12 +7,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @SuppressWarnings("serial")
 @Entity
+@Table(name = "cerfa")
 public class Cerfa extends BaseEntity implements Serializable {
 
 	@Column(nullable = true, length = 255)
