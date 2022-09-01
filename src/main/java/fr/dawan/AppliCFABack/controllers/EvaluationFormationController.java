@@ -13,7 +13,7 @@ public class EvaluationFormationController extends GenericController<EvaluationF
 
 	public EvaluationFormationController(EvaluationFormationService service) {
 		super(service);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 }

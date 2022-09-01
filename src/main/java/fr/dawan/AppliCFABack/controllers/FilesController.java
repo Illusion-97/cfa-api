@@ -39,7 +39,7 @@ public class FilesController {
 			@PathVariable("id") long id) {
 
 		if (!directory.equals(promotions) && !directory.equals(users) && !directory.equals(projets))
-			return null;
+			return new String[0];
 		
 		return fileService.getAllNamesByDirectory(directory + "/" + id);	
 	}
@@ -48,7 +48,7 @@ public class FilesController {
 			@PathVariable("id") long id) {
 
 		if (!directory.equals(promotions) && !directory.equals(users) && !directory.equals(projets))
-			return null;
+			return new String[0];
 		
 		return fileService.getAllNamesByDirectory(directory + "/" + id +"/"+directory2);	
 	}

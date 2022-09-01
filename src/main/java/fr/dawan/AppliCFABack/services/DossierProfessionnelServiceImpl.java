@@ -218,7 +218,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
             Template template = freemarkerConfig.getTemplate("DossierPro.ftl");
 
-            Map<String, Object> model = new HashMap<String, Object>();
+            Map<String, Object> model = new HashMap<>();
             model.put("backendUrl", backendUrl);
 
             String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);

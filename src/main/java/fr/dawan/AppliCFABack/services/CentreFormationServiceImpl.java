@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
@@ -29,6 +32,7 @@ import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 
 @Service
 @Transactional
@@ -170,12 +174,15 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	 * @param Id	Id concernant la session
 	 * @param email Email l'utilsateur dg2
 	 * @param password   Mot de passe de l'utlisateur dg2
+	 * @throws URISyntaxException 
+	 * @throws JsonProcessingException 
+	 * @throws JsonMappingException 
 	 * 
 	 * @exception Exception retourne une exception si erreur dans la récupération des centres
 	 */
 
 	@Override
-	public void fetchAllDG2CentreFormation(String email, String password) throws Exception {
+	public void fetchAllDG2CentreFormation(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<CentreFormationDG2Dto> cResJson;
 		
@@ -213,7 +220,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 				}
 			}
 		} else {
-			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 	}
 

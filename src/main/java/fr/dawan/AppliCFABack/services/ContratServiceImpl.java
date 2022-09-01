@@ -38,7 +38,7 @@ public class ContratServiceImpl implements ContratService{
 	public List<ContratDto> getAllContrat() {
 		List<Contrat> lst = contratRepository.findAll();
 		
-		List<ContratDto> lstDto = new ArrayList<ContratDto>();
+		List<ContratDto> lstDto = new ArrayList<>();
 		for (Contrat c : lst) {
 			lstDto.add(mapper.ContratToContratDto(c));
 		}
@@ -54,8 +54,7 @@ public class ContratServiceImpl implements ContratService{
 	public ContratDto getById(long id) {
 		Optional<Contrat> c = contratRepository.findById(id);
 		if (c.isPresent()) {
-			ContratDto cDto = mapper.ContratToContratDto(c.get());
-			return cDto;
+			return mapper.ContratToContratDto(c.get());
 		}
 		return null;
 	}
@@ -75,7 +74,7 @@ public class ContratServiceImpl implements ContratService{
 		List<Contrat> lst = contratRepository.findAllByMaitreApprentissageUtilisateurPrenomContainingIgnoringCaseOrMaitreApprentissageUtilisateurNomContainingIgnoringCase(search,search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<ContratDto> lstDto = new ArrayList<ContratDto>();
+		List<ContratDto> lstDto = new ArrayList<>();
 		for (Contrat c : lst) {
 			ContratDto cDto = mapper.ContratToContratDto(c);
 			lstDto.add(cDto);
@@ -109,7 +108,7 @@ public class ContratServiceImpl implements ContratService{
 
 	@Override
 	public ContratDto count(String string) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -123,8 +122,7 @@ public class ContratServiceImpl implements ContratService{
 	public ContratDto getByEtudiantId(long id) {
 		Contrat c = contratRepository.findByEtudiantId(id);
 	if (c != null) {
-		ContratDto cDto = mapper.ContratToContratDto(c);
-		return cDto;
+		return mapper.ContratToContratDto(c);
 	}
 	return null;
 	}

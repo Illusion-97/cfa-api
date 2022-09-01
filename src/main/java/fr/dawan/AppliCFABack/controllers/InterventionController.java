@@ -52,23 +52,37 @@ public class InterventionController {
 //		return interventionService.getById(id);
 //	}
 	
-	// GET : /AppliCFABack/interventions/{id}
+	/**
+	 * 
+	 * @param id
+	 * @return ResponseEntity
+	 */
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<?> getById(@PathVariable("id") long id) {
 		HttpStatus status = ResponseEntity.status(HttpStatus.OK).build().getStatusCode();
-		ResponseEntity<?> response = ResponseEntity.status(status).header("Status", status.toString())
+		return ResponseEntity.status(status).header("Status", status.toString())
 				.body(interventionService.getById(id));
-		return response;
 	}
 
-	// GET : /AppliCFABack/interventions/{page}/{size}
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @return liste des interventions avec pagination
+	 */
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		return interventionService.getAllByPage(page, size, "");
 	}
 	
-	// GET : /AppliCFABack/interventions/{page}/{size}/{search}
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @param search
+	 * @return liste des interventiosn avec pagination + search
+	 */
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size,

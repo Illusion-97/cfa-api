@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.interceptors;
 
+import java.util.logging.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,13 +17,15 @@ public class TokenInterceptor implements HandlerInterceptor {
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	
+	private static Logger logger = Logger.getGlobal();
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println(">>>>>> inside Token Interceptor...");
-		System.out.println("URI =" + request.getRequestURI());
-		System.out.println("Header (authorization) :" + request.getHeader("Authorization"));
+		logger.info(">>>>>> inside Token Interceptor...");
+		logger.info("URI =" + request.getRequestURI());
+		logger.info("Header (authorization) :" + request.getHeader("Authorization"));
 		if (!request.getMethod().equals("OPTIONS")) {
 			if (!request.getRequestURI().equals("/authenticate")
 					&& !request.getRequestURI().equals("/insert-example")

@@ -32,10 +32,12 @@ public class PassageExamen extends BaseEntity implements Serializable {
 		this.intervention = intervention;
 	}
 
+	@Override
 	public long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}

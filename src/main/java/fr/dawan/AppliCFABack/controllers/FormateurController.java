@@ -31,14 +31,26 @@ public class FormateurController {
 	public List<FormateurDto> getAll() {
 		return formateurService.getAll();
 	}
-
-	// GET : /AppliCFABack/formateurs/{page}/{size}
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @return all formateur by page 
+	 * 
+	 */
 	@GetMapping(produces = "application/json", value = "/{page}/{size}")
 	public @ResponseBody List<FormateurDto> getAll(@PathVariable("page") int page, @PathVariable("size") int size) {
 		return formateurService.getAllByPage(page, size);
 	}
 
-	// GET : /AppliCFABack/formateurs/{page}/{size}/{search}
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @param search
+	 * @return all formateur by page + search
+	 * 
+	 */
 	@GetMapping(produces = "application/json", value = "/{page}/{size}/{search}")
 	public @ResponseBody List<FormateurDto> getAll(@PathVariable("page") int page, @PathVariable("size") int size,
 			@PathVariable("search") Optional<String> search) {
@@ -47,25 +59,41 @@ public class FormateurController {
 		return formateurService.getAllByPage(page, size);
 	}
 
-	// GET : /AppliCFABack/formateurs/with-object
+
+	/**
+	 * 
+	 * @return getAllWithObject
+	 */
 	@GetMapping(value = "/with-object", produces = "application/json")
 	public List<FormateurDto> getAllWithObject() {
 		return formateurService.getAllWithObject();
 	}
 
-	// GET : /AppliCFABack/formateurs/{id}
+	/**
+	 * 
+	 * @param id
+	 * @return formateur by id
+	 */
 	@GetMapping(produces = "application/json", value = "/{id}")
 	public FormateurDto getById(@PathVariable("id") long id) {
 		return formateurService.getById(id);
 	}
 
-	// POST : /AppliCFABack/formateurs
+	/**
+	 * 
+	 * @param fDto formateurDto
+	 * @return saveOrUpdate formateur
+	 */
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public FormateurDto save(@RequestBody FormateurDto fDto) {
 		return formateurService.saveOrUpdate(fDto);
 	}
 
-	// DELETE : /AppliCFABack/formateurs/{id}
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@DeleteMapping(value = "/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable("id") long id) {
 		try {
@@ -76,19 +104,30 @@ public class FormateurController {
 		}
 	}
 
-	// PUT : /AppliCFABack/formateurs
+	/**
+	 * 
+	 * @param fDto
+	 * @return
+	 */
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public FormateurDto update(@RequestBody FormateurDto fDto) {
 		return formateurService.saveOrUpdate(fDto);
 	}
 
-	// GET : /AppliCFABack/formateurs/count
+	/**
+	 * 
+	 * @return
+	 */
 	@GetMapping(value = "/count")
 	public CountDto count() {
 		return formateurService.count("");
 	}
 
-	// GET : /AppliCFABack/formateurs/count/{search}
+	/**
+	 * 
+	 * @param search
+	 * @return
+	 */
 	@GetMapping(value = "/count/{search}")
 	public CountDto count(@PathVariable("search") Optional<String> search) {
 		if (search.isPresent())
@@ -97,7 +136,14 @@ public class FormateurController {
 	}
 
 	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++ **/
-	// GET : /AppliCFABack/formateurs/{id}/interventions/{page}/{size}/{search}
+	/**
+	 * 
+	 * @param id
+	 * @param page
+	 * @param size
+	 * @param search
+	 * @return
+	 */
 	@GetMapping(produces = "application/json", value = "/{id}/interventions/{page}/{size}/{search}")
 	public List<InterventionDto> getInterventionsByFormateurIdByKeyword(@PathVariable("id") long id,
 			@PathVariable("page") int page, @PathVariable("size") int size,
@@ -107,20 +153,35 @@ public class FormateurController {
 		return formateurService.getAllInterventionsByFormateurIdPerPage(id, page, size);
 	}
 
-	// GET : /AppliCFABack/formateurs/{id}/interventions/{page}/{size}
+	/**
+	 * 
+	 * @param id
+	 * @param page
+	 * @param size
+	 * @return
+	 */
 	@GetMapping(produces = "application/json", value = "/{id}/interventions/{page}/{size}")
 	public List<InterventionDto> getInterventionsByFormateurId(@PathVariable("id") long id,
 			@PathVariable("page") int page, @PathVariable("size") int size) {
 		return formateurService.getAllInterventionsByFormateurIdPerPage(id, page, size);
 	}
 
-	// GET : /AppliCFABack/formateurs/{id}/interventions/count
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@GetMapping(value = "/{id}/interventions/count")
 	public CountDto countByFormateurId(@PathVariable("id") long id) {
 		return formateurService.countInterventionById(id);
 	}
 
-	// GET : /AppliCFABack/formateurs/{id}/interventions/count/{search}
+	/**
+	 * 
+	 * @param id
+	 * @param search
+	 * @return
+	 */
 	@GetMapping(value = "/{id}/interventions/count/{search}")
 	public CountDto countByFormateurId(@PathVariable("id") long id, @PathVariable("search") Optional<String> search) {
 		if (search.isPresent())

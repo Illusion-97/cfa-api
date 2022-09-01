@@ -11,6 +11,7 @@ import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
+import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.Formation;
@@ -179,24 +180,24 @@ public class DtoTools {
         Examen e = context.getSource();
         LivretEvaluationDto leDto = new LivretEvaluationDto();
 
-        leDto.setPromotions(e.getPromotions().stream().map(p -> {
-            return p.getNom();
-        }).collect(Collectors.toList()));
+        leDto.setPromotions(e.getPromotions().stream().map(
+        		Promotion::getNom
+        ).collect(Collectors.toList()));
 
         leDto.setExamen(e.getTitre());
 
-        leDto.setCompetences(e.getCompetencesProfessionnelles().stream().map(c -> {
-            return c.getLibelle();
-        }).collect(Collectors.toList()));
+        leDto.setCompetences(e.getCompetencesProfessionnelles().stream().map( 
+             CompetenceProfessionnelle::getLibelle
+        ).collect(Collectors.toList()));
 
         leDto.setSatisfactions(e.getNotes().stream().map(s -> {
             Note.Satisfaction satisfaction = s.getSatisfaction();
             return satisfaction;
         }).collect(Collectors.toList()));
 
-        leDto.setObservations(e.getNotes().stream().map(o -> {
-            return o.getObservation();
-        }).collect(Collectors.toList()));
+        leDto.setObservations(e.getNotes().stream().map(
+             Note::getObservation
+        ).collect(Collectors.toList()));
         return leDto;
     };
 
@@ -227,9 +228,9 @@ public class DtoTools {
 
         nDto.setDate(n.getExamen().getDateExamen());
 
-        nDto.setPromotions(n.getExamen().getPromotions().stream().map(p -> {
-            return p.getNom();
-        }).collect(Collectors.toSet()));
+        nDto.setPromotions(n.getExamen().getPromotions().stream().map(
+        		Promotion::getNom
+        ).collect(Collectors.toSet()));
 
         return nDto;
     };

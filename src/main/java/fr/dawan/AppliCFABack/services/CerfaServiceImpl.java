@@ -79,9 +79,8 @@ public class CerfaServiceImpl implements CerfaService {
 	
 	@Override
 	public List<CerfaDto> getAll() {
-		// TODO Auto-generated method stub
 		List<Cerfa> lstCerfa = cerfaRepo.findAll();
-		List<CerfaDto> lstCerfaDto = new ArrayList<CerfaDto>();
+		List<CerfaDto> lstCerfaDto = new ArrayList<>();
 		
 		for(Cerfa c : lstCerfa) {
 			CerfaDto cDto = mapper.CerfaToCerfaDto(c);

@@ -1,10 +1,12 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 
 public interface CursusService {
 
@@ -24,6 +26,6 @@ public interface CursusService {
 
 	List<PromotionDto> getPromotionsById(long id);
 
-	void fetchDG2Cursus(String email, String password) throws Exception;
+	void fetchDG2Cursus(String email, String password) throws FetchDG2Exception, URISyntaxException;
 
 }
