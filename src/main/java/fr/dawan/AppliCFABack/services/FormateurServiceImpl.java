@@ -53,7 +53,7 @@ public class FormateurServiceImpl implements FormateurService {
 		List<Formateur> lst = formateurRepository.findAll();
 		List<FormateurDto> lstDto = new ArrayList<>();
 		for (Formateur f : lst) {
-			lstDto.add(mapper.FormateurToFormateurDto(f));
+			lstDto.add(mapper.formateurToFormateurDto(f));
 		}
 		return lstDto;
 	}
@@ -73,7 +73,7 @@ public class FormateurServiceImpl implements FormateurService {
 				.collect(Collectors.toList());
 		List<FormateurDto> lstDto = new ArrayList<>();
 		for (Formateur f : lst) {
-			lstDto.add(mapper.FormateurToFormateurDto(f));
+			lstDto.add(mapper.formateurToFormateurDto(f));
 		}
 		return lstDto;
 	}
@@ -97,7 +97,7 @@ public class FormateurServiceImpl implements FormateurService {
 		List<FormateurDto> lstDto = new ArrayList<>();
 
 		for (Formateur f : lstFor) {
-			lstDto.add(mapper.FormateurToFormateurDto(f));
+			lstDto.add(mapper.formateurToFormateurDto(f));
 		}
 		return lstDto;
 	}
@@ -112,8 +112,8 @@ public class FormateurServiceImpl implements FormateurService {
 	public FormateurDto getById(long id) {
 		Optional<Formateur> f = formateurRepository.findById(id);
 		if (f.isPresent()) {
-			FormateurDto fDto = mapper.FormateurToFormateurDto(f.get());
-			fDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(f.get().getUtilisateur()));
+			FormateurDto fDto = mapper.formateurToFormateurDto(f.get());
+			fDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(f.get().getUtilisateur()));
 			return fDto;
 		}
 
@@ -149,7 +149,7 @@ public class FormateurServiceImpl implements FormateurService {
 		
 		
 		formateur = formateurRepository.saveAndFlush(formateur);
-		return mapper.FormateurToFormateurDto(formateur);
+		return mapper.formateurToFormateurDto(formateur);
 	}
 
 	/**
@@ -182,15 +182,15 @@ public class FormateurServiceImpl implements FormateurService {
 
 		for (Formateur formateur : lstFor) {
 
-			FormateurDto formateurDto = mapper.FormateurToFormateurDto(formateur);
+			FormateurDto formateurDto = mapper.formateurToFormateurDto(formateur);
 
 			List<Intervention> lstInter = formateur.getInterventions();
 			List<InterventionDto> lstInterDto = new ArrayList<>();
 			for (Intervention intervention : lstInter) {
 				if (intervention != null)
-					lstInterDto.add(mapper.InterventionToInterventionDto(intervention));
+					lstInterDto.add(mapper.interventionToInterventionDto(intervention));
 			}
-			formateurDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(formateur.getUtilisateur()));
+			formateurDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(formateur.getUtilisateur()));
 			formateurDto.setInterventionsDto(lstInterDto);
 			lstDto.add(formateurDto);
 		}
@@ -271,9 +271,9 @@ public class FormateurServiceImpl implements FormateurService {
 		List<InterventionDto> lstInDto = new ArrayList<>();
 		for (Intervention intervention : lstIn) {
 			if (intervention != null) {
-				InterventionDto interDto = mapper.InterventionToInterventionDto(intervention);
+				InterventionDto interDto = mapper.interventionToInterventionDto(intervention);
 
-				FormationDto formDto = mapper.FormationToFormationDto(intervention.getFormation());
+				FormationDto formDto = mapper.formationToFormationDto(intervention.getFormation());
 
 				interDto.setFormationDto(formDto);
 				lstInDto.add(interDto);
@@ -302,9 +302,9 @@ public class FormateurServiceImpl implements FormateurService {
 		List<InterventionDto> lstInDto = new ArrayList<>();
 		for (Intervention intervention : lstIn) {
 			if (intervention != null) {
-				InterventionDto interDto = mapper.InterventionToInterventionDto(intervention);
+				InterventionDto interDto = mapper.interventionToInterventionDto(intervention);
 
-				FormationDto formDto = mapper.FormationToFormationDto(intervention.getFormation());
+				FormationDto formDto = mapper.formationToFormationDto(intervention.getFormation());
 
 				interDto.setFormationDto(formDto);
 				lstInDto.add(interDto);

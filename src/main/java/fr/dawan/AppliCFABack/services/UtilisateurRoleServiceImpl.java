@@ -44,7 +44,7 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
 
         List<UtilisateurRoleDto> lstDto = new ArrayList<>();
         for (UtilisateurRole n : lst) {
-            lstDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(n));
+            lstDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(n));
         }
         return lstDto;
     }
@@ -66,7 +66,7 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
         // conversion vers Dto
         List<UtilisateurRoleDto> lstDto = new ArrayList<>();
         for (UtilisateurRole c : lst) {
-            UtilisateurRoleDto uDto = mapper.UtilisateurRoleToUtilisateurRoleDto(c);
+            UtilisateurRoleDto uDto = mapper.utilisateurRoleToUtilisateurRoleDto(c);
             lstDto.add(uDto);
         }
         return lstDto;
@@ -95,7 +95,7 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
         if (e.isPresent()) {
             //UtilisateurRoleDto uDto = mapper.UtilisateurRoleToUtilisateurRoleDto(e.get());
 
-            return mapper.UtilisateurRoleToUtilisateurRoleDto(e.get());
+            return mapper.utilisateurRoleToUtilisateurRoleDto(e.get());
         }
 
         return null;
@@ -112,7 +112,7 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
 
         u = utilisateurRoleRepository.saveAndFlush(u);
 
-        return mapper.UtilisateurRoleToUtilisateurRoleDto(u);
+        return mapper.utilisateurRoleToUtilisateurRoleDto(u);
     }
 
 	/**
@@ -125,7 +125,7 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
     @Override
     public UtilisateurRoleDto findByIntitule(String intitule) {
         UtilisateurRole role = utilisateurRoleRepository.findByIntituleContaining(intitule);
-        return mapper.UtilisateurRoleToUtilisateurRoleDto(role);
+        return mapper.utilisateurRoleToUtilisateurRoleDto(role);
     }
 
     //recuperartion par intitule bis ?

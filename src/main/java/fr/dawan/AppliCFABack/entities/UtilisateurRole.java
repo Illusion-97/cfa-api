@@ -15,7 +15,7 @@ public class UtilisateurRole extends BaseEntity implements Serializable {
 	private String intitule;
 
 	@ManyToMany(mappedBy = "roles")
-	List<Utilisateur> utilisateurs;
+	private List<Utilisateur> utilisateurs;
 
 	public UtilisateurRole() {
 		super();

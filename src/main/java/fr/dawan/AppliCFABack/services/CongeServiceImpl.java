@@ -59,7 +59,7 @@ public class CongeServiceImpl implements CongeService {
 
 		List<CongeDto> lstDto = new ArrayList<>();
 		for (Conge c : lst) {
-			lstDto.add(mapper.CongeToCongeDto(c));
+			lstDto.add(mapper.congeToCongeDto(c));
 		}
 		return lstDto;
 	}
@@ -73,8 +73,8 @@ public class CongeServiceImpl implements CongeService {
 	public CongeDto getById(long id) {
 		Optional<Conge> f = congeRepository.findById(id);
 		if (f.isPresent()) {
-			CongeDto cDto = mapper.CongeToCongeDto(f.get());
-			cDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(f.get().getUtilisateur()));
+			CongeDto cDto = mapper.congeToCongeDto(f.get());
+			cDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(f.get().getUtilisateur()));
 			return cDto;
 		}
 		return null;		
@@ -97,8 +97,8 @@ public class CongeServiceImpl implements CongeService {
 		// conversion vers Dto
 		List<CongeDto> lstDto = new ArrayList<>();
 		for (Conge c : lst) {
-			CongeDto cDto = mapper.CongeToCongeDto(c);
-			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(c.getUtilisateur());
+			CongeDto cDto = mapper.congeToCongeDto(c);
+			UtilisateurDto uDto = mapper.utilisateurToUtilisateurDto(c.getUtilisateur());
 			cDto.setUtilisateurDto(uDto);
 			lstDto.add(cDto);
 		}
@@ -122,7 +122,7 @@ public class CongeServiceImpl implements CongeService {
 			emailService.alertDemandeCongetoReferent(c);			
 		}				
 		
-		return mapper.CongeToCongeDto(c);
+		return mapper.congeToCongeDto(c);
 	}
 
 	/**
@@ -279,7 +279,7 @@ public class CongeServiceImpl implements CongeService {
 		List<CongeDto> result = new ArrayList<>();
 		List<Conge> list = congeRepository.findAllByUtilisateurId(id);
 		for(Conge c : list) {
-			result.add(mapper.CongeToCongeDto(c));
+			result.add(mapper.congeToCongeDto(c));
 		}
 		return result;
 	}

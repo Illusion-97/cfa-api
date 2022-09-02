@@ -74,14 +74,14 @@ public class FormationServiceImpl implements FormationService {
 
 		List<FormationDto> lstDto = new ArrayList<>();
 		for (Formation f : lst) {
-			FormationDto formationDto = mapper.FormationToFormationDto(f);
+			FormationDto formationDto = mapper.formationToFormationDto(f);
 
 			List<Cursus> lstCursus = f.getCursusLst();
 			List<CursusDto> lstCursusDto = new ArrayList<>();
 
 			for (Cursus cursus : lstCursus) {
 				if (cursus != null)
-					lstCursusDto.add(mapper.CursusToCursusDto(cursus));
+					lstCursusDto.add(mapper.cursusToCursusDto(cursus));
 			}
 
 			formationDto.setCursusLstDto(lstCursusDto);
@@ -109,10 +109,10 @@ public class FormationServiceImpl implements FormationService {
 		// conversion vers Dto
 		List<FormationDto> lstDto = new ArrayList<>();
 		for (Formation c : lst) {
-			FormationDto cDto = mapper.FormationToFormationDto(c);
+			FormationDto cDto = mapper.formationToFormationDto(c);
 			List<CursusDto> cursusLstDto = new ArrayList<>();
 			for (Cursus cursus : c.getCursusLst()) {
-				cursusLstDto.add(mapper.CursusToCursusDto(cursus));
+				cursusLstDto.add(mapper.cursusToCursusDto(cursus));
 			}
 			cDto.setCursusLstDto(cursusLstDto);
 			lstDto.add(cDto);
@@ -142,13 +142,13 @@ public class FormationServiceImpl implements FormationService {
 	public FormationDto getById(long id) {
 		Optional<Formation> f = formationRepository.findById(id);
 		if (f.isPresent()) {
-			FormationDto formationDto = mapper.FormationToFormationDto(f.get());
+			FormationDto formationDto = mapper.formationToFormationDto(f.get());
 			List<Cursus> lstCursus = f.get().getCursusLst();
 			List<CursusDto> lstCursusDto = new ArrayList<>();
 
 			for (Cursus cursus : lstCursus) {
 				if (cursus != null)
-					lstCursusDto.add(mapper.CursusToCursusDto(cursus));
+					lstCursusDto.add(mapper.cursusToCursusDto(cursus));
 			}
 
 			formationDto.setCursusLstDto(lstCursusDto);
@@ -169,7 +169,7 @@ public class FormationServiceImpl implements FormationService {
 
 		f = formationRepository.saveAndFlush(f);
 
-		return mapper.FormationToFormationDto(f);
+		return mapper.formationToFormationDto(f);
 	}
 
 	/**
@@ -202,7 +202,7 @@ public class FormationServiceImpl implements FormationService {
 		List<InterventionDto> lstIntDto = new ArrayList<>();
 		for (Intervention itv : lstInt) {
 			if (itv != null)
-				lstIntDto.add(mapper.InterventionToInterventionDto(itv));
+				lstIntDto.add(mapper.interventionToInterventionDto(itv));
 		}
 		return lstIntDto;
 	}

@@ -43,8 +43,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		List<DossierProjetDto> lstDossierProjetDto= new ArrayList<>();
 		
 		for (DossierProjet dossierProjet : lstDossierProjets) {
-			DossierProjetDto dpDto =mapper.DossierProjetToDossierProjetDto(dossierProjet);
-			dpDto.setProjet(mapper.ProjetToProjetDto(dossierProjet.getProjet()));
+			DossierProjetDto dpDto =mapper.dossierProjetToDossierProjetDto(dossierProjet);
+			dpDto.setProjet(mapper.projetToProjetDto(dossierProjet.getProjet()));
 			lstDossierProjetDto.add(dpDto);
 			
 		}
@@ -60,8 +60,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	public DossierProjetDto getById(long id) {
 		Optional<DossierProjet> dp = dossierProRepo.findById(id);
 		if(dp.isPresent()) {
-			DossierProjetDto dpDto = mapper.DossierProjetToDossierProjetDto(dp.get());
-			dpDto.setProjet(mapper.ProjetToProjetDto(dp.get().getProjet()));
+			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp.get());
+			dpDto.setProjet(mapper.projetToProjetDto(dp.get().getProjet()));
 			return dpDto;
 		}
 		return null;
@@ -87,8 +87,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		// conversion vers Dto
 		List<DossierProjetDto> lstDto = new ArrayList<>();
 		for (DossierProjet dp : lst) {
-			DossierProjetDto dpDto = mapper.DossierProjetToDossierProjetDto(dp);
-			dpDto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
+			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
+			dpDto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
 			
 			lstDto.add(dpDto);
 		}
@@ -103,10 +103,10 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	
 	@Override
 	public DossierProjetDto getByName(String nom) {
-		DossierProjetDto dpDto = mapper.DossierProjetToDossierProjetDto(dossierProRepo.getByName(nom));
+		DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dossierProRepo.getByName(nom));
 		if(dpDto!=null) {
 			if(dossierProRepo.getByName(nom).getProjet()==null)
-				dpDto.setProjet( mapper.ProjetToProjetDto(dossierProRepo.getByName(nom).getProjet()));		
+				dpDto.setProjet( mapper.projetToProjetDto(dossierProRepo.getByName(nom).getProjet()));		
 		return dpDto;
 		}
 		return null;
@@ -121,7 +121,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) {
 		DossierProjet d = DtoTools.convert(dpDto, DossierProjet.class);
 		dossierProRepo.saveAndFlush(d);
-		return mapper.DossierProjetToDossierProjetDto(d);
+		return mapper.dossierProjetToDossierProjetDto(d);
 	}
 
 	/**

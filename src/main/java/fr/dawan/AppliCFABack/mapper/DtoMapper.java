@@ -77,99 +77,99 @@ import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 public interface DtoMapper {
 
 	@Mapping(source = ".", target = ".")
-	CompetenceProfessionnelleDto CompetenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
+	CompetenceProfessionnelleDto competenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
 
 	@Mapping(source = ".", target = ".")
-	ActiviteTypeDto ActiviteTypeToActiviteDto(ActiviteType activiteType);
+	ActiviteTypeDto activiteTypeToActiviteDto(ActiviteType activiteType);
 
 	@Mapping(source = ".", target = ".")
-	AdresseDto AdresseToAdresseDto(Adresse adresse);
+	AdresseDto adresseToAdresseDto(Adresse adresse);
 
 	@Mapping(source = ".", target = ".")
-	CEFDto CEFToCEFDto(CEF cef);
+	CEFDto cefToCEFDto(CEF cef);
 
 	@Mapping(source = ".", target = ".")
-	CentreFormationDto CentreFormationToCentreFormationDto(CentreFormation centreFormation);
+	CentreFormationDto centreFormationToCentreFormationDto(CentreFormation centreFormation);
 
 	@Mapping(source = ".", target = ".")
-	CongeDto CongeToCongeDto(Conge conge);
+	CongeDto congeToCongeDto(Conge conge);
 
 	@Mapping(source = ".", target = ".")
-	CursusDto CursusToCursusDto(Cursus cursus);
+	CursusDto cursusToCursusDto(Cursus cursus);
 
 	@Mapping(source = ".", target = ".")
-	DevoirDto DevoirToDevoirDto(Devoir devoir);
+	DevoirDto devoirToDevoirDto(Devoir devoir);
 
 	@Mapping(source = ".", target = ".")
-	EntrepriseDto EntrepriseToEntrepriseDto(Entreprise entreprise);
+	EntrepriseDto entrepriseToEntrepriseDto(Entreprise entreprise);
 
 	@Mapping(source = ".", target = ".")
-	EtudiantDto EtudiantToEtudiantDto(Etudiant etudiant);
+	EtudiantDto etudiantToEtudiantDto(Etudiant etudiant);
 
 	@Mapping(source = ".", target = ".")
-	ExamenDto ExamenToExamenDto(Examen examen);
+	ExamenDto examenToExamenDto(Examen examen);
 
 	@Mapping(source = ".", target = ".")
 	@Mapping(source = "utilisateur", target = "utilisateurDto")
-	FormateurDto FormateurToFormateurDto(Formateur formateur);
+	FormateurDto formateurToFormateurDto(Formateur formateur);
 
 	@Mapping(source = ".", target = ".")
-	FormationDto FormationToFormationDto(Formation formation);
+	FormationDto formationToFormationDto(Formation formation);
 
 	@Mapping(source = ".", target = ".")
-	GroupeEtudiantDto GroupeEtudiantToGroupEtudiantDto(GroupeEtudiant groupeEtudiant);
+	GroupeEtudiantDto groupeEtudiantToGroupEtudiantDto(GroupeEtudiant groupeEtudiant);
 
 	@Mapping(source = ".", target = ".")
-	InterventionDto InterventionToInterventionDto(Intervention intervention);
+	InterventionDto interventionToInterventionDto(Intervention intervention);
 
 	@Mapping(source = ".", target = ".")
-	NoteDto NoteToNoteDto(Note note);
+	NoteDto noteToNoteDto(Note note);
 
 	@Mapping(source = ".", target = ".")
-	PassageExamenDto PassageExamenToPassageExamenDto(PassageExamen passageExamen);
+	PassageExamenDto passageExamenToPassageExamenDto(PassageExamen passageExamen);
 
 	@Mapping(source = ".", target = ".")
-	ProjetDto ProjetToProjetDto(Projet projet);
+	ProjetDto projetToProjetDto(Projet projet);
 
 	@Mapping(source = ".", target = ".")
 	@Mapping(source = "cursus", target = "cursusDto")
-	PromotionDto PromotionToPromotionDto(Promotion promotion);
+	PromotionDto promotionToPromotionDto(Promotion promotion);
 
 	@Mapping(source = ".", target = ".")
-	UtilisateurDto UtilisateurToUtilisateurDto(Utilisateur utilisateur);
+	UtilisateurDto utilisateurToUtilisateurDto(Utilisateur utilisateur);
 
 	@Mapping(source = ".", target = ".")
-	UtilisateurRoleDto UtilisateurRoleToUtilisateurRoleDto(UtilisateurRole utilisateurRole);
+	UtilisateurRoleDto utilisateurRoleToUtilisateurRoleDto(UtilisateurRole utilisateurRole);
 
 	@Mapping(source = ".", target = ".")
-	FichePosteDto FichePosteToFichePosteDto(FichePoste fichePoste);
+	FichePosteDto fichePosteToFichePosteDto(FichePoste fichePoste);
 
 	@Mapping(source = ".", target = ".")
-	DossierProfessionnelDto DossierProfessionnelToDossierProfessionnelDto(DossierProfessionnel dossierProfessionnel);
+	DossierProfessionnelDto dossierProfessionnelToDossierProfessionnelDto(DossierProfessionnel dossierProfessionnel);
 
 	@Mapping(source = ".", target = ".")
-	DossierProjetDto DossierProjetToDossierProjetDto(DossierProjet dossierProjet);
+	DossierProjetDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet);
 
 	@Mapping(source = ".", target = ".")
-	FicheEntrepriseDto FicheEntrepriseToFicheEntrepriseDto(FicheEntreprise FicheEntreprise);
+	FicheEntrepriseDto ficheEntrepriseToFicheEntrepriseDto(FicheEntreprise FicheEntreprise);
 
 	@Mapping(source = ".", target = ".")
-	ContratDto ContratToContratDto(Contrat contrat);
+	ContratDto contratToContratDto(Contrat contrat);
 
 	@Mapping(source = ".", target = ".")
-	MaitreApprentissageDto MaitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage);
+	MaitreApprentissageDto maitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage);
 
 	@Mapping(source = ".", target = ".")
-	CerfaDto CerfaToCerfaDto(Cerfa cerfa);
+	CerfaDto cerfaToCerfaDto(Cerfa cerfa);
 
 	@Mapping(source = ".", target = ".")
-	RemunerationDto RemunerationTORemunerationDto(Remuneration remuneration);
+	RemunerationDto remunerationTORemunerationDto(Remuneration remuneration);
 
 	@Mapping(source = ".", target = ".")
-	ActiviteTypeDto ActiviteTypeToActiviteTypeDto(ActiviteType activiteType);
+	ActiviteTypeDto activiteTypeToActiviteTypeDto(ActiviteType activiteType);
 
 	@Mapping(source = ".", target = ".")
-	CompetenceProfessionnelleDto CompetenceProfessionnelleToCompetenceProfessionnelleDto(
+	CompetenceProfessionnelleDto competenceProfessionnelleToCompetenceProfessionnelleDto(
 			CompetenceProfessionnelle competenceProfessionnelle);
 
 	@Mapping(target = "cursusLst", ignore = true)
@@ -203,7 +203,7 @@ public interface DtoMapper {
 
 
 	@Mapping(source = ".", target = ".")
-	ExperienceProfessionnelleDto ExperienceProfessionnelleToExperienceProfessionnelleDto(
+	ExperienceProfessionnelleDto experienceProfessionnelleToExperienceProfessionnelleDto(
 			ExperienceProfessionnelle experienceProfessionnelle);
 
 

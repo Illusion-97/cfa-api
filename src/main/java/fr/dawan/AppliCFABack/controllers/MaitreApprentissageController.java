@@ -39,7 +39,12 @@ public class MaitreApprentissageController {
 		return maitreApprentissageService.getById(id);
 	}
 
-	// /AppliCFABack/groupeEtudiants/{page}/{size}
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @return all maitre apprentissage by page
+	 */
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<MaitreApprentissageDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {

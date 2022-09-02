@@ -41,7 +41,7 @@ public class AdresseServiceImpl implements AdresseService{
 		
 		List<AdresseDto> lstDto = new ArrayList<>();
 		for (Adresse a : lst) {
-			lstDto.add(mapper.AdresseToAdresseDto(a));
+			lstDto.add(mapper.adresseToAdresseDto(a));
 		}
 		return lstDto;
 	}
@@ -55,7 +55,7 @@ public class AdresseServiceImpl implements AdresseService{
 	public AdresseDto getById(long id) {
 		Optional<Adresse> adresseOpt = adresseRepository.findById(id);
 		if (adresseOpt.isPresent())
-			return mapper.AdresseToAdresseDto(adresseOpt.get());
+			return mapper.adresseToAdresseDto(adresseOpt.get());
 		return null;
 	}
 	
@@ -76,7 +76,7 @@ public class AdresseServiceImpl implements AdresseService{
 		// conversion vers Dto
 		List<AdresseDto> lstDto = new ArrayList<>();
 		for (Adresse a : lst) {
-			AdresseDto aDto =mapper.AdresseToAdresseDto(a);
+			AdresseDto aDto =mapper.adresseToAdresseDto(a);
 			lstDto.add(aDto);
 		}
 		return lstDto;
@@ -93,7 +93,7 @@ public class AdresseServiceImpl implements AdresseService{
 
 		a= adresseRepository.saveAndFlush(a);
 
-		return mapper.AdresseToAdresseDto(a);
+		return mapper.adresseToAdresseDto(a);
 	}
 	
 	/**
@@ -125,7 +125,7 @@ public class AdresseServiceImpl implements AdresseService{
 		List<Adresse> adresses = adresseRepository.findAllByLibelleContainingOrVilleContaining(search, search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<AdresseDto> res = new ArrayList<>();
 		for (Adresse a : adresses) {
-			res.add(mapper.AdresseToAdresseDto(a));
+			res.add(mapper.adresseToAdresseDto(a));
 		}
 		return res;
 	}

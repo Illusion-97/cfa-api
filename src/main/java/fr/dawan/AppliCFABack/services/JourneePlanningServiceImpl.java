@@ -42,14 +42,14 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 				List<FormateurDto> formateurs = new ArrayList<>();
 								
 				for(Formateur f : i.getFormateurs()) {
-					FormateurDto formDto = mapper.FormateurToFormateurDto(f);
-					formDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(f.getUtilisateur()));
+					FormateurDto formDto = mapper.formateurToFormateurDto(f);
+					formDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(f.getUtilisateur()));
 					formateurs.add(formDto);
 				}
 				
 				Formation f = i.getFormation();
 				
-				FormationDto fDto = mapper.FormationToFormationDto(f);
+				FormationDto fDto = mapper.formationToFormationDto(f);
 				
 				JourneePlanningDto journee = new JourneePlanningDto(compteur, fDto, formateurs);
 				journee.setIdIntervention(i.getId());

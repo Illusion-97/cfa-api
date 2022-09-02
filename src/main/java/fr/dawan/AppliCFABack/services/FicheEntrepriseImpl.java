@@ -38,11 +38,11 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 
 		List<FicheEntrepriseDto> lstDto = new ArrayList<>();
 		for (FicheEntreprise n : lst) {
-			FicheEntrepriseDto fDto = mapper.FicheEntrepriseToFicheEntrepriseDto(n);
-			fDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.getEtudiant()));
-			fDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(n.getEntreprise()));
+			FicheEntrepriseDto fDto = mapper.ficheEntrepriseToFicheEntrepriseDto(n);
+			fDto.setEtudiantDto(mapper.etudiantToEtudiantDto(n.getEtudiant()));
+			fDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(n.getEntreprise()));
 
-			fDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(n.getEntreprise().getAdresseSiege()));
+			fDto.getEntrepriseDto().setAdresseSiegeDto(mapper.adresseToAdresseDto(n.getEntreprise().getAdresseSiege()));
 			lstDto.add(fDto);
 		}
 		return lstDto;
@@ -66,10 +66,10 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 		// conversion vers Dto
 		List<FicheEntrepriseDto> lstDto = new ArrayList<>();
 		for (FicheEntreprise c : lst) {
-			FicheEntrepriseDto fDto = mapper.FicheEntrepriseToFicheEntrepriseDto(c);
-			fDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(c.getEntreprise()));
+			FicheEntrepriseDto fDto = mapper.ficheEntrepriseToFicheEntrepriseDto(c);
+			fDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(c.getEntreprise()));
 			//fDto.getEntrepriseDto().setRaisonSociale(mapper.EntrepriseToEntrepriseDto(c.getEntreprise().getRaisonSociale()));
-			fDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(c.getEntreprise().getAdresseSiege()));
+			fDto.getEntrepriseDto().setAdresseSiegeDto(mapper.adresseToAdresseDto(c.getEntreprise().getAdresseSiege()));
 			lstDto.add(fDto);
 		}
 		return lstDto;
@@ -92,12 +92,12 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 		Optional<FicheEntreprise> e = ficheEntrepriseRepository.findById(id);
 		if (e.isPresent()) {
 			
-			FicheEntrepriseDto fDto = mapper.FicheEntrepriseToFicheEntrepriseDto(e.get());
+			FicheEntrepriseDto fDto = mapper.ficheEntrepriseToFicheEntrepriseDto(e.get());
 
-			fDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(e.get().getEntreprise()));
-			fDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(e.get().getEtudiant()));	
+			fDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(e.get().getEntreprise()));
+			fDto.setEtudiantDto(mapper.etudiantToEtudiantDto(e.get().getEtudiant()));	
 
-			fDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.get().getEntreprise().getAdresseSiege()));
+			fDto.getEntrepriseDto().setAdresseSiegeDto(mapper.adresseToAdresseDto(e.get().getEntreprise().getAdresseSiege()));
 			return fDto;
 		}			
 
@@ -115,7 +115,7 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 		
 		u = ficheEntrepriseRepository.saveAndFlush(u);
 		
-		return mapper.FicheEntrepriseToFicheEntrepriseDto(u);
+		return mapper.ficheEntrepriseToFicheEntrepriseDto(u);
 	}
 
 	/**

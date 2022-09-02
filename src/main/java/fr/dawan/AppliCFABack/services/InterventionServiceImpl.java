@@ -95,9 +95,9 @@ public class InterventionServiceImpl implements InterventionService {
 	public List<InterventionDto> getAllIntervention() {
 		List<Intervention> lst = interventionRepository.findAll();
 
-		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
+		List<InterventionDto> lstDto = new ArrayList<>();
 		for (Intervention i : lst) {
-			InterventionDto interventionDto = mapper.InterventionToInterventionDto(i);
+			InterventionDto interventionDto = mapper.interventionToInterventionDto(i);
 			interventionDto.setHeuresDisponsees();
 			lstDto.add(interventionDto);
 
@@ -117,11 +117,11 @@ public class InterventionServiceImpl implements InterventionService {
 		List<Intervention> lst = interventionRepository.findAll(PageRequest.of(page, size)).get()
 				.collect(Collectors.toList());
 		// conversion vers Dto
-		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
+		List<InterventionDto> lstDto = new ArrayList<>();
 
 		for (Intervention i : lst) {
-			InterventionDto interventionDto = mapper.InterventionToInterventionDto(i);
-			FormationDto formationDto = mapper.FormationToFormationDto(i.getFormation());
+			InterventionDto interventionDto = mapper.interventionToInterventionDto(i);
+			FormationDto formationDto = mapper.formationToFormationDto(i.getFormation());
 			interventionDto.setFormationDto(formationDto);
 
 			lstDto.add(interventionDto);
@@ -145,18 +145,18 @@ public class InterventionServiceImpl implements InterventionService {
 						search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
 
-		List<InterventionDto> lstDto = new ArrayList<InterventionDto>();
+		List<InterventionDto> lstDto = new ArrayList<>();
 
 		for (Intervention intervention : lstIn) {
 			/**
 			 * on recup une intervention de type Intervention que l'on convertis en
 			 * InterventionDto
 			 **/
-			InterventionDto interventionDto = mapper.InterventionToInterventionDto(intervention);
+			InterventionDto interventionDto = mapper.interventionToInterventionDto(intervention);
 			/**
 			 * on recup une formation de type Formation que l'on convertis en FormationDto
 			 **/
-			FormationDto formationDto = mapper.FormationToFormationDto(intervention.getFormation());
+			FormationDto formationDto = mapper.formationToFormationDto(intervention.getFormation());
 			// Les convertion en Dto faite => on ajoute la formationDto à l'interventionDto
 			interventionDto.setFormationDto(formationDto);
 
@@ -171,7 +171,7 @@ public class InterventionServiceImpl implements InterventionService {
 			for (Promotion promotion : lstPromo) {
 				/** On convertis List<Promotion> en List<PromotionDto> **/
 				if (promotion != null)
-					lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
+					lstPromoDto.add(mapper.promotionToPromotionDto(promotion));
 			}
 
 			List<FormateurDto> lstFormDto = new ArrayList<FormateurDto>();
@@ -203,21 +203,21 @@ public class InterventionServiceImpl implements InterventionService {
 	public InterventionDto getById(long id) {
 		Optional<Intervention> i = interventionRepository.findById(id);
 		if (i.isPresent()) {
-			InterventionDto interventionDto = mapper.InterventionToInterventionDto(i.get());
+			InterventionDto interventionDto = mapper.interventionToInterventionDto(i.get());
 //			// Recupere les formations par rapport à l'id de l'intervention
 //			// Convertion de l'entitie Formation en FormationDto
-			FormationDto formationDto = mapper.FormationToFormationDto(i.get().getFormation());
+			FormationDto formationDto = mapper.formationToFormationDto(i.get().getFormation());
 
 			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
 			for (Promotion promo : i.get().getPromotions()) {
 				if (promo != null)
-					lstPromoDto.add(mapper.PromotionToPromotionDto(promo));
+					lstPromoDto.add(mapper.promotionToPromotionDto(promo));
 			}
 
 			List<FormateurDto> lstFormaDto = new ArrayList<FormateurDto>();
 			for (Formateur formateur : i.get().getFormateurs()) {
 				if (formateur != null)
-					lstFormaDto.add(mapper.FormateurToFormateurDto(formateur));
+					lstFormaDto.add(mapper.formateurToFormateurDto(formateur));
 			}
 
 			interventionDto.setFormateursDto(lstFormaDto);
@@ -243,7 +243,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 		filesService.createDirectory("interventions/" + i.getId());
 
-		return mapper.InterventionToInterventionDto(i);
+		return mapper.interventionToInterventionDto(i);
 	}
 
 	/**
@@ -297,8 +297,8 @@ public class InterventionServiceImpl implements InterventionService {
 		List<EtudiantDto> lstEtuDto = new ArrayList<EtudiantDto>();
 		for (Etudiant etu : lstEtu) {
 			if (etu != null) {
-				EtudiantDto eDto = mapper.EtudiantToEtudiantDto(etu);
-				eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(etu.getUtilisateur()));
+				EtudiantDto eDto = mapper.etudiantToEtudiantDto(etu);
+				eDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(etu.getUtilisateur()));
 				lstEtuDto.add(eDto);
 			}
 		}
@@ -319,7 +319,7 @@ public class InterventionServiceImpl implements InterventionService {
 		List<PromotionDto> lstPromDto = new ArrayList<PromotionDto>();
 		for (Promotion prom : lstProm) {
 			if (prom != null)
-				lstPromDto.add(mapper.PromotionToPromotionDto(prom));
+				lstPromDto.add(mapper.promotionToPromotionDto(prom));
 		}
 		return lstPromDto;
 	}
@@ -334,11 +334,11 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public List<FormateurDto> findFormateursByInterventionsId(long id) {
 		List<Formateur> lstForm = formateurRepository.findByInterventionsId(id);
-		List<FormateurDto> lstFormDto = new ArrayList<FormateurDto>();
+		List<FormateurDto> lstFormDto = new ArrayList<>();
 		for (Formateur form : lstForm) {
 			if (form != null) {
-				FormateurDto fDto = mapper.FormateurToFormateurDto(form);
-				fDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(form.getUtilisateur()));
+				FormateurDto fDto = mapper.formateurToFormateurDto(form);
+				fDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(form.getUtilisateur()));
 				lstFormDto.add(fDto);
 			}
 		}
@@ -357,7 +357,7 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public int fetchDGInterventions(String email, String password) throws Exception {
 		List<Intervention> interventions = new ArrayList<Intervention>();
-		List<Promotion> promoLst = new ArrayList<Promotion>();
+		List<Promotion> promoLst = new ArrayList<>();
 		promoLst = promoRepository.findAll();
 		for (Promotion p : promoLst) {
 			interventions.addAll(getInerventionDG2ByIdPromotionDG2(email, password, p.getIdDg2()));
@@ -374,7 +374,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Override
 	public int fetchDGInterventions(String email, String password, long idPrmotionDg2) throws Exception {
-		List<Intervention> interventions = new ArrayList<Intervention>();
+		List<Intervention> interventions = new ArrayList<>();
 		interventions.addAll(getInerventionDG2ByIdPromotionDG2(email, password, idPrmotionDg2));
 		for (Intervention i : interventions) {
 			try {
@@ -392,7 +392,7 @@ public class InterventionServiceImpl implements InterventionService {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>();
-		List<Intervention> result = new ArrayList<Intervention>();
+		List<Intervention> result = new ArrayList<>();
 
 		URI url = new URI("https://dawan.org/api2/cfa/sessions/" + idPrmotionDg2 + "/children");
 		HttpHeaders headers = new HttpHeaders();

@@ -4,7 +4,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -26,6 +25,6 @@ public interface CentreFormationService {
 
 	List<CentreFormationDto> getAllCentreFormations(int page, int size, String string);
 	
-	void fetchAllDG2CentreFormation(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonMappingException, JsonProcessingException;
+	void fetchAllDG2CentreFormation(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonProcessingException;
 
 }

@@ -116,7 +116,6 @@ public class UtilisateurController {
      * @return ResponseEntity
      */
     @PostMapping(consumes = "application/json", produces = "application/json")
-    //public ResponseEntity<UtilisateurDto> insert(@RequestBody UtilisateurDto uDto){
     public ResponseEntity<?> insert(@RequestBody UtilisateurDto uDto) {
         try {
             return ResponseEntity.ok(utilisateurService.insertUpdate(uDto));

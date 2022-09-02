@@ -59,9 +59,9 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 
 		List<CentreFormationDto> lstDto = new ArrayList<>();
 		for (CentreFormation cf : lst) {
-			CentreFormationDto cDto = mapper.CentreFormationToCentreFormationDto(cf);
-			cDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(cf.getEntreprise()));
-			cDto.setAdresseDto(mapper.AdresseToAdresseDto(cf.getAdresse()));
+			CentreFormationDto cDto = mapper.centreFormationToCentreFormationDto(cf);
+			cDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(cf.getEntreprise()));
+			cDto.setAdresseDto(mapper.adresseToAdresseDto(cf.getAdresse()));
 			lstDto.add(cDto);
 		}
 		return lstDto;
@@ -83,9 +83,9 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		// conversion vers Dto
 		List<CentreFormationDto> lstDto = new ArrayList<>();
 		for (CentreFormation cf : lst) {
-			CentreFormationDto cDto = mapper.CentreFormationToCentreFormationDto(cf);
-			cDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(cf.getEntreprise()));
-			cDto.setAdresseDto(mapper.AdresseToAdresseDto(cf.getAdresse()));
+			CentreFormationDto cDto = mapper.centreFormationToCentreFormationDto(cf);
+			cDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(cf.getEntreprise()));
+			cDto.setAdresseDto(mapper.adresseToAdresseDto(cf.getAdresse()));
 			lstDto.add(cDto);
 		}
 		return lstDto;
@@ -101,9 +101,9 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		Optional<CentreFormation> cf = centreFormationRepository.findById(id);
 		if (!cf.isPresent()) return null;
 		
-		CentreFormationDto cDto = mapper.CentreFormationToCentreFormationDto(cf.get());
-		cDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(cf.get().getEntreprise()));
-		cDto.setAdresseDto(mapper.AdresseToAdresseDto(cf.get().getAdresse()));
+		CentreFormationDto cDto = mapper.centreFormationToCentreFormationDto(cf.get());
+		cDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(cf.get().getEntreprise()));
+		cDto.setAdresseDto(mapper.adresseToAdresseDto(cf.get().getAdresse()));
 		
 		return cDto;
 	}
@@ -119,7 +119,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 
 		cf = centreFormationRepository.saveAndFlush(cf);
 
-		return mapper.CentreFormationToCentreFormationDto(cf);
+		return mapper.centreFormationToCentreFormationDto(cf);
 	}
 
 	/**
@@ -160,9 +160,9 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		List<CentreFormation> cf = centreFormationRepository.findAllByNomContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<CentreFormationDto> res = new ArrayList<>();
 		for (CentreFormation c : cf) {
-			CentreFormationDto cfDto = mapper.CentreFormationToCentreFormationDto(c);
-			cfDto.setEntrepriseDto(mapper.EntrepriseToEntrepriseDto(c.getEntreprise()));
-			cfDto.setAdresseDto(mapper.AdresseToAdresseDto(c.getAdresse()));
+			CentreFormationDto cfDto = mapper.centreFormationToCentreFormationDto(c);
+			cfDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(c.getEntreprise()));
+			cfDto.setAdresseDto(mapper.adresseToAdresseDto(c.getAdresse()));
 			res.add(cfDto);
 		}
 		return res;
@@ -182,7 +182,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	 */
 
 	@Override
-	public void fetchAllDG2CentreFormation(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonMappingException, JsonProcessingException {
+	public void fetchAllDG2CentreFormation(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<CentreFormationDG2Dto> cResJson;
 		

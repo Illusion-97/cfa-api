@@ -29,7 +29,7 @@ public class ExperienceProfessionnelleServiceImpl implements ExperienceProfessio
         List<ExperienceProfessionnelle> lst = expProRepository.findAll();
         List<ExperienceProfessionnelleDto> lstDto = new ArrayList<>();
         for (ExperienceProfessionnelle exp : lst) {
-            lstDto.add(mapper.ExperienceProfessionnelleToExperienceProfessionnelleDto(exp));
+            lstDto.add(mapper.experienceProfessionnelleToExperienceProfessionnelleDto(exp));
         }
         return lstDto;
     }

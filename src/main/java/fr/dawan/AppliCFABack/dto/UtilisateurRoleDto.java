@@ -15,7 +15,7 @@ import java.util.List;
 public class UtilisateurRoleDto extends BaseEntityDto implements Serializable {
 
 	private String intitule;
-	List<UtilisateurDto> utilisateursDto;
+	private List<UtilisateurDto> utilisateursDto;
 
 	/**
 	 * @return the intitule

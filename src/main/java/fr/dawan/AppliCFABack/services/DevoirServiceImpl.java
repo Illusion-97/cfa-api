@@ -60,7 +60,7 @@ public class DevoirServiceImpl implements DevoirService {
 
 		List<DevoirDto> lstDto = new ArrayList<>();
 		for (Devoir d : lst) {
-			lstDto.add(mapper.DevoirToDevoirDto(d));
+			lstDto.add(mapper.devoirToDevoirDto(d));
 		}
 		return lstDto;
 	}

@@ -65,7 +65,7 @@ public class CursusServiceImpl implements CursusService {
 		List<Cursus> lst = cursusRepo.findAll();
 		List<CursusDto> lstDto = new ArrayList<>();
 		for (Cursus c : lst) {
-			lstDto.add(mapper.CursusToCursusDto(c));
+			lstDto.add(mapper.cursusToCursusDto(c));
 		}
 		return lstDto;
 	}
@@ -90,12 +90,12 @@ public class CursusServiceImpl implements CursusService {
 		// conversion vers Dto
 		List<CursusDto> lstDto = new ArrayList<>();
 		for (Cursus c : lst) {
-			CursusDto cDto = mapper.CursusToCursusDto(c);
+			CursusDto cDto = mapper.cursusToCursusDto(c);
 			List<Formation> lstForm = c.getFormations();
 			List<FormationDto> lstFormDto = new ArrayList<>();
 			for (Formation form : lstForm) {
 				if (form != null)
-					lstFormDto.add(mapper.FormationToFormationDto(form));
+					lstFormDto.add(mapper.formationToFormationDto(form));
 			}
 			cDto.setFormationsDto(lstFormDto);
 			lstDto.add(cDto);
@@ -124,7 +124,7 @@ public class CursusServiceImpl implements CursusService {
 	public CursusDto saveOrUpdate(CursusDto cDto) {
 		Cursus c = DtoTools.convert(cDto, Cursus.class);
 		cursusRepo.saveAndFlush(c);
-		return mapper.CursusToCursusDto(c);
+		return mapper.cursusToCursusDto(c);
 	}
 
 	/**
@@ -149,10 +149,10 @@ public class CursusServiceImpl implements CursusService {
 		Optional<Cursus> c = cursusRepo.findById(id);
 		if (c.isPresent()) {
 
-			CursusDto cDto = mapper.CursusToCursusDto(c.get());
+			CursusDto cDto = mapper.cursusToCursusDto(c.get());
 			List<FormationDto> lst = new ArrayList<>();
 			for (Formation f : c.get().getFormations()) {
-				lst.add(mapper.FormationToFormationDto(f));
+				lst.add(mapper.formationToFormationDto(f));
 			}
 			cDto.setFormationsDto(lst);
 			return cDto;

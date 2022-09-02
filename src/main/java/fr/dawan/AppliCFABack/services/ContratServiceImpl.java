@@ -40,7 +40,7 @@ public class ContratServiceImpl implements ContratService{
 		
 		List<ContratDto> lstDto = new ArrayList<>();
 		for (Contrat c : lst) {
-			lstDto.add(mapper.ContratToContratDto(c));
+			lstDto.add(mapper.contratToContratDto(c));
 		}
 		return lstDto;
 	}
@@ -54,7 +54,7 @@ public class ContratServiceImpl implements ContratService{
 	public ContratDto getById(long id) {
 		Optional<Contrat> c = contratRepository.findById(id);
 		if (c.isPresent()) {
-			return mapper.ContratToContratDto(c.get());
+			return mapper.contratToContratDto(c.get());
 		}
 		return null;
 	}
@@ -76,7 +76,7 @@ public class ContratServiceImpl implements ContratService{
 		// conversion vers Dto
 		List<ContratDto> lstDto = new ArrayList<>();
 		for (Contrat c : lst) {
-			ContratDto cDto = mapper.ContratToContratDto(c);
+			ContratDto cDto = mapper.contratToContratDto(c);
 			lstDto.add(cDto);
 		}
 		return lstDto;
@@ -91,7 +91,7 @@ public class ContratServiceImpl implements ContratService{
 	public ContratDto saveOrUpdate(ContratDto cDto) {
 		Contrat c = DtoTools.convert(cDto, Contrat.class);
 		contratRepository.saveAndFlush(c);
-		return mapper.ContratToContratDto(c);
+		return mapper.contratToContratDto(c);
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class ContratServiceImpl implements ContratService{
 	public ContratDto getByEtudiantId(long id) {
 		Contrat c = contratRepository.findByEtudiantId(id);
 	if (c != null) {
-		return mapper.ContratToContratDto(c);
+		return mapper.contratToContratDto(c);
 	}
 	return null;
 	}

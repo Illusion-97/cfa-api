@@ -101,13 +101,13 @@ public class ExamenServiceImpl implements ExamenService {
 		List<Examen> lst = examenRepository.findAll();
 		List<ExamenDto> lstDto = new ArrayList<>();
 		for (Examen e : lst) {
-			ExamenDto eDto = mapper.ExamenToExamenDto(e);
+			ExamenDto eDto = mapper.examenToExamenDto(e);
 			
 			Set<CompetenceProfessionnelle> lstCp = e.getCompetencesProfessionnelles();
 			Set<CompetenceProfessionnelleDto> lstCpDto = new HashSet<>();
 			for (CompetenceProfessionnelle cp : lstCp) {
 				if (cp != null)
-					lstCpDto.add(mapper.CompetenceProfessionnelleDto(cp));
+					lstCpDto.add(mapper.competenceProfessionnelleDto(cp));
 			}
 			
 			Set<Note> lstNotes = e.getNotes();
@@ -142,7 +142,7 @@ public class ExamenServiceImpl implements ExamenService {
 		// conversion vers Dto
 		List<ExamenDto> lstDto = new ArrayList<>();
 		for (Examen e : lst) {
-			ExamenDto eDto = mapper.ExamenToExamenDto(e);
+			ExamenDto eDto = mapper.examenToExamenDto(e);
 			
 //			eDto.setPromotionDto(mapper.PromotionToPromotionDto(e.getPromotion()));
 //			eDto.setCursusDto(mapper.CursusToCursusDto(e.getCursus()));

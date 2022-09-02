@@ -45,7 +45,7 @@ public class CEFServiceImpl implements CEFService {
 
 		List<CEFDto> lstDto = new ArrayList<>();
 		for (CEF c : lst) {
-			lstDto.add(mapper.CEFToCEFDto(c));
+			lstDto.add(mapper.cefToCEFDto(c));
 		}
 		return lstDto;
 	}
@@ -65,8 +65,8 @@ public class CEFServiceImpl implements CEFService {
 		// conversion vers Dto
 		List<CEFDto> lstDto = new ArrayList<>();
 		for (CEF c : lst) {
-			CEFDto cDto = mapper.CEFToCEFDto(c);
-			cDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(c.getUtilisateur()));
+			CEFDto cDto = mapper.cefToCEFDto(c);
+			cDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(c.getUtilisateur()));
 			lstDto.add(cDto);
 		}
 		return lstDto;
@@ -82,8 +82,8 @@ public class CEFServiceImpl implements CEFService {
 	public CEFDto getById(long id) {
 		Optional<CEF> c = cefRepository.findById(id);
 		if (c.isPresent()) {
-			CEFDto cefDto = mapper.CEFToCEFDto(c.get());
-			cefDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(c.get().getUtilisateur()));
+			CEFDto cefDto = mapper.cefToCEFDto(c.get());
+			cefDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(c.get().getUtilisateur()));
 			return cefDto;
 		}
 			
@@ -119,7 +119,7 @@ public class CEFServiceImpl implements CEFService {
 
 		c = cefRepository.saveAndFlush(c);
 
-		return mapper.CEFToCEFDto(c);
+		return mapper.cefToCEFDto(c);
 	}
 
 	/**

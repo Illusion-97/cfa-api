@@ -42,7 +42,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 
 		List<MaitreApprentissageDto> lstDto = new ArrayList<>();
 		for (MaitreApprentissage ma : lst) {
-			lstDto.add(mapper.MaitreApprentissageToMaitreApprentissageDto(ma));
+			lstDto.add(mapper.maitreApprentissageToMaitreApprentissageDto(ma));
 		}
 		return lstDto;
 	}
@@ -62,7 +62,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 		// conversion vers Dto
 		List<MaitreApprentissageDto> lstDto = new ArrayList<>();
 		for (MaitreApprentissage ma : lst) {
-			lstDto.add(mapper.MaitreApprentissageToMaitreApprentissageDto(ma));
+			lstDto.add(mapper.maitreApprentissageToMaitreApprentissageDto(ma));
 		}
 		return lstDto;
 	}
@@ -77,7 +77,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 	public MaitreApprentissageDto getById(long id) {
 		Optional<MaitreApprentissage> c = maitreApprentissageRepository.findById(id);
 		if (c.isPresent())
-			return mapper.MaitreApprentissageToMaitreApprentissageDto(c.get());
+			return mapper.maitreApprentissageToMaitreApprentissageDto(c.get());
 
 		return null;
 	}
@@ -109,7 +109,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 
 		ma = maitreApprentissageRepository.saveAndFlush(ma);
 
-		return mapper.MaitreApprentissageToMaitreApprentissageDto(ma);
+		return mapper.maitreApprentissageToMaitreApprentissageDto(ma);
 	}
 
 	/**

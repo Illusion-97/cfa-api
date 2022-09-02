@@ -109,10 +109,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			List<UtilisateurRoleDto> role = new ArrayList<>();
 			for (UtilisateurRole r : u.getRoles()) {
-				role.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
+				role.add(mapper.utilisateurRoleToUtilisateurRoleDto(r));
 			}
 
-			UtilisateurDto user = mapper.UtilisateurToUtilisateurDto(u);
+			UtilisateurDto user = mapper.utilisateurToUtilisateurDto(u);
 			user.setRolesDto(role);
 			res.add(user);
 		}
@@ -139,11 +139,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		List<UtilisateurDto> res = new ArrayList<>();
 		for (Utilisateur u : users) {
-			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(u);
-			uDto.setAdresseDto(mapper.AdresseToAdresseDto(u.getAdresse()));
+			UtilisateurDto uDto = mapper.utilisateurToUtilisateurDto(u);
+			uDto.setAdresseDto(mapper.adresseToAdresseDto(u.getAdresse()));
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<>();
 			for (UtilisateurRole ur : u.getRoles()) {
-				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
+				utilisateurRoleDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(ur));
 			}
 			uDto.setRolesDto(utilisateurRoleDto);
 
@@ -178,25 +178,25 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		logger.info("id : " + id);
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (userOpt.isPresent()) {
-			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(userOpt.get());
+			UtilisateurDto uDto = mapper.utilisateurToUtilisateurDto(userOpt.get());
 
 			if (userOpt.get().getAdresse() != null)
-				uDto.setAdresseDto(mapper.AdresseToAdresseDto(userOpt.get().getAdresse()));
+				uDto.setAdresseDto(mapper.adresseToAdresseDto(userOpt.get().getAdresse()));
 
 //			if(userOpt.get().getEntreprise().getAdresseSiege() != null) uDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(userOpt.get().getEntreprise().getAdresseSiege()));
 
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<>();
 			for (UtilisateurRole ur : userOpt.get().getRoles()) {
-				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
+				utilisateurRoleDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(ur));
 			}
 			uDto.setRolesDto(utilisateurRoleDto);
 
 			if (userOpt.get().getEtudiant() != null)
-				uDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(userOpt.get().getEtudiant()));
+				uDto.setEtudiantDto(mapper.etudiantToEtudiantDto(userOpt.get().getEtudiant()));
 			if (userOpt.get().getFormateur() != null)
-				uDto.setFormateurDto(mapper.FormateurToFormateurDto(userOpt.get().getFormateur()));
+				uDto.setFormateurDto(mapper.formateurToFormateurDto(userOpt.get().getFormateur()));
 			if (userOpt.get().getCef() != null)
-				uDto.setCefDto(mapper.CEFToCEFDto(userOpt.get().getCef()));
+				uDto.setCefDto(mapper.cefToCEFDto(userOpt.get().getCef()));
 
 			return uDto;
 		}
@@ -218,22 +218,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		if (user == null)
 			return null;
 
-		UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(user);
+		UtilisateurDto utilisateurDto = mapper.utilisateurToUtilisateurDto(user);
 
-		AdresseDto adresseDto = mapper.AdresseToAdresseDto(user.getAdresse());
+		AdresseDto adresseDto = mapper.adresseToAdresseDto(user.getAdresse());
 		utilisateurDto.setAdresseDto(adresseDto);
 
 		List<UtilisateurRole> lstUsrRole = user.getRoles();
 		List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<>();
 		for (UtilisateurRole utilisateurRole : lstUsrRole) {
 			if (utilisateurRole != null)
-				lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
+				lstUsrRoleDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 		}
 		utilisateurDto.setRolesDto(lstUsrRoleDto);
 
-		utilisateurDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(user.getEtudiant()));
-		utilisateurDto.setFormateurDto(mapper.FormateurToFormateurDto(user.getFormateur()));
-		utilisateurDto.setCefDto(mapper.CEFToCEFDto(user.getCef()));
+		utilisateurDto.setEtudiantDto(mapper.etudiantToEtudiantDto(user.getEtudiant()));
+		utilisateurDto.setFormateurDto(mapper.formateurToFormateurDto(user.getFormateur()));
+		utilisateurDto.setCefDto(mapper.cefToCEFDto(user.getCef()));
 
 		return utilisateurDto;
 	}
@@ -248,7 +248,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public UtilisateurDto getName(String name) {
 		Utilisateur user = utilisateurRepository.findByName(name);
 		if (user != null)
-			return mapper.UtilisateurToUtilisateurDto(user);
+			return mapper.utilisateurToUtilisateurDto(user);
 		return null;
 	}
 	
@@ -419,10 +419,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		filesService.createDirectory("utilisateurs/" + user.getId() + "/DossierProfessionnel");
 		filesService.createDirectory("utilisateurs/" + user.getId() + "/DossierProjet");
 
-		UtilisateurDto result = mapper.UtilisateurToUtilisateurDto(utilisateurRepository.getOne(user.getId()));
-		result.setEtudiantDto(mapper.EtudiantToEtudiantDto(user.getEtudiant()));
-		result.setFormateurDto(mapper.FormateurToFormateurDto(user.getFormateur()));
-		result.setCefDto(mapper.CEFToCEFDto(user.getCef()));
+		UtilisateurDto result = mapper.utilisateurToUtilisateurDto(utilisateurRepository.getOne(user.getId()));
+		result.setEtudiantDto(mapper.etudiantToEtudiantDto(user.getEtudiant()));
+		result.setFormateurDto(mapper.formateurToFormateurDto(user.getFormateur()));
+		result.setCefDto(mapper.cefToCEFDto(user.getCef()));
 
 		return result;
 	}
@@ -486,7 +486,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<Utilisateur> users = utilisateurRepository.findByAdresseVille(ville);
 		List<UtilisateurDto> res = new ArrayList<>();
 		for (Utilisateur u : users) {
-			res.add(mapper.UtilisateurToUtilisateurDto(u));
+			res.add(mapper.utilisateurToUtilisateurDto(u));
 		}
 		return res;
 	}
@@ -544,7 +544,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<Conge> conges = congeRepository.findByIdUtilisateur(id);
 
 		for (Conge c : conges) {
-			result.add(mapper.CongeToCongeDto(c));
+			result.add(mapper.congeToCongeDto(c));
 		}
 
 		return result;
@@ -559,7 +559,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	@Override
 	public AdresseDto getAdresseByIdUtilisateur(long id) {
-		return mapper.AdresseToAdresseDto(getUtilisateurById(id).getAdresse());
+		return mapper.adresseToAdresseDto(getUtilisateurById(id).getAdresse());
 	}
 
 	@Override
@@ -568,22 +568,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<UtilisateurDto> lstUsrDto = new ArrayList<>();
 
 		for (Utilisateur utilisateur : lstUsr) {
-			UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
+			UtilisateurDto utilisateurDto = mapper.utilisateurToUtilisateurDto(utilisateur);
 
-			AdresseDto adresseDto = mapper.AdresseToAdresseDto(utilisateur.getAdresse());
+			AdresseDto adresseDto = mapper.adresseToAdresseDto(utilisateur.getAdresse());
 			utilisateurDto.setAdresseDto(adresseDto);
 
 			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
 			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<>();
 			for (UtilisateurRole utilisateurRole : lstUsrRole) {
 				if (utilisateurRole != null)
-					lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
+					lstUsrRoleDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 			}
 			utilisateurDto.setRolesDto(lstUsrRoleDto);
 
-			utilisateurDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(utilisateur.getEtudiant()));
-			utilisateurDto.setFormateurDto(mapper.FormateurToFormateurDto(utilisateur.getFormateur()));
-			utilisateurDto.setCefDto(mapper.CEFToCEFDto(utilisateur.getCef()));
+			utilisateurDto.setEtudiantDto(mapper.etudiantToEtudiantDto(utilisateur.getEtudiant()));
+			utilisateurDto.setFormateurDto(mapper.formateurToFormateurDto(utilisateur.getFormateur()));
+			utilisateurDto.setCefDto(mapper.cefToCEFDto(utilisateur.getCef()));
 
 			lstUsrDto.add(utilisateurDto);
 		}
@@ -597,22 +597,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Utilisateur utilisateur = getUtilisateurById(id);
 
 		if (utilisateur != null) {
-			UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
+			UtilisateurDto utilisateurDto = mapper.utilisateurToUtilisateurDto(utilisateur);
 
-			AdresseDto adresseDto = mapper.AdresseToAdresseDto(utilisateur.getAdresse());
+			AdresseDto adresseDto = mapper.adresseToAdresseDto(utilisateur.getAdresse());
 			utilisateurDto.setAdresseDto(adresseDto);
 
 			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
 			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<>();
 			for (UtilisateurRole utilisateurRole : lstUsrRole) {
 				if (utilisateurRole != null)
-					lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
+					lstUsrRoleDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 			}
 			utilisateurDto.setRolesDto(lstUsrRoleDto);
 
-			utilisateurDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(utilisateur.getEtudiant()));
-			utilisateurDto.setFormateurDto(mapper.FormateurToFormateurDto(utilisateur.getFormateur()));
-			utilisateurDto.setCefDto(mapper.CEFToCEFDto(utilisateur.getCef()));
+			utilisateurDto.setEtudiantDto(mapper.etudiantToEtudiantDto(utilisateur.getEtudiant()));
+			utilisateurDto.setFormateurDto(mapper.formateurToFormateurDto(utilisateur.getFormateur()));
+			utilisateurDto.setCefDto(mapper.cefToCEFDto(utilisateur.getCef()));
 
 			return utilisateurDto;
 		}
@@ -685,7 +685,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		List<UtilisateurDto> res = new ArrayList<>();
 		for (Utilisateur u : users) {
-			res.add(mapper.UtilisateurToUtilisateurDto(u));
+			res.add(mapper.utilisateurToUtilisateurDto(u));
 		}
 		return res;
 	}
@@ -761,7 +761,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						utilisateur.setPassword(item.getString("password")); // TODO: commenter cette ligne plus tard
 
 						// on convertit l'utilisateur en Dto puis on appelle la methode insertUpdate
-						UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
+						UtilisateurDto utilisateurDto = mapper.utilisateurToUtilisateurDto(utilisateur);
 						List<UtilisateurRoleDto> roleDtoList = new ArrayList<>();
 						// On cherche un role par son intitule
 						UtilisateurRoleDto rDto = utilisateurRoleService.findByIntitule(item.getString("rolesDto"));
