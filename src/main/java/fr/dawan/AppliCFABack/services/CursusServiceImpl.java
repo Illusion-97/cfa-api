@@ -170,7 +170,6 @@ public class CursusServiceImpl implements CursusService {
 	@Override
 	public CursusDto getByIdPromotion(long id) {
 		PromotionDto pDto = promoService.getById(id);
-		//CursusDto cDto = getById(pDto.getCursusDto().getId());
 		return getById(pDto.getCursusDto().getId());
 	}
 

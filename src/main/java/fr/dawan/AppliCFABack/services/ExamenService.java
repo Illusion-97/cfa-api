@@ -7,6 +7,7 @@ import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
 import fr.dawan.AppliCFABack.dto.customdtos.DoubleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 public interface ExamenService {
 
@@ -18,7 +19,7 @@ public interface ExamenService {
 
 	ExamenDto getById(long id);
 
-	ExamenDtoSave saveOrUpdate(ExamenDtoSave eDto) throws Exception;
+	ExamenDtoSave saveOrUpdate(ExamenDtoSave eDto) throws SaveInvalidException;
 
 	void deleteById(long id);
 	

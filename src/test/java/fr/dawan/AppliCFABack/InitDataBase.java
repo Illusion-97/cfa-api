@@ -314,15 +314,15 @@ public class InitDataBase {
 		conge.setType(TypeConge.MALADIE);
 		conge.setStatus(StatusConge.CONFIRME);
 		
-		admin = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(admin)), Utilisateur.class);
-		monEtudiant = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(monEtudiant)), Utilisateur.class);
-		monCEF = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(monCEF)), Utilisateur.class);
-		monFormateur = DtoTools.convert(utilisateurService.insertUpdate(mapper.UtilisateurToUtilisateurDto(monFormateur)), Utilisateur.class);
+		admin = DtoTools.convert(utilisateurService.insertUpdate(mapper.utilisateurToUtilisateurDto(admin)), Utilisateur.class);
+		monEtudiant = DtoTools.convert(utilisateurService.insertUpdate(mapper.utilisateurToUtilisateurDto(monEtudiant)), Utilisateur.class);
+		monCEF = DtoTools.convert(utilisateurService.insertUpdate(mapper.utilisateurToUtilisateurDto(monCEF)), Utilisateur.class);
+		monFormateur = DtoTools.convert(utilisateurService.insertUpdate(mapper.utilisateurToUtilisateurDto(monFormateur)), Utilisateur.class);
 		
 		
-		etudiant = DtoTools.convert(etudiantService.saveOrUpdate(mapper.EtudiantToEtudiantDto(etudiant)), Etudiant.class);
-		cef = DtoTools.convert(cefService.saveOrUpdate(mapper.CEFToCEFDto(cef)), CEF.class);
-		formateur = DtoTools.convert(formateurService.saveOrUpdate(mapper.FormateurToFormateurDto(formateur)), Formateur.class);	
+		etudiant = DtoTools.convert(etudiantService.saveOrUpdate(mapper.etudiantToEtudiantDto(etudiant)), Etudiant.class);
+		cef = DtoTools.convert(cefService.saveOrUpdate(mapper.cefToCEFDto(cef)), CEF.class);
+		formateur = DtoTools.convert(formateurService.saveOrUpdate(mapper.formateurToFormateurDto(formateur)), Formateur.class);	
 		mApprentissage = maitreApprentissageRepository.save(mApprentissage);	
 		
 		contrat = contratRepository.save(contrat);
