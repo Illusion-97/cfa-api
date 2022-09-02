@@ -214,9 +214,12 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 					adresse.setCountryCode(cDG2.getCountry());
 					if (optCentre.isPresent()) {
 						if (!adresse.equals(optCentre.get().getAdresse())) {
-							adresse.setId(optCentre.get().getAdresse().getId());
-							adresse.setVersion(optCentre.get().getAdresse().getVersion());
-							adresseRepository.saveAndFlush(adresse);
+							if (optCentre.get().getAdresse() != null) {
+								adresse.setId(optCentre.get().getAdresse().getId());
+								adresse.setVersion(optCentre.get().getAdresse().getVersion());
+								adresseRepository.saveAndFlush(adresse);
+							}
+							
 						}
 					}
 					else {
@@ -229,8 +232,10 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 					if (optCentre.get().equals(centreImport))
 						continue;
 					else if (!optCentre.get().equals(centreImport)) {
-						centreImport.setId(optCentre.get().getId());
-						centreImport.setVersion(optCentre.get().getVersion());
+						if (centreImport != null) {
+							centreImport.setId(optCentre.get().getId());
+							centreImport.setVersion(optCentre.get().getVersion());
+						}
 					}
 					centreFormationRepository.saveAndFlush(centreImport);
 				} else {
