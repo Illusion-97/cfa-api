@@ -811,7 +811,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	 * @return generatedString	mot de passe généré
 	 */
 	// generation pwd
-	private String generatePassword() {
+	public String generatePassword() {
 		int leftLimit = 48; // numeral '0'
 		int rightLimit = 122; // letter 'z'
 		int targetStringLength = 10;

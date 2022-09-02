@@ -71,8 +71,13 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
+<<<<<<< HEAD
     date = "2022-09-01T11:19:38+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
+=======
+    date = "2022-09-02T12:31:36+0200",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.14.1 (Amazon.com Inc.)"
+>>>>>>> back-william
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -121,6 +126,11 @@ public class DtoMapperImpl implements DtoMapper {
         adresseDto.setCodePostal( adresse.getCodePostal() );
         adresseDto.setLibelle( adresse.getLibelle() );
         adresseDto.setVille( adresse.getVille() );
+<<<<<<< HEAD
+=======
+        adresseDto.setCodePostal( adresse.getCodePostal() );
+        adresseDto.setCountry( adresse.getCountry() );
+>>>>>>> back-william
 
         return adresseDto;
     }
@@ -420,6 +430,7 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateurDto.setPassword( utilisateur.getPassword() );
         utilisateurDto.setPrenom( utilisateur.getPrenom() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
+        utilisateurDto.setTelephoneFixe( utilisateur.getTelephoneFixe() );
 
         return utilisateurDto;
     }

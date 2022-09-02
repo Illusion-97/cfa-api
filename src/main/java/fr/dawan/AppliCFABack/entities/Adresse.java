@@ -25,7 +25,7 @@ public class Adresse extends BaseEntity implements Serializable {
 		super();
 	}
 
-	public Adresse(String libelle, String ville, String codePostal) {
+	public Adresse(String libelle, String ville, String codePostal, String country) {
 		this.libelle = libelle;
 		this.ville = ville;
 		this.codePostal = codePostal;
@@ -54,7 +54,6 @@ public class Adresse extends BaseEntity implements Serializable {
 	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
 	}
-
 
 	/**
 	 * @return le countryCode

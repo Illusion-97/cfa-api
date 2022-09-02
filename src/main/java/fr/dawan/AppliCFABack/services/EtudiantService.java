@@ -5,6 +5,7 @@ import java.util.List;
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
+import fr.dawan.AppliCFABack.entities.Promotion;
 
 public interface EtudiantService {
 
@@ -69,6 +70,6 @@ public interface EtudiantService {
 	EtudiantDossierDto getByEtudiantIdForDossierPro(long id);
 	EtudiantDossierDto saveOrUpdateEtudiantDossier(EtudiantDossierDto e);
 
-    void fetchAllEtudiantDG2(String email, String password) throws Exception;
+    void fetchAllEtudiantDG2(String email, String password, long idPromotionDg2) throws Exception;
 
 }
