@@ -68,6 +68,8 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	Optional<Promotion> getByEtudiantsIdAndInterventionsId( long etudiantId, long interventionId);
 
 	Optional<Promotion> findByIdDg2(long id);
-	
 
+
+	@Query("From Promotion p WHERE p.idDg2 = :idPromotionDg2")
+    List<Promotion> findAllByIdPromotionDg2(long idPromotionDg2);
 }

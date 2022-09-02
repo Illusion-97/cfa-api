@@ -5,6 +5,7 @@ import java.util.List;
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
+import fr.dawan.AppliCFABack.entities.Promotion;
 
 public interface EtudiantService {
 

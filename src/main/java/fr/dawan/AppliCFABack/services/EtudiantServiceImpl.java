@@ -5,7 +5,6 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -908,6 +907,8 @@ public class EtudiantServiceImpl implements EtudiantService {
                     }
                     utilisateur.setRoles(roles);
                     etudiant.setUtilisateur(utilisateur);
+                    List<Promotion> promotions = promotionRepository.findAllByIdPromotionDg2(idPromotionDg2);
+                    etudiant.setPromotions(promotions);
                     utilisateurRepository.saveAndFlush(utilisateur);
                     etudiantRepository.saveAndFlush(etudiant);
                 }
