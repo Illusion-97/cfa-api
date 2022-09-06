@@ -171,7 +171,7 @@ public class PromotionServiceImpl implements PromotionService {
 		}
 		pDto.setInterventionsDto(iDtos);
 		Set<Examen> examens = promo.getExamens();
-		Set<ExamenDto> examenDtos = new HashSet<ExamenDto>();
+		Set<ExamenDto> examenDtos = new HashSet<>();
 
 		for (Examen examen : examens) {
 			ExamenDto eDto = mapper.examenToExamenDto(examen);
@@ -405,7 +405,7 @@ public class PromotionServiceImpl implements PromotionService {
 	}
 
 	@Override
-	public int fetchDGPromotions(String email, String password) throws Exception {
+	public int fetchDGPromotions(String email, String password) throws FetchDG2Exception, URISyntaxException {
 		List<Cursus> cursus = new ArrayList<>();
 		List<Promotion> promoLst = new ArrayList<>();
 		cursus = cursusRepository.findAll();
@@ -427,7 +427,7 @@ public class PromotionServiceImpl implements PromotionService {
 		return promoLst.size();
 	}
 	@Override
-	public int fetchDGPromotions(String email, String password, long idCursusDg2) throws Exception {
+	public int fetchDGPromotions(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
 		List<Promotion> promoLst = getPromotionDG2ByIdCursusDG2(email, password, idCursusDg2);
 		
 		for(Promotion p : promoLst) {
@@ -445,7 +445,7 @@ public class PromotionServiceImpl implements PromotionService {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>(); 
-		List<Promotion> result = new ArrayList<Promotion>();
+		List<Promotion> result = new ArrayList<>();
 		
 		URI url = new URI("https://dawan.org/api2/cfa/trainings/" +idCursusDg2+ "/sessions");
 		HttpHeaders headers = new HttpHeaders();
@@ -518,7 +518,7 @@ public class PromotionServiceImpl implements PromotionService {
 		if (interventions.isEmpty() || interventions == null)
 			throw new GrilleException("Pas d'interventions encore pour cette promotion non trouvé");
 
-		Map<String, List<?>> gp = new HashMap<String, List<?>>();
+		Map<String, List<?>> gp = new HashMap<>();
 		List<GrillePositionnementDto> grillesPositionnements = new ArrayList<>();
 		for (Intervention i : interventions) {
 

@@ -27,9 +27,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import fr.dawan.AppliCFABack.controllers.ExamenController;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
@@ -39,7 +36,7 @@ import fr.dawan.AppliCFABack.services.ExamenService;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class ExamenControllerTest {
+class ExamenControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;

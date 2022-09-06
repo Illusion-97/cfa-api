@@ -10,7 +10,7 @@ import fr.dawan.AppliCFABack.controllers.PromotionController;
 
 
 @SpringBootTest
-public class PromotionControllerTests {
+class PromotionControllerTests {
 
 //	@Autowired
 //	private MockMvc mockMvc;

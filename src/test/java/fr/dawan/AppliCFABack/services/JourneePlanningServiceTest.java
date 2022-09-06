@@ -23,7 +23,7 @@ import fr.dawan.AppliCFABack.entities.Utilisateur;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class JourneePlanningServiceTest {
+class JourneePlanningServiceTest {
 
 	@Autowired
 	JourneePlanningService journeePlanningService;

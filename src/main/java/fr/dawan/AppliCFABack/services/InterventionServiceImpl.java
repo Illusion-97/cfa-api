@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +50,7 @@ import fr.dawan.AppliCFABack.repositories.FormationRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.repositories.PassageExamenRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 
 @Service
 @Transactional
@@ -208,13 +210,13 @@ public class InterventionServiceImpl implements InterventionService {
 //			// Convertion de l'entitie Formation en FormationDto
 			FormationDto formationDto = mapper.formationToFormationDto(i.get().getFormation());
 
-			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
+			List<PromotionDto> lstPromoDto = new ArrayList<>();
 			for (Promotion promo : i.get().getPromotions()) {
 				if (promo != null)
 					lstPromoDto.add(mapper.promotionToPromotionDto(promo));
 			}
 
-			List<FormateurDto> lstFormaDto = new ArrayList<FormateurDto>();
+			List<FormateurDto> lstFormaDto = new ArrayList<>();
 			for (Formateur formateur : i.get().getFormateurs()) {
 				if (formateur != null)
 					lstFormaDto.add(mapper.formateurToFormateurDto(formateur));
@@ -294,7 +296,7 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public List<EtudiantDto> findAllEtudiantsByPromotionInterventionsId(long id) {
 		List<Etudiant> lstEtu = etudiantRepository.findAllDistinctByPromotionsInterventionsId(id);
-		List<EtudiantDto> lstEtuDto = new ArrayList<EtudiantDto>();
+		List<EtudiantDto> lstEtuDto = new ArrayList<>();
 		for (Etudiant etu : lstEtu) {
 			if (etu != null) {
 				EtudiantDto eDto = mapper.etudiantToEtudiantDto(etu);
@@ -316,7 +318,7 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public List<PromotionDto> findPromotionsByInterventionId(long id) {
 		List<Promotion> lstProm = promoRepository.findAllByInterventionsId(id);
-		List<PromotionDto> lstPromDto = new ArrayList<PromotionDto>();
+		List<PromotionDto> lstPromDto = new ArrayList<>();
 		for (Promotion prom : lstProm) {
 			if (prom != null)
 				lstPromDto.add(mapper.promotionToPromotionDto(prom));
@@ -356,7 +358,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Override
 	public int fetchDGInterventions(String email, String password) throws Exception {
-		List<Intervention> interventions = new ArrayList<Intervention>();
+		List<Intervention> interventions = new ArrayList<>();
 		List<Promotion> promoLst = new ArrayList<>();
 		promoLst = promoRepository.findAll();
 		for (Promotion p : promoLst) {
@@ -388,7 +390,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Override
 	public List<Intervention> getInerventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
-			throws Exception {
+			throws FetchDG2Exception, URISyntaxException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>();
@@ -440,7 +442,7 @@ public class InterventionServiceImpl implements InterventionService {
 				}
 			}
 		} else {
-			throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 		return result;
 	}

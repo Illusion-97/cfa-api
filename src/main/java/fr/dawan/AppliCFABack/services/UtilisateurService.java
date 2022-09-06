@@ -1,7 +1,12 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.tools.FileException;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 public interface UtilisateurService {
@@ -23,13 +28,11 @@ public interface UtilisateurService {
 
 	UtilisateurDto getName(String name);
 
-	UtilisateurDto insertUpdate(UtilisateurDto uDto) throws Exception;
+	UtilisateurDto insertUpdate(UtilisateurDto uDto) throws SaveInvalidException;
 
 	void deleteById(long id);
 
 	List<UtilisateurDto> findByAdresse(String ville);
-
-//	List<UtilisateurDto> findByEntreprise(long idEntreprise);
 
 	List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id);
 
@@ -47,7 +50,7 @@ public interface UtilisateurService {
 
 	Boolean isReferent(long id);
 
-	void uploadFile(MultipartFile file, long idUser) throws Exception;
+	void uploadFile(MultipartFile file, long idUser) throws FileException, IOException;
 
 	boolean resetPassword(ResetResponse reset) throws Exception;
 

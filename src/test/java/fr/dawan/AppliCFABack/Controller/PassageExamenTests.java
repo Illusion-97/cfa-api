@@ -34,7 +34,7 @@ import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class PassageExamenTests {
+class PassageExamenTests {
 
 	@Autowired
 	private MockMvc mockMvc;

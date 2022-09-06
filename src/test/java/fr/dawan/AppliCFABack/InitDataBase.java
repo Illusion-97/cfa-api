@@ -67,7 +67,7 @@ import fr.dawan.AppliCFABack.services.UtilisateurService;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class InitDataBase {
+class InitDataBase {
 
 	@Autowired
 	private UtilisateurService utilisateurService;	

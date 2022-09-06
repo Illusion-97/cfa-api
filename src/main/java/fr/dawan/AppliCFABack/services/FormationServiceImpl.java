@@ -208,8 +208,8 @@ public class FormationServiceImpl implements FormationService {
 	}
 
 	@Override
-	public int fetchDG2Formations(String email, String password) throws Exception {
-		List<Formation> result = new ArrayList<Formation>();
+	public int fetchDG2Formations(String email, String password) throws FetchDG2Exception, URISyntaxException {
+		List<Formation> result = new ArrayList<>();
 		List<FormationDG2Dto> fetchResJson = new ArrayList<>();
 		int nbChangement = 0;
 		

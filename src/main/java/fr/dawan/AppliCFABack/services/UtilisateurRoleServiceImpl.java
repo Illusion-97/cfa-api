@@ -29,8 +29,6 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
 
     @Autowired
     private DtoMapper mapper = new DtoMapperImpl();
-    
-    private static Logger logger = Logger.getGlobal();
 
     /**
 	 * Récupération de la liste des roles utilisateurs
@@ -93,7 +91,6 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
     public UtilisateurRoleDto getById(long id) {
         Optional<UtilisateurRole> e = utilisateurRoleRepository.findById(id);
         if (e.isPresent()) {
-            //UtilisateurRoleDto uDto = mapper.UtilisateurRoleToUtilisateurRoleDto(e.get());
 
             return mapper.utilisateurRoleToUtilisateurRoleDto(e.get());
         }

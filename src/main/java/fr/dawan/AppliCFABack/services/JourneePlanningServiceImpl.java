@@ -81,21 +81,21 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 	
     private boolean estFerie(LocalDate date)
     {
-        List<LocalDate> JoursFeries = new ArrayList<>();
-        JoursFeries.add(LocalDate.of(date.getYear(),1,1));// 01 Janvier
-        JoursFeries.add(LocalDate.of(date.getYear(), 5, 1));// 01 Mai
-        JoursFeries.add(LocalDate.of(date.getYear(), 5, 8));// 08 Mai
-        JoursFeries.add(LocalDate.of(date.getYear(), 7, 14));// 14 Juillet
-        JoursFeries.add(LocalDate.of(date.getYear(), 8, 15));// 15 Aout
-        JoursFeries.add(LocalDate.of(date.getYear(), 11, 1));// 01 Novembre
-        JoursFeries.add(LocalDate.of(date.getYear(), 11, 11));// 11 Novembre
-        JoursFeries.add(LocalDate.of(date.getYear(), 12, 25));// Noël
+        List<LocalDate> joursFeries = new ArrayList<>();
+        joursFeries.add(LocalDate.of(date.getYear(),1,1));// 01 Janvier
+        joursFeries.add(LocalDate.of(date.getYear(), 5, 1));// 01 Mai
+        joursFeries.add(LocalDate.of(date.getYear(), 5, 8));// 08 Mai
+        joursFeries.add(LocalDate.of(date.getYear(), 7, 14));// 14 Juillet
+        joursFeries.add(LocalDate.of(date.getYear(), 8, 15));// 15 Aout
+        joursFeries.add(LocalDate.of(date.getYear(), 11, 1));// 01 Novembre
+        joursFeries.add(LocalDate.of(date.getYear(), 11, 11));// 11 Novembre
+        joursFeries.add(LocalDate.of(date.getYear(), 12, 25));// Noël
 
         //  --  Calcul de pâque
         //  --  Trouver sur internet : 
-        JoursFeries.addAll(calculPaque(date));
+        joursFeries.addAll(calculPaque(date));
 
-        for(LocalDate d : JoursFeries)
+        for(LocalDate d : joursFeries)
             //date.compareTo(date2) : j'ai peur d'avoir des erreurs avec d'éventuelle heures ou autres ?
         	//ça ne devrait pas arriver, mais dans le doute ...
             if (date.getDayOfYear() == d.getDayOfYear()) 
@@ -146,7 +146,6 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
         // jour de pâques
         int intDayPaques = intDaysEquinoxeBeforeFullMoon + 28 - 31 * (intMonthPaques / 4);
         // lundi de pâques
-//        LocalDate dtMondayPaques = new LocalDate(date.getYear(), intMonthPaques, intDayPaques + 1);
         LocalDate dtMondayPaques = LocalDate.of(date.getYear(), intMonthPaques, intDayPaques + 1);
         // Ascension
         LocalDate dtAscension = dtMondayPaques.plusDays(38);
