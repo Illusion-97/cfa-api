@@ -52,7 +52,7 @@ class PromotionControllerTests {
 	}
 
 	@Test
-	public void getCursusByIdEtudiant_test() throws Exception {
+	void getCursusByIdEtudiant_test() throws Exception {
 		int idEtudiant = 1;
 		when(promoService.getCursusByIdEtudiant(idEtudiant)).thenReturn(promotions);
 		mockMvc.perform(get("/promotions/cursus-etudiant/{id}", idEtudiant)

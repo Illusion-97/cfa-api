@@ -2,7 +2,6 @@ package fr.dawan.AppliCFABack.controllers;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -34,8 +33,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -139,7 +136,7 @@ public class ExamenController {
 
 	@PostMapping(consumes = "multipart/form-data", produces = "application/json")
 	public ResponseEntity<ExamenDtoSave> save(@RequestParam("examen") String examStr,
-			@RequestPart("file") MultipartFile file) throws FileException, SaveInvalidException, IOException {
+			@RequestPart("file") MultipartFile file) throws SaveInvalidException, IOException {
 
 		File f = new File(storageFolder + "/examens/" + file.getOriginalFilename());
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f));
