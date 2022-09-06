@@ -58,15 +58,15 @@ public class CerfaServiceImpl implements CerfaService {
 	public CerfaDto getById(long id) {
 		
 		Optional<Cerfa> c = cerfaRepo.findById(id);
-		CerfaDto cDto = mapper.CerfaToCerfaDto(c.get());
-		cDto.setRemuneration1(mapper.RemunerationTORemunerationDto(c.get().getRemuneration1()));
-		cDto.setRemuneration2(mapper.RemunerationTORemunerationDto(c.get().getRemuneration2()));
-		cDto.setRemuneration3(mapper.RemunerationTORemunerationDto(c.get().getRemuneration3()));
-		cDto.setRemuneration4(mapper.RemunerationTORemunerationDto(c.get().getRemuneration4()));
-		cDto.setAdresseApprenti(mapper.AdresseToAdresseDto(c.get().getAdresseApprenti()));
-		cDto.setAdresseEmployeur(mapper.AdresseToAdresseDto(c.get().getAdresseEmployeur()));
-		cDto.setAdresseRepresentant(mapper.AdresseToAdresseDto(c.get().getAdresseRepresentant()));
-		cDto.setAdresseResponsable(mapper.AdresseToAdresseDto(c.get().getAdresseResponsable()));
+		CerfaDto cDto = mapper.cerfaToCerfaDto(c.get());
+		cDto.setRemuneration1(mapper.remunerationTORemunerationDto(c.get().getRemuneration1()));
+		cDto.setRemuneration2(mapper.remunerationTORemunerationDto(c.get().getRemuneration2()));
+		cDto.setRemuneration3(mapper.remunerationTORemunerationDto(c.get().getRemuneration3()));
+		cDto.setRemuneration4(mapper.remunerationTORemunerationDto(c.get().getRemuneration4()));
+		cDto.setAdresseApprenti(mapper.adresseToAdresseDto(c.get().getAdresseApprenti()));
+		cDto.setAdresseEmployeur(mapper.adresseToAdresseDto(c.get().getAdresseEmployeur()));
+		cDto.setAdresseRepresentant(mapper.adresseToAdresseDto(c.get().getAdresseRepresentant()));
+		cDto.setAdresseResponsable(mapper.adresseToAdresseDto(c.get().getAdresseResponsable()));
 		cDto.setEtudiant(etudiantService.getById(c.get().getEtudiant().getId()));
 		return cDto;
 	}
@@ -79,20 +79,19 @@ public class CerfaServiceImpl implements CerfaService {
 	
 	@Override
 	public List<CerfaDto> getAll() {
-		// TODO Auto-generated method stub
 		List<Cerfa> lstCerfa = cerfaRepo.findAll();
-		List<CerfaDto> lstCerfaDto = new ArrayList<CerfaDto>();
+		List<CerfaDto> lstCerfaDto = new ArrayList<>();
 		
 		for(Cerfa c : lstCerfa) {
-			CerfaDto cDto = mapper.CerfaToCerfaDto(c);
-			cDto.setRemuneration1(mapper.RemunerationTORemunerationDto(c.getRemuneration1()));
-			cDto.setRemuneration2(mapper.RemunerationTORemunerationDto(c.getRemuneration2()));
-			cDto.setRemuneration3(mapper.RemunerationTORemunerationDto(c.getRemuneration3()));
-			cDto.setRemuneration4(mapper.RemunerationTORemunerationDto(c.getRemuneration4()));
-			cDto.setAdresseApprenti(mapper.AdresseToAdresseDto(c.getAdresseApprenti()));
-			cDto.setAdresseEmployeur(mapper.AdresseToAdresseDto(c.getAdresseEmployeur()));
-			cDto.setAdresseRepresentant(mapper.AdresseToAdresseDto(c.getAdresseRepresentant()));
-			cDto.setAdresseResponsable(mapper.AdresseToAdresseDto(c.getAdresseResponsable()));
+			CerfaDto cDto = mapper.cerfaToCerfaDto(c);
+			cDto.setRemuneration1(mapper.remunerationTORemunerationDto(c.getRemuneration1()));
+			cDto.setRemuneration2(mapper.remunerationTORemunerationDto(c.getRemuneration2()));
+			cDto.setRemuneration3(mapper.remunerationTORemunerationDto(c.getRemuneration3()));
+			cDto.setRemuneration4(mapper.remunerationTORemunerationDto(c.getRemuneration4()));
+			cDto.setAdresseApprenti(mapper.adresseToAdresseDto(c.getAdresseApprenti()));
+			cDto.setAdresseEmployeur(mapper.adresseToAdresseDto(c.getAdresseEmployeur()));
+			cDto.setAdresseRepresentant(mapper.adresseToAdresseDto(c.getAdresseRepresentant()));
+			cDto.setAdresseResponsable(mapper.adresseToAdresseDto(c.getAdresseResponsable()));
 			cDto.setEtudiant(etudiantService.getById(c.getEtudiant().getId()));
 			lstCerfaDto.add(cDto);
 		}
@@ -193,7 +192,7 @@ public class CerfaServiceImpl implements CerfaService {
 	            c.setAdresseResponsable(adresseRepop);
 	        }
 		cerfaRepo.saveAndFlush(c);
-		return mapper.CerfaToCerfaDto(c);
+		return mapper.cerfaToCerfaDto(c);
 	}
 
 	/**

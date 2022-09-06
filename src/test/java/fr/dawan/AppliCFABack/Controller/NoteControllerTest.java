@@ -34,7 +34,7 @@ import fr.dawan.AppliCFABack.entities.Note.Satisfaction;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class NoteControllerTest {
+class NoteControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 

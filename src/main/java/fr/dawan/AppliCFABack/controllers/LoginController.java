@@ -14,6 +14,7 @@ import fr.dawan.AppliCFABack.dto.LoginResponseDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.interceptors.TokenSaver;
 import fr.dawan.AppliCFABack.services.UtilisateurService;
+import fr.dawan.AppliCFABack.tools.CheckLoginException;
 import fr.dawan.AppliCFABack.tools.HashTools;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 
@@ -28,15 +29,20 @@ public class LoginController {
 	private JwtTokenUtil jwtTokenUtil;
 
 	@PostMapping(value="/authenticate", consumes = "application/json")
-    public ResponseEntity<?> checkLogin(@RequestBody LoginDto loginObj) throws Exception{
+    public ResponseEntity<?> checkLogin(@RequestBody LoginDto loginObj) throws CheckLoginException{
 		//On récupère l'utilisateur concerné dans la bdd grace au login dans loginObj
         UtilisateurDto uDto = utilisateurService.findByEmail(loginObj.getLogin());
         //On hash le pwd du loginObj pour plus tard le comparer
-        String hashedPwd  = HashTools.hashSHA512(loginObj.getPassword());
+        String hashedPwd = null;
+		try {
+			hashedPwd = HashTools.hashSHA512(loginObj.getPassword());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         
         if(uDto !=null && uDto.getPassword().contentEquals(hashedPwd )) {
             //Fabrication du token en utilisant jwt (librairie incluse dans le pom)
-            Map<String, Object> claims = new HashMap<String, Object>();
+            Map<String, Object> claims = new HashMap<>();
             claims.put("user_id", uDto.getId());
             claims.put("user_email", uDto.getLogin());
             
@@ -46,7 +52,7 @@ public class LoginController {
             
             return ResponseEntity.ok(new LoginResponseDto(/*utilisateurService.getByIdWithObject(uDto.getId()),*/token));
         }else
-            throw new Exception("Erreur : identifiants incorrects !");
+            throw new CheckLoginException("Erreur : identifiants incorrects !");
         
     }
 

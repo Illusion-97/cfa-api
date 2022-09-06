@@ -23,7 +23,7 @@ public class SupportCours extends BaseEntity implements Serializable {
 	private List<Intervention> interventions;
 
 	public List<Long> getInterventionsId() {
-		List<Long> res = new ArrayList<Long>();
+		List<Long> res = new ArrayList<>();
 		for (Intervention i : interventions) {
 			res.add(i.getId());
 		}

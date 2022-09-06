@@ -48,7 +48,7 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 			List<ExamenDto> examensDto = new ArrayList<>();
 			for (Examen ex : competenceProfessionnelle.getExamens()) {
 
-				examensDto.add(mapper.ExamenToExamenDto(ex));
+				examensDto.add(mapper.examenToExamenDto(ex));
 
 			}
 			cptDto.setExamensDto(examensDto);

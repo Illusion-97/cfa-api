@@ -75,8 +75,8 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
 
         for (DossierProfessionnel dp : lstDossierProfessionnel) {
-            DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-            dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
+            DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
+            dpDto.setCursusDto(mapper.cursusToCursusDto(dp.getCursus()));
             lstDossierProfessionnelDto.add(dpDto);
 
         }
@@ -90,8 +90,8 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
     public DossierProfessionnelDto getById(long id) {
         Optional<DossierProfessionnel> dp = dossierProRepo.findById(id);
         if (dp.isPresent()) {
-            DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp.get());
-            dpDto.setCursusDto(mapper.CursusToCursusDto(dp.get().getCursus()));
+            DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp.get());
+            dpDto.setCursusDto(mapper.cursusToCursusDto(dp.get().getCursus()));
             return dpDto;
         }
         return null;
@@ -114,8 +114,8 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         // conversion vers Dto
         List<DossierProfessionnelDto> lstDto = new ArrayList<>();
         for (DossierProfessionnel dp : lst) {
-            DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-            dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
+            DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
+            dpDto.setCursusDto(mapper.cursusToCursusDto(dp.getCursus()));
 
             lstDto.add(dpDto);
         }
@@ -130,7 +130,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         DossierProfessionnel d = DtoTools.convert(dpDto, DossierProfessionnel.class);
         d.setCursus(DtoTools.convert(dpDto.getCursusDto(), Cursus.class));
         dossierProRepo.saveAndFlush(d);
-        return mapper.DossierProfessionnelToDossierProfessionnelDto(d);
+        return mapper.dossierProfessionnelToDossierProfessionnelDto(d);
     }
 
     /**
@@ -167,10 +167,10 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
      */
     @Override
     public DossierProfessionnelDto getByName(String nom) {
-        DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dossierProRepo.getByName(nom));
+        DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dossierProRepo.getByName(nom));
         if (dpDto != null) {
             if (dossierProRepo.getByName(nom).getCursus() == null)
-                dpDto.setCursusDto(mapper.CursusToCursusDto(dossierProRepo.getByName(nom).getCursus()));
+                dpDto.setCursusDto(mapper.cursusToCursusDto(dossierProRepo.getByName(nom).getCursus()));
             return dpDto;
         }
         return null;
@@ -218,7 +218,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
             Template template = freemarkerConfig.getTemplate("DossierPro.ftl");
 
-            Map<String, Object> model = new HashMap<String, Object>();
+            Map<String, Object> model = new HashMap<>();
             model.put("backendUrl", backendUrl);
 
             String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);

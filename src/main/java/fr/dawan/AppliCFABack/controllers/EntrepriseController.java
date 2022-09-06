@@ -41,7 +41,12 @@ public class EntrepriseController {
 		return entrepriseService.getById(id);
 	}
 
-	// /AppliCFABack/groupeEtudiants/{page}/{size}
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @return all entreprise by page
+	 */
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<EntrepriseDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {

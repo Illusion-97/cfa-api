@@ -41,8 +41,8 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 
 		List<EntrepriseDto> lstDto = new ArrayList<>();
 		for (Entreprise e : lst) {
-			EntrepriseDto eDto = mapper.EntrepriseToEntrepriseDto(e);
-			eDto.setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.getAdresseSiege()));
+			EntrepriseDto eDto = mapper.entrepriseToEntrepriseDto(e);
+			eDto.setAdresseSiegeDto(mapper.adresseToAdresseDto(e.getAdresseSiege()));
 			lstDto.add(eDto);
 		}
 		return lstDto;
@@ -64,8 +64,8 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		// conversion vers Dto
 		List<EntrepriseDto> lstDto = new ArrayList<>();
 		for (Entreprise e : lst) {
-			EntrepriseDto eDto = mapper.EntrepriseToEntrepriseDto(e);
-			eDto.setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.getAdresseSiege()));
+			EntrepriseDto eDto = mapper.entrepriseToEntrepriseDto(e);
+			eDto.setAdresseSiegeDto(mapper.adresseToAdresseDto(e.getAdresseSiege()));
 			//lstDto.add(DtoTools.convert(e, EntrepriseDto.class));
 			lstDto.add(eDto);
 		}
@@ -82,8 +82,8 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	public EntrepriseDto getById(long id) {
 		Optional<Entreprise> e = entrepriseRepository.findById(id);
 		if (e.isPresent()){
-			EntrepriseDto eDto = mapper.EntrepriseToEntrepriseDto(e.get());
-			eDto.setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.get().getAdresseSiege()));
+			EntrepriseDto eDto = mapper.entrepriseToEntrepriseDto(e.get());
+			eDto.setAdresseSiegeDto(mapper.adresseToAdresseDto(e.get().getAdresseSiege()));
 			return eDto;
 		}
 		
@@ -101,7 +101,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 
 		e = entrepriseRepository.saveAndFlush(e);
 
-		return mapper.EntrepriseToEntrepriseDto(e);
+		return mapper.entrepriseToEntrepriseDto(e);
 	}
 
 	/**
@@ -142,8 +142,8 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		List<Entreprise> entreprises = entrepriseRepository.findAllByRaisonSocialeContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<EntrepriseDto> res = new ArrayList<>();
 		for (Entreprise e : entreprises) {
-			EntrepriseDto eDto = mapper.EntrepriseToEntrepriseDto(e);
-			eDto.setAdresseSiegeDto(mapper.AdresseToAdresseDto(e.getAdresseSiege()));
+			EntrepriseDto eDto = mapper.entrepriseToEntrepriseDto(e);
+			eDto.setAdresseSiegeDto(mapper.adresseToAdresseDto(e.getAdresseSiege()));
 			res.add(eDto);
 		}
 		return res;

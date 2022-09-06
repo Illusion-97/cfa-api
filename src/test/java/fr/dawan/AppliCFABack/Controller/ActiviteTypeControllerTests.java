@@ -34,7 +34,7 @@ import fr.dawan.AppliCFABack.services.ActiviteTypeService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ActiviteTypeControllerTests {
+class ActiviteTypeControllerTests {
 
 @Autowired
 private ActiviteTypeController activiteTypeController;

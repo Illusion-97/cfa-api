@@ -1,9 +1,13 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.net.URISyntaxException;
 import java.util.List;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 
 public interface CentreFormationService {
 
@@ -21,6 +25,6 @@ public interface CentreFormationService {
 
 	List<CentreFormationDto> getAllCentreFormations(int page, int size, String string);
 	
-	void fetchAllDG2CentreFormation(String email, String password) throws Exception;
+	void fetchAllDG2CentreFormation(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonProcessingException;
 
 }

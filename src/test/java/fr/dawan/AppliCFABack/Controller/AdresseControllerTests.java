@@ -31,7 +31,7 @@ import fr.dawan.AppliCFABack.dto.AdresseDto;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class AdresseControllerTests {
+class AdresseControllerTests {
 
 	@Autowired
 	private MockMvc mockMvc;

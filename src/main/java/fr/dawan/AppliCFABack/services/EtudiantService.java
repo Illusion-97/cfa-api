@@ -1,11 +1,17 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.net.URISyntaxException;
 import java.util.List;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+
 
 public interface EtudiantService {
 
@@ -70,6 +76,7 @@ public interface EtudiantService {
 	EtudiantDossierDto getByEtudiantIdForDossierPro(long id);
 	EtudiantDossierDto saveOrUpdateEtudiantDossier(EtudiantDossierDto e);
 
-    void fetchAllEtudiantDG2(String email, String password, long idPromotionDg2) throws Exception;
+    void fetchAllEtudiantDG2(String email, String password, long idPromotionDg2) throws FetchDG2Exception, JsonProcessingException, URISyntaxException;
+
 
 }

@@ -9,7 +9,7 @@ public class TokenSaver {
 		public static Map<String, String> tokensByEmail;
 
 		static {
-			tokensByEmail = new HashMap<String, String>();
+			tokensByEmail = new HashMap<>();
 		}
 		
 		public static Map<String, String> getTokensbyemail() {

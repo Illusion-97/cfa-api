@@ -62,10 +62,12 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 		this.promotions = promotions;
 	}
 
+	@Override
 	public long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}

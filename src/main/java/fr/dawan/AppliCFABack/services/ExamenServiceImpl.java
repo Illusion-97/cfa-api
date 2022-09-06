@@ -1,23 +1,24 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import fr.dawan.AppliCFABack.dto.customdtos.DoubleDto;
-import fr.dawan.AppliCFABack.dto.customdtos.EvalByBlocDto;
-import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
-import fr.dawan.AppliCFABack.repositories.*;
-import fr.dawan.AppliCFABack.tools.PdfTools;
-import fr.dawan.AppliCFABack.tools.SaveInvalidException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+
 import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -26,6 +27,9 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
 import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.customdtos.DoubleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EvalByBlocDto;
+import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Etudiant;
@@ -35,7 +39,14 @@ import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository;
+import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.ExamenRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.tools.PdfTools;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
@@ -101,13 +112,13 @@ public class ExamenServiceImpl implements ExamenService {
 		List<Examen> lst = examenRepository.findAll();
 		List<ExamenDto> lstDto = new ArrayList<>();
 		for (Examen e : lst) {
-			ExamenDto eDto = mapper.ExamenToExamenDto(e);
+			ExamenDto eDto = mapper.examenToExamenDto(e);
 			
 			Set<CompetenceProfessionnelle> lstCp = e.getCompetencesProfessionnelles();
 			Set<CompetenceProfessionnelleDto> lstCpDto = new HashSet<>();
 			for (CompetenceProfessionnelle cp : lstCp) {
 				if (cp != null)
-					lstCpDto.add(mapper.CompetenceProfessionnelleDto(cp));
+					lstCpDto.add(mapper.competenceProfessionnelleDto(cp));
 			}
 			
 			Set<Note> lstNotes = e.getNotes();
@@ -142,7 +153,7 @@ public class ExamenServiceImpl implements ExamenService {
 		// conversion vers Dto
 		List<ExamenDto> lstDto = new ArrayList<>();
 		for (Examen e : lst) {
-			ExamenDto eDto = mapper.ExamenToExamenDto(e);
+			ExamenDto eDto = mapper.examenToExamenDto(e);
 			
 //			eDto.setPromotionDto(mapper.PromotionToPromotionDto(e.getPromotion()));
 //			eDto.setCursusDto(mapper.CursusToCursusDto(e.getCursus()));
@@ -243,7 +254,7 @@ public class ExamenServiceImpl implements ExamenService {
 		}
 		else {
 			Examen exDb =  examenRepository.saveAndFlush(e);
-			Set<Note> Notes =  new HashSet<>();
+			Set<Note> notes =  new HashSet<>();
 			//Ajout list de notes vide avec les etudiants 
 			for (Promotion promo : exDb.getPromotions()) {
 				List<EtudiantDto> etudiantsParPromo = promotionService.getEtudiantsById(promo.getId());
@@ -252,11 +263,11 @@ public class ExamenServiceImpl implements ExamenService {
 					note.setEtudiantNote(DtoTools.convert(etudiantDto, Etudiant.class));
 					note.setNoteObtenue(0.0);
 					note.setExamen(exDb);
-					Notes.add(note);
+					notes.add(note);
 				}
 			}
 			
-			exDb.setNotes(Notes);			
+			exDb.setNotes(notes);			
 			
 			 return DtoTools.convert(examenRepository.saveAndFlush(exDb),ExamenDtoSave.class);
 			
@@ -328,15 +339,15 @@ public class ExamenServiceImpl implements ExamenService {
 					EvalByBlocDto evalByBlocDto = new EvalByBlocDto();
 					evalByBlocDto.setActiviteType(at);
 					try {
-						System.out.println("etuId = "+etudiantId);
-						System.out.println("atId = "+ at.getId());
+						logger.log(Level.INFO,"etuId = "+etudiantId);
+						logger.log(Level.INFO, "atId = "+ at.getId());
 						double moyB = getAvgByEtudiantIdAndActiviteTypeId(etudiantId, at.getId()).getResult();
 						evalByBlocDto.setMoyenne(moyB);
 						s += moyB;
 					} catch (Exception e) {
 						//0 par défaut ou afficher un message
 						logger.log(Level.WARNING, "error : pas d'activité type", e);
-						System.out.println("L'étudiant n'a pas de note associée à cette activité type");
+						logger.info("L'étudiant n'a pas de note associée à cette activité type");
 						throw new Exception("L'étudiant n'a pas de note associée à cette activité type"); 
 						
 					}
@@ -345,9 +356,10 @@ public class ExamenServiceImpl implements ExamenService {
 						evalByBlocDto.setMoyennePromo(getAvgByPromoIdAndActiviteTypeId(promotionId, at.getId()).getResult());
 					} catch (Exception e) {
 						// 0 par défaut //ajouter un message pour dire note manquante
-						logger.log(Level.WARNING, "note manquante", e);
-						System.out.println("note manquante");
-						throw new Exception("note manquante");
+						String msg = "note manquante";
+						logger.log(Level.WARNING, msg, e);
+						logger.log(Level.SEVERE, msg);
+						throw new Exception(msg);
 					}
 					evalList.add(evalByBlocDto);
 				}

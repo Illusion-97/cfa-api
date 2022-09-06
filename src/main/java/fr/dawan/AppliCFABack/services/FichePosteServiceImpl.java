@@ -41,8 +41,8 @@ public class FichePosteServiceImpl implements FichePosteService{
 		
 		List<FichePosteDto> lstDto = new ArrayList<>();
 		for (FichePoste n : lst) {
-			FichePosteDto fDto =mapper.FichePosteToFichePosteDto(n);
-			fDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(n.getEtudiant()));
+			FichePosteDto fDto =mapper.fichePosteToFichePosteDto(n);
+			fDto.setEtudiantDto(mapper.etudiantToEtudiantDto(n.getEtudiant()));
 			lstDto.add(fDto);
 		}
 		return lstDto;
@@ -65,7 +65,7 @@ public class FichePosteServiceImpl implements FichePosteService{
 		// conversion vers Dto
 		List<FichePosteDto> lstDto = new ArrayList<>();
 		for (FichePoste c : lst) {
-			FichePosteDto fDto =mapper.FichePosteToFichePosteDto(c);
+			FichePosteDto fDto =mapper.fichePosteToFichePosteDto(c);
 			lstDto.add(fDto);
 		}
 		return lstDto;
@@ -93,8 +93,8 @@ public class FichePosteServiceImpl implements FichePosteService{
 		Optional<FichePoste> e = fichePosteRepository.findById(id);
 		if (e.isPresent()) {
 			
-			FichePosteDto fDto = mapper.FichePosteToFichePosteDto(e.get());
-			fDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(e.get().getEtudiant()));			
+			FichePosteDto fDto = mapper.fichePosteToFichePosteDto(e.get());
+			fDto.setEtudiantDto(mapper.etudiantToEtudiantDto(e.get().getEtudiant()));			
 			return fDto;
 		}			
 
@@ -112,7 +112,7 @@ public class FichePosteServiceImpl implements FichePosteService{
 		
 		u = fichePosteRepository.saveAndFlush(u);
 		
-		return mapper.FichePosteToFichePosteDto(u);
+		return mapper.fichePosteToFichePosteDto(u);
 	}
 
 	/**

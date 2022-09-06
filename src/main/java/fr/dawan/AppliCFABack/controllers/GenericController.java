@@ -26,7 +26,7 @@ public abstract class GenericController<TDto extends BaseEntityDto> {
 
 	protected final GenericService<TDto> service;
 
-	public GenericController(GenericService<TDto> service) {
+	protected GenericController(GenericService<TDto> service) {
 		super();
 		this.service = service;
 	}

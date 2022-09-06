@@ -53,7 +53,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		
 		List<GroupeEtudiantDto> lstDto = new ArrayList<>();
 		for (GroupeEtudiant g : lst) {
-			lstDto.add(mapper.GroupeEtudiantToGroupEtudiantDto(g));
+			lstDto.add(mapper.groupeEtudiantToGroupEtudiantDto(g));
 		}
 		return lstDto;
 	}
@@ -75,16 +75,16 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		// conversion vers Dto
 		List<GroupeEtudiantDto> lstDto = new ArrayList<>();
 		for (GroupeEtudiant g : lst) {
-			GroupeEtudiantDto gDto = mapper.GroupeEtudiantToGroupEtudiantDto(g);
+			GroupeEtudiantDto gDto = mapper.groupeEtudiantToGroupEtudiantDto(g);
 			List<EtudiantDto> etudiantsDto = new ArrayList<>();
 			for(Etudiant e : g.getEtudiants()) {
-				EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
+				EtudiantDto eDto = mapper.etudiantToEtudiantDto(e);
 				List<PromotionDto> pDtos = new ArrayList<>();
 				for(Promotion p : e.getPromotions()) {
-					pDtos.add(mapper.PromotionToPromotionDto(p));
+					pDtos.add(mapper.promotionToPromotionDto(p));
 				}
 				eDto.setPromotionsDto(pDtos);
-				eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
+				eDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(e.getUtilisateur()));
 				etudiantsDto.add(eDto);
 			}
 			gDto.setEtudiantsDto(etudiantsDto);
@@ -116,13 +116,13 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		
 		if(!g.isPresent()) return null;
 		
-		GroupeEtudiantDto gDto = mapper.GroupeEtudiantToGroupEtudiantDto(g.get());
+		GroupeEtudiantDto gDto = mapper.groupeEtudiantToGroupEtudiantDto(g.get());
 		List<EtudiantDto> etudiantsDto = new ArrayList<>();
 		for(Etudiant e : g.get().getEtudiants()) {
-			EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
+			EtudiantDto eDto = mapper.etudiantToEtudiantDto(e);
 			List<PromotionDto> pDtos = new ArrayList<>();
 			for(Promotion p : e.getPromotions()) {
-				pDtos.add(mapper.PromotionToPromotionDto(p));
+				pDtos.add(mapper.promotionToPromotionDto(p));
 			}
 			eDto.setPromotionsDto(pDtos);
 			etudiantsDto.add(eDto);
@@ -141,7 +141,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	public GroupeEtudiantDto saveOrUpdate(GroupeEtudiantDto gDto) {
 		logger.info("GroupeEtudiantDto saveOrUpdate");
 		GroupeEtudiant g = groupeEtudiantRepository.saveAndFlush(DtoTools.convert(gDto, GroupeEtudiant.class));
-		return mapper.GroupeEtudiantToGroupEtudiantDto(g);
+		return mapper.groupeEtudiantToGroupEtudiantDto(g);
 	}
 
 	/**
@@ -184,13 +184,13 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		
 		List<EtudiantDto> result = new ArrayList<>();
 		for(Etudiant e : g.get().getEtudiants()) {
-			EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
+			EtudiantDto eDto = mapper.etudiantToEtudiantDto(e);
 			List<PromotionDto> pDtos = new ArrayList<>();
 			for(Promotion p : e.getPromotions()) {
-				pDtos.add(mapper.PromotionToPromotionDto(p));
+				pDtos.add(mapper.promotionToPromotionDto(p));
 			}
 			eDto.setPromotionsDto(pDtos);
-			eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
+			eDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(e.getUtilisateur()));
 			result.add(eDto);
 		}		
 		

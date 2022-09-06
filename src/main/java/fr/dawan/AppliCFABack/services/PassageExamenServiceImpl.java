@@ -36,7 +36,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 
 		List<PassageExamenDto> lstDto = new ArrayList<>();
 		for (PassageExamen pe : lst) {
-			lstDto.add(mapper.PassageExamenToPassageExamenDto(pe));
+			lstDto.add(mapper.passageExamenToPassageExamenDto(pe));
 		}
 		return lstDto;
 	}
@@ -92,9 +92,9 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 		if (!pe.isPresent())
 			return null;
 
-		PassageExamenDto pDto = mapper.PassageExamenToPassageExamenDto(pe.get());
-		pDto.setExamenDto(mapper.ExamenToExamenDto(pe.get().getExamen()));
-		pDto.setInterventionDto(mapper.InterventionToInterventionDto(pe.get().getIntervention()));
+		PassageExamenDto pDto = mapper.passageExamenToPassageExamenDto(pe.get());
+		pDto.setExamenDto(mapper.examenToExamenDto(pe.get().getExamen()));
+		pDto.setInterventionDto(mapper.interventionToInterventionDto(pe.get().getIntervention()));
 //		pDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(pe.get().getExamen().getFormation()));
 
 		return pDto;
@@ -111,7 +111,7 @@ public class PassageExamenServiceImpl implements PassageExamenService {
 
 		pe = passageExamenRepository.saveAndFlush(pe);
 
-		return mapper.PassageExamenToPassageExamenDto(pe);
+		return mapper.passageExamenToPassageExamenDto(pe);
 	}
 
 	/**

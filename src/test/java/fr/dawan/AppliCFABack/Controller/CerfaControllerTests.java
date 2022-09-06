@@ -33,7 +33,7 @@ import fr.dawan.AppliCFABack.services.EtudiantService;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class CerfaControllerTests {
+class CerfaControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 

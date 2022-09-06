@@ -32,7 +32,7 @@ import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class CentreFormationControllerTests {
+class CentreFormationControllerTests {
 
 	@Autowired
 	private MockMvc mockMvc;

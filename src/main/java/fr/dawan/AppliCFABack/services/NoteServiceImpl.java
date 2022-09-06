@@ -59,7 +59,7 @@ public class NoteServiceImpl implements NoteService {
 
 		List<NoteDto> lstDto = new ArrayList<>();
 		for (Note n : lst) {
-			lstDto.add(mapper.NoteToNoteDto(n));
+			lstDto.add(mapper.noteToNoteDto(n));
 		}
 		return lstDto;
 	}

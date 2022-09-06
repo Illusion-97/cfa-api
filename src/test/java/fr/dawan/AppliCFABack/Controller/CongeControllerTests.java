@@ -34,7 +34,7 @@ import fr.dawan.AppliCFABack.entities.TypeConge;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class CongeControllerTests {
+class CongeControllerTests {
 
 	@Autowired
 	private MockMvc mockMvc;

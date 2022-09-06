@@ -98,7 +98,7 @@ public class FormationServiceImpl implements FormationService {
 
 		// conversion vers Dto
 
-		List<FormationDto> lstDto = new ArrayList<FormationDto>();
+		List<FormationDto> lstDto = new ArrayList<>();
 		for (Formation f : lst) {
 
 			lstDto.add(DtoTools.convert(f, FormationDto.class));
@@ -156,6 +156,7 @@ public class FormationServiceImpl implements FormationService {
 		formation = formationRepository.saveAndFlush(formation);
 
 		return DtoTools.convert(formation, FormationDto.class);
+		
 	}
 
 	/**
@@ -188,7 +189,7 @@ public class FormationServiceImpl implements FormationService {
 		List<InterventionDto> lstIntDto = new ArrayList<>();
 		for (Intervention itv : lstInt) {
 			if (itv != null)
-				lstIntDto.add(mapper.InterventionToInterventionDto(itv));
+				lstIntDto.add(mapper.interventionToInterventionDto(itv));
 		}
 		return lstIntDto;
 	}
@@ -222,8 +223,7 @@ public class FormationServiceImpl implements FormationService {
 	 * @param password    Mot de passe de l'utlisateur dg2
 	 * @param idCursusDg2 Identifiant du cursus
 	 * @return nombre de formation sauvgardé ou mise à jour
-	 * @exception Exception retourne une exception, si erreur dans la sauvgarde des
-	 *                      formations
+	 * @throws Exception 
 	 */
 	@Override
 	public int fetchDG2Formations(String email, String password, long idCursusDg2) throws Exception {
@@ -265,7 +265,6 @@ public class FormationServiceImpl implements FormationService {
 		List<FormationDG2Dto> fetchResJson = new ArrayList<FormationDG2Dto>();
 
 		// Récupérer la liste formation DG2
-
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 

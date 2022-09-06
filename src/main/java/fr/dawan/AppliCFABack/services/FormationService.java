@@ -1,10 +1,12 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.List;
+
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.entities.Formation;
+
 
 public interface FormationService {
 
@@ -22,11 +24,12 @@ public interface FormationService {
 
 	List<InterventionDto> findAllByFormationId(long id);
 
-
-
 	int fetchDG2Formations(String email, String password, long idCursusDg2) throws Exception;
+	
+	List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2 ) throws Exception ;
+	
 	int fetchDG2Formations(String email, String password) throws Exception;
-	List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2 ) throws Exception;
+
 
 
 }
