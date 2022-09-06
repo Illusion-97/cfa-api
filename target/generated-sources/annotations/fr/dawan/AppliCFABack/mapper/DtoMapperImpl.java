@@ -71,7 +71,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-06T10:09:59+0200",
+    date = "2022-09-06T14:49:32+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -413,12 +413,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         utilisateurDto.setId( utilisateur.getId() );
         utilisateurDto.setVersion( utilisateur.getVersion() );
-        utilisateurDto.setLogin( utilisateur.getLogin() );
-        utilisateurDto.setPassword( utilisateur.getPassword() );
-        utilisateurDto.setPrenom( utilisateur.getPrenom() );
-        utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setCivilite( utilisateur.getCivilite() );
         utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
+        utilisateurDto.setLogin( utilisateur.getLogin() );
+        utilisateurDto.setNom( utilisateur.getNom() );
+        utilisateurDto.setPassword( utilisateur.getPassword() );
+        utilisateurDto.setPrenom( utilisateur.getPrenom() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
         utilisateurDto.setTelephoneFixe( utilisateur.getTelephoneFixe() );
 
@@ -711,9 +711,9 @@ public class DtoMapperImpl implements DtoMapper {
         formation.setPrerequis( formationDG2Dto.getPrerequisites() );
         formation.setId( formationDG2Dto.getId() );
         formation.setVersion( formationDG2Dto.getVersion() );
+        formation.setSlug( formationDG2Dto.getSlug() );
         formation.setDuration( formationDG2Dto.getDuration() );
         formation.setPlan( formationDG2Dto.getPlan() );
-        formation.setSlug( formationDG2Dto.getSlug() );
 
         return formation;
     }

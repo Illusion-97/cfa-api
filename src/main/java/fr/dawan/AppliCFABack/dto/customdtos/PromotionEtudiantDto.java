@@ -21,7 +21,7 @@ public class PromotionEtudiantDto {
     public PromotionEtudiantDto() {
     }
 
-    public PromotionEtudiantDto(String cursusTitre, String cursusDescription, String cursusDuree, String nom, LocalDate dateDebut, LocalDate dateFin, List<PlanningEtudiantDto> planningsEtudiantDto) {
+    public PromotionEtudiantDto(String cursusTitre, String cursusDuree, String nom, LocalDate dateDebut, LocalDate dateFin, List<PlanningEtudiantDto> planningsEtudiantDto) {
         this.cursusTitre = cursusTitre;
         this.cursusDuree = cursusDuree;
         this.nom = nom;

@@ -6,28 +6,65 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.dawan.AppliCFABack.dto.*;
+
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DevoirDto;
+import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EntrepriseDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
+import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.PositionnementDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
-
-import fr.dawan.AppliCFABack.entities.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-
+import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.Contrat;
+import fr.dawan.AppliCFABack.entities.Devoir;
+import fr.dawan.AppliCFABack.entities.DevoirEtudiant;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
+import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.Positionnement;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
@@ -45,7 +82,6 @@ import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.HashTools;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 @Transactional
@@ -123,9 +159,6 @@ public class EtudiantServiceImpl implements EtudiantService {
             UtilisateurDto utilisateur = mapper.utilisateurToUtilisateurDto(e.getUtilisateur());
 
             etuDto.setUtilisateurDto(utilisateur);
-
-            UtilisateurDto Utilisateur = mapper.utilisateurToUtilisateurDto(e.getUtilisateur());
-            etuDto.setUtilisateurDto(Utilisateur);
 
             AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
 //			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
@@ -913,8 +946,8 @@ public class EtudiantServiceImpl implements EtudiantService {
                     try {
 						utilisateur.setPassword(HashTools.hashSHA512(utilisateur.getPassword()));
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
+						
 					}
                     utilisateur.setEtudiant(etudiant);
                     utilisateur.setCivilite(eDG2.getCivilite());

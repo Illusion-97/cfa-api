@@ -2,8 +2,6 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 
-import fr.dawan.AppliCFABack.entities.LivretEvaluation;
-import fr.dawan.AppliCFABack.entities.Signature;
 import fr.dawan.AppliCFABack.entities.Validation.Etat;
 
 @SuppressWarnings("serial")

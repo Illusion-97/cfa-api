@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -383,7 +384,7 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public int fetchDGInterventions(String email, String password, long idPrmotionDg2) throws Exception {
 		List<Intervention> interventions = new ArrayList<>();
-		interventions.addAll(getInerventionDG2ByIdPromotionDG2(email, password, idPrmotionDg2));
+		interventions.addAll(getInterventionDG2ByIdPromotionDG2(email, password, idPrmotionDg2));
 		for (Intervention i : interventions) {
 			try {
 				interventionRepository.saveAndFlush(i);
@@ -396,12 +397,12 @@ public class InterventionServiceImpl implements InterventionService {
 	}
 
 	@Override
-	public List<Intervention> getInerventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
-			throws Exception {
+	public List<Intervention> getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
+			throws FetchDG2Exception, URISyntaxException {
 		Optional<Promotion> promotionOpt = promoRepository.findByIdDg2(idPrmotionDg2);
 		
 		if (!promotionOpt.isPresent()) {
-			throw new Exception("Promotion introuvable veuiller mettre à jour les promotions");
+			throw new FetchDG2Exception("Promotion introuvable veuiller mettre à jour les promotions");
 		}
 		
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -442,7 +443,7 @@ public class InterventionServiceImpl implements InterventionService {
 //					throw new Exception("Formation introuvable veuiller mettre à jour les formations");
 				}
 				if (!interventionDb.isPresent()) {
-					List<Promotion> promotions = new ArrayList<Promotion>(); 
+					List<Promotion> promotions = new ArrayList<>(); 
 
 					promotions.add(promotionOpt.get());
 					interventionDG2.setPromotions(promotions);

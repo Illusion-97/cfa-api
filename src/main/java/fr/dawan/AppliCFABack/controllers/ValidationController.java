@@ -12,7 +12,7 @@ public class ValidationController extends GenericController<ValidationDto>{
 
 	public ValidationController(GenericService<ValidationDto> service) {
 		super(service);
-		// TODO Auto-generated constructor stub
+
 	}
 
 }

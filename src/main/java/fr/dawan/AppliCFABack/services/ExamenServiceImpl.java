@@ -339,8 +339,8 @@ public class ExamenServiceImpl implements ExamenService {
 					EvalByBlocDto evalByBlocDto = new EvalByBlocDto();
 					evalByBlocDto.setActiviteType(at);
 					try {
-						logger.log(Level.INFO,"etuId = "+etudiantId);
-						logger.log(Level.INFO, "atId = "+ at.getId());
+						logger.log(Level.INFO,"etuId = " + etudiantId);
+						logger.log(Level.INFO, "atId = " + at.getId());
 						double moyB = getAvgByEtudiantIdAndActiviteTypeId(etudiantId, at.getId()).getResult();
 						evalByBlocDto.setMoyenne(moyB);
 						s += moyB;

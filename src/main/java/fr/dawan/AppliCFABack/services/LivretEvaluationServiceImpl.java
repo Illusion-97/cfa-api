@@ -31,9 +31,8 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	public LivretEvaluationDto getById(long id) {
 		Optional<LivretEvaluation> livretEvalOpt = livretEvaluationRepository.findById(id);
 		
-		if(livretEvalOpt.isPresent()) {
-			LivretEvaluationDto livretEvalDto = DtoTools.convert(livretEvalOpt, LivretEvaluationDto.class);		
-			return livretEvalDto;
+		if(livretEvalOpt.isPresent()) {	
+			return DtoTools.convert(livretEvalOpt, LivretEvaluationDto.class);
 		}
 		return null;
 	}
@@ -75,7 +74,7 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	@Override
 	public List<LivretEvaluationDto> getByEtudiantId(long id) {
 		List<LivretEvaluation> livrets = livretEvaluationRepository.findLivretEvaluationByEtudiantId(id);
-		List<LivretEvaluationDto> result = new ArrayList<LivretEvaluationDto>();
+		List<LivretEvaluationDto> result = new ArrayList<>();
 		for(LivretEvaluation l: livrets) {
 			result.add(DtoTools.convert(l, LivretEvaluationDto.class));
 		}

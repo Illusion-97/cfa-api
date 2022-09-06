@@ -49,8 +49,7 @@ public class RemunerationServiceImpl implements RemunerationService {
 
 	@Override
 	public void deleteById(long id) {
-		
-
+		remunerationRepo.deleteById(id);
 	}
 
 	@Override
