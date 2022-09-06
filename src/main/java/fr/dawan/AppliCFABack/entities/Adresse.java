@@ -25,10 +25,11 @@ public class Adresse extends BaseEntity implements Serializable {
 		super();
 	}
 
-	public Adresse(String libelle, String ville, String codePostal, String country) {
+	public Adresse(String libelle, String ville, String codePostal, String countryCode) {
 		this.libelle = libelle;
 		this.ville = ville;
 		this.codePostal = codePostal;
+		this.countryCode = countryCode;
 	}
 
 	public String getLibelle() {

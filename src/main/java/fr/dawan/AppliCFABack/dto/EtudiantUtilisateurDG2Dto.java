@@ -14,8 +14,6 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
 
     @JsonProperty(value = "person_id")
     private long personId;
-    
-    private String honorific;
 
     @JsonProperty(value = "honorific")
     private String civilite;

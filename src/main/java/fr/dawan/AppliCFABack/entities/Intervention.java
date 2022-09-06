@@ -144,7 +144,7 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 	}
 
 	public List<Long> getPromotionId(){
-		List<Long> promotionsId = new ArrayList<Long>();
+		List<Long> promotionsId = new ArrayList<>();
 		if (promotions != null) {
 			for(Promotion p : promotions) {
 				promotionsId.add(p.getId());

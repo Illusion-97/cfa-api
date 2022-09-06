@@ -48,7 +48,7 @@ class PromotionControllerTests {
 		List<PlanningEtudiantDto> plannings = new ArrayList<>();
 		plannings.add(new PlanningEtudiantDto(LocalDate.now(),LocalDate.now(),"JavaScript","Stéphane Menut"));
 
-		promotions.add(new PromotionEtudiantDto("Concepteur", "développement d'applications", "1 an", "Java",LocalDate.now(),LocalDate.now(), plannings));
+		promotions.add(new PromotionEtudiantDto("Concepteur", "1 an", "développement d'applications", LocalDate.now(),LocalDate.now(), plannings));
 	}
 
 	@Test

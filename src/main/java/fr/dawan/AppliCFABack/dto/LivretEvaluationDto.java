@@ -3,12 +3,6 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import fr.dawan.AppliCFABack.entities.CentreFormation;
-import fr.dawan.AppliCFABack.entities.Cursus;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Validation;
-
 @SuppressWarnings("serial")
 public class LivretEvaluationDto extends BaseEntityDto implements Serializable{
 

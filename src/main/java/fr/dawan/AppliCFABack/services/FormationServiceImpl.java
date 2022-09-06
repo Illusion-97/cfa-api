@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +38,7 @@ import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.FormationRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 
 @Service
 @Transactional
@@ -205,7 +207,7 @@ public class FormationServiceImpl implements FormationService {
 	 */
 	@Override
 	public int fetchDG2Formations(String email, String password) throws Exception {
-		List<Long> cursusDg2Ids = cursusRepository.findAll().stream().map(c -> c.getIdDg2())
+		List<Long> cursusDg2Ids = cursusRepository.findAll().stream().map(Cursus::getIdDg2)
 				.collect(Collectors.toList());
 		int result = 0;
 		for (Long idCursus : cursusDg2Ids) {
@@ -223,20 +225,21 @@ public class FormationServiceImpl implements FormationService {
 	 * @param password    Mot de passe de l'utlisateur dg2
 	 * @param idCursusDg2 Identifiant du cursus
 	 * @return nombre de formation sauvgardé ou mise à jour
+	 * @throws URISyntaxException 
 	 * @throws Exception 
 	 */
 	@Override
-	public int fetchDG2Formations(String email, String password, long idCursusDg2) throws Exception {
+	public int fetchDG2Formations(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
 
-		List<Formation> formations = new ArrayList<Formation>();
+		List<Formation> formations = new ArrayList<>();
 
 		formations.addAll(getFormationDG2ByIdCursus(email, password, idCursusDg2));
 
 		for (Formation formation : formations) {
 			try {
 				saveOrUpdate(DtoTools.convert(formation, FormationDto.class));
-			} catch (Exception e2) {
-				// TODO: handle exception
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		return formations.size();
@@ -248,21 +251,22 @@ public class FormationServiceImpl implements FormationService {
 	 * @param email    Email l'utilsateur dg2
 	 * @param password Mot de passe de l'utlisateur dg2
 	 * @return Liste de formation à partir de DG2
+	 * @throws URISyntaxException 
 	 * @exception Exception retourne une exception, si erreur dans la récupération
 	 *                      des formations
 	 */
 	@Override
-	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2) throws Exception {
+	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
 
 		Optional<Cursus> cursusDb = cursusRepository.findByIdDg2(idCursusDg2);
 
 		if (!cursusDb.isPresent()) {
-			throw new Exception("Cursus non présent dans la BDD veuiller mettre à jour les cursus");
+			throw new FetchDG2Exception("Cursus non présent dans la BDD veuiller mettre à jour les cursus");
 		}
 
-		List<Formation> result = new ArrayList<Formation>();
+		List<Formation> result = new ArrayList<>();
 
-		List<FormationDG2Dto> fetchResJson = new ArrayList<FormationDG2Dto>();
+		List<FormationDG2Dto> fetchResJson = new ArrayList<>();
 
 		// Récupérer la liste formation DG2
 		ObjectMapper objectMapper = new ObjectMapper();

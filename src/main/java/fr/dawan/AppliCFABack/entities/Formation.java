@@ -3,7 +3,6 @@ package fr.dawan.AppliCFABack.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -175,7 +174,7 @@ public class Formation extends BaseEntity implements Serializable {
 	 * @return liste des cursus Ids à partir de la liste des cursus
 	 */
 	public List<Long> getCursusLstId(){
-		List<Long> cursusId = new ArrayList<Long>();
+		List<Long> cursusId = new ArrayList<>();
 		if (cursusLst != null) {
 			for(Cursus cursus : cursusLst) {
 				cursusId.add(cursus.getId());

@@ -38,7 +38,7 @@ public class CentreFormation extends BaseEntity implements Serializable{
 		this.entreprise = entreprise;
 	}
 
-	public CentreFormation(long id, long idDg2, String countryCode, String nom, Adresse adresse,
+	public CentreFormation(long id, long idDg2, String nom, Adresse adresse,
 			Entreprise entreprise) {
 		super();
 		this.id = id;

@@ -17,7 +17,6 @@ public class LivretEvaluationController extends GenericController<LivretEvaluati
 	
 	public LivretEvaluationController(GenericService<LivretEvaluationDto> service) {
 		super(service);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@GetMapping(value = "/etudiant/{id}", produces = "application/json")
