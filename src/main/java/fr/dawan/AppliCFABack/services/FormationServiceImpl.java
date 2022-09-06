@@ -309,7 +309,7 @@ public class FormationServiceImpl implements FormationService {
 			// Si !isPresent() alors ajout
 			if (!formationDb.isPresent()) {
 
-				List<Cursus> newCursusDb = new ArrayList<Cursus>();
+				List<Cursus> newCursusDb = new ArrayList<>();
 				newCursusDb.add(cursusDb.get());
 				formationDG2.setCursusLst(newCursusDb);
 				result.add(formationDG2);

@@ -35,7 +35,6 @@ import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
-import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 @Service
 @Transactional
