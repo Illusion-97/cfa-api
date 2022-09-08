@@ -190,8 +190,7 @@ public class DtoTools {
         ).collect(Collectors.toList()));
 
         leDto.setSatisfactions(e.getNotes().stream().map(s -> {
-            Note.Satisfaction satisfaction = s.getSatisfaction();
-            return satisfaction;
+            return s.getSatisfaction();
         }).collect(Collectors.toList()));
 
         leDto.setObservations(e.getNotes().stream().map(

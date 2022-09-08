@@ -58,6 +58,7 @@ public class CerfaServiceImpl implements CerfaService {
 	public CerfaDto getById(long id) {
 		
 		Optional<Cerfa> c = cerfaRepo.findById(id);
+		if(c.isPresent()) {
 		CerfaDto cDto = mapper.cerfaToCerfaDto(c.get());
 		cDto.setRemuneration1(mapper.remunerationTORemunerationDto(c.get().getRemuneration1()));
 		cDto.setRemuneration2(mapper.remunerationTORemunerationDto(c.get().getRemuneration2()));
@@ -68,7 +69,10 @@ public class CerfaServiceImpl implements CerfaService {
 		cDto.setAdresseRepresentant(mapper.adresseToAdresseDto(c.get().getAdresseRepresentant()));
 		cDto.setAdresseResponsable(mapper.adresseToAdresseDto(c.get().getAdresseResponsable()));
 		cDto.setEtudiant(etudiantService.getById(c.get().getEtudiant().getId()));
+		
 		return cDto;
+		}
+		return null;
 	}
 
 	/**

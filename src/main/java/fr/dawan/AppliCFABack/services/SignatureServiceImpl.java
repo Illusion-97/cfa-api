@@ -13,6 +13,7 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.SignatureDto;
 import fr.dawan.AppliCFABack.entities.Signature;
 import fr.dawan.AppliCFABack.repositories.SignatureRepository;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 /***
  * 
  * @author Feres BG Valentin C.
@@ -53,7 +54,7 @@ public class SignatureServiceImpl implements SignatureService{
 	 * @return Signature DTO
 	 */
 	@Override
-	public SignatureDto saveOrUpdate(SignatureDto tDto) throws Exception {
+	public SignatureDto saveOrUpdate(SignatureDto tDto) throws SaveInvalidException {
 		Signature s = DtoTools.convert(tDto, Signature.class);
 		s = signatureRepository.saveAndFlush(s);
 		return DtoTools.convert(s, SignatureDto.class);

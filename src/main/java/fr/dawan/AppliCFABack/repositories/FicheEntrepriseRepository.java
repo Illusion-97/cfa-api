@@ -6,7 +6,5 @@ import fr.dawan.AppliCFABack.entities.FicheEntreprise;
 
 public interface FicheEntrepriseRepository extends JpaRepository<FicheEntreprise, Long> {
 
-//	Page<FicheEntreprise> findAllByNomContainingIgnoringCase(String nom, Pageable pageable);
-	
-//	long countByNomContainingIgnoringCase(String search);
+
 }

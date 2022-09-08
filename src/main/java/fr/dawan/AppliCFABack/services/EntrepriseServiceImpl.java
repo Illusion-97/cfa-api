@@ -66,7 +66,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		for (Entreprise e : lst) {
 			EntrepriseDto eDto = mapper.entrepriseToEntrepriseDto(e);
 			eDto.setAdresseSiegeDto(mapper.adresseToAdresseDto(e.getAdresseSiege()));
-			//lstDto.add(DtoTools.convert(e, EntrepriseDto.class));
+			
 			lstDto.add(eDto);
 		}
 		return lstDto;
@@ -140,13 +140,13 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	@Override
 	public List<EntrepriseDto> getAllEntreprises(int page, int size, String search) {
 		List<Entreprise> entreprises = entrepriseRepository.findAllByRaisonSocialeContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
-		List<EntrepriseDto> res = new ArrayList<>();
+		List<EntrepriseDto> lstDto = new ArrayList<>();
 		for (Entreprise e : entreprises) {
 			EntrepriseDto eDto = mapper.entrepriseToEntrepriseDto(e);
 			eDto.setAdresseSiegeDto(mapper.adresseToAdresseDto(e.getAdresseSiege()));
-			res.add(eDto);
+			lstDto.add(eDto);
 		}
-		return res;
+		return lstDto;
 	}
 	
 

@@ -38,7 +38,7 @@ public class UtilisateurController {
             @RequestParam(required = false) Optional<String> role,
             @RequestParam(defaultValue = "", required = false) Optional<String> search) {
 
-        if (role.isPresent())
+        if (role.isPresent() && search.isPresent())
             return utilisateurService.findAllByRoleByPage(page, size, role.get(), search.get());
         else
             return utilisateurService.getAllUtilisateurs(page, size, search.get());
@@ -47,7 +47,7 @@ public class UtilisateurController {
     @GetMapping(value = "/count", produces = "application/json")
     public CountDto count(@RequestParam(required = false) Optional<String> role,
                           @RequestParam(defaultValue = "", required = false) Optional<String> search) {
-        if (role.isPresent())
+        if (role.isPresent() && search.isPresent())
             return utilisateurService.countByRole(role.get(), search.get());
         else
             return utilisateurService.count(search.get());

@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @SuppressWarnings("serial")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FormationDG2Dto extends BaseEntityDto implements Serializable {
-	private long id;
+
 	private String title;
 	private String duration;
 	private String slug;

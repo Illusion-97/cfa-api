@@ -18,13 +18,6 @@ public interface DevoirRepository extends JpaRepository<Devoir, Long> {
 
 	long countByConsigneContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(String consigne,
 			String formationTitre);
-
-	// @Query(value = "SELECT n FROM Note n WHERE n.etudiant.id = :id")
-	// Page<Note> getNotesByIdEtudiant(@Param("id") long id, Pageable pageRequest);
-
-	// @Query(value = "SELECT n FROM Devoir n WHERE n.etudiant.id = :id")
-	// Page<Devoir> getDevoirsByIdEtudiant(@Param("id") long id,Pageable
-	// pageRequest);
 	
 	@Query("FROM Devoir d WHERE d.intervention.id = :id")
 	List<Devoir> findAllByInterventionId(long id);

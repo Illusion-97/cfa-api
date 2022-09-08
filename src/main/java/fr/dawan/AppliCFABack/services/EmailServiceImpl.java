@@ -4,18 +4,23 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.interceptors.TokenSaver;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 
 @Service
@@ -105,11 +110,12 @@ public class EmailServiceImpl implements EmailService {
 	 * Envoie de mail avec lien pour modifier le mot de passe
 	 * 
 	 * @param uDto Objet Utilisateur
+	 * @throws MessagingException 
 	 * @exception Exception Returns une exception si le message n'est pas valide
 	 */
 
 	@Override
-	public void sendMailForResetPassword(UtilisateurDto uDto) throws Exception {
+	public void sendMailForResetPassword(UtilisateurDto uDto) throws EmailResetPasswordException, MessagingException {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("name", uDto.getNom());
 

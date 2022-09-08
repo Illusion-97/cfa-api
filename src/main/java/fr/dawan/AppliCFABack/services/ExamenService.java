@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.IOException;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -7,7 +8,13 @@ import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
 import fr.dawan.AppliCFABack.dto.customdtos.DoubleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.tools.AvgException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.core.ParseException;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 public interface ExamenService {
 
@@ -24,18 +31,17 @@ public interface ExamenService {
 	void deleteById(long id);
 	
 	List<ExamenDto> findExamensByInterventionId(long id);
-
 	/**
 	 * @param id de l'étudiant
 	 * @return toutes les données nécessaires pour remplir la section livret d'évaluation dans le front partie étudiant, par le service implémenté
 	 */
     List<LivretEvaluationDto> getLivretEvaluation(long id);
 
-	String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws Exception;
+	String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws ToPdf, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
-	DoubleDto getAvgByEtudiantIdAndActiviteTypeId(long etudiantId, long activiteTypeId) throws Exception;
+	DoubleDto getAvgByEtudiantIdAndActiviteTypeId(long etudiantId, long activiteTypeId) throws AvgException;
 
-	DoubleDto getAvgByPromoIdAndActiviteTypeId(long promotionId, long activiteTypeId) throws Exception;
+	DoubleDto getAvgByPromoIdAndActiviteTypeId(long promotionId, long activiteTypeId) throws AvgException;
 
-	DoubleDto getAvgByPromotionId(long promotionId) throws Exception;
+	DoubleDto getAvgByPromotionId(long promotionId) throws AvgException;
 }

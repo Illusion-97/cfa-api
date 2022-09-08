@@ -18,8 +18,6 @@ public interface FormateurService {
 
 	FormateurDto getById(long id);
 
-//	FormateurDto getInterventionByIdFormateur(long id);
-
 	List<InterventionDto> getAllInterventionsByFormateurIdPerPage(long id, int page, int size);
 
 	List<InterventionDto> getAllInterventionsByFormateurIdPerPageByKeyword(long id, int page, int size, String search);

@@ -1,10 +1,13 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -30,8 +33,12 @@ import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.ExperienceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.tools.PdfTools;
+import freemarker.core.ParseException;
 import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 @Service
 @Transactional
@@ -62,6 +69,8 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Value("src/main/resources/files/bulletinsEvaluations")
     private String storageFolder;
+    
+    private static Logger logger = Logger.getGlobal();
 
     /**
      * Récupération de la liste des dossiers professionnes
@@ -211,7 +220,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
     }
 
     @Override
-    public String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws Exception {
+    public String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws PdfTools, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
         Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
         if(etuOpt.isPresent()) {
             freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
@@ -225,7 +234,11 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
             String outputPdf = storageFolder + "/dossier-" + etudiantId + "-pro-" + promotionId + ".pdf";
 
-            PdfTools.generatePdfFromHtml(outputPdf, htmlContent);
+            try {
+				PdfTools.generatePdfFromHtml(outputPdf, htmlContent);
+			} catch (Exception e) {
+				logger.log(Level.SEVERE,"convertHtmlToPdf failed", e);
+			}
 
             return outputPdf;
         }

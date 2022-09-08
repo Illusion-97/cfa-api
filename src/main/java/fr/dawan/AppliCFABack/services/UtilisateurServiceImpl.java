@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -296,7 +297,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"hashPwd failed", e);
 		}
 
 		// On save l'addresse avant de save l'utilisateur
@@ -774,14 +775,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 							// On appelle la methode pour inserer un utilisateur
 							insertUpdate(utilisateurDto);
 						} catch (Exception e) {
-							e.printStackTrace();
+							logger.log(Level.SEVERE,"insertUpdate failed", e);
 						}
 					});
 				} else { // sinon => ERROR
 					throw new FileException("Extension de fichier incorrecte");
 				}
 			} else {
-				throw new FileException("Acces refusé : Vous n'avez pas les autorisations requises");
+				throw new FileException("Accès refusé : Vous n'avez pas les autorisations requises");
 			}
 		}
 	}

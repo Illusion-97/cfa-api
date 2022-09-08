@@ -10,8 +10,6 @@ public interface FicheEntrepriseService {
 
 	List<FicheEntrepriseDto> getAllByPage(int page, int size, String string);
 
-//	CountDto count(String string);
-
 	FicheEntrepriseDto getById(long id);
 
 	FicheEntrepriseDto saveOrUpdate(FicheEntrepriseDto fDto);

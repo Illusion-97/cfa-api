@@ -21,9 +21,4 @@ public interface DossierProfessionnelRepository extends JpaRepository<DossierPro
 	@Query("SELECT DISTINCT d FROM DossierProfessionnel d")
 	List<DossierProfessionnel> findAllDossierPro();
 
-//	@Query("SELECT dp FROM DossierProfessionnel dp WHERE dp.etudiant.id = :id")
-//	List<DossierProfessionnel> findByIdEtudiant(long id);
-
-
-
 }

@@ -3,6 +3,8 @@ package fr.dawan.AppliCFABack.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -28,6 +30,8 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+	
+	private static Logger logger = Logger.getGlobal();
 	
 	/**
 	 * Récupération de la liste des maitres d'apprentissages
@@ -104,7 +108,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 	            }
 			}	
 		}catch (Exception e) {
-            e.printStackTrace();
+			logger.log(Level.SEVERE,"hash mdp failed", e);
         }
 
 		ma = maitreApprentissageRepository.saveAndFlush(ma);
