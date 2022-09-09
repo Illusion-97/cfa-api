@@ -49,6 +49,7 @@ import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.FileException;
 import fr.dawan.AppliCFABack.tools.HashTools;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
@@ -176,7 +177,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	@Override
 	public UtilisateurDto getById(long id) {
-		logger.info("id : " + id);
+		logger.log(Level.INFO, "id : ", id);
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (userOpt.isPresent()) {
 			UtilisateurDto uDto = mapper.utilisateurToUtilisateurDto(userOpt.get());
@@ -350,7 +351,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			user.setEtudiant(etudiant);
 			etudiant.setUtilisateur(user);
 
-			//etudiant = etudiantRepository.saveAndFlush(etudiant);
 			etudiantRepository.saveAndFlush(etudiant);
 
 		}
@@ -360,7 +360,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			user.setFormateur(formateur);
 			formateur.setUtilisateur(user);
 
-			//formateur = formateurRepository.saveAndFlush(formateur);
 			formateurRepository.saveAndFlush(formateur);
 		}
 		if (isCEF && user.getCef() == null) {
@@ -383,7 +382,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			etudiant.setUtilisateur(null);
 			user.setEtudiant(null);
 
-			//etudiant = etudiantRepository.saveAndFlush(etudiant);
 			etudiantRepository.saveAndFlush(etudiant);
 
 			// On delete l'etudiant ?
@@ -394,7 +392,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			formateur.setUtilisateur(null);
 			user.setFormateur(null);
 
-			//formateur = formateurRepository.saveAndFlush(formateur);
 			formateurRepository.saveAndFlush(formateur);
 
 			// On delete l'etudiant ?
@@ -405,7 +402,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			cef.setUtilisateur(null);
 			user.setCef(null);
 
-			//cef = cefRepository.saveAndFlush(cef);
 			cefRepository.saveAndFlush(cef);
 
 			// On delete l'etudiant ?
@@ -832,19 +828,29 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Reset du mot de passe
+	 * @throws EmailResetPasswordException 
 	 * 
 	 */
 	// reset pwd
 	@Override
-	public boolean resetPassword(ResetResponse reset) throws Exception {
-		String hashedPwd = HashTools.hashSHA512(reset.getPassword());
+	public boolean resetPassword(ResetResponse reset) throws EmailResetPasswordException {
+		String hashedPwd = null;
+		try {
+			hashedPwd = HashTools.hashSHA512(reset.getPassword());
+		} catch (Exception e) {
+			throw new EmailResetPasswordException("1 : Hashage failed");
+		}
 		String email = jwtTokenUtil.getUsernameFromToken(reset.getToken());
 
 		Utilisateur u = utilisateurRepository.findByEmail(email);
 		String currentPwd = "";
 
 		if (u != null)
-			currentPwd = HashTools.hashSHA512(u.getPassword());
+			try {
+				currentPwd = HashTools.hashSHA512(u.getPassword());
+			} catch (Exception e) {
+				throw new EmailResetPasswordException("2 : Hashage failed");
+			}
 
 		if (u != null && !currentPwd.equals(hashedPwd)) {
 
@@ -861,47 +867,4 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 
 	}
-
-	// import des users DG2 en prevoyance des necessité d'ajouts pour le projet
-//		@Override
-//		public void fetchAllDG2User(String email, String password) throws Exception {
-//			ObjectMapper objectMapper = new ObjectMapper();
-//			List<UserDG2Dto> cResJson;
-//			
-//			//url dg2 qui concerne la recupération des locations
-//			URI url = new URI("https://dawan.org/api2/cfa/users");
-//			
-//			//recupérartion des headers / email / password dg2
-//			HttpHeaders headers = new HttpHeaders();
-//			headers.add("x-auth-token", email + ":" + password);
-//
-//			HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-//
-//			ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-//
-//			if (repWs.getStatusCode() == HttpStatus.OK) {
-//				String json = repWs.getBody();
-//				//recuperation des values en json et lecture
-//				cResJson = objectMapper.readValue(json, new TypeReference<List<UtilisateurDG2Dto>>() {
-//				});
-//				//boucle pour récupérer toute la liste
-//				for (UtilisateurDG2Dto uDG2 : uResJson) {
-//					Utilisateur userImport = mapper.utilisateurDG2DtoToUtilisateur(uDG2);
-//					Optional<Utilisateur> optUser = utilisateurRepository.findByIdDg2(userImport.getIdDg2());
-//
-//					if (optUser.isPresent()) {
-//						if (optUser.get().equals(userImport))
-//							continue;
-//						else if (!optUser.get().equals(userImport)) {
-//							userImport.setId(optUser.get().getId());
-//						}
-//						utilisateurRepository.saveAndFlush(userImport);
-//					} else {
-//						utilisateurRepository.saveAndFlush(userImport);
-//					}
-//				}
-//			} else {
-//				throw new Exception("ResponseEntity from the webservice WDG2 not correct");
-//			}
-//		}
 }

@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.FileException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
@@ -52,7 +53,7 @@ public interface UtilisateurService {
 
 	void uploadFile(MultipartFile file, long idUser) throws FileException, IOException;
 
-	boolean resetPassword(ResetResponse reset) throws Exception;
+	boolean resetPassword(ResetResponse reset) throws EmailResetPasswordException;
 
 	String generatePassword();
 
