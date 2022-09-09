@@ -10,9 +10,14 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 
-public class PdfTools {
+public class PdfTools extends Exception{
 
-    public static void generatePdfFromHtml(String outputPdf, String htmlContent) throws Exception {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static void generatePdfFromHtml(String outputPdf, String htmlContent) throws Exception {
         OutputStream os = new BufferedOutputStream(new FileOutputStream(outputPdf));
         // objet permettant de builder le pdf
         PdfRendererBuilder builder = new PdfRendererBuilder();
@@ -24,5 +29,10 @@ public class PdfTools {
         builder.run();
         os.close();
     }
+    
+    public PdfTools(String message) {
+		super.getMessage();
+	}
+
 
 }

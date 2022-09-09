@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.controllers;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,7 +211,7 @@ public class EtudiantController {
      */
     @GetMapping(value = "/{id}/interventions", produces = "application/json")
     public List<InterventionDto> getIntervenionByIdEtudiant(@PathVariable("id") long id) {
-        return etudiantService.getIntervenionByIdEtudiant(id);
+        return etudiantService.getInterventionByIdEtudiant(id);
     }
 
     /**
@@ -243,7 +244,7 @@ public class EtudiantController {
             }
             return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
         } catch (Exception e) {
-            e.printStackTrace();
+        	logger.log(Level.SEVERE,"ERROR", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body
                     ("Error while fetching data from the webservice DG2");
         }

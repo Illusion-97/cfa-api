@@ -37,10 +37,6 @@ public class CompetenceProfessionnelleDto extends BaseEntityDto implements Seria
 		this.activiteTypeId = activiteTypeId;
 	}
 
-	public CompetenceProfessionnelleDto(String competence) {
-		super();
-	}
-
 	/**
 	 * @return the libelle
 	 */

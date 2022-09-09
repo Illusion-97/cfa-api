@@ -169,14 +169,14 @@ public class InterventionServiceImpl implements InterventionService {
 
 			// On affiche une liste de promotions de type List<Promotion>
 			List<Promotion> lstPromo = intervention.getPromotions();
-			List<PromotionDto> lstPromoDto = new ArrayList<PromotionDto>();
+			List<PromotionDto> lstPromoDto = new ArrayList<>();
 			for (Promotion promotion : lstPromo) {
 				/** On convertis List<Promotion> en List<PromotionDto> **/
 				if (promotion != null)
 					lstPromoDto.add(mapper.promotionToPromotionDto(promotion));
 			}
 
-			List<FormateurDto> lstFormDto = new ArrayList<FormateurDto>();
+			List<FormateurDto> lstFormDto = new ArrayList<>();
 			for (Formateur formateur : intervention.getFormateurs()) {
 				if (formateur != null)
 					lstFormDto.add(DtoTools.convert(formateur, FormateurDto.class));
@@ -365,11 +365,12 @@ public class InterventionServiceImpl implements InterventionService {
 	 * @param email    Email l'utilsateur dg2
 	 * @param password Mot de passe de l'utlisateur dg2
 	 * @return List Liste des interventions
+	 * @throws URISyntaxException 
 	 */
 
 	@Override
-	public int fetchDGInterventions(String email, String password) throws Exception {
-		List<Promotion> promoLst = new ArrayList<Promotion>();
+	public int fetchDGInterventions(String email, String password) throws FetchDG2Exception, URISyntaxException {
+		List<Promotion> promoLst = new ArrayList<>();
 		promoLst = promoRepository.findAll();
 		int result = 0;
 		for (Promotion p : promoLst) {
@@ -382,7 +383,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 
 	@Override
-	public int fetchDGInterventions(String email, String password, long idPrmotionDg2) throws Exception {
+	public int fetchDGInterventions(String email, String password, long idPrmotionDg2) throws FetchDG2Exception, URISyntaxException {
 		List<Intervention> interventions = new ArrayList<>();
 		interventions.addAll(getInterventionDG2ByIdPromotionDG2(email, password, idPrmotionDg2));
 		for (Intervention i : interventions) {

@@ -332,7 +332,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 					}
 				}
 			} catch (Exception ex) {
-				logger.log(Level.WARNING,"Error save etudiant", e);
+				logger.log(Level.WARNING,"Error save etudiant", ex);
 			}
 
 			// Pour le dossier
@@ -341,7 +341,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			try {
 				Files.createDirectories(path);
 			} catch (IOException ex) {
-				logger.log(Level.WARNING,"Error creation du dossier", e);
+				logger.log(Level.WARNING,"Error creation du dossier", ex);
 			}
 		}
 
@@ -448,7 +448,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Override
 	public List<PromotionDto> getPromotionsByIdEtudiant(long id) {
-		List<Promotion> lst = getEtudiantById(id).getPromotions();
+		List<Promotion> lst = new ArrayList<>();
+		try {
+			lst = getEtudiantById(id).getPromotions();
+		} catch (Exception e) {
+			logger.log(Level.SEVERE,"getEtudiantById(id).getPromotions() failed", e);
+		}
 		List<PromotionDto> lstDto = new ArrayList<>();
 
 		for (Promotion p : lst) {
@@ -474,7 +479,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 	 */
 	@Override
 	public List<GroupeEtudiantDto> getGroupesByIdEtudiant(long id) {
-		List<GroupeEtudiant> lst = getEtudiantById(id).getGroupes();
+		List<GroupeEtudiant> lst = new ArrayList<>();
+		try {
+			lst = getEtudiantById(id).getGroupes();
+		} catch (Exception ex) {
+			logger.log(Level.SEVERE,"getEtudiantById(id).getGroupes()", ex);
+		}
 		List<GroupeEtudiantDto> lstDto = new ArrayList<>();
 		for (GroupeEtudiant g : lst) {
 			GroupeEtudiantDto gDto = mapper.groupeEtudiantToGroupEtudiantDto(g);
@@ -578,7 +588,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	 */
 
 	@Override
-	public List<InterventionDto> getIntervenionByIdEtudiant(long id) {
+	public List<InterventionDto> getInterventionByIdEtudiant(long id) {
 		List<Intervention> interventions = new ArrayList<>();
 		List<InterventionDto> res = new ArrayList<>();
 
@@ -670,25 +680,6 @@ public class EtudiantServiceImpl implements EtudiantService {
     @Override
     public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
 
-//		List<DevoirDto> lstdDto =  new ArrayList<DevoirDto>();
-//		EtudiantDto eDto = getById(id);
-//		List<Devoir> lstD = devoirRepository.findAll();
-//		
-//		for (PromotionDto pDto : eDto.getPromotionsDto()) {
-//			for (InterventionDto iDto : pDto.getInterventionsDto()) {
-//				for (Devoir devoir : lstD) {
-//					if (devoir.getIntervention().getId() == iDto.getId()) {
-//						DevoirDto dDto = mapper.DevoirToDevoirDto(devoir);
-//						dDto.setInterventionDto(iDto);
-//						dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(devoir.getIntervention().getFormation()));
-//						lstdDto.add(dDto);
-//					}
-//				}
-//			}			
-//		}
-//		
-//		return lstdDto;
-
 		List<Devoir> lst = devoirRepository.findAllByInterventionPromotionsEtudiantsId(id, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
 		List<DevoirDto> res = new ArrayList<>();
@@ -727,7 +718,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 					}
 				}
 			}catch (Exception ex) {
-				logger.log(Level.WARNING,"Error save dossier etudiant", e);
+				logger.log(Level.WARNING,"Error save dossier etudiant", ex);
 			}
 
 			//Pour le dossier
@@ -736,7 +727,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			try {
 				Files.createDirectories(path);
 			} catch (IOException ex) {
-				logger.log(Level.WARNING,"Error dossier create", e);
+				logger.log(Level.WARNING,"Error dossier create", ex);
 			}
 		}
 
@@ -745,7 +736,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 
 		return DtoTools.convert(etudiant,EtudiantDossierDto.class);
-		//return mapper.EtudiantToEtudiantDto(etudiant);
 	}
 
 	/**
@@ -946,7 +936,7 @@ public class EtudiantServiceImpl implements EtudiantService {
                     try {
 						utilisateur.setPassword(HashTools.hashSHA512(utilisateur.getPassword()));
 					} catch (Exception e) {
-						e.printStackTrace();
+						logger.log(Level.SEVERE,"setPassword failed", e);
 						
 					}
                     utilisateur.setEtudiant(etudiant);

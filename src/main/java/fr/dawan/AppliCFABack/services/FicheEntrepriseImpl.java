@@ -68,18 +68,11 @@ public class FicheEntrepriseImpl implements FicheEntrepriseService {
 		for (FicheEntreprise c : lst) {
 			FicheEntrepriseDto fDto = mapper.ficheEntrepriseToFicheEntrepriseDto(c);
 			fDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(c.getEntreprise()));
-			//fDto.getEntrepriseDto().setRaisonSociale(mapper.EntrepriseToEntrepriseDto(c.getEntreprise().getRaisonSociale()));
 			fDto.getEntrepriseDto().setAdresseSiegeDto(mapper.adresseToAdresseDto(c.getEntreprise().getAdresseSiege()));
 			lstDto.add(fDto);
 		}
 		return lstDto;
 	}
-
-//	@Override
-//	public CountDto count(String search) {
-//		
-//		return new CountDto(ficheEntrepriseRepository.countByNomContainingIgnoringCase(search));
-//	}
 
 	/**
 	 * Récupération des fiches entreprises en fonction de l'id

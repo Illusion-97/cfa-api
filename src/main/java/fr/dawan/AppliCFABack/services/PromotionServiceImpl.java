@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -413,7 +414,7 @@ public class PromotionServiceImpl implements PromotionService {
 		for(Cursus c: cursus) {
 			List<Promotion> promoDg2 = new ArrayList<>();
 			promoDg2 = getPromotionDG2ByIdCursusDG2(email, password, c.getIdDg2());
-			if(promoDg2.isEmpty()  || promoDg2.size() != 0) {
+			if(promoDg2.isEmpty()  || promoDg2.isEmpty()) {
 				promoLst.addAll(promoDg2);
 				logger.info(c.getId()+"Liste non vide");
 			}
@@ -422,7 +423,7 @@ public class PromotionServiceImpl implements PromotionService {
 			try {
 				promotionRepository.saveAndFlush(p);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE,"SaveAndFlush failed", e);
 			}
 		}
 		return promoLst.size();
@@ -435,7 +436,7 @@ public class PromotionServiceImpl implements PromotionService {
 			try {
 				promotionRepository.saveAndFlush(p);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE,"SaveAndFlush failed", e);
 			}
 		}
 		return promoLst.size();
@@ -460,7 +461,7 @@ public class PromotionServiceImpl implements PromotionService {
 			try {
 				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {} );
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE,"objectMapper failed", e);
 			}
 			
 			
@@ -473,7 +474,7 @@ public class PromotionServiceImpl implements PromotionService {
 					 promotionDG2 = dtoTools.promotionOrInterventionDG2DtoToPromotion(pDtoDG2);
 					
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.log(Level.SEVERE,"dtoTools failed", e);
 				}
 //				Optional<CentreFormation> cfOpt = centreFormationRepository.findByIdDg2(pDtoDG2.getLocationId());
 //				// valeur null centre de formation Id cause le problem
@@ -547,7 +548,7 @@ public class PromotionServiceImpl implements PromotionService {
 			grillesPositionnements.add(gpd);
 		}
 		gp.put("interventions", grillesPositionnements);
-		List<NiveauDto> niveaux = niveauService.getAllNiveaux();;
+		List<NiveauDto> niveaux = niveauService.getAllNiveaux();
 		gp.put("niveaux", niveaux);
 		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
 		Template template = freemarkerConfig.getTemplate("GrillePositionnement.ftl");
@@ -558,7 +559,7 @@ public class PromotionServiceImpl implements PromotionService {
 		try {
 			ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"convertHtmlToPdf failed", e);
 		}
 
 		return outputPdf;

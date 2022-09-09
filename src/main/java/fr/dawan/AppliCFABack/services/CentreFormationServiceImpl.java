@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -51,6 +53,8 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	private static Logger logger = Logger.getGlobal();
 
 	/**
 	 * Récupération de la liste des centres de formation
@@ -250,7 +254,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 						centreFormationRepository.saveAndFlush(centreImport);
 
 					} catch (Exception e) {
-						e.printStackTrace();
+						logger.log(Level.SEVERE,"SaveAndFlush failed", e);
 					}
 				}
 			}

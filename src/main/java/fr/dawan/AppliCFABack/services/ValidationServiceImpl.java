@@ -12,6 +12,7 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ValidationDto;
 import fr.dawan.AppliCFABack.entities.Validation;
 import fr.dawan.AppliCFABack.repositories.ValidationRepository;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 @Service
 @Transactional
@@ -32,7 +33,7 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	@Override
-	public ValidationDto saveOrUpdate(ValidationDto tDto) throws Exception {
+	public ValidationDto saveOrUpdate(ValidationDto tDto) throws SaveInvalidException {
 		Validation validation = DtoTools.convert(tDto, Validation.class);
 		Validation validationDb = validationRepository.saveAndFlush(validation);
 		return DtoTools.convert(validationDb, ValidationDto.class);

@@ -123,13 +123,15 @@ public class DevoirServiceImpl implements DevoirService {
 	
 	@Override
 	public DevoirDto saveOrUpdate(DevoirDto dDto) {
-//		Devoir devoir = DtoTools.convert(dDto, Devoir.class);
-//		Devoir devoirDb = devoirRepository.saveAndFlush(devoir);
-//		return DtoTools.convert(devoirDb, DevoirDto.class);
+		
 		Devoir devoir = DtoTools.convert(dDto, Devoir.class);
+		
 		if (dDto.getId() != 0) {
+			
 			return DtoTools.convert(devoirRepository.saveAndFlush(devoir), dDto.getClass());
+		
 		} else {
+			
 			Devoir devoirDb = devoirRepository.saveAndFlush(devoir);
 			//On créer des champs vides dans devoirs_etudiant
 			List<EtudiantDto> allEtuByIntervention = interventionServiceImpl.findAllEtudiantsByPromotionInterventionsId(devoirDb.getIntervention().getId());

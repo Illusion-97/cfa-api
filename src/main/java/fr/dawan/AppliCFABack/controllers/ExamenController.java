@@ -41,7 +41,6 @@ import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
 import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.services.ExamenService;
 import fr.dawan.AppliCFABack.services.FileService;
-import fr.dawan.AppliCFABack.tools.FileException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 @RestController

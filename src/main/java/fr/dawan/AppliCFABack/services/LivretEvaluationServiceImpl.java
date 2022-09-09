@@ -17,6 +17,7 @@ import fr.dawan.AppliCFABack.entities.Validation;
 import fr.dawan.AppliCFABack.entities.Validation.Etat;
 import fr.dawan.AppliCFABack.repositories.LivretEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.ValidationRepository;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 @Service
 @Transactional
@@ -38,7 +39,7 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	}
 
 	@Override
-	public LivretEvaluationDto saveOrUpdate(LivretEvaluationDto tDto) throws Exception {
+	public LivretEvaluationDto saveOrUpdate(LivretEvaluationDto tDto) throws SaveInvalidException {
 		LivretEvaluation livretEval = DtoTools.convert(tDto, LivretEvaluation.class);
 		if(tDto.getId() == 0 ) {
 			//créer un object Validation et l'entrer dans table Validation 

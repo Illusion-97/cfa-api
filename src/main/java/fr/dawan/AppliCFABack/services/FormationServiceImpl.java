@@ -202,11 +202,12 @@ public class FormationServiceImpl implements FormationService {
 	 * @param email    Email l'utilsateur dg2
 	 * @param password Mot de passe de l'utlisateur dg2
 	 * @return nombre de formation sauvgardé ou mise à jour
+	 * @throws URISyntaxException 
 	 * @exception Exception retourne une exception, si erreur dans la sauvgarde des
 	 *                      formations
 	 */
 	@Override
-	public int fetchDG2Formations(String email, String password) throws Exception {
+	public int fetchDG2Formations(String email, String password) throws FetchDG2Exception, URISyntaxException{
 		List<Long> cursusDg2Ids = cursusRepository.findAll().stream().map(Cursus::getIdDg2)
 				.collect(Collectors.toList());
 		int result = 0;
@@ -239,7 +240,7 @@ public class FormationServiceImpl implements FormationService {
 			try {
 				saveOrUpdate(DtoTools.convert(formation, FormationDto.class));
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE,"SaveOrUpdate failed", e);
 			}
 		}
 		return formations.size();

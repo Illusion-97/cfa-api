@@ -2,6 +2,8 @@ package fr.dawan.AppliCFABack.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.annotation.MultipartConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class LoginController {
 	
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	
+	private static Logger logger = Logger.getGlobal();
 
 	@PostMapping(value="/authenticate", consumes = "application/json")
     public ResponseEntity<?> checkLogin(@RequestBody LoginDto loginObj) throws CheckLoginException{
@@ -37,7 +41,7 @@ public class LoginController {
 		try {
 			hashedPwd = HashTools.hashSHA512(loginObj.getPassword());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Hash passwaod failed", e);
 		}
         
         if(uDto !=null && uDto.getPassword().contentEquals(hashedPwd )) {

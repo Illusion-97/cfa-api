@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,7 @@ public class GroupeController {
     
     @GetMapping(value = "/{id}/etudiants", produces = "application/json")
 	public List<EtudiantDto> getEtudiantsByGroupeId(@PathVariable("id") long id) {
-    	logger.info("getEtudiantsByGroupeId : " + id);
+    	logger.log(Level.INFO, "getEtudiantsByGroupeId : ", id);
 		return groupeEtudiantService.getEtudiantsByGroupeId(id);
 	}
 

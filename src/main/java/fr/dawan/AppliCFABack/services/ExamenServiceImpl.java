@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -45,10 +46,16 @@ import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.tools.AvgException;
 import fr.dawan.AppliCFABack.tools.PdfTools;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.core.ParseException;
 import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 /***
  * 
@@ -173,7 +180,6 @@ public class ExamenServiceImpl implements ExamenService {
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(examenRepository.countByTitreContainingIgnoringCaseOrDescriptifContainingIgnoringCase(search, search));
-//		return new CountDto(examenRepository.countByEnonceContainingIgnoringCaseOrFormationTitreContainingIgnoringCaseOrCursusTitreContainingIgnoringCase(search, search, search));
 		
 	}
 
@@ -310,7 +316,7 @@ public class ExamenServiceImpl implements ExamenService {
 	}
 
 	@Override
-	public String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws Exception {
+	public String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws ToPdf, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
 		if (etuOpt.isPresent()) {
 			freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
@@ -348,7 +354,7 @@ public class ExamenServiceImpl implements ExamenService {
 						//0 par défaut ou afficher un message
 						logger.log(Level.WARNING, "error : pas d'activité type", e);
 						logger.info("L'étudiant n'a pas de note associée à cette activité type");
-						throw new Exception("L'étudiant n'a pas de note associée à cette activité type"); 
+						throw new ToPdf("L'étudiant n'a pas de note associée à cette activité type"); 
 						
 					}
 
@@ -359,17 +365,25 @@ public class ExamenServiceImpl implements ExamenService {
 						String msg = "note manquante";
 						logger.log(Level.WARNING, msg, e);
 						logger.log(Level.SEVERE, msg);
-						throw new Exception(msg);
+						throw new ToPdf(msg);
 					}
 					evalList.add(evalByBlocDto);
 				}
 				model.put("evalList", evalList);
 				model.put("moyEtudiant", (s/activiteTypes.size()));
-				model.put("moyPromo",getAvgByPromotionId(promotionId).getResult());
+				try {
+					model.put("moyPromo",getAvgByPromotionId(promotionId).getResult());
+				} catch (Exception e) {
+					logger.log(Level.SEVERE,"getAvgByPromotionId failed", e);
+				}
 			}
 			String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 			String outputPdf = storageFolder + "/bulletin-" + etudiantId + "-promo-" + promotionId + ".pdf";
-			PdfTools.generatePdfFromHtml(outputPdf, htmlContent);
+			try {
+				PdfTools.generatePdfFromHtml(outputPdf, htmlContent);
+			} catch (Exception e) {
+				logger.log(Level.SEVERE,"generatePdfFromHtml failed", e);
+			}
 
 			return outputPdf;
 		}
@@ -377,17 +391,17 @@ public class ExamenServiceImpl implements ExamenService {
 	}
 
 	@Override
-	public DoubleDto getAvgByEtudiantIdAndActiviteTypeId(long etudiantId, long activiteTypeId) throws Exception {
+	public DoubleDto getAvgByEtudiantIdAndActiviteTypeId(long etudiantId, long activiteTypeId) throws AvgException {
 		return new DoubleDto(examenRepository.getAvgByEtudiantIdAndActiviteTypeId(etudiantId, activiteTypeId));
 	}
 
 	@Override
-	public DoubleDto getAvgByPromoIdAndActiviteTypeId(long promotionId, long activiteTypeId) throws Exception {
+	public DoubleDto getAvgByPromoIdAndActiviteTypeId(long promotionId, long activiteTypeId) throws AvgException {
 		return new DoubleDto(examenRepository.getAvgByPromoIdAndActiviteTypeId(promotionId, activiteTypeId));
 	}
 
 	@Override
-	public DoubleDto getAvgByPromotionId(long promotionId) throws Exception {
+	public DoubleDto getAvgByPromotionId(long promotionId) throws AvgException {
 		return new DoubleDto(examenRepository.getAvgByPromotionId(promotionId));
 	}
 

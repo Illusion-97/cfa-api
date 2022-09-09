@@ -28,9 +28,9 @@ public interface FormationService {
 
 	int fetchDG2Formations(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException ;
 	
-	List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2 ) throws FetchDG2Exception, URISyntaxException  ;
+	List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2 ) throws FetchDG2Exception, URISyntaxException;
 	
-	int fetchDG2Formations(String email, String password) throws Exception;
+	int fetchDG2Formations(String email, String password) throws FetchDG2Exception, URISyntaxException;
 
 
 

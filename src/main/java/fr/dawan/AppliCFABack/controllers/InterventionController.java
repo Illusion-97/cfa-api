@@ -46,11 +46,6 @@ public class InterventionController {
 	public List<InterventionDto> getAll() {
 		return interventionService.getAllIntervention();
 	}
-
-//	@GetMapping(value = "/{id}", produces = "application/json")
-//	public InterventionDto getById(@PathVariable("id") long id) {
-//		return interventionService.getById(id);
-//	}
 	
 	/**
 	 * 
@@ -137,7 +132,6 @@ public class InterventionController {
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		try {
 			interventionService.deleteById(id);
-//			int status = ResponseEntity.status(HttpStatus.ACCEPTED).build().getStatusCodeValue();
 			HttpStatus status = ResponseEntity.status(HttpStatus.ACCEPTED).build().getStatusCode();
 			return ResponseEntity.status(status).header("Status", status.toString()).build();
 		} catch (Exception e) {

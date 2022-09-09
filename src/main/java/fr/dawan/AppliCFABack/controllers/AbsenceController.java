@@ -67,10 +67,7 @@ public class AbsenceController extends GenericController<AbsenceDto> {
 //		return absenceService.getAllAbsence();
 //	}
 //
-//	@GetMapping(value = "/{id}", produces = "application/json")
-//	public AbsenceDto getById(@PathVariable("id") long id) {
-//		return absenceService.getById(id);
-//	}
+
 //
 //	// /AppliCFABack/groupeEtudiants/{page}/{size}/{search}
 //	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
@@ -89,55 +86,13 @@ public class AbsenceController extends GenericController<AbsenceDto> {
 //		return absenceService.getAllAbsence(page, size, "");
 //	}
 //
-//	@GetMapping(value = "/count", produces = "application/json")
-//	public CountDto count() {
-//		return absenceService.count("");
-//	}
-//	
-//	 @GetMapping(value = "/etudiant/{id}", produces = "application/json")
-//		public @ResponseBody List<AbsenceDto> getAllByIdEtudiant(@PathVariable("id") long id) {
-//			return absenceService.getAllByIdEtudiant(id);
-//		}
-//
 //	@GetMapping(value = "/count/{search}", produces = "application/json")
 //	public CountDto count(@PathVariable("search") Optional<String> search) {
 //		if (search.isPresent())
 //			return absenceService.count(search.get());
 //		return absenceService.count("");
 //	}
-//	// ##################################################
-//	// # POST #
-//	// ##################################################
-//
-//	@PostMapping(consumes = "application/json", produces = "application/json")
-//	public AbsenceDto save(@RequestBody AbsenceDto aDto) {
-//		return absenceService.saveOrUpdate(aDto);
-//	}
-//
-//	// ##################################################
-//	// # DELETE #
-//	// ##################################################
-//
-//	@DeleteMapping(value = "/{id}", produces = "text/plain")
-//	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
-//		try {
-//			absenceService.deleteById(id);
-//			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
-//		} catch (Exception e) {
-//			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
-//		}
-//
-//	}
-//
-//	// ##################################################
-//	// # PUT #
-//	// ##################################################
-//
-//	@PutMapping(consumes = "application/json", produces = "application/json")
-//	public AbsenceDto update(@RequestBody AbsenceDto aDto) {
-//		return absenceService.saveOrUpdate(aDto);
-//	}
-
+	
 //	@GetMapping(value = "/promotion/{id}/absences", produces = "application/json")
 //	public List<AbsenceDto> getAbsenceByPromotionId(@PathVariable("id") long id) {
 //		return absenceService.getAbsenceByReferentId(id);

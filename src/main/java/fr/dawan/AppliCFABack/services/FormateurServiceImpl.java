@@ -161,6 +161,7 @@ public class FormateurServiceImpl implements FormateurService {
 	@Override
 	public void deleteById(long id) {
 		Optional<Formateur> formateur = formateurRepository.findById(id);
+		
 		List<Intervention> lstInterventions = formateur.get().getInterventions();
 
 		if (formateur.isPresent())
@@ -207,52 +208,6 @@ public class FormateurServiceImpl implements FormateurService {
 	public CountDto count(String search) {
 		return new CountDto(formateurRepository.countByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(search, search));
 	}
-
-//	// Recupere les interventions par rapport a l'id du formateur
-//	@Override
-//	public FormateurDto getInterventionByIdFormateur(long id) {
-//		// methode findById dans le repository
-//		Optional<Formateur> i = formateurRepository.findById(id);
-//		if (i.isPresent()) {
-//			// On convertis un Optional<Formateur> en Formateur
-//			FormateurDto formateurDto = DtoTools.convert(i.get(), FormateurDto.class);
-//
-//			// ici je recupere les intervention par rapport au formateur
-//			List<Intervention> lstInt = i.get().getInterventions();
-//			/**
-//			 * les interventions sont de type Intervention. Comme on passe par les Dto on
-//			 * doit convertir lstInt qui est de type Intervention en InterventionDto
-//			 **/
-//			List<InterventionDto> lstIntDto = new ArrayList<InterventionDto>();
-//			for (Intervention inter : lstInt) {
-//				/**
-//				 * La boucle va me permettre de recup les interventionDto du formateur. J'ai
-//				 * besoin aussi de recup les formation lié aux intervention du formateur. Pareil
-//				 * que par rapport aux intervention, je convertis la Formation en FormationDto
-//				 * 
-//				 */
-//				if (inter != null) {
-//					Formation formation = inter.getFormation();
-//					FormationDto formationDto = DtoTools.convert(formation, FormationDto.class);
-//					InterventionDto interDto = DtoTools.convert(inter, InterventionDto.class);
-//					interDto.setFormationDto(formationDto);
-//					lstIntDto.add(interDto);
-//				}
-//			}
-//
-//			List<UtilisateurRole> lstRole = i.get().getRoles();
-//			List<UtilisateurRoleDto> lstRoleDto = new ArrayList<UtilisateurRoleDto>();
-//			for (UtilisateurRole role : lstRole) {
-//				if (role != null)
-//					lstRoleDto.add(DtoTools.convert(role, UtilisateurRoleDto.class));
-//			}
-//			formateurDto.setRolesDto(lstRoleDto);
-//			formateurDto.setInterventionsDto(lstIntDto);
-//			return formateurDto;
-//		}
-//
-//		return null;
-//	}
 
 	/**
 	 * Recuperation des interventions du formateur avec pagination

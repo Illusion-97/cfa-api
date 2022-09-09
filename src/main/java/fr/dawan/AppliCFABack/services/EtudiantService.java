@@ -60,7 +60,7 @@ public interface EtudiantService {
 	// # 3eme Niveau #
 	// ##################################################
 
-	List<InterventionDto> getIntervenionByIdEtudiant(long id);
+	List<InterventionDto> getInterventionByIdEtudiant(long id);
 
 	// ##################################################
 	// # Utile #
