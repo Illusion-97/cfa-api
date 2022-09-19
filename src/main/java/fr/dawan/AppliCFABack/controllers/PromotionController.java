@@ -187,6 +187,7 @@ public class PromotionController {
 		return ResponseEntity.ok()
 				.headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 	}
+	
 	@GetMapping(value = "grillePositionnement/file/{idPromotion}")
 	public ResponseEntity<Resource> getFileGrillePositionnement(@PathVariable("idPromotion") long idPromotion) {
 		PromotionDto promotionDto = promoService.getById(idPromotion);
@@ -206,4 +207,11 @@ public class PromotionController {
 		}
 
 	}
+	
+	@GetMapping(value = "/centreFormation/{idCentreFormation}", produces="application/json")
+	public List<PromotionDto> getPromoByCentreFormationId(@PathVariable("idCentreFormation") long id){
+		return promoService.getPromoByCentreFormationId(id);
+	}
+	
+	
 }

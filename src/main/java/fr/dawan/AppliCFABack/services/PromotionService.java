@@ -49,4 +49,6 @@ public interface PromotionService {
 	List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursis) throws Exception;
 
 	String getGrillePositionnement(long idPromotion) throws Exception;
+	
+	List<PromotionDto> getPromoByCentreFormationId(long id);
 }

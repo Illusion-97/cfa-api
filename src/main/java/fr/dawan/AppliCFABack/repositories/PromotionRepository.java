@@ -69,5 +69,7 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 
 	Optional<Promotion> findByIdDg2(long id);
 	
+	List<Promotion> findPromotionsByCentreFormationId(long id);
+	
 
 }

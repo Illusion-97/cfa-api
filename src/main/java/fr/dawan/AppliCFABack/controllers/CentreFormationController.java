@@ -107,7 +107,6 @@ public class CentreFormationController {
 		return centreFormationService.saveOrUpdate(cfDto);
 	}
 	
-	
 	// ##################################################
 	// # FETCH Dawan webservice #
 	// ##################################################
