@@ -2,6 +2,8 @@ package fr.dawan.AppliCFABack.controllers;
 
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.services.UtilisateurService;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,7 @@ public class UtilisateurController {
             @RequestParam(required = false) Optional<String> role,
             @RequestParam(defaultValue = "", required = false) Optional<String> search) {
 
-        if (role.isPresent())
+        if (role.isPresent() && search.isPresent())
             return utilisateurService.findAllByRoleByPage(page, size, role.get(), search.get());
         else
             return utilisateurService.getAllUtilisateurs(page, size, search.get());
@@ -45,54 +47,77 @@ public class UtilisateurController {
     @GetMapping(value = "/count", produces = "application/json")
     public CountDto count(@RequestParam(required = false) Optional<String> role,
                           @RequestParam(defaultValue = "", required = false) Optional<String> search) {
-        if (role.isPresent())
+        if (role.isPresent() && search.isPresent())
             return utilisateurService.countByRole(role.get(), search.get());
         else
             return utilisateurService.count(search.get());
     }
     
-    // GET: /AppliCFABack/utilisateurs/{id}
+    /**
+     * 
+     * @param id
+     * @return recuperation des user pat id
+     */
     @GetMapping(value = "/{id}", produces = "application/json")
     public UtilisateurDto getById(@PathVariable("id") long id) {
         return utilisateurService.getById(id);
     }
 
-    // GET: /AppliCFABack/utilisateurs/with-object
+    /**
+     * 
+     * @return
+     */
     @GetMapping(produces = {"application/json", "application/xml"}, value = "/with-object")
     public List<UtilisateurDto> getAllWithObject() {
         return utilisateurService.getAllWithObject();
     }
 
-    // GET: /AppliCFABack/utilisateurs
+    /**
+     * 
+     * @return recuperation de tous les users
+     */
     @GetMapping(produces = {"application/json", "application/xml"})
     public List<UtilisateurDto> getAll() {
         return utilisateurService.getAll();
     }
     
-   
-
-    // GET: /AppliCFABack/utilisateurs/{login}
+    /**
+     * 
+     * @param login
+     * @return recherche par email
+     */
     @GetMapping(value = "/email={login}", produces = "application/json")
     public UtilisateurDto getByLogin(@PathVariable("login") String login) {
         return utilisateurService.findByEmail(login);
     }
 
-    // GET: /AppliCFABack/utilisateurs/with-object
+    /**
+     * 
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/{id}/with-object", produces = {"application/json", "application/xml"})
     public UtilisateurDto getByIdWithObject(@PathVariable("id") long id) {
         return utilisateurService.getByIdWithObject(id);
     }
 
-    // GET: /AppliCFABack/utilisateurs/user?name=XXXX
+    /**
+     * 
+     * @param name
+     * @return ResponseEntity
+     */
     @GetMapping(value = "/user", produces = "application/json")
     public ResponseEntity<?> getName(@RequestParam("name") String name) {
         UtilisateurDto user = utilisateurService.getName(name);
-        return new ResponseEntity<UtilisateurDto>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    // POST: /AppliCFABack/utilisateurs
+    /**
+     * 
+     * @param uDto
+     * @return ResponseEntity
+     */
     @PostMapping(consumes = "application/json", produces = "application/json")
-    //public ResponseEntity<UtilisateurDto> insert(@RequestBody UtilisateurDto uDto){
     public ResponseEntity<?> insert(@RequestBody UtilisateurDto uDto) {
         try {
             return ResponseEntity.ok(utilisateurService.insertUpdate(uDto));
@@ -101,13 +126,22 @@ public class UtilisateurController {
         }
     }
 
-    // PUT: /AppliCFABack/utilisateurs
+    /**
+     * 
+     * @param uDto
+     * @return mise à jour des user
+     * @throws Exception
+     */
     @PutMapping(consumes = "application/json", produces = "application/json")
-    public UtilisateurDto update(@RequestBody UtilisateurDto uDto) throws Exception {
+    public UtilisateurDto update(@RequestBody UtilisateurDto uDto) throws SaveInvalidException {
         return utilisateurService.insertUpdate(uDto);
     }
 
-    // GET: /AppliCFABack/utlisateur/adresse?ville=XXXX
+    /**
+     * 
+     * @param ville
+     * @return recjerche par adresse(ville)
+     */
     @GetMapping(value = "/adresse", produces = "application/json")
     public List<UtilisateurDto> findByAdresse(@RequestParam("ville") String ville) {
         return utilisateurService.findByAdresse(ville);

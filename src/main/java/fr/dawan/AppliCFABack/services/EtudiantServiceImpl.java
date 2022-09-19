@@ -6,28 +6,65 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.dawan.AppliCFABack.dto.*;
+
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DevoirDto;
+import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EntrepriseDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
+import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.PositionnementDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
-
-import fr.dawan.AppliCFABack.entities.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-
+import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.Contrat;
+import fr.dawan.AppliCFABack.entities.Devoir;
+import fr.dawan.AppliCFABack.entities.DevoirEtudiant;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
+import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.Positionnement;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
@@ -45,7 +82,6 @@ import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.HashTools;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 @Transactional
@@ -119,22 +155,19 @@ public class EtudiantServiceImpl implements EtudiantService {
 		List<EtudiantDto> res = new ArrayList<>();
 
         for (Etudiant e : lst) {
-            EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(e);
-            UtilisateurDto utilisateur = mapper.UtilisateurToUtilisateurDto(e.getUtilisateur());
+            EtudiantDto etuDto = mapper.etudiantToEtudiantDto(e);
+            UtilisateurDto utilisateur = mapper.utilisateurToUtilisateurDto(e.getUtilisateur());
 
             etuDto.setUtilisateurDto(utilisateur);
 
-            UtilisateurDto Utilisateur = mapper.UtilisateurToUtilisateurDto(e.getUtilisateur());
-            etuDto.setUtilisateurDto(Utilisateur);
-
-            AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getUtilisateur().getAdresse());
+            AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
 //			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
 
 			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
 			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<>();
 			for (GroupeEtudiant grp : lstGrpEtu) {
 				if (grp != null)
-					lstGrpEtuDto.add(mapper.GroupeEtudiantToGroupEtudiantDto(grp));
+					lstGrpEtuDto.add(mapper.groupeEtudiantToGroupEtudiantDto(grp));
 			}
 
 			List<Promotion> lstPromo = e.getPromotions();
@@ -142,20 +175,20 @@ public class EtudiantServiceImpl implements EtudiantService {
 			for (Promotion promotion : lstPromo) {
 				/** On convertis List<Promotion> en List<PromotionDto> **/
 				if (promotion != null)
-					lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
+					lstPromoDto.add(mapper.promotionToPromotionDto(promotion));
 			}
 			List<DossierProjet> lstDossierProjet = e.getDossierProjet();
 			List<DossierProjetDto> lstDossierProjetDto = new ArrayList<>();
 			for (DossierProjet dp : lstDossierProjet) {
-				DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
-				dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
+				DossierProjetDto dpdto = mapper.dossierProjetToDossierProjetDto(dp);
+				dpdto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
 				lstDossierProjetDto.add(dpdto);
 
 			}
 
 			List<UtilisateurRoleDto> uRDto = new ArrayList<>();
 			for (UtilisateurRole r : e.getUtilisateur().getRoles()) {
-				uRDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
+				uRDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(r));
 			}
 
 			etuDto.getUtilisateurDto().setRolesDto(uRDto);
@@ -163,8 +196,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 			List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
 			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
 			for (DossierProfessionnel dp : lstDossierProfessionnel) {
-				DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-				dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
+				DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
+				dpDto.setCursusDto(mapper.cursusToCursusDto(dp.getCursus()));
 				lstDossierProfessionnelDto.add(dpDto);
 			}
 
@@ -209,12 +242,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 //		return new CountDto(etudiantRepository.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search, search, search));
 //	}
 
-    /**
-     * Récupération des etudiants en fonction de l'id
-     *
-     * @param id id de l'étudiant
-     * @return eDto objet Etudiant
-     */
+	/**
+	 * Récupération des etudiants en fonction de l'id
+	 * 
+	 * @param id id de l'étudiant
+	 * @return eDto objet Etudiant
+	 */
 
     @Override
     public EtudiantDto getById(long id) {
@@ -222,33 +255,32 @@ public class EtudiantServiceImpl implements EtudiantService {
 
         if (!e.isPresent())
             return null;
-
-        EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e.get());
-
-        eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.get().getUtilisateur()));
-        eDto.getUtilisateurDto().setAdresseDto(mapper.AdresseToAdresseDto(e.get().getUtilisateur().getAdresse()));
+        
+		EtudiantDto eDto = mapper.etudiantToEtudiantDto(e.get());
+		eDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(e.get().getUtilisateur()));
+		eDto.getUtilisateurDto().setAdresseDto(mapper.adresseToAdresseDto(e.get().getUtilisateur().getAdresse()));
 //		eDto.setFormateurReferentDto(mapper.UtilisateurToUtilisateurDto(e.get().getFormateurReferent()));
 //		eDto.setManagerDto(mapper.UtilisateurToUtilisateurDto(e.get().getManager()));
 
 
 		List<GroupeEtudiantDto> groupes = new ArrayList<>();
 		for (GroupeEtudiant g : e.get().getGroupes()) {
-			groupes.add(mapper.GroupeEtudiantToGroupEtudiantDto(g));
+			groupes.add(mapper.groupeEtudiantToGroupEtudiantDto(g));
 		}
 		eDto.setGroupesDto(groupes);
 
-		List<UtilisateurRoleDto> URDto = new ArrayList<>();
+		List<UtilisateurRoleDto> uRDto = new ArrayList<>();
 		for (UtilisateurRole r : e.get().getUtilisateur().getRoles()) {
-			URDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
+			uRDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(r));
 		}
-		eDto.getUtilisateurDto().setRolesDto(URDto);
+		eDto.getUtilisateurDto().setRolesDto(uRDto);
 
 		List<PromotionDto> promotions = new ArrayList<>();
 		for (Promotion p : e.get().getPromotions()) {
-			PromotionDto pDto = mapper.PromotionToPromotionDto(p);
+			PromotionDto pDto = mapper.promotionToPromotionDto(p);
 			List<InterventionDto> lstIDto = new ArrayList<>();
 			for (Intervention i : p.getInterventions()) {
-				InterventionDto iDto = mapper.InterventionToInterventionDto(i);
+				InterventionDto iDto = mapper.interventionToInterventionDto(i);
 				lstIDto.add(iDto);
 			}
 			pDto.setInterventionsDto(lstIDto);
@@ -258,15 +290,15 @@ public class EtudiantServiceImpl implements EtudiantService {
 		List<DossierProjet> lstDossierProjet = e.get().getDossierProjet();
 		List<DossierProjetDto> lstDossierProjetDto = new ArrayList<>();
 		for (DossierProjet dp : lstDossierProjet) {
-			DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
-			dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
+			DossierProjetDto dpdto = mapper.dossierProjetToDossierProjetDto(dp);
+			dpdto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
 			lstDossierProjetDto.add(dpdto);
 		}
 		List<DossierProfessionnel> lstDossierProfessionnel = e.get().getDossierProfessionnel();
 		List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
 		for (DossierProfessionnel dp : lstDossierProfessionnel) {
-			DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-			dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
+			DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
+			dpDto.setCursusDto(mapper.cursusToCursusDto(dp.getCursus()));
 			lstDossierProfessionnelDto.add(dpDto);
 		}
 		eDto.setDossierProfessionnel(lstDossierProfessionnelDto);
@@ -300,7 +332,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 					}
 				}
 			} catch (Exception ex) {
-				logger.log(Level.WARNING,"Error save etudiant", e);
+				logger.log(Level.WARNING,"Error save etudiant", ex);
 			}
 
 			// Pour le dossier
@@ -309,13 +341,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 			try {
 				Files.createDirectories(path);
 			} catch (IOException ex) {
-				logger.log(Level.WARNING,"Error creation du dossier", e);
+				logger.log(Level.WARNING,"Error creation du dossier", ex);
 			}
 		}
 
 		etudiant = etudiantRepository.saveAndFlush(etudiant);
 
-		return mapper.EtudiantToEtudiantDto(etudiant);
+		return mapper.etudiantToEtudiantDto(etudiant);
 	}
 
 	/**
@@ -416,15 +448,20 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Override
 	public List<PromotionDto> getPromotionsByIdEtudiant(long id) {
-		List<Promotion> lst = getEtudiantById(id).getPromotions();
+		List<Promotion> lst = new ArrayList<>();
+		try {
+			lst = getEtudiantById(id).getPromotions();
+		} catch (Exception e) {
+			logger.log(Level.SEVERE,"getEtudiantById(id).getPromotions() failed", e);
+		}
 		List<PromotionDto> lstDto = new ArrayList<>();
 
 		for (Promotion p : lst) {
 			// Quand on convertit en Dto, on perd les objets contenu
 			// On récupère le referent pedagogiue que l'on redonne a promotionDto
 
-			UtilisateurDto referentPedagogique = mapper.UtilisateurToUtilisateurDto(p.getReferentPedagogique());
-			PromotionDto promotion = mapper.PromotionToPromotionDto(p);
+			UtilisateurDto referentPedagogique = mapper.utilisateurToUtilisateurDto(p.getReferentPedagogique());
+			PromotionDto promotion = mapper.promotionToPromotionDto(p);
 
 			promotion.setReferentPedagogiqueDto(referentPedagogique);
 
@@ -442,14 +479,19 @@ public class EtudiantServiceImpl implements EtudiantService {
 	 */
 	@Override
 	public List<GroupeEtudiantDto> getGroupesByIdEtudiant(long id) {
-		List<GroupeEtudiant> lst = getEtudiantById(id).getGroupes();
+		List<GroupeEtudiant> lst = new ArrayList<>();
+		try {
+			lst = getEtudiantById(id).getGroupes();
+		} catch (Exception ex) {
+			logger.log(Level.SEVERE,"getEtudiantById(id).getGroupes()", ex);
+		}
 		List<GroupeEtudiantDto> lstDto = new ArrayList<>();
 		for (GroupeEtudiant g : lst) {
-			GroupeEtudiantDto gDto = mapper.GroupeEtudiantToGroupEtudiantDto(g);
+			GroupeEtudiantDto gDto = mapper.groupeEtudiantToGroupEtudiantDto(g);
 			List<EtudiantDto> eDtos = new ArrayList<>();
 			for (Etudiant e : g.getEtudiants()) {
-				EtudiantDto etudiantDto = mapper.EtudiantToEtudiantDto(e);
-				etudiantDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
+				EtudiantDto etudiantDto = mapper.etudiantToEtudiantDto(e);
+				etudiantDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(e.getUtilisateur()));
 				eDtos.add(etudiantDto);
 			}
 			gDto.setEtudiantsDto(eDtos);
@@ -470,7 +512,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		// ATTENTION : L'etudiant a potentiellement une liste de contrat => une liste
 		// d'entreprise
 		Contrat contrat = contratRepository.findByEtudiantId(id);
-		return mapper.EntrepriseToEntrepriseDto(contrat.getMaitreApprentissage().getEtudiant().getUtilisateur().getEntreprise());
+		return mapper.entrepriseToEntrepriseDto(contrat.getMaitreApprentissage().getEtudiant().getUtilisateur().getEntreprise());
 	}
 
 	/**
@@ -481,7 +523,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Override
 	public AdresseDto getAdresseByIdEtudiant(long id) {
-		return mapper.AdresseToAdresseDto(getEtudiantById(id).getUtilisateur().getAdresse());
+		return mapper.adresseToAdresseDto(getEtudiantById(id).getUtilisateur().getAdresse());
 	}
 
 	// ##################################################
@@ -546,7 +588,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	 */
 
 	@Override
-	public List<InterventionDto> getIntervenionByIdEtudiant(long id) {
+	public List<InterventionDto> getInterventionByIdEtudiant(long id) {
 		List<Intervention> interventions = new ArrayList<>();
 		List<InterventionDto> res = new ArrayList<>();
 
@@ -554,7 +596,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			interventions.addAll(interventionRepository.getInterventionsByIdPromotion(p.getId()));
 
 		for (Intervention i : interventions)
-			res.add(mapper.InterventionToInterventionDto(i));
+			res.add(mapper.interventionToInterventionDto(i));
 
 		return res;
 	}
@@ -609,7 +651,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
 		Contrat contrat = contratRepository.findByEtudiantId(id);
-		return mapper.UtilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
+		return mapper.utilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
 	}
 	// recuperation du formateur referent par id etudiants
 
@@ -637,25 +679,6 @@ public class EtudiantServiceImpl implements EtudiantService {
      */
     @Override
     public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
-
-//		List<DevoirDto> lstdDto =  new ArrayList<DevoirDto>();
-//		EtudiantDto eDto = getById(id);
-//		List<Devoir> lstD = devoirRepository.findAll();
-//		
-//		for (PromotionDto pDto : eDto.getPromotionsDto()) {
-//			for (InterventionDto iDto : pDto.getInterventionsDto()) {
-//				for (Devoir devoir : lstD) {
-//					if (devoir.getIntervention().getId() == iDto.getId()) {
-//						DevoirDto dDto = mapper.DevoirToDevoirDto(devoir);
-//						dDto.setInterventionDto(iDto);
-//						dDto.getInterventionDto().setFormationDto(mapper.FormationToFormationDto(devoir.getIntervention().getFormation()));
-//						lstdDto.add(dDto);
-//					}
-//				}
-//			}			
-//		}
-//		
-//		return lstdDto;
 
 		List<Devoir> lst = devoirRepository.findAllByInterventionPromotionsEtudiantsId(id, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
@@ -695,7 +718,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 					}
 				}
 			}catch (Exception ex) {
-				logger.log(Level.WARNING,"Error save dossier etudiant", e);
+				logger.log(Level.WARNING,"Error save dossier etudiant", ex);
 			}
 
 			//Pour le dossier
@@ -704,7 +727,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			try {
 				Files.createDirectories(path);
 			} catch (IOException ex) {
-				logger.log(Level.WARNING,"Error dossier create", e);
+				logger.log(Level.WARNING,"Error dossier create", ex);
 			}
 		}
 
@@ -713,7 +736,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 
 		return DtoTools.convert(etudiant,EtudiantDossierDto.class);
-		//return mapper.EtudiantToEtudiantDto(etudiant);
 	}
 
 	/**
@@ -748,9 +770,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 		List<EtudiantDto> res = new ArrayList<>();
 
 		for (Etudiant e : lstStud) {
-			EtudiantDto etuDto = mapper.EtudiantToEtudiantDto(e);
-			UtilisateurDto pDto = mapper.UtilisateurToUtilisateurDto(e.getUtilisateur());
-			AdresseDto addrDto = mapper.AdresseToAdresseDto(e.getUtilisateur().getAdresse());
+			EtudiantDto etuDto = mapper.etudiantToEtudiantDto(e);
+			UtilisateurDto pDto = mapper.utilisateurToUtilisateurDto(e.getUtilisateur());
+			AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
 
 
 //			EntrepriseDto entDto =mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
@@ -762,7 +784,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<>();
 			for (GroupeEtudiant grp : lstGrpEtu) {
 				if (grp != null)
-					lstGrpEtuDto.add(mapper.GroupeEtudiantToGroupEtudiantDto(grp));
+					lstGrpEtuDto.add(mapper.groupeEtudiantToGroupEtudiantDto(grp));
 			}
 
 			List<Promotion> lstPromo = e.getPromotions();
@@ -770,21 +792,21 @@ public class EtudiantServiceImpl implements EtudiantService {
 			for (Promotion promotion : lstPromo) {
 				/** On convertis List<Promotion> en List<PromotionDto> **/
 				if (promotion != null)
-					lstPromoDto.add(mapper.PromotionToPromotionDto(promotion));
+					lstPromoDto.add(mapper.promotionToPromotionDto(promotion));
 			}
 			List<DossierProjet> lstDossierProjet = e.getDossierProjet();
 			List<DossierProjetDto> lstDossierProjetDto = new ArrayList<>();
 			for (DossierProjet dp : lstDossierProjet) {
-				DossierProjetDto dpdto = mapper.DossierProjetToDossierProjetDto(dp);
-				dpdto.setProjet(mapper.ProjetToProjetDto(dp.getProjet()));
+				DossierProjetDto dpdto = mapper.dossierProjetToDossierProjetDto(dp);
+				dpdto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
 				lstDossierProjetDto.add(dpdto);
 
 			}
 			List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
 			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
 			for (DossierProfessionnel dp : lstDossierProfessionnel) {
-				DossierProfessionnelDto dpDto = mapper.DossierProfessionnelToDossierProfessionnelDto(dp);
-				dpDto.setCursusDto(mapper.CursusToCursusDto(dp.getCursus()));
+				DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
+				dpDto.setCursusDto(mapper.cursusToCursusDto(dp.getCursus()));
 				lstDossierProfessionnelDto.add(dpDto);
 			}
 
@@ -867,7 +889,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	}
 
     @Override
-    public void fetchAllEtudiantDG2(String email, String password, long idPromotionDg2) throws Exception {
+    public void fetchAllEtudiantDG2(String email, String password, long idPromotionDg2) throws FetchDG2Exception, JsonProcessingException, URISyntaxException {
         ObjectMapper objectMapper = new ObjectMapper();
         List<EtudiantUtilisateurDG2Dto> cResJson;
 
@@ -911,7 +933,12 @@ public class EtudiantServiceImpl implements EtudiantService {
                     utilisateur.setNom(eDG2.getLastName());
                     utilisateur.setLogin(eDG2.getEmail());
                     utilisateur.setPassword(utilisateurService.generatePassword());
-                    utilisateur.setPassword(HashTools.hashSHA512(utilisateur.getPassword()));
+                    try {
+						utilisateur.setPassword(HashTools.hashSHA512(utilisateur.getPassword()));
+					} catch (Exception e) {
+						logger.log(Level.SEVERE,"setPassword failed", e);
+						
+					}
                     utilisateur.setEtudiant(etudiant);
                     utilisateur.setCivilite(eDG2.getCivilite());
                     utilisateur.setAdresse(new Adresse(eDG2.getStreet(), eDG2.getPostcode(), eDG2.getCity(), eDG2.getCountry()));
@@ -933,7 +960,7 @@ public class EtudiantServiceImpl implements EtudiantService {
                 }
             }
         } else {
-            throw new Exception("ResponseEntity from the webservice WDG2 not correct");
+            throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
         }
     }
 

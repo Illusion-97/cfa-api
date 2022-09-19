@@ -33,7 +33,7 @@ import fr.dawan.AppliCFABack.dto.InterventionDto;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class InterventionControllerTests {
+class InterventionControllerTests {
 
 	
 	@Autowired

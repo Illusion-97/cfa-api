@@ -32,7 +32,7 @@ import fr.dawan.AppliCFABack.dto.CEFDto;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class CEFControllerTests {
+class CEFControllerTests {
 	
 	@Autowired
 	private MockMvc mockMvc;

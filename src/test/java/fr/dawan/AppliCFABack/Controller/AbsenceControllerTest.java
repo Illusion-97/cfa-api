@@ -36,7 +36,7 @@ import fr.dawan.AppliCFABack.services.AbsenceService;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class AbsenceControllerTest {
+class AbsenceControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;

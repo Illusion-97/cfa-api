@@ -30,14 +30,14 @@ public class FilesServiceImpl implements FilesService{
 	private ServletContext servletContext;
 	
 	@Value("${app.storagefolder}")
-	private String PARENT_DIRECTORY;
+	private String myParentdirectory;
 	
 	private static Logger logger = Logger.getGlobal();
 	
 	@Override
 	public boolean createDirectory(String path) {
 		
-		Path test = Paths.get(PARENT_DIRECTORY + path);
+		Path test = Paths.get(myParentdirectory + path);
 		
 		try {
 			Files.createDirectories(test);
@@ -50,7 +50,7 @@ public class FilesServiceImpl implements FilesService{
 
 	@Override
 	public boolean deleteDirectoryWithContent(String path) {
-		File directory = new File(PARENT_DIRECTORY + path);
+		File directory = new File(myParentdirectory + path);
 	
 		return deleteDirectory(directory);
 	}
@@ -67,10 +67,10 @@ public class FilesServiceImpl implements FilesService{
 
 	@Override
 	public String[] getAllNamesByDirectory(String string) {
-		File workingDirectoryFile = new File(PARENT_DIRECTORY + string);
+		File workingDirectoryFile = new File(myParentdirectory + string);
 
 		if (!workingDirectoryFile.exists())
-			return null;
+			return new String[0];
 		
 		return workingDirectoryFile.list();
 	}
@@ -79,7 +79,7 @@ public class FilesServiceImpl implements FilesService{
 	@Override
 	public boolean postFile(String filePath, MultipartFile file) {
 		try {
-			File f = new File(PARENT_DIRECTORY + filePath + file.getOriginalFilename());
+			File f = new File(myParentdirectory + filePath + file.getOriginalFilename());
 			try (BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(f))) {
 				bw.write(file.getBytes());
 			}
@@ -96,7 +96,7 @@ public class FilesServiceImpl implements FilesService{
 		
 		MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
 
-		Path path = Paths.get(PARENT_DIRECTORY + workingDirectory + fileName);
+		Path path = Paths.get(myParentdirectory + workingDirectory + fileName);
 		byte[] data = null;
 
 		try {

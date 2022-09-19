@@ -115,7 +115,6 @@ public class CursusController {
 	@GetMapping(value = "/CurrentCursus/{id}",produces = "application/json")
 	public CursusDto getCurrentCursusByIdEtudiant(@PathVariable("id") long id) {
 		List<CursusDto> lstCursusDto = getByIdEtudiant(id);
-		//CursusDto cdto = lstCursusDto.get(0);
 		return lstCursusDto.get(0);
 	}
 

@@ -1,10 +1,18 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+import fr.dawan.AppliCFABack.tools.GrilleException;
+import freemarker.core.ParseException;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 
 public interface PromotionService {
@@ -42,11 +50,11 @@ public interface PromotionService {
 	
 	List<PromotionForSelectDto> getPromotionByInterventionIdForSelect(long idIntervention);
 	
-	int fetchDGPromotions(String email, String password) throws Exception;
-	int fetchDGPromotions(String email, String password, long idCursusDg2) throws Exception;
+	int fetchDGPromotions(String email, String password) throws FetchDG2Exception, URISyntaxException;
+	int fetchDGPromotions(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException;
 
 	
-	List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursis) throws Exception;
+	List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursus) throws FetchDG2Exception, URISyntaxException;
 
-	String getGrillePositionnement(long idPromotion) throws Exception;
+	String getGrillePositionnement(long idPromotion) throws GrilleException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 }

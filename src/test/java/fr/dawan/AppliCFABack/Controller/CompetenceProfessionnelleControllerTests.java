@@ -35,7 +35,7 @@ import fr.dawan.AppliCFABack.services.CompetenceProfessionnelleService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CompetenceProfessionnelleControllerTestes {
+class CompetenceProfessionnelleControllerTests {
 
 	@Autowired
 	private CompetenceProfessionnelleController competenceProfessionnelleController;

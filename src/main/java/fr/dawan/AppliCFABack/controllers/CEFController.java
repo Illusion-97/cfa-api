@@ -39,7 +39,12 @@ public class CEFController {
 		return cefService.getById(id);
 	}
 
-	// /AppliCFABack/groupeEtudiants/{page}/{size}
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @return all cef by page
+	 */
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<CEFDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {

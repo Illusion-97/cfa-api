@@ -76,8 +76,7 @@ public class SupportCoursServiceImpl implements SupportCoursService {
 //			return DtoTools.convert(supportCoursRepository.saveAndFlush(supportCours), SupportCoursDto.class);
 //		}else {
 			supportCours = supportCoursRepository.saveAndFlush(supportCours);
-			SupportCoursDto res = DtoTools.convert(supportCours, SupportCoursDto.class);
-			return res;
+			return DtoTools.convert(supportCours, SupportCoursDto.class);
 		//}
 		//		supportCours = supportCoursRepository.saveAndFlush(supportCours);
 //		return DtoTools.convert(supportCours, SupportCoursDto.class);

@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.AfterAll;
@@ -35,7 +34,7 @@ import fr.dawan.AppliCFABack.dto.DevoirDto;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class DevoirControllerTest {
+class DevoirControllerTest {
 	
 	@Autowired
 	private MockMvc mockMvc;

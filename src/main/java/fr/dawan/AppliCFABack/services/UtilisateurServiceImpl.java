@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -48,6 +49,7 @@ import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.FileException;
 import fr.dawan.AppliCFABack.tools.HashTools;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
@@ -109,10 +111,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			List<UtilisateurRoleDto> role = new ArrayList<>();
 			for (UtilisateurRole r : u.getRoles()) {
-				role.add(mapper.UtilisateurRoleToUtilisateurRoleDto(r));
+				role.add(mapper.utilisateurRoleToUtilisateurRoleDto(r));
 			}
 
-			UtilisateurDto user = mapper.UtilisateurToUtilisateurDto(u);
+			UtilisateurDto user = mapper.utilisateurToUtilisateurDto(u);
 			user.setRolesDto(role);
 			res.add(user);
 		}
@@ -139,11 +141,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		List<UtilisateurDto> res = new ArrayList<>();
 		for (Utilisateur u : users) {
-			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(u);
-			uDto.setAdresseDto(mapper.AdresseToAdresseDto(u.getAdresse()));
+			UtilisateurDto uDto = mapper.utilisateurToUtilisateurDto(u);
+			uDto.setAdresseDto(mapper.adresseToAdresseDto(u.getAdresse()));
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<>();
 			for (UtilisateurRole ur : u.getRoles()) {
-				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
+				utilisateurRoleDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(ur));
 			}
 			uDto.setRolesDto(utilisateurRoleDto);
 
@@ -175,28 +177,28 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	@Override
 	public UtilisateurDto getById(long id) {
-		logger.info("id : " + id);
+		logger.log(Level.INFO, "id : ", id);
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (userOpt.isPresent()) {
-			UtilisateurDto uDto = mapper.UtilisateurToUtilisateurDto(userOpt.get());
+			UtilisateurDto uDto = mapper.utilisateurToUtilisateurDto(userOpt.get());
 
 			if (userOpt.get().getAdresse() != null)
-				uDto.setAdresseDto(mapper.AdresseToAdresseDto(userOpt.get().getAdresse()));
+				uDto.setAdresseDto(mapper.adresseToAdresseDto(userOpt.get().getAdresse()));
 
 //			if(userOpt.get().getEntreprise().getAdresseSiege() != null) uDto.getEntrepriseDto().setAdresseSiegeDto(mapper.AdresseToAdresseDto(userOpt.get().getEntreprise().getAdresseSiege()));
 
 			List<UtilisateurRoleDto> utilisateurRoleDto = new ArrayList<>();
 			for (UtilisateurRole ur : userOpt.get().getRoles()) {
-				utilisateurRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(ur));
+				utilisateurRoleDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(ur));
 			}
 			uDto.setRolesDto(utilisateurRoleDto);
 
 			if (userOpt.get().getEtudiant() != null)
-				uDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(userOpt.get().getEtudiant()));
+				uDto.setEtudiantDto(mapper.etudiantToEtudiantDto(userOpt.get().getEtudiant()));
 			if (userOpt.get().getFormateur() != null)
-				uDto.setFormateurDto(mapper.FormateurToFormateurDto(userOpt.get().getFormateur()));
+				uDto.setFormateurDto(mapper.formateurToFormateurDto(userOpt.get().getFormateur()));
 			if (userOpt.get().getCef() != null)
-				uDto.setCefDto(mapper.CEFToCEFDto(userOpt.get().getCef()));
+				uDto.setCefDto(mapper.cefToCEFDto(userOpt.get().getCef()));
 
 			return uDto;
 		}
@@ -218,22 +220,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		if (user == null)
 			return null;
 
-		UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(user);
+		UtilisateurDto utilisateurDto = mapper.utilisateurToUtilisateurDto(user);
 
-		AdresseDto adresseDto = mapper.AdresseToAdresseDto(user.getAdresse());
+		AdresseDto adresseDto = mapper.adresseToAdresseDto(user.getAdresse());
 		utilisateurDto.setAdresseDto(adresseDto);
 
 		List<UtilisateurRole> lstUsrRole = user.getRoles();
 		List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<>();
 		for (UtilisateurRole utilisateurRole : lstUsrRole) {
 			if (utilisateurRole != null)
-				lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
+				lstUsrRoleDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 		}
 		utilisateurDto.setRolesDto(lstUsrRoleDto);
 
-		utilisateurDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(user.getEtudiant()));
-		utilisateurDto.setFormateurDto(mapper.FormateurToFormateurDto(user.getFormateur()));
-		utilisateurDto.setCefDto(mapper.CEFToCEFDto(user.getCef()));
+		utilisateurDto.setEtudiantDto(mapper.etudiantToEtudiantDto(user.getEtudiant()));
+		utilisateurDto.setFormateurDto(mapper.formateurToFormateurDto(user.getFormateur()));
+		utilisateurDto.setCefDto(mapper.cefToCEFDto(user.getCef()));
 
 		return utilisateurDto;
 	}
@@ -248,7 +250,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public UtilisateurDto getName(String name) {
 		Utilisateur user = utilisateurRepository.findByName(name);
 		if (user != null)
-			return mapper.UtilisateurToUtilisateurDto(user);
+			return mapper.utilisateurToUtilisateurDto(user);
 		return null;
 	}
 	
@@ -296,7 +298,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"hashPwd failed", e);
 		}
 
 		// On save l'addresse avant de save l'utilisateur
@@ -349,7 +351,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			user.setEtudiant(etudiant);
 			etudiant.setUtilisateur(user);
 
-			//etudiant = etudiantRepository.saveAndFlush(etudiant);
 			etudiantRepository.saveAndFlush(etudiant);
 
 		}
@@ -359,7 +360,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			user.setFormateur(formateur);
 			formateur.setUtilisateur(user);
 
-			//formateur = formateurRepository.saveAndFlush(formateur);
 			formateurRepository.saveAndFlush(formateur);
 		}
 		if (isCEF && user.getCef() == null) {
@@ -382,7 +382,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			etudiant.setUtilisateur(null);
 			user.setEtudiant(null);
 
-			//etudiant = etudiantRepository.saveAndFlush(etudiant);
 			etudiantRepository.saveAndFlush(etudiant);
 
 			// On delete l'etudiant ?
@@ -393,7 +392,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			formateur.setUtilisateur(null);
 			user.setFormateur(null);
 
-			//formateur = formateurRepository.saveAndFlush(formateur);
 			formateurRepository.saveAndFlush(formateur);
 
 			// On delete l'etudiant ?
@@ -404,7 +402,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			cef.setUtilisateur(null);
 			user.setCef(null);
 
-			//cef = cefRepository.saveAndFlush(cef);
 			cefRepository.saveAndFlush(cef);
 
 			// On delete l'etudiant ?
@@ -419,10 +416,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		filesService.createDirectory("utilisateurs/" + user.getId() + "/DossierProfessionnel");
 		filesService.createDirectory("utilisateurs/" + user.getId() + "/DossierProjet");
 
-		UtilisateurDto result = mapper.UtilisateurToUtilisateurDto(utilisateurRepository.getOne(user.getId()));
-		result.setEtudiantDto(mapper.EtudiantToEtudiantDto(user.getEtudiant()));
-		result.setFormateurDto(mapper.FormateurToFormateurDto(user.getFormateur()));
-		result.setCefDto(mapper.CEFToCEFDto(user.getCef()));
+		UtilisateurDto result = mapper.utilisateurToUtilisateurDto(utilisateurRepository.getOne(user.getId()));
+		result.setEtudiantDto(mapper.etudiantToEtudiantDto(user.getEtudiant()));
+		result.setFormateurDto(mapper.formateurToFormateurDto(user.getFormateur()));
+		result.setCefDto(mapper.cefToCEFDto(user.getCef()));
 
 		return result;
 	}
@@ -486,7 +483,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<Utilisateur> users = utilisateurRepository.findByAdresseVille(ville);
 		List<UtilisateurDto> res = new ArrayList<>();
 		for (Utilisateur u : users) {
-			res.add(mapper.UtilisateurToUtilisateurDto(u));
+			res.add(mapper.utilisateurToUtilisateurDto(u));
 		}
 		return res;
 	}
@@ -544,7 +541,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<Conge> conges = congeRepository.findByIdUtilisateur(id);
 
 		for (Conge c : conges) {
-			result.add(mapper.CongeToCongeDto(c));
+			result.add(mapper.congeToCongeDto(c));
 		}
 
 		return result;
@@ -559,7 +556,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	@Override
 	public AdresseDto getAdresseByIdUtilisateur(long id) {
-		return mapper.AdresseToAdresseDto(getUtilisateurById(id).getAdresse());
+		return mapper.adresseToAdresseDto(getUtilisateurById(id).getAdresse());
 	}
 
 	@Override
@@ -568,22 +565,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<UtilisateurDto> lstUsrDto = new ArrayList<>();
 
 		for (Utilisateur utilisateur : lstUsr) {
-			UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
+			UtilisateurDto utilisateurDto = mapper.utilisateurToUtilisateurDto(utilisateur);
 
-			AdresseDto adresseDto = mapper.AdresseToAdresseDto(utilisateur.getAdresse());
+			AdresseDto adresseDto = mapper.adresseToAdresseDto(utilisateur.getAdresse());
 			utilisateurDto.setAdresseDto(adresseDto);
 
 			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
 			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<>();
 			for (UtilisateurRole utilisateurRole : lstUsrRole) {
 				if (utilisateurRole != null)
-					lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
+					lstUsrRoleDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 			}
 			utilisateurDto.setRolesDto(lstUsrRoleDto);
 
-			utilisateurDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(utilisateur.getEtudiant()));
-			utilisateurDto.setFormateurDto(mapper.FormateurToFormateurDto(utilisateur.getFormateur()));
-			utilisateurDto.setCefDto(mapper.CEFToCEFDto(utilisateur.getCef()));
+			utilisateurDto.setEtudiantDto(mapper.etudiantToEtudiantDto(utilisateur.getEtudiant()));
+			utilisateurDto.setFormateurDto(mapper.formateurToFormateurDto(utilisateur.getFormateur()));
+			utilisateurDto.setCefDto(mapper.cefToCEFDto(utilisateur.getCef()));
 
 			lstUsrDto.add(utilisateurDto);
 		}
@@ -597,22 +594,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Utilisateur utilisateur = getUtilisateurById(id);
 
 		if (utilisateur != null) {
-			UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
+			UtilisateurDto utilisateurDto = mapper.utilisateurToUtilisateurDto(utilisateur);
 
-			AdresseDto adresseDto = mapper.AdresseToAdresseDto(utilisateur.getAdresse());
+			AdresseDto adresseDto = mapper.adresseToAdresseDto(utilisateur.getAdresse());
 			utilisateurDto.setAdresseDto(adresseDto);
 
 			List<UtilisateurRole> lstUsrRole = utilisateur.getRoles();
 			List<UtilisateurRoleDto> lstUsrRoleDto = new ArrayList<>();
 			for (UtilisateurRole utilisateurRole : lstUsrRole) {
 				if (utilisateurRole != null)
-					lstUsrRoleDto.add(mapper.UtilisateurRoleToUtilisateurRoleDto(utilisateurRole));
+					lstUsrRoleDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(utilisateurRole));
 			}
 			utilisateurDto.setRolesDto(lstUsrRoleDto);
 
-			utilisateurDto.setEtudiantDto(mapper.EtudiantToEtudiantDto(utilisateur.getEtudiant()));
-			utilisateurDto.setFormateurDto(mapper.FormateurToFormateurDto(utilisateur.getFormateur()));
-			utilisateurDto.setCefDto(mapper.CEFToCEFDto(utilisateur.getCef()));
+			utilisateurDto.setEtudiantDto(mapper.etudiantToEtudiantDto(utilisateur.getEtudiant()));
+			utilisateurDto.setFormateurDto(mapper.formateurToFormateurDto(utilisateur.getFormateur()));
+			utilisateurDto.setCefDto(mapper.cefToCEFDto(utilisateur.getCef()));
 
 			return utilisateurDto;
 		}
@@ -685,7 +682,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		List<UtilisateurDto> res = new ArrayList<>();
 		for (Utilisateur u : users) {
-			res.add(mapper.UtilisateurToUtilisateurDto(u));
+			res.add(mapper.utilisateurToUtilisateurDto(u));
 		}
 		return res;
 	}
@@ -761,7 +758,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						utilisateur.setPassword(item.getString("password")); // TODO: commenter cette ligne plus tard
 
 						// on convertit l'utilisateur en Dto puis on appelle la methode insertUpdate
-						UtilisateurDto utilisateurDto = mapper.UtilisateurToUtilisateurDto(utilisateur);
+						UtilisateurDto utilisateurDto = mapper.utilisateurToUtilisateurDto(utilisateur);
 						List<UtilisateurRoleDto> roleDtoList = new ArrayList<>();
 						// On cherche un role par son intitule
 						UtilisateurRoleDto rDto = utilisateurRoleService.findByIntitule(item.getString("rolesDto"));
@@ -774,14 +771,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 							// On appelle la methode pour inserer un utilisateur
 							insertUpdate(utilisateurDto);
 						} catch (Exception e) {
-							e.printStackTrace();
+							logger.log(Level.SEVERE,"insertUpdate failed", e);
 						}
 					});
 				} else { // sinon => ERROR
 					throw new FileException("Extension de fichier incorrecte");
 				}
 			} else {
-				throw new FileException("Acces refusé : Vous n'avez pas les autorisations requises");
+				throw new FileException("Accès refusé : Vous n'avez pas les autorisations requises");
 			}
 		}
 	}
@@ -831,19 +828,29 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Reset du mot de passe
+	 * @throws EmailResetPasswordException 
 	 * 
 	 */
 	// reset pwd
 	@Override
-	public boolean resetPassword(ResetResponse reset) throws Exception {
-		String hashedPwd = HashTools.hashSHA512(reset.getPassword());
+	public boolean resetPassword(ResetResponse reset) throws EmailResetPasswordException {
+		String hashedPwd = null;
+		try {
+			hashedPwd = HashTools.hashSHA512(reset.getPassword());
+		} catch (Exception e) {
+			throw new EmailResetPasswordException("1 : Hashage failed");
+		}
 		String email = jwtTokenUtil.getUsernameFromToken(reset.getToken());
 
 		Utilisateur u = utilisateurRepository.findByEmail(email);
 		String currentPwd = "";
 
 		if (u != null)
-			currentPwd = HashTools.hashSHA512(u.getPassword());
+			try {
+				currentPwd = HashTools.hashSHA512(u.getPassword());
+			} catch (Exception e) {
+				throw new EmailResetPasswordException("2 : Hashage failed");
+			}
 
 		if (u != null && !currentPwd.equals(hashedPwd)) {
 
@@ -860,47 +867,4 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 
 	}
-
-	// import des users DG2 en prevoyance des necessité d'ajouts pour le projet
-//		@Override
-//		public void fetchAllDG2User(String email, String password) throws Exception {
-//			ObjectMapper objectMapper = new ObjectMapper();
-//			List<UserDG2Dto> cResJson;
-//			
-//			//url dg2 qui concerne la recupération des locations
-//			URI url = new URI("https://dawan.org/api2/cfa/users");
-//			
-//			//recupérartion des headers / email / password dg2
-//			HttpHeaders headers = new HttpHeaders();
-//			headers.add("x-auth-token", email + ":" + password);
-//
-//			HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-//
-//			ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-//
-//			if (repWs.getStatusCode() == HttpStatus.OK) {
-//				String json = repWs.getBody();
-//				//recuperation des values en json et lecture
-//				cResJson = objectMapper.readValue(json, new TypeReference<List<UtilisateurDG2Dto>>() {
-//				});
-//				//boucle pour récupérer toute la liste
-//				for (UtilisateurDG2Dto uDG2 : uResJson) {
-//					Utilisateur userImport = mapper.utilisateurDG2DtoToUtilisateur(uDG2);
-//					Optional<Utilisateur> optUser = utilisateurRepository.findByIdDg2(userImport.getIdDg2());
-//
-//					if (optUser.isPresent()) {
-//						if (optUser.get().equals(userImport))
-//							continue;
-//						else if (!optUser.get().equals(userImport)) {
-//							userImport.setId(optUser.get().getId());
-//						}
-//						utilisateurRepository.saveAndFlush(userImport);
-//					} else {
-//						utilisateurRepository.saveAndFlush(userImport);
-//					}
-//				}
-//			} else {
-//				throw new Exception("ResponseEntity from the webservice WDG2 not correct");
-//			}
-//		}
 }

@@ -15,7 +15,4 @@ public interface DossierProjetRepository extends JpaRepository<DossierProjet, Lo
 	@Query("SELECT d FROM DossierProjet d where nom = :nom")
 	DossierProjet getByName(String nom);
 
-//	@Query("SELECT dp FROM DossierProjet dp WHERE dp.etudiant.id = :id")
-//	List<DossierProjet> findByIdEtudiant(long id);
-
 }

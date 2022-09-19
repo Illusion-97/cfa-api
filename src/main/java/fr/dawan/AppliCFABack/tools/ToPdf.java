@@ -11,7 +11,8 @@ import org.jsoup.nodes.Document;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 
 
-public class ToPdf {
+@SuppressWarnings("serial")
+public class ToPdf extends Exception{
 
 	public static void convertHtmlToPdf(String htmlContent,  String outputPdf) throws Exception {
 		
@@ -30,4 +31,9 @@ public class ToPdf {
 
 		os.close();	
 	}
+	
+	public ToPdf (String message) {
+		super.getMessage();
+	}
+
 }

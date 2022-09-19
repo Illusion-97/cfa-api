@@ -32,7 +32,7 @@ import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class DossierProfessionnelControllerTests {
+class DossierProfessionnelControllerTests {
 	
 	@Autowired
 	private MockMvc mockMvc;

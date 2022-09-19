@@ -18,8 +18,6 @@ public interface FormateurService {
 
 	FormateurDto getById(long id);
 
-//	FormateurDto getInterventionByIdFormateur(long id);
-
 	List<InterventionDto> getAllInterventionsByFormateurIdPerPage(long id, int page, int size);
 
 	List<InterventionDto> getAllInterventionsByFormateurIdPerPageByKeyword(long id, int page, int size, String search);
@@ -36,12 +34,4 @@ public interface FormateurService {
 
 	CountDto count(String search);
 
-	// TODO : CountDto count(String search) => nb de formateurs : OK
-	// TODO : getAllByPage(int page,int size,String search) => rechercher un
-	// formateur
-	// TODO : getAllInterventionsByFormateurIdPerPage(long id,int page,int
-	// size,String search) :OK
-	// TODO : countByFormateurId(String search) => nb intervention par rapport au
-	// formateur : OK
-	// TODO :
 }

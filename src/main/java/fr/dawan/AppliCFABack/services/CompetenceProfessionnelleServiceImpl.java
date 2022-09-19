@@ -48,7 +48,7 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 			List<ExamenDto> examensDto = new ArrayList<>();
 			for (Examen ex : competenceProfessionnelle.getExamens()) {
 
-				examensDto.add(mapper.ExamenToExamenDto(ex));
+				examensDto.add(mapper.examenToExamenDto(ex));
 
 			}
 			cptDto.setExamensDto(examensDto);
@@ -101,25 +101,5 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 	public void deleteById(long id) {
 		competenceProfessionnelleRepository.deleteById(id);
 	}
-
-//	@Override
-//	public CompetenceDossierProDto getById2(long id) {
-//		Optional<CompetenceProfessionnelle> cpt = competenceProfessionnelleRepository.findById(id);
-//		if (cpt.isPresent()) {
-//			CompetenceProfessionnelle cp = cpt.get();
-//			return DtoTools.convert(cpt.get(), CompetenceDossierProDto.class);
-//		}
-//
-//		return null;
-//	}
-//
-//	@Override
-//	public CompetenceDossierProDto saveOrUpdate2(CompetenceDossierProDto cpDto) {
-//		CompetenceProfessionnelle cpt = DtoTools.convert(cpDto, CompetenceProfessionnelle.class);
-//		cpt.setExperienceProfessionnelle(experienceProfessionnelleRepository.save(cpt.getExperienceProfessionnelle()));
-//		CompetenceProfessionnelle cptBd = competenceProfessionnelleRepository.save(cpt);
-//
-//		return DtoTools.convert(cptBd, CompetenceDossierProDto.class);
-//	}
 
 }

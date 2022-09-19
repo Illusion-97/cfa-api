@@ -20,7 +20,7 @@ public class PassageExamenDto extends BaseEntityDto implements Serializable {
 	private InterventionDto interventionDto;
 
 	public PassageExamenDto() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public PassageExamenDto(long id, LocalDate dateDebut, LocalDate dateFin, ExamenDto examenDto,

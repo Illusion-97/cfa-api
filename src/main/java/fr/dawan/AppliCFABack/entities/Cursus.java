@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -46,7 +45,7 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 	}
 	
 
-	public Cursus(String titre, List<Formation> formations, Set<ActiviteType> activiteTypes, String description,
+	public Cursus(String titre, List<Formation> formations, Set<ActiviteType> activiteTypes,
 			String duree, String slug, long idDg2) {
 		super();
 		this.titre = titre;

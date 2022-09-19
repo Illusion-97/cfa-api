@@ -28,7 +28,7 @@ public class InterventionDto extends BaseEntityDto implements Serializable {
 	
 
 	public InterventionDto() {
-
+		super();
 	}
 
 	/**

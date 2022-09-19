@@ -3,6 +3,8 @@ package fr.dawan.AppliCFABack.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -29,6 +31,8 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	
+	private static Logger logger = Logger.getGlobal();
+	
 	/**
 	 * Récupération de la liste des maitres d'apprentissages
 	 * 
@@ -42,7 +46,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 
 		List<MaitreApprentissageDto> lstDto = new ArrayList<>();
 		for (MaitreApprentissage ma : lst) {
-			lstDto.add(mapper.MaitreApprentissageToMaitreApprentissageDto(ma));
+			lstDto.add(mapper.maitreApprentissageToMaitreApprentissageDto(ma));
 		}
 		return lstDto;
 	}
@@ -62,7 +66,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 		// conversion vers Dto
 		List<MaitreApprentissageDto> lstDto = new ArrayList<>();
 		for (MaitreApprentissage ma : lst) {
-			lstDto.add(mapper.MaitreApprentissageToMaitreApprentissageDto(ma));
+			lstDto.add(mapper.maitreApprentissageToMaitreApprentissageDto(ma));
 		}
 		return lstDto;
 	}
@@ -77,7 +81,7 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 	public MaitreApprentissageDto getById(long id) {
 		Optional<MaitreApprentissage> c = maitreApprentissageRepository.findById(id);
 		if (c.isPresent())
-			return mapper.MaitreApprentissageToMaitreApprentissageDto(c.get());
+			return mapper.maitreApprentissageToMaitreApprentissageDto(c.get());
 
 		return null;
 	}
@@ -104,12 +108,12 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 	            }
 			}	
 		}catch (Exception e) {
-            e.printStackTrace();
+			logger.log(Level.SEVERE,"hash mdp failed", e);
         }
 
 		ma = maitreApprentissageRepository.saveAndFlush(ma);
 
-		return mapper.MaitreApprentissageToMaitreApprentissageDto(ma);
+		return mapper.maitreApprentissageToMaitreApprentissageDto(ma);
 	}
 
 	/**

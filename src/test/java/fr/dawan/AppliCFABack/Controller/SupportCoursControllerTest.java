@@ -37,7 +37,7 @@ import fr.dawan.AppliCFABack.services.SupportCoursService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SupportCoursControllerTest {
+class SupportCoursControllerTest {
 	
 	@Autowired
 	private SupportCoursController supportCoursController;

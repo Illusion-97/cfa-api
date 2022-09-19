@@ -32,7 +32,7 @@ import fr.dawan.AppliCFABack.dto.FormateurDto;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
-public class FormateurControllerTests {
+class FormateurControllerTests {
 	
 	@Autowired
 	private MockMvc mockMvc;

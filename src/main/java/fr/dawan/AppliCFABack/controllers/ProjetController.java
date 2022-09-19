@@ -87,7 +87,7 @@ public class ProjetController {
        EtudiantDto eDto = etudiantService.getById(id);
        List<ProjetDto> lstProjetDto = projetService.getAllProjet();
        List<GroupeEtudiantDto> gpeDto = eDto.getGroupesDto();
-       List<ProjetDto> lstProjetDtoEtudiant = new ArrayList<ProjetDto>();
+       List<ProjetDto> lstProjetDtoEtudiant = new ArrayList<>();
        for (GroupeEtudiantDto groupeEtudiantDto : gpeDto) {
     	  for (ProjetDto projetDto : lstProjetDto) {
     		  if (projetDto.getGroupeDto().getId()==groupeEtudiantDto.getId()) {

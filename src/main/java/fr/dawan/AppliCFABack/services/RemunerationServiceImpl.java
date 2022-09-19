@@ -25,37 +25,36 @@ public class RemunerationServiceImpl implements RemunerationService {
 
 	@Override
 	public CountDto count(String string) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public List<RemunerationDto> getAllByPage(int page, int size, String string) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public RemunerationDto getById(long id) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public List<RemunerationDto> getAll() {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 
 	@Override
 	public void deleteById(long id) {
-		// TODO Auto-generated method stub
-
+		remunerationRepo.deleteById(id);
 	}
 
 	@Override
 	public RemunerationDto saveOrUpdate(RemunerationDto rDto) {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 

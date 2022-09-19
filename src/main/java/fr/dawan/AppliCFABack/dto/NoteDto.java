@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
-import java.util.List;
 
 import fr.dawan.AppliCFABack.entities.Note.Satisfaction;
 
@@ -36,10 +35,12 @@ public class NoteDto extends BaseEntityDto implements Serializable {
 
 	public NoteDto(Satisfaction satisfaction) {
 		super();
+		this.satisfaction = satisfaction;
 	}
 
 	public NoteDto(String observation) {
 		super();
+		this.observation = observation;
 	}
 
 	/**

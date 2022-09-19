@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -122,8 +123,8 @@ public class PromotionServiceImpl implements PromotionService {
 		List<Promotion> lst = promoRepo.findAll();
 		List<PromotionDto> lstDto = new ArrayList<>();
 		for (Promotion promo : lst) {
-			PromotionDto pDto = mapper.PromotionToPromotionDto(promo);
-			pDto.setCentreFormationDto(mapper.CentreFormationToCentreFormationDto(promo.getCentreFormation()));
+			PromotionDto pDto = mapper.promotionToPromotionDto(promo);
+			pDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(promo.getCentreFormation()));
 			lstDto.add(pDto);
 		}
 		return lstDto;
@@ -139,25 +140,25 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public PromotionDto getById(long id) {
 		Promotion promo = promoRepo.getOne(id);
-		PromotionDto pDto = mapper.PromotionToPromotionDto(promo);
+		PromotionDto pDto = mapper.promotionToPromotionDto(promo);
 				
-		pDto.setCursusDto(mapper.CursusToCursusDto(promo.getCursus()));
-		pDto.setCentreFormationDto(mapper.CentreFormationToCentreFormationDto(promo.getCentreFormation()));
-		pDto.setReferentPedagogiqueDto(mapper.UtilisateurToUtilisateurDto(promo.getReferentPedagogique()));
-		pDto.setCefDto(mapper.CEFToCEFDto(promo.getCef()));		
-		pDto.getCefDto().setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(promo.getCef().getUtilisateur()));
-		pDto.setCentreFormationDto(mapper.CentreFormationToCentreFormationDto(promo.getCentreFormation()));
+		pDto.setCursusDto(mapper.cursusToCursusDto(promo.getCursus()));
+		pDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(promo.getCentreFormation()));
+		pDto.setReferentPedagogiqueDto(mapper.utilisateurToUtilisateurDto(promo.getReferentPedagogique()));
+		pDto.setCefDto(mapper.cefToCEFDto(promo.getCef()));		
+		pDto.getCefDto().setUtilisateurDto(mapper.utilisateurToUtilisateurDto(promo.getCef().getUtilisateur()));
+		pDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(promo.getCentreFormation()));
 		
 		List<Etudiant> etudiants = promo.getEtudiants();
 		List<EtudiantDto> eDtos = new ArrayList<>();	
 		for(Etudiant e : etudiants) {
-			EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
+			EtudiantDto eDto = mapper.etudiantToEtudiantDto(e);
 			List<GroupeEtudiantDto> gDtos = new ArrayList<>();
 			for(GroupeEtudiant g : e.getGroupes()) {
-				gDtos.add(mapper.GroupeEtudiantToGroupEtudiantDto(g));
+				gDtos.add(mapper.groupeEtudiantToGroupEtudiantDto(g));
 			}
 			eDto.setGroupesDto(gDtos);
-			eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
+			eDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(e.getUtilisateur()));
 			eDtos.add(eDto);
 		}
 		pDto.setEtudiantsDto(eDtos);
@@ -165,28 +166,28 @@ public class PromotionServiceImpl implements PromotionService {
 		List<Intervention> interventions = promo.getInterventions();
 		List<InterventionDto> iDtos = new ArrayList<>();	
 		for(Intervention i : interventions) {
-			InterventionDto iDto =mapper.InterventionToInterventionDto(i);
-			iDto.setFormationDto(mapper.FormationToFormationDto(i.getFormation()));
+			InterventionDto iDto =mapper.interventionToInterventionDto(i);
+			iDto.setFormationDto(mapper.formationToFormationDto(i.getFormation()));
 			iDto.setHeuresDisponsees();
 			iDtos.add(iDto);
 		}
 		pDto.setInterventionsDto(iDtos);
 		Set<Examen> examens = promo.getExamens();
-		Set<ExamenDto> examenDtos = new HashSet<ExamenDto>();
+		Set<ExamenDto> examenDtos = new HashSet<>();
 
 		for (Examen examen : examens) {
-			ExamenDto eDto = mapper.ExamenToExamenDto(examen);
+			ExamenDto eDto = mapper.examenToExamenDto(examen);
 			Set<CompetenceProfessionnelle>competenceProfessionnelles = examen.getCompetencesProfessionnelles();
 			Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new HashSet<>();
 			for (CompetenceProfessionnelle cptP : competenceProfessionnelles) {
-				competenceProfessionnellesDto.add(mapper.CompetenceProfessionnelleDto(cptP));
+				competenceProfessionnellesDto.add(mapper.competenceProfessionnelleDto(cptP));
 			}
 			eDto.setCompetencesProfessionnellesDto(competenceProfessionnellesDto);
 			
 			List<ActiviteType> activiteTypes = examen.getActiviteTypes();
 			List<ActiviteTypeDto> activiteTypesDto = new ArrayList<>();
 			for (ActiviteType at : activiteTypes) {
-				activiteTypesDto.add(mapper.ActiviteTypeToActiviteDto(at));
+				activiteTypesDto.add(mapper.activiteTypeToActiviteDto(at));
 			}
 			eDto.setActiviteTypesDto(activiteTypesDto);
 			examenDtos.add(eDto);
@@ -232,7 +233,7 @@ public class PromotionServiceImpl implements PromotionService {
 		
 		filesService.createDirectory("promotions/" + p.getId());
 		
-		return mapper.PromotionToPromotionDto(p);
+		return mapper.promotionToPromotionDto(p);
 	}
 
 	/**
@@ -255,7 +256,7 @@ public class PromotionServiceImpl implements PromotionService {
 	
 	@Override
 	public UtilisateurDto getReferentById(long id) {
-		return mapper.UtilisateurToUtilisateurDto(promoRepo.getOne(id).getReferentPedagogique());
+		return mapper.utilisateurToUtilisateurDto(promoRepo.getOne(id).getReferentPedagogique());
 	}
 
 	/**
@@ -301,11 +302,11 @@ public class PromotionServiceImpl implements PromotionService {
 		for (Etudiant e : lst) {
 			List<PromotionDto> promoList = new ArrayList<>();
 			for(Promotion p : e.getPromotions()) {
-				promoList.add(mapper.PromotionToPromotionDto(p));
+				promoList.add(mapper.promotionToPromotionDto(p));
 			}
-			EtudiantDto eDto = mapper.EtudiantToEtudiantDto(e);
+			EtudiantDto eDto = mapper.etudiantToEtudiantDto(e);
 			eDto.setPromotionsDto(promoList);
-			eDto.setUtilisateurDto(mapper.UtilisateurToUtilisateurDto(e.getUtilisateur()));
+			eDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(e.getUtilisateur()));
 			lstDto.add(eDto);
 		}
 		return lstDto;
@@ -325,7 +326,7 @@ public class PromotionServiceImpl implements PromotionService {
 		List<PromotionDto> result = new ArrayList<>();
 		
 		for(Promotion p : lst) {
-			result.add(mapper.PromotionToPromotionDto(p));
+			result.add(mapper.promotionToPromotionDto(p));
 		}
 		
 		return result;
@@ -340,7 +341,7 @@ public class PromotionServiceImpl implements PromotionService {
 	
 	@Override
     public UtilisateurDto getCefById(long id) {
-        return mapper.UtilisateurToUtilisateurDto(promoRepo.getOne(id).getCef().getUtilisateur());
+        return mapper.utilisateurToUtilisateurDto(promoRepo.getOne(id).getCef().getUtilisateur());
     }
 
 	/**
@@ -355,7 +356,7 @@ public class PromotionServiceImpl implements PromotionService {
 		List<PromotionDto> result = new ArrayList<>();
 		
 		for(Promotion p : promos) {
-			PromotionDto pDto = mapper.PromotionToPromotionDto(p);
+			PromotionDto pDto = mapper.promotionToPromotionDto(p);
 			result.add(pDto);
 		}
 		return result;
@@ -406,14 +407,14 @@ public class PromotionServiceImpl implements PromotionService {
 	}
 
 	@Override
-	public int fetchDGPromotions(String email, String password) throws Exception {
+	public int fetchDGPromotions(String email, String password) throws FetchDG2Exception, URISyntaxException {
 		List<Cursus> cursus = new ArrayList<>();
 		List<Promotion> promoLst = new ArrayList<>();
 		cursus = cursusRepository.findAll();
 		for(Cursus c: cursus) {
 			List<Promotion> promoDg2 = new ArrayList<>();
 			promoDg2 = getPromotionDG2ByIdCursusDG2(email, password, c.getIdDg2());
-			if(promoDg2.isEmpty()  || promoDg2.size() != 0) {
+			if(promoDg2.isEmpty()  || promoDg2.isEmpty()) {
 				promoLst.addAll(promoDg2);
 				logger.info(c.getId()+"Liste non vide");
 			}
@@ -422,20 +423,20 @@ public class PromotionServiceImpl implements PromotionService {
 			try {
 				promotionRepository.saveAndFlush(p);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE,"SaveAndFlush failed", e);
 			}
 		}
 		return promoLst.size();
 	}
 	@Override
-	public int fetchDGPromotions(String email, String password, long idCursusDg2) throws Exception {
+	public int fetchDGPromotions(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
 		List<Promotion> promoLst = getPromotionDG2ByIdCursusDG2(email, password, idCursusDg2);
 		
 		for(Promotion p : promoLst) {
 			try {
 				promotionRepository.saveAndFlush(p);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE,"SaveAndFlush failed", e);
 			}
 		}
 		return promoLst.size();
@@ -446,7 +447,7 @@ public class PromotionServiceImpl implements PromotionService {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>(); 
-		List<Promotion> result = new ArrayList<Promotion>();
+		List<Promotion> result = new ArrayList<>();
 		
 		URI url = new URI("https://dawan.org/api2/cfa/trainings/" +idCursusDg2+ "/sessions");
 		HttpHeaders headers = new HttpHeaders();
@@ -460,7 +461,7 @@ public class PromotionServiceImpl implements PromotionService {
 			try {
 				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {} );
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE,"objectMapper failed", e);
 			}
 			
 			
@@ -473,7 +474,7 @@ public class PromotionServiceImpl implements PromotionService {
 					 promotionDG2 = dtoTools.promotionOrInterventionDG2DtoToPromotion(pDtoDG2);
 					
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.log(Level.SEVERE,"dtoTools failed", e);
 				}
 //				Optional<CentreFormation> cfOpt = centreFormationRepository.findByIdDg2(pDtoDG2.getLocationId());
 //				// valeur null centre de formation Id cause le problem
@@ -522,7 +523,7 @@ public class PromotionServiceImpl implements PromotionService {
 		if (interventions.isEmpty() || interventions == null)
 			throw new GrilleException("Pas d'interventions encore pour cette promotion non trouvé");
 
-		Map<String, List<?>> gp = new HashMap<String, List<?>>();
+		Map<String, List<?>> gp = new HashMap<>();
 		List<GrillePositionnementDto> grillesPositionnements = new ArrayList<>();
 		for (Intervention i : interventions) {
 
@@ -547,7 +548,7 @@ public class PromotionServiceImpl implements PromotionService {
 			grillesPositionnements.add(gpd);
 		}
 		gp.put("interventions", grillesPositionnements);
-		List<NiveauDto> niveaux = niveauService.getAllNiveaux();;
+		List<NiveauDto> niveaux = niveauService.getAllNiveaux();
 		gp.put("niveaux", niveaux);
 		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
 		Template template = freemarkerConfig.getTemplate("GrillePositionnement.ftl");
@@ -558,7 +559,7 @@ public class PromotionServiceImpl implements PromotionService {
 		try {
 			ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"convertHtmlToPdf failed", e);
 		}
 
 		return outputPdf;

@@ -42,7 +42,6 @@ public class AppliCfaBackApplication {
 			// CORS ORIGIN
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/").allowedMethods("GET").allowedOrigins("*");
 				registry.addMapping("/swagger-ui/index.html").allowedMethods("POST", "PUT").allowedOrigins("*");
 				registry.addMapping("/**").allowedOrigins("*").allowedMethods("*","GET", "POST", "PUT", "DELETE", "OPTIONS").allowedHeaders("*")
 //						.exposedHeaders("Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",

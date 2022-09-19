@@ -46,29 +46,38 @@ public class InterventionController {
 	public List<InterventionDto> getAll() {
 		return interventionService.getAllIntervention();
 	}
-
-//	@GetMapping(value = "/{id}", produces = "application/json")
-//	public InterventionDto getById(@PathVariable("id") long id) {
-//		return interventionService.getById(id);
-//	}
 	
-	// GET : /AppliCFABack/interventions/{id}
+	/**
+	 * 
+	 * @param id
+	 * @return ResponseEntity
+	 */
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<?> getById(@PathVariable("id") long id) {
 		HttpStatus status = ResponseEntity.status(HttpStatus.OK).build().getStatusCode();
-		ResponseEntity<?> response = ResponseEntity.status(status).header("Status", status.toString())
+		return ResponseEntity.status(status).header("Status", status.toString())
 				.body(interventionService.getById(id));
-		return response;
 	}
 
-	// GET : /AppliCFABack/interventions/{page}/{size}
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @return liste des interventions avec pagination
+	 */
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
 		return interventionService.getAllByPage(page, size, "");
 	}
 	
-	// GET : /AppliCFABack/interventions/{page}/{size}/{search}
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @param search
+	 * @return liste des interventiosn avec pagination + search
+	 */
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size,
@@ -123,7 +132,6 @@ public class InterventionController {
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		try {
 			interventionService.deleteById(id);
-//			int status = ResponseEntity.status(HttpStatus.ACCEPTED).build().getStatusCodeValue();
 			HttpStatus status = ResponseEntity.status(HttpStatus.ACCEPTED).build().getStatusCode();
 			return ResponseEntity.status(status).header("Status", status.toString()).build();
 		} catch (Exception e) {

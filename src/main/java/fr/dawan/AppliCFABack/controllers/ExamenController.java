@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.controllers;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,6 +41,7 @@ import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
 import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.services.ExamenService;
 import fr.dawan.AppliCFABack.services.FileService;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 @RestController
 @RequestMapping("/examens")
@@ -133,7 +135,7 @@ public class ExamenController {
 
 	@PostMapping(consumes = "multipart/form-data", produces = "application/json")
 	public ResponseEntity<ExamenDtoSave> save(@RequestParam("examen") String examStr,
-			@RequestPart("file") MultipartFile file) throws Exception {
+			@RequestPart("file") MultipartFile file) throws SaveInvalidException, IOException {
 
 		File f = new File(storageFolder + "/examens/" + file.getOriginalFilename());
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f));
@@ -165,7 +167,7 @@ public class ExamenController {
 	// ##################################################
 
 	@PutMapping(consumes = "application/json", produces = "application/json")
-	public ExamenDtoSave update(@RequestBody ExamenDtoSave eDto) throws Exception {
+	public ExamenDtoSave update(@RequestBody ExamenDtoSave eDto) throws SaveInvalidException {
 		return examenService.saveOrUpdate(eDto);
 	}
 

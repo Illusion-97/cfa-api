@@ -12,6 +12,7 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EvaluationFormationDto;
 import fr.dawan.AppliCFABack.entities.EvaluationFormation;
 import fr.dawan.AppliCFABack.repositories.EvaluationFormationRepository;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 @Service
 @Transactional
@@ -31,7 +32,7 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 	}
 
 	@Override
-	public EvaluationFormationDto saveOrUpdate(EvaluationFormationDto tDto) throws Exception {
+	public EvaluationFormationDto saveOrUpdate(EvaluationFormationDto tDto) throws SaveInvalidException {
 		EvaluationFormation evaluationF = DtoTools.convert(tDto, EvaluationFormation.class);
 
 		EvaluationFormation evaluationFDb = evaluationFormationRepository.saveAndFlush(evaluationF);

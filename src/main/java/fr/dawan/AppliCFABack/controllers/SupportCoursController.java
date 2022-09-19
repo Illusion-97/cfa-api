@@ -25,7 +25,6 @@ public class SupportCoursController extends GenericController<SupportCoursDto> {
 	@Autowired
 	public SupportCoursController(SupportCoursService service) {
 		super(service);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

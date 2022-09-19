@@ -17,6 +17,7 @@ import fr.dawan.AppliCFABack.entities.Validation;
 import fr.dawan.AppliCFABack.entities.Validation.Etat;
 import fr.dawan.AppliCFABack.repositories.LivretEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.ValidationRepository;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 @Service
 @Transactional
@@ -31,15 +32,14 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	public LivretEvaluationDto getById(long id) {
 		Optional<LivretEvaluation> livretEvalOpt = livretEvaluationRepository.findById(id);
 		
-		if(livretEvalOpt.isPresent()) {
-			LivretEvaluationDto livretEvalDto = DtoTools.convert(livretEvalOpt, LivretEvaluationDto.class);		
-			return livretEvalDto;
+		if(livretEvalOpt.isPresent()) {	
+			return DtoTools.convert(livretEvalOpt, LivretEvaluationDto.class);
 		}
 		return null;
 	}
 
 	@Override
-	public LivretEvaluationDto saveOrUpdate(LivretEvaluationDto tDto) throws Exception {
+	public LivretEvaluationDto saveOrUpdate(LivretEvaluationDto tDto) throws SaveInvalidException {
 		LivretEvaluation livretEval = DtoTools.convert(tDto, LivretEvaluation.class);
 		if(tDto.getId() == 0 ) {
 			//créer un object Validation et l'entrer dans table Validation 
@@ -75,7 +75,7 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	@Override
 	public List<LivretEvaluationDto> getByEtudiantId(long id) {
 		List<LivretEvaluation> livrets = livretEvaluationRepository.findLivretEvaluationByEtudiantId(id);
-		List<LivretEvaluationDto> result = new ArrayList<LivretEvaluationDto>();
+		List<LivretEvaluationDto> result = new ArrayList<>();
 		for(LivretEvaluation l: livrets) {
 			result.add(DtoTools.convert(l, LivretEvaluationDto.class));
 		}

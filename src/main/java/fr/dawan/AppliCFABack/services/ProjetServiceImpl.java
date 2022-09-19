@@ -43,8 +43,8 @@ public class ProjetServiceImpl implements ProjetService {
 
 		List<ProjetDto> lstDto = new ArrayList<>();
 		for (Projet p : lst) {
-			ProjetDto pDto = mapper.ProjetToProjetDto(p);
-			pDto.setGroupeDto(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
+			ProjetDto pDto = mapper.projetToProjetDto(p);
+			pDto.setGroupeDto(mapper.groupeEtudiantToGroupEtudiantDto(p.getGroupe()));
 			lstDto.add(pDto);
 		}
 		return lstDto;
@@ -67,8 +67,8 @@ public class ProjetServiceImpl implements ProjetService {
 		// conversion vers Dto
 		List<ProjetDto> lstDto = new ArrayList<>();
 		for (Projet p : lst) {
-			ProjetDto pDto = mapper.ProjetToProjetDto(p);
-			pDto.setGroupeDto(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
+			ProjetDto pDto = mapper.projetToProjetDto(p);
+			pDto.setGroupeDto(mapper.groupeEtudiantToGroupEtudiantDto(p.getGroupe()));
 			lstDto.add(pDto);
 		}
 		return lstDto;
@@ -96,8 +96,8 @@ public class ProjetServiceImpl implements ProjetService {
 		Optional<Projet> p = projetRepository.findById(id);
 		if (p.isPresent()) {
 
-			ProjetDto pDto = mapper.ProjetToProjetDto(p.get());
-			pDto.setGroupeDto(mapper.GroupeEtudiantToGroupEtudiantDto(p.get().getGroupe()));
+			ProjetDto pDto = mapper.projetToProjetDto(p.get());
+			pDto.setGroupeDto(mapper.groupeEtudiantToGroupEtudiantDto(p.get().getGroupe()));
 			return pDto;
 		}
 
@@ -117,7 +117,7 @@ public class ProjetServiceImpl implements ProjetService {
 		
 		filesService.createDirectory("projets/" + p.getId());
 
-		return mapper.ProjetToProjetDto(p);
+		return mapper.projetToProjetDto(p);
 	}
 
 	/**
@@ -145,8 +145,8 @@ public class ProjetServiceImpl implements ProjetService {
 		
 		List<ProjetDto> result = new ArrayList<>();
 		for(Projet p : projets) {
-		ProjetDto pDto = mapper.ProjetToProjetDto(p);
-		pDto.setGroupeDto(mapper.GroupeEtudiantToGroupEtudiantDto(p.getGroupe()));
+		ProjetDto pDto = mapper.projetToProjetDto(p);
+		pDto.setGroupeDto(mapper.groupeEtudiantToGroupEtudiantDto(p.getGroupe()));
 		result.add(pDto);
 		}
 		

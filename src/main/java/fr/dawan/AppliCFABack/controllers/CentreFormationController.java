@@ -43,7 +43,12 @@ public class CentreFormationController {
 		return centreFormationService.getById(id);
 	}
 
-	// /AppliCFABack/groupeEtudiants/{page}/{size}
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @return all centre formation by page
+	 */
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<CentreFormationDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {

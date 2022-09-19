@@ -1,11 +1,25 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
-import fr.dawan.AppliCFABack.dto.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DevoirDto;
+import fr.dawan.AppliCFABack.dto.EntrepriseDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
-import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+
 
 public interface EtudiantService {
 
@@ -46,7 +60,7 @@ public interface EtudiantService {
 	// # 3eme Niveau #
 	// ##################################################
 
-	List<InterventionDto> getIntervenionByIdEtudiant(long id);
+	List<InterventionDto> getInterventionByIdEtudiant(long id);
 
 	// ##################################################
 	// # Utile #
@@ -70,6 +84,7 @@ public interface EtudiantService {
 	EtudiantDossierDto getByEtudiantIdForDossierPro(long id);
 	EtudiantDossierDto saveOrUpdateEtudiantDossier(EtudiantDossierDto e);
 
-    void fetchAllEtudiantDG2(String email, String password, long idPromotionDg2) throws Exception;
+    void fetchAllEtudiantDG2(String email, String password, long idPromotionDg2) throws FetchDG2Exception, JsonProcessingException, URISyntaxException;
+
 
 }
