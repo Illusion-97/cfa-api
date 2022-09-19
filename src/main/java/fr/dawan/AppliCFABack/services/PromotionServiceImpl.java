@@ -565,6 +565,16 @@ public class PromotionServiceImpl implements PromotionService {
 		return outputPdf;
 	}
 
+	@Override
+	public List<PromotionDto> getPromoByCentreFormationId(long id) {
+		List<Promotion> result = promoRepo.findPromotionsByCentreFormationId(id);
+		List<PromotionDto> res = new ArrayList<>();
+		for(Promotion p: result) {
+			res.add(DtoTools.convert(p, PromotionDto.class));
+		}
+		return res;
+	}
+
 
 
 
