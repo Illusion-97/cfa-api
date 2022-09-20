@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -104,4 +105,13 @@ public class Etudiant extends BaseEntity implements Serializable {
 	public void setNotes(Set<Note> notes) {
 		this.notes = notes;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Etudiant)) return false;
+		Etudiant etudiant = (Etudiant) o;
+		return getIdDg2() == etudiant.getIdDg2() && Objects.equals(getUtilisateur(), etudiant.getUtilisateur());
+	}
+
 }
