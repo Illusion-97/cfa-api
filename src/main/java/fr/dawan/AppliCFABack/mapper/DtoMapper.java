@@ -20,6 +20,7 @@ import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.dto.EmployeeDG2Dto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
@@ -219,4 +220,10 @@ public interface DtoMapper {
 //	@Mapping(source = ".", target = ".")
 //	@Mapping(source = "cursus", target = "cursusDescription")
 //	PromotionEtudiantDto PromotionToPromotionEtudiantDto(Promotion promotion);
+	@Mapping(source = "personId", target ="idDg2" )
+	@Mapping(source = "firstName", target = "prenom")
+	@Mapping(source = "lastName", target = "nom")
+	@Mapping(source = "email", target = "login")
+
+	Utilisateur employeeDg2ToUtilisateur(EmployeeDG2Dto eDg2);
 }

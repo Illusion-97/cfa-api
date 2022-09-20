@@ -1,9 +1,10 @@
 package fr.dawan.AppliCFABack.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 
 @SuppressWarnings("serial")
 public class EtudiantUtilisateurDG2Dto implements Serializable {

@@ -14,6 +14,7 @@ import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.dto.EmployeeDG2Dto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
@@ -71,15 +72,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-<<<<<<< HEAD
-
-    date = "2022-09-02T15:38:03+0200",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.14.1 (Amazon.com Inc.)"
-
-=======
-    date = "2022-09-07T17:04:27+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
->>>>>>> 08b6e1671b5d4050ecf03e4aa45d294d3127d6d0
+    date = "2022-09-19T16:42:59+0200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -422,6 +416,7 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateurDto.setVersion( utilisateur.getVersion() );
         utilisateurDto.setCivilite( utilisateur.getCivilite() );
         utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
+        utilisateurDto.setIdDg2( utilisateur.getIdDg2() );
         utilisateurDto.setLogin( utilisateur.getLogin() );
         utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setPassword( utilisateur.getPassword() );
@@ -804,6 +799,25 @@ public class DtoMapperImpl implements DtoMapper {
         etudiant.setUtilisateur( eDG2.getUtilisateur() );
 
         return etudiant;
+    }
+
+    @Override
+    public Utilisateur employeeDg2ToUtilisateur(EmployeeDG2Dto eDg2) {
+        if ( eDg2 == null ) {
+            return null;
+        }
+
+        Utilisateur utilisateur = new Utilisateur();
+
+        if ( eDg2.getPersonId() != null ) {
+            utilisateur.setIdDg2( Long.parseLong( eDg2.getPersonId() ) );
+        }
+        utilisateur.setPrenom( eDg2.getFirstName() );
+        utilisateur.setNom( eDg2.getLastName() );
+        utilisateur.setLogin( eDg2.getEmail() );
+        utilisateur.setId( eDg2.getId() );
+
+        return utilisateur;
     }
 
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -191,5 +192,20 @@ public class UtilisateurController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    @GetMapping(value = "/dg2", produces = "application/json")
+	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers) {
+			String userDG2 = headers.get("x-auth-token");
+			String[] splitUserDG2String = userDG2.split(":");
+
+			try {
+				utilisateurService.fetchAllDG2Employees(splitUserDG2String[0], splitUserDG2String[1]);
+				return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.body("Error while fetching data from the webservice DG2");
+			}
+		}
+
 }
 

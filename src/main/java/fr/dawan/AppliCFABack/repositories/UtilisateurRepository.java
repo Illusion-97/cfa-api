@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,4 +35,5 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	long countByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
 			String role1, String prenom, String role2, String nom, String role3, String login);
 	
+	Optional<Utilisateur> findByIdDg2(long idDg2);
 }
