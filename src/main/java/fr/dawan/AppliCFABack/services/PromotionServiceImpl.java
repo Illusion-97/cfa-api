@@ -566,8 +566,8 @@ public class PromotionServiceImpl implements PromotionService {
 	}
 
 	@Override
-	public List<PromotionDto> getPromoByCentreFormationId(long id) {
-		List<Promotion> result = promoRepo.findPromotionsByCentreFormationId(id);
+	public List<PromotionDto> getPromoByCentreFormationIdPagination(int page, int size, long id) {
+		List<Promotion> result = promoRepo.findPromotionsByCentreFormationId(id, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<>();
 		for(Promotion p: result) {
 			res.add(DtoTools.convert(p, PromotionDto.class));
