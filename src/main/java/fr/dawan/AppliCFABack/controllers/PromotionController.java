@@ -208,9 +208,10 @@ public class PromotionController {
 
 	}
 	
-	@GetMapping(value = "/centreFormation/{idCentreFormation}", produces="application/json")
-	public List<PromotionDto> getPromoByCentreFormationId(@PathVariable("idCentreFormation") long id){
-		return promoService.getPromoByCentreFormationId(id);
+	@GetMapping(value = "/centreFormation/{idCentreFormation}/{page}/{size}", produces="application/json")
+	public List<PromotionDto> getPromoByCentreFormationIdPagination(@PathVariable("idCentreFormation") long id, @PathVariable("page") int page,
+			@PathVariable("size") int size){
+		return promoService.getPromoByCentreFormationIdPagination(page, size, id);
 	}
 	
 	

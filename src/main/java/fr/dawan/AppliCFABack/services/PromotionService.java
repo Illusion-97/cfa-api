@@ -58,6 +58,6 @@ public interface PromotionService {
 
 	String getGrillePositionnement(long idPromotion) throws GrilleException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 	
-	List<PromotionDto> getPromoByCentreFormationId(long id);
+	List<PromotionDto> getPromoByCentreFormationIdPagination(int page, int size, long id);
 
 }
