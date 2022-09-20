@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
@@ -67,19 +68,6 @@ import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
-import fr.dawan.AppliCFABack.repositories.ContratRepository;
-import fr.dawan.AppliCFABack.repositories.DevoirEtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.DevoirRepository;
-import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.ExamenRepository;
-import fr.dawan.AppliCFABack.repositories.FormateurRepository;
-import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.InterventionRepository;
-import fr.dawan.AppliCFABack.repositories.NoteRepository;
-import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
-import fr.dawan.AppliCFABack.repositories.PromotionRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.HashTools;
 
@@ -134,11 +122,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	private static Logger logger = Logger.getGlobal();
 
     @Autowired
     private UtilisateurService utilisateurService;
+    @Autowired
+    private AdresseRepository adresseRepository;
 
     // ##################################################
     // # CRUD #
@@ -244,7 +234,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	/**
 	 * Récupération des etudiants en fonction de l'id
-	 * 
+	 *
 	 * @param id id de l'étudiant
 	 * @return eDto objet Etudiant
 	 */
@@ -255,7 +245,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
         if (!e.isPresent())
             return null;
-        
+
 		EtudiantDto eDto = mapper.etudiantToEtudiantDto(e.get());
 		eDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(e.get().getUtilisateur()));
 		eDto.getUtilisateurDto().setAdresseDto(mapper.adresseToAdresseDto(e.get().getUtilisateur().getAdresse()));
@@ -309,7 +299,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	/**
 	 * Sauvegarde ou mise à jour d'un etudiant
-	 * 
+	 *
 	 */
 
 	@Override
@@ -352,7 +342,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	/**
 	 * Suppression d'un etudiant
-	 * 
+	 *
 	 * @param id Id concernant l'etudiant
 	 */
 	@Override
@@ -441,7 +431,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	/**
 	 * Récupération des promotions en fonction de l'id etudiant
-	 * 
+	 *
 	 * @param id id de l'etudiant
 	 * @return lstDto liste des promotions de l'étudiant
 	 */
@@ -473,7 +463,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	/**
 	 * Récupération des groupes en fonction de l'id etudiant
-	 * 
+	 *
 	 * @param id id de l'etudiant
 	 * @return lstDto liste des groupes de l'étudiant
 	 */
@@ -503,7 +493,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	/**
 	 * Récupération de l'entreprise en fonction de l'id etudiant
-	 * 
+	 *
 	 * @param id id de l'etudiant
 	 */
 
@@ -517,7 +507,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	/**
 	 * Récupération de l'adresse de l'étudiant
-	 * 
+	 *
 	 * @param id id de l'etudiant
 	 */
 
@@ -582,7 +572,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	/**
 	 * Récupération des interventions en fonction de l'id etudiant
-	 * 
+	 *
 	 * @param id id de l'etudiant
 	 * @return res liste des interventions de l'étudiant
 	 */
@@ -618,7 +608,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	/**
 	 * Récupération du planning en fonction de l'id etudiant
-	 * 
+	 *
 	 * @param id id de l'etudiant
 	 * @return result planning de l'étudiant
 	 */
@@ -740,7 +730,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	/**
 	 * Recherche d'un etudiant
-	 * 
+	 *
 	 * @param search recherche par prenom / nom / promotion / groupe
 	 */
 
@@ -754,7 +744,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	/**
 	 * Va permettre de récupérer tous les etudiants avec pagination recherche par
 	 * nom / prenom / promo / groupe
-	 * 
+	 *
 	 * @param page   numero de la page
 	 * @param size   éléments sur la page
 	 * @param search éléments etudiant (nom,prenom,groupe,promo)
@@ -921,28 +911,29 @@ public class EtudiantServiceImpl implements EtudiantService {
                         etudiant.getUtilisateur().setNom(eDG2.getLastName());
                         etudiant.getUtilisateur().setLogin(eDG2.getEmail());
                         etudiant.getUtilisateur().setCivilite(eDG2.getCivilite());
-                        etudiant.getUtilisateur().setAdresse(new Adresse(eDG2.getStreet(), eDG2.getPostcode(), eDG2.getCity(), eDG2.getCountry()));
                         etudiant.getUtilisateur().setTelephone(eDG2.getMobile());
                         etudiant.getUtilisateur().setTelephoneFixe(eDG2.getLandline());
-
-                        //etudiantRepository.saveAndFlush(etudiant);
-                    }
+						etudiant.getUtilisateur().getAdresse().setLibelle(eDG2.getStreet());
+						etudiant.getUtilisateur().getAdresse().setCodePostal(eDG2.getPostcode());
+						etudiant.getUtilisateur().getAdresse().setVille(eDG2.getCity());
+						etudiant.getUtilisateur().getAdresse().setCountryCode(eDG2.getCountry());
+					}
                 } else {
                     Utilisateur utilisateur = new Utilisateur();
                     utilisateur.setPrenom(eDG2.getFirstName());
                     utilisateur.setNom(eDG2.getLastName());
                     utilisateur.setLogin(eDG2.getEmail());
-                    utilisateur.setPassword(utilisateurService.generatePassword());
+                    //utilisateur.setPassword(utilisateurService.generatePassword());
+					utilisateur.setPassword("password");
                     try {
 						utilisateur.setPassword(HashTools.hashSHA512(utilisateur.getPassword()));
 					} catch (Exception e) {
 						logger.log(Level.SEVERE,"setPassword failed", e);
-						
+
 					}
                     utilisateur.setEtudiant(etudiant);
                     utilisateur.setCivilite(eDG2.getCivilite());
                     utilisateur.setAdresse(new Adresse(eDG2.getStreet(), eDG2.getPostcode(), eDG2.getCity(), eDG2.getCountry()));
-                    //utilisateur.setDateDeNaissance(LocalDate.of(1990,05,05));
                     utilisateur.setTelephone(eDG2.getMobile());
                     utilisateur.setTelephoneFixe(eDG2.getLandline());
 
@@ -963,6 +954,5 @@ public class EtudiantServiceImpl implements EtudiantService {
             throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
         }
     }
-
 }
 

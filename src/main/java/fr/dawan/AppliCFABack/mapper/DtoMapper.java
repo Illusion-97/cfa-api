@@ -76,146 +76,144 @@ import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 @Component
 public interface DtoMapper {
 
-	@Mapping(source = ".", target = ".")
-	CompetenceProfessionnelleDto competenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
+    @Mapping(source = ".", target = ".")
+    CompetenceProfessionnelleDto competenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
 
-	@Mapping(source = ".", target = ".")
-	ActiviteTypeDto activiteTypeToActiviteDto(ActiviteType activiteType);
+    @Mapping(source = ".", target = ".")
+    ActiviteTypeDto activiteTypeToActiviteDto(ActiviteType activiteType);
 
-	@Mapping(source = ".", target = ".")
-	AdresseDto adresseToAdresseDto(Adresse adresse);
+    @Mapping(source = ".", target = ".")
+    AdresseDto adresseToAdresseDto(Adresse adresse);
 
-	@Mapping(source = ".", target = ".")
-	CEFDto cefToCEFDto(CEF cef);
+    @Mapping(source = ".", target = ".")
+    CEFDto cefToCEFDto(CEF cef);
 
-	@Mapping(source = ".", target = ".")
-	CentreFormationDto centreFormationToCentreFormationDto(CentreFormation centreFormation);
+    @Mapping(source = ".", target = ".")
+    CentreFormationDto centreFormationToCentreFormationDto(CentreFormation centreFormation);
 
-	@Mapping(source = ".", target = ".")
-	CongeDto congeToCongeDto(Conge conge);
+    @Mapping(source = ".", target = ".")
+    CongeDto congeToCongeDto(Conge conge);
 
-	@Mapping(source = ".", target = ".")
-	CursusDto cursusToCursusDto(Cursus cursus);
+    @Mapping(source = ".", target = ".")
+    CursusDto cursusToCursusDto(Cursus cursus);
 
-	@Mapping(source = ".", target = ".")
-	DevoirDto devoirToDevoirDto(Devoir devoir);
+    @Mapping(source = ".", target = ".")
+    DevoirDto devoirToDevoirDto(Devoir devoir);
 
-	@Mapping(source = ".", target = ".")
-	EntrepriseDto entrepriseToEntrepriseDto(Entreprise entreprise);
+    @Mapping(source = ".", target = ".")
+    EntrepriseDto entrepriseToEntrepriseDto(Entreprise entreprise);
 
-	@Mapping(source = ".", target = ".")
-	EtudiantDto etudiantToEtudiantDto(Etudiant etudiant);
+    @Mapping(source = ".", target = ".")
+    EtudiantDto etudiantToEtudiantDto(Etudiant etudiant);
 
-	@Mapping(source = ".", target = ".")
-	ExamenDto examenToExamenDto(Examen examen);
+    @Mapping(source = ".", target = ".")
+    ExamenDto examenToExamenDto(Examen examen);
 
-	@Mapping(source = ".", target = ".")
-	@Mapping(source = "utilisateur", target = "utilisateurDto")
-	FormateurDto formateurToFormateurDto(Formateur formateur);
+    @Mapping(source = ".", target = ".")
+    @Mapping(source = "utilisateur", target = "utilisateurDto")
+    FormateurDto formateurToFormateurDto(Formateur formateur);
 
-	@Mapping(source = ".", target = ".")
-	FormationDto formationToFormationDto(Formation formation);
+    @Mapping(source = ".", target = ".")
+    FormationDto formationToFormationDto(Formation formation);
 
-	@Mapping(source = ".", target = ".")
-	GroupeEtudiantDto groupeEtudiantToGroupEtudiantDto(GroupeEtudiant groupeEtudiant);
+    @Mapping(source = ".", target = ".")
+    GroupeEtudiantDto groupeEtudiantToGroupEtudiantDto(GroupeEtudiant groupeEtudiant);
 
-	@Mapping(source = ".", target = ".")
-	InterventionDto interventionToInterventionDto(Intervention intervention);
+    @Mapping(source = ".", target = ".")
+    InterventionDto interventionToInterventionDto(Intervention intervention);
 
-	@Mapping(source = ".", target = ".")
-	NoteDto noteToNoteDto(Note note);
+    @Mapping(source = ".", target = ".")
+    NoteDto noteToNoteDto(Note note);
 
-	@Mapping(source = ".", target = ".")
-	PassageExamenDto passageExamenToPassageExamenDto(PassageExamen passageExamen);
+    @Mapping(source = ".", target = ".")
+    PassageExamenDto passageExamenToPassageExamenDto(PassageExamen passageExamen);
 
-	@Mapping(source = ".", target = ".")
-	ProjetDto projetToProjetDto(Projet projet);
+    @Mapping(source = ".", target = ".")
+    ProjetDto projetToProjetDto(Projet projet);
 
-	@Mapping(source = ".", target = ".")
-	@Mapping(source = "cursus", target = "cursusDto")
-	PromotionDto promotionToPromotionDto(Promotion promotion);
+    @Mapping(source = ".", target = ".")
+    @Mapping(source = "cursus", target = "cursusDto")
+    PromotionDto promotionToPromotionDto(Promotion promotion);
 
-	@Mapping(source = ".", target = ".")
-	UtilisateurDto utilisateurToUtilisateurDto(Utilisateur utilisateur);
+    @Mapping(source = ".", target = ".")
+    UtilisateurDto utilisateurToUtilisateurDto(Utilisateur utilisateur);
 
-	@Mapping(source = ".", target = ".")
-	UtilisateurRoleDto utilisateurRoleToUtilisateurRoleDto(UtilisateurRole utilisateurRole);
+    @Mapping(source = ".", target = ".")
+    UtilisateurRoleDto utilisateurRoleToUtilisateurRoleDto(UtilisateurRole utilisateurRole);
 
-	@Mapping(source = ".", target = ".")
-	FichePosteDto fichePosteToFichePosteDto(FichePoste fichePoste);
+    @Mapping(source = ".", target = ".")
+    FichePosteDto fichePosteToFichePosteDto(FichePoste fichePoste);
 
-	@Mapping(source = ".", target = ".")
-	DossierProfessionnelDto dossierProfessionnelToDossierProfessionnelDto(DossierProfessionnel dossierProfessionnel);
+    @Mapping(source = ".", target = ".")
+    DossierProfessionnelDto dossierProfessionnelToDossierProfessionnelDto(DossierProfessionnel dossierProfessionnel);
 
-	@Mapping(source = ".", target = ".")
-	DossierProjetDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet);
+    @Mapping(source = ".", target = ".")
+    DossierProjetDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet);
 
-	@Mapping(source = ".", target = ".")
-	FicheEntrepriseDto ficheEntrepriseToFicheEntrepriseDto(FicheEntreprise FicheEntreprise);
+    @Mapping(source = ".", target = ".")
+    FicheEntrepriseDto ficheEntrepriseToFicheEntrepriseDto(FicheEntreprise FicheEntreprise);
 
-	@Mapping(source = ".", target = ".")
-	ContratDto contratToContratDto(Contrat contrat);
+    @Mapping(source = ".", target = ".")
+    ContratDto contratToContratDto(Contrat contrat);
 
-	@Mapping(source = ".", target = ".")
-	MaitreApprentissageDto maitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage);
+    @Mapping(source = ".", target = ".")
+    MaitreApprentissageDto maitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage);
 
-	@Mapping(source = ".", target = ".")
-	CerfaDto cerfaToCerfaDto(Cerfa cerfa);
+    @Mapping(source = ".", target = ".")
+    CerfaDto cerfaToCerfaDto(Cerfa cerfa);
 
-	@Mapping(source = ".", target = ".")
-	RemunerationDto remunerationTORemunerationDto(Remuneration remuneration);
+    @Mapping(source = ".", target = ".")
+    RemunerationDto remunerationTORemunerationDto(Remuneration remuneration);
 
-	@Mapping(source = ".", target = ".")
-	ActiviteTypeDto activiteTypeToActiviteTypeDto(ActiviteType activiteType);
+    @Mapping(source = ".", target = ".")
+    ActiviteTypeDto activiteTypeToActiviteTypeDto(ActiviteType activiteType);
 
-	@Mapping(source = ".", target = ".")
-	CompetenceProfessionnelleDto competenceProfessionnelleToCompetenceProfessionnelleDto(
-			CompetenceProfessionnelle competenceProfessionnelle);
+    @Mapping(source = ".", target = ".")
+    CompetenceProfessionnelleDto competenceProfessionnelleToCompetenceProfessionnelleDto(
+            CompetenceProfessionnelle competenceProfessionnelle);
 
-	@Mapping(target = "cursusLst", ignore = true)
-	@Mapping(source = "id", target = "idDg2")
-	@Mapping(source = "title", target = "titre")
-	@Mapping(source = "objectives", target = "objectif")
-	@Mapping(source = "prerequisites", target = "prerequis")
-	Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
+    @Mapping(target = "cursusLst", ignore = true)
+    @Mapping(source = "id", target = "idDg2")
+    @Mapping(source = "title", target = "titre")
+    @Mapping(source = "objectives", target = "objectif")
+    @Mapping(source = "prerequisites", target = "prerequis")
+    Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
 
-	@Mapping(target = "activiteTypes", ignore = true)
-	@Mapping(target = "formations", ignore = true)
-	@Mapping(source = "id", target = "idDg2")
-	@Mapping(source = "title", target = "titre")
-	@Mapping(source = "duration", target = "duree")
-	Cursus cursusDG2DtoToCursus(CursusDG2Dto cursusDG2Dto);
+    @Mapping(target = "activiteTypes", ignore = true)
+    @Mapping(target = "formations", ignore = true)
+    @Mapping(source = "id", target = "idDg2")
+    @Mapping(source = "title", target = "titre")
+    @Mapping(source = "duration", target = "duree")
+    Cursus cursusDG2DtoToCursus(CursusDG2Dto cursusDG2Dto);
 
 //	@Mapping(target = "formations", ignore = true)
 //	@Mapping(source = "slug", target = "titre")
 //	Cursus cursusDG2DtoToCursus(InterventionDG2Dto cursusDG2Dto);
 
-	List<Cursus> lstCursusDG2DtoToListCursus(List<InterventionDG2Dto> lstCurusDto);
+    List<Cursus> lstCursusDG2DtoToListCursus(List<InterventionDG2Dto> lstCurusDto);
 
-	@Mapping(target = "adresse", ignore = true)
-	@Mapping(target = "entreprise", ignore = true)
-	@Mapping(source = "name", target = "nom")
-	@Mapping(source = "id", target = "idDg2")
-	@Mapping(target = "id", ignore = true)
-	CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
-
-
-	@Mapping(source = ".", target = ".")
-	ExperienceProfessionnelleDto experienceProfessionnelleToExperienceProfessionnelleDto(
-			ExperienceProfessionnelle experienceProfessionnelle);
+    @Mapping(target = "adresse", ignore = true)
+    @Mapping(target = "entreprise", ignore = true)
+    @Mapping(source = "name", target = "nom")
+    @Mapping(source = "id", target = "idDg2")
+    @Mapping(target = "id", ignore = true)
+    CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
 
 
-	@Mapping(source = "personId", target = "idDg2")
-	@Mapping(target = "promotions", ignore = true)
-	@Mapping(target = "groupes", ignore = true)
-	@Mapping(target = "notes", ignore = true)
-	@Mapping(target = "dossierProfessionnel", ignore = true)
-	@Mapping(target = "dossierProjet", ignore = true)
-//	@Mapping(target = "address2", ignore = true)
-//	@Mapping(target = "adresse3", ignore = true)
-//	@Mapping(target = "country", ignore = true)
+    @Mapping(source = ".", target = ".")
+    ExperienceProfessionnelleDto experienceProfessionnelleToExperienceProfessionnelleDto(
+            ExperienceProfessionnelle experienceProfessionnelle);
+
+
+    @Mapping(source = "personId", target = "idDg2")
+    //@Mapping(source = "street", target = "etudiant.utilisateur.adresse.libelle")
+    @Mapping(target = "promotions", ignore = true)
+    @Mapping(target = "groupes", ignore = true)
+    @Mapping(target = "notes", ignore = true)
+    @Mapping(target = "dossierProfessionnel", ignore = true)
+    @Mapping(target = "dossierProjet", ignore = true)
     Etudiant etudiantUtilisateurDG2DtoToEtudiant(EtudiantUtilisateurDG2Dto eDG2);
-	
+
 //	@Mapping(source = ".", target = ".")
 //	@Mapping(source = "cursus", target = "cursusDescription")
 //	PromotionEtudiantDto PromotionToPromotionEtudiantDto(Promotion promotion);
