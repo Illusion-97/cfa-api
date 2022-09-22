@@ -13,6 +13,8 @@ public interface MaitreApprentissageService {
 
 	MaitreApprentissageDto getById(long id);
 	
+	MaitreApprentissageDto getMaitreApprentissageByEtudiantId(long id);
+	
 	MaitreApprentissageDto saveOrUpdate(MaitreApprentissageDto cDto);
 
 	void deleteById(long id);

@@ -50,6 +50,11 @@ public class MaitreApprentissageController {
 			@PathVariable(value = "size") int size) {
 		return maitreApprentissageService.getAllMaitreApprentissage(page, size);
 	}
+	
+	@GetMapping(value="/etudiant/{id}", produces = "application/json")
+	public MaitreApprentissageDto getByEtudiantId(@PathVariable("id") long id) {
+		return maitreApprentissageService.getMaitreApprentissageByEtudiantId(id);
+	}
 
 	// ##################################################
 	// # POST #

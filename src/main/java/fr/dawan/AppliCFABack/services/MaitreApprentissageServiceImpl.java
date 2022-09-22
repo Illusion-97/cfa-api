@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.MaitreApprentissageDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -127,5 +128,18 @@ public class MaitreApprentissageServiceImpl implements MaitreApprentissageServic
 		maitreApprentissageRepository.deleteById(id);
 		
 	}
+
+	@Override
+	public MaitreApprentissageDto getMaitreApprentissageByEtudiantId(long id) {
+		Optional<MaitreApprentissage> maOpt = maitreApprentissageRepository.findMaitreApprentissageByEtudiantId(id);
+		if(maOpt.isPresent()) {
+			MaitreApprentissageDto maDto = DtoTools.convert(maOpt.get(), MaitreApprentissageDto.class);
+			maDto.setUtilisateurDto(DtoTools.convert(maOpt.get().getUtilisateur(), UtilisateurDto.class));
+			return maDto;
+		}
+		return null;
+	}
+
+
 
 }
