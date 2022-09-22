@@ -15,7 +15,7 @@ public class MaitreApprentissageDto extends BaseEntityDto implements Serializabl
 
 	private long etudiantId;
 
-	private long utilisateurId;
+	private UtilisateurDto utilisateurDto;
 
 	/**
 	 * @return le etudiantId
@@ -33,18 +33,22 @@ public class MaitreApprentissageDto extends BaseEntityDto implements Serializabl
 	}
 
 	/**
-	 * @return le utilisateurId
+	 * @return le utilisateurDto
 	 */
-	public long getUtilisateurId() {
-		return utilisateurId;
+	public UtilisateurDto getUtilisateurDto() {
+		return utilisateurDto;
 	}
 
 	/**
-	 * @param utilisateurId le utilisateurId à affecter
-	 * 
+	 * @param utilisateurDto le utilisateurDto à affecter
+	 
 	 */
-	public void setUtilisateurId(long utilisateurId) {
-		this.utilisateurId = utilisateurId;
+	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
+		this.utilisateurDto = utilisateurDto;
 	}
+
+
+
+
 
 }
