@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantPromotionDossierProDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -124,6 +125,11 @@ public class DossierProfessionnelController {
 	@GetMapping(value = "/etudiant",produces = "application/json")
 	public List<DossierProEtudiantDto> getAllDossierProfessionnel() {
 		return dossierProService.getAllDossierProfessionnel();
+	}
+
+	@GetMapping(value = "/cursus/etudiant/{id}", produces = "application/json")
+	public EtudiantPromotionDossierProDto getAllDossierProfessionnelByEtudiantAndByCursus(@PathVariable("id") long id) {
+		return dossierProService.getAllDossierProfessionnelByEtudiant(id);
 	}
 
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "application/json", produces = "application/json")

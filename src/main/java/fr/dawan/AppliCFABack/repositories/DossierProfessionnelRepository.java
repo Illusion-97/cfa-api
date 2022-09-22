@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.repositories;
 
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.customdtos.DossierProEtudiantDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,6 @@ public interface DossierProfessionnelRepository extends JpaRepository<DossierPro
 	@Query("SELECT DISTINCT d FROM DossierProfessionnel d")
 	List<DossierProfessionnel> findAllDossierPro();
 
+	@Query("SELECT d FROM DossierProfessionnel d JOIN d.etudiant e ON e.id = :id JOIN e.promotions p JOIN p.cursus c WHERE d.cursus.id = c.id")
+    DossierProfessionnel findDossierProByEtudiantIdAndCursusId(long id);
 }

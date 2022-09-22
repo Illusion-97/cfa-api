@@ -206,7 +206,6 @@ public interface DtoMapper {
 
 
     @Mapping(source = "personId", target = "idDg2")
-    //@Mapping(source = "street", target = "etudiant.utilisateur.adresse.libelle")
     @Mapping(target = "promotions", ignore = true)
     @Mapping(target = "groupes", ignore = true)
     @Mapping(target = "notes", ignore = true)

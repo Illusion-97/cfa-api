@@ -18,6 +18,9 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 	@OneToMany(mappedBy = "dossierProfessionnel", cascade = CascadeType.ALL)
 	private List<ExperienceProfessionnelle> experienceProfessionnelles;
 
+	@ManyToOne
+	private Etudiant etudiant;
+
 	public String getNom() {
 		return nom;
 	}
@@ -40,5 +43,13 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 
 	public void setExperienceProfessionnelles(List<ExperienceProfessionnelle> experienceProfessionnelles) {
 		this.experienceProfessionnelles = experienceProfessionnelles;
+	}
+
+	public Etudiant getEtudiant() {
+		return etudiant;
+	}
+
+	public void setEtudiant(Etudiant etudiant) {
+		this.etudiant = etudiant;
 	}
 }

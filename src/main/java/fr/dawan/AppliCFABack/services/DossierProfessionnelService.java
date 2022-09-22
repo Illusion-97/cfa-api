@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.customdtos.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantPromotionDossierProDto;
 import fr.dawan.AppliCFABack.tools.PdfTools;
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
@@ -32,4 +33,6 @@ public interface DossierProfessionnelService {
 	List<DossierProEtudiantDto> getAllDossierProfessionnel();
 
     String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws PdfTools, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
+
+	EtudiantPromotionDossierProDto getAllDossierProfessionnelByEtudiant(long id);
 }
