@@ -139,14 +139,15 @@ public class PromotionServiceImpl implements PromotionService {
 	
 	@Override
 	public PromotionDto getById(long id) {
+		Optional<Promotion> promoOpt = promoRepo.findById(id);
 		Promotion promo = promoRepo.getOne(id);
 		PromotionDto pDto = mapper.promotionToPromotionDto(promo);
 				
 		pDto.setCursusDto(mapper.cursusToCursusDto(promo.getCursus()));
 		pDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(promo.getCentreFormation()));
 		pDto.setReferentPedagogiqueDto(mapper.utilisateurToUtilisateurDto(promo.getReferentPedagogique()));
-		pDto.setCefDto(mapper.cefToCEFDto(promo.getCef()));		
-		pDto.getCefDto().setUtilisateurDto(mapper.utilisateurToUtilisateurDto(promo.getCef().getUtilisateur()));
+//		pDto.setCefDto(mapper.cefToCEFDto(promo.getCef()));		
+//		pDto.getCefDto().setUtilisateurDto(mapper.utilisateurToUtilisateurDto(promo.getCef().getUtilisateur()));
 		pDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(promo.getCentreFormation()));
 		
 		List<Etudiant> etudiants = promo.getEtudiants();
