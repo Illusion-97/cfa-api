@@ -687,7 +687,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public EtudiantDossierDto getByEtudiantIdForDossierPro(long id) {
 		Optional<Etudiant> e = etudiantRepository.findById(id);
 		if (!e.isPresent()) return null;
-		return DtoTools.convert(e, EtudiantDossierDto.class);
+		return DtoTools.convert(e.get(), EtudiantDossierDto.class);
 	}
 
 	@Override

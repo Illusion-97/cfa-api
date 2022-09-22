@@ -1,17 +1,15 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -21,8 +19,6 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.DossierProEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.entities.Etudiant;
@@ -192,9 +188,13 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         for(ExperienceProfessionnelle exp : exps){
             exp.setDossierProfessionnel(dp);
         }
-        dp = dossierProRepo.saveAndFlush(dp);
 
         EtudiantDossierDto eDto = etudiantService.getByEtudiantIdForDossierPro(id);
+        //Etudiant etudiant = DtoTools.convert(eDto, Etudiant.class);
+        Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+        dp.setEtudiant(etudiant.get());
+        dp = dossierProRepo.saveAndFlush(dp);
+
         DossierProEtudiantDto dossierDto = DtoTools.convert(dp, DossierProEtudiantDto.class);
         List<DossierProEtudiantDto> dpList = eDto.getDossierProfessionnel();
         if(!dpList.contains(dossierDto)){
@@ -203,7 +203,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
             int index = dpList.indexOf(dossierDto);
             dpList.set(index, dossierDto);
         }
-
+        //etudiant = etudiantRepository.saveAndFlush(etudiant);
         return dossierDto;
     }
 
@@ -243,6 +243,32 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
             return outputPdf;
         }
         return null;
+    }
+
+    @Override
+    public EtudiantPromotionDossierProDto getAllDossierProfessionnelByEtudiant(long id) {
+
+        Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+        EtudiantPromotionDossierProDto eDto = DtoTools.convert(etudiant, EtudiantPromotionDossierProDto.class);
+
+        DossierProfessionnel dossierProfessionnel = dossierProRepo.findDossierProByEtudiantIdAndCursusId(id);
+        DossierProEtudiantDto dpDto = DtoTools.convert(dossierProfessionnel, DossierProEtudiantDto.class);
+
+        for(PromotionDossierProDto pDto : eDto.getPromotions()) {
+            pDto.getCursus().setDossierProfessionnel(dpDto);
+            pDto.getCursus().getDossierProfessionnel().getCursus().getActiviteTypes().stream().map(ac -> {
+                Set<CompetenceDossierProDto> cp = ac.getCompetenceProfessionnelles();
+                for(CompetenceDossierProDto c : cp) {
+                    for(ExperienceProfessionnelleDto exp : dpDto.getExperienceProfessionnelles()) {
+                        if(exp.getCompetenceProfessionnelleId() == c.getId()) {
+                            c.setExperienceProfessionnelles(dpDto.getExperienceProfessionnelles());
+                        }
+                    }
+                }
+                return pDto;
+            }).collect(Collectors.toList());
+        }
+        return eDto;
     }
 
 
