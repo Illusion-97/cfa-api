@@ -2,12 +2,16 @@ package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.FileException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public interface UtilisateurService {
@@ -56,5 +60,8 @@ public interface UtilisateurService {
 	boolean resetPassword(ResetResponse reset) throws EmailResetPasswordException;
 
 	String generatePassword();
+
+	void fetchAllDG2Employees(String email, String password)
+			throws FetchDG2Exception, URISyntaxException, JsonProcessingException;
 
 }

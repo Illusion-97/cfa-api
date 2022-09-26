@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -12,7 +13,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Formateur extends BaseEntity implements Serializable {
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Utilisateur utilisateur;
 
 	@ManyToOne

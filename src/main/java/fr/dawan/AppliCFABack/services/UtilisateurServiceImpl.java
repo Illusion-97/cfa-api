@@ -2,6 +2,8 @@ package fr.dawan.AppliCFABack.services;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,26 +14,39 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.univocity.parsers.common.record.Record;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 
 import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EmployeeDG2Dto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.ResetResponse;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
+import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
@@ -42,6 +57,7 @@ import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
+import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
 import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
@@ -50,6 +66,7 @@ import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.FileException;
 import fr.dawan.AppliCFABack.tools.HashTools;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
@@ -88,12 +105,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	UtilisateurRoleService utilisateurRoleService;
 	@Autowired
 	EntrepriseRepository entrepriseRepository;
+	@Autowired
+	CentreFormationRepository centreFormationRepository;
 	
 	@Autowired
 	private DtoMapper mapper;
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	private static Logger logger = Logger.getGlobal();
 
@@ -281,7 +303,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		try {
 			// Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
 			if (user.getId() == 0) {
-				if (user.getPassword().equals("") || user.getPassword() == null) {
+				if ( user.getPassword() == null|| user.getPassword().equals("") ) {
 					user.setPassword(generatePassword());
 					// emailService.newPassword(user.getLogin(), user.getPassword());
 					user.setPassword(HashTools.hashSHA512(user.getPassword()));
@@ -867,4 +889,76 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 
 	}
+	/**
+	 * Enregistre en base de données le employees récupéré de DG2
+	 * 
+	 * @param email , password
+	 * @return void
+	 */
+	@Override
+	public void fetchAllDG2Employees(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		List<EmployeeDG2Dto> cResJson;
+		
+		//url dg2 qui concerne la recupération des locations
+		URI url = new URI("https://dawan.org/api2/cfa/employees");
+		
+		//recupérartion des headers / email / password dg2
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("x-auth-token", email + ":" + password);
+
+		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+
+		if (repWs.getStatusCode() == HttpStatus.OK) {
+			String json = repWs.getBody();
+			//recuperation des values en json et lecture
+			cResJson = objectMapper.readValue(json, new TypeReference<List<EmployeeDG2Dto>>() {
+			});
+			//boucle pour récupérer toute la liste
+			for (EmployeeDG2Dto eDG2 : cResJson) {
+				Utilisateur utilisateurImport = mapper.employeeDg2ToUtilisateur(eDG2);
+				Optional<CentreFormation> centreFormationOpt = centreFormationRepository.findByIdDg2(eDG2.getLocationId());
+				Optional<Utilisateur> optUtlisateur = utilisateurRepository.findByIdDg2(utilisateurImport.getIdDg2());
+				if (centreFormationOpt.isPresent()) {
+					utilisateurImport.setCentreFormation(centreFormationOpt.get());
+				}
+				
+				if (optUtlisateur.isPresent()) {
+					if (optUtlisateur.get().equals(utilisateurImport)) {
+						continue;}
+					else  {
+						if (utilisateurImport != null) {
+							utilisateurImport.setId(optUtlisateur.get().getId());
+							utilisateurImport.setVersion(optUtlisateur.get().getVersion());
+						
+						}
+					}
+					try {
+					utilisateurRepository.saveAndFlush(utilisateurImport);
+
+					} catch (Exception e) {
+						logger.log(Level.SEVERE,"SaveAndFlush failed", e);
+
+					}
+				} else {
+					
+					try {
+						utilisateurImport.setPassword(HashTools.hashSHA512("password"));
+					    utilisateurRepository.saveAndFlush(utilisateurImport);
+
+
+					} catch (Exception e) {
+						logger.log(Level.SEVERE,"SaveAndFlush failed", e);
+
+					
+					}
+				}
+			}
+		} else {
+			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
+		}
+	}
+	
 }

@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,4 +23,6 @@ public interface FormateurRepository extends JpaRepository<Formateur, Long> {
 	
 	// Liste des formateurs par l'id de l'intervention
 	List<Formateur> findByInterventionsId(long id);
+
+	Optional<Formateur> findByUtilisateurId(long id);
 }

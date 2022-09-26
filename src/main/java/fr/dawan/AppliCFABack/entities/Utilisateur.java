@@ -10,6 +10,9 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Utilisateur extends BaseEntity implements Serializable {
+	
+	@Column(nullable = true) 
+	private long idDg2;
 
 	@Column(nullable = false, length = 255)
 	private String login;
@@ -23,7 +26,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 255)
 	private String nom;
 
-	@Column(nullable = false, length = 255)
+	@Column(nullable = true, length = 255)
 	private String civilite;
 
 	private LocalDate dateDeNaissance;
@@ -51,6 +54,9 @@ public class Utilisateur extends BaseEntity implements Serializable {
 
 	@ManyToOne
 	private Entreprise entreprise;
+	
+	@ManyToOne
+	private CentreFormation centreFormation;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Etudiant etudiant;
@@ -183,4 +189,67 @@ public class Utilisateur extends BaseEntity implements Serializable {
 		this.telephoneFixe = telephoneFixe;
 	}
 
+	/**
+	 * @return le idDg2
+	 */
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	/**
+	 * @param idDg2 le idDg2 à affecter
+	 
+	 */
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
+	}
+
+	/**
+	 * @return le centreFormation
+	 */
+	public CentreFormation getCentreFormation() {
+		return centreFormation;
+	}
+
+	/**
+	 * @param centreFormation le centreFormation à affecter
+	 
+	 */
+	public void setCentreFormation(CentreFormation centreFormation) {
+		this.centreFormation = centreFormation;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Utilisateur other = (Utilisateur) obj;
+		if (idDg2 != other.idDg2)
+			return false;
+		if (nom == null) {
+			if (other.nom != null)
+				return false;
+		} else if (!nom.equals(other.nom))
+			return false;
+		if (prenom == null) {
+			if (other.prenom != null)
+				return false;
+		} else if (!prenom.equals(other.prenom))
+			return false;
+		if (login == null) {
+			if (other.login != null)
+				return false;
+		} else if (!login.equals(other.login))
+			return false;
+		if (centreFormation.getId() == 0) {
+			if (other.centreFormation.getId() != 0)
+				return false;
+		} else if (!(centreFormation.getId() == other.centreFormation.getId()))
+			return false;
+		return true;
+	}
+	
 }

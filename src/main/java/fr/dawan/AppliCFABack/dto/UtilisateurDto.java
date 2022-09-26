@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
+
+import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 
 /**
@@ -31,6 +34,8 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 	private EtudiantDto etudiantDto;
 	private FormateurDto formateurDto;
 	private CEFDto cefDto;
+	private long idDg2;
+	private long centreFormationId;
 
 	public UtilisateurDto() {
 		super();
@@ -220,6 +225,37 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 	
 	public Entreprise getEntrepriseDto() {
 		return entrepriseDto;
+	}
+	
+
+	/**
+	 * @return le idDg2
+	 */
+	public long getIdDg2() {
+		return idDg2;
+	}
+
+	/**
+	 * @param idDg2 le idDg2 à affecter
+	 
+	 */
+	public void setIdDg2(long idDg2) {
+		this.idDg2 = idDg2;
+	}
+
+	/**
+	 * @return le centreFormationId
+	 */
+	public long getCentreFormationId() {
+		return centreFormationId;
+	}
+
+	/**
+	 * @param centreFormationId le centreFormationId à affecter
+	 
+	 */
+	public void setCentreFormationId(long centreFormationId) {
+		this.centreFormationId = centreFormationId;
 	}
 
 	@Override
