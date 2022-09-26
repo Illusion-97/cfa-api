@@ -936,22 +936,21 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						}
 					}
 					try {
-						utilisateurRepository.saveAndFlush(utilisateurImport);
+					utilisateurRepository.saveAndFlush(utilisateurImport);
+
 					} catch (Exception e) {
 						logger.log(Level.SEVERE,"SaveAndFlush failed", e);
-						e.printStackTrace();
 
 					}
 				} else {
 					
 					try {
 						utilisateurImport.setPassword(HashTools.hashSHA512("password"));
-						utilisateurRepository.saveAndFlush(utilisateurImport);
+					    utilisateurRepository.saveAndFlush(utilisateurImport);
 
 
 					} catch (Exception e) {
 						logger.log(Level.SEVERE,"SaveAndFlush failed", e);
-						e.printStackTrace();
 
 					
 					}

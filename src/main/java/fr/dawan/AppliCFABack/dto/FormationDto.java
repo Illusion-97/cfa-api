@@ -22,6 +22,38 @@ public class FormationDto extends BaseEntityDto implements Serializable {
 	private String prerequis;
 	private String plan;
 	private List<Long> cursusLstId;
+	private List<CursusDto> cursus;
+	private List<InterventionDto> interventions;
+
+	/**
+	 * @return le cursus
+	 */
+	public List<CursusDto> getCursus() {
+		return cursus;
+	}
+
+	/**
+	 * @param cursus le cursus à affecter
+	 
+	 */
+	public void setCursus(List<CursusDto> cursus) {
+		this.cursus = cursus;
+	}
+
+	/**
+	 * @return le interventions
+	 */
+	public List<InterventionDto> getInterventions() {
+		return interventions;
+	}
+
+	/**
+	 * @param interventions le interventions à affecter
+	 
+	 */
+	public void setInterventions(List<InterventionDto> interventions) {
+		this.interventions = interventions;
+	}
 
 	public FormationDto() {
 		super();

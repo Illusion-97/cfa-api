@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -76,8 +77,19 @@ public class FormationServiceImpl implements FormationService {
 
 		List<FormationDto> lstDto = new ArrayList<>();
 		for (Formation f : lst) {
-
-			lstDto.add(DtoTools.convert(f, FormationDto.class));
+			FormationDto formationDto = DtoTools.convert(f,FormationDto.class);
+			List<Intervention> interventions = interventionRepository.findAllByFormationId(f.getId());
+			List<InterventionDto> interventionDtos = new ArrayList<>();
+			if (interventions != null) {
+				
+				for (Intervention i : interventions) {
+					interventionDtos.add(DtoTools.convert(i, InterventionDto.class));
+				}
+			}
+			if (!interventionDtos.isEmpty()) {
+				formationDto.setInterventions(interventionDtos);
+			}
+			lstDto.add(formationDto);
 
 		}
 		return lstDto;
@@ -102,8 +114,19 @@ public class FormationServiceImpl implements FormationService {
 
 		List<FormationDto> lstDto = new ArrayList<>();
 		for (Formation f : lst) {
-
-			lstDto.add(DtoTools.convert(f, FormationDto.class));
+			FormationDto formationDto = DtoTools.convert(f,FormationDto.class);
+			List<Intervention> interventions = interventionRepository.findAllByFormationId(f.getId());
+			List<InterventionDto> interventionDtos = new ArrayList<>();
+			if (interventions != null) {
+				
+				for (Intervention i : interventions) {
+					interventionDtos.add(DtoTools.convert(i, InterventionDto.class));
+				}
+			}
+			if (!interventionDtos.isEmpty()) {
+				formationDto.setInterventions(interventionDtos);
+			}
+			lstDto.add(formationDto);
 
 		}
 		return lstDto;

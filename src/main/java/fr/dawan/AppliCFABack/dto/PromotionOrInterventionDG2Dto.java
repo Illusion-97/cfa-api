@@ -17,6 +17,7 @@ public class PromotionOrInterventionDG2Dto implements Serializable {
 	private String type;
 	@JsonIgnore
 	private long nbParticipants;
+	private long trainerPersonId;
 	/**
 	 * @return le id
 	 */
@@ -128,6 +129,19 @@ public class PromotionOrInterventionDG2Dto implements Serializable {
 	 */
 	public void setNbParticipants(long nbParticipants) {
 		this.nbParticipants = nbParticipants;
+	}
+	/**
+	 * @return le trainerPersonId
+	 */
+	public long getTrainerPersonId() {
+		return trainerPersonId;
+	}
+	/**
+	 * @param trainerPersonId le trainerPersonId à affecter
+	 
+	 */
+	public void setTrainerPersonId(long trainerPersonId) {
+		this.trainerPersonId = trainerPersonId;
 	}
 	
 	

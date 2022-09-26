@@ -284,7 +284,10 @@ public class PromotionServiceImpl implements PromotionService {
 		List<Promotion> promo = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<>();
 		for (Promotion p : promo) {
-			res.add(DtoTools.convert(p, PromotionDto.class));
+			PromotionDto promotionDto = DtoTools.convert(p, PromotionDto.class);
+			promotionDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(p.getCentreFormation()));
+			res.add(promotionDto);
+			
 		}
 		return res;
 	}

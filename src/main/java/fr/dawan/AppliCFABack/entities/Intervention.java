@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -39,7 +40,7 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 	@ManyToMany
 	private List<Promotion> promotions; // CDA 2021
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Formateur> formateurs;
 
 	@ManyToMany(mappedBy = "interventions")
@@ -167,8 +168,10 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 			return false;
 		Intervention other = (Intervention) obj;
 		return Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
-//				&& formation.getIdDg2()== other.formation.getIdDg2() 
-				&& idDg2 == other.idDg2;
-	}
+				//&& formation.getIdDg2()== other.formation.getIdDg2() 
+				&& idDg2 == other.idDg2
+				&& formateurs == other.formateurs
+				&& promotions == other.promotions;}
+
 
 }

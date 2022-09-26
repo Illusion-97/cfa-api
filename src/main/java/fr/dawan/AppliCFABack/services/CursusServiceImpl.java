@@ -197,7 +197,7 @@ public class CursusServiceImpl implements CursusService {
 	
 	//import des cursus DG2
 	@Override
-	public void fetchDG2Cursus(String email, String password) throws FetchDG2Exception, URISyntaxException {
+	public void fetchDG2Cursus(String email, String password) throws  FetchDG2Exception, URISyntaxException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<CursusDG2Dto> fResJson = new ArrayList<>();
 		
@@ -248,10 +248,12 @@ public class CursusServiceImpl implements CursusService {
 					}
 				}
 			} else {
-				throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
+				throw new FetchDG2Exception("Status Code in the webservice WDG2 not correct");
 			}
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Failed fetch dg2", e);
+
+			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 		
 		
