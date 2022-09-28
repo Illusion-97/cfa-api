@@ -2,6 +2,8 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 
+import fr.dawan.AppliCFABack.entities.Entreprise.EmployeurType;
+
 /**
  * 
  * 
@@ -16,8 +18,8 @@ public class EntrepriseDto extends BaseEntityDto implements Serializable {
 	private String raisonSociale;
 	private String siret;
 	private String naf;
-	private String effectifTotal;
-	private String employeurType;
+	private int effectifTotal;
+	private EmployeurType employeurType;
 	private AdresseDto adresseSiegeDto;
 
 	public EntrepriseDto() {
@@ -66,31 +68,34 @@ public class EntrepriseDto extends BaseEntityDto implements Serializable {
 		this.naf = naf;
 	}
 
+
 	/**
-	 * @return the effectifTotal
+	 * @return le effectifTotal
 	 */
-	public String getEffectifTotal() {
+	public int getEffectifTotal() {
 		return effectifTotal;
 	}
 
 	/**
-	 * @param effectifTotal the effectifTotal to set
+	 * @param effectifTotal le effectifTotal à affecter
+	 
 	 */
-	public void setEffectifTotal(String effectifTotal) {
+	public void setEffectifTotal(int effectifTotal) {
 		this.effectifTotal = effectifTotal;
 	}
 
 	/**
-	 * @return the employeurType
+	 * @return le employeurType
 	 */
-	public String getEmployeurType() {
+	public EmployeurType getEmployeurType() {
 		return employeurType;
 	}
 
 	/**
-	 * @param employeurType the employeurType to set
+	 * @param employeurType le employeurType à affecter
+	 
 	 */
-	public void setEmployeurType(String employeurType) {
+	public void setEmployeurType(EmployeurType employeurType) {
 		this.employeurType = employeurType;
 	}
 

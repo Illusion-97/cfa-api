@@ -16,9 +16,6 @@ public class Formateur extends BaseEntity implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Utilisateur utilisateur;
 
-	@ManyToOne
-	private Entreprise entreprise;
-
 	@ManyToMany(mappedBy = "formateurs")
 	private List<Intervention> interventions;
 
@@ -30,7 +27,6 @@ public class Formateur extends BaseEntity implements Serializable {
 		super();
 		this.id = id;
 		this.utilisateur = utilisateur;
-		this.entreprise = entreprise;
 		this.interventions = interventions;
 	}
 

@@ -66,7 +66,8 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	 * @return return une promotion si elle existe
 	 */
 	Optional<Promotion> getByEtudiantsIdAndInterventionsId( long etudiantId, long interventionId);
-
+	
+	//@Query("SELECT p from Promotion p JOIN FETCH p.etudiants WHERE p.idDg2 = :id")
 	Optional<Promotion> findByIdDg2(long id);
 
 	Page<Promotion> findPromotionsByCentreFormationId(long id, Pageable pageable);

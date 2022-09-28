@@ -16,13 +16,11 @@ import javax.persistence.OneToOne;
 @Entity
 public class Etudiant extends BaseEntity implements Serializable {
 
-	@Column(nullable = true)
-	private long idDg2;
 
 	@OneToOne
 	private Utilisateur utilisateur;
 
-	@ManyToMany(mappedBy = "etudiants")
+	@ManyToMany(mappedBy = "etudiants",cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	private List<Promotion> promotions;
 
 	@ManyToMany(mappedBy = "etudiants")
@@ -90,14 +88,6 @@ public class Etudiant extends BaseEntity implements Serializable {
 		this.utilisateur = utilisateur;
 	}
 
-	public long getIdDg2() {
-		return idDg2;
-	}
-
-	public void setIdDg2(long idDg2) {
-		this.idDg2 = idDg2;
-	}
-
 	public Set<Note> getNotes() {
 		return notes;
 	}
@@ -111,7 +101,7 @@ public class Etudiant extends BaseEntity implements Serializable {
 		if (this == o) return true;
 		if (!(o instanceof Etudiant)) return false;
 		Etudiant etudiant = (Etudiant) o;
-		return getIdDg2() == etudiant.getIdDg2() && Objects.equals(getUtilisateur(), etudiant.getUtilisateur());
+		return   Objects.equals(getUtilisateur(), etudiant.getUtilisateur());
 	}
 
 }

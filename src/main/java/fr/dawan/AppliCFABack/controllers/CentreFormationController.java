@@ -124,6 +124,7 @@ public class CentreFormationController {
 				centreFormationService.fetchAllDG2CentreFormation(splitUserDG2String[0], splitUserDG2String[1]);
 				return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
 			} catch (Exception e) {
+				e.printStackTrace();
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 						.body("Error while fetching data from the webservice DG2");
 			}

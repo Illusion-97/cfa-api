@@ -13,8 +13,7 @@ import java.io.Serializable;
 public class CEFDto extends BaseEntityDto implements Serializable{
 	
 	private UtilisateurDto utilisateurDto;
-	private CentreFormationDto centreFormationDto;
-	private EntrepriseDto entrepriseDto;
+
 	/**
 	 * @return the utilisateurDto
 	 */
@@ -26,30 +25,6 @@ public class CEFDto extends BaseEntityDto implements Serializable{
 	 */
 	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
 		this.utilisateurDto = utilisateurDto;
-	}
-	/**
-	 * @return the centreFormationDto
-	 */
-	public CentreFormationDto getCentreFormationDto() {
-		return centreFormationDto;
-	}
-	/**
-	 * @param centreFormationDto the centreFormationDto to set
-	 */
-	public void setCentreFormationDto(CentreFormationDto centreFormationDto) {
-		this.centreFormationDto = centreFormationDto;
-	}
-	/**
-	 * @return the entrepriseDto
-	 */
-	public EntrepriseDto getEntrepriseDto() {
-		return entrepriseDto;
-	}
-	/**
-	 * @param entrepriseDto the entrepriseDto to set
-	 */
-	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
-		this.entrepriseDto = entrepriseDto;
 	}
 
 

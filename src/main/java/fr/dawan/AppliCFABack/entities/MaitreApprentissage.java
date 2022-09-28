@@ -16,13 +16,15 @@ import javax.persistence.UniqueConstraint;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"utilisateur_id", "etudiant_id" })  )
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"utilisateur_id", "etudiant_id","promotion_id" })  )
 public class MaitreApprentissage extends BaseEntity implements Serializable {
 
 	@ManyToOne
 	private Etudiant etudiant;
 	@ManyToOne
 	private Utilisateur utilisateur;
+	@ManyToOne
+	private Promotion promotion;
 	
 	/**
 	 * @return le etudiant
@@ -50,5 +52,19 @@ public class MaitreApprentissage extends BaseEntity implements Serializable {
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
+	/**
+	 * @return le promotion
+	 */
+	public Promotion getPromotion() {
+		return promotion;
+	}
+	/**
+	 * @param promotion le promotion à affecter
+	 
+	 */
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
+	
 
 }

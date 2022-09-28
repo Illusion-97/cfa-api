@@ -37,17 +37,8 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@Column(nullable = true, length = 255)
 	private String telephoneFixe;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.PERSIST })
 	private Adresse adresse;
-	
-	@Column(nullable = true, length = 255)
-	private String address2;
-	
-	@Column(nullable = true, length = 255)
-	private String address3;
-	
-	@Column(nullable = true, length = 255)
-	private String country;
 
 	@ManyToMany
 	private List<UtilisateurRole> roles;
@@ -244,10 +235,20 @@ public class Utilisateur extends BaseEntity implements Serializable {
 				return false;
 		} else if (!login.equals(other.login))
 			return false;
-		if (centreFormation.getId() == 0) {
-			if (other.centreFormation.getId() != 0)
+		if (telephoneFixe == null) {
+			if (other.telephoneFixe != null)
 				return false;
-		} else if (!(centreFormation.getId() == other.centreFormation.getId()))
+		} else if (!telephoneFixe.equals(other.telephoneFixe))
+			return false;
+		if (telephone == null) {
+			if (other.telephone != null)
+				return false;
+		} else if (!telephone.equals(other.telephone))
+			return false;
+		if (civilite == null) {
+			if (other.civilite != null)
+				return false;
+		} else if (!civilite.equals(other.civilite))
 			return false;
 		return true;
 	}

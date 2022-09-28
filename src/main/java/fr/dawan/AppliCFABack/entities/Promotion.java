@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -28,7 +29,7 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 	@ManyToOne
 	private CEF cef;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Etudiant> etudiants;
 
 	@ManyToMany(mappedBy = "promotions")

@@ -14,28 +14,7 @@ public class CEF extends BaseEntity implements Serializable{
 	@OneToOne
 	private Utilisateur utilisateur;
 
-	@ManyToOne
-	private CentreFormation centreFormation;
-	
-	@ManyToOne
-	private Entreprise entreprise;
 
-	public CEF() {
-		super();
-	}
-
-	public CEF(CentreFormation centreFormation) {
-		super();
-		this.centreFormation = centreFormation;
-	}
-
-	public CentreFormation getCentreFormation() {
-		return centreFormation;
-	}
-
-	public void setCentreFormation(CentreFormation centreFormation) {
-		this.centreFormation = centreFormation;
-	}
 
 	public Utilisateur getUtilisateur() {
 		return utilisateur;

@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import fr.dawan.AppliCFABack.entities.Utilisateur;
@@ -32,11 +33,14 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
     private String email;
     
     private String street;
+    @JsonIgnore
     private String address2;
+    @JsonIgnore
     private String address3;
     private String postcode;
     private String city;
     private String country;
+    @JsonIgnore
     private Utilisateur utilisateur;
 
     private int version;

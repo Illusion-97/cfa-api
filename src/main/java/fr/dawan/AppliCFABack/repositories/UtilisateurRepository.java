@@ -36,4 +36,6 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 			String role1, String prenom, String role2, String nom, String role3, String login);
 	
 	Optional<Utilisateur> findByIdDg2(long idDg2);
+
+	Optional<Utilisateur> findDistinctByIdDg2(long personId);
 }

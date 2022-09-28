@@ -453,7 +453,7 @@ public class InterventionServiceImpl implements InterventionService {
 				Optional<Utilisateur> UtilisateurOptional = utilisateurRepository
 						.findByIdDg2(iDtoDG2.getTrainerPersonId());
 				if (!UtilisateurOptional.isPresent()) {
-					System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +iDtoDG2.getTrainerPersonId());
+					System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + iDtoDG2.getTrainerPersonId());
 					throw new FetchDG2Exception("Utilisateur introuvable");
 				}
 
@@ -486,12 +486,12 @@ public class InterventionServiceImpl implements InterventionService {
 					promotions.add(promotionOpt.get());
 					interventionDG2.setPromotions(promotions);
 					result.add(interventionDG2);
-					
+
 					// si existe en BDD -> comparer tous les champs et si différents -> faire update
 				} else {
 					List<Promotion> promotions = interventionDb.get().getPromotions();
 					promotions.addAll(interventionDb.get().getPromotions());
-					
+
 					if (interventionDb.get().getFormateurs() != null) {
 						formateurs.addAll(interventionDb.get().getFormateurs());
 					}

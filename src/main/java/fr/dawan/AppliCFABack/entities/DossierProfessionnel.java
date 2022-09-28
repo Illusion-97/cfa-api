@@ -12,7 +12,7 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 255)
 	private String nom;
 
-	@OneToOne
+	@ManyToOne
 	private Cursus cursus;
 
 	@OneToMany(mappedBy = "dossierProfessionnel", cascade = CascadeType.ALL)
