@@ -14,7 +14,6 @@ import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CerfaDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
-import fr.dawan.AppliCFABack.dto.ContratDto;
 import fr.dawan.AppliCFABack.dto.CursusDG2Dto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
@@ -26,8 +25,6 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
-import fr.dawan.AppliCFABack.dto.FicheEntrepriseDto;
-import fr.dawan.AppliCFABack.dto.FichePosteDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
@@ -49,7 +46,6 @@ import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Cerfa;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.Contrat;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
@@ -58,8 +54,6 @@ import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
-import fr.dawan.AppliCFABack.entities.FicheEntreprise;
-import fr.dawan.AppliCFABack.entities.FichePoste;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
@@ -142,20 +136,12 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     UtilisateurRoleDto utilisateurRoleToUtilisateurRoleDto(UtilisateurRole utilisateurRole);
 
-    @Mapping(source = ".", target = ".")
-    FichePosteDto fichePosteToFichePosteDto(FichePoste fichePoste);
-
+   
     @Mapping(source = ".", target = ".")
     DossierProfessionnelDto dossierProfessionnelToDossierProfessionnelDto(DossierProfessionnel dossierProfessionnel);
 
     @Mapping(source = ".", target = ".")
     DossierProjetDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet);
-
-    @Mapping(source = ".", target = ".")
-    FicheEntrepriseDto ficheEntrepriseToFicheEntrepriseDto(FicheEntreprise FicheEntreprise);
-
-    @Mapping(source = ".", target = ".")
-    ContratDto contratToContratDto(Contrat contrat);
 
     @Mapping(source = ".", target = ".")
     MaitreApprentissageDto maitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage);
@@ -206,13 +192,15 @@ public interface DtoMapper {
             ExperienceProfessionnelle experienceProfessionnelle);
 
 
-    @Mapping(source = "personId", target = "idDg2")
-    @Mapping(target = "promotions", ignore = true)
-    @Mapping(target = "groupes", ignore = true)
-    @Mapping(target = "notes", ignore = true)
-    @Mapping(target = "dossierProfessionnel", ignore = true)
-    @Mapping(target = "dossierProjet", ignore = true)
-    Etudiant etudiantUtilisateurDG2DtoToEtudiant(EtudiantUtilisateurDG2Dto eDG2);
+
+	@Mapping(source = "personId", target ="idDg2" )
+	@Mapping(source = "firstName", target = "prenom")
+	@Mapping(source = "lastName", target = "nom")
+	@Mapping(source = "email", target = "login")
+	@Mapping(source = "landline", target = "telephoneFixe")
+	@Mapping(source = "mobile", target = "telephone")
+
+    Utilisateur etudiantUtilisateurDG2DtoToUtilisateur(EtudiantUtilisateurDG2Dto eDG2);
 
 //	@Mapping(source = ".", target = ".")
 //	@Mapping(source = "cursus", target = "cursusDescription")
@@ -223,4 +211,12 @@ public interface DtoMapper {
 	@Mapping(source = "email", target = "login")
 
 	Utilisateur employeeDg2ToUtilisateur(EmployeeDG2Dto eDg2);
+	
+
+	@Mapping(source = "postcode", target = "codePostal")
+	@Mapping(source = "city", target = "ville")
+	@Mapping(source = "country", target = "countryCode")
+	@Mapping(source = "street", target = "libelle")
+
+    Adresse etudiantUtilisateurDG2DtoToAdresse(EtudiantUtilisateurDG2Dto eDG2);
 }

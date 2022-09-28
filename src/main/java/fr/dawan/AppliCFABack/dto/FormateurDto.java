@@ -16,7 +16,6 @@ public class FormateurDto extends BaseEntityDto implements Serializable {
 
 	private UtilisateurDto utilisateurDto;
 	private List<InterventionDto> interventionsDto;
-	private EntrepriseDto entrepriseDto;
 
 	public FormateurDto() {
 		super();
@@ -50,19 +49,6 @@ public class FormateurDto extends BaseEntityDto implements Serializable {
 		this.interventionsDto = interventionsDto;
 	}
 
-	/**
-	 * @return the entrepriseDto
-	 */
-	public EntrepriseDto getEntrepriseDto() {
-		return entrepriseDto;
-	}
-
-	/**
-	 * @param entrepriseDto the entrepriseDto to set
-	 */
-	public void setEntrepriseDto(EntrepriseDto entrepriseDto) {
-		this.entrepriseDto = entrepriseDto;
-	}
 
 	
 }

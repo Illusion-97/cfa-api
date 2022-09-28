@@ -30,5 +30,5 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 
 	List<Etudiant> findAllDistinctByPromotionsInterventionsId(long id);
 
-    Optional<Etudiant> findByIdDg2(long idDg2);
+ 
 }

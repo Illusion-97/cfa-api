@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import fr.dawan.AppliCFABack.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
@@ -38,7 +37,6 @@ import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
@@ -54,7 +52,6 @@ import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.Adresse;
-import fr.dawan.AppliCFABack.entities.Contrat;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.DevoirEtudiant;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
@@ -68,6 +65,20 @@ import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
+import fr.dawan.AppliCFABack.repositories.AdresseRepository;
+import fr.dawan.AppliCFABack.repositories.DevoirEtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.DevoirRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.ExamenRepository;
+import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.NoteRepository;
+import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.HashTools;
 
@@ -75,64 +86,62 @@ import fr.dawan.AppliCFABack.tools.HashTools;
 @Transactional
 public class EtudiantServiceImpl implements EtudiantService {
 
-    @Autowired
-    EtudiantRepository etudiantRepository;
+	@Autowired
+	EtudiantRepository etudiantRepository;
 
-    @Autowired
-    UtilisateurRepository utilisateurRepository;
+	@Autowired
+	UtilisateurRepository utilisateurRepository;
 
-    @Autowired
-    NoteRepository noteRepository;
+	@Autowired
+	NoteRepository noteRepository;
 
-    @Autowired
-    InterventionRepository interventionRepository;
+	@Autowired
+	InterventionRepository interventionRepository;
 
-    @Autowired
-    GroupeEtudiantRepository groupeEtudiantRepository;
+	@Autowired
+	GroupeEtudiantRepository groupeEtudiantRepository;
 
-    @Autowired
-    PromotionRepository promotionRepository;
+	@Autowired
+	PromotionRepository promotionRepository;
 
-    @Autowired
-    FormateurRepository formateurRepository;
+	@Autowired
+	FormateurRepository formateurRepository;
 
-    @Autowired
-    JourneePlanningService journeePlanningService;
+	@Autowired
+	JourneePlanningService journeePlanningService;
 
-    @Autowired
-    DevoirRepository devoirRepository;
+	@Autowired
+	DevoirRepository devoirRepository;
 
-    @Autowired
-    ContratRepository contratRepository;
+	@Autowired
+	ExamenRepository examenRepository;
+	@Autowired
+	UtilisateurRoleRepository utilisateurRoleRepository;
+	@Autowired
+	private AbsenceRepository absenceRepository;
 
-    @Autowired
-    ExamenRepository examenRepository;
+	@Autowired
+	private DevoirEtudiantRepository devoirEtudiantRepository;
 
-    @Autowired
-    private AbsenceRepository absenceRepository;
+	@Autowired
+	private PositionnementRepository positionnementRepository;
 
-    @Autowired
-    private DevoirEtudiantRepository devoirEtudiantRepository;
-
-    @Autowired
-    private PositionnementRepository positionnementRepository;
-
-    @Autowired
-    private DtoMapper mapper = new DtoMapperImpl();
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
 
 	@Autowired
 	private RestTemplate restTemplate;
 
 	private static Logger logger = Logger.getGlobal();
 
-    @Autowired
-    private UtilisateurService utilisateurService;
-    @Autowired
-    private AdresseRepository adresseRepository;
+	@Autowired
+	private UtilisateurService utilisateurService;
+	@Autowired
+	private AdresseRepository adresseRepository;
 
-    // ##################################################
-    // # CRUD #
-    // ##################################################
+	// ##################################################
+	// # CRUD #
+	// ##################################################
 
 	/**
 	 * Récupération de la liste des etudiants
@@ -144,13 +153,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 		List<Etudiant> lst = etudiantRepository.findAll();
 		List<EtudiantDto> res = new ArrayList<>();
 
-        for (Etudiant e : lst) {
-            EtudiantDto etuDto = mapper.etudiantToEtudiantDto(e);
-            UtilisateurDto utilisateur = mapper.utilisateurToUtilisateurDto(e.getUtilisateur());
+		for (Etudiant e : lst) {
+			EtudiantDto etuDto = mapper.etudiantToEtudiantDto(e);
+			UtilisateurDto utilisateur = mapper.utilisateurToUtilisateurDto(e.getUtilisateur());
 
-            etuDto.setUtilisateurDto(utilisateur);
+			etuDto.setUtilisateurDto(utilisateur);
 
-            AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
+			AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
 //			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
 
 			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
@@ -191,22 +200,21 @@ public class EtudiantServiceImpl implements EtudiantService {
 				lstDossierProfessionnelDto.add(dpDto);
 			}
 
-
 //			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 
-            etuDto.getUtilisateurDto().setAdresseDto(addrDto);
-            etuDto.setGroupesDto(lstGrpEtuDto);
+			etuDto.getUtilisateurDto().setAdresseDto(addrDto);
+			etuDto.setGroupesDto(lstGrpEtuDto);
 //			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
-            etuDto.setPromotionsDto(lstPromoDto);
+			etuDto.setPromotionsDto(lstPromoDto);
 //			etuDto.setFormateurReferentDto(refDto);
-            etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
-            etuDto.setDossierProjet(lstDossierProjetDto);
+			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
+			etuDto.setDossierProjet(lstDossierProjetDto);
 
-            res.add(etuDto);
-        }
+			res.add(etuDto);
+		}
 
-        return res;
-    }
+		return res;
+	}
 
 //	@Override
 //	public List<EtudiantDto> getAllByPage(int page, int size, String search) {
@@ -239,19 +247,18 @@ public class EtudiantServiceImpl implements EtudiantService {
 	 * @return eDto objet Etudiant
 	 */
 
-    @Override
-    public EtudiantDto getById(long id) {
-        Optional<Etudiant> e = etudiantRepository.findById(id);
+	@Override
+	public EtudiantDto getById(long id) {
+		Optional<Etudiant> e = etudiantRepository.findById(id);
 
-        if (!e.isPresent())
-            return null;
+		if (!e.isPresent())
+			return null;
 
 		EtudiantDto eDto = mapper.etudiantToEtudiantDto(e.get());
 		eDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(e.get().getUtilisateur()));
 		eDto.getUtilisateurDto().setAdresseDto(mapper.adresseToAdresseDto(e.get().getUtilisateur().getAdresse()));
 //		eDto.setFormateurReferentDto(mapper.UtilisateurToUtilisateurDto(e.get().getFormateurReferent()));
 //		eDto.setManagerDto(mapper.UtilisateurToUtilisateurDto(e.get().getManager()));
-
 
 		List<GroupeEtudiantDto> groupes = new ArrayList<>();
 		for (GroupeEtudiant g : e.get().getGroupes()) {
@@ -322,7 +329,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 					}
 				}
 			} catch (Exception ex) {
-				logger.log(Level.WARNING,"Error save etudiant", ex);
+				logger.log(Level.WARNING, "Error save etudiant", ex);
 			}
 
 			// Pour le dossier
@@ -331,7 +338,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			try {
 				Files.createDirectories(path);
 			} catch (IOException ex) {
-				logger.log(Level.WARNING,"Error creation du dossier", ex);
+				logger.log(Level.WARNING, "Error creation du dossier", ex);
 			}
 		}
 
@@ -347,7 +354,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 	 */
 	@Override
 	public void deleteById(long id) {
-
 
 //		Etudiant etudiant = getEtudiantById(id);
 
@@ -442,7 +448,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		try {
 			lst = getEtudiantById(id).getPromotions();
 		} catch (Exception e) {
-			logger.log(Level.SEVERE,"getEtudiantById(id).getPromotions() failed", e);
+			logger.log(Level.SEVERE, "getEtudiantById(id).getPromotions() failed", e);
 		}
 		List<PromotionDto> lstDto = new ArrayList<>();
 
@@ -473,7 +479,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		try {
 			lst = getEtudiantById(id).getGroupes();
 		} catch (Exception ex) {
-			logger.log(Level.SEVERE,"getEtudiantById(id).getGroupes()", ex);
+			logger.log(Level.SEVERE, "getEtudiantById(id).getGroupes()", ex);
 		}
 		List<GroupeEtudiantDto> lstDto = new ArrayList<>();
 		for (GroupeEtudiant g : lst) {
@@ -491,19 +497,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return lstDto;
 	}
 
-	/**
-	 * Récupération de l'entreprise en fonction de l'id etudiant
-	 *
-	 * @param id id de l'etudiant
-	 */
 
-	@Override
-	public EntrepriseDto getEntrepriseByIdEtudiant(long id) {
-		// ATTENTION : L'etudiant a potentiellement une liste de contrat => une liste
-		// d'entreprise
-		Contrat contrat = contratRepository.findByEtudiantId(id);
-		return mapper.entrepriseToEntrepriseDto(contrat.getMaitreApprentissage().getEtudiant().getUtilisateur().getEntreprise());
-	}
 
 	/**
 	 * Récupération de l'adresse de l'étudiant
@@ -539,21 +533,21 @@ public class EtudiantServiceImpl implements EtudiantService {
 //		}
 //		
 
-        return null;
-    }
+		return null;
+	}
 
-    // recuperation des notes par id etudiants
-    public List<NoteDto> getNotesByIdEtudiant(long id) {
+	// recuperation des notes par id etudiants
+	public List<NoteDto> getNotesByIdEtudiant(long id) {
 //		List<Note> lst = noteRepository.getNotesByIdEtudiant(id);
 //		List<NoteDto> res = new ArrayList<NoteDto>();
 //
 //		for (Note n : lst)
 //			res.add(mapper.NoteToNoteDto(n));
 
-        return null;
-    }
+		return null;
+	}
 
-    // recuperation des absences par id etudiants + pagination
+	// recuperation des absences par id etudiants + pagination
 //	@Override
 //	public List<AbsenceDto> getAbsencesByIdEtudiant(long id, int page, int size) {
 //		List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id, PageRequest.of(page, size)).get()
@@ -633,16 +627,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return result;
 	}
 
-	/**
-	 * @param id de l'étudiant
-	 * utilise le ContratRepository pour récupérer le formateur par id de l'étudiant
-	 * @return le formateur référent (tuteur) de l'étudiant et ses informations personnelles par le mapper (DtoMapper)
-	 */
-	@Override
-	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
-		Contrat contrat = contratRepository.findByEtudiantId(id);
-		return mapper.utilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
-	}
+
 	// recuperation du formateur referent par id etudiants
 
 //	@Override
@@ -651,24 +636,23 @@ public class EtudiantServiceImpl implements EtudiantService {
 //		return mapper.UtilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
 //	}
 
-
 //	@Override
 //	public UtilisateurDto getManagerByIdEtudiant(long id) {
 //		return mapper.UtilisateurToUtilisateurDto(getEtudiantById(id).getManager());
 //	}
 
-    // recuperation des devoirs par id etudiants + pagination
+	// recuperation des devoirs par id etudiants + pagination
 
-    /**
-     * Va permettre de récupérer tous les devoirs avec pagination
-     *
-     * @param id   id de l'étudiant
-     * @param page numero de la page
-     * @param size éléments sur la page
-     * @return res Liste des devoirs de l'étudiants
-     */
-    @Override
-    public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
+	/**
+	 * Va permettre de récupérer tous les devoirs avec pagination
+	 *
+	 * @param id   id de l'étudiant
+	 * @param page numero de la page
+	 * @param size éléments sur la page
+	 * @return res Liste des devoirs de l'étudiants
+	 */
+	@Override
+	public List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size) {
 
 		List<Devoir> lst = devoirRepository.findAllByInterventionPromotionsEtudiantsId(id, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
@@ -686,7 +670,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public EtudiantDossierDto getByEtudiantIdForDossierPro(long id) {
 		Optional<Etudiant> e = etudiantRepository.findById(id);
-		if (!e.isPresent()) return null;
+		if (!e.isPresent())
+			return null;
 		return DtoTools.convert(e.get(), EtudiantDossierDto.class);
 	}
 
@@ -694,38 +679,38 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public EtudiantDossierDto saveOrUpdateEtudiantDossier(EtudiantDossierDto e) {
 		Etudiant etudiant = DtoTools.convert(e, Etudiant.class);
 
-		if(etudiant.getUtilisateur() != null) {
-			//HashTools throw Exception
+		if (etudiant.getUtilisateur() != null) {
+			// HashTools throw Exception
 			try {
-				//Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
-				if(etudiant.getUtilisateur().getId() == 0) {
-					etudiant.getUtilisateur().setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
-				}else {
-					//Si on a modifié le mdp
+				// Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+				if (etudiant.getUtilisateur().getId() == 0) {
+					etudiant.getUtilisateur()
+							.setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
+				} else {
+					// Si on a modifié le mdp
 					Etudiant etudiantInDB = etudiantRepository.getOne(etudiant.getId());
-					if(!etudiantInDB.getUtilisateur().getPassword().equals(etudiant.getUtilisateur().getPassword())) {
-						etudiant.getUtilisateur().setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
+					if (!etudiantInDB.getUtilisateur().getPassword().equals(etudiant.getUtilisateur().getPassword())) {
+						etudiant.getUtilisateur()
+								.setPassword(HashTools.hashSHA512(etudiant.getUtilisateur().getPassword()));
 					}
 				}
-			}catch (Exception ex) {
-				logger.log(Level.WARNING,"Error save dossier etudiant", ex);
+			} catch (Exception ex) {
+				logger.log(Level.WARNING, "Error save dossier etudiant", ex);
 			}
 
-			//Pour le dossier
+			// Pour le dossier
 			Path path = Paths.get("./src/main/resources/files/utilisateurs/" + etudiant.getUtilisateur().getId());
 
 			try {
 				Files.createDirectories(path);
 			} catch (IOException ex) {
-				logger.log(Level.WARNING,"Error dossier create", ex);
+				logger.log(Level.WARNING, "Error dossier create", ex);
 			}
 		}
 
-
 		etudiant = etudiantRepository.saveAndFlush(etudiant);
 
-
-		return DtoTools.convert(etudiant,EtudiantDossierDto.class);
+		return DtoTools.convert(etudiant, EtudiantDossierDto.class);
 	}
 
 	/**
@@ -764,11 +749,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 			UtilisateurDto pDto = mapper.utilisateurToUtilisateurDto(e.getUtilisateur());
 			AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
 
-
 //			EntrepriseDto entDto =mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
 //			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 //			UtilisateurDto managDto = mapper.UtilisateurToUtilisateurDto(e.getManager());
-
 
 			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
 			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<>();
@@ -805,7 +788,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			etuDto.setGroupesDto(lstGrpEtuDto);
 
 //			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
-            etuDto.setPromotionsDto(lstPromoDto);
+			etuDto.setPromotionsDto(lstPromoDto);
 //			etuDto.setFormateurReferentDto(refDto);
 //			etuDto.setManagerDto(managDto);
 
@@ -821,12 +804,14 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public List<EtudiantAbsencesDevoirsDto> getEtudiantsByInterventionId(long idIntervention, String search) {
 
 		List<EtudiantAbsencesDevoirsDto> etudiantAbsencesDevoirsDtos = new ArrayList<>();
-		List<Etudiant> etudiants = etudiantRepository.findAllDistinctByPromotionsInterventionsId(idIntervention,search);
+		List<Etudiant> etudiants = etudiantRepository.findAllDistinctByPromotionsInterventionsId(idIntervention,
+				search);
 		for (Etudiant etudiant : etudiants) {
 
 			EtudiantAbsencesDevoirsDto etudiantAbsencesDevoirsDto = new EtudiantAbsencesDevoirsDto();
 
-			Optional<Promotion> promotion = promotionRepository.getByEtudiantsIdAndInterventionsId(etudiant.getId(), idIntervention);
+			Optional<Promotion> promotion = promotionRepository.getByEtudiantsIdAndInterventionsId(etudiant.getId(),
+					idIntervention);
 
 			EtudiantInfoInterventionDto aInfoIdto = DtoTools.convert(etudiant, EtudiantInfoInterventionDto.class);
 
@@ -836,8 +821,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 			}
 			etudiantAbsencesDevoirsDto.setEtudiant(aInfoIdto);
 
-
-			Optional<Positionnement> positionnement = positionnementRepository.getDistinctByInterventionIdAndEtudiantId(idIntervention, etudiant.getId());
+			Optional<Positionnement> positionnement = positionnementRepository
+					.getDistinctByInterventionIdAndEtudiantId(idIntervention, etudiant.getId());
 
 			if (positionnement.isPresent()) {
 				Positionnement.Niveau nDebut = positionnement.get().getNiveauDebut();
@@ -851,7 +836,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			List<Absence> absences = absenceRepository.findAllByEtudiantIdAndInterventionId(etudiant.getId(),
 					idIntervention);
 
-			if ( !absences.isEmpty() ||absences != null ) {
+			if (!absences.isEmpty() || absences != null) {
 				List<AbsenceDto> absencesDto = new ArrayList<>();
 				for (Absence absence : absences) {
 					absencesDto.add(DtoTools.convert(absence, AbsenceDto.class));
@@ -859,9 +844,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 				etudiantAbsencesDevoirsDto.setAbsences(absencesDto);
 
 			}
-			List<DevoirEtudiant> devoirsEtudiant = devoirEtudiantRepository.getAllDevoirsEtudiantByInterventionId(idIntervention, etudiant.getId());
+			List<DevoirEtudiant> devoirsEtudiant = devoirEtudiantRepository
+					.getAllDevoirsEtudiantByInterventionId(idIntervention, etudiant.getId());
 
-			if ( !devoirsEtudiant.isEmpty()|| devoirsEtudiant != null) {
+			if (!devoirsEtudiant.isEmpty() || devoirsEtudiant != null) {
 
 				List<DevoirEtudiantDto> devoirsEDto = new ArrayList<>();
 
@@ -878,81 +864,145 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return etudiantAbsencesDevoirsDtos;
 	}
 
-    @Override
-    public void fetchAllEtudiantDG2(String email, String password, long idPromotionDg2) throws FetchDG2Exception, JsonProcessingException, URISyntaxException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<EtudiantUtilisateurDG2Dto> cResJson;
+	public void fetchAllEtudiantDG2(String email, String password) throws Exception {
+		List<Promotion> promotions = promotionRepository.findAll();
 
-        URI url = new URI("https://dawan.org/api2/cfa/sessions/" + idPromotionDg2 + "/registrations");
+		for (Promotion promotion : promotions) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("x-auth-token", email + ":" + password);
+			fetchAllEtudiantDG2ByIdPromotion(email, password, promotion.getIdDg2());
+		}
 
-        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+	}
 
-        ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+	@Override
+	public void fetchAllEtudiantDG2ByIdPromotion(String email, String password, long idPromotionDg2)
+			throws FetchDG2Exception, JsonProcessingException, URISyntaxException {
+		Optional<Promotion> promotion = promotionRepository.findByIdDg2(idPromotionDg2);
+		System.out.println(">>>>>>>promo>>>>" + promotion.get().getIdDg2());
+		if (!promotion.isPresent()) {
+			throw new FetchDG2Exception("Promotion Introuvable");
 
-        if (repWs.getStatusCode() == HttpStatus.OK) {
-            String json = repWs.getBody();
-            cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {
-            });
+		}
+		ObjectMapper objectMapper = new ObjectMapper();
+		List<EtudiantUtilisateurDG2Dto> cResJson;
 
-            for (EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
-                Etudiant etudiant = mapper.etudiantUtilisateurDG2DtoToEtudiant(eDG2);
-                Optional<Etudiant> optEtudiant = etudiantRepository.findByIdDg2(etudiant.getIdDg2());
+		URI url = new URI("https://dawan.org/api2/cfa/sessions/" + idPromotionDg2 + "/registrations");
 
-                if (optEtudiant.isPresent()) {
-                    if (optEtudiant.get().equals(etudiant))
-                        continue;
-                    else if (!optEtudiant.get().equals(etudiant)) {
-                        etudiant.setId(optEtudiant.get().getId());
-                        etudiant.setUtilisateur(optEtudiant.get().getUtilisateur());
-                        etudiant.getUtilisateur().setPrenom(eDG2.getFirstName());
-                        etudiant.getUtilisateur().setNom(eDG2.getLastName());
-                        etudiant.getUtilisateur().setLogin(eDG2.getEmail());
-                        etudiant.getUtilisateur().setCivilite(eDG2.getCivilite());
-                        etudiant.getUtilisateur().setTelephone(eDG2.getMobile());
-                        etudiant.getUtilisateur().setTelephoneFixe(eDG2.getLandline());
-						etudiant.getUtilisateur().getAdresse().setLibelle(eDG2.getStreet());
-						etudiant.getUtilisateur().getAdresse().setCodePostal(eDG2.getPostcode());
-						etudiant.getUtilisateur().getAdresse().setVille(eDG2.getCity());
-						etudiant.getUtilisateur().getAdresse().setCountryCode(eDG2.getCountry());
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("x-auth-token", email + ":" + password);
+
+		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+
+		if (repWs.getStatusCode() == HttpStatus.OK) {
+			String json = repWs.getBody();
+			cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {
+			});
+
+			for (EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
+
+				// Etudiant etudiantDg2 = mapper.etudiantUtilisateurDG2DtoToEtudiant(eDG2);
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>" + eDG2.getPersonId());
+				Optional<Utilisateur> utiLisateurOptional = utilisateurRepository
+						.findDistinctByIdDg2(eDG2.getPersonId());
+				Utilisateur utilisateurDg2 = mapper.etudiantUtilisateurDG2DtoToUtilisateur(eDG2);
+				Adresse adresseDg2 = mapper.etudiantUtilisateurDG2DtoToAdresse(eDG2);
+				Etudiant etudiant = new Etudiant();
+				if (utiLisateurOptional.isPresent()) {
+					etudiant = utiLisateurOptional.get().getEtudiant();
+
+					if (!adresseDg2.equals(utiLisateurOptional.get().getAdresse())) {
+						if (utiLisateurOptional.get().getAdresse() != null) {
+							adresseDg2.setId(utiLisateurOptional.get().getAdresse().getId());
+							adresseDg2.setVersion(utiLisateurOptional.get().getAdresse().getVersion());
+							adresseRepository.saveAndFlush(adresseDg2);
+						}
+
+					} 
+
+					utilisateurDg2.setPassword(utiLisateurOptional.get().getPassword());
+					if (!utilisateurDg2.equals(utiLisateurOptional.get())) {
+						utilisateurDg2.setId(utiLisateurOptional.get().getId());
+						utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
+					} else {
+
+						if (etudiant.getPromotions().contains(promotion.get())) {
+							System.out
+									.println("Promotions des etudiants>>>>>>>/n" + etudiant.getPromotions().toString());
+							continue;
+						}
+						else {
+							utilisateurDg2.setId(utiLisateurOptional.get().getId());
+							utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
+							if (etudiant != null) {
+								List<Etudiant> etudiants = new ArrayList<>();
+								List<Promotion> promotions = new ArrayList<>();
+								if (etudiant.getPromotions() != null) {
+									promotions.addAll(etudiant.getPromotions());
+								}
+								if (!promotions.contains(promotion.get())) {
+									promotions.add(promotion.get());
+								}
+								etudiant.setPromotions(promotions);
+								if (promotion.get().getEtudiants() != null) {
+									etudiants.addAll(promotion.get().getEtudiants());
+								}
+								if (!etudiants.contains(etudiant)) {
+									etudiants.add(etudiant);
+								}
+								promotion.get().setEtudiants(etudiants);
+
+							}
+						}
 					}
-                } else {
-                    Utilisateur utilisateur = new Utilisateur();
-                    utilisateur.setPrenom(eDG2.getFirstName());
-                    utilisateur.setNom(eDG2.getLastName());
-                    utilisateur.setLogin(eDG2.getEmail());
-                    //utilisateur.setPassword(utilisateurService.generatePassword());
-					utilisateur.setPassword("password");
-                    try {
-						utilisateur.setPassword(HashTools.hashSHA512(utilisateur.getPassword()));
+					
+					utilisateurDg2.setEtudiant(etudiant);
+					etudiant.setUtilisateur(utilisateurDg2);
+
+				} else {
+					List<Promotion> promotions = new ArrayList<>();
+					promotions.add(promotion.get());
+					utilisateurDg2.setAdresse(adresseDg2);
+
+					etudiant.setPromotions(promotions);
+					List<Etudiant> etudiants = new ArrayList<>();
+					etudiants.add(etudiant);
+					if (promotion.get().getEtudiants() != null) {
+						etudiants.addAll(promotion.get().getEtudiants());
+					}
+					promotion.get().setEtudiants(etudiants);
+					try {
+						utilisateurDg2.setPassword(HashTools.hashSHA512("password"));
 					} catch (Exception e) {
-						logger.log(Level.SEVERE,"setPassword failed", e);
+						logger.log(Level.SEVERE, "setPassword failed", e);
+					}
+
+					List<UtilisateurRole> roles = new ArrayList<>();
+					List<Utilisateur> utilisateurs = new ArrayList<>();
+					UtilisateurRole etudiantRole = utilisateurRoleRepository.findByIntituleContaining("ETUDIANT");
+					roles.add(etudiantRole);
+
+					utilisateurs.add(utilisateurDg2);
+					if (etudiantRole.getUtilisateurs() != null) {
+						utilisateurs.addAll(etudiantRole.getUtilisateurs());
 
 					}
-                    utilisateur.setEtudiant(etudiant);
-                    utilisateur.setCivilite(eDG2.getCivilite());
-                    utilisateur.setAdresse(new Adresse(eDG2.getStreet(), eDG2.getPostcode(), eDG2.getCity(), eDG2.getCountry()));
-                    utilisateur.setTelephone(eDG2.getMobile());
-                    utilisateur.setTelephoneFixe(eDG2.getLandline());
+					utilisateurDg2.setRoles(roles);
+					etudiantRole.setUtilisateurs(utilisateurs);
+					utilisateurDg2.setEtudiant(etudiant);
+					etudiant.setUtilisateur(utilisateurDg2);
 
-                    List<UtilisateurRole> roles = new ArrayList<>();
-                    for (UtilisateurRole role : roles
-                    ) {
-                        role.setUtilisateurs((List<Utilisateur>) utilisateur);
-                    }
-                    utilisateur.setRoles(roles);
-                    etudiant.setUtilisateur(utilisateur);
-                    List<Promotion> promotions = promotionRepository.findAllByIdPromotionDg2(idPromotionDg2);
-                    etudiant.setPromotions(promotions);
-                    utilisateurRepository.saveAndFlush(utilisateur);
-                    etudiantRepository.saveAndFlush(etudiant);
-                }
-            }
-        } else {
-            throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
-        }
-    }
+				}
+				utilisateurRepository.saveAndFlush(utilisateurDg2);
+				etudiantRepository.saveAndFlush(etudiant);
+
+			}
+
+		} else
+
+		{
+			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
+		}
+	}
 }
-

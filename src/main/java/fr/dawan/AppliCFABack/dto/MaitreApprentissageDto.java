@@ -16,6 +16,23 @@ public class MaitreApprentissageDto extends BaseEntityDto implements Serializabl
 	private long etudiantId;
 
 	private UtilisateurDto utilisateurDto;
+	
+	private long promotionId;
+
+	/**
+	 * @return le promotionId
+	 */
+	public long getPromotionId() {
+		return promotionId;
+	}
+
+	/**
+	 * @param promotionId le promotionId à affecter
+	 
+	 */
+	public void setPromotionId(long promotionId) {
+		this.promotionId = promotionId;
+	}
 
 	/**
 	 * @return le etudiantId

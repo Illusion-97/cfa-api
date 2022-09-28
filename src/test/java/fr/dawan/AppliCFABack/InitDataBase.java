@@ -18,7 +18,6 @@ import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.Contrat;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.Entreprise;
@@ -42,7 +41,6 @@ import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
-import fr.dawan.AppliCFABack.repositories.ContratRepository;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
 import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
@@ -117,8 +115,7 @@ class InitDataBase {
 	private CongeRepository congeRepository;
 	@Autowired
 	private MaitreApprentissageRepository maitreApprentissageRepository;
-	@Autowired
-	private ContratRepository contratRepository;
+
 	
 	@Autowired
 	private DtoMapper mapper;
@@ -190,10 +187,6 @@ class InitDataBase {
 		CEF cef = new CEF();
 		Formateur formateur = new Formateur();
 		MaitreApprentissage mApprentissage = new MaitreApprentissage();
-		
-		Contrat contrat = new Contrat();
-		contrat.setDateDebut(LocalDate.now());
-		contrat.setDateFin(LocalDate.now());
 
 		LocalDate promoDate = LocalDate.of(2021, 1, 1);
 
@@ -221,8 +214,7 @@ class InitDataBase {
 
 		Entreprise entreprise = new Entreprise();
 		entreprise.setRaisonSociale("raison sociale");
-		entreprise.setEffectifTotal("200");
-		entreprise.setEmployeurType("Employeur type test");
+		entreprise.setEffectifTotal(20);
 		entreprise.setSiret("42998754800162");
 		entreprise.setNaf("Naf test");
 
@@ -325,7 +317,6 @@ class InitDataBase {
 		formateur = DtoTools.convert(formateurService.saveOrUpdate(mapper.formateurToFormateurDto(formateur)), Formateur.class);	
 		mApprentissage = maitreApprentissageRepository.save(mApprentissage);	
 		
-		contrat = contratRepository.save(contrat);
 		groupe = groupeEtudiantRepository.save(groupe);
 		promotion = promotionRepository.save(promotion);
 		promotion2 = promotionRepository.save(promotion2);
@@ -474,7 +465,6 @@ class InitDataBase {
 		monCEF.setAdresse(adresse);
 		monCEF.setCef(cef);
 		
-		cef.setCentreFormation(centre);
 		cef.setUtilisateur(monCEF);
 		
 		centre.setAdresse(adresse);
@@ -512,8 +502,6 @@ class InitDataBase {
 
 		conge.setUtilisateur(monEtudiant);
 		
-		contrat.setEtudiant(etudiant);
-		contrat.setMaitreApprentissage(mApprentissage);
 		
 		utilisateurRepository.save(admin);
 		utilisateurRepository.save(monEtudiant);
@@ -550,6 +538,6 @@ class InitDataBase {
 		projetRepository.save(projet);
 		centreFormationRepository.save(centre);
 		congeRepository.save(conge);
-		contratRepository.save(contrat);
+
 	}
 }

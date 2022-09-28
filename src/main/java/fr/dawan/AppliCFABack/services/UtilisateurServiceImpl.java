@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.univocity.parsers.common.processor.AbstractRowProcessor;
 import com.univocity.parsers.common.record.Record;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
@@ -924,12 +925,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				if (centreFormationOpt.isPresent()) {
 					utilisateurImport.setCentreFormation(centreFormationOpt.get());
 				}
+				else {
+					logger.log(Level.SEVERE,"SaveAndFlush failed","Centre de formation Introuvable");
+					throw new FetchDG2Exception("Centre de formation Introuvable");
+				}
 				
 				if (optUtlisateur.isPresent()) {
-					if (optUtlisateur.get().equals(utilisateurImport)) {
+					
+					if (optUtlisateur.get().equals(utilisateurImport) && optUtlisateur.get().getCentreFormation().getId() == centreFormationOpt.get().getId()) {
 						continue;}
 					else  {
 						if (utilisateurImport != null) {
+							utilisateurImport.setPassword(optUtlisateur.get().getPassword());
 							utilisateurImport.setId(optUtlisateur.get().getId());
 							utilisateurImport.setVersion(optUtlisateur.get().getVersion());
 						

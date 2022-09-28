@@ -125,13 +125,6 @@ public class EtudiantController {
 	// # Get : 1er Niveau #
 	// ##################################################
 
-	/*
-	 * On récupère l'entreprise de l'étudiant à partir de son id
-	 */
-	@GetMapping(value = "/{id}/entreprise", produces = "application/json")
-	public EntrepriseDto getEntrepriseByIdEtudiant(@PathVariable("id") long id) {
-		return etudiantService.getEntrepriseByIdEtudiant(id);
-	}
 
 	/*
 	 * On récupère toutes les promotions auxquelles l'étudiant est inscrit à partir
@@ -191,15 +184,6 @@ public class EtudiantController {
 		return etudiantService.getDevoirsByIdEtudiant(id, page, size);
 	}
 
-	/*
-	 * On récupère les absences de l'étudiant à partir de son id
-	 */
-
-//	@GetMapping(value = "/{id}/absences/{page}/{size}", produces = "application/json")
-//	public List<AbsenceDto> getAbsencesByIdEtudiant(@PathVariable("id") long id, @PathVariable("page") int page,
-//			@PathVariable(value = "size") int size) {
-//		return etudiantService.getAbsencesByIdEtudiant(id, page, size);
-//	}
 
     // ##################################################
     // # Get : 3eme Niveau #
@@ -214,34 +198,24 @@ public class EtudiantController {
         return etudiantService.getInterventionByIdEtudiant(id);
     }
 
-    /**
-     * @param id de l'étudiant
-     * @return dans un get, le service qui permet de récupérer le formateur référent de l'étudiant (tuteur) et ses infos personnelles
-     */
-    @GetMapping(value = "/{id}/formateurReferent", produces = "application/json")
-    public UtilisateurDto getFormateurReferentByIdEtudiant(@PathVariable("id") long id) {
-        return etudiantService.getFormateurReferentByIdEtudiant(id);
-    }
-
-//	@GetMapping(value = "/{id}/manager", produces = "application/json")
-//	public UtilisateurDto getManagerByIdEtudiant(@PathVariable("id") long id) {
-//		return etudiantService.getManagerByIdEtudiant(id);
-//	}
 
 
     // ##################################################
     // # FETCH Dawan webservice #
     // ##################################################
 
-    @GetMapping(value = "/dg2/{idPromotionDg2}", produces = "application/json")
+    @GetMapping(value = {"dg2","/dg2/{idPromotionDg2}"}, produces = "application/json")
     public ResponseEntity<String> fetchAllEtudiantDG2(@RequestHeader Map<String, String> headers, @PathVariable(value = "idPromotionDg2", required = false) Optional<Long> idPromotionDg2) {
         String userDG2 = headers.get("x-auth-token");
         String[] splitUserDG2String = userDG2.split(":");
 
         try {
             if(idPromotionDg2.isPresent()){
-                etudiantService.fetchAllEtudiantDG2(splitUserDG2String[0], splitUserDG2String[1], idPromotionDg2.get());
+                etudiantService.fetchAllEtudiantDG2ByIdPromotion(splitUserDG2String[0], splitUserDG2String[1], idPromotionDg2.get());
             }
+            else {
+				etudiantService.fetchAllEtudiantDG2(splitUserDG2String[0], splitUserDG2String[1]);
+			}
             return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
         } catch (Exception e) {
         	logger.log(Level.SEVERE,"ERROR", e);

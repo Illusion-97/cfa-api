@@ -46,7 +46,6 @@ public interface EtudiantService {
 
 	List<GroupeEtudiantDto> getGroupesByIdEtudiant(long id);
 
-	EntrepriseDto getEntrepriseByIdEtudiant(long id);
 
 	AdresseDto getAdresseByIdEtudiant(long id);
 
@@ -72,19 +71,20 @@ public interface EtudiantService {
 	 * @param id de l'étudiant
 	 * @return le formateur référent (tuteur) de l'étudiant et ses informations personnelles dans le service implémenté
 	 */
-	UtilisateurDto getFormateurReferentByIdEtudiant(long id);
 
-//	UtilisateurDto getManagerByIdEtudiant(long id);
+
 
 	List<DevoirDto> getDevoirsByIdEtudiant(long id, int page, int size);
 
-//	List<AbsenceDto> getAbsencesByIdEtudiant(long id, int page, int size);
 
 	List<EtudiantAbsencesDevoirsDto> getEtudiantsByInterventionId(long idIntervention ,String search);
 	EtudiantDossierDto getByEtudiantIdForDossierPro(long id);
 	EtudiantDossierDto saveOrUpdateEtudiantDossier(EtudiantDossierDto e);
 
-    void fetchAllEtudiantDG2(String email, String password, long idPromotionDg2) throws FetchDG2Exception, JsonProcessingException, URISyntaxException;
+    void fetchAllEtudiantDG2(String email, String password) throws Exception;
+
+	void fetchAllEtudiantDG2ByIdPromotion(String email, String password, long idPromotionDg2)
+			throws FetchDG2Exception, JsonProcessingException, URISyntaxException, Exception;
 
 
 }
