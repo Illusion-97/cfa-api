@@ -1,0 +1,116 @@
+
+/*-------------------- div logo + titre DOSSIER PROFESSIONNEL ----------------*/
+.greyBarsAndH1 {
+    float: right;
+}
+h1 {
+    border-bottom: 2px solid #D3D3D3;
+    margin:7px 0 5px 3px;
+    padding: 0 0 25px 0;
+    text-align: left;
+    font-family: 'Open Sans';
+    font-weight: 100;
+    font-size: 26pt;
+}
+.greyBarTop {
+    background-color: #F2F2F2;
+    width: 714.89px;
+    height: 18px;
+    border-bottom: 1px solid #D3D3D3;
+}
+.greyBarBottom {
+    background-color: #F2F2F2;
+    width: 714.89px;
+    height: 40px;
+}
+.pinkLine {
+    background-color: #D60093;
+    width: 714.89px;
+    height: 4px;
+    margin : 7px 0 0 0;
+}
+.frenchRepublic {
+    width: 120px;
+}
+.divTitlePage1 {
+    width: 845px;
+    margin: auto;
+}
+
+/* ----------------div liste champs identité------------------------------- */
+.identityDiv {
+    width: 300px;
+    margin: 100px 0 0 245px;
+}
+.identityUl {
+    color: #D60093;
+    list-style: none;
+    border-left: 7px solid #D60093;
+    padding: 0 0 0 8px;
+    font-style: italic;
+    font-family: 'Open Sans';
+    float: left;
+}
+.identityUl>li {
+    margin: 0 0 5px 0;
+}
+.iconsList>li {
+    margin: 0 0 10px 0;
+}
+.fa-solid {
+    margin: 0 0 0 10px;
+}
+.iconsList {
+    float: right;
+}
+.iconsList {
+    color: #D60093;
+    list-style: none;
+    padding: 0 0 0 8px;
+
+}
+
+/*------------------------ div Titre professionnel visé ---------------------*/
+
+.divTitrePro {
+    margin: 340px auto 0;
+    width: 895px;
+    color: white;
+}
+.titlePink {
+    background-color: #D60093;
+    text-align: center;
+}
+.h2TitrePro {
+    padding: 3px;
+    font-size: 30px;
+    margin-bottom: 5px;
+    font-family: 'Open Sans';
+
+}
+.pinkDiv1 {
+    background-color: #D60093;
+    width: auto;
+    height: 4px;
+    margin : 7px 0 0 0;
+}
+.pinkDiv2 {
+    background-color: #D60093;
+    width: auto;
+    height: 2px;
+    margin : 40px 0 0 0;
+}
+
+/*------------------------ div Modalité d'accès---------------------*/
+
+.divModalite {
+    font-family: 'Open Sans';
+    margin: 160px auto 500px;
+    width: 875px;
+    padding: 10px;
+    border-width: 1px;
+    border-color: rgb(255, 254, 254);
+}
+.divModalite>ul>li {
+    list-style: none;
+}

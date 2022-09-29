@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
-import fr.dawan.AppliCFABack.dto.customdtos.EtudiantPromotionDossierProDto;
+import fr.dawan.AppliCFABack.dto.customdtos.GetDossierProDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -128,7 +128,7 @@ public class DossierProfessionnelController {
 	}
 
 	@GetMapping(value = "/cursus/etudiant/{id}", produces = "application/json")
-	public EtudiantPromotionDossierProDto getAllDossierProfessionnelByEtudiantAndByCursus(@PathVariable("id") long id) {
+	public GetDossierProDto getAllDossierProfessionnelByEtudiantAndByCursus(@PathVariable("id") long id) {
 		return dossierProService.getAllDossierProfessionnelByEtudiant(id);
 	}
 

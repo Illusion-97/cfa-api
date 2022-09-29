@@ -246,27 +246,31 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
     }
 
     @Override
-    public EtudiantPromotionDossierProDto getAllDossierProfessionnelByEtudiant(long id) {
+    public GetDossierProDto getAllDossierProfessionnelByEtudiant(long id) {
 
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
-        EtudiantPromotionDossierProDto eDto = DtoTools.convert(etudiant, EtudiantPromotionDossierProDto.class);
+        GetDossierProDto eDto = DtoTools.convert(etudiant, GetDossierProDto.class);
 
-        DossierProfessionnel dossierProfessionnel = dossierProRepo.findDossierProByEtudiantIdAndCursusId(id);
-        DossierProEtudiantDto dpDto = DtoTools.convert(dossierProfessionnel, DossierProEtudiantDto.class);
-
-        for(PromotionDossierProDto pDto : eDto.getPromotions()) {
-            pDto.getCursus().setDossierProfessionnel(dpDto);
-            pDto.getCursus().getDossierProfessionnel().getCursus().getActiviteTypes().stream().map(ac -> {
-                Set<CompetenceDossierProDto> cp = ac.getCompetenceProfessionnelles();
-                for(CompetenceDossierProDto c : cp) {
-                    for(ExperienceProfessionnelleDto exp : dpDto.getExperienceProfessionnelles()) {
-                        if(exp.getCompetenceProfessionnelleId() == c.getId()) {
-                            c.setExperienceProfessionnelles(dpDto.getExperienceProfessionnelles());
+        List<DossierProfessionnel> dossierProfessionnel = dossierProRepo.findDossierProByEtudiantIdAndCursusId(id);
+        for(DossierProfessionnel dp : dossierProfessionnel) {
+            DossierProEtudiantDto dpDto = DtoTools.convert(dp, DossierProEtudiantDto.class);
+            for(GetPromotionDossierProDto pDto : eDto.getPromotions()) {
+                if(pDto.getCursus().getId() == dpDto.getCursus().getId()){
+                    pDto.getCursus().setDossierProfessionnel(dpDto);
+                    pDto.getCursus().getDossierProfessionnel().setCursus(dpDto.getCursus());
+                    pDto.getCursus().getDossierProfessionnel().getCursus().getActiviteTypes().stream().map(ac -> {
+                        Set<CompetenceDossierProDto> cp = ac.getCompetenceProfessionnelles();
+                        for(CompetenceDossierProDto c : cp) {
+                            for(ExperienceProfessionnelleDto exp : dpDto.getExperienceProfessionnelles()) {
+                                if(exp.getCompetenceProfessionnelleId() == c.getId()) {
+                                    c.setExperienceProfessionnelles(dpDto.getExperienceProfessionnelles());
+                                }
+                            }
                         }
-                    }
+                        return pDto;
+                    }).collect(Collectors.toList());
                 }
-                return pDto;
-            }).collect(Collectors.toList());
+            }
         }
         return eDto;
     }

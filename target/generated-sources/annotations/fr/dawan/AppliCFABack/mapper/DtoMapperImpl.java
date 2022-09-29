@@ -66,8 +66,13 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
+<<<<<<< HEAD
     date = "2022-09-28T15:37:42+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.50.v20210914-1429, environment: Java 17.0.1 (Eclipse Adoptium)"
+=======
+    date = "2022-09-29T10:10:46+0200",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.14.1 (Amazon.com Inc.)"
+>>>>>>> freemarker-william
 )
 public class DtoMapperImpl implements DtoMapper {
 

@@ -1,12 +1,11 @@
 package fr.dawan.AppliCFABack.dto.customdtos;
 
 import java.io.Serializable;
-import java.util.List;
 
-public class EtudiantPromotionDossierProDto implements Serializable {
+public class GetPromotionDossierProDto implements Serializable {
 
     private long id;
-    private List<PromotionDossierProDto> promotions;
+    private GetCursusDossierProDto cursus;
     private int version;
 
     public long getId() {
@@ -17,12 +16,12 @@ public class EtudiantPromotionDossierProDto implements Serializable {
         this.id = id;
     }
 
-    public List<PromotionDossierProDto> getPromotions() {
-        return promotions;
+    public GetCursusDossierProDto getCursus() {
+        return cursus;
     }
 
-    public void setPromotions(List<PromotionDossierProDto> promotions) {
-        this.promotions = promotions;
+    public void setCursus(GetCursusDossierProDto cursus) {
+        this.cursus = cursus;
     }
 
     public int getVersion() {
