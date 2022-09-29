@@ -1,11 +1,9 @@
 package fr.dawan.AppliCFABack.dto.customdtos;
 
-import java.io.Serializable;
-
-public class PromotionDossierProDto implements Serializable {
+public class GetCompetenceDossierProDto {
 
     private long id;
-    private CursusPromotionDossierProDto cursus;
+    private String libelle;
     private int version;
 
     public long getId() {
@@ -16,12 +14,12 @@ public class PromotionDossierProDto implements Serializable {
         this.id = id;
     }
 
-    public CursusPromotionDossierProDto getCursus() {
-        return cursus;
+    public String getLibelle() {
+        return libelle;
     }
 
-    public void setCursus(CursusPromotionDossierProDto cursus) {
-        this.cursus = cursus;
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
     }
 
     public int getVersion() {
