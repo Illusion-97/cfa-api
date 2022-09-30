@@ -19,6 +19,7 @@ public class NoteDtoToSave extends BaseEntityDto implements Serializable {
 	private Satisfaction satisfaction;
 	private long etudiantNoteId;
 	private long examenId;
+	private String observation;
 
 	/**
 	 * @return the noteObtenue
@@ -76,4 +77,21 @@ public class NoteDtoToSave extends BaseEntityDto implements Serializable {
 		this.examenId = examenId;
 	}
 
+	/**
+	 * @return le observation
+	 */
+	public String getObservation() {
+		return observation;
+	}
+
+	/**
+	 * @param observation le observation à affecter
+	 
+	 */
+	public void setObservation(String observation) {
+		this.observation = observation;
+	}
+
+
+	
 }
