@@ -483,7 +483,13 @@ public class InterventionServiceImpl implements InterventionService {
 					List<Promotion> promotions = new ArrayList<>();
 					formateurs.add(formateur);
 					interventionDG2.setFormateurs(formateurs);
-					promotions.add(promotionOpt.get());
+		
+					if (interventionDb.get().getPromotions() != null) {
+						promotions.addAll(interventionDb.get().getPromotions());
+					}
+					if (!promotions.contains(promotionOpt.get())) {
+						promotions.add(promotionOpt.get());
+					}
 					interventionDG2.setPromotions(promotions);
 					result.add(interventionDG2);
 

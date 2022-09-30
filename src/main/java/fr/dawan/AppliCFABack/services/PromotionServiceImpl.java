@@ -535,7 +535,13 @@ public class PromotionServiceImpl implements PromotionService {
 			gpd.setDateDebut(i.getDateDebut());
 			gpd.setDateFin(i.getDateFin());
 			Formation f = i.getFormation();
-			gpd.setModule(f.getTitre());
+			if (f != null) {
+				gpd.setModule(f.getTitre());	
+			}else {
+				gpd.setModule("Pas de Formation");
+			}
+			
+		
 //			gpd.setObjectifPedagogiques(f.getObjectifsPedagogique());
 			gpd.setObjectifPedagogiques("A définir");
 			List<String> formateursNomPrenom = i.getFormateurs().stream().map(
