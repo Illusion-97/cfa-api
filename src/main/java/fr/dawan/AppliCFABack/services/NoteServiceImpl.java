@@ -106,9 +106,7 @@ public class NoteServiceImpl implements NoteService {
 	@Override
 	public NoteDtoToSave saveOrUpdate(NoteDtoToSave nDto) {
 		Note n = DtoTools.convert(nDto, Note.class);
-
 		n = noteRepository.saveAndFlush(n);
-
 		return DtoTools.convert(n, NoteDtoToSave.class);
 	}
 
