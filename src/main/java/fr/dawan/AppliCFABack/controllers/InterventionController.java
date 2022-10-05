@@ -170,7 +170,7 @@ public class InterventionController {
 			else {
 				nb = interventionService.fetchDGInterventions(splitUser[0], splitUser[1]);
 			}
-			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Promotions updated :" +nb);
+			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Intreventions updated :" +nb);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,7 +41,7 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 	@ManyToMany
 	private List<Promotion> promotions; // CDA 2021
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.MERGE)
 	private List<Formateur> formateurs;
 
 	@ManyToMany(mappedBy = "interventions")
@@ -155,8 +156,15 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 }
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateDebut, dateFin, formation, idDg2);
-	}
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dateDebut == null) ? 0 : dateFin.hashCode());
+		result = prime * result + ((dateFin== null) ? 0 : dateFin.hashCode());
+		result = prime * result + ((promotions == null) ? 0 : promotions.hashCode());
+		result = prime * result + ((formateurs== null) ? 0 : formateurs.hashCode());
+		result = prime * result + (int) (idDg2 ^ (idDg2 >>> 32));
+		return result;}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -167,11 +175,31 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 		if (getClass() != obj.getClass())
 			return false;
 		Intervention other = (Intervention) obj;
-		return Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
-				//&& formation.getIdDg2()== other.formation.getIdDg2() 
-				&& idDg2 == other.idDg2
-				&& formateurs == other.formateurs
-				&& promotions == other.promotions;}
+		if (dateDebut == null) {
+			if (other.dateDebut != null)
+				return false;
+		} else if (!dateDebut.equals(other.dateDebut))
+			return false;
+		if (dateFin == null) {
+			if (other.dateFin != null)
+				return false;
+		} else if (!dateFin.equals(other.dateFin))
+			return false;
+		if (idDg2 != other.idDg2)
+			return false;
+		if (promotions == null) {
+			if (other.promotions != null)
+				return false;
+		} else if (!promotions.stream().map(p ->p.getId()).collect(Collectors.toList()).equals(other.promotions.stream().map(p ->p.getId()).collect(Collectors.toList())))
+			return false;
+		if (formateurs == null) {
+			if (other.formateurs != null)
+				return false;
+		} else if (!formateurs.stream().map(f ->f.getId()).collect(Collectors.toList()).equals(other.formateurs.stream().map(f ->f.getId()).collect(Collectors.toList())))
+			return false;
+		
+		return true;
+	}
 
 
 }
