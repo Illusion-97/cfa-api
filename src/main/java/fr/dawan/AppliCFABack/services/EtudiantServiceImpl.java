@@ -928,8 +928,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 					} else {
 
 						if (etudiant.getPromotions().contains(promotion.get())) {
-							System.out
-									.println("Promotions des etudiants>>>>>>>/n" + etudiant.getPromotions().toString());
+							
 							continue;
 						}
 						else {
