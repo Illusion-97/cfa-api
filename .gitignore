@@ -1,4 +1,27 @@
-/.metadata/
-/.idea
-cfa.iml
-*.log
+.mvn/wrapper/maven-wrapper.jar
+.gitlab-ci.yml
+!**/src/main/resources/application.properties
+**/src/main/resources/application.properties
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+target/
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/target/
