@@ -128,7 +128,6 @@
 
         .container-legende {
             width: 400px;
-            display: flex;
             justify-content: space-around;
             align-items: center;
              margin-top: 10px;

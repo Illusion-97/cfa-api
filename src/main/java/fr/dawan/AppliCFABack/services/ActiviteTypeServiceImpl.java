@@ -154,10 +154,12 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 		for (ActiviteType activiteType : activiteTypes) {
 
 			ActiviteTypeDto atDto = mapper.activiteTypeToActiviteDto(activiteType);
+			atDto.setCursusActiviteTypeId(activiteType.getCursusActiviteType().getId());
 			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<>();
 
 			for (CompetenceProfessionnelle cp : activiteType.getCompetenceProfessionnelles()) {
 				cpDto.add(mapper.competenceProfessionnelleToCompetenceProfessionnelleDto(cp));
+		
 				atDto.setCompetenceProfessionnellesDto(cpDto);
 			}
 			activiteTypeDto.add(atDto);

@@ -40,7 +40,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@ManyToOne(cascade = {CascadeType.PERSIST })
 	private Adresse adresse;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<UtilisateurRole> roles;
 
 	@ManyToOne

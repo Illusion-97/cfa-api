@@ -47,7 +47,8 @@ public interface NoteRepository extends JpaRepository<Note, Long>{
 	 * @param search la saisie de la recherche
 	 * @return Liste des notes en fonction de l'intervention et l'examen
 	 */
-	@Query("SELECT n FROM Note n JOIN n.examen e On e.id = :idExamen Join e.intervention i On i.id =:idIntervention Join Fetch n.etudiantNote etu Join etu.utilisateur u Where u.nom LIKE %:search% OR u.prenom  LIKE %:search% ")
+	@Query("SELECT n FROM Note n JOIN n.examen e On e.id = :idExamen Join e.intervention i On i.id "
+			+ "=:idIntervention Join Fetch n.etudiantNote etu Join etu.utilisateur u Where u.nom LIKE %:search% OR u.prenom  LIKE %:search% ")
 	List<Note> findAllByExamenInterventionIdAndExamenId(long idIntervention ,long idExamen,String search);
 
 }
