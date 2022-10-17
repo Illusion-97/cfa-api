@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -166,26 +167,40 @@ public class PromotionController {
 					.body("Error while fetching data from the webservice DG2");
 		}
 	}
-	@GetMapping(value = "/grillePositionnement/{idPromotion}",  produces = "application/octet-stream")
-	public ResponseEntity<Resource> getGrillePositionnement(@PathVariable("idPromotion") long idPromotion) throws Exception {
+//	@GetMapping(value = "/grillePositionnement/{idPromotion}",  produces = "application/octet-stream")
+//	public ResponseEntity<Resource> getGrillePositionnement(@PathVariable("idPromotion") long idPromotion) throws Exception {
+//		
+//		String outpoutPath = promoService.getGrillePositionnement(idPromotion);
+//		File f = new File(outpoutPath);
+//		
+//		Path path = Paths.get(f.getAbsolutePath());
+//		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+//		
+//		//Pour afficher un boite de téléchargement dans une réponse web au lieu de changer de page, nous devons
+//		//spécifier un header : Content-Disposition, attachment;filename=app.log
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=grille.pdf");
+//		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+//		headers.add("Pragma", "no-cache");
+//		headers.add("Expires", "0");
+//		
+//		return ResponseEntity.ok()
+//				.headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+//	}
+	@GetMapping(value = "/grillePositionnement/{idPromotion}",  produces = "plain/text")
+	public ResponseEntity<String> getGrillePositionnement(@PathVariable("idPromotion") long idPromotion) throws Exception {
 		
 		String outpoutPath = promoService.getGrillePositionnement(idPromotion);
 		File f = new File(outpoutPath);
 		
 		Path path = Paths.get(f.getAbsolutePath());
-		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-		
+		byte[] bytes =  Files.readAllBytes(path);
+		String base64 = Base64.getEncoder().encodeToString(bytes);
 		//Pour afficher un boite de téléchargement dans une réponse web au lieu de changer de page, nous devons
 		//spécifier un header : Content-Disposition, attachment;filename=app.log
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=app.log");
-		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-		headers.add("Pragma", "no-cache");
-		headers.add("Expires", "0");
-		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=app.log");
 		
-		return ResponseEntity.ok()
-				.headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+		return ResponseEntity.ok().body(base64);
+				
 	}
 	
 	@GetMapping(value = "grillePositionnement/file/{idPromotion}")
@@ -193,7 +208,7 @@ public class PromotionController {
 		PromotionDto promotionDto = promoService.getById(idPromotion);
 
 		try {
-			Resource file = fileSevice.download("GrillePositionnement " +promotionDto.getNom()+".pdf","grillePositionnements");
+			Resource file = fileSevice.download("GrillePositionnement" +promotionDto.getNom()+".pdf","grillePositionnements");
 
 			Path path = file.getFile().toPath();
 
@@ -202,6 +217,7 @@ public class PromotionController {
 					.body(file);
 
 		} catch (Exception e) {
+
 			logger.log(Level.WARNING, "Failed Response Entity ? file ? path", e);
 			return null;
 		}

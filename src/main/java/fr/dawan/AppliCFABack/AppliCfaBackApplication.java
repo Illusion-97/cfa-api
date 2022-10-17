@@ -23,7 +23,7 @@ public class AppliCfaBackApplication {
 
 	@Autowired
 	private TokenInterceptor tokenInterceptor;
-	
+
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
@@ -43,7 +43,8 @@ public class AppliCfaBackApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/swagger-ui/index.html").allowedMethods("POST", "PUT").allowedOrigins("*");
-				registry.addMapping("/**").allowedOrigins("*").allowedMethods("*","GET", "POST", "PUT", "DELETE", "OPTIONS").allowedHeaders("*")
+				registry.addMapping("/**").allowedOrigins("*")
+						.allowedMethods("*", "GET", "POST", "PUT", "DELETE", "OPTIONS").allowedHeaders("*")
 //						.exposedHeaders("Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
 //								"Origin", "Authorization", "X-Requested-With", "requestId", "Correlation-Id")
 
@@ -53,12 +54,12 @@ public class AppliCfaBackApplication {
 			// Intercepteurs
 			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
-			//	registry.addInterceptor(tokenInterceptor);
+				// registry.addInterceptor(tokenInterceptor);
 
 			}
 
 			@Override
-			public void addResourceHandlers(ResourceHandlerRegistry registry){
+			public void addResourceHandlers(ResourceHandlerRegistry registry) {
 				registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
 				registry.addResourceHandler("pictures/**").addResourceLocations("classpath:/pictures/");
 			}

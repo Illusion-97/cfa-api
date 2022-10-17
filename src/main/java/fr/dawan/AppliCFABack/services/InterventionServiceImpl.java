@@ -465,19 +465,22 @@ public class InterventionServiceImpl implements InterventionService {
 				if (!formateurOpt.isPresent()) {
 
 					UtilisateurRole formateurRole = utilisateurRoleRepository.findByIntituleContaining("FORMATEUR");
-
+					List<Utilisateur> utilisateurs = new ArrayList<>();
+					utilisateurs.add(UtilisateurOptional.get());
+					if (formateurRole.getUtilisateurs() != null) {
+						utilisateurs.addAll(formateurRole.getUtilisateurs());
+					} 
+					formateurRole.setUtilisateurs(utilisateurs);
 					if (UtilisateurOptional.get().getRoles() != null) {
 						if (!UtilisateurOptional.get().getRoles().contains(formateurRole)) {
 							UtilisateurOptional.get().getRoles().add(formateurRole);
 						}
-
 					} else {
 						List<UtilisateurRole> roles = new ArrayList<>();
 						roles.add(formateurRole);
 						UtilisateurOptional.get().setRoles(roles);
 					}
 					formateur.setUtilisateur(UtilisateurOptional.get());
-
 					formateur = formateurRepository.saveAndFlush(formateur);
 					UtilisateurOptional.get().setFormateur(formateur);
 					utilisateurRepository.saveAndFlush(UtilisateurOptional.get());
@@ -489,11 +492,10 @@ public class InterventionServiceImpl implements InterventionService {
 							if (!formateurOpt.get().getInterventions().contains(interventionDb.get())) {
 								interventions.add(interventionDG2);
 							}
-						}
-						else {
+						} else {
 							interventions.add(interventionDG2);
 						}
-						
+
 						interventions.addAll(formateurOpt.get().getInterventions());
 					}
 				}
@@ -503,7 +505,7 @@ public class InterventionServiceImpl implements InterventionService {
 				formateur.setInterventions(interventions);
 
 				if (!interventionDb.isPresent()) {
-					
+
 					formateurs.add(formateur);
 					interventionDG2.setFormateurs(formateurs);
 
@@ -518,7 +520,8 @@ public class InterventionServiceImpl implements InterventionService {
 					List<Long> promotionsId = new ArrayList<Long>();
 
 					if (interventionDb.get().getFormateurs() != null) {
-						formateursId = interventionDb.get().getFormateurs().stream().map(f->f.getId()).collect(Collectors.toList());
+						formateursId = interventionDb.get().getFormateurs().stream().map(f -> f.getId())
+								.collect(Collectors.toList());
 						formateurs.addAll(interventionDb.get().getFormateurs());
 					}
 					if (!formateursId.contains(formateur.getId())) {
@@ -535,7 +538,7 @@ public class InterventionServiceImpl implements InterventionService {
 					interventionDG2.setPromotions(promotions);
 					if (interventionDb.get().equals(interventionDG2)) {
 						continue;
-						
+
 					} else {
 						interventionDG2.setId(interventionDb.get().getId());
 						interventionDG2.setVersion(interventionDb.get().getVersion());
