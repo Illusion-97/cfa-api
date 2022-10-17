@@ -67,6 +67,7 @@ import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.GrilleException;
+import fr.dawan.AppliCFABack.tools.PdfTools;
 import fr.dawan.AppliCFABack.tools.ToPdf;
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
@@ -565,9 +566,11 @@ public class PromotionServiceImpl implements PromotionService {
 
 		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, gp);
 
-		String outputPdf = storageFolder + "grillePositionnements/GrillePositionnement "+promotion.get().getNom()+".pdf";
+		String outputPdf = storageFolder + "grillePositionnements/GrillePositionnement"+promotion.get().getNom()+".pdf";
+
 		try {
-			ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+			
+			PdfTools.generatePdfFromHtml(outputPdf,htmlContent );
 		} catch (Exception e) {
 			logger.log(Level.SEVERE,"convertHtmlToPdf failed", e);
 		}

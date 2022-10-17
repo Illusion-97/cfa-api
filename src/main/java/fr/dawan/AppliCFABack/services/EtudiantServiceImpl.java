@@ -910,7 +910,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 				Adresse adresseDg2 = mapper.etudiantUtilisateurDG2DtoToAdresse(eDG2);
 				Etudiant etudiant = new Etudiant();
 				if (utiLisateurOptional.isPresent()) {
-					etudiant = utiLisateurOptional.get().getEtudiant();
+					if (utiLisateurOptional.get().getEtudiant() != null) {
+						etudiant = utiLisateurOptional.get().getEtudiant();
+					}
+					
 
 					if (!adresseDg2.equals(utiLisateurOptional.get().getAdresse())) {
 						if (utiLisateurOptional.get().getAdresse() != null) {
