@@ -21,6 +21,7 @@ public class EntrepriseDto extends BaseEntityDto implements Serializable {
 	private int effectifTotal;
 	private EmployeurType employeurType;
 	private AdresseDto adresseSiegeDto;
+	private long adresseSiegeId;
 
 	public EntrepriseDto() {
 		super();
@@ -111,6 +112,14 @@ public class EntrepriseDto extends BaseEntityDto implements Serializable {
 	 */
 	public void setAdresseSiegeDto(AdresseDto adresseSiegeDto) {
 		this.adresseSiegeDto = adresseSiegeDto;
+	}
+	
+	public long getAdresseSiegeId() {
+		return adresseSiegeId;
+	}
+
+	public void setAdresseSiegeId(long adresseSiegeId) {
+		this.adresseSiegeId = adresseSiegeId;
 	}
 
 }
