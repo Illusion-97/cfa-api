@@ -45,7 +45,7 @@ public class EntrepriseController {
 	 * 
 	 * @param page
 	 * @param size
-	 * @return all entreprise by page
+	 * @return all entreprises by page
 	 */
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<EntrepriseDto> getAllByPage(@PathVariable("page") int page,

@@ -42,6 +42,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		List<EntrepriseDto> lstDto = new ArrayList<>();
 		for (Entreprise e : lst) {
 			EntrepriseDto eDto = mapper.entrepriseToEntrepriseDto(e);
+			eDto.setAdresseSiegeId(e.getAdresseSiege().getId());
 			eDto.setAdresseSiegeDto(mapper.adresseToAdresseDto(e.getAdresseSiege()));
 			lstDto.add(eDto);
 		}
@@ -65,6 +66,10 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		List<EntrepriseDto> lstDto = new ArrayList<>();
 		for (Entreprise e : lst) {
 			EntrepriseDto eDto = mapper.entrepriseToEntrepriseDto(e);
+			eDto.setAdresseSiegeId(e.getAdresseSiege().getId());
+			System.out.println("--------------------------------------");
+			System.out.println(e.getAdresseSiege().toString());
+			System.out.println("--------------------------------------");
 			eDto.setAdresseSiegeDto(mapper.adresseToAdresseDto(e.getAdresseSiege()));
 			
 			lstDto.add(eDto);
