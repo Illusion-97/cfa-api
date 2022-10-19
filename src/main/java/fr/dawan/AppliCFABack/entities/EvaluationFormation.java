@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -44,6 +45,7 @@ public class EvaluationFormation extends BaseEntity implements Serializable {
 	@ManyToMany
 	private List<Intervention> interventions;
 
+	private LocalDate dateEvaluation;
 	/**
 	 * @return l' livretEvaluation
 	 */
@@ -162,6 +164,21 @@ public class EvaluationFormation extends BaseEntity implements Serializable {
 	 */
 	public void setInterventions(List<Intervention> interventions) {
 		this.interventions = interventions;
+	}
+
+	/**
+	 * @return le dateEvaluation
+	 */
+	public LocalDate getDateEvaluation() {
+		return dateEvaluation;
+	}
+
+	/**
+	 * @param dateEvaluation le dateEvaluation à affecter
+	 
+	 */
+	public void setDateEvaluation(LocalDate dateEvaluation) {
+		this.dateEvaluation = dateEvaluation;
 	}
 	
 

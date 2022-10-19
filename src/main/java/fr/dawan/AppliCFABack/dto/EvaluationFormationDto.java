@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -23,6 +24,9 @@ public class EvaluationFormationDto  extends BaseEntityDto implements Serializab
 	private String commentaireEvaluationsComplementaires;
 
 	private List<Long> interventions;
+	
+	private LocalDate dateEvaluation;
+
 
 	/**
 	 * @return le livretEvaluationId
@@ -143,6 +147,22 @@ public class EvaluationFormationDto  extends BaseEntityDto implements Serializab
 	public void setInterventions(List<Long> interventions) {
 		this.interventions = interventions;
 	}
+
+	/**
+	 * @return le dateEvaluation
+	 */
+	public LocalDate getDateEvaluation() {
+		return dateEvaluation;
+	}
+
+	/**
+	 * @param dateEvaluation le dateEvaluation à affecter
+	 
+	 */
+	public void setDateEvaluation(LocalDate dateEvaluation) {
+		this.dateEvaluation = dateEvaluation;
+	}
+	
 	
 	
 }

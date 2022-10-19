@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,4 +13,6 @@ public interface LivretEvaluationRepository extends JpaRepository<LivretEvaluati
 
 	@Query("FROM LivretEvaluation l WHERE l.etudiant.id = :id")
 	List<LivretEvaluation> findLivretEvaluationByEtudiantId(long id);
+
+	Optional<LivretEvaluation> findByEtudiantIdAndTitreProfessionnelId(long idEtudiant, long idCursus);
 }
