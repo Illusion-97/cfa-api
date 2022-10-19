@@ -33,7 +33,14 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 	
 	@Column(nullable = true) // pour recupérer l'id dg2
 	private long idDg2;
-
+	
+	@Column(nullable = true)
+	private int niveau ;
+	
+	@Column(nullable = true)
+	private String sigle;
+	
+	
 	public Cursus() {
 		super();
 	}
@@ -107,6 +114,36 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 	@Override
 	public int hashCode() {
 		return Objects.hash(duree, idDg2, slug, titre);
+	}
+
+	/**
+	 * @return le niveau
+	 */
+	public int getNiveau() {
+		return niveau;
+	}
+
+	/**
+	 * @param niveau le niveau à affecter
+	 
+	 */
+	public void setNiveau(int niveau) {
+		this.niveau = niveau;
+	}
+
+	/**
+	 * @return le sigle
+	 */
+	public String getSigle() {
+		return sigle;
+	}
+
+	/**
+	 * @param sigle le sigle à affecter
+	 
+	 */
+	public void setSigle(String sigle) {
+		this.sigle = sigle;
 	}
 
 	@Override

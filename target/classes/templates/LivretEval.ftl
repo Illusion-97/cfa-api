@@ -526,8 +526,8 @@
                     <h2>Titre professionnel </h2>
                 </div>
                 <div class="basRoseTitre"></div>
-                <h3 class="nomTitre">Concepteur développeur d’applications</h3>
-                <p class="niveauTitre"> Niveau 6</p>
+                <h3 class="nomTitre">${livertEval.cursus.titre}</h3>
+                <p class="niveauTitre"> Niveau ${livertEval.cursus.niveau}</p>
                 <div class="blocDate">
                     <p>
                     <div class="spanDate">Arrêté du :</div>
@@ -551,25 +551,25 @@
                     <div>
                         <span class="spanF">Lieu de formation</span>
                         <div style=" display: inline-block;" class="arrow-right"></div> <span
-                            class="spanFT">Rennes</span>
+                            class="spanFT">${livertEval.livretEvaluation.organismeFormation.nom}</span>
                     </div>
 
                 </div>
                 <div class="candidat">
                     <p>Candidat(e) :</p>
                     <div>
-                        <span class="spanF">Nom </span>
+                        <span class="spanF">${livertEval.etudiant.utilisateur.nom}</span>
                         <div style=" display: inline-block;" class="arrow-right"></div> <span class="spanFT">Ben </span>
                     </div>
                     <div>
                         <span class="spanF">Prénom</span>
                         <div style=" display: inline-block;" class="arrow-right"></div> <span
-                            class="spanFT">Feres</span>
+                            class="spanFT">${livertEval.etudiant.utilisateur.prenom}</span>
                     </div>
                     <div>
                         <span class="spanF">Date de naissance</span>
                         <div style=" display: inline-block;" class="arrow-right"></div> <span
-                            class="spanFT">30/3/1994</span>
+                            class="spanFT">${livertEval.etudiant.utilisateur.dateDeNaissance}</span>
                     </div>
 
                 </div>
@@ -585,7 +585,7 @@
                             <td>Page</td>
                         </tr>
                         <tr>
-                            <td>CDA</td>
+                            <td>${livertEval.cursus.sigle}</td>
                             <td>Livret d’évaluations passées en cours de formation </td>
                             <td>TP-01281</td>
                             <td>03</td>
@@ -626,7 +626,7 @@
                             <td>Page</td>
                         </tr>
                         <tr>
-                            <td>CDA</td>
+                            <td>${livertEval.cursus.sigle}</td>
                             <td>Livret d’évaluations passées en cours de formation </td>
                             <td>TP-01281</td>
                             <td>03</td>
@@ -637,28 +637,26 @@
                     </tbody>
                 </table>
             </section>
+             <#list livertEval.evaluations as at, evaluationsFormations>
             <section class="ficheResultat">
                 <div class="fiche">
                     <h2> Fiche de résultats des évaluations</h2>
                 </div>
                 <div>
                     <h3 class="at">
-                        Activité-type <span> 1</span>
+                        Activité-type <span>${at.numeroFiche}</span>
                     </h3>
 
                     <h3 class="libelle">
-                        Concevoir et développer des composants d'interface utilisateur en intégrant les recommandations
-                        de sécurité
+                       ${at.libelle}
                     </h3>
                 </div>
                 <div class="basRoseTitre"></div>
                 <div class="competences">
                     <h3>Compétences :</h3>
-                    <p><span>1.</span>Maquetter une application</p>
-                    <p><span>2.</span>Développer une interface utilisateur de type desktop </p>
-                    <p><span>3.</span> Développer des composants d’accès aux données</p>
-                    <p><span>4.</span>Développer la partie front-end d’une interface utilisateur web</p>
-                    <p><span>5.</span>Développer la partie back-end d’une interface utilisateur web</p>
+                    <#list at.competenceProfessionnelles as  competence>
+                    <p><span> ${competence.numeroFiche}.</span>${competence.libelle}</p>
+                    </#list>
                 </div>
                 <table class="minimalistBlackEvaluation">
                     <thead>
@@ -669,83 +667,31 @@
                         </tr>
                     </thead>
                     <tbody>
+                     <#list evaluationsFormations as  ef >
                         <tr>
-                            <td>
-                                <h4> <span>1 </span> Conception d’une application Desktop de gestion d’un carnet
-                                    d’adresses </h4>
-                                <p>Analyse du cahier des charges </p>
+                            <td width="60%">
+                                ${ef.contenu}
+                            </td>
+                            <td width="13%"style=" text-align: center;">
+                                ${ef.dateEvaluation}
                             </td>
                             <td>
-                                30/07/2020
-                            </td>
-                            <td>
-                                <div class="divTable tableChekCompetence">
+                               <div class="divTable tableChekCompetence">
                                     <div class="divTableBody">
                                         <div class="divTableRow">
+                                        <#list  [1,2,3] as nb >
                                             <div class="divTableCell">&nbsp;
-                                                <label for="scales">1</label>
-                                                <input type="checkbox" id="scales" name="scales">
+                                                <label for="scales">${nb}</label>
+                                                <input type="checkbox" id="scales" name="scales"  <#list ef.competencesEvaluees as comp> <#if nb == comp.numeroFiche > checked  </#if> </#list>>
                                             </div>
-                                            <div class="divTableCell">&nbsp;
-                                                <label for="scales">2</label>
-                                                <input type="checkbox" id="scales" name="scales" checked>
-
-                                            </div>
-                                            <div class="divTableCell">&nbsp;
-                                                <label for="scales">3</label>
-                                                <input type="checkbox" id="scales" name="scales">
-                                            </div>
+                                        
+                                           </#list>
                                         </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;
-                                                <label for="scales">4</label>
-                                                <input type="checkbox" id="scales" name="scales" checked>
-                                            </div>
-                                            <div class="divTableCell">&nbsp;
-                                                <label for="scales">5</label>
-                                                <input type="checkbox" id="scales" name="scales">
-                                            </div>
-                                            <div class="divTableCell">&nbsp;
-                                                <label for="scales">6</label>
-                                                <input type="checkbox" id="scales" name="scales">
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;
-                                                <label for="scales">7</label>
-                                                <input type="checkbox" id="scales" name="scales" checked>
-
-                                            </div>
-                                            <div class="divTableCell">&nbsp;
-                                                <label for="scales">8</label>
-                                                <input type="checkbox" id="scales" name="scales">
-                                            </div>
-                                            <div class="divTableCell">&nbsp;
-                                                <label for="scales">9</label>
-                                                <input type="checkbox" id="scales" name="scales">
-                                            </div>
-                                        </div>
+                                   
                                     </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <h4> <span>2 </span> Développer la partie front-end d’une application de gestion d’un
-                                    catalogue de produits. </h4>
-                            </td>
-                            <td>cell2_2</td>
-                            <td>cell3_2</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h4> <span>2 </span> Création d’une application de comparaison d’offres de formations
-                                    (projet en groupes – 4 semaines)
-                                </h4>
-
-                            </td>
-                            <td>cell2_3</td>
-                            <td>cell3_3</td>
-                        </tr>
+                         </#list>
                     </tbody>
                 </table>
                 <table class="minimalistBlack">
@@ -854,6 +800,7 @@
                     </tbody>
                 </table>
             </section>
+            </#list>
         </main>
         <footer>
             <div class="separation"></div>

@@ -1,0 +1,742 @@
+2022-10-18 09:34:04.835  INFO 16212 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 16212 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 09:34:04.841  INFO 16212 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 09:34:08.470  INFO 16212 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 09:34:08.714  INFO 16212 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 231ms. Found 35 JPA repository interfaces.
+2022-10-18 09:34:09.375  INFO 16212 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 09:34:09.386  INFO 16212 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 09:34:09.386  INFO 16212 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 09:34:09.570  INFO 16212 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 09:34:09.571  INFO 16212 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4672 ms
+2022-10-18 09:34:09.893  INFO 16212 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 09:34:09.989  INFO 16212 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 09:34:10.070  INFO 16212 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 09:34:10.278  INFO 16212 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 09:34:10.418  INFO 16212 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 09:34:10.512  INFO 16212 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 09:34:10.539  INFO 16212 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 09:34:10.658  WARN 16212 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 09:34:12.605  INFO 16212 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 09:34:12.613  INFO 16212 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 09:34:12.783  INFO 16212 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 09:34:12.865  INFO 16212 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 09:34:12.866  INFO 16212 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 09:34:12.866  INFO 16212 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 09:34:12.909  INFO 16212 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 09:34:12.909  INFO 16212 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 122 ms
+2022-10-18 09:34:12.922  INFO 16212 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 09:34:13.217  INFO 16212 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 09:34:13.218  INFO 16212 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 09:34:14.670  INFO 16212 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 09:34:14.672  INFO 16212 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 09:34:14.672  INFO 16212 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 09:34:14.674  INFO 16212 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 10.278 seconds (JVM running for 11.532)
+2022-10-18 09:34:14.674  INFO 16212 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 09:34:14.675  INFO 16212 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 09:34:14.702  INFO 16212 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 27 ms
+2022-10-18 09:34:46.160 ERROR 16212 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 09:34:46.161 ERROR 16212 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 09:34:46.248 ERROR 16212 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 09:34:46.249 ERROR 16212 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 09:34:46.301 ERROR 16212 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 09:34:46.301 ERROR 16212 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 09:34:46.318  WARN 16212 --- [http-nio-8085-exec-2] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -moz-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 09:34:46.318  WARN 16212 --- [http-nio-8085-exec-2] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -webkit-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 09:34:46.379 ERROR 16212 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 09:34:46.379 ERROR 16212 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 09:34:46.384 ERROR 16212 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 09:34:46.384 ERROR 16212 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:32:11.400  INFO 16212 --- [RMI TCP Connection(61)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-10-18 10:32:11.559  INFO 16212 --- [RMI TCP Connection(61)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:32:11.575  INFO 16212 --- [RMI TCP Connection(61)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:32:11.576  INFO 16212 --- [RMI TCP Connection(61)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-10-18 10:32:11.582  INFO 16212 --- [RMI TCP Connection(61)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-10-18 10:32:16.007  INFO 49608 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 49608 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 10:32:16.011  INFO 49608 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 10:32:16.982  INFO 49608 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 10:32:17.162  INFO 49608 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 174ms. Found 35 JPA repository interfaces.
+2022-10-18 10:32:17.678  INFO 49608 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 10:32:17.686  INFO 49608 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:32:17.686  INFO 49608 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:32:17.817  INFO 49608 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:32:17.817  INFO 49608 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1771 ms
+2022-10-18 10:32:18.011  INFO 49608 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:32:18.085  INFO 49608 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 10:32:18.153  INFO 49608 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 10:32:18.332  INFO 49608 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 10:32:18.439  INFO 49608 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 10:32:18.516  INFO 49608 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 10:32:18.539  INFO 49608 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 10:32:18.568  WARN 49608 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 10:32:20.055  INFO 49608 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 10:32:20.061  INFO 49608 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:32:20.184  INFO 49608 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 10:32:20.257  INFO 49608 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 10:32:20.258  INFO 49608 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:32:20.259  INFO 49608 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:32:20.293  INFO 49608 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:32:20.294  INFO 49608 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 107 ms
+2022-10-18 10:32:20.306  INFO 49608 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 10:32:20.529  INFO 49608 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 10:32:20.530  INFO 49608 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:32:20.960  INFO 49608 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 10:32:20.960  INFO 49608 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 10:32:20.966  INFO 49608 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2022-10-18 10:32:21.542  INFO 49608 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:32:21.544  INFO 49608 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:32:21.544  INFO 49608 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:32:21.545  INFO 49608 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 5.823 seconds (JVM running for 6.621)
+2022-10-18 10:33:18.866  INFO 49608 --- [RMI TCP Connection(4)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-10-18 10:33:18.937  INFO 49608 --- [RMI TCP Connection(4)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:33:18.938  INFO 49608 --- [RMI TCP Connection(4)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:33:18.939  INFO 49608 --- [RMI TCP Connection(4)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-10-18 10:33:18.942  INFO 49608 --- [RMI TCP Connection(4)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-10-18 10:33:21.369  INFO 55640 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 55640 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 10:33:21.371  INFO 55640 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 10:33:22.257  INFO 55640 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 10:33:22.433  INFO 55640 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 169ms. Found 35 JPA repository interfaces.
+2022-10-18 10:33:22.905  INFO 55640 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 10:33:22.912  INFO 55640 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:33:22.912  INFO 55640 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:33:23.040  INFO 55640 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:33:23.041  INFO 55640 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1639 ms
+2022-10-18 10:33:23.264  INFO 55640 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:33:23.340  INFO 55640 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 10:33:23.394  INFO 55640 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 10:33:23.536  INFO 55640 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 10:33:23.645  INFO 55640 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 10:33:23.714  INFO 55640 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 10:33:23.731  INFO 55640 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 10:33:23.785  WARN 55640 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 10:33:25.179  INFO 55640 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 10:33:25.187  INFO 55640 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:33:25.290  INFO 55640 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 10:33:25.370  INFO 55640 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 10:33:25.371  INFO 55640 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:33:25.371  INFO 55640 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:33:25.408  INFO 55640 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:33:25.409  INFO 55640 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 116 ms
+2022-10-18 10:33:25.424  INFO 55640 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 10:33:25.656  INFO 55640 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 10:33:25.658  INFO 55640 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:33:26.656  INFO 55640 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:33:26.657  INFO 55640 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:33:26.658  INFO 55640 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:33:26.659  INFO 55640 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 5.543 seconds (JVM running for 6.295)
+2022-10-18 10:33:26.659  INFO 55640 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 10:33:26.659  INFO 55640 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 10:33:26.664  INFO 55640 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2022-10-18 10:33:35.646 ERROR 55640 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:33:35.647 ERROR 55640 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:33:35.688 ERROR 55640 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:33:35.688 ERROR 55640 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:33:35.727 ERROR 55640 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:33:35.728 ERROR 55640 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:33:35.740  WARN 55640 --- [http-nio-8085-exec-1] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -moz-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 10:33:35.741  WARN 55640 --- [http-nio-8085-exec-1] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -webkit-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 10:33:35.774 ERROR 55640 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:33:35.774 ERROR 55640 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:33:35.780 ERROR 55640 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:33:35.780 ERROR 55640 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:39:32.021  INFO 55640 --- [RMI TCP Connection(9)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-10-18 10:39:32.076  INFO 55640 --- [RMI TCP Connection(9)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:39:32.078  INFO 55640 --- [RMI TCP Connection(9)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:39:32.078  INFO 55640 --- [RMI TCP Connection(9)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-10-18 10:39:32.081  INFO 55640 --- [RMI TCP Connection(9)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-10-18 10:39:35.839  INFO 27176 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 27176 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 10:39:35.842  INFO 27176 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 10:39:36.997  INFO 27176 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 10:39:37.238  INFO 27176 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 232ms. Found 35 JPA repository interfaces.
+2022-10-18 10:39:37.870  INFO 27176 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 10:39:37.880  INFO 27176 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:39:37.880  INFO 27176 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:39:38.058  INFO 27176 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:39:38.059  INFO 27176 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2177 ms
+2022-10-18 10:39:38.347  INFO 27176 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:39:38.427  INFO 27176 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 10:39:38.489  INFO 27176 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 10:39:38.652  INFO 27176 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 10:39:38.756  INFO 27176 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 10:39:38.853  INFO 27176 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 10:39:38.872  INFO 27176 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 10:39:39.059  WARN 27176 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 10:39:40.663  INFO 27176 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 10:39:40.671  INFO 27176 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:39:40.816  INFO 27176 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 10:39:40.932  INFO 27176 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 10:39:40.933  INFO 27176 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:39:40.933  INFO 27176 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:39:40.980  INFO 27176 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:39:40.980  INFO 27176 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 157 ms
+2022-10-18 10:39:40.991  INFO 27176 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 10:39:41.279  INFO 27176 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 10:39:41.280  INFO 27176 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:39:42.027  INFO 27176 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 10:39:42.027  INFO 27176 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 10:39:42.035  INFO 27176 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2022-10-18 10:39:42.506  INFO 27176 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:39:42.508  INFO 27176 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:39:42.508  INFO 27176 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:39:42.509  INFO 27176 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 6.933 seconds (JVM running for 7.733)
+2022-10-18 10:42:12.113  INFO 27176 --- [RMI TCP Connection(7)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-10-18 10:42:12.185  INFO 27176 --- [RMI TCP Connection(7)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:42:12.186  INFO 27176 --- [RMI TCP Connection(7)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:42:12.186  INFO 27176 --- [RMI TCP Connection(7)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-10-18 10:42:12.190  INFO 27176 --- [RMI TCP Connection(7)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-10-18 10:42:15.881  INFO 12860 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 12860 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 10:42:15.883  INFO 12860 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 10:42:16.776  INFO 12860 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 10:42:16.967  INFO 12860 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 184ms. Found 35 JPA repository interfaces.
+2022-10-18 10:42:17.419  INFO 12860 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 10:42:17.426  INFO 12860 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:42:17.426  INFO 12860 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:42:17.545  INFO 12860 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:42:17.545  INFO 12860 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1633 ms
+2022-10-18 10:42:17.747  INFO 12860 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:42:17.821  INFO 12860 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 10:42:17.870  INFO 12860 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 10:42:17.994  INFO 12860 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 10:42:18.086  INFO 12860 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 10:42:18.150  INFO 12860 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 10:42:18.165  INFO 12860 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 10:42:18.340  WARN 12860 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 10:42:19.550  INFO 12860 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 10:42:19.555  INFO 12860 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:42:19.649  INFO 12860 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 10:42:19.724  INFO 12860 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 10:42:19.725  INFO 12860 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:42:19.725  INFO 12860 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:42:19.763  INFO 12860 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:42:19.763  INFO 12860 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 111 ms
+2022-10-18 10:42:19.773  INFO 12860 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 10:42:19.989  INFO 12860 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 10:42:19.991  INFO 12860 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:42:20.936  INFO 12860 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:42:20.938  INFO 12860 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:42:20.938  INFO 12860 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:42:20.947  INFO 12860 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 5.314 seconds (JVM running for 6.095)
+2022-10-18 10:42:22.109  INFO 12860 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 10:42:22.110  INFO 12860 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 10:42:22.114  INFO 12860 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2022-10-18 10:42:29.006 ERROR 12860 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:42:29.007 ERROR 12860 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:42:29.055 ERROR 12860 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:42:29.055 ERROR 12860 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:42:29.091 ERROR 12860 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:42:29.092 ERROR 12860 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:42:29.103  WARN 12860 --- [http-nio-8085-exec-1] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -moz-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 10:42:29.103  WARN 12860 --- [http-nio-8085-exec-1] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -webkit-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 10:42:29.139 ERROR 12860 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:42:29.139 ERROR 12860 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:42:29.143 ERROR 12860 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:42:29.144 ERROR 12860 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:51:17.028  INFO 12860 --- [RMI TCP Connection(12)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-10-18 10:51:17.104  INFO 12860 --- [RMI TCP Connection(12)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:51:17.105  INFO 12860 --- [RMI TCP Connection(12)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:51:17.105  INFO 12860 --- [RMI TCP Connection(12)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-10-18 10:51:17.108  INFO 12860 --- [RMI TCP Connection(12)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-10-18 10:51:23.072  INFO 57384 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 57384 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 10:51:23.074  INFO 57384 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 10:51:24.043  INFO 57384 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 10:51:24.244  INFO 57384 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 194ms. Found 35 JPA repository interfaces.
+2022-10-18 10:51:24.751  INFO 57384 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 10:51:24.762  INFO 57384 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:51:24.763  INFO 57384 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:51:24.913  INFO 57384 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:51:24.914  INFO 57384 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1811 ms
+2022-10-18 10:51:25.122  INFO 57384 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:51:25.195  INFO 57384 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 10:51:25.258  INFO 57384 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 10:51:25.385  INFO 57384 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 10:51:25.485  INFO 57384 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 10:51:25.554  INFO 57384 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 10:51:25.570  INFO 57384 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 10:51:25.741  WARN 57384 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 10:51:27.063  INFO 57384 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 10:51:27.074  INFO 57384 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:51:27.212  INFO 57384 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 10:51:27.285  INFO 57384 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 10:51:27.285  INFO 57384 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:51:27.286  INFO 57384 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:51:27.322  INFO 57384 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:51:27.322  INFO 57384 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 107 ms
+2022-10-18 10:51:27.335  INFO 57384 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 10:51:27.550  INFO 57384 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 10:51:27.550  INFO 57384 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:51:28.519  INFO 57384 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 10:51:28.519  INFO 57384 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 10:51:28.524  INFO 57384 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2022-10-18 10:51:28.553  INFO 57384 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:51:28.555  INFO 57384 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:51:28.556  INFO 57384 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:51:28.557  INFO 57384 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 5.719 seconds (JVM running for 6.463)
+2022-10-18 10:51:49.051  INFO 57384 --- [RMI TCP Connection(2)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-10-18 10:51:49.118  INFO 57384 --- [RMI TCP Connection(2)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:51:49.120  INFO 57384 --- [RMI TCP Connection(2)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:51:49.121  INFO 57384 --- [RMI TCP Connection(2)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-10-18 10:51:49.124  INFO 57384 --- [RMI TCP Connection(2)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-10-18 10:53:43.213  INFO 55556 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 55556 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 10:53:43.216  INFO 55556 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 10:53:44.193  INFO 55556 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 10:53:44.382  INFO 55556 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 182ms. Found 35 JPA repository interfaces.
+2022-10-18 10:53:44.874  INFO 55556 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 10:53:44.883  INFO 55556 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:53:44.883  INFO 55556 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:53:45.007  INFO 55556 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:53:45.007  INFO 55556 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1752 ms
+2022-10-18 10:53:45.226  INFO 55556 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:53:45.292  INFO 55556 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 10:53:45.344  INFO 55556 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 10:53:45.468  INFO 55556 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 10:53:45.572  INFO 55556 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 10:53:45.639  INFO 55556 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 10:53:45.656  INFO 55556 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 10:53:45.837  WARN 55556 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 10:53:47.159  INFO 55556 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 10:53:47.166  INFO 55556 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:53:47.305  INFO 55556 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 10:53:47.381  INFO 55556 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 10:53:47.382  INFO 55556 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:53:47.382  INFO 55556 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:53:47.420  INFO 55556 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:53:47.420  INFO 55556 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 109 ms
+2022-10-18 10:53:47.431  INFO 55556 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 10:53:47.675  INFO 55556 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 10:53:47.676  INFO 55556 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:53:48.757  INFO 55556 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:53:48.759  INFO 55556 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:53:48.759  INFO 55556 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:53:48.760  INFO 55556 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 5.791 seconds (JVM running for 6.564)
+2022-10-18 10:53:48.762  INFO 55556 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 10:53:48.762  INFO 55556 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 10:53:48.767  INFO 55556 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2022-10-18 10:53:54.642 ERROR 55556 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:53:54.643 ERROR 55556 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:53:54.682 ERROR 55556 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:53:54.682 ERROR 55556 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:53:54.716 ERROR 55556 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:53:54.716 ERROR 55556 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:53:54.726  WARN 55556 --- [http-nio-8085-exec-2] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -moz-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 10:53:54.726  WARN 55556 --- [http-nio-8085-exec-2] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -webkit-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 10:53:54.755 ERROR 55556 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:53:54.755 ERROR 55556 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:53:54.758 ERROR 55556 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:53:54.758 ERROR 55556 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:57:10.416  INFO 55556 --- [RMI TCP Connection(8)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-10-18 10:57:10.485  INFO 55556 --- [RMI TCP Connection(8)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:57:10.486  INFO 55556 --- [RMI TCP Connection(8)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:57:10.486  INFO 55556 --- [RMI TCP Connection(8)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-10-18 10:57:10.490  INFO 55556 --- [RMI TCP Connection(8)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-10-18 10:57:16.515  INFO 23664 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 23664 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 10:57:16.518  INFO 23664 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 10:57:17.515  INFO 23664 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 10:57:17.715  INFO 23664 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 190ms. Found 35 JPA repository interfaces.
+2022-10-18 10:57:18.212  INFO 23664 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 10:57:18.222  INFO 23664 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:57:18.222  INFO 23664 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:57:18.409  INFO 23664 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:57:18.410  INFO 23664 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1858 ms
+2022-10-18 10:57:18.625  INFO 23664 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:57:18.699  INFO 23664 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 10:57:18.745  INFO 23664 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 10:57:18.859  INFO 23664 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 10:57:18.942  INFO 23664 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 10:57:19.012  INFO 23664 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 10:57:19.034  INFO 23664 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 10:57:19.237  WARN 23664 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 10:57:20.471  INFO 23664 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 10:57:20.477  INFO 23664 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:57:20.597  INFO 23664 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 10:57:20.663  INFO 23664 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 10:57:20.664  INFO 23664 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:57:20.664  INFO 23664 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:57:20.699  INFO 23664 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:57:20.699  INFO 23664 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 98 ms
+2022-10-18 10:57:20.712  INFO 23664 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 10:57:20.952  INFO 23664 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 10:57:20.953  INFO 23664 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:57:21.917  INFO 23664 --- [RMI TCP Connection(1)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 10:57:21.918  INFO 23664 --- [RMI TCP Connection(1)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 10:57:21.923  INFO 23664 --- [RMI TCP Connection(1)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2022-10-18 10:57:21.931  INFO 23664 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:57:21.932  INFO 23664 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:57:21.932  INFO 23664 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:57:21.934  INFO 23664 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 5.67 seconds (JVM running for 6.412)
+2022-10-18 10:58:04.581  INFO 23664 --- [RMI TCP Connection(5)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-10-18 10:58:04.651  INFO 23664 --- [RMI TCP Connection(5)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:58:04.652  INFO 23664 --- [RMI TCP Connection(5)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:58:04.652  INFO 23664 --- [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-10-18 10:58:04.656  INFO 23664 --- [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-10-18 10:58:08.690  INFO 36736 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 36736 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 10:58:08.692  INFO 36736 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 10:58:09.734  INFO 36736 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 10:58:09.955  INFO 36736 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 212ms. Found 35 JPA repository interfaces.
+2022-10-18 10:58:10.515  INFO 36736 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 10:58:10.525  INFO 36736 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:58:10.525  INFO 36736 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:58:10.670  INFO 36736 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:58:10.670  INFO 36736 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1948 ms
+2022-10-18 10:58:10.871  INFO 36736 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 10:58:10.937  INFO 36736 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 10:58:10.992  INFO 36736 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 10:58:11.112  INFO 36736 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 10:58:11.220  INFO 36736 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 10:58:11.277  INFO 36736 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 10:58:11.292  INFO 36736 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 10:58:11.490  WARN 36736 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 10:58:12.767  INFO 36736 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 10:58:12.773  INFO 36736 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 10:58:12.899  INFO 36736 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 10:58:12.971  INFO 36736 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 10:58:12.972  INFO 36736 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 10:58:12.972  INFO 36736 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 10:58:13.008  INFO 36736 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 10:58:13.008  INFO 36736 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 106 ms
+2022-10-18 10:58:13.019  INFO 36736 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 10:58:13.245  INFO 36736 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 10:58:13.246  INFO 36736 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:58:14.236  INFO 36736 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:58:14.238  INFO 36736 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 10:58:14.238  INFO 36736 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 10:58:14.247  INFO 36736 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 5.829 seconds (JVM running for 6.692)
+2022-10-18 10:58:14.285  INFO 36736 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 10:58:14.285  INFO 36736 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 10:58:14.290  INFO 36736 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2022-10-18 10:58:20.017 ERROR 36736 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:58:20.018 ERROR 36736 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:58:20.074 ERROR 36736 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:58:20.074 ERROR 36736 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:58:20.114 ERROR 36736 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:58:20.115 ERROR 36736 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:58:20.127  WARN 36736 --- [http-nio-8085-exec-1] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -moz-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 10:58:20.127  WARN 36736 --- [http-nio-8085-exec-1] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -webkit-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 10:58:20.156 ERROR 36736 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:58:20.156 ERROR 36736 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 10:58:20.159 ERROR 36736 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 10:58:20.159 ERROR 36736 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:07:09.518  INFO 36736 --- [RMI TCP Connection(12)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-10-18 11:07:09.589  INFO 36736 --- [RMI TCP Connection(12)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 11:07:09.590  INFO 36736 --- [RMI TCP Connection(12)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-10-18 11:07:09.590  INFO 36736 --- [RMI TCP Connection(12)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-10-18 11:07:09.594  INFO 36736 --- [RMI TCP Connection(12)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-10-18 11:07:13.059  INFO 50072 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 50072 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 11:07:13.061  INFO 50072 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 11:07:13.975  INFO 50072 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 11:07:14.155  INFO 50072 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 173ms. Found 35 JPA repository interfaces.
+2022-10-18 11:07:14.631  INFO 50072 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 11:07:14.639  INFO 50072 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 11:07:14.639  INFO 50072 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 11:07:14.779  INFO 50072 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 11:07:14.780  INFO 50072 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1678 ms
+2022-10-18 11:07:14.977  INFO 50072 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 11:07:15.043  INFO 50072 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 11:07:15.088  INFO 50072 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 11:07:15.209  INFO 50072 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 11:07:15.296  INFO 50072 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 11:07:15.353  INFO 50072 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 11:07:15.367  INFO 50072 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 11:07:15.533  WARN 50072 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 11:07:16.708  INFO 50072 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 11:07:16.713  INFO 50072 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 11:07:16.804  INFO 50072 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 11:07:16.866  INFO 50072 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 11:07:16.867  INFO 50072 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 11:07:16.868  INFO 50072 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 11:07:16.897  INFO 50072 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 11:07:16.897  INFO 50072 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 90 ms
+2022-10-18 11:07:16.906  INFO 50072 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 11:07:17.113  INFO 50072 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 11:07:17.114  INFO 50072 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 11:07:18.064  INFO 50072 --- [RMI TCP Connection(1)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 11:07:18.064  INFO 50072 --- [RMI TCP Connection(1)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 11:07:18.069  INFO 50072 --- [RMI TCP Connection(1)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2022-10-18 11:07:18.090  INFO 50072 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 11:07:18.091  INFO 50072 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 11:07:18.091  INFO 50072 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 11:07:18.092  INFO 50072 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 5.265 seconds (JVM running for 5.956)
+2022-10-18 11:07:31.132 ERROR 50072 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:07:31.132 ERROR 50072 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:07:31.201 ERROR 50072 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:07:31.202 ERROR 50072 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:07:31.242 ERROR 50072 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:07:31.242 ERROR 50072 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:07:31.252  WARN 50072 --- [http-nio-8085-exec-2] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -moz-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 11:07:31.253  WARN 50072 --- [http-nio-8085-exec-2] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -webkit-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 11:07:31.289 ERROR 50072 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:07:31.290 ERROR 50072 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:07:31.293 ERROR 50072 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:07:31.293 ERROR 50072 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:08:01.512  INFO 50072 --- [RMI TCP Connection(6)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-10-18 11:08:01.581  INFO 50072 --- [RMI TCP Connection(6)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 11:08:01.582  INFO 50072 --- [RMI TCP Connection(6)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-10-18 11:08:01.582  INFO 50072 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-10-18 11:08:01.586  INFO 50072 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-10-18 11:08:06.179  INFO 55620 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 55620 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 11:08:06.186  INFO 55620 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 11:08:07.294  INFO 55620 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 11:08:07.495  INFO 55620 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 193ms. Found 35 JPA repository interfaces.
+2022-10-18 11:08:08.118  INFO 55620 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 11:08:08.127  INFO 55620 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 11:08:08.127  INFO 55620 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 11:08:08.253  INFO 55620 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 11:08:08.253  INFO 55620 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2021 ms
+2022-10-18 11:08:08.479  INFO 55620 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 11:08:08.546  INFO 55620 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 11:08:08.600  INFO 55620 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 11:08:08.763  INFO 55620 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 11:08:08.870  INFO 55620 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 11:08:08.944  INFO 55620 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 11:08:08.961  INFO 55620 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 11:08:09.164  WARN 55620 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 11:08:10.539  INFO 55620 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 11:08:10.545  INFO 55620 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 11:08:10.659  INFO 55620 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 11:08:10.737  INFO 55620 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 11:08:10.738  INFO 55620 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 11:08:10.738  INFO 55620 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 11:08:10.768  INFO 55620 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 11:08:10.768  INFO 55620 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 105 ms
+2022-10-18 11:08:10.779  INFO 55620 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 11:08:10.902  INFO 55620 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 11:08:10.903  INFO 55620 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 11:08:10.910  INFO 55620 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+2022-10-18 11:08:11.089  INFO 55620 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 11:08:11.091  INFO 55620 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 11:08:12.262  INFO 55620 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 11:08:12.263  INFO 55620 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 11:08:12.263  INFO 55620 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 11:08:12.264  INFO 55620 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 6.368 seconds (JVM running for 7.377)
+2022-10-18 11:11:45.043 ERROR 55620 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:11:45.047 ERROR 55620 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:11:46.653 ERROR 55620 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:11:46.657 ERROR 55620 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:11:48.301 ERROR 55620 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:11:48.305 ERROR 55620 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:11:48.641  WARN 55620 --- [http-nio-8085-exec-1] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -moz-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 11:11:48.643  WARN 55620 --- [http-nio-8085-exec-1] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -webkit-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 11:11:49.606 ERROR 55620 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:11:49.610 ERROR 55620 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:11:49.730 ERROR 55620 --- [http-nio-8085-exec-1] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:11:49.734 ERROR 55620 --- [http-nio-8085-exec-1] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:19:56.127 ERROR 55620 --- [http-nio-8085-exec-7] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:19:56.129 ERROR 55620 --- [http-nio-8085-exec-7] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:19:56.167 ERROR 55620 --- [http-nio-8085-exec-7] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:19:56.168 ERROR 55620 --- [http-nio-8085-exec-7] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:19:56.209 ERROR 55620 --- [http-nio-8085-exec-7] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:19:56.210 ERROR 55620 --- [http-nio-8085-exec-7] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:19:56.217  WARN 55620 --- [http-nio-8085-exec-7] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -moz-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 11:19:56.217  WARN 55620 --- [http-nio-8085-exec-7] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -webkit-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 11:19:56.240 ERROR 55620 --- [http-nio-8085-exec-7] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:19:56.240 ERROR 55620 --- [http-nio-8085-exec-7] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:19:56.243 ERROR 55620 --- [http-nio-8085-exec-7] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:19:56.244 ERROR 55620 --- [http-nio-8085-exec-7] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:20:27.822  INFO 45144 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 45144 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 11:20:27.825  INFO 45144 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 11:20:29.854  INFO 45144 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 11:20:30.057  INFO 45144 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 193ms. Found 35 JPA repository interfaces.
+2022-10-18 11:20:30.649  INFO 45144 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 11:20:30.658  INFO 45144 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 11:20:30.658  INFO 45144 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 11:20:30.805  INFO 45144 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 11:20:30.805  INFO 45144 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2949 ms
+2022-10-18 11:20:31.009  INFO 45144 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 11:20:31.079  INFO 45144 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 11:20:31.131  INFO 45144 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 11:20:31.269  INFO 45144 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 11:20:31.376  INFO 45144 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 11:20:31.436  INFO 45144 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 11:20:31.457  INFO 45144 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 11:20:31.644  WARN 45144 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 11:20:32.986  INFO 45144 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 11:20:32.993  INFO 45144 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 11:20:33.123  INFO 45144 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 11:20:33.209  INFO 45144 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 11:20:33.209  INFO 45144 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 11:20:33.210  INFO 45144 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 11:20:33.239  INFO 45144 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 11:20:33.239  INFO 45144 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 112 ms
+2022-10-18 11:20:33.251  INFO 45144 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 11:20:33.515  INFO 45144 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 11:20:33.516  INFO 45144 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 11:20:34.638  INFO 45144 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 11:20:34.639  INFO 45144 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 11:20:34.639  INFO 45144 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 11:20:34.647  INFO 45144 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 7.088 seconds (JVM running for 10.023)
+2022-10-18 11:20:35.524  INFO 45144 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 11:20:35.524  INFO 45144 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 11:20:35.529  INFO 45144 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2022-10-18 11:20:41.170 ERROR 45144 --- [http-nio-8085-exec-3] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:20:41.171 ERROR 45144 --- [http-nio-8085-exec-3] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:20:41.221 ERROR 45144 --- [http-nio-8085-exec-3] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:20:41.222 ERROR 45144 --- [http-nio-8085-exec-3] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:20:41.261 ERROR 45144 --- [http-nio-8085-exec-3] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:20:41.261 ERROR 45144 --- [http-nio-8085-exec-3] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:20:41.274  WARN 45144 --- [http-nio-8085-exec-3] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -moz-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 11:20:41.274  WARN 45144 --- [http-nio-8085-exec-3] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -webkit-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 11:20:41.324 ERROR 45144 --- [http-nio-8085-exec-3] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:20:41.325 ERROR 45144 --- [http-nio-8085-exec-3] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:20:41.329 ERROR 45144 --- [http-nio-8085-exec-3] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 11:20:41.329 ERROR 45144 --- [http-nio-8085-exec-3] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 11:22:16.222  INFO 1276 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 1276 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 11:22:16.226  INFO 1276 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 11:22:17.359  INFO 1276 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 11:22:17.551  INFO 1276 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 185ms. Found 35 JPA repository interfaces.
+2022-10-18 11:22:18.163  INFO 1276 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 11:22:18.175  INFO 1276 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 11:22:18.176  INFO 1276 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 11:22:18.325  INFO 1276 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 11:22:18.326  INFO 1276 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2068 ms
+2022-10-18 11:22:18.540  INFO 1276 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 11:22:18.607  INFO 1276 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 11:22:18.660  INFO 1276 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 11:22:18.793  INFO 1276 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 11:22:18.892  INFO 1276 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 11:22:18.951  INFO 1276 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 11:22:18.969  INFO 1276 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 11:22:19.179  WARN 1276 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 11:22:20.468  INFO 1276 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 11:22:20.475  INFO 1276 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 11:22:20.593  INFO 1276 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 11:22:20.663  INFO 1276 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 11:22:20.664  INFO 1276 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 11:22:20.665  INFO 1276 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 11:22:20.697  INFO 1276 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 11:22:20.698  INFO 1276 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 102 ms
+2022-10-18 11:22:20.708  INFO 1276 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 11:22:20.995  INFO 1276 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 11:22:20.996  INFO 1276 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 11:22:22.093  INFO 1276 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 11:22:22.095  INFO 1276 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 11:22:22.095  INFO 1276 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 11:22:22.105  INFO 1276 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 6.182 seconds (JVM running for 7.096)
+2022-10-18 11:22:22.785  INFO 1276 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 11:22:22.785  INFO 1276 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 11:22:22.789  INFO 1276 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2022-10-18 12:03:42.714  INFO 30904 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 30904 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 12:03:42.718  INFO 30904 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 12:03:43.754  INFO 30904 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 12:03:43.941  INFO 30904 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 180ms. Found 35 JPA repository interfaces.
+2022-10-18 12:03:44.506  INFO 30904 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 12:03:44.516  INFO 30904 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 12:03:44.516  INFO 30904 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 12:03:44.684  INFO 30904 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 12:03:44.685  INFO 30904 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1934 ms
+2022-10-18 12:03:44.895  INFO 30904 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 12:03:44.961  INFO 30904 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 12:03:45.014  INFO 30904 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 12:03:45.146  INFO 30904 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 12:03:45.250  INFO 30904 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 12:03:45.306  INFO 30904 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 12:03:45.321  INFO 30904 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 12:03:45.526  WARN 30904 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 12:03:46.869  INFO 30904 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 12:03:46.875  INFO 30904 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 12:03:46.983  INFO 30904 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 12:03:47.048  INFO 30904 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 12:03:47.049  INFO 30904 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 12:03:47.049  INFO 30904 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 12:03:47.081  INFO 30904 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 12:03:47.082  INFO 30904 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 96 ms
+2022-10-18 12:03:47.095  INFO 30904 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 12:03:47.381  INFO 30904 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 12:03:47.382  INFO 30904 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 12:03:48.428  INFO 30904 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 12:03:48.429  INFO 30904 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 12:03:48.430  INFO 30904 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 12:03:48.431  INFO 30904 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 6.001 seconds (JVM running for 6.907)
+2022-10-18 12:03:48.431  INFO 30904 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 12:03:48.431  INFO 30904 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 12:03:48.437  INFO 30904 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2022-10-18 12:05:55.611  INFO 33396 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 33396 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 12:05:55.614  INFO 33396 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 12:05:56.751  INFO 33396 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 12:05:56.967  INFO 33396 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 208ms. Found 35 JPA repository interfaces.
+2022-10-18 12:05:57.546  INFO 33396 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 12:05:57.554  INFO 33396 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 12:05:57.554  INFO 33396 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 12:05:57.672  INFO 33396 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 12:05:57.672  INFO 33396 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2023 ms
+2022-10-18 12:05:57.877  INFO 33396 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 12:05:57.944  INFO 33396 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 12:05:57.996  INFO 33396 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 12:05:58.135  INFO 33396 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 12:05:58.243  INFO 33396 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 12:05:58.300  INFO 33396 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 12:05:58.323  INFO 33396 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 12:05:58.508  WARN 33396 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 12:05:59.835  INFO 33396 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 12:05:59.841  INFO 33396 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 12:05:59.947  INFO 33396 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 12:06:00.019  INFO 33396 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 12:06:00.019  INFO 33396 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 12:06:00.019  INFO 33396 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 12:06:00.046  INFO 33396 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 12:06:00.046  INFO 33396 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 94 ms
+2022-10-18 12:06:00.060  INFO 33396 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 12:06:00.330  INFO 33396 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 12:06:00.332  INFO 33396 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 12:06:01.361  INFO 33396 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 12:06:01.363  INFO 33396 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 12:06:01.364  INFO 33396 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 12:06:01.373  INFO 33396 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 6.068 seconds (JVM running for 6.947)
+2022-10-18 12:06:01.700  INFO 33396 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 12:06:01.700  INFO 33396 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 12:06:01.705  INFO 33396 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2022-10-18 12:06:14.267 ERROR 33396 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 12:06:14.268 ERROR 33396 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 12:06:14.311 ERROR 33396 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 12:06:14.312 ERROR 33396 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 12:06:14.358 ERROR 33396 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 12:06:14.358 ERROR 33396 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 12:06:14.373  WARN 33396 --- [http-nio-8085-exec-2] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -moz-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 12:06:14.374  WARN 33396 --- [http-nio-8085-exec-2] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -webkit-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 12:06:14.412 ERROR 33396 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 12:06:14.413 ERROR 33396 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 12:06:14.416 ERROR 33396 --- [http-nio-8085-exec-2] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 12:06:14.417 ERROR 33396 --- [http-nio-8085-exec-2] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 12:11:21.217  INFO 59696 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 59696 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
+2022-10-18 12:11:21.221  INFO 59696 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2022-10-18 12:11:22.348  INFO 59696 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022-10-18 12:11:22.569  INFO 59696 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 213ms. Found 35 JPA repository interfaces.
+2022-10-18 12:11:23.148  INFO 59696 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2022-10-18 12:11:23.156  INFO 59696 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 12:11:23.156  INFO 59696 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 12:11:23.295  INFO 59696 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-18 12:11:23.296  INFO 59696 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2041 ms
+2022-10-18 12:11:23.500  INFO 59696 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-18 12:11:23.579  INFO 59696 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-18 12:11:23.630  INFO 59696 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2022-10-18 12:11:23.762  INFO 59696 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-10-18 12:11:23.863  INFO 59696 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-10-18 12:11:23.927  INFO 59696 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-10-18 12:11:23.943  INFO 59696 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2022-10-18 12:11:24.127  WARN 59696 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-18 12:11:25.534  INFO 59696 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-18 12:11:25.541  INFO 59696 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-18 12:11:25.660  INFO 59696 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2022-10-18 12:11:25.739  INFO 59696 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2022-10-18 12:11:25.739  INFO 59696 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-18 12:11:25.739  INFO 59696 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2022-10-18 12:11:25.771  INFO 59696 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-10-18 12:11:25.771  INFO 59696 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 106 ms
+2022-10-18 12:11:25.782  INFO 59696 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-18 12:11:26.049  INFO 59696 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2022-10-18 12:11:26.051  INFO 59696 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 12:11:27.143  INFO 59696 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 12:11:27.146  INFO 59696 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2022-10-18 12:11:27.146  INFO 59696 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2022-10-18 12:11:27.157  INFO 59696 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 6.239 seconds (JVM running for 7.122)
+2022-10-18 12:11:27.423  INFO 59696 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-18 12:11:27.423  INFO 59696 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-18 12:11:27.428  INFO 59696 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2022-10-18 12:11:33.035 ERROR 59696 --- [http-nio-8085-exec-3] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 12:11:33.036 ERROR 59696 --- [http-nio-8085-exec-3] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 12:11:33.081 ERROR 59696 --- [http-nio-8085-exec-3] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 12:11:33.082 ERROR 59696 --- [http-nio-8085-exec-3] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 12:11:33.128 ERROR 59696 --- [http-nio-8085-exec-3] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 12:11:33.129 ERROR 59696 --- [http-nio-8085-exec-3] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 12:11:33.141  WARN 59696 --- [http-nio-8085-exec-3] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -moz-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 12:11:33.141  WARN 59696 --- [http-nio-8085-exec-3] .i.s.c.r.s.i.BackgroundShorthandResolver : Was not able to define one of the background CSS shorthand properties: -webkit-linear-gradient(top,#e9e9e9 0%,#e5e5e5 66%,#e2e2e2 100%)
+2022-10-18 12:11:33.176 ERROR 59696 --- [http-nio-8085-exec-3] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 12:11:33.177 ERROR 59696 --- [http-nio-8085-exec-3] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker
+2022-10-18 12:11:33.184 ERROR 59696 --- [http-nio-8085-exec-3] c.i.s.r.resource.ResourceResolver        : Unable to retrieve image with given base URI (file:/C:/Users/Admin%20stagiaire.DESKTOP-8967908/Desktop/cfa-portal-api/) and image source path ()
+2022-10-18 12:11:33.186 ERROR 59696 --- [http-nio-8085-exec-3] c.i.h.attach.impl.DefaultHtmlProcessor   : Worker of type com.itextpdf.html2pdf.attach.impl.tags.TdTagWorker unable to process com.itextpdf.html2pdf.attach.impl.tags.ImgTagWorker

@@ -3,6 +3,8 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
+
 /**
  * 
  * 
@@ -19,6 +21,8 @@ public class CursusDto extends BaseEntityDto implements Serializable {
 	private String duree;
 	private String slug;
 	private long idDg2;
+	private int niveau ;
+	private String sigle;
 
 	public CursusDto() {
 		super();
@@ -85,5 +89,36 @@ public class CursusDto extends BaseEntityDto implements Serializable {
 	public void setIdDg2(long idDg2) {
 		this.idDg2 = idDg2;
 	}
+
+	/**
+	 * @return le niveau
+	 */
+	public int getNiveau() {
+		return niveau;
+	}
+
+	/**
+	 * @param niveau le niveau à affecter
+	 
+	 */
+	public void setNiveau(int niveau) {
+		this.niveau = niveau;
+	}
+
+	/**
+	 * @return le sigle
+	 */
+	public String getSigle() {
+		return sigle;
+	}
+
+	/**
+	 * @param sigle le sigle à affecter
+	 
+	 */
+	public void setSigle(String sigle) {
+		this.sigle = sigle;
+	}
+	
 
 }

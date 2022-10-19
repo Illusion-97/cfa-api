@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.tools.GrilleException;
+import fr.dawan.AppliCFABack.tools.LivertEvaluationException;
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
@@ -15,6 +16,6 @@ public interface LivretEvaluationService extends GenericService<LivretEvaluation
 	//une liste car si étudiant fait plusieurs formations
 	List<LivretEvaluationDto> getByEtudiantId(long id);
 
-	String getLivretEvaluation(long idEtudiant) throws GrilleException, TemplateNotFoundException,
+	String getLivretEvaluation(long idEtudiant , long idCursus) throws LivertEvaluationException, TemplateNotFoundException,
 			MalformedTemplateNameException, ParseException, IOException, TemplateException;
 }

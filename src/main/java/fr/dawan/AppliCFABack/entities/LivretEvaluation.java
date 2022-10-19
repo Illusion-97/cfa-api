@@ -18,7 +18,7 @@ import javax.persistence.OneToOne;
  *
  */
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unused" })
 @Entity
 public class LivretEvaluation extends BaseEntity implements Serializable {
 

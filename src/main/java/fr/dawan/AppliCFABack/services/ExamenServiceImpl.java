@@ -337,7 +337,7 @@ public class ExamenServiceImpl implements ExamenService {
 				model.put("titrePro", promo.getCursus().getTitre());
 
 				List<ActiviteType> activiteTypes = activiteTypeRepository
-						.findAllByCursusActiviteTypeId(promo.getCursus().getId());
+						.findAllByCursusActiviteTypeIdOrderByNumeroFiche(promo.getCursus().getId());
 
 				List<EvalByBlocDto> evalList = new ArrayList<>();
 				double s = 0;
