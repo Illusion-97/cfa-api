@@ -15,16 +15,13 @@ import javax.persistence.ManyToOne;
  * @since 1.0
  * @version 1.0
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unused" })
 @Entity
 public class EvaluationFormation extends BaseEntity implements Serializable {
 
 	@ManyToOne
-	private LivretEvaluation livretEvaluation;
-
-	@ManyToOne
-	private ActiviteType activiteType;
-
+	private BlocEvaluation blocEvaluation;
+	
 	@Column(columnDefinition = "TEXT", nullable = false)
 
 	private String contenu;
@@ -32,48 +29,23 @@ public class EvaluationFormation extends BaseEntity implements Serializable {
 	@ManyToMany
 	private List<CompetenceProfessionnelle> competencesEvaluees;
 
-	private boolean criteresSatisfaits;
-
-	@Column(columnDefinition = "TEXT")
-
-	private String commentaireInsatisfaction;
-
-	@Column(columnDefinition = "TEXT")
-
-	private String commentaireEvaluationsComplementaires;
-
-	@ManyToMany
-	private List<Intervention> interventions;
-
+	
 	private LocalDate dateEvaluation;
+	
+	
 	/**
-	 * @return l' livretEvaluation
+	 * @return le blocEvaluation
 	 */
-	public LivretEvaluation getLivretEvaluation() {
-		return livretEvaluation;
+	public BlocEvaluation getBlocEvaluation() {
+		return blocEvaluation;
 	}
 
 	/**
-	 * @param livretEvaluation l' livretEvaluation à affecter
+	 * @param blocEvaluation le blocEvaluation à affecter
 	 
 	 */
-	public void setLivretEvaluation(LivretEvaluation livretEvaluation) {
-		this.livretEvaluation = livretEvaluation;
-	}
-
-	/**
-	 * @return le activiteType
-	 */
-	public ActiviteType getActiviteType() {
-		return activiteType;
-	}
-
-	/**
-	 * @param activiteType le activiteType à affecter
-	 
-	 */
-	public void setActiviteType(ActiviteType activiteType) {
-		this.activiteType = activiteType;
+	public void setBlocEvaluation(BlocEvaluation blocEvaluation) {
+		this.blocEvaluation = blocEvaluation;
 	}
 
 	/**
@@ -106,65 +78,6 @@ public class EvaluationFormation extends BaseEntity implements Serializable {
 		this.competencesEvaluees = competencesEvaluees;
 	}
 
-	/**
-	 * @return le criteresSatisfaits
-	 */
-	public boolean isCriteresSatisfaits() {
-		return criteresSatisfaits;
-	}
-
-	/**
-	 * @param criteresSatisfaits le criteresSatisfaits à affecter
-	 
-	 */
-	public void setCriteresSatisfaits(boolean criteresSatisfaits) {
-		this.criteresSatisfaits = criteresSatisfaits;
-	}
-
-	/**
-	 * @return le commentaireInsatisfaction
-	 */
-	public String getCommentaireInsatisfaction() {
-		return commentaireInsatisfaction;
-	}
-
-	/**
-	 * @param commentaireInsatisfaction le commentaireInsatisfaction à affecter
-	 
-	 */
-	public void setCommentaireInsatisfaction(String commentaireInsatisfaction) {
-		this.commentaireInsatisfaction = commentaireInsatisfaction;
-	}
-
-	/**
-	 * @return le commentaireEvaluationsComplementaires
-	 */
-	public String getCommentaireEvaluationsComplementaires() {
-		return commentaireEvaluationsComplementaires;
-	}
-
-	/**
-	 * @param commentaireEvaluationsComplementaires le commentaireEvaluationsComplementaires à affecter
-	 
-	 */
-	public void setCommentaireEvaluationsComplementaires(String commentaireEvaluationsComplementaires) {
-		this.commentaireEvaluationsComplementaires = commentaireEvaluationsComplementaires;
-	}
-
-	/**
-	 * @return le interventions
-	 */
-	public List<Intervention> getInterventions() {
-		return interventions;
-	}
-
-	/**
-	 * @param interventions le interventions à affecter
-	 
-	 */
-	public void setInterventions(List<Intervention> interventions) {
-		this.interventions = interventions;
-	}
 
 	/**
 	 * @return le dateEvaluation

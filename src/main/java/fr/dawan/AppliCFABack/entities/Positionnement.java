@@ -22,6 +22,11 @@ public class Positionnement extends BaseEntity implements Serializable {
 	@Max(5)
 	@Enumerated(EnumType.ORDINAL)
 	private Niveau niveauFin;
+	@ManyToOne
+	private Intervention intervention;
+
+	@ManyToOne
+	private Etudiant etudiant;
 
 	public enum Niveau {
 		ABSENT(0, "#000000", "Absent"), AUCUNECONNAISSANCE(1, "#7E0021", "Aucune connaissance"),
@@ -33,7 +38,7 @@ public class Positionnement extends BaseEntity implements Serializable {
 		private String codeCouleur;
 		
 		private String description;
-		
+
 
 		Niveau() {
 		}
@@ -98,11 +103,7 @@ public class Positionnement extends BaseEntity implements Serializable {
 		
 	}
 
-	@ManyToOne
-	private Intervention intervention;
 
-	@ManyToOne
-	private Etudiant etudiant;
 
 	public Niveau getNiveauDebut() {
 		return niveauDebut;
