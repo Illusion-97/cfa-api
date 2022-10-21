@@ -20,8 +20,6 @@ import org.hibernate.annotations.BatchSize;
 @BatchSize(size = 20) //permet un gain de temps à tester
 public class Intervention extends BaseEntity implements Serializable { // intervention prévue
 
-
-
 	//	@Temporal(value = TemporalType.DATE)
 	private LocalDate dateDebut; // 12/03
 

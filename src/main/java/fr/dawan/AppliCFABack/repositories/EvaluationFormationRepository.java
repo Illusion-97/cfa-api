@@ -8,6 +8,6 @@ import fr.dawan.AppliCFABack.entities.EvaluationFormation;
 
 public interface EvaluationFormationRepository extends JpaRepository<EvaluationFormation, Long> {
 
-	List<EvaluationFormation> findAllByActiviteTypeId(long id);
+	List<EvaluationFormation> findAllByBlocEvaluationActiviteTypeId(long id);
 
 }

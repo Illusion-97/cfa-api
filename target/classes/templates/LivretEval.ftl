@@ -276,7 +276,7 @@
     table.minimalistBlackEvaluation {
         border: 3px solid #000000;
         width: 100%;
-        height: 625px;
+        height: 600px;
         text-align: left;
         border-collapse: collapse;
         margin-bottom: 8px;
@@ -505,6 +505,7 @@
 
     
 </style>
+<#global pages=(livertEval.evaluations?size)*2 + 4 >
 
 <body>
     <section id="contaiter">
@@ -558,8 +559,8 @@
                 <div class="candidat">
                     <p>Candidat(e) :</p>
                     <div>
-                        <span class="spanF">${livertEval.etudiant.utilisateur.nom}</span>
-                        <div style=" display: inline-block;" class="arrow-right"></div> <span class="spanFT">Ben </span>
+                        <span class="spanF">Nom</span>
+                        <div style=" display: inline-block;" class="arrow-right"></div> <span class="spanFT">${livertEval.etudiant.utilisateur.nom} </span>
                     </div>
                     <div>
                         <span class="spanF">Prénom</span>
@@ -591,7 +592,7 @@
                             <td>03</td>
                             <td>17/04/2018</td>
                             <td>27/04/2018</td>
-                            <td>1/6</td>
+                            <td>1/${pages}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -632,29 +633,30 @@
                             <td>03</td>
                             <td>17/04/2018</td>
                             <td>27/04/2018</td>
-                            <td>2/6</td>
+                            <td>2/${pages}</td>
                         </tr>
                     </tbody>
                 </table>
             </section>
-             <#list livertEval.evaluations as at, evaluationsFormations>
+             <#list livertEval.evaluations  as evaluation>
+             
             <section class="ficheResultat">
                 <div class="fiche">
                     <h2> Fiche de résultats des évaluations</h2>
                 </div>
                 <div>
                     <h3 class="at">
-                        Activité-type <span>${at.numeroFiche}</span>
+                        Activité-type <span>${evaluation.activiteType.numeroFiche}</span>
                     </h3>
 
                     <h3 class="libelle">
-                       ${at.libelle}
+                       ${evaluation.activiteType.libelle}
                     </h3>
                 </div>
                 <div class="basRoseTitre"></div>
                 <div class="competences">
                     <h3>Compétences :</h3>
-                    <#list at.competenceProfessionnelles as  competence>
+                    <#list evaluation.activiteType.competenceProfessionnelles?sort_by("numeroFiche") as  competence>
                     <p><span> ${competence.numeroFiche}.</span>${competence.libelle}</p>
                     </#list>
                 </div>
@@ -667,34 +669,49 @@
                         </tr>
                     </thead>
                     <tbody>
-                     <#list evaluationsFormations as  ef >
+                     <#list evaluation.evaluationFormations as  ef >
                         <tr>
-                            <td width="60%">
+                            <td width="70%">
                                 ${ef.contenu}
                             </td>
                             <td width="13%"style=" text-align: center;">
                                 ${ef.dateEvaluation}
                             </td>
                             <td>
-                               <div class="divTable tableChekCompetence">
-                                    <div class="divTableBody">
-                                        <div class="divTableRow">
-                                        <#list  [1,2,3] as nb >
-                                            <div class="divTableCell">&nbsp;
-                                                <label for="scales">${nb}</label>
-                                                <input type="checkbox" id="scales" name="scales"  <#list ef.competencesEvaluees as comp> <#if nb == comp.numeroFiche > checked  </#if> </#list>>
-                                            </div>
-                                        
-                                           </#list>
-                                        </div>
-                                   
-                                    </div>
+							<table class="tableComp">
+							<tbody>
+							<#list  evaluation.activiteType.competenceProfessionnelles ?sort_by("numeroFiche") as compt >
+							 <#if compt?index == 0  >
+							<tr>
+												<td>  <label for="scales">${compt.numeroFiche}</label>
+                                                <input type="checkbox" id="scales" name="scales"  <#list ef.competencesEvaluees as comp> <#if compt.numeroFiche == comp.numeroFiche > checked  </#if> </#list>></td>
+												<td>  <label for="scales">${compt.numeroFiche +1}</label>
+                                                <input type="checkbox" id="scales" name="scales"  <#list ef.competencesEvaluees as comp> <#if compt.numeroFiche+1 == comp.numeroFiche > checked  </#if> </#list>></td>
+                                                <td>  <label for="scales">${compt.numeroFiche +2}</label>
+                                                <input type="checkbox" id="scales" name="scales"  <#list ef.competencesEvaluees as comp> <#if compt.numeroFiche+2 == comp.numeroFiche > checked  </#if> </#list>></td>
+							</tr>
+						
+							 <#elseif ((compt?index) ) % 3 == 0  >
+							 <tr>
+							
+									<td>  <label for="scales">${compt.numeroFiche}</label>
+                                                <input type="checkbox" id="scales" name="scales"  <#list ef.competencesEvaluees as comp> <#if compt.numeroFiche == comp.numeroFiche > checked  </#if> </#list>></td>
+												<td>  <label for="scales">${compt.numeroFiche +1}</label>
+                                                <input type="checkbox" id="scales" name="scales"  <#list ef.competencesEvaluees as comp> <#if compt.numeroFiche+1 == comp.numeroFiche > checked  </#if> </#list>></td>
+                                                <td>  <label for="scales">${compt.numeroFiche +2}</label>
+                                                <input type="checkbox" id="scales" name="scales"  <#list ef.competencesEvaluees as comp> <#if compt.numeroFiche+2 == comp.numeroFiche > checked  </#if> </#list>></td>
+							</tr>
+							 </#if>
+							 </#list>
+							</tbody>
+							</table>
+
                             </td>
                         </tr>
                          </#list>
                     </tbody>
                 </table>
-                <table class="minimalistBlack">
+                <table class="minimalistBlack" style="margin-top:10px">
                     <tbody>
                         <tr>
                             <td>SIGLE</td>
@@ -706,13 +723,13 @@
                             <td>Page</td>
                         </tr>
                         <tr>
-                            <td>CDA</td>
+                            <td>${livertEval.cursus.sigle}</td>
                             <td>Livret d’évaluations passées en cours de formation </td>
                             <td>TP-01281</td>
                             <td>03</td>
                             <td>17/04/2018</td>
                             <td>27/04/2018</td>
-                            <td>3/6</td>
+                            <td><#if evaluation?index == 0>${evaluation?index +3} <#else> ${evaluation?index*2 +3} </#if> /${pages}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -722,13 +739,13 @@
                     considéré(e) :
                 </h5>
                 <div>
-                    <input style="margin: 0; display: inline-block;" type="checkbox" id="scales" name="scales" checked>
+                    <input style="margin: 0; display: inline-block;" type="checkbox" id="scales" name="scales" <#if evaluation.blocEvaluation.criteresSatisfaits == true > checked </#if> >
                     Avoir satisfait aux critères issus des référentiels du titre professionnel
                     attendus pour la réalisation de cette activité-type.
                 </div>
                 <div>
 
-                    <input style="margin: 0; display: inline-block;" type="checkbox" id="scales" name="scales">
+                    <input style="margin: 0; display: inline-block;" type="checkbox" id="scales" name="scales" <#if evaluation.blocEvaluation.criteresSatisfaits == false > checked </#if> >
                     Ne pas avoir satisfait aux critères issus des référentiels du titre professionnel.
                 </div>
                 <div class="blockText">
@@ -739,7 +756,9 @@
                     <div>
                         <p style="margin: 0 ;">
                         <div style=" display: inline-block;" class="arrow-right"></div>
-                        taper text ici
+                     
+                         ${evaluation.blocEvaluation.commentaireInsatisfaction}
+                      
                         </p>
                     </div>
                 </div>
@@ -751,7 +770,9 @@
                     <div>
                         <p style="margin: 0 ;">
                         <div style=" display: inline-block;" class="arrow-right"></div>
-                        taper text ici
+                 
+                         ${evaluation.blocEvaluation.commentaireEvaluationsComplementaires}
+                      
                         </p>
                     </div>
                 </div>
@@ -763,12 +784,11 @@
                         <tr>
                             <td> Nom
                                 <div style=" display: inline-block;" class="arrow-right arrow-formateur"></div>
-                                Mouhamed derkaoui
-
+							${evaluation.blocEvaluation.formateurEvaluateur.utilisateur.prenom}	 ${evaluation.blocEvaluation.formateurEvaluateur.utilisateur.nom}
                             </td>
                             <td> Date
                                 <div style=" display: inline-block;" class="arrow-right arrow-formateur"></div>
-                                30/12/2022
+                              ${evaluation.blocEvaluation.dateSignature}
                             </td>
                             <td>
                                 <img src="" alt="" width="100px" height="50px">Signature
@@ -777,7 +797,7 @@
                     </tbody>
                 </table>
                 <!-- si 2 formateur margin-top 15px -->
-                <table class="minimalistBlack" style="margin-top:80px;">
+                <table class="minimalistBlack" style="margin-top:85px;">
                     <tbody>
                         <tr>
                             <td>SIGLE</td>
@@ -789,13 +809,13 @@
                             <td>Page</td>
                         </tr>
                         <tr>
-                            <td>CDA</td>
+                            <td>${livertEval.cursus.sigle}</td>
                             <td>Livret d’évaluations passées en cours de formation </td>
                             <td>TP-01281</td>
                             <td>03</td>
                             <td>17/04/2018</td>
                             <td>27/04/2018</td>
-                            <td>4/6</td>
+                            <td><#if evaluation?index == 0>${evaluation?index +4} <#else>> ${evaluation?index*2 +4} </#if> /${pages}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -811,31 +831,7 @@
                 <div class="basRose"></div>
             </div>
             <div>
-                <!-- <table class="synthese">
-                    <thead>
-                        <tr>
-                            <th>Intitulé de l’activité type </th>
-                            <th>Compétences professionnelles </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <h5>
-                                    Concevoir et développer des composants d'interface utilisateur en intégrant les
-                                    recommandations de sécurité
-                                </h5>
-                            </td>
-                            <td>
-                                <p><span>1.</span>Maquetter une application</p>
-                                <p><span>2.</span>Développer une interface utilisateur de type desktop </p>
-                                <p><span>3.</span> Développer des composants d’accès aux données</p>
-                                <p><span>4.</span>Développer la partie front-end d’une interface utilisateur web</p>
-                                <p><span>5.</span>Développer la partie back-end d’une interface utilisateur web</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table> -->
+                  <#list livertEval.evaluations  as evaluation>
                 <div class="divTable synthese" style=" margin: 0;">
                     <div class="divTableHeading">
                         <div class="divTableRow">
@@ -847,16 +843,13 @@
                         <div class="divTableRow">
                             <div class="divTableCell" style="width:250px; height: 155px ">
                                 <h5>
-                                    Concevoir et développer des composants d'interface utilisateur en intégrant les
-                                    recommandations de sécurité
+                                     ${evaluation.activiteType.libelle}
                                 </h5>
                             </div>
                             <div class="divTableCell" style="width:450px ;height: 155px">
-                                <p><span>1.</span>Maquetter une application</p>
-                                <p><span>2.</span>Développer une interface utilisateur de type desktop </p>
-                                <p><span>3.</span> Développer des composants d’accès aux données</p>
-                                <p><span>4.</span>Développer la partie front-end d’une interface utilisateur web</p>
-                                <p><span>5.</span>Développer la partie back-end d’une interface utilisateur web</p>
+                                  <#list evaluation.activiteType.competenceProfessionnelles?sort_by("numeroFiche") as  competence>
+                   					 <p><span> ${competence.numeroFiche}.</span>${competence.libelle}</p>
+                  				  </#list>
                             </div>
                         </div>
                     </div>
@@ -866,49 +859,13 @@
                     <div style=" margin: 0; border-left: 1px solid #B7B7B7 ;">
                         <p style=" margin: 0 ; padding-top: 12px;">
                         <div style=" margin: 0 10px; display: inline-block ;  border-left: 5px solid #d60093;"
-                            class="arrow-right"></div> L’activité <span>1</span> est maîtrisée : <span> OUI</span>
-                        <input display: inline-block type="checkbox" id="scales" name="scales" checked><span> NON</span>
-                        <input display: inline-block type="checkbox" id="scales" name="scales">
+                            class="arrow-right"></div> L’activité <span> ${evaluation.activiteType.numeroFiche}</span> est maîtrisée : <span> OUI</span>
+                        <input display: inline-block type="checkbox" id="scales" name="scales" <#if evaluation.blocEvaluation.criteresSatisfaits == true > checked </#if>><span> NON</span>
+                        <input display: inline-block type="checkbox" id="scales" name="scales" <#if evaluation.blocEvaluation.criteresSatisfaits == false > checked </#if>>
                         </p>
                     </div>
                 </div>
-                <div class="divTable synthese">
-                    <div class="divTableBody">
-                        <div class="divTableRow"  style="height: 200px;">
-                            <div class="divTableCell" style="width:250px ; height: 155px">cell1_1</div>
-                            <div class="divTableCell" style="width:450px ; height: 155px">cell2_1</div>
-                        </div>
-                    </div>
-
-                </div>
-                <div>
-                    <div style=" margin: 0; border-left: 1px solid #B7B7B7 ;">
-                        <p style=" margin: 0 ; padding-top: 12px;">
-                        <div style=" margin: 0 10px; display: inline-block ;  border-left: 5px solid #d60093;"
-                            class="arrow-right"></div> L’activité <span>2</span> est maîtrisée : <span> OUI</span>
-                        <input display: inline-block type="checkbox" id="scales" name="scales" checked><span> NON</span>
-                        <input display: inline-block type="checkbox" id="scales" name="scales">
-                        </p>
-                    </div>
-                </div>
-                <div class="divTable synthese">
-                    <div class="divTableBody">
-                        <div class="divTableRow" style="height: 200px;">
-                            <div class="divTableCell" style="width:250px  ;height: 155px;">cell1_1</div>
-                            <div class="divTableCell" style="width:450px;height: 155px;">cell2_1</div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div style=" margin: 0; border-left: 1px solid #B7B7B7 ;">
-                        <p style=" margin: 0 ; padding-top: 12px;">
-                        <div style=" margin: 0 10px; display: inline-block ;  border-left: 5px solid #d60093;"
-                            class="arrow-right"></div> L’activité <span>2</span> est maîtrisée : <span> OUI</span>
-                        <input display: inline-block type="checkbox" id="scales" name="scales" checked><span> NON</span>
-                        <input display: inline-block type="checkbox" id="scales" name="scales">
-                        </p>
-                    </div>
-                </div>
+   			  </#list>
                 <table class="minimalistBlack" style="margin-top:80px;">
                     <tbody>
                         <tr>
@@ -921,13 +878,13 @@
                             <td>Page</td>
                         </tr>
                         <tr>
-                            <td>CDA</td>
+                            <td>${livertEval.cursus.sigle}</td>
                             <td>Livret d’évaluations passées en cours de formation </td>
                             <td>TP-01281</td>
                             <td>03</td>
                             <td>17/04/2018</td>
                             <td>27/04/2018</td>
-                            <td>5/6</td>
+                            <td>${(livertEval.evaluations?size)*2 +3}/${pages}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -938,31 +895,33 @@
                     <div>
                         <p style="margin: 0 ;">
                         <div style=" display: inline-block;" class="arrow-right"></div>
-                        taper text ici
+                        ${livertEval.livretEvaluation.observation}
+                      
                         </p>
                     </div>
                 </div>
                 <h4 style="margin-bottom: 0"><span style="padding-right: 300px;">Formateur(s) / Evaluateur(s)</span>
                     <span> Visa <span>
                 </h4>
+
+                <#list livertEval.formateursEvaluateurs as formateur>
                 <table class="formateur1">
                     <tbody>
                         <tr>
                             <td> Nom
                                 <div style=" display: inline-block;" class="arrow-right arrow-formateur"></div>
-                                Mouhamed derkaoui
-
+                               ${formateur.formateurEvaluateur.utilisateur.prenom}	 ${formateur.formateurEvaluateur.utilisateur.nom}
                             </td>
                             <td> Date
                                 <div style=" display: inline-block;" class="arrow-right arrow-formateur"></div>
-                                30/12/2022
-                            </td>
+								${formateur.dateSignature}                            </td>
                             <td>
                                 <img src="" alt="" width="100px" height="50px">Signature
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                 </#list>
                 <h4 style="margin-bottom: 0"><span style="padding-right: 200px;">Représentant de l’organisme de formation</span>
                    
                 </h4>
@@ -991,6 +950,27 @@
                     Signature du candidat pour information:
                 </h4>
         </footer>
+        <table class="minimalistBlack" style="margin-top:80px;">
+                    <tbody>
+                        <tr>
+                            <td>SIGLE</td>
+                            <td>Type de document</td>
+                            <td>Code titre</td>
+                            <td>Mill&eacute;sime</td>
+                            <td>Date JO</td>
+                            <td>Date de mise &agrave; jour</td>
+                            <td>Page</td>
+                        </tr>
+                        <tr>
+                            <td>${livertEval.cursus.sigle}</td>
+                            <td>Livret d’évaluations passées en cours de formation </td>
+                            <td>TP-01281</td>
+                            <td>03</td>
+                            <td>17/04/2018</td>
+                            <td>27/04/2018</td>
+                            <td>${(livertEval.evaluations?size)*2 +4}/${pages}</td>
+                        </tr>
+                    </tbody>
     </section>
 </body>
 

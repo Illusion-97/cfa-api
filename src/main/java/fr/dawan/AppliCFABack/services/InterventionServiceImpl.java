@@ -202,7 +202,6 @@ public class InterventionServiceImpl implements InterventionService {
 
 	/**
 	 * Va permettre de récupérer l'intervention en fonction de son id
-	 * 
 	 * @param Id Id concernant l'intervention
 	 * @return interventionDto l'objet intervention
 	 */
@@ -212,8 +211,6 @@ public class InterventionServiceImpl implements InterventionService {
 		Optional<Intervention> i = interventionRepository.findById(id);
 		if (i.isPresent()) {
 			InterventionDto interventionDto = mapper.interventionToInterventionDto(i.get());
-//			// Recupere les formations par rapport à l'id de l'intervention
-//			// Convertion de l'entitie Formation en FormationDto
 			FormationDto formationDto = mapper.formationToFormationDto(i.get().getFormation());
 
 			List<PromotionDto> lstPromoDto = new ArrayList<>();
@@ -402,7 +399,15 @@ public class InterventionServiceImpl implements InterventionService {
 		}
 		return interventions.size();
 	}
-
+	/**
+	 * Va permettre l'import des intervention de Dg2
+	 * @author Feres BG
+	 * @param Id       Id concernant la promotion
+	 * @param email    Email l'utilsateur dg2
+	 * @param password Mot de passe de l'utlisateur dg2
+	 * @return List Liste des interventions
+	 * @throws URISyntaxException, FetchDG2Exception
+	 */
 	@Override
 	public List<Intervention> getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
 			throws FetchDG2Exception, URISyntaxException {
@@ -434,8 +439,8 @@ public class InterventionServiceImpl implements InterventionService {
 			}
 
 			for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
+				
 				Optional<Intervention> interventionDb = interventionRepository.findByIdDg2(iDtoDG2.getId());
-
 				DtoTools dtoTools = new DtoTools();
 				Intervention interventionDG2 = new Intervention();
 				try {
@@ -447,7 +452,6 @@ public class InterventionServiceImpl implements InterventionService {
 				Optional<Utilisateur> UtilisateurOptional = utilisateurRepository
 						.findByIdDg2(iDtoDG2.getTrainerPersonId());
 				if (!UtilisateurOptional.isPresent()) {
-
 					continue;
 				}
 				Optional<Formation> formationOpt = formationRepository.findByIdDg2(iDtoDG2.getCourseId());
@@ -462,8 +466,22 @@ public class InterventionServiceImpl implements InterventionService {
 						.findByUtilisateurId(UtilisateurOptional.get().getId());
 				Formateur formateur = new Formateur();
 				List<Intervention> interventions = new ArrayList<>();
-				if (!formateurOpt.isPresent()) {
+				if (formateurOpt.isPresent()) {
+					Optional<Intervention> interventionDbGroup = interventionRepository.findInterventionBydateFormationAndFormateur(interventionDG2.getDateDebut(),interventionDG2.getDateFin(),formateurOpt.get().getId());
+					if (interventionDbGroup.isPresent()) {
+						if(!interventionDbGroup.get().getPromotionId().contains(promotionOpt.get().getId()))
+						{
+							interventionDbGroup.get().getPromotions().add(promotionOpt.get());
+							promotionOpt.get().getInterventions().add(interventionDbGroup.get());
+							result.add(interventionDbGroup.get());
+							continue;
+							
+						}
+					}
+				}
 
+				if (!formateurOpt.isPresent()) {
+					
 					UtilisateurRole formateurRole = utilisateurRoleRepository.findByIntituleContaining("FORMATEUR");
 					List<Utilisateur> utilisateurs = new ArrayList<>();
 					utilisateurs.add(UtilisateurOptional.get());
