@@ -38,8 +38,6 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 	
 	private String observation;
 
-	@ManyToOne
-	private Formateur formateurEvaluateur;
 
 	private LocalDate dateSignature;
 
@@ -101,21 +99,6 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 	 */
 	public void setObservation(String observation) {
 		this.observation = observation;
-	}
-
-	/**
-	 * @return le formateurEvaluateur
-	 */
-	public Formateur getFormateurEvaluateur() {
-		return formateurEvaluateur;
-	}
-
-	/**
-	 * @param formateurEvaluateur le formateurEvaluateur à affecter
-	 * 
-	 */
-	public void setFormateurEvaluateur(Formateur formateurEvaluateur) {
-		this.formateurEvaluateur = formateurEvaluateur;
 	}
 
 	/**

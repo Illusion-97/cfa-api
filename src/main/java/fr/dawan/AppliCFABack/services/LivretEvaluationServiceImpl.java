@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -20,7 +21,9 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.LivretEvaluationFileDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EvaluationDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
+import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.EvaluationFormation;
@@ -28,11 +31,13 @@ import fr.dawan.AppliCFABack.entities.LivretEvaluation;
 import fr.dawan.AppliCFABack.entities.Validation;
 import fr.dawan.AppliCFABack.entities.Validation.Etat;
 import fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository;
+import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.EvaluationFormationRepository;
 import fr.dawan.AppliCFABack.repositories.LivretEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.ValidationRepository;
+import fr.dawan.AppliCFABack.tools.Filter;
 import fr.dawan.AppliCFABack.tools.LivretEvaluationException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import fr.dawan.AppliCFABack.tools.ToPdf;
@@ -43,6 +48,13 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 
+/**
+ * 
+ * @author Feres BG, Valentin C.
+ * @see fr.dawan.appliCFABack.services
+ * @since 1.0
+ * @version 1.0
+ */
 @Service
 @Transactional
 public class LivretEvaluationServiceImpl implements LivretEvaluationService {
@@ -69,6 +81,9 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	private LivretEvaluationRepository livertEvaluationRepository;
 	@Autowired
 	private EvaluationFormationRepository evaluationFormationRepository;
+
+	@Autowired
+	private BlocEvaluationRepository blocEvaluationRepository;
 
 	private static Logger logger = Logger.getGlobal();
 
@@ -127,6 +142,13 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 		return result;
 	}
 
+	/**
+	 * Permet de générer le livret d'évaluation
+	 * @author Feres BG 
+	 * 
+	 * @param id étudiant id du cursus
+	 * @return fichier pdf
+	 */
 	@Override
 	public String getLivretEvaluation(long idEtudiant, long idCursus) throws TemplateNotFoundException,
 			MalformedTemplateNameException, ParseException, IOException, TemplateException, LivretEvaluationException {
@@ -147,17 +169,8 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 		if (!livretEvaluation.isPresent()) {
 			throw new LivretEvaluationException("Livret Evaluation non trouvé");
 		}
-		List<ActiviteType> activiteTypes = activiteTypeRepository.findAllByCursusActiviteTypeIdOrderByNumeroFiche(idCursus);
-	//	activiteTypes = activiteTypes.stream().sorted(Comparator.comparing(ActiviteType:: getNumeroFiche)).collect(Collectors.toList());
-//		 Collections.sort(activiteTypes, new Comparator<ActiviteType>() {
-//			 @Override 
-//			 public int compare(ActiviteType at1 , ActiviteType at2) {
-//				  int nf1 = at1.getNumeroFiche();
-//				  int nf2 = at2.getNumeroFiche();
-//
-//				 return nf1 - nf2;
-//			 }
-//		});
+		List<ActiviteType> activiteTypes = activiteTypeRepository
+				.findAllByCursusActiviteTypeIdOrderByNumeroFiche(idCursus);
 		if (activiteTypes.isEmpty() || activiteTypes == null) {
 			throw new LivretEvaluationException("Pas d'activité Types trouvé pour ce cursus");
 		}
@@ -166,27 +179,24 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 		livretEvalFile.setCursus(cursus.get());
 		livretEvalFile.setEtudiant(etudiant.get());
 		livretEvalFile.setLivretEvaluation(livretEvaluation.get());
-
-		Map<ActiviteType,List<EvaluationFormation>>  evaluations = new HashMap<>(); 
-		
+		List<BlocEvaluation> formateursEvaluateurs = new ArrayList<>();
+		List<EvaluationDto> evaluations = new ArrayList<>();
 		for (ActiviteType activiteType : activiteTypes) {
-//			Set<CompetenceProfessionnelle> competenceProfessionnelles = activiteType.getCompetenceProfessionnelles();
-//			 Collections.sort(competenceProfessionnelles, new TreeSet<CompetenceProfessionnelle>() {
-//				 @Override 
-//				 public int compare(CompetenceProfessionnelle at1 , CompetenceProfessionnelle at2) {
-//					  int nf1 = at1.getNumeroFiche();
-//					  int nf2 = at2.getNumeroFiche();
-//	
-//					 return nf1 - nf2;
-//				 }
-//			});
-			
-//			activiteType.setCompetenceProfessionnelles(activiteType.getCompetenceProfessionnelles());
-			List<EvaluationFormation> evaluationFormations = evaluationFormationRepository.findAllByActiviteTypeId(activiteType.getId());
-			evaluations.put(activiteType, evaluationFormations);
+
+			EvaluationDto evaluationDto = new EvaluationDto();
+			evaluationDto.setActiviteType(activiteType);
+			BlocEvaluation blocEvaluation = blocEvaluationRepository.findByActiviteTypeId(activiteType.getId());
+			evaluationDto.setBlocEvaluation(blocEvaluation);
+			formateursEvaluateurs.add(blocEvaluation);
+			List<EvaluationFormation> evaluationFormations = evaluationFormationRepository
+					.findAllByBlocEvaluationActiviteTypeId(activiteType.getId());
+			evaluationDto.setEvaluationFormations(evaluationFormations);
+			evaluations.add(evaluationDto);
 		}
 		livretEvalFile.setEvaluations(evaluations);
-		
+	
+		formateursEvaluateurs = formateursEvaluateurs.stream().filter(Filter.distinctByKey(BlocEvaluation::getFormateurEvaluateur) ).collect(Collectors.toList());
+		livretEvalFile.setFormateursEvaluateurs(formateursEvaluateurs);
 		Map<String, Object> model = new HashMap<>();
 		model.put("backendUrl", backendUrl);
 		model.put("livertEval", livretEvalFile);

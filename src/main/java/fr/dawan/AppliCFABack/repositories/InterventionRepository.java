@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,4 +42,6 @@ public interface InterventionRepository extends JpaRepository<Intervention, Long
 	List<Intervention> findAllByFormationId(long id);
 
 	Optional<Intervention> findByIdDg2(long id);
+	@Query("SELECT i FROM Intervention i JOIN i.formateurs f WHERE f.id =:id And i.dateDebut =:dateDebut And i.dateFin =:dateFin")
+	Optional<Intervention> findInterventionBydateFormationAndFormateur(LocalDate dateDebut, LocalDate dateFin, long id);
 }

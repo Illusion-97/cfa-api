@@ -1,14 +1,20 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.util.List;
-import java.util.Map;
 
-import fr.dawan.AppliCFABack.entities.ActiviteType;
+import fr.dawan.AppliCFABack.dto.customdtos.EvaluationDto;
+import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.EvaluationFormation;
+import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.LivretEvaluation;
-
+/**
+ * 
+ * @author Feres BG.
+ * @see fr.dawan.appliCFABack.dto
+ * @since 1.0
+ * @version 1.0
+ */
 public class LivretEvaluationFileDto {
 
 	private LivretEvaluation livretEvaluation;
@@ -16,8 +22,25 @@ public class LivretEvaluationFileDto {
 	private Cursus cursus;
 	
 	private Etudiant etudiant;
+
+	private List<EvaluationDto> evaluations;
 	
-	private Map<ActiviteType,List<EvaluationFormation>>evaluations;
+	private List<BlocEvaluation> formateursEvaluateurs;
+	
+	/**
+	 * @return le formateurEvaluateurs
+	 */
+	public List<BlocEvaluation> getFormateursEvaluateurs() {
+		return formateursEvaluateurs;
+	}
+
+	/**
+	 * @param formateurEvaluateurs le formateurEvaluateurs à affecter
+	 
+	 */
+	public void setFormateursEvaluateurs(List<BlocEvaluation> formateursEvaluateurs) {
+		this.formateursEvaluateurs = formateursEvaluateurs;
+	}
 
 	/**
 	 * @return le livretEvaluation
@@ -65,9 +88,9 @@ public class LivretEvaluationFileDto {
 	}
 
 	/**
-	 * @return les evaluations
+	 * @return le evaluations
 	 */
-	public Map<ActiviteType, List<EvaluationFormation>> getEvaluations() {
+	public List<EvaluationDto> getEvaluations() {
 		return evaluations;
 	}
 
@@ -75,9 +98,11 @@ public class LivretEvaluationFileDto {
 	 * @param evaluations le evaluations à affecter
 	 
 	 */
-	public void setEvaluations(Map<ActiviteType, List<EvaluationFormation>> evaluations) {
+	public void setEvaluations(List<EvaluationDto> evaluations) {
 		this.evaluations = evaluations;
 	}
+
+
 
 	
 }
