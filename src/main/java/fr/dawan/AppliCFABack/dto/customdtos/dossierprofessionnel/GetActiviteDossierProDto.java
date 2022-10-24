@@ -1,14 +1,13 @@
-package fr.dawan.AppliCFABack.dto.customdtos;
+package fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel;
 
 import java.io.Serializable;
 import java.util.Set;
 
-public class ActiviteTypeDossierProDto implements Serializable {
+public class GetActiviteDossierProDto implements Serializable {
 
     private long id;
     private String libelle;
-    private Set<CompetenceDossierProDto> competenceProfessionnelles;
-
+    private Set<GetCompetenceDossierProDto> competenceProfessionnelles;
     private int version;
 
     public long getId() {
@@ -27,11 +26,11 @@ public class ActiviteTypeDossierProDto implements Serializable {
         this.libelle = libelle;
     }
 
-    public Set<CompetenceDossierProDto> getCompetenceProfessionnelles() {
+    public Set<GetCompetenceDossierProDto> getCompetenceProfessionnelles() {
         return competenceProfessionnelles;
     }
 
-    public void setCompetenceProfessionnelles(Set<CompetenceDossierProDto> competenceProfessionnelles) {
+    public void setCompetenceProfessionnelles(Set<GetCompetenceDossierProDto> competenceProfessionnelles) {
         this.competenceProfessionnelles = competenceProfessionnelles;
     }
 

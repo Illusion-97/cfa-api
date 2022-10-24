@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
-import fr.dawan.AppliCFABack.dto.customdtos.*;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.*;
+import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -19,15 +21,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.entities.Cursus;
-import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
-import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
-import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.ExperienceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.tools.PdfTools;
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
@@ -56,6 +50,12 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Autowired
     private EtudiantRepository etudiantRepository;
+
+    @Autowired
+    private ActiviteTypeRepository activiteTypeRepository;
+
+    @Autowired
+    private PromotionRepository promotionRepository;
 
     @Autowired
     private Configuration freemarkerConfig;
@@ -222,13 +222,27 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
     @Override
     public String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws PdfTools, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
         Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
+        Etudiant et = null;
+
         if(etuOpt.isPresent()) {
+            et = etuOpt.get();
+
+            List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByPromotionIdAndOrderByNumeroFiche(promotionId);
+
+            List<CompetenceProfessionnelle> cp = competenceProfessionnelleRepository.getCompetenceProfessionnellesByEtudiantDossier(etudiantId);
+
+            List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByEtudiantDossier(etudiantId, promotionId);
+
             freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
 
             Template template = freemarkerConfig.getTemplate("DossierPro.ftl");
 
             Map<String, Object> model = new HashMap<>();
             model.put("backendUrl", backendUrl);
+            model.put("et", et);
+            model.put("at", at);
+            model.put("cp", cp);
+            model.put("exp", exp);
 
             String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 

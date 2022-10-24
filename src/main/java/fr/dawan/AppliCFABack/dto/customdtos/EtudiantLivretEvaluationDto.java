@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class LivretEvaluationDto extends BaseEntityDto implements Serializable {
+public class EtudiantLivretEvaluationDto extends BaseEntityDto implements Serializable {
     private List<String> promotions;
     private String examen;
     private List<String> competences = new ArrayList<>();
     private List<Note.Satisfaction> satisfactions = new ArrayList<>();
     private List<String> observations = new ArrayList<>();
 
-    public LivretEvaluationDto() {
+    public EtudiantLivretEvaluationDto() {
     	super();
     }
 

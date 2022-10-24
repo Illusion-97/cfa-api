@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
-import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
 import fr.dawan.AppliCFABack.services.ExamenService;
 import fr.dawan.AppliCFABack.services.FileService;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
@@ -178,7 +178,7 @@ public class ExamenController {
 	 *         étudiant
 	 */
 	@GetMapping(value = "/livret-evaluation/{id}", produces = "application/json")
-	public List<LivretEvaluationDto> getLivretEvaluation(@PathVariable("id") long id) {
+	public List<EtudiantLivretEvaluationDto> getLivretEvaluation(@PathVariable("id") long id) {
 		return examenService.getLivretEvaluation(id);
 	}
 

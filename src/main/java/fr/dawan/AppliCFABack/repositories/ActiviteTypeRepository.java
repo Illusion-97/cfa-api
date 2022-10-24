@@ -32,4 +32,7 @@ public interface ActiviteTypeRepository extends JpaRepository<ActiviteType, Long
 			+ "FROM activite_type \r\n"
 			+ "WHERE activite_type.cursus_activite_type_id = :id")
 	List<ActiviteType> getActiviteTypesByCursus(@Param("id") long id);
+
+	@Query("SELECT at FROM ActiviteType at JOIN Promotion p ON p.id = :promotionId JOIN Cursus c ON c.id = p.cursus.id ORDER BY at.numeroFiche ASC")
+	List<ActiviteType> getActiviteTypesByPromotionIdAndOrderByNumeroFiche(long promotionId);
 }

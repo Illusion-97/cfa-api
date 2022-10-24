@@ -2,7 +2,6 @@ package fr.dawan.AppliCFABack.repositories;
 
 import java.util.List;
 
-import fr.dawan.AppliCFABack.dto.customdtos.DossierProEtudiantDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;

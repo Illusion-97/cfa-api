@@ -42,8 +42,12 @@
     border-bottom: 1px solid #D3D3D3;
 }
 .identityDiv {
-    width: 200px;
+    width: 470px;
     margin: 50px 0 0 125px;
+}
+.spanData {
+    color: black;
+    font-family: 'Source Sans Pro', 'Serif';
 }
 .identityUl {
     color: #D60093;
@@ -276,6 +280,10 @@
     font-size: 15px;
     margin-bottom: 0;
 }
+.spanSommaireTitle {
+    width: 500px;
+    position: relative;
+}
 .divIntitule {
     background-color: #F2F2F2;
     border-left: 3px solid #D60093;
@@ -296,43 +304,63 @@
 }
 .divExemple>ul>li {
     padding: 7px 0;
+    position: relative;
 }
 .divExemple>ul>li>i {
     color: #D60093;
     font-size: 7px;
 }
 .spanPage {
-    margin-left: 393px;
+    position: absolute;
+    left: 563px;
 }
 .spanPageBold {
-    margin-left: 400px;
     font-size: 15px;
+    position: absolute;
+    left: 500px;
+    top: 2700px;
+}
+.spanPageBoldAt1 {
+    font-size: 15px;
+    position: absolute;
+    left: 600px;
+    top: 2340px;
+}
+.spanPageBoldAt2 {
+    font-size: 15px;
+    position: absolute;
+    left: 600px;
+    top: 2500px;
+}
+.spanPageBoldAt3 {
+    font-size: 15px;
+    position: absolute;
+    left: 600px;
+    top: 2670px;
+}
+.spanPageBoldAt4 {
+    font-size: 15px;
+    position: absolute;
+    left: 600px;
+    top: 2816px;
 }
 .divAnnexes {
     border-left: 3px solid #D60093;
     font-family: 'Source Sans Pro', 'Serif';
     width: 700px;
-    margin-bottom: 51px;
 }
 .divAnnexes>h4 {
-    padding: 7px 0 7px 5px;
+    padding: 7px 0 0 5px;
     font-size: 15px;
     margin-bottom: 0;
+    position: relative;
 }
 .h4NoMargin {
     margin-top: 0;
 }
 .spanPageBold2 {
-    margin-left: 207px;
-}
-.spanPageBold3 {
-    margin-left: 421px;
-}
-.spanPageBold4 {
-    margin-left: 200px;
-}
-.spanPageBold5 {
-    margin-left: 407px;
+    position: absolute;
+    left: 586px;
 }
 
 /*------------------------PAGE 4-----------------------------*/
@@ -358,16 +386,29 @@
     text-align: center;
     padding-bottom: 5px;
 }
+.divActiviteExemple {
+    position: relative;
+}
 .h2Activite {
     font-family: 'Open Sans', 'Serif';
     color: #D60093;
-    margin: 130px 0 10px 20px;
+    margin: 126px 0 16px 20px;
+    width: 200px;
+}
+.spanActivitetitle {
+    font-family: 'Open Sans', 'Serif';
+    color: black;
+    font-weight: bold;
+    font-size: 14px;
+    position: absolute;
+    top: 1px;
+    left: 222px;
 }
 .spanExempleNumero {
     font-style: italic;
     font-weight: bold;
     margin: 0 0 0 113px;
-    font-size: 13px;
+    font-size: 12px;
     font-family: 'Open Sans', 'Serif';
 }
 .iconExemple {
@@ -392,7 +433,7 @@
     margin : 3px 0 0 0;
 }
 .divExempleDescription {
-    margin: 40px 0 57px 0;
+    margin: 40px 0 55px 0;
     font-family: 'Open Sans', 'Serif';
     font-size: 13px;
 }
@@ -411,7 +452,7 @@
 
 .divTitlePage5 {
     width: 700px;
-    margin: 30px auto 120px auto;
+    margin: 0 auto 120px auto;
 }
 .divTitlePage5>.greyBarsAndH1>h2 {
     border-bottom: 3px solid #D3D3D3;

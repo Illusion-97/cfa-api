@@ -44,10 +44,10 @@
         </li>
     </ul>
     <ul class="iconsList">
+        <li><i class="fa-solid fa-play fa-2xs"></i><span class="spanData">${et.utilisateur.nom}</span></li>
         <li><i class="fa-solid fa-play fa-2xs"></i></li>
-        <li><i class="fa-solid fa-play fa-2xs"></i></li>
-        <li><i class="fa-solid fa-play fa-2xs"></i></li>
-        <li><i class="fa-solid fa-play fa-2xs"></i></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><span class="spanData">${et.utilisateur.prenom}</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><span class="spanData">${et.utilisateur.adresse.libelle} ${et.utilisateur.adresse.codePostal} ${et.utilisateur.adresse.ville}</span></li>
     </ul>
 </div>
 
@@ -150,7 +150,7 @@
 </div>
 <h3 class="h3Url"><img class="triangleRose" src="${backendUrl}/pictures/triangle-rose.png" alt="triangle rose">
     http://travail-emploi.gouv.fr/titres-professionnels</h3>
-<#---------------------------------------------Page3---------------------------------------------------------->
+<#---------------------------------------------Page3-------------------------------------->
 <div class="divTitlePage3">
     <div class="greyBarsAndH1">
         <div class="greyBarTop2"></div>
@@ -168,54 +168,54 @@
     Exemples de pratique professionnelle
 </h3>
 <div class="divIntitule">
-    <h4>Intitulé de l'activité-type n° 1<span class="spanPageBold">p.</span></h4>
+    <h4><div class="spanSommaireTitle"><#if at[0]??>${at[0].libelle}<#else>Intitulé de l'activité type 1</#if></div><span class="spanPageBoldAt1">p. 5</span></h4>
 </div>
 <div class="divExemple">
     <ul>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 1 <span class="spanPage">p.</span></li>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 2 <span class="spanPage">p.</span></li>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 3 <span class="spanPage">p.</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[0]??>${cp[0].libelle}<#else>Intitulé de l'exemple n° 1</#if><span class="spanPage">p. 5</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[1]??>${cp[1].libelle}<#else>Intitulé de l'exemple n° 2</#if><span class="spanPage">p. 7</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[2]??>${cp[2].libelle}<#else>Intitulé de l'exemple n° 3</#if><span class="spanPage">p. 9</span></li>
     </ul>
 </div>
 <div class="divIntitule">
-    <h4>Intitulé de l'activité-type n° 2<span class="spanPageBold">p.</span></h4>
+    <h4><div class="spanSommaireTitle"><#if at[1]??>${at[1].libelle}<#else>Intitulé de l'activité type 2</#if></div><span class="spanPageBoldAt2">p. 11</span></h4>
 </div>
 <div class="divExemple">
     <ul>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 1 <span class="spanPage">p.</span></li>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 2 <span class="spanPage">p.</span></li>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 3 <span class="spanPage">p.</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[3]??>${cp[3].libelle}<#else>Intitulé de l'exemple n° 4</#if><span class="spanPage">p. 11</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[4]??>${cp[4].libelle}<#else>Intitulé de l'exemple n° 5</#if><span class="spanPage">p. 13</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[5]??>${cp[5].libelle}<#else>Intitulé de l'exemple n° 6</#if><span class="spanPage">p. 15</span></li>
     </ul>
 </div>
 <div class="divIntitule">
-    <h4>Intitulé de l'activité-type n° 3<span class="spanPageBold">p.</span></h4>
+    <h4><div class="spanSommaireTitle"><#if at[2]??>${at[2].libelle}<#else>Intitulé de l'activité type 3</#if></div><span class="spanPageBoldAt3">p. 17</span></h4>
 </div>
 <div class="divExemple">
     <ul>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 1 <span class="spanPage">p.</span></li>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 2 <span class="spanPage">p.</span></li>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 3 <span class="spanPage">p.</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[6]??>${cp[6].libelle}<#else>Intitulé de l'exemple n° 7</#if><span class="spanPage">p. 17</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[7]??>${cp[7].libelle}<#else>Intitulé de l'exemple n° 8</#if><span class="spanPage">p. 19</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[8]??>${cp[8].libelle}<#else>Intitulé de l'exemple n° 9</#if><span class="spanPage">p. 21</span></li>
     </ul>
 </div>
 <div class="divIntitule">
-    <h4>Intitulé de l'activité-type n° 4<span class="spanPageBold">p.</span></h4>
+    <h4><div class="spanSommaireTitle"><#if at[3]??>${at[3].libelle}<#else>Intitulé de l'activité type 4</#if></div><span class="spanPageBoldAt4">p. 23</span></h4>
 </div>
 <div class="divExemple">
     <ul>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 1 <span class="spanPage">p.</span></li>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 2 <span class="spanPage">p.</span></li>
-        <li><i class="fa-solid fa-play fa-2xs"></i> Intitulé de l'exemple n° 3 <span class="spanPage">p.</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[9]??>${cp[9].libelle}<#else>Intitulé de l'exemple n° 10</#if><span class="spanPage">p. 23</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[10]??>${cp[10].libelle}<#else>Intitulé de l'exemple n° 11</#if><span class="spanPage">p. 25</span></li>
+        <li><i class="fa-solid fa-play fa-2xs"></i><#if cp[11]??>${cp[11].libelle}<#else>Intitulé de l'exemple n° 12</#if><span class="spanPage">p. 27</span></li>
     </ul>
 </div>
 <div class="divAnnexes">
     <h4>
-        Titres, diplômes, CQP, attestations de formation <span class="spanFacultatif">(facultatif)</span><span class="spanPageBold2">p.</span>
+        Titres, diplômes, CQP, attestations de formation <span class="spanFacultatif">(facultatif)</span><span class="spanPageBold2">p. 28</span>
     </h4>
-    <h4 class="h4NoMargin">Déclaration sur l'honneur<span class="spanPageBold3">p.</span></h4>
+    <h4 class="h4NoMargin">Déclaration sur l'honneur<span class="spanPageBold2">p. 29</span></h4>
     <h4 class="h4NoMargin">
-        Documents illustrant la pratique professionnelles <span class="spanFacultatif">(facultatif)</span><span class="spanPageBold4">p.</span>
+        Documents illustrant la pratique professionnelles <span class="spanFacultatif">(facultatif)</span><span class="spanPageBold2">p. 30</span>
     </h4>
-    <h4 class="h4NoMargin">Annexes <span class="spanFacultatif">(Si le RC le prévoit)<span class="spanPageBold5">p.</span></span>
+    <h4 class="h4NoMargin">Annexes <span class="spanFacultatif">(Si le RC le prévoit)<span class="spanPageBold2">p. 31</span></span>
     </h4>
 </div>
 <#-------------------------------------------------------Page4--------------------------------->
@@ -239,7 +239,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 1</h2>
-    <span class="spanExempleNumero">Exemple n°1 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[0]??>${at[0].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°1 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[0]??>${cp[0].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
@@ -313,7 +314,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 1</h2>
-    <span class="spanExempleNumero">Exemple n°2 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[0]??>${at[0].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°2 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[1]??>${cp[1].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
@@ -387,7 +389,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 1</h2>
-    <span class="spanExempleNumero">Exemple n°3 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[0]??>${at[0].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°3 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[2]??>${cp[2].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
@@ -461,7 +464,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 2</h2>
-    <span class="spanExempleNumero">Exemple n°1 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[1]??>${at[1].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°1 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[3]??>${cp[3].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
@@ -535,7 +539,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 2</h2>
-    <span class="spanExempleNumero">Exemple n°2 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[1]??>${at[1].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°2 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[4]??>${cp[4].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
@@ -609,7 +614,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 2</h2>
-    <span class="spanExempleNumero">Exemple n°3 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[1]??>${at[1].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°3 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[5]??>${cp[5].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
@@ -683,7 +689,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 3</h2>
-    <span class="spanExempleNumero">Exemple n°1 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[2]??>${at[2].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°1 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[6]??>${cp[6].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
@@ -757,7 +764,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 3</h2>
-    <span class="spanExempleNumero">Exemple n°2 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[2]??>${at[2].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°2 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[7]??>${cp[7].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
@@ -831,7 +839,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 3</h2>
-    <span class="spanExempleNumero">Exemple n°3 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[2]??>${at[2].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°3 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[8]??>${cp[8].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
@@ -905,7 +914,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 4</h2>
-    <span class="spanExempleNumero">Exemple n°1 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[3]??>${at[3].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°1 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[9]??>${cp[9].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
@@ -979,7 +989,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 4</h2>
-    <span class="spanExempleNumero">Exemple n°2 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[3]??>${at[3].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°2 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[10]??>${cp[10].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
@@ -1053,7 +1064,8 @@
 </div>
 <div class="divActiviteExemple">
     <h2 class="h2Activite">Activité-type 4</h2>
-    <span class="spanExempleNumero">Exemple n°3 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span></span>
+    <span class="spanActivitetitle"><#if at[3]??>${at[3].libelle}</#if></span>
+    <span class="spanExempleNumero">Exemple n°3 <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span><#if cp[11]??>${cp[11].libelle}</#if></span>
     <div class="pinkDiv3"></div>
     <div class="pinkDiv4"></div>
 </div>
