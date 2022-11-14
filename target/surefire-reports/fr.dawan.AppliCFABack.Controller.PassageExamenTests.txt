@@ -1,14 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.PassageExamenTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.213 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.PassageExamenTests
-testFindById  Time elapsed: 0.01 s  <<< FAILURE!
-java.lang.AssertionError: No value at JSON path "$.dateDebut"
-	at fr.dawan.AppliCFABack.Controller.PassageExamenTests.testFindById(PassageExamenTests.java:77)
-Caused by: java.lang.IllegalArgumentException: json can not be null or empty
-	at fr.dawan.AppliCFABack.Controller.PassageExamenTests.testFindById(PassageExamenTests.java:77)
-
-testDelete  Time elapsed: 0.013 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<202> but was:<404>
-	at fr.dawan.AppliCFABack.Controller.PassageExamenTests.testDelete(PassageExamenTests.java:141)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.046 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.PassageExamenTests
+fr.dawan.AppliCFABack.Controller.PassageExamenTests  Time elapsed: 0.046 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'APPLICATION_STORAGE_VOLUME' in value "${APPLICATION_STORAGE_VOLUME}/app.log"
 

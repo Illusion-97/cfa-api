@@ -1,46 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.EtudiantControllerTests
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 10, Errors: 0, Skipped: 0, Time elapsed: 0.258 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.EtudiantControllerTests
-testGetIntervenionByIdEtudiant  Time elapsed: 0.007 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<400>
-	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetIntervenionByIdEtudiant(EtudiantControllerTests.java:222)
-
-testGetAdresseByIdEtudiant  Time elapsed: 0.01 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<500>
-	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetAdresseByIdEtudiant(EtudiantControllerTests.java:182)
-
-testGetEntrepriseByIdEtudiant  Time elapsed: 0.02 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<500>
-	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetEntrepriseByIdEtudiant(EtudiantControllerTests.java:146)
-
-testGetPromotionsByIdEtudiant  Time elapsed: 0.01 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<500>
-	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetPromotionsByIdEtudiant(EtudiantControllerTests.java:158)
-
-testGetFormateurReferentByIdEtudiant  Time elapsed: 0.009 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<500>
-	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetFormateurReferentByIdEtudiant(EtudiantControllerTests.java:234)
-
-testGetAbsencesByIdEtudiant  Time elapsed: 0.007 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<400>
-	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetAbsencesByIdEtudiant(EtudiantControllerTests.java:210)
-
-testGetGroupesByIdEtudiant  Time elapsed: 0.01 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<500>
-	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetGroupesByIdEtudiant(EtudiantControllerTests.java:170)
-
-testFindById  Time elapsed: 0.008 s  <<< FAILURE!
-java.lang.AssertionError: No value at JSON path "$.nom"
-	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testFindById(EtudiantControllerTests.java:78)
-Caused by: java.lang.IllegalArgumentException: json can not be null or empty
-	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testFindById(EtudiantControllerTests.java:78)
-
-testGetNotesByIdEtudiant  Time elapsed: 0.006 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<400>
-	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetNotesByIdEtudiant(EtudiantControllerTests.java:197)
-
-testGetFormateurManagerByIdEtudiant  Time elapsed: 0.006 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<400>
-	at fr.dawan.AppliCFABack.Controller.EtudiantControllerTests.testGetFormateurManagerByIdEtudiant(EtudiantControllerTests.java:246)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.03 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.EtudiantControllerTests
+fr.dawan.AppliCFABack.Controller.EtudiantControllerTests  Time elapsed: 0.03 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'APPLICATION_STORAGE_VOLUME' in value "${APPLICATION_STORAGE_VOLUME}/app.log"
 

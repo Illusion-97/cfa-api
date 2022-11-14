@@ -1,6 +1,8 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.io.IOException;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,6 +12,8 @@ import javax.transaction.Transactional;
 
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.*;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfActiviteDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfCompetenceDto;
 import fr.dawan.AppliCFABack.entities.*;
 import fr.dawan.AppliCFABack.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +60,9 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Autowired
     private PromotionRepository promotionRepository;
+
+    @Autowired
+    private SignatureRepository signatureRepository;
 
     @Autowired
     private Configuration freemarkerConfig;
@@ -227,11 +234,108 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         if(etuOpt.isPresent()) {
             et = etuOpt.get();
 
-            List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByPromotionIdAndOrderByNumeroFiche(promotionId);
+            List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByPromotionIdAndOrderByNumeroFiche(etudiantId, promotionId);
 
-            List<CompetenceProfessionnelle> cp = competenceProfessionnelleRepository.getCompetenceProfessionnellesByEtudiantDossier(etudiantId);
+            List<PdfActiviteDto> pdfActiviteDtos = new ArrayList<>();
 
-            List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByEtudiantDossier(etudiantId, promotionId);
+            //insérer la liste d'activités type dans l'objet freemarker
+            for(ActiviteType a : at) {
+                PdfActiviteDto pdfActiviteDto = DtoTools.convert(a, PdfActiviteDto.class);
+                pdfActiviteDtos.add(pdfActiviteDto);
+            }
+
+            Set<PdfCompetenceDto> pdfCompetenceDtos1 = new HashSet<>();
+            Set<PdfCompetenceDto> pdfCompetenceDtos2 = new HashSet<>();
+            Set<PdfCompetenceDto> pdfCompetenceDtos3 = new HashSet<>();
+            Set<PdfCompetenceDto> pdfCompetenceDtos4 = new HashSet<>();
+
+            //ACTIVITE 1
+            if(pdfActiviteDtos.size() > 0) {
+                long activiteId1 = pdfActiviteDtos.get(0).getId();
+                List<CompetenceProfessionnelle> cp = competenceProfessionnelleRepository.getCompetencesByActivite(activiteId1);
+                for(CompetenceProfessionnelle c : cp) {
+                    List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByCompetenceId(etudiantId,c.getId());
+                    List<ExperienceProfessionnelleDto> experienceProfessionnelleDtoList = new ArrayList<>();
+                    for(ExperienceProfessionnelle e : exp) {
+                        ExperienceProfessionnelleDto eDto = DtoTools.convert(e, ExperienceProfessionnelleDto.class);
+                        experienceProfessionnelleDtoList.add(eDto);
+                    }
+                    PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
+                    pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
+                    pdfCompetenceDtos1.add(pdfCompetenceDto);
+                }
+                Set<PdfCompetenceDto> pdfCompetenceDtos1Sorted = pdfCompetenceDtos1.stream().sorted(Comparator.comparingInt(PdfCompetenceDto::getNumeroFiche)).collect(Collectors.toCollection(LinkedHashSet::new));
+                pdfActiviteDtos.get(0).setPdfCompetenceDtoSet(pdfCompetenceDtos1Sorted);
+            }
+
+
+            //ACTIVITE 2
+            if(pdfActiviteDtos.size() > 1) {
+                long activiteId2 = pdfActiviteDtos.get(1).getId();
+                List<CompetenceProfessionnelle> cp2 = competenceProfessionnelleRepository.getCompetencesByActivite(activiteId2);
+                for(CompetenceProfessionnelle c : cp2) {
+                    List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByCompetenceId(etudiantId,c.getId());
+                    List<ExperienceProfessionnelleDto> experienceProfessionnelleDtoList = new ArrayList<>();
+                    for(ExperienceProfessionnelle e : exp) {
+                        ExperienceProfessionnelleDto eDto = DtoTools.convert(e, ExperienceProfessionnelleDto.class);
+                        experienceProfessionnelleDtoList.add(eDto);
+                    }
+                    PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
+                    pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
+                    pdfCompetenceDtos2.add(pdfCompetenceDto);
+                }
+                Set<PdfCompetenceDto> pdfCompetenceDtos2Sorted = pdfCompetenceDtos2.stream().sorted(Comparator.comparingInt(PdfCompetenceDto::getNumeroFiche)).collect(Collectors.toCollection(LinkedHashSet::new));
+                pdfActiviteDtos.get(1).setPdfCompetenceDtoSet(pdfCompetenceDtos2Sorted);
+            }
+
+
+            //ACTIVITE 3
+            if(pdfActiviteDtos.size() > 2) {
+                long activiteId3 = pdfActiviteDtos.get(2).getId();
+                List<CompetenceProfessionnelle> cp3 = competenceProfessionnelleRepository.getCompetencesByActivite(activiteId3);
+                for(CompetenceProfessionnelle c : cp3) {
+                    List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByCompetenceId(etudiantId,c.getId());
+                    List<ExperienceProfessionnelleDto> experienceProfessionnelleDtoList = new ArrayList<>();
+                    for(ExperienceProfessionnelle e : exp) {
+                        ExperienceProfessionnelleDto eDto = DtoTools.convert(e, ExperienceProfessionnelleDto.class);
+                        experienceProfessionnelleDtoList.add(eDto);
+                    }
+                    PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
+                    pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
+                    pdfCompetenceDtos3.add(pdfCompetenceDto);
+                }
+                Set<PdfCompetenceDto> pdfCompetenceDtos3Sorted = pdfCompetenceDtos3.stream().sorted(Comparator.comparingInt(PdfCompetenceDto::getNumeroFiche)).collect(Collectors.toCollection(LinkedHashSet::new));
+                pdfActiviteDtos.get(2).setPdfCompetenceDtoSet(pdfCompetenceDtos3Sorted);
+            }
+
+            //ACTIVITE 4
+            if(pdfActiviteDtos.size() > 3) {
+                long activiteId4 = pdfActiviteDtos.get(3).getId();
+                List<CompetenceProfessionnelle> cp4 = competenceProfessionnelleRepository.getCompetencesByActivite(activiteId4);
+                for(CompetenceProfessionnelle c : cp4) {
+                    List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByCompetenceId(etudiantId,c.getId());
+                    List<ExperienceProfessionnelleDto> experienceProfessionnelleDtoList = new ArrayList<>();
+                    for(ExperienceProfessionnelle e : exp) {
+                        ExperienceProfessionnelleDto eDto = DtoTools.convert(e, ExperienceProfessionnelleDto.class);
+                        experienceProfessionnelleDtoList.add(eDto);
+                    }
+                    PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
+                    pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
+                    pdfCompetenceDtos4.add(pdfCompetenceDto);
+                }
+                Set<PdfCompetenceDto> pdfCompetenceDtos4Sorted = pdfCompetenceDtos4.stream().sorted(Comparator.comparingInt(PdfCompetenceDto::getNumeroFiche)).collect(Collectors.toCollection(LinkedHashSet::new));
+                pdfActiviteDtos.get(3).setPdfCompetenceDtoSet(pdfCompetenceDtos4Sorted);
+            }
+
+//            List<CompetenceProfessionnelle> cp = competenceProfessionnelleRepository.getCompetenceProfessionnellesByEtudiantDossier(etudiantId);
+//
+//            List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByEtudiantDossier(etudiantId, promotionId);
+
+            Signature signature = signatureRepository.getSignatureByEtudiantId(etudiantId);
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+            ZonedDateTime now = ZonedDateTime.now();
+            String dateNow = dtf.format(now);
 
             freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
 
@@ -240,9 +344,12 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
             Map<String, Object> model = new HashMap<>();
             model.put("backendUrl", backendUrl);
             model.put("et", et);
-            model.put("at", at);
-            model.put("cp", cp);
-            model.put("exp", exp);
+            model.put("pdfActiviteDtos", pdfActiviteDtos);
+           model.put("at", at);
+//            model.put("cp", cp);
+//            model.put("exp", exp);
+            model.put("dateNow", dateNow);
+            model.put("signature", signature);
 
             String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
@@ -253,7 +360,6 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 			} catch (Exception e) {
 				logger.log(Level.SEVERE,"convertHtmlToPdf failed", e);
 			}
-
             return outputPdf;
         }
         return null;

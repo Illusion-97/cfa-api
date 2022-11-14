@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.CerfaControllerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.424 s - in fr.dawan.AppliCFABack.Controller.CerfaControllerTests
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.043 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CerfaControllerTests
+fr.dawan.AppliCFABack.Controller.CerfaControllerTests  Time elapsed: 0.043 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'APPLICATION_STORAGE_VOLUME' in value "${APPLICATION_STORAGE_VOLUME}/app.log"
+

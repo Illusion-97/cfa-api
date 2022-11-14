@@ -1,10 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.FormateurControllerTests
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.128 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.FormateurControllerTests
-testFindById  Time elapsed: 0.009 s  <<< FAILURE!
-java.lang.AssertionError: No value at JSON path "$.nom"
-	at fr.dawan.AppliCFABack.Controller.FormateurControllerTests.testFindById(FormateurControllerTests.java:77)
-Caused by: java.lang.IllegalArgumentException: json can not be null or empty
-	at fr.dawan.AppliCFABack.Controller.FormateurControllerTests.testFindById(FormateurControllerTests.java:77)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.03 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.FormateurControllerTests
+fr.dawan.AppliCFABack.Controller.FormateurControllerTests  Time elapsed: 0.03 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'APPLICATION_STORAGE_VOLUME' in value "${APPLICATION_STORAGE_VOLUME}/app.log"
 
