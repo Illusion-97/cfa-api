@@ -195,7 +195,15 @@
 </div>
 </#list>
 </#list>
-<div class="divAnnexes">
+<#if pdfActiviteDtos?size = 3>
+<div class="divAnnexes3">
+    <#elseif pdfActiviteDtos?size = 4>
+    <div class="divAnnexes4">
+        <#elseif pdfActiviteDtos?size = 2>
+        <div class="divAnnexes2">
+            <#elseif pdfActiviteDtos?size = 1>
+            <div class="divAnnexes1">
+        </#if>
     <h4>
         Titres, diplômes, CQP, attestations de formation <span class="spanFacultatif">(facultatif)</span><span
                 class="spanPageBold2">p. 29</span>

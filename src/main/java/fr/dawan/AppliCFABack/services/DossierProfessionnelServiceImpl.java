@@ -192,8 +192,11 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
     public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id) {
         DossierProfessionnel dp = DtoTools.convert(dpDto, DossierProfessionnel.class);
         List<ExperienceProfessionnelle> exps = dp.getExperienceProfessionnelles();
+
         for(ExperienceProfessionnelle exp : exps){
+            Optional<Etudiant> optEtudiant = etudiantRepository.findById(id);
             exp.setDossierProfessionnel(dp);
+            exp.setEtudiant(optEtudiant.get());
         }
 
         EtudiantDossierDto eDto = etudiantService.getByEtudiantIdForDossierPro(id);

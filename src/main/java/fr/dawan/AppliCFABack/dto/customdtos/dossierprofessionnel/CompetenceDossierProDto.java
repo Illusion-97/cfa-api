@@ -12,6 +12,8 @@ public class CompetenceDossierProDto implements Serializable {
 
     private String libelle;
 
+    private byte numeroFiche;
+
     private int version;
 
     private List<ExperienceProfessionnelleDto> experienceProfessionnelles;
@@ -46,5 +48,13 @@ public class CompetenceDossierProDto implements Serializable {
 
     public void setExperienceProfessionnelles(List<ExperienceProfessionnelleDto> experienceProfessionnelles) {
         this.experienceProfessionnelles = experienceProfessionnelles;
+    }
+
+    public byte getNumeroFiche() {
+        return numeroFiche;
+    }
+
+    public void setNumeroFiche(byte numeroFiche) {
+        this.numeroFiche = numeroFiche;
     }
 }

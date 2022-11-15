@@ -7,6 +7,7 @@ public class ActiviteTypeDossierProDto implements Serializable {
 
     private long id;
     private String libelle;
+    private byte numeroFiche;
     private Set<CompetenceDossierProDto> competenceProfessionnelles;
 
     private int version;
@@ -41,5 +42,13 @@ public class ActiviteTypeDossierProDto implements Serializable {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public byte getNumeroFiche() {
+        return numeroFiche;
+    }
+
+    public void setNumeroFiche(byte numeroFiche) {
+        this.numeroFiche = numeroFiche;
     }
 }
