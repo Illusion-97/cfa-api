@@ -1,22 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.DevoirControllerTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.104 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.DevoirControllerTest
-testSave  Time elapsed: 0.055 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<500>
-	at fr.dawan.AppliCFABack.Controller.DevoirControllerTest.testSave(DevoirControllerTest.java:101)
-
-testFindById  Time elapsed: 0.008 s  <<< FAILURE!
-java.lang.AssertionError: No value at JSON path "$.enonce"
-	at fr.dawan.AppliCFABack.Controller.DevoirControllerTest.testFindById(DevoirControllerTest.java:78)
-Caused by: java.lang.IllegalArgumentException: json can not be null or empty
-	at fr.dawan.AppliCFABack.Controller.DevoirControllerTest.testFindById(DevoirControllerTest.java:78)
-
-testDelete  Time elapsed: 0.012 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<202> but was:<404>
-	at fr.dawan.AppliCFABack.Controller.DevoirControllerTest.testDelete(DevoirControllerTest.java:145)
-
-testUpdate  Time elapsed: 0.009 s  <<< FAILURE!
-java.lang.AssertionError: Cannot invoke "fr.dawan.AppliCFABack.dto.DevoirDto.setConsigne(String)" because "eDto" is null
-	at fr.dawan.AppliCFABack.Controller.DevoirControllerTest.testUpdate(DevoirControllerTest.java:134)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.026 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.DevoirControllerTest
+fr.dawan.AppliCFABack.Controller.DevoirControllerTest  Time elapsed: 0.026 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'APPLICATION_STORAGE_VOLUME' in value "${APPLICATION_STORAGE_VOLUME}/app.log"
 

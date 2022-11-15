@@ -1,4 +1,4 @@
-package fr.dawan.AppliCFABack.dto.customdtos;
+package fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel;
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,13 +6,17 @@ import java.util.List;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 
 @SuppressWarnings("serial")
-public class DossierProEtudiantDto implements Serializable {
+public class CompetenceDossierProDto implements Serializable {
 
     private long id;
-    private String nom;
-    private CursusDossierProDto cursus;
-    private List<ExperienceProfessionnelleDto> experienceProfessionnelles;
+
+    private String libelle;
+
+    private byte numeroFiche;
+
     private int version;
+
+    private List<ExperienceProfessionnelleDto> experienceProfessionnelles;
 
     public long getId() {
         return id;
@@ -22,20 +26,12 @@ public class DossierProEtudiantDto implements Serializable {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getLibelle() {
+        return libelle;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public CursusDossierProDto getCursus() {
-        return cursus;
-    }
-
-    public void setCursus(CursusDossierProDto cursus) {
-        this.cursus = cursus;
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
     }
 
     public int getVersion() {
@@ -52,5 +48,13 @@ public class DossierProEtudiantDto implements Serializable {
 
     public void setExperienceProfessionnelles(List<ExperienceProfessionnelleDto> experienceProfessionnelles) {
         this.experienceProfessionnelles = experienceProfessionnelles;
+    }
+
+    public byte getNumeroFiche() {
+        return numeroFiche;
+    }
+
+    public void setNumeroFiche(byte numeroFiche) {
+        this.numeroFiche = numeroFiche;
     }
 }

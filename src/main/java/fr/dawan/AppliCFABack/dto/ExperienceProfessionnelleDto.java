@@ -14,6 +14,7 @@ public class ExperienceProfessionnelleDto implements Serializable {
     private int version;
     private long dossierProfessionnelId;
     private long competenceProfessionnelleId;
+    private long etudiantId;
 
 
     public String getTacheRealisee() {
@@ -86,5 +87,13 @@ public class ExperienceProfessionnelleDto implements Serializable {
 
     public void setCompetenceProfessionnelleId(long competenceProfessionnelleId) {
         this.competenceProfessionnelleId = competenceProfessionnelleId;
+    }
+
+    public long getEtudiantId() {
+        return etudiantId;
+    }
+
+    public void setEtudiantId(long etudiantId) {
+        this.etudiantId = etudiantId;
     }
 }

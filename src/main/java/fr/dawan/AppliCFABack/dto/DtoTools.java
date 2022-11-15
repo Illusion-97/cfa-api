@@ -7,7 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
-import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
@@ -174,10 +174,10 @@ public class DtoTools {
      * permet de mapper un objet Examen en LivretEvaluationDto (dto customisé) -
      * return l'objet dto custom mappé
      */
-    Converter<Examen, LivretEvaluationDto> examenToLivretEvaluationDtoConverter = context -> {
+    Converter<Examen, EtudiantLivretEvaluationDto> examenToLivretEvaluationDtoConverter = context -> {
 
         Examen e = context.getSource();
-        LivretEvaluationDto leDto = new LivretEvaluationDto();
+        EtudiantLivretEvaluationDto leDto = new EtudiantLivretEvaluationDto();
 
         leDto.setPromotions(e.getPromotions().stream().map(
         		Promotion::getNom
@@ -204,8 +204,8 @@ public class DtoTools {
      * @param examen
      * @return l'objet dto custom mappé
      */
-    public LivretEvaluationDto examenToLivretEvaluationDto(Examen examen) {
-        return convert(examen, LivretEvaluationDto.class, examenToLivretEvaluationDtoConverter);
+    public EtudiantLivretEvaluationDto examenToLivretEvaluationDto(Examen examen) {
+        return convert(examen, EtudiantLivretEvaluationDto.class, examenToLivretEvaluationDtoConverter);
     }
 
     /**

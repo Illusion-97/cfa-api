@@ -1,20 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.ExamenControllerTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 2.053 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.ExamenControllerTest
-testFindAll  Time elapsed: 0.005 s  <<< ERROR!
-java.time.DateTimeException: Invalid value for MonthOfYear (valid values 1 - 12): 29
-	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:66)
-
-testFindById  Time elapsed: 0.004 s  <<< ERROR!
-java.time.DateTimeException: Invalid value for MonthOfYear (valid values 1 - 12): 29
-	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:66)
-
-contextLoads  Time elapsed: 0.004 s  <<< ERROR!
-java.time.DateTimeException: Invalid value for MonthOfYear (valid values 1 - 12): 29
-	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:66)
-
-testDelete  Time elapsed: 0.007 s  <<< ERROR!
-java.time.DateTimeException: Invalid value for MonthOfYear (valid values 1 - 12): 29
-	at fr.dawan.AppliCFABack.Controller.ExamenControllerTest.init(ExamenControllerTest.java:66)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.031 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.ExamenControllerTest
+fr.dawan.AppliCFABack.Controller.ExamenControllerTest  Time elapsed: 0.031 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'APPLICATION_STORAGE_VOLUME' in value "${APPLICATION_STORAGE_VOLUME}/app.log"
 

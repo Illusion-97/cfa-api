@@ -1,4 +1,4 @@
-package fr.dawan.AppliCFABack.dto.customdtos;
+package fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel;
 
 public class GetCompetenceDossierProDto {
 

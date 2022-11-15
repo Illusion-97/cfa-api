@@ -3,8 +3,8 @@ package fr.dawan.AppliCFABack.services;
 import java.io.IOException;
 import java.util.List;
 
-import fr.dawan.AppliCFABack.dto.customdtos.DossierProEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.GetDossierProDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
 import fr.dawan.AppliCFABack.tools.PdfTools;
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;

@@ -1,22 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.184 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests
-testSave  Time elapsed: 0.074 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<500>
-	at fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests.testSave(CentreFormationControllerTests.java:94)
-
-testFindById  Time elapsed: 0.009 s  <<< FAILURE!
-java.lang.AssertionError: No value at JSON path "$.entreprise"
-	at fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests.testFindById(CentreFormationControllerTests.java:75)
-Caused by: java.lang.IllegalArgumentException: json can not be null or empty
-	at fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests.testFindById(CentreFormationControllerTests.java:75)
-
-testDelete  Time elapsed: 0.01 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<202> but was:<404>
-	at fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests.testDelete(CentreFormationControllerTests.java:134)
-
-testUpdate  Time elapsed: 0.069 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <23> but was: <0>
-	at fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests.testUpdate(CentreFormationControllerTests.java:120)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.036 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests
+fr.dawan.AppliCFABack.Controller.CentreFormationControllerTests  Time elapsed: 0.036 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'APPLICATION_STORAGE_VOLUME' in value "${APPLICATION_STORAGE_VOLUME}/app.log"
 
