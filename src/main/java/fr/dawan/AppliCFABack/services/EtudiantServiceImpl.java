@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
@@ -128,6 +129,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+
+	@Autowired
+	private DtoTools mapperTools;
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -1007,4 +1011,15 @@ public class EtudiantServiceImpl implements EtudiantService {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 	}
+
+	@Override
+	public AccueilEtudiantDto getAccueilEtudiant(long id) {
+		Optional<Etudiant> e = etudiantRepository.findById(id);
+		if(e.isPresent()) {
+			return mapperTools.etudiantToAccueilEtudiantDto(e.get());
+		}
+		return null;
+	}
+
+
 }
