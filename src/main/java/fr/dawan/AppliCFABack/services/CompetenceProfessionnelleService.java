@@ -13,4 +13,10 @@ public interface CompetenceProfessionnelleService {
 	CompetenceProfessionnelleDto saveOrUpdate( CompetenceProfessionnelleDto cpDto);
 	
 	void deleteById(long id);
+
+	/**
+	 * Récupération de toutes les absences en fonctions d'un EtudiantId
+	 */
+	List<CompetenceProfessionnelleDto> getAllByActiviteTypeId(long id);
+	
 }
