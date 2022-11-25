@@ -1,10 +1,9 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * @author William P. Rémy C.
@@ -48,8 +47,13 @@ public class ExperienceProfessionnelle extends BaseEntity implements Serializabl
     @ManyToOne
     private DossierProfessionnel dossierProfessionnel;
 
+//    @OneToMany(mappedBy = "experienceProfessionnelle", cascade = CascadeType.ALL)
+//    private Set<CompetenceExperienceEtudiant> competenceExperienceEtudiants;
+
     @ManyToOne
     private CompetenceProfessionnelle competenceProfessionnelle;
+
+    @ManyToOne Etudiant etudiant;
 
     /**
      * @return la tâche réalisée
@@ -123,11 +127,27 @@ public class ExperienceProfessionnelle extends BaseEntity implements Serializabl
         this.dossierProfessionnel = dossierProfessionnel;
     }
 
-    public CompetenceProfessionnelle getCompetenceProfessionnelle() {
+//    public Set<CompetenceExperienceEtudiant> getCompetenceExperienceEtudiants() {
+//        return competenceExperienceEtudiants;
+//    }
+//
+//    public void setCompetenceExperienceEtudiants(Set<CompetenceExperienceEtudiant> competenceExperienceEtudiants) {
+//        this.competenceExperienceEtudiants = competenceExperienceEtudiants;
+//    }
+
+        public CompetenceProfessionnelle getCompetenceProfessionnelle() {
         return competenceProfessionnelle;
     }
 
     public void setCompetenceProfessionnelle(CompetenceProfessionnelle competenceProfessionnelle) {
         this.competenceProfessionnelle = competenceProfessionnelle;
+    }
+
+    public Etudiant getEtudiant() {
+        return etudiant;
+    }
+
+    public void setEtudiant(Etudiant etudiant) {
+        this.etudiant = etudiant;
     }
 }

@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 
@@ -16,6 +17,12 @@ public class DossierProfessionnelDto extends BaseEntityDto implements Serializab
 	private String nom;
 
 	private CursusDto cursusDto;
+
+	private List<ExperienceProfessionnelleDto> experienceProfessionnelleDtos;
+
+	private EtudiantDto etudiantDto;
+
+	private List<AnnexeDto> annexeDtos;
 
 	public DossierProfessionnelDto() {
 		super();
@@ -53,4 +60,27 @@ public class DossierProfessionnelDto extends BaseEntityDto implements Serializab
 		this.cursusDto = cursusDto;
 	}
 
+	public List<ExperienceProfessionnelleDto> getExperienceProfessionnelleDtos() {
+		return experienceProfessionnelleDtos;
+	}
+
+	public void setExperienceProfessionnelleDtos(List<ExperienceProfessionnelleDto> experienceProfessionnelleDtos) {
+		this.experienceProfessionnelleDtos = experienceProfessionnelleDtos;
+	}
+
+	public EtudiantDto getEtudiantDto() {
+		return etudiantDto;
+	}
+
+	public void setEtudiantDto(EtudiantDto etudiantDto) {
+		this.etudiantDto = etudiantDto;
+	}
+
+	public List<AnnexeDto> getAnnexeDtos() {
+		return annexeDtos;
+	}
+
+	public void setAnnexeDtos(List<AnnexeDto> annexeDtos) {
+		this.annexeDtos = annexeDtos;
+	}
 }

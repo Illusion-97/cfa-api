@@ -1,14 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.CongeControllerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.171 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CongeControllerTests
-testSave  Time elapsed: 0.066 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<500>
-	at fr.dawan.AppliCFABack.Controller.CongeControllerTests.testSave(CongeControllerTests.java:101)
-
-testFindById  Time elapsed: 0.011 s  <<< FAILURE!
-java.lang.AssertionError: No value at JSON path "$.motif"
-	at fr.dawan.AppliCFABack.Controller.CongeControllerTests.testFindById(CongeControllerTests.java:78)
-Caused by: java.lang.IllegalArgumentException: json can not be null or empty
-	at fr.dawan.AppliCFABack.Controller.CongeControllerTests.testFindById(CongeControllerTests.java:78)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.026 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CongeControllerTests
+fr.dawan.AppliCFABack.Controller.CongeControllerTests  Time elapsed: 0.026 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'APPLICATION_STORAGE_VOLUME' in value "${APPLICATION_STORAGE_VOLUME}/app.log"
 

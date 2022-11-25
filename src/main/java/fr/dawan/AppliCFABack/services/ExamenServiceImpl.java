@@ -30,7 +30,7 @@ import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.customdtos.DoubleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EvalByBlocDto;
-import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Etudiant;
@@ -305,8 +305,8 @@ public class ExamenServiceImpl implements ExamenService {
 	 * 			- liste d'observations
 	 */
 	@Override
-	public List<LivretEvaluationDto> getLivretEvaluation(long id) {
-		List<LivretEvaluationDto> result = new ArrayList<>();
+	public List<EtudiantLivretEvaluationDto> getLivretEvaluation(long id) {
+		List<EtudiantLivretEvaluationDto> result = new ArrayList<>();
 		List<Examen> list = examenRepository.findallByEtudiantId(id);
 
 		for(Examen e : list) {
