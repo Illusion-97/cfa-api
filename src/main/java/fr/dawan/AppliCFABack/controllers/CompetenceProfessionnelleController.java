@@ -88,5 +88,10 @@ public class CompetenceProfessionnelleController {
 		}
 
 	}
+	
+	@GetMapping(value = "/activiteType/{id}", produces = "application/json")
+	public List<CompetenceProfessionnelleDto> getAllByActiviteTypeId(@PathVariable("id") long id){
+		return competenceProfessionnelleService.getAllByActiviteTypeId(id);
+	}
 
 }
