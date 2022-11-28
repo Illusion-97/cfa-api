@@ -11,7 +11,7 @@ public class AccueilEtudiantDto implements Serializable {
     private String login;
     private String telephone;
     private String ville;
-    private List<String> promotions;
+    private String promotion;
     private List<List<String>> projets;
     private List<String> groupes;
     private String managerNom;
@@ -20,8 +20,8 @@ public class AccueilEtudiantDto implements Serializable {
     private String managerEmail;
     private List<Stream<String>> membresPrenom;
     private List<Stream<String>> membresNom;
-    private List<Stream<String>> membresRole;
-//    private List<String> prochainCours;
+    private List<Stream<Stream<String>>> membresRole;
+    private Stream<PlanningEtudiantDto> prochainCours;
 
     public String getNom() {
         return nom;
@@ -63,12 +63,12 @@ public class AccueilEtudiantDto implements Serializable {
         this.ville = ville;
     }
 
-    public List<String> getPromotions() {
-        return promotions;
+    public String getPromotion() {
+        return promotion;
     }
 
-    public void setPromotions(List<String> promotions) {
-        this.promotions = promotions;
+    public void setPromotion(String promotion) {
+        this.promotion = promotion;
     }
 
     public List<List<String>> getProjets() {
@@ -135,20 +135,22 @@ public class AccueilEtudiantDto implements Serializable {
         this.membresNom = membresNom;
     }
 
-    public List<Stream<String>> getMembresRole() {
+    public List<Stream<Stream<String>>> getMembresRole() {
         return membresRole;
     }
 
-    public void setMembresRole(List<Stream<String>> membresRole) {
+    public void setMembresRole(List<Stream<Stream<String>>> membresRole) {
         this.membresRole = membresRole;
     }
 
-//    public List<String> getProchainCours() {
-//        return prochainCours;
-//    }
-//
-//    public void setProchainCours(List<String> prochainCours) {
-//        this.prochainCours = prochainCours;
-//    }
+
+    public Stream<PlanningEtudiantDto> getProchainCours() {
+        return prochainCours;
+    }
+
+    public void setProchainCours(Stream<PlanningEtudiantDto> prochainCours) {
+        this.prochainCours = prochainCours;
+    }
+
 }
 

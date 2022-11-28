@@ -243,9 +243,6 @@ public class DtoTools {
         a.setLogin(e.getUtilisateur().getLogin());
         a.setTelephone(e.getUtilisateur().getTelephone());
         a.setVille(e.getUtilisateur().getAdresse().getVille());
-        a.setPromotions(e.getPromotions().stream().map(
-            Promotion::getNom
-                ).collect(Collectors.toList()));
         a.setProjets(e.getGroupes().stream().map(groupeEtudiant -> {
             List<Projet> projetList = groupeEtudiant.getProjets();
             List<String> projetnoms = new ArrayList<>();
@@ -254,6 +251,8 @@ public class DtoTools {
             }
             return projetnoms;
         }).collect(Collectors.toList()));
+        a.setPromotion(e.getPromotions().stream().filter(promotion ->
+                (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getNom).findAny().orElse(null));
         a.setGroupes(e.getGroupes().stream().map(GroupeEtudiant::getNom).collect(Collectors.toList()));
         a.setManagerNom(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
                 (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getCef).findAny().orElse(null)).getUtilisateur().getNom());
@@ -263,35 +262,31 @@ public class DtoTools {
                 (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getCef).findAny().orElse(null)).getUtilisateur().getRoles().get(0).getIntitule());
         a.setManagerEmail(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
                 (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getCef).findAny().orElse(null)).getUtilisateur().getLogin());
-//        a.setManagerPrenom(e.getUtilisateur().getCef().getUtilisateur().getPrenom());
-//        a.setManagerRole(e.getUtilisateur().getCef().getUtilisateur().getRoles().get(0).getIntitule());
-//        a.setManagerEmail(e.getUtilisateur().getCef().getUtilisateur().getLogin());
         a.setMembresPrenom(e.getGroupes().stream().map(groupeEtudiant -> {
             List<Etudiant> el = groupeEtudiant.getEtudiants();
-            for(Etudiant etudiant : el) {
-                etudiant.getUtilisateur().getNom();
-            }
-            return el.stream().map(etudiant -> etudiant.getUtilisateur().getNom());
+            return el.stream().map(etudiant -> etudiant.getUtilisateur().getPrenom());
         }).collect(Collectors.toList()));
         a.setMembresNom((e.getGroupes().stream().map(groupeEtudiant -> {
             List<Etudiant> el = groupeEtudiant.getEtudiants();
-            for(Etudiant etudiant : el) {
-                etudiant.getUtilisateur().getPrenom();
-            }
-            return el.stream().map(etudiant -> etudiant.getUtilisateur().getPrenom());
+            return el.stream().map(etudiant -> etudiant.getUtilisateur().getNom());
         }).collect(Collectors.toList())));
         a.setMembresRole(e.getGroupes().stream().map(groupeEtudiant -> {
             List<Etudiant> el = groupeEtudiant.getEtudiants();
-            for(Etudiant etudiant : el) {
-                etudiant.getUtilisateur().getRoles().get(0).getIntitule();
-            }
-            return el.stream().map(etudiant -> etudiant.getUtilisateur().getPrenom());
+            return el.stream().map(etudiant -> etudiant.getUtilisateur().getRoles().stream().map(UtilisateurRole::getIntitule));
         }).collect(Collectors.toList()));
 //        a.setProchainCours(e.getPromotions().stream().map(promotion -> promotion.getInterventions().stream().map(intervention -> {
 //            Utilisateur u = intervention.getFormateurs().get(0).getUtilisateur();
 //            String identity = u.getPrenom() + " " + u.getNom();
 //            return new PlanningEtudiantDto(intervention.getDateDebut(), intervention.getDateFin(), intervention.getFormation().getTitre(), identity);
-//        }).collect(Collectors.toList())));
+//        }).collect(Collectors.toList()).stream().map(planningEtudiantDto ->
+//                planningEtudiantDto.getInterventionDateDebut().isAfter(ZonedDateTime.now().toLocalDate()))));
+        a.setProchainCours(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
+                (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getInterventions).findAny().orElse(null)).stream().map(intervention -> {
+            Utilisateur u = intervention.getFormateurs().get(0).getUtilisateur();
+            String identity = u.getPrenom() + " " + u.getNom();
+            return new PlanningEtudiantDto(intervention.getDateDebut(), intervention.getDateFin(), intervention.getFormation().getTitre(), identity);
+        }).collect(Collectors.toList()).stream().filter(planningEtudiantDto ->
+                planningEtudiantDto.getInterventionDateDebut().isAfter(ZonedDateTime.now().toLocalDate())));
         return a;
     };
 
