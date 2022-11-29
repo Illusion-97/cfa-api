@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unused" })
 @Entity
 public class Cursus extends BaseEntity implements Serializable { // cursus du catalogue Dev Full Stack
 
@@ -23,7 +23,6 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 
 	@OneToMany(mappedBy = "cursusActiviteType", cascade = CascadeType.ALL)
 	private Set<ActiviteType> activiteTypes;
-
 
 	@Column(nullable = false, length = 255) // attribut de dg2
 	private String duree;

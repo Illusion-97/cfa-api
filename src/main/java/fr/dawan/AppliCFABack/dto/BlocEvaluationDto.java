@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * 
@@ -27,7 +28,27 @@ public class BlocEvaluationDto extends BaseEntityDto implements Serializable {
 
 	private LocalDate dateSignature;
 	
+	private List<Long> evaluationsFormationsId;
 	
+	
+	
+	/**
+	 * @return le evaluationsFormationsId
+	 */
+	public List<Long> getEvaluationsFormationsId() {
+		return evaluationsFormationsId;
+	}
+
+
+	/**
+	 * @param evaluationsFormationsId le evaluationsFormationsId à affecter
+	 
+	 */
+	public void setEvaluationsFormationsId(List<Long> evaluationsFormationsId) {
+		this.evaluationsFormationsId = evaluationsFormationsId;
+	}
+
+
 	/**
 	 * @return le dateSignature
 	 */

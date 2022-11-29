@@ -188,12 +188,14 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 		if (promotions == null) {
 			if (other.promotions != null)
 				return false;
-		} else if (!promotions.stream().map(p ->p.getId()).collect(Collectors.toList()).equals(other.promotions.stream().map(p ->p.getId()).collect(Collectors.toList())))
+		} else if (!promotions.stream().map(p ->p.getId()).collect(Collectors.toList()).equals(other.promotions.stream().map(p ->p.getId())
+				.collect(Collectors.toList())))
 			return false;
 		if (formateurs == null) {
 			if (other.formateurs != null)
 				return false;
-		} else if (!formateurs.stream().map(f ->f.getId()).collect(Collectors.toList()).equals(other.formateurs.stream().map(f ->f.getId()).collect(Collectors.toList())))
+		} else if (!formateurs.stream().map(f ->f.getId()).collect(Collectors.toList()).equals(other.formateurs.stream().map(f ->f.getId())
+				.collect(Collectors.toList())))
 			return false;
 		
 		return true;

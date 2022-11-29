@@ -55,4 +55,13 @@ private BlocEvaluationRepository blocEvaluationRepository;
 		blocEvaluationRepository.deleteById(id);		
 	}
 
+	@Override
+	public BlocEvaluationDto finddByActiviteTypeIdAndlivretEvaluationId(long idAt, long idLivretEval) {
+		Optional<BlocEvaluation> blocEvaluation = blocEvaluationRepository.findByActiviteTypeIdAndLivretEvaluationId(idAt,idLivretEval);
+		if (blocEvaluation.isPresent()) {
+			return DtoTools.convert(blocEvaluation.get(), BlocEvaluationDto.class);
+		}
+		return null;
+	}
+
 }

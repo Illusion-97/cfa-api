@@ -54,7 +54,7 @@ class CompetenceProfessionnelleControllerTests {
 	
 	private final List<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new ArrayList<CompetenceProfessionnelleDto>();
 	
-	@BeforeEach 
+	@BeforeEach
 	public void beforeEach() throws Exception {
 		
 		when(tokenInterceptor.preHandle(any(), any(), any())).thenReturn(true);
@@ -69,16 +69,19 @@ class CompetenceProfessionnelleControllerTests {
 	}
 	@Test
 	void testFindAll() throws Exception {
-		
-		when(competenceProfessionnelleService.getAllCompetenceProfessionnelle()).thenReturn(competenceProfessionnellesDto);
-		
+		//Arrange 
 		int numFiche = competenceProfessionnellesDto.get(0).getNumeroFiche();
 		int id = (int) competenceProfessionnellesDto.get(0).getId();
 		int activiteTypeId =(int) competenceProfessionnellesDto.get(0).getActiviteTypeId();
 		int numFiche1 = competenceProfessionnellesDto.get(1).getNumeroFiche();
 		int id1 = (int) competenceProfessionnellesDto.get(1).getId();
 		int activiteTypeId1 =(int) competenceProfessionnellesDto.get(1).getActiviteTypeId();
+		
+		when(competenceProfessionnelleService.getAllCompetenceProfessionnelle()).thenReturn(competenceProfessionnellesDto);
+		
+		//Act 
 		mockMvc.perform(get("/competenceProfessionnelles").accept(MediaType.APPLICATION_JSON))
+		//Assert
 			.andExpect(status().isOk())	
 			.andExpect(jsonPath("$.size()", is(competenceProfessionnellesDto.size())))
 			.andExpect(jsonPath("$[0].libelle", is(competenceProfessionnellesDto.get(0).getLibelle())))

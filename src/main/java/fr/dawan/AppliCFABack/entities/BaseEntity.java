@@ -9,8 +9,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 /***
- * 
- * @author Feres BG,Valentin C.
+ * @author Feres BG.
  * @see fr.dawan.appliCfaBack.entities
  * @since 1.0
  * @version 1.0

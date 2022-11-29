@@ -97,7 +97,16 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 		}
 		return null;
 	}
+	@Override
+	public LivretEvaluationDto getByIdEtudiantAndIdCurcus(long idEtudiant, long idCursus) {
+		Optional<LivretEvaluation> livretEvalOpt = livretEvaluationRepository.findByEtudiantIdAndTitreProfessionnelId(idEtudiant, idCursus);
 
+		if (livretEvalOpt.isPresent()) {
+			return DtoTools.convert(livretEvalOpt, LivretEvaluationDto.class);
+		}
+		return null;
+	
+	}
 	@Override
 	public LivretEvaluationDto saveOrUpdate(LivretEvaluationDto tDto) throws SaveInvalidException {
 		LivretEvaluation livretEval = DtoTools.convert(tDto, LivretEvaluation.class);
@@ -145,9 +154,11 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	/**
 	 * Permet de générer le livret d'évaluation
 	 * @author Feres BG 
-	 * 
-	 * @param id étudiant id du cursus
+	 * @param idEtudiant identifiant de l'etudiant
+	 * @param idCursus identifiant du cursus
 	 * @return fichier pdf
+	 * @exception TemplateNotFoundException,MalformedTemplateNameException, ParseException, IOException, 
+	 * TemplateException, LivretEvaluationException
 	 */
 	@Override
 	public String getLivretEvaluation(long idEtudiant, long idCursus) throws TemplateNotFoundException,
@@ -182,14 +193,13 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 		List<BlocEvaluation> formateursEvaluateurs = new ArrayList<>();
 		List<EvaluationDto> evaluations = new ArrayList<>();
 		for (ActiviteType activiteType : activiteTypes) {
-
+	
 			EvaluationDto evaluationDto = new EvaluationDto();
 			evaluationDto.setActiviteType(activiteType);
 			BlocEvaluation blocEvaluation = blocEvaluationRepository.findByActiviteTypeId(activiteType.getId());
 			evaluationDto.setBlocEvaluation(blocEvaluation);
 			formateursEvaluateurs.add(blocEvaluation);
-			List<EvaluationFormation> evaluationFormations = evaluationFormationRepository
-					.findAllByBlocEvaluationActiviteTypeId(activiteType.getId());
+			List<EvaluationFormation> evaluationFormations = blocEvaluation.getEvaluationsFormations();
 			evaluationDto.setEvaluationFormations(evaluationFormations);
 			evaluations.add(evaluationDto);
 		}
@@ -214,4 +224,5 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 		return outputPdf;
 	}
 
+	
 }

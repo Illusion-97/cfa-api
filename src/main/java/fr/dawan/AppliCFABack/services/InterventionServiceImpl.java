@@ -475,7 +475,6 @@ public class InterventionServiceImpl implements InterventionService {
 							promotionOpt.get().getInterventions().add(interventionDbGroup.get());
 							result.add(interventionDbGroup.get());
 							continue;
-							
 						}
 					}
 				}

@@ -4,7 +4,7 @@ import fr.dawan.AppliCFABack.dto.BaseEntityDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
-public interface GenericService<TDto extends BaseEntityDto > {
+public interface GenericService<TDto extends BaseEntityDto> {
 
     TDto getById(long id);
 

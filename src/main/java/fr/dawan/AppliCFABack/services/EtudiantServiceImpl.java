@@ -7,8 +7,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -42,6 +44,7 @@ import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PositionnementDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
@@ -51,7 +54,9 @@ import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
 import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.DevoirEtudiant;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
@@ -59,6 +64,7 @@ import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.LivretEvaluation;
 import fr.dawan.AppliCFABack.entities.Positionnement;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
@@ -67,6 +73,7 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
+import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirEtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
@@ -74,6 +81,7 @@ import fr.dawan.AppliCFABack.repositories.ExamenRepository;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.LivretEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.NoteRepository;
 import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
@@ -127,6 +135,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 	private PositionnementRepository positionnementRepository;
 
 	@Autowired
+	private BlocEvaluationRepository blocEvaluationRepository;
+	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
 	@Autowired
@@ -135,10 +145,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 	private static Logger logger = Logger.getGlobal();
 
 	@Autowired
-	private UtilisateurService utilisateurService;
-	@Autowired
 	private AdresseRepository adresseRepository;
-
+	@Autowired
+	private LivretEvaluationRepository livretEvaluationRepository;
 	// ##################################################
 	// # CRUD #
 	// ##################################################
@@ -497,8 +506,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return lstDto;
 	}
 
-
-
 	/**
 	 * Récupération de l'adresse de l'étudiant
 	 *
@@ -626,7 +633,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 			result.addAll(journeePlanningService.getJourneePlanningFromIntervention(i));
 		return result;
 	}
-
 
 	// recuperation du formateur referent par id etudiants
 
@@ -907,34 +913,34 @@ public class EtudiantServiceImpl implements EtudiantService {
 				Optional<Utilisateur> utiLisateurOptional = utilisateurRepository
 						.findDistinctByIdDg2(eDG2.getPersonId());
 				Utilisateur utilisateurDg2 = mapper.etudiantUtilisateurDG2DtoToUtilisateur(eDG2);
+				System.out.println("DG2 " + utilisateurDg2.toString());
 				Adresse adresseDg2 = mapper.etudiantUtilisateurDG2DtoToAdresse(eDG2);
 				Etudiant etudiant = new Etudiant();
 				if (utiLisateurOptional.isPresent()) {
+					System.out.println(utiLisateurOptional.get());
 					if (utiLisateurOptional.get().getEtudiant() != null) {
 						etudiant = utiLisateurOptional.get().getEtudiant();
 					}
-					
 
 					if (!adresseDg2.equals(utiLisateurOptional.get().getAdresse())) {
 						if (utiLisateurOptional.get().getAdresse() != null) {
 							adresseDg2.setId(utiLisateurOptional.get().getAdresse().getId());
 							adresseDg2.setVersion(utiLisateurOptional.get().getAdresse().getVersion());
 							adresseRepository.saveAndFlush(adresseDg2);
+						} else {
+							adresseDg2 = adresseRepository.saveAndFlush(adresseDg2);
+							utiLisateurOptional.get().setAdresse(adresseDg2);
 						}
 
-					} 
+					}
 
 					utilisateurDg2.setPassword(utiLisateurOptional.get().getPassword());
-					if (!utilisateurDg2.equals(utiLisateurOptional.get())) {
-						utilisateurDg2.setId(utiLisateurOptional.get().getId());
-						utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
+					utilisateurDg2.setId(utiLisateurOptional.get().getId());
+					utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
+					if (utilisateurDg2.equals(utiLisateurOptional.get()) && etudiant.getPromotions().contains(promotion.get())) {
+						continue;
 					} else {
 
-						if (etudiant.getPromotions().contains(promotion.get())) {
-							
-							continue;
-						}
-						else {
 							utilisateurDg2.setId(utiLisateurOptional.get().getId());
 							utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
 							if (etudiant != null) {
@@ -954,11 +960,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 									etudiants.add(etudiant);
 								}
 								promotion.get().setEtudiants(etudiants);
-
+								
+								
 							}
-						}
 					}
-					
+
 					utilisateurDg2.setEtudiant(etudiant);
 					etudiant.setUtilisateur(utilisateurDg2);
 
@@ -996,8 +1002,29 @@ public class EtudiantServiceImpl implements EtudiantService {
 					etudiant.setUtilisateur(utilisateurDg2);
 
 				}
+				System.out.println(">>>> uti " +utilisateurDg2.toString());
 				utilisateurRepository.saveAndFlush(utilisateurDg2);
-				etudiantRepository.saveAndFlush(etudiant);
+				
+				Etudiant etuSaved = etudiantRepository.saveAndFlush(etudiant);
+				Optional<LivretEvaluation> evaOptional = livretEvaluationRepository.findByEtudiantIdAndTitreProfessionnelId(etuSaved.getId(), promotion.get().getCursus().getId());
+				if (!evaOptional.isPresent()) {
+					LivretEvaluation livert = new LivretEvaluation();
+					livert.setEtudiant(etuSaved);
+					livert.setTitreProfessionnel(promotion.get().getCursus());
+					livert.setObservation("Cliquez ici pour taper du texte.");
+					livert = livretEvaluationRepository.saveAndFlush(livert);
+					Set<ActiviteType> activiteTypes = promotion.get().getCursus().getActiviteTypes();
+					
+					for (ActiviteType at : activiteTypes) {
+						
+						BlocEvaluation blocEvaluation = new BlocEvaluation();
+						blocEvaluation.setLivretEvaluation(livert);
+						blocEvaluation.setActiviteType(at);
+						blocEvaluationRepository.saveAndFlush(blocEvaluation);
+						
+					}
+				}
+				
 
 			}
 

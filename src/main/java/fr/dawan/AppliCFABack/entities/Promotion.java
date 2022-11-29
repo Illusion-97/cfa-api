@@ -12,7 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unused" })
 @Entity
 public class Promotion extends BaseEntity implements Serializable { // CDA2021
 
@@ -23,7 +23,6 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 
 	private LocalDate dateFin; // 31/12/2021
 	
-
 	private long idDg2;
 
 	@ManyToOne
