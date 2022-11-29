@@ -26,5 +26,3 @@ target/
 /nbdist/
 /.nb-gradle/
 /target/
-### Logs ###
-*.log

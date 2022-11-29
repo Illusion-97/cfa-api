@@ -419,8 +419,10 @@ public class PromotionServiceImpl implements PromotionService {
 		for(Cursus c: cursus) {
 			List<Promotion> promoDg2 = new ArrayList<>();
 			promoDg2 = getPromotionDG2ByIdCursusDG2(email, password, c.getIdDg2());
-			if(promoDg2.isEmpty()  || promoDg2.isEmpty()) {
+			if(!promoDg2.isEmpty() ) {
 				promoLst.addAll(promoDg2);
+			}
+			else {
 				logger.info(c.getId()+"Liste non vide");
 			}
 		}

@@ -40,10 +40,6 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
     private String postcode;
     private String city;
     private String country;
-    @JsonIgnore
-    private Utilisateur utilisateur;
-
-    private int version;
 
     public long getPersonId() {
         return personId;
@@ -59,14 +55,6 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
     }
 
     public String getLastName() {
@@ -101,13 +89,6 @@ public class EtudiantUtilisateurDG2Dto implements Serializable {
         this.state = state;
     }
 
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
-    }
-
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
 
     public String getCivilite() {
         return civilite;

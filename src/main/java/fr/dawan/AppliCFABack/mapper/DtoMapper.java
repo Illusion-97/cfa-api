@@ -199,7 +199,6 @@ public interface DtoMapper {
 	@Mapping(source = "email", target = "login")
 	@Mapping(source = "landline", target = "telephoneFixe")
 	@Mapping(source = "mobile", target = "telephone")
-
     Utilisateur etudiantUtilisateurDG2DtoToUtilisateur(EtudiantUtilisateurDG2Dto eDG2);
 
 //	@Mapping(source = ".", target = ".")

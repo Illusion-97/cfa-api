@@ -2,22 +2,24 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
+/**
+ * 
+ * @author Feres BG.
+ * @see fr.dawan.appliCFABack.dto
+ * @since 1.0
+ * @version 1.0
+ */
 @SuppressWarnings("serial")
 public class LivretEvaluationDto extends BaseEntityDto implements Serializable{
 
 	private long etudiantId;
 	private long titreProfessionnelId;
 	private long organismeFormationId;
-	//private ValidationDto validationDto;
 	private long validationId;
 	private String observation;
 	private long formateurEvaluateurId;
 	private LocalDate dateSignature;
 	
-
-	
-
 
 	/**
 	 * @return le validationId

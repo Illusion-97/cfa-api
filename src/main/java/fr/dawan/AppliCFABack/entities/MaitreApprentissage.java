@@ -14,7 +14,7 @@ import javax.persistence.UniqueConstraint;
  * @since 1.0
  * @version 1.0
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unused" })
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"utilisateur_id", "etudiant_id","promotion_id" })  )
 public class MaitreApprentissage extends BaseEntity implements Serializable {

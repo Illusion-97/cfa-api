@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
  * @see Cursus,CentreFormation,Etudiant,Formateur
  * @since 1.0
  * @version 1.0
- *
  */
 
 @SuppressWarnings({ "serial", "unused" })

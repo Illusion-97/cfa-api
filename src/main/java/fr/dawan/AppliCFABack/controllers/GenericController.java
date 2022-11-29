@@ -16,7 +16,7 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.services.GenericService;
 
 /**
- * @author Valentin C, Feres BG.
+ * @author Feres BG.
  * @see fr.dawan.appliCFABack.controller
  * @since 1.0
  * @version 1.0

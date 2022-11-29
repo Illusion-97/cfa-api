@@ -17,5 +17,6 @@ public interface CursusRepository extends JpaRepository<Cursus, Long> {
 	long countDistinctByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(String search, String search2);
 	
 	Optional<Cursus> findByIdDg2(long cursusId);
+	
 
 }

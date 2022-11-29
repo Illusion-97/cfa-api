@@ -1,12 +1,12 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.customdtos.EvaluationDto;
 import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.LivretEvaluation;
 /**
  * 
@@ -15,7 +15,8 @@ import fr.dawan.AppliCFABack.entities.LivretEvaluation;
  * @since 1.0
  * @version 1.0
  */
-public class LivretEvaluationFileDto {
+@SuppressWarnings("serial")
+public class LivretEvaluationFileDto implements Serializable {
 
 	private LivretEvaluation livretEvaluation;
 	
@@ -26,6 +27,7 @@ public class LivretEvaluationFileDto {
 	private List<EvaluationDto> evaluations;
 	
 	private List<BlocEvaluation> formateursEvaluateurs;
+	
 	
 	/**
 	 * @return le formateurEvaluateurs

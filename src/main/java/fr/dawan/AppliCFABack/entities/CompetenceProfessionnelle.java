@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
  * @version 1.0
  *
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unused" })
 @Entity
 public class CompetenceProfessionnelle extends BaseEntity implements Serializable {
 

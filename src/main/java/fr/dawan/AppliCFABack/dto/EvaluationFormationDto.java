@@ -8,32 +8,14 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class EvaluationFormationDto  extends BaseEntityDto implements Serializable{
 
-	
-	private long blocEvaluationId;
-
-
 	private String contenu;
 
-	private List<Long> competencesEvaluees;
+	private List<Long> competencesEvalueesId;
 
 	private LocalDate dateEvaluation;
 
-
-	/**
-	 * @return le blocEvaluationId
-	 */
-	public long getBlocEvaluationId() {
-		return blocEvaluationId;
-	}
-
-	/**
-	 * @param blocEvaluationId le blocEvaluationId à affecter
-	 
-	 */
-	public void setBlocEvaluationId(long blocEvaluationId) {
-		this.blocEvaluationId = blocEvaluationId;
-	}
-
+	private long interventionId;
+	
 	/**
 	 * @return le contenu
 	 */
@@ -52,18 +34,17 @@ public class EvaluationFormationDto  extends BaseEntityDto implements Serializab
 	/**
 	 * @return le competencesEvaluees
 	 */
-	public List<Long> getCompetencesEvaluees() {
-		return competencesEvaluees;
+	public List<Long> getCompetencesEvalueesId() {
+		return competencesEvalueesId;
 	}
 
 	/**
 	 * @param competencesEvaluees le competencesEvaluees à affecter
 	 
 	 */
-	public void setCompetencesEvaluees(List<Long> competencesEvaluees) {
-		this.competencesEvaluees = competencesEvaluees;
+	public void setCompetencesEvalueesId(List<Long> competencesEvalueesId) {
+		this.competencesEvalueesId = competencesEvalueesId;
 	}
-
 
 
 	/**
@@ -79,6 +60,21 @@ public class EvaluationFormationDto  extends BaseEntityDto implements Serializab
 	 */
 	public void setDateEvaluation(LocalDate dateEvaluation) {
 		this.dateEvaluation = dateEvaluation;
+	}
+
+	/**
+	 * @return le interventionId
+	 */
+	public long getInterventionId() {
+		return interventionId;
+	}
+
+	/**
+	 * @param interventionId le interventionId à affecter
+	 
+	 */
+	public void setInterventionId(long interventionId) {
+		this.interventionId = interventionId;
 	}
 	
 	

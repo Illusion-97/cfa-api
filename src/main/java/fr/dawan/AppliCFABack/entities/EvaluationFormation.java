@@ -19,8 +19,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class EvaluationFormation extends BaseEntity implements Serializable {
 
-	@ManyToOne
-	private BlocEvaluation blocEvaluation;
 	
 	@Column(columnDefinition = "TEXT", nullable = false)
 
@@ -32,22 +30,9 @@ public class EvaluationFormation extends BaseEntity implements Serializable {
 	
 	private LocalDate dateEvaluation;
 	
+	@ManyToOne
+	private Intervention intervention; 
 	
-	/**
-	 * @return le blocEvaluation
-	 */
-	public BlocEvaluation getBlocEvaluation() {
-		return blocEvaluation;
-	}
-
-	/**
-	 * @param blocEvaluation le blocEvaluation à affecter
-	 
-	 */
-	public void setBlocEvaluation(BlocEvaluation blocEvaluation) {
-		this.blocEvaluation = blocEvaluation;
-	}
-
 	/**
 	 * @return le contenu
 	 */
@@ -80,20 +65,35 @@ public class EvaluationFormation extends BaseEntity implements Serializable {
 
 
 	/**
-	 * @return le dateEvaluation
+	 * @return la dateEvaluation
 	 */
 	public LocalDate getDateEvaluation() {
 		return dateEvaluation;
 	}
 
 	/**
-	 * @param dateEvaluation le dateEvaluation à affecter
+	 * @param dateEvaluation la dateEvaluation à affecter
 	 
 	 */
 	public void setDateEvaluation(LocalDate dateEvaluation) {
 		this.dateEvaluation = dateEvaluation;
 	}
-	
 
+	/**
+	 * @return l'intervention
+	 */
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	/**
+	 * @param intervention l'intervention à affecter
+	 
+	 */
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
+	}
+	
+	
 
 }

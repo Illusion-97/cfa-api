@@ -23,7 +23,7 @@ public interface ActiviteTypeRepository extends JpaRepository<ActiviteType, Long
 	 * @return toutes les activites types de la promotion recherchée
 	 */
 	@Query(nativeQuery = true, value = "SELECT * FROM activite_type WHERE activite_type.cursus_activite_type_id ="
-			+ " (SELECT c.id FROM cursus c INNER JOIN promotion p ON p.cursus_id = c.id WHERE p.id = :id)")
+			+ " (SELECT c.id FROM cursus c INNER JOIN promotion p ON p.cursus_id = c.id WHERE p.id = :id) order by numero_fiche ")
 	List<ActiviteType> getActiviteTypesByPromotionId(@Param("id") long id);
 
 	List<ActiviteType> findAllByCursusActiviteTypeIdOrderByNumeroFiche(long id);

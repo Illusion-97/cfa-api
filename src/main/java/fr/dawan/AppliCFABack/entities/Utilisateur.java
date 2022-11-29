@@ -252,5 +252,15 @@ public class Utilisateur extends BaseEntity implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Utilisateur [idDg2=" + idDg2 + ", login=" + login + ", password=" + password + ", prenom=" + prenom
+				+ ", nom=" + nom + ", civilite=" + civilite + ", dateDeNaissance=" + dateDeNaissance + ", telephone="
+				+ telephone + ", telephoneFixe=" + telephoneFixe + ", adresse=" + adresse + ", roles=" + roles
+				+ ", entreprise=" + entreprise + ", centreFormation=" + centreFormation + ", etudiant=" + etudiant
+				+ ", formateur=" + formateur + ", cef=" + cef 
+				+ "version=" + this.getVersion()+ "]";
+	}
 	
 }

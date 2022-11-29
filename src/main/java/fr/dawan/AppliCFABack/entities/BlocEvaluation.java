@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,9 @@ import javax.persistence.OneToMany;
 @SuppressWarnings({ "serial", "unused" })
 @Entity
 public class BlocEvaluation extends BaseEntity implements Serializable {
+	
+	@OneToMany
+	private List<EvaluationFormation> evaluationsFormations;
 	@ManyToOne
 	private LivretEvaluation livretEvaluation;
 
@@ -39,6 +43,22 @@ public class BlocEvaluation extends BaseEntity implements Serializable {
 	
 	private LocalDate dateSignature;
 	
+	
+	/**
+	 * @return le evaluationFormations
+	 */
+	public List<EvaluationFormation> getEvaluationsFormations() {
+		return evaluationsFormations;
+	}
+
+	/**
+	 * @param evaluationFormations le evaluationFormations à affecter
+	 
+	 */
+	public void setEvaluationFormations(List<EvaluationFormation> evaluationsFormations) {
+		this.evaluationsFormations = evaluationsFormations;
+	}
+
 	/**
 	 * @return le dateSignature
 	 */
@@ -144,6 +164,6 @@ public class BlocEvaluation extends BaseEntity implements Serializable {
 		this.formateurEvaluateur = formateurEvaluateur;
 	}
 
-	
+
 
 }

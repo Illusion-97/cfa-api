@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unused" })
 @Entity
 public class Cursus extends BaseEntity implements Serializable { // cursus du catalogue Dev Full Stack
 
@@ -23,7 +23,6 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 
 	@OneToMany(mappedBy = "cursusActiviteType", cascade = CascadeType.ALL)
 	private Set<ActiviteType> activiteTypes;
-
 
 	@Column(nullable = false, length = 255) // attribut de dg2
 	private String duree;
@@ -39,6 +38,12 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 	
 	@Column(nullable = true)
 	private String sigle;
+	
+	@Column(nullable = true)
+	private String millesime;
+	
+	@Column(nullable = true)
+	private String codeTitre;
 	
 	
 	public Cursus() {
@@ -61,6 +66,22 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 		this.duree = duree;
 		this.slug = slug;
 		this.idDg2 = idDg2;
+	}
+	
+	
+
+	public Cursus(String titre, List<Formation> formations, Set<ActiviteType> activiteTypes, String duree, String slug,
+			long idDg2, int niveau, String sigle, String millesime) {
+		super();
+		this.titre = titre;
+		this.formations = formations;
+		this.activiteTypes = activiteTypes;
+		this.duree = duree;
+		this.slug = slug;
+		this.idDg2 = idDg2;
+		this.niveau = niveau;
+		this.sigle = sigle;
+		this.millesime = millesime;
 	}
 
 	public String getTitre() {
@@ -144,6 +165,42 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 	 */
 	public void setSigle(String sigle) {
 		this.sigle = sigle;
+	}
+	
+	/**
+	 * @return le millesime
+	 */
+	
+	public String getMillesime() {
+		return millesime;
+	}
+
+	/**
+	 * @param millesime 
+	 * le millesime à affecter
+	 
+	 */
+	
+	public void setMillesime(String millesime) {
+		this.millesime = millesime;
+	}
+
+	/**
+	 * @return le codeTitre
+	 */
+	
+	public String getCodeTitre() {
+		return codeTitre;
+	}
+
+	/**
+	 * @param codeTitre 
+	 * le codeTitre à affecter
+	 
+	 */
+	
+	public void setCodeTitre(String codeTitre) {
+		this.codeTitre = codeTitre;
 	}
 
 	@Override
