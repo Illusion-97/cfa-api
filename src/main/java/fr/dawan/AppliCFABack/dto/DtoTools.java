@@ -1,25 +1,17 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+import fr.dawan.AppliCFABack.dto.customdtos.*;
+import fr.dawan.AppliCFABack.entities.*;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
-import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
-import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
-import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
-import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Examen;
-import fr.dawan.AppliCFABack.entities.Formation;
-import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.Note;
-import fr.dawan.AppliCFABack.entities.Positionnement;
-import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.tools.DateConverter;
 /**
 *
@@ -174,10 +166,10 @@ public class DtoTools {
      * permet de mapper un objet Examen en LivretEvaluationDto (dto customisé) -
      * return l'objet dto custom mappé
      */
-    Converter<Examen, LivretEvaluationDto> examenToLivretEvaluationDtoConverter = context -> {
+    Converter<Examen, EtudiantLivretEvaluationDto> examenToLivretEvaluationDtoConverter = context -> {
 
         Examen e = context.getSource();
-        LivretEvaluationDto leDto = new LivretEvaluationDto();
+        EtudiantLivretEvaluationDto leDto = new EtudiantLivretEvaluationDto();
 
         leDto.setPromotions(e.getPromotions().stream().map(
         		Promotion::getNom
@@ -204,8 +196,8 @@ public class DtoTools {
      * @param examen
      * @return l'objet dto custom mappé
      */
-    public LivretEvaluationDto examenToLivretEvaluationDto(Examen examen) {
-        return convert(examen, LivretEvaluationDto.class, examenToLivretEvaluationDtoConverter);
+    public EtudiantLivretEvaluationDto examenToLivretEvaluationDto(Examen examen) {
+        return convert(examen, EtudiantLivretEvaluationDto.class, examenToLivretEvaluationDtoConverter);
     }
 
     /**
@@ -242,7 +234,65 @@ public class DtoTools {
         return convert(note, NoteControleContinuDto.class, noteToNoteControleContinuDtoConverter);
     }
 
+    Converter<Etudiant, AccueilEtudiantDto> etudiantToAccueilEtudiantDtoConverter = context -> {
+        Etudiant e = context.getSource();
+        AccueilEtudiantDto a = new AccueilEtudiantDto();
 
+        a.setNom(e.getUtilisateur().getNom());
+        a.setPrenom(e.getUtilisateur().getPrenom());
+        a.setLogin(e.getUtilisateur().getLogin());
+        a.setTelephone(e.getUtilisateur().getTelephone());
+        a.setVille(e.getUtilisateur().getAdresse().getVille());
+        a.setProjets(e.getGroupes().stream().map(groupeEtudiant -> {
+            List<Projet> projetList = groupeEtudiant.getProjets();
+            List<String> projetnoms = new ArrayList<>();
+            for(Projet p : projetList) {
+                projetnoms.add(p.getNom());
+            }
+            return projetnoms;
+        }).collect(Collectors.toList()));
+        a.setPromotion(e.getPromotions().stream().filter(promotion ->
+                (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getNom).findAny().orElse(null));
+        a.setGroupes(e.getGroupes().stream().map(GroupeEtudiant::getNom).collect(Collectors.toList()));
+        a.setManagerNom(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
+                (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getCef).findAny().orElse(null)).getUtilisateur().getNom());
+        a.setManagerPrenom(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
+                (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getCef).findAny().orElse(null)).getUtilisateur().getPrenom());
+        a.setManagerRole(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
+                (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getCef).findAny().orElse(null)).getUtilisateur().getRoles().get(0).getIntitule());
+        a.setManagerEmail(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
+                (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getCef).findAny().orElse(null)).getUtilisateur().getLogin());
+        a.setMembresPrenom(e.getGroupes().stream().map(groupeEtudiant -> {
+            List<Etudiant> el = groupeEtudiant.getEtudiants();
+            return el.stream().map(etudiant -> etudiant.getUtilisateur().getPrenom());
+        }).collect(Collectors.toList()));
+        a.setMembresNom((e.getGroupes().stream().map(groupeEtudiant -> {
+            List<Etudiant> el = groupeEtudiant.getEtudiants();
+            return el.stream().map(etudiant -> etudiant.getUtilisateur().getNom());
+        }).collect(Collectors.toList())));
+        a.setMembresRole(e.getGroupes().stream().map(groupeEtudiant -> {
+            List<Etudiant> el = groupeEtudiant.getEtudiants();
+            return el.stream().map(etudiant -> etudiant.getUtilisateur().getRoles().stream().map(UtilisateurRole::getIntitule));
+        }).collect(Collectors.toList()));
+//        a.setProchainCours(e.getPromotions().stream().map(promotion -> promotion.getInterventions().stream().map(intervention -> {
+//            Utilisateur u = intervention.getFormateurs().get(0).getUtilisateur();
+//            String identity = u.getPrenom() + " " + u.getNom();
+//            return new PlanningEtudiantDto(intervention.getDateDebut(), intervention.getDateFin(), intervention.getFormation().getTitre(), identity);
+//        }).collect(Collectors.toList()).stream().map(planningEtudiantDto ->
+//                planningEtudiantDto.getInterventionDateDebut().isAfter(ZonedDateTime.now().toLocalDate()))));
+        a.setProchainCours(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
+                (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getInterventions).findAny().orElse(null)).stream().map(intervention -> {
+            Utilisateur u = intervention.getFormateurs().get(0).getUtilisateur();
+            String identity = u.getPrenom() + " " + u.getNom();
+            return new PlanningEtudiantDto(intervention.getDateDebut(), intervention.getDateFin(), intervention.getFormation().getTitre(), identity);
+        }).collect(Collectors.toList()).stream().filter(planningEtudiantDto ->
+                planningEtudiantDto.getInterventionDateDebut().isAfter(ZonedDateTime.now().toLocalDate())));
+        return a;
+    };
+
+    public AccueilEtudiantDto etudiantToAccueilEtudiantDto(Etudiant etudiant) {
+        return convert(etudiant, AccueilEtudiantDto.class, etudiantToAccueilEtudiantDtoConverter);
+    }
 
 
 

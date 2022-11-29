@@ -3,9 +3,7 @@ package fr.dawan.AppliCFABack.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
@@ -16,6 +14,9 @@ public class GroupeEtudiant extends BaseEntity implements Serializable {
 
 	@ManyToMany
 	private List<Etudiant> etudiants;
+
+	@OneToMany(mappedBy = "groupe", cascade = CascadeType.ALL)
+	private List<Projet> projets;
 
 	public GroupeEtudiant() {
 		super();
@@ -43,4 +44,11 @@ public class GroupeEtudiant extends BaseEntity implements Serializable {
 		this.etudiants = etudiants;
 	}
 
+	public List<Projet> getProjets() {
+		return projets;
+	}
+
+	public void setProjets(List<Projet> projets) {
+		this.projets = projets;
+	}
 }

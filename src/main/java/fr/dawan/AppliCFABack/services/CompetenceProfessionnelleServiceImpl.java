@@ -10,9 +10,11 @@ import fr.dawan.AppliCFABack.repositories.ExperienceProfessionnelleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
+import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
@@ -100,6 +102,19 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 	@Override
 	public void deleteById(long id) {
 		competenceProfessionnelleRepository.deleteById(id);
+	}
+	
+	/**
+	 * Récupération de toutes les absences en fonctions d'un EtudiantId
+	 */
+	@Override
+	public List<CompetenceProfessionnelleDto> getAllByActiviteTypeId(long id) {
+		List<CompetenceProfessionnelle> competenceProfessionnelles = competenceProfessionnelleRepository.findAllByActiviteTypeId(id);
+		List<CompetenceProfessionnelleDto> result = new ArrayList<>();
+		for (CompetenceProfessionnelle cp : competenceProfessionnelles) {
+			result.add(DtoTools.convert(cp, CompetenceProfessionnelleDto.class));
+		}
+		return result;
 	}
 
 }

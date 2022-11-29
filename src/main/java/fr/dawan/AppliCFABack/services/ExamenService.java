@@ -7,7 +7,7 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExamenDtoSave;
 import fr.dawan.AppliCFABack.dto.customdtos.DoubleDto;
-import fr.dawan.AppliCFABack.dto.customdtos.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
 import fr.dawan.AppliCFABack.tools.AvgException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import fr.dawan.AppliCFABack.tools.ToPdf;
@@ -35,7 +35,7 @@ public interface ExamenService {
 	 * @param id de l'étudiant
 	 * @return toutes les données nécessaires pour remplir la section livret d'évaluation dans le front partie étudiant, par le service implémenté
 	 */
-    List<LivretEvaluationDto> getLivretEvaluation(long id);
+    List<EtudiantLivretEvaluationDto> getLivretEvaluation(long id);
 
 	String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws ToPdf, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 

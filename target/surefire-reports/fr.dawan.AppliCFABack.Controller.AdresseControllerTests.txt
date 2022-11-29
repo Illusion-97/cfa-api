@@ -1,14 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.AdresseControllerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 2.642 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.AdresseControllerTests
-testFindById  Time elapsed: 0.014 s  <<< FAILURE!
-java.lang.AssertionError: No value at JSON path "$.numero"
-	at fr.dawan.AppliCFABack.Controller.AdresseControllerTests.testFindById(AdresseControllerTests.java:74)
-Caused by: java.lang.IllegalArgumentException: json can not be null or empty
-	at fr.dawan.AppliCFABack.Controller.AdresseControllerTests.testFindById(AdresseControllerTests.java:74)
-
-testDelete  Time elapsed: 0.011 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<202> but was:<404>
-	at fr.dawan.AppliCFABack.Controller.AdresseControllerTests.testDelete(AdresseControllerTests.java:146)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.033 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.AdresseControllerTests
+fr.dawan.AppliCFABack.Controller.AdresseControllerTests  Time elapsed: 0.033 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'APPLICATION_STORAGE_VOLUME' in value "${APPLICATION_STORAGE_VOLUME}/app.log"
 

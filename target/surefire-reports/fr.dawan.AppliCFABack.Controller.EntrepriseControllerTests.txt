@@ -1,18 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: fr.dawan.AppliCFABack.Controller.EntrepriseControllerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.122 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.EntrepriseControllerTests
-testSave  Time elapsed: 0.047 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<500>
-	at fr.dawan.AppliCFABack.Controller.EntrepriseControllerTests.testSave(EntrepriseControllerTests.java:94)
-
-testFindById  Time elapsed: 0.01 s  <<< FAILURE!
-java.lang.AssertionError: No value at JSON path "$.raisonSociale"
-	at fr.dawan.AppliCFABack.Controller.EntrepriseControllerTests.testFindById(EntrepriseControllerTests.java:75)
-Caused by: java.lang.IllegalArgumentException: json can not be null or empty
-	at fr.dawan.AppliCFABack.Controller.EntrepriseControllerTests.testFindById(EntrepriseControllerTests.java:75)
-
-testDelete  Time elapsed: 0.008 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<202> but was:<404>
-	at fr.dawan.AppliCFABack.Controller.EntrepriseControllerTests.testDelete(EntrepriseControllerTests.java:135)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.026 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.EntrepriseControllerTests
+fr.dawan.AppliCFABack.Controller.EntrepriseControllerTests  Time elapsed: 0.026 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'APPLICATION_STORAGE_VOLUME' in value "${APPLICATION_STORAGE_VOLUME}/app.log"
 

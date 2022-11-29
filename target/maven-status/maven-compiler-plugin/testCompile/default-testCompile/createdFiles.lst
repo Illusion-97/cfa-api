@@ -12,15 +12,14 @@ fr\dawan\AppliCFABack\Controller\NoteControllerTest.class
 fr\dawan\AppliCFABack\Controller\CongeControllerTests.class
 fr\dawan\AppliCFABack\Controller\GroupeEtudiantControllerTest.class
 fr\dawan\AppliCFABack\Controller\DossierProjetControllerTests.class
+fr\dawan\AppliCFABack\Controller\CompetenceProfessionnelleControllerTests.class
 fr\dawan\AppliCFABack\Controller\SupportCoursControllerTest.class
 fr\dawan\AppliCFABack\Controller\ProjetControllerTests.class
-fr\dawan\AppliCFABack\Controller\FichePosteControllerTests.class
 fr\dawan\AppliCFABack\Controller\DevoirControllerTest.class
 fr\dawan\AppliCFABack\Controller\ActiviteTypeControllerTests.class
-fr\dawan\AppliCFABack\Controller\CompetenceProfessionnelleControllerTestes.class
 fr\dawan\AppliCFABack\Controller\UtilisateurControllerTests.class
-fr\dawan\AppliCFABack\Controller\FicheEntrepriseControllerTests.class
 fr\dawan\AppliCFABack\InitDataBase.class
+fr\dawan\AppliCFABack\Controller\AbsenceControllerTest.class
 fr\dawan\AppliCFABack\AppliCfaBackApplicationTests.class
 fr\dawan\AppliCFABack\Controller\CerfaControllerTests.class
 fr\dawan\AppliCFABack\Controller\InterventionControllerTests.class
