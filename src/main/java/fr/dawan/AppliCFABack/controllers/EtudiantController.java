@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -223,5 +224,14 @@ public class EtudiantController {
                     ("Error while fetching data from the webservice DG2");
         }
     }
+
+	/**
+	 * méthode de récupération des données nécessaires pour la section Accueil de l'espace étudiant
+	 * on convertit un objet Etudiant en AccueilEtudiantDto
+	 */
+	@GetMapping(value = "accueil-etudiant/{id}", produces = "application/json")
+	public AccueilEtudiantDto getAccueilEtudiant(@PathVariable("id") long id) {
+		return etudiantService.getAccueilEtudiant(id);
+	}
 
 }

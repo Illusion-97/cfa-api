@@ -14,6 +14,7 @@ import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
@@ -85,4 +86,5 @@ public interface EtudiantService {
 			throws FetchDG2Exception, JsonProcessingException, URISyntaxException, Exception;
 
 
+	AccueilEtudiantDto getAccueilEtudiant(long id);
 }

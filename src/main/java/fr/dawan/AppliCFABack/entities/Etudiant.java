@@ -16,7 +16,6 @@ import javax.persistence.OneToOne;
 @Entity
 public class Etudiant extends BaseEntity implements Serializable {
 
-
 	@OneToOne
 	private Utilisateur utilisateur;
 
