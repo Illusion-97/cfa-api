@@ -93,7 +93,7 @@ public class LivretEvaluationController extends GenericController<LivretEvaluati
 	}
 
 	@GetMapping(value = "livret-etudiant/{id}", produces = "application/json")
-	public EtudiantLivretEvaluationDto getlivretEtudiant(@PathVariable("id") long id) {
+	public List<EtudiantLivretEvaluationDto> getlivretEtudiant(@PathVariable("id") long id) {
 		return ((LivretEvaluationService) service).getLivretEtudiant(id);
 	}
 
