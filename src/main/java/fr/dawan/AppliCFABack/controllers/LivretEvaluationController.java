@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -88,8 +89,13 @@ public class LivretEvaluationController extends GenericController<LivretEvaluati
 		byte[] bytes =  Files.readAllBytes(path);
 		String base64 = Base64.getEncoder().encodeToString(bytes);
 
-
 		return ResponseEntity.ok().body(base64);
-
 	}
+
+	@GetMapping(value = "livret-etudiant/{id}", produces = "application/json")
+	public EtudiantLivretEvaluationDto getlivretEtudiant(@PathVariable("id") long id) {
+		return ((LivretEvaluationService) service).getLivretEtudiant(id);
+	}
+
+
 }

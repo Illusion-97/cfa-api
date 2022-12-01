@@ -304,16 +304,16 @@ public class ExamenServiceImpl implements ExamenService {
 	 * 			- liste de satisfactions
 	 * 			- liste d'observations
 	 */
-	@Override
-	public List<EtudiantLivretEvaluationDto> getLivretEvaluation(long id) {
-		List<EtudiantLivretEvaluationDto> result = new ArrayList<>();
-		List<Examen> list = examenRepository.findallByEtudiantId(id);
-
-		for(Examen e : list) {
-			result.add(mapperTools.examenToLivretEvaluationDto(e));
-		}
-		return result;
-	}
+//	@Override
+//	public List<EtudiantLivretEvaluationDto> getLivretEvaluation(long id) {
+//		List<EtudiantLivretEvaluationDto> result = new ArrayList<>();
+//		List<Examen> list = examenRepository.findallByEtudiantId(id);
+//
+//		for(Examen e : list) {
+//			result.add(mapperTools.examenToLivretEvaluationDto(e));
+//		}
+//		return result;
+//	}
 
 	@Override
 	public String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws ToPdf, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {

@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
+import fr.dawan.AppliCFABack.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,13 +24,6 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.LivretEvaluationFileDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EvaluationDto;
-import fr.dawan.AppliCFABack.entities.ActiviteType;
-import fr.dawan.AppliCFABack.entities.BlocEvaluation;
-import fr.dawan.AppliCFABack.entities.Cursus;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.EvaluationFormation;
-import fr.dawan.AppliCFABack.entities.LivretEvaluation;
-import fr.dawan.AppliCFABack.entities.Validation;
 import fr.dawan.AppliCFABack.entities.Validation.Etat;
 import fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository;
 import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
@@ -86,6 +81,9 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	private BlocEvaluationRepository blocEvaluationRepository;
 
 	private static Logger logger = Logger.getGlobal();
+
+	@Autowired
+	private DtoTools mapper;
 
 	@Override
 
@@ -224,5 +222,15 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 		return outputPdf;
 	}
 
-	
+	@Override
+	public EtudiantLivretEvaluationDto getLivretEtudiant(long id) {
+		Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+		EtudiantLivretEvaluationDto evaluationDto = etudiant.map(value -> mapper.etudiantToLivretEvaluationDto(value)).orElse(null);
+		List<LivretEvaluation> observations = livretEvaluationRepository.findObservationsByEtudiantId(id);
+		assert evaluationDto != null;
+//		evaluationDto.setObservations();
+		return evaluationDto;
+	}
+
+
 }

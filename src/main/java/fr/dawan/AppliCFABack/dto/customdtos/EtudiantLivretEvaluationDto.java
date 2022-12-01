@@ -9,15 +9,9 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class EtudiantLivretEvaluationDto extends BaseEntityDto implements Serializable {
-    private List<String> promotions;
-    private String examen;
-    private List<String> competences = new ArrayList<>();
-    private List<Note.Satisfaction> satisfactions = new ArrayList<>();
-    private List<String> observations = new ArrayList<>();
 
-    public EtudiantLivretEvaluationDto() {
-    	super();
-    }
+    private List<String> promotions;
+    private List<String> observations = new ArrayList<>();
 
     public List<String> getPromotions() {
         return promotions;
@@ -25,31 +19,6 @@ public class EtudiantLivretEvaluationDto extends BaseEntityDto implements Serial
 
     public void setPromotions(List<String> promotions) {
         this.promotions = promotions;
-    }
-
-    public String getExamen() {
-        return examen;
-    }
-
-    public void setExamen(String examen) {
-        this.examen = examen;
-    }
-
-    public List<String> getCompetences() {
-        return competences;
-    }
-
-    public void setCompetences(List<String> competences) {
-        this.competences = competences;
-    }
-
-    public List<Note.Satisfaction> getSatisfactions() {
-        return satisfactions;
-    }
-
-    public void setSatisfactions(List<Note.Satisfaction> satisfactions) {
-        this.satisfactions = satisfactions;
-
     }
 
     public List<String> getObservations() {
