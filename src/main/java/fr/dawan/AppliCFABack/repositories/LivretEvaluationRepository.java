@@ -15,4 +15,7 @@ public interface LivretEvaluationRepository extends JpaRepository<LivretEvaluati
 	List<LivretEvaluation> findLivretEvaluationByEtudiantId(long id);
 
 	Optional<LivretEvaluation> findByEtudiantIdAndTitreProfessionnelId(long idEtudiant, long idCursus);
+
+	@Query("SELECT l.observation FROM LivretEvaluation l WHERE l.etudiant.id = :id")
+    List<LivretEvaluation> findObservationsByEtudiantId(long id);
 }

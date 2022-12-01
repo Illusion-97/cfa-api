@@ -177,10 +177,10 @@ public class ExamenController {
 	 *         nécessaires pour remplir la section livret Evaluation du front partie
 	 *         étudiant
 	 */
-	@GetMapping(value = "/livret-evaluation/{id}", produces = "application/json")
-	public List<EtudiantLivretEvaluationDto> getLivretEvaluation(@PathVariable("id") long id) {
-		return examenService.getLivretEvaluation(id);
-	}
+//	@GetMapping(value = "/livret-evaluation/{id}", produces = "application/json")
+//	public List<EtudiantLivretEvaluationDto> getLivretEvaluation(@PathVariable("id") long id) {
+//		return examenService.getLivretEvaluation(id);
+//	}
 
 	@GetMapping(value = "/bulletin-etudiant/{etudiantId}/{promotionId}", produces = "application/octet-stream")
 	public ResponseEntity<Resource> generateBulletinByStudentAndPromo(@PathVariable("etudiantId") long etudiantId, @PathVariable("promotionId") long promotionId) throws Exception {

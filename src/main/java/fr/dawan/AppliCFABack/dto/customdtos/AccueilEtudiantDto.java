@@ -18,9 +18,11 @@ public class AccueilEtudiantDto implements Serializable {
     private String managerPrenom;
     private String managerRole;
     private String managerEmail;
-    private List<Stream<String>> membresPrenom;
-    private List<Stream<String>> membresNom;
-    private List<Stream<Stream<String>>> membresRole;
+    private Stream<Object> membreEtudiantDtos;
+//    private List<Stream<String>> membresPrenom;
+//    private List<Stream<String>> membresNom;
+//    private List<Stream<Stream<String>>> membresRole;
+
     private Stream<PlanningEtudiantDto> prochainCours;
 
     public String getNom() {
@@ -119,29 +121,29 @@ public class AccueilEtudiantDto implements Serializable {
         this.managerEmail = managerEmail;
     }
 
-    public List<Stream<String>> getMembresPrenom() {
-        return membresPrenom;
-    }
-
-    public void setMembresPrenom(List<Stream<String>> membresPrenom) {
-        this.membresPrenom = membresPrenom;
-    }
-
-    public List<Stream<String>> getMembresNom() {
-        return membresNom;
-    }
-
-    public void setMembresNom(List<Stream<String>> membresNom) {
-        this.membresNom = membresNom;
-    }
-
-    public List<Stream<Stream<String>>> getMembresRole() {
-        return membresRole;
-    }
-
-    public void setMembresRole(List<Stream<Stream<String>>> membresRole) {
-        this.membresRole = membresRole;
-    }
+//    public List<Stream<String>> getMembresPrenom() {
+//        return membresPrenom;
+//    }
+//
+//    public void setMembresPrenom(List<Stream<String>> membresPrenom) {
+//        this.membresPrenom = membresPrenom;
+//    }
+//
+//    public List<Stream<String>> getMembresNom() {
+//        return membresNom;
+//    }
+//
+//    public void setMembresNom(List<Stream<String>> membresNom) {
+//        this.membresNom = membresNom;
+//    }
+//
+//    public List<Stream<Stream<String>>> getMembresRole() {
+//        return membresRole;
+//    }
+//
+//    public void setMembresRole(List<Stream<Stream<String>>> membresRole) {
+//        this.membresRole = membresRole;
+//    }
 
 
     public Stream<PlanningEtudiantDto> getProchainCours() {
@@ -152,5 +154,12 @@ public class AccueilEtudiantDto implements Serializable {
         this.prochainCours = prochainCours;
     }
 
+    public Stream<Object> getMembreEtudiantDtos() {
+        return membreEtudiantDtos;
+    }
+
+    public void setMembreEtudiantDtos(Stream<Object> membreEtudiantDtos) {
+        this.membreEtudiantDtos = membreEtudiantDtos;
+    }
 }
 

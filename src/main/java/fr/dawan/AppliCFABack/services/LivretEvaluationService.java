@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
 import fr.dawan.AppliCFABack.tools.LivretEvaluationException;
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
@@ -17,4 +18,6 @@ public interface LivretEvaluationService extends GenericService<LivretEvaluation
 
 	String getLivretEvaluation(long idEtudiant , long idCursus) throws LivretEvaluationException, TemplateNotFoundException,
 			MalformedTemplateNameException, ParseException, IOException, TemplateException;
+
+	EtudiantLivretEvaluationDto getLivretEtudiant(long id);
 }
