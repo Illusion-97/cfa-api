@@ -21,5 +21,5 @@ public interface LivretEvaluationService extends GenericService<LivretEvaluation
 	String getLivretEvaluation(long idEtudiant , long idCursus) throws LivretEvaluationException, TemplateNotFoundException,
 			MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
-	EtudiantLivretEvaluationDto getLivretEtudiant(long id);
+	List<EtudiantLivretEvaluationDto> getLivretEtudiant(long id);
 }

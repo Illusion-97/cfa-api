@@ -166,15 +166,13 @@ public class DtoTools {
      * permet de mapper un objet Examen en LivretEvaluationDto (dto customisé) -
      * return l'objet dto custom mappé
      */
-    Converter<Etudiant, EtudiantLivretEvaluationDto> etudiantToLivretEvaluationDtoConverter = context -> {
+    Converter<Promotion, EtudiantLivretEvaluationDto> promotionToLivretEvaluationDtoConverter = context -> {
 
-        Etudiant e = context.getSource();
+        Promotion p = context.getSource();
         EtudiantLivretEvaluationDto leDto = new EtudiantLivretEvaluationDto();
 
-        leDto.setPromotions(e.getPromotions().stream().map(
-                Promotion::getCursus
-        ).collect(Collectors.toList()).stream().map(Cursus::getTitre).collect(Collectors.toList()));
-
+        leDto.setCursusId(p.getCursus().getId());
+        leDto.setCursus(p.getCursus().getTitre());
         return leDto;
     };
 
@@ -183,8 +181,8 @@ public class DtoTools {
      * @param examen
      * @return l'objet dto custom mappé
      */
-    public EtudiantLivretEvaluationDto etudiantToLivretEvaluationDto(Etudiant etudiant) {
-        return convert(etudiant, EtudiantLivretEvaluationDto.class, etudiantToLivretEvaluationDtoConverter);
+    public EtudiantLivretEvaluationDto promotionToLivretEvaluationDto(Promotion promotion) {
+        return convert(promotion, EtudiantLivretEvaluationDto.class, promotionToLivretEvaluationDtoConverter);
     }
 
     /**
