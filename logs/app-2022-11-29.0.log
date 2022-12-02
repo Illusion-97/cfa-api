@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 2022-11-25 11:26:45.054  INFO 10964 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 10964 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
 2022-11-25 11:26:45.058  INFO 10964 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
 2022-11-25 11:26:46.298  INFO 10964 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
@@ -173,7 +172,7 @@ Caused by: org.hibernate.TransientPropertyValueException: object references an u
 	at org.hibernate.event.internal.AbstractFlushingEventListener.flushEverythingToExecutions(AbstractFlushingEventListener.java:81)
 	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:39)
 	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:102)
-<<<<<<< HEAD
+
 	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1360)
 	... 117 more
 
@@ -182,7 +181,7 @@ Caused by: org.hibernate.TransientPropertyValueException: object references an u
 2022-11-25 14:37:33.842  INFO 10964 --- [RMI TCP Connection(195)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
 2022-11-25 14:37:33.842  INFO 10964 --- [RMI TCP Connection(195)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-11-25 14:37:33.883  INFO 10964 --- [RMI TCP Connection(195)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-=======
+
 	at org.hibernate.internal.SessionImpl.firePersist(SessionImpl.java:718)
 	at org.hibernate.internal.SessionImpl.persist(SessionImpl.java:704)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -1565,6 +1564,7 @@ Caused by: java.lang.IllegalArgumentException: Can not set int field fr.dawan.Ap
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+<<<<<<< HEAD
 =======
 2022-11-29 09:37:36.274  INFO 18756 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on PG77700-BJLMHX2 with PID 18756 (C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api\target\classes started by Admin stagiaire in C:\Users\Admin stagiaire.DESKTOP-8967908\Desktop\cfa-portal-api)
 2022-11-29 09:37:36.282  INFO 18756 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
@@ -1608,6 +1608,8 @@ Caused by: java.lang.IllegalArgumentException: Can not set int field fr.dawan.Ap
 	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
@@ -1647,6 +1649,9 @@ Caused by: java.lang.IllegalArgumentException: Can not set int field fr.dawan.Ap
 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
@@ -1726,6 +1731,7 @@ Caused by: java.lang.IllegalArgumentException: Can not set int field fr.dawan.Ap
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.lang.reflect.Method.invoke(Method.java:498)
+<<<<<<< HEAD
 =======
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
@@ -1738,6 +1744,8 @@ Caused by: java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/tools/HashTools
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
 	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
 	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
@@ -1746,6 +1754,9 @@ Caused by: java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/tools/HashTools
 	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
 	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
@@ -1889,6 +1900,7 @@ Caused by: java.lang.IllegalArgumentException: Can not set int field fr.dawan.Ap
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+<<<<<<< HEAD
 =======
 	... 46 more
 Caused by: java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
@@ -1920,6 +1932,8 @@ java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/dto/APIError
 	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
@@ -1959,6 +1973,9 @@ java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/dto/APIError
 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
@@ -3276,6 +3293,7 @@ javax.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not ac
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+<<<<<<< HEAD
 =======
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
@@ -3299,6 +3317,8 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
 	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
 	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
@@ -3309,12 +3329,17 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
 =======
 	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
 >>>>>>> signature
+=======
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
@@ -3354,6 +3379,9 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
@@ -3403,6 +3431,7 @@ Caused by: java.lang.IllegalArgumentException: Can not set int field fr.dawan.Ap
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+<<<<<<< HEAD
 =======
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
@@ -3416,6 +3445,8 @@ Caused by: java.lang.IllegalArgumentException: Can not set int field fr.dawan.Ap
 	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
@@ -3455,6 +3486,9 @@ Caused by: java.lang.IllegalArgumentException: Can not set int field fr.dawan.Ap
 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
@@ -3486,6 +3520,7 @@ Caused by: java.lang.IllegalArgumentException: Can not set int field fr.dawan.Ap
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+<<<<<<< HEAD
 =======
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
@@ -3498,6 +3533,8 @@ Caused by: java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/tools/HashTools
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
 	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
 	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
@@ -3506,6 +3543,9 @@ Caused by: java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/tools/HashTools
 	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
 	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
@@ -3590,6 +3630,7 @@ Caused by: java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/tools/HashTools
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+<<<<<<< HEAD
 =======
 	... 46 more
 Caused by: java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
@@ -3618,6 +3659,8 @@ java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/dto/APIError
 	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
@@ -3657,6 +3700,9 @@ java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/dto/APIError
 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
@@ -3688,6 +3734,7 @@ java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/dto/APIError
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+<<<<<<< HEAD
 =======
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
@@ -3705,6 +3752,8 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
 	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
 	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
@@ -3715,12 +3764,17 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
 =======
 	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
 >>>>>>> signature
+=======
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
@@ -3760,6 +3814,9 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
@@ -3802,6 +3859,7 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+<<<<<<< HEAD
 =======
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
@@ -3815,6 +3873,8 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
@@ -3854,6 +3914,9 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
@@ -3885,6 +3948,7 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+<<<<<<< HEAD
 =======
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
@@ -3897,6 +3961,8 @@ Caused by: java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/tools/HashTools
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
 	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
 	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
@@ -3905,10 +3971,14 @@ Caused by: java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/tools/HashTools
 	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
 	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+<<<<<<< HEAD
 =======
 	... 46 more
 Caused by: java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
@@ -3937,6 +4007,8 @@ java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/dto/APIError
 	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
@@ -3976,6 +4048,9 @@ java.lang.NoClassDefFoundError: fr/dawan/AppliCFABack/dto/APIError
 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
@@ -4101,6 +4176,7 @@ javax.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not ac
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+<<<<<<< HEAD
 =======
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
@@ -4118,6 +4194,8 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
 	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
 	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
@@ -4128,12 +4206,17 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
 =======
 	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
 >>>>>>> signature
+=======
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
@@ -4173,6 +4256,9 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
@@ -4182,6 +4268,7 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 2022-11-29 17:43:06.862  INFO 17884 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
 2022-11-29 17:43:06.862  INFO 17884 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-11-29 17:43:06.866  INFO 17884 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+<<<<<<< HEAD
 =======
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
@@ -4274,3 +4361,5 @@ java.lang.ClassNotFoundException: fr.dawan.AppliCFABack.tools.HashTools
 2022-11-29 17:34:36.513  INFO 10628 --- [RMI TCP Connection(11)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-11-29 17:34:36.518  INFO 10628 --- [RMI TCP Connection(11)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
 >>>>>>> signature
+=======
+>>>>>>> 03587910ffef52073c7171da6be13b1296f0e5b3
