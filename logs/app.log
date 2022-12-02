@@ -1187,3 +1187,8 @@ Caused by: java.lang.NullPointerException: Cannot invoke "fr.dawan.AppliCFABack.
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:833)
 
+2022-12-02 15:38:01.282  INFO 3440 --- [RMI TCP Connection(395)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-12-02 15:38:01.458  INFO 3440 --- [RMI TCP Connection(395)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-02 15:38:01.470  INFO 3440 --- [RMI TCP Connection(395)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-12-02 15:38:01.472  INFO 3440 --- [RMI TCP Connection(395)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-02 15:38:01.476  INFO 3440 --- [RMI TCP Connection(395)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
