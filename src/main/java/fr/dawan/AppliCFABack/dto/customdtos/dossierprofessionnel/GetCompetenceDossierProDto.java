@@ -4,6 +4,7 @@ public class GetCompetenceDossierProDto {
 
     private long id;
     private String libelle;
+    private byte numeroFiche;
     private int version;
 
     public long getId() {
@@ -28,5 +29,13 @@ public class GetCompetenceDossierProDto {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public byte getNumeroFiche() {
+        return numeroFiche;
+    }
+
+    public void setNumeroFiche(byte numeroFiche) {
+        this.numeroFiche = numeroFiche;
     }
 }

@@ -166,28 +166,13 @@ public class DtoTools {
      * permet de mapper un objet Examen en LivretEvaluationDto (dto customisé) -
      * return l'objet dto custom mappé
      */
-    Converter<Examen, EtudiantLivretEvaluationDto> examenToLivretEvaluationDtoConverter = context -> {
+    Converter<Promotion, EtudiantLivretEvaluationDto> promotionToLivretEvaluationDtoConverter = context -> {
 
-        Examen e = context.getSource();
+        Promotion p = context.getSource();
         EtudiantLivretEvaluationDto leDto = new EtudiantLivretEvaluationDto();
 
-        leDto.setPromotions(e.getPromotions().stream().map(
-        		Promotion::getNom
-        ).collect(Collectors.toList()));
-
-        leDto.setExamen(e.getTitre());
-
-        leDto.setCompetences(e.getCompetencesProfessionnelles().stream().map( 
-             CompetenceProfessionnelle::getLibelle
-        ).collect(Collectors.toList()));
-
-        leDto.setSatisfactions(e.getNotes().stream().map(s -> {
-            return s.getSatisfaction();
-        }).collect(Collectors.toList()));
-
-        leDto.setObservations(e.getNotes().stream().map(
-             Note::getObservation
-        ).collect(Collectors.toList()));
+        leDto.setCursusId(p.getCursus().getId());
+        leDto.setCursus(p.getCursus().getTitre());
         return leDto;
     };
 
@@ -196,8 +181,8 @@ public class DtoTools {
      * @param examen
      * @return l'objet dto custom mappé
      */
-    public EtudiantLivretEvaluationDto examenToLivretEvaluationDto(Examen examen) {
-        return convert(examen, EtudiantLivretEvaluationDto.class, examenToLivretEvaluationDtoConverter);
+    public EtudiantLivretEvaluationDto promotionToLivretEvaluationDto(Promotion promotion) {
+        return convert(promotion, EtudiantLivretEvaluationDto.class, promotionToLivretEvaluationDtoConverter);
     }
 
     /**
@@ -262,24 +247,7 @@ public class DtoTools {
                 (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getCef).findAny().orElse(null)).getUtilisateur().getRoles().get(0).getIntitule());
         a.setManagerEmail(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
                 (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getCef).findAny().orElse(null)).getUtilisateur().getLogin());
-        a.setMembresPrenom(e.getGroupes().stream().map(groupeEtudiant -> {
-            List<Etudiant> el = groupeEtudiant.getEtudiants();
-            return el.stream().map(etudiant -> etudiant.getUtilisateur().getPrenom());
-        }).collect(Collectors.toList()));
-        a.setMembresNom((e.getGroupes().stream().map(groupeEtudiant -> {
-            List<Etudiant> el = groupeEtudiant.getEtudiants();
-            return el.stream().map(etudiant -> etudiant.getUtilisateur().getNom());
-        }).collect(Collectors.toList())));
-        a.setMembresRole(e.getGroupes().stream().map(groupeEtudiant -> {
-            List<Etudiant> el = groupeEtudiant.getEtudiants();
-            return el.stream().map(etudiant -> etudiant.getUtilisateur().getRoles().stream().map(UtilisateurRole::getIntitule));
-        }).collect(Collectors.toList()));
-//        a.setProchainCours(e.getPromotions().stream().map(promotion -> promotion.getInterventions().stream().map(intervention -> {
-//            Utilisateur u = intervention.getFormateurs().get(0).getUtilisateur();
-//            String identity = u.getPrenom() + " " + u.getNom();
-//            return new PlanningEtudiantDto(intervention.getDateDebut(), intervention.getDateFin(), intervention.getFormation().getTitre(), identity);
-//        }).collect(Collectors.toList()).stream().map(planningEtudiantDto ->
-//                planningEtudiantDto.getInterventionDateDebut().isAfter(ZonedDateTime.now().toLocalDate()))));
+        a.setMembreEtudiantDtos(e.getGroupes().stream().map(groupeEtudiant -> groupeEtudiant.getEtudiants().stream().map(etudiant -> new MembreEtudiantDto(etudiant.getUtilisateur().getNom(), etudiant.getUtilisateur().getPrenom(), etudiant.getUtilisateur().getRoles().stream().map(UtilisateurRole::getIntitule)))));
         a.setProchainCours(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
                 (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getInterventions).findAny().orElse(null)).stream().map(intervention -> {
             Utilisateur u = intervention.getFormateurs().get(0).getUtilisateur();

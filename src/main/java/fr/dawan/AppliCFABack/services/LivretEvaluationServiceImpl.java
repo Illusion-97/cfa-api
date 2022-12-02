@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
+import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,21 +25,7 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.LivretEvaluationFileDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EvaluationDto;
-import fr.dawan.AppliCFABack.entities.ActiviteType;
-import fr.dawan.AppliCFABack.entities.BlocEvaluation;
-import fr.dawan.AppliCFABack.entities.Cursus;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.EvaluationFormation;
-import fr.dawan.AppliCFABack.entities.LivretEvaluation;
-import fr.dawan.AppliCFABack.entities.Validation;
 import fr.dawan.AppliCFABack.entities.Validation.Etat;
-import fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository;
-import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
-import fr.dawan.AppliCFABack.repositories.CursusRepository;
-import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.EvaluationFormationRepository;
-import fr.dawan.AppliCFABack.repositories.LivretEvaluationRepository;
-import fr.dawan.AppliCFABack.repositories.ValidationRepository;
 import fr.dawan.AppliCFABack.tools.Filter;
 import fr.dawan.AppliCFABack.tools.LivretEvaluationException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
@@ -85,7 +74,13 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	@Autowired
 	private BlocEvaluationRepository blocEvaluationRepository;
 
+	@Autowired
+	private PromotionRepository promotionRepository;
+
 	private static Logger logger = Logger.getGlobal();
+
+	@Autowired
+	private DtoTools mapper;
 
 	@Override
 
@@ -224,5 +219,24 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 		return outputPdf;
 	}
 
-	
+	@Override
+	public List<EtudiantLivretEvaluationDto> getLivretEtudiant(long id) {
+
+		List<Promotion> promotions = promotionRepository.getByEtudiantId(id);
+
+		List<EtudiantLivretEvaluationDto> evaluationDtos = promotions.stream().map(promotion -> mapper.promotionToLivretEvaluationDto(promotion)).collect(Collectors.toList());
+
+		List<LivretEvaluation> livretEvaluations = livretEvaluationRepository.findLivretEvaluationByEtudiantId(id);
+
+		for(EtudiantLivretEvaluationDto e : evaluationDtos) {
+			for(LivretEvaluation livretEvaluation : livretEvaluations) {
+				if(e.getCursusId() == livretEvaluation.getTitreProfessionnel().getId()) {
+					e.setObservation(livretEvaluation.getObservation());
+				}
+			}
+		}
+		return evaluationDtos;
+	}
+
+
 }
