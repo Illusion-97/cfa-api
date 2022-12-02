@@ -247,18 +247,6 @@ public class DtoTools {
                 (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getCef).findAny().orElse(null)).getUtilisateur().getRoles().get(0).getIntitule());
         a.setManagerEmail(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
                 (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getCef).findAny().orElse(null)).getUtilisateur().getLogin());
-//        a.setMembresPrenom(e.getGroupes().stream().map(groupeEtudiant -> {
-//            List<Etudiant> el = groupeEtudiant.getEtudiants();
-//            return el.stream().map(etudiant -> etudiant.getUtilisateur().getPrenom());
-//        }).collect(Collectors.toList()));
-//        a.setMembresNom((e.getGroupes().stream().map(groupeEtudiant -> {
-//            List<Etudiant> el = groupeEtudiant.getEtudiants();
-//            return el.stream().map(etudiant -> etudiant.getUtilisateur().getNom());
-//        }).collect(Collectors.toList())));
-//        a.setMembresRole(e.getGroupes().stream().map(groupeEtudiant -> {
-//            List<Etudiant> el = groupeEtudiant.getEtudiants();
-//            return el.stream().map(etudiant -> etudiant.getUtilisateur().getRoles().stream().map(UtilisateurRole::getIntitule));
-//        }).collect(Collectors.toList()));
         a.setMembreEtudiantDtos(e.getGroupes().stream().map(groupeEtudiant -> groupeEtudiant.getEtudiants().stream().map(etudiant -> new MembreEtudiantDto(etudiant.getUtilisateur().getNom(), etudiant.getUtilisateur().getPrenom(), etudiant.getUtilisateur().getRoles().stream().map(UtilisateurRole::getIntitule)))));
         a.setProchainCours(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
                 (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getInterventions).findAny().orElse(null)).stream().map(intervention -> {

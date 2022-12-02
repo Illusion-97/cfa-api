@@ -191,18 +191,20 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
     @Override
     public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id) {
         DossierProfessionnel dp = DtoTools.convert(dpDto, DossierProfessionnel.class);
+        assert dp != null;
         List<ExperienceProfessionnelle> exps = dp.getExperienceProfessionnelles();
 
         for(ExperienceProfessionnelle exp : exps){
             Optional<Etudiant> optEtudiant = etudiantRepository.findById(id);
             exp.setDossierProfessionnel(dp);
-            exp.setEtudiant(optEtudiant.get());
+            optEtudiant.ifPresent(exp::setEtudiant);
         }
 
         EtudiantDossierDto eDto = etudiantService.getByEtudiantIdForDossierPro(id);
-        //Etudiant etudiant = DtoTools.convert(eDto, Etudiant.class);
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
-        dp.setEtudiant(etudiant.get());
+        if(etudiant.isPresent()){
+            dp.setEtudiant(etudiant.get());
+        }
         dp = dossierProRepo.saveAndFlush(dp);
 
         DossierProEtudiantDto dossierDto = DtoTools.convert(dp, DossierProEtudiantDto.class);
@@ -213,7 +215,6 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
             int index = dpList.indexOf(dossierDto);
             dpList.set(index, dossierDto);
         }
-        //etudiant = etudiantRepository.saveAndFlush(etudiant);
         return dossierDto;
     }
 
@@ -264,6 +265,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
                         experienceProfessionnelleDtoList.add(eDto);
                     }
                     PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
+                    assert pdfCompetenceDto != null;
                     pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
                     pdfCompetenceDtos1.add(pdfCompetenceDto);
                 }
@@ -284,6 +286,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
                         experienceProfessionnelleDtoList.add(eDto);
                     }
                     PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
+                    assert pdfCompetenceDto != null;
                     pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
                     pdfCompetenceDtos2.add(pdfCompetenceDto);
                 }
@@ -304,6 +307,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
                         experienceProfessionnelleDtoList.add(eDto);
                     }
                     PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
+                    assert pdfCompetenceDto != null;
                     pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
                     pdfCompetenceDtos3.add(pdfCompetenceDto);
                 }
@@ -323,6 +327,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
                         experienceProfessionnelleDtoList.add(eDto);
                     }
                     PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
+                    assert pdfCompetenceDto != null;
                     pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
                     pdfCompetenceDtos4.add(pdfCompetenceDto);
                 }
@@ -377,7 +382,9 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         List<DossierProfessionnel> dossierProfessionnel = dossierProRepo.findDossierProByEtudiantIdAndCursusId(id);
         for(DossierProfessionnel dp : dossierProfessionnel) {
             DossierProEtudiantDto dpDto = DtoTools.convert(dp, DossierProEtudiantDto.class);
+            assert eDto != null;
             for(GetPromotionDossierProDto pDto : eDto.getPromotions()) {
+                assert dpDto != null;
                 if(pDto.getCursus().getId() == dpDto.getCursus().getId()){
                     pDto.getCursus().setDossierProfessionnel(dpDto);
                     pDto.getCursus().getDossierProfessionnel().setCursus(dpDto.getCursus());
