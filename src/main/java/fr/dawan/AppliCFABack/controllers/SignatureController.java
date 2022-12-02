@@ -43,7 +43,7 @@ public class SignatureController extends GenericController<SignatureDto> {
 	}
 
 
-	@PostMapping(consumes = "multipart/form-data", produces = "application/json")
+	@PostMapping(value ="/file",consumes = "multipart/form-data", produces = "application/json")
 	ResponseEntity<SignatureDto> save(@RequestParam("signature")String signatureStr, @RequestParam("file") MultipartFile file) throws Exception {
 
 		File f =  new File(storageFolder + "/signatures/" +file.getOriginalFilename() );

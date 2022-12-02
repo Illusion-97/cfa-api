@@ -19,7 +19,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Signature extends BaseEntity implements Serializable {
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String pieceJointe;
 
 	@OneToMany(mappedBy = "signature")
