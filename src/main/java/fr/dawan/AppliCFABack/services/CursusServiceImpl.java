@@ -256,8 +256,5 @@ public class CursusServiceImpl implements CursusService {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 		
-		
 	}
-
-
 }

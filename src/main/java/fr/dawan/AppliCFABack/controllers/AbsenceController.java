@@ -1,14 +1,39 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.services.AbsenceService;
+import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.FileService;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+
 /**
  * @author Valentin C, Feres BG.
  * @see fr.dawan.appliCFABack.service
@@ -21,10 +46,24 @@ import fr.dawan.AppliCFABack.services.AbsenceService;
 @RequestMapping("/absences")
 public class AbsenceController extends GenericController<AbsenceDto> {
 	
+	@Value("${app.storagefolder}")
+	private String storageFolder;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
+	
 	@Autowired
 	public AbsenceController(AbsenceService service) {
 		super(service);
 	}
+	
+	@Autowired
+	private EtudiantService etudiantService;
+	
+	@Autowired
+	FileService fileSevice; 
+	
+	private static Logger logger = Logger.getGlobal();
 	
 	/**
 	 * 
@@ -54,6 +93,40 @@ public class AbsenceController extends GenericController<AbsenceDto> {
 	@GetMapping(value = "/etudiant/search/{search}", produces = "application/json")
 	public List<AbsenceDto> getAllByNomPrenomContaining(@PathVariable("search") String search){
 		return ((AbsenceService) service).getAllByNomPrenomContaining(search);
+	}
+	
+	@GetMapping(value = "/justificatif/{idAbsence}")
+	public ResponseEntity<String> getJustificatifByAbsenceId(@PathVariable("idAbsence") long idAbsence) throws Exception {
+				
+		String outpoutPath = ((AbsenceService) service).getJustificatifByAbsenceId(idAbsence);
+		File f = new File(outpoutPath);
+		Path path = Paths.get(f.getAbsolutePath());
+		byte[] bytes =  Files.readAllBytes(path	);
+		String base64 = Base64.getEncoder().encodeToString(bytes);
+		
+		return ResponseEntity.ok().body(base64);
+	}
+	
+//	@PutMapping(consumes="application/json", produces="application/json")
+//	public AbsenceDto update(@RequestBody AbsenceDto aDto) throws SaveInvalidException{
+//		return ((AbsenceService) service).saveOrUpdate(aDto);
+//	}
+//	
+	
+	@PutMapping(consumes="multipart/form-data", produces="application/json")
+	public AbsenceDto update(@RequestParam("absence") String absStr, 
+			@RequestPart("fileJustificatif") MultipartFile file) throws SaveInvalidException, IOException{
+		
+		
+		//A changer : bien rentrer le nom du fichier
+		File f = new File(storageFolder + "/justificatifAbsenceEtudiant/" + file.getOriginalFilename());
+		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f));
+		bos.write(file.getBytes());
+		bos.close();
+		
+		AbsenceDto absDto = objectMapper.readValue(absStr, AbsenceDto.class);
+		
+		return ((AbsenceService) service).saveOrUpdate(absDto);
 	}
 
 	

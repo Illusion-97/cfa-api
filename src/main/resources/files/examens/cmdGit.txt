@@ -1,0 +1,27 @@
+git add -p -permet de vérifier avant de add
+gitk - interface visuelle git
+git checkout -b <nomBranche>
+
+git add -p
+git status
+git add source //Pour ajouter les fichiers non tracés
+git status
+git commit -m "message"
+git stash
+git status
+git push
+git push --set-upstream....
+git checkout dev
+git pull origin dev
+
+________________________________
+Merge conflict
+______________
+git checkout dev
+git fetch
+git pull
+git merge --no-ff "NomDeLaBrancheAMerge"
+[FAIRE LES MERGE]
+git add .
+git commit -m "NomDeLaBrancheAMerge"
+git push
