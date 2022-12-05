@@ -25,7 +25,7 @@ public interface AbsenceService extends GenericService<AbsenceDto>{
 	List<AbsenceDto> getAllByNomPrenomContaining(String search);
 	String getJustificatifByAbsenceId(long idAbsence) throws JustificatifException;
 //	List<AbsenceDto> getAllByPromotionId(long id);
-	
+	//
 	
 //	List<AbsenceDto> getAllAbsence();
 //	List<AbsenceDto> getAllAbsence(int page, int size, String search);
