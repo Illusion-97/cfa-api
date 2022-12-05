@@ -29,9 +29,9 @@ public class SupportCoursServiceImpl implements SupportCoursService {
 	InterventionRepository interventionRepository;
 	
 	/**
-	 * Récupération des supprts de cours en fonction de l'id 
+	 * Récupération des supports de cours en fonction de l'id 
 	 * 
-	 * @param id	id du support de cours
+	 * @param id du support de cours
 	 */
 	
 	@Override
@@ -45,8 +45,6 @@ public class SupportCoursServiceImpl implements SupportCoursService {
 			for(Intervention i: interventions) {
 				interventionsDto.add(DtoTools.convert(i, InterventionDto.class));
 			}
-			
-//			supportDto.setInterventionsId(interventionsDto);
 			return supportDto;
 		}
 		return null;

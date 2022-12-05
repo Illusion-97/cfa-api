@@ -519,21 +519,20 @@ public class PromotionServiceImpl implements PromotionService {
 
 	
 	@Override
-	public String getGrillePositionnement(long idPromotion) throws GrilleException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	public String getGrillePositionnement(long idPromotion) throws GrilleException, TemplateNotFoundException, 
+	MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		Optional<Promotion> promotion = promotionRepository.findById(idPromotion);
-
 		if (!promotion.isPresent())
 			throw new GrilleException("Promotion non trouvé");
-
+		
 		List<Intervention> interventions = interventionRepository.getInterventionsByIdPromotion(idPromotion);
-
 		if (interventions.isEmpty() || interventions == null)
 			throw new GrilleException("Pas d'interventions encore pour cette promotion non trouvé");
 
 		Map<String, List<?>> gp = new HashMap<>();
 		List<GrillePositionnementDto> grillesPositionnements = new ArrayList<>();
+		
 		for (Intervention i : interventions) {
-
 			GrillePositionnementDto gpd = new GrillePositionnementDto();
 			gpd.setDateDebut(i.getDateDebut());
 			gpd.setDateFin(i.getDateFin());
@@ -543,19 +542,17 @@ public class PromotionServiceImpl implements PromotionService {
 			}else {
 				gpd.setModule("Pas de Formation");
 			}
-			
-		
-//			gpd.setObjectifPedagogiques(f.getObjectifsPedagogique());
 			gpd.setObjectifPedagogiques("A définir");
 			List<String> formateursNomPrenom = i.getFormateurs().stream().map(
 					fr -> fr.getUtilisateur().getNom() + " " + fr.getUtilisateur().getPrenom()
 					).collect(Collectors.toList());
 			gpd.setFormateurs(formateursNomPrenom);
-
 			Map<String, Positionnement> etudiantsPositionnement = new HashMap<>();
 			List<Positionnement> positionnements =  positionnementRepository.getAllByInterventionId(i.getId());
+			
 			for (Positionnement p : positionnements) {
-				etudiantsPositionnement.put(p.getEtudiant().getUtilisateur().getNom() + " " +p.getEtudiant().getUtilisateur().getPrenom(), p);
+				etudiantsPositionnement.put(p.getEtudiant().getUtilisateur().getNom() + " " 
+			+p.getEtudiant().getUtilisateur().getPrenom(), p);
 			}
 			gpd.setEtudiantsPositionnements(etudiantsPositionnement);
 			grillesPositionnements.add(gpd);
@@ -565,18 +562,14 @@ public class PromotionServiceImpl implements PromotionService {
 		gp.put("niveaux", niveaux);
 		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
 		Template template = freemarkerConfig.getTemplate("GrillePositionnement.ftl");
-
 		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, gp);
-
 		String outputPdf = storageFolder + "grillePositionnements/GrillePositionnement"+promotion.get().getNom()+".pdf";
 
 		try {
-			
 			PdfTools.generatePdfFromHtml(outputPdf,htmlContent );
 		} catch (Exception e) {
 			logger.log(Level.SEVERE,"convertHtmlToPdf failed", e);
 		}
-
 		return outputPdf;
 	}
 

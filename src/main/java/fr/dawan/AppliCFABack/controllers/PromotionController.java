@@ -187,6 +187,7 @@ public class PromotionController {
 //		return ResponseEntity.ok()
 //				.headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 //	}
+	
 	@GetMapping(value = "/grillePositionnement/{idPromotion}",  produces = "plain/text")
 	public ResponseEntity<String> getGrillePositionnement(@PathVariable("idPromotion") long idPromotion) throws Exception {
 		
