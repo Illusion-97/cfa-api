@@ -105,20 +105,19 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	@Override
 	public LivretEvaluationDto saveOrUpdate(LivretEvaluationDto tDto) throws SaveInvalidException {
 		LivretEvaluation livretEval = DtoTools.convert(tDto, LivretEvaluation.class);
-		if (tDto.getId() == 0) {
+//		if (tDto.getId() == 0) {
 			// créer un object Validation et l'entrer dans table Validation
-			Validation validation = new Validation();
-			validation.setSignature(null);
-			validation.setEtat(Etat.NONTRAITE);
-			validation.setVersion(0);
-			validation = validationRepository.saveAndFlush(validation);
-			livretEval.setValidation(validation);
+//			Validation validation = new Validation();
+//			validation.setSignature(null);
+//			validation.setEtat(Etat.NONTRAITE);
+//			validation.setVersion(0);
+//			validation = validationRepository.saveAndFlush(validation);
 			LivretEvaluation livretEvalDb = livretEvaluationRepository.saveAndFlush(livretEval);
 			return DtoTools.convert(livretEvalDb, LivretEvaluationDto.class);
-		} else {
-			LivretEvaluation livretEvalDb = livretEvaluationRepository.saveAndFlush(livretEval);
-			return DtoTools.convert(livretEvalDb, LivretEvaluationDto.class);
-		}
+//		} else {
+//			LivretEvaluation livretEvalDb = livretEvaluationRepository.saveAndFlush(livretEval);
+//			return DtoTools.convert(livretEvalDb, LivretEvaluationDto.class);
+//		}
 
 	}
 

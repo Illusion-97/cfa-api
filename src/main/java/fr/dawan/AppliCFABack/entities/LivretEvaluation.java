@@ -6,8 +6,12 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import fr.dawan.AppliCFABack.entities.Validation.Etat;
 
 /***
  * 
@@ -30,16 +34,21 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 	@ManyToOne
 	private CentreFormation organismeFormation;
 
-	@OneToOne(cascade = CascadeType.REMOVE)
-	private Validation validation;
-
-	@Column(columnDefinition = "TEXT", nullable = false)
+//	@OneToOne(cascade = CascadeType.REMOVE)
+//	private Validation validation;
 	
-	private String observation;
+	@Enumerated(EnumType.STRING)
+	private EtatLivertEval etat;
+	
+	@Column(columnDefinition = "TEXT")
 
+	private String observation;
 
 	private LocalDate dateSignature;
 
+	public enum EtatLivertEval {
+		 ENATTENTEDEVALIDATION, VALIDEPARLEFORMATEUR,VALIDEPARLETUDIANT
+	}
 	/**
 	 * @return l' etudiant
 	 */
@@ -115,19 +124,21 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 		this.dateSignature = dateSignature;
 	}
 
+
 	/**
-	 * @return le validation
+	 * @return le etat
 	 */
-	public Validation getValidation() {
-		return validation;
+	public EtatLivertEval getEtat() {
+		return etat;
 	}
 
 	/**
-	 * @param validation le validation à affecter
-	 * 
+	 * @param etat le etat à affecter
+	 
 	 */
-	public void setValidation(Validation validation) {
-		this.validation = validation;
+	public void setEtat(EtatLivertEval etat) {
+		this.etat = etat;
 	}
+	
 
 }

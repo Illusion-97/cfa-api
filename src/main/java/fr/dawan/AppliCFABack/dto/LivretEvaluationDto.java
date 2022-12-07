@@ -2,6 +2,8 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import fr.dawan.AppliCFABack.entities.LivretEvaluation.EtatLivertEval;
 /**
  * 
  * @author Feres BG.
@@ -15,25 +17,12 @@ public class LivretEvaluationDto extends BaseEntityDto implements Serializable{
 	private long etudiantId;
 	private long titreProfessionnelId;
 	private long organismeFormationId;
-	private long validationId;
 	private String observation;
 	private long formateurEvaluateurId;
 	private LocalDate dateSignature;
-	
+	private EtatLivertEval etat;
 
-	/**
-	 * @return le validationId
-	 */
-	public long getValidationId() {
-		return validationId;
-	}
-	/**
-	 * @param validationId le validationId à affecter
-	 
-	 */
-	public void setValidationId(long validationId) {
-		this.validationId = validationId;
-	}
+
 	/**
 	 * @return le etudiantId
 	 */
@@ -114,6 +103,19 @@ public class LivretEvaluationDto extends BaseEntityDto implements Serializable{
 	 */
 	public void setDateSignature(LocalDate dateSignature) {
 		this.dateSignature = dateSignature;
+	}
+	/**
+	 * @return le etat
+	 */
+	public EtatLivertEval getEtat() {
+		return etat;
+	}
+	/**
+	 * @param etat le etat à affecter
+	 
+	 */
+	public void setEtat(EtatLivertEval etat) {
+		this.etat = etat;
 	}
 
 	
