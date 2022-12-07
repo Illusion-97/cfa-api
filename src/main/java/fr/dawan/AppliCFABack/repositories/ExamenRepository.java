@@ -46,7 +46,8 @@ public interface ExamenRepository extends JpaRepository<Examen, Long> {
 	@Query("SELECT DISTINCT e FROM Examen e JOIN Note n ON n.etudiantNote.id =:id")
 	List<Examen> findallByEtudiantId(@Param("id") long id);
 
-	@Query("SELECT AVG(n.noteObtenue) FROM Note n JOIN n.etudiantNote etu JOIN n.examen.activiteTypes at WHERE etu.id= :etudiantId AND at.id = :activiteTypeId")
+	@Query("SELECT AVG(n.noteObtenue) FROM Note n JOIN n.etudiantNote etu JOIN n.examen.activiteTypes at"
+			+ " WHERE etu.id= :etudiantId AND at.id = :activiteTypeId")
 	double getAvgByEtudiantIdAndActiviteTypeId(@Param("etudiantId") long etudiantId, @Param("activiteTypeId") long activiteTypeId);
 
 	@Query("SELECT AVG(n.noteObtenue) FROM Note n JOIN n.etudiantNote etu JOIN etu.promotions promo WHERE promo.id= :promotionId")

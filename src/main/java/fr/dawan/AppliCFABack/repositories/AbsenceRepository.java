@@ -1,6 +1,9 @@
 package fr.dawan.AppliCFABack.repositories;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,15 +24,13 @@ public interface AbsenceRepository extends JpaRepository<Absence, Long> {
 	 * @param id de l'étudiant concerné
 	 * @return objet étudiant concerné
 	 */
-	@Query("SELECT a FROM Absence a WHERE a.etudiant.id = :id")
-	List<Absence> getByEtudiantId(@Param("id") long id);
+	List<Absence> findByEtudiantId(@Param("id") long id);
 	
 	/**
 	 * 
 	 * @param id de l'intervention concernée
 	 * @return toutes les absences pour une intervention
 	 */
-	@Query("FROM Absence a WHERE a.intervention.id = :id ")
 	List<Absence> findAllByInterventionId(@Param("id") long id);
 	
 	/**
@@ -37,12 +38,8 @@ public interface AbsenceRepository extends JpaRepository<Absence, Long> {
 	 * @param id de l'étudiant concerné
 	 * @return toutes les absences de l'étudiant concerné
 	 */
-	@Query("FROM Absence a WHERE a.etudiant.id = :id")
 	List<Absence> findAllByEtudiantId(long id);
-	
-//	@Query("SELECT Absence a JOIN a.etudiant et JOIN et.promotion p WHERE p.id = :id")
-//	List<Absence> findAllByPromotionId(long id);
-	
+
 	/**
 	 * 
 	 * @param search champs de recherche par nom ou prénom des étudiants
@@ -65,6 +62,9 @@ public interface AbsenceRepository extends JpaRepository<Absence, Long> {
 	 * @return list d'absence par etudiant dans une Intervention
 	 */
 	List<Absence> findAllByEtudiantIdAndInterventionId(long etudiantId, long interventionId);
+	
+	@Query("SELECT a FROM Absence a WHERE a.id = :idAbsence")
+	Optional<Absence> findByAbsenceId(long idAbsence);
 	
 	
 //	long countByEtudiantUtilisateurNomContainingOrEtudiantUtilisateurPrenomContainingAllIgnoreCase(String prenom, String nom);

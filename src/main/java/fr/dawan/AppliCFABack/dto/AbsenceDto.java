@@ -4,44 +4,29 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import fr.dawan.AppliCFABack.entities.Absence.TypeAbsence;
+import fr.dawan.AppliCFABack.entities.Intervention;
 
 @SuppressWarnings("serial")
 public class AbsenceDto extends BaseEntityDto implements Serializable{
-	
-
 	private LocalDateTime dateDebut;
-	
 	private LocalDateTime dateFin;
-
-
 	private String justificatif;
-
-
 	private long etudiantId;
-	
-
+//	private Intervention intervention;
 	private long interventionId;
-	
-
 	private TypeAbsence typeAbsence;
 	
-
-
 	public AbsenceDto() {
 		super();
 	}
-
-
-
+	
 	/**
 	 * @return le dateDebut
 	 */
 	public LocalDateTime getDateDebut() {
 		return dateDebut;
 	}
-
-
-
+	
 	/**
 	 * @param dateDebut le dateDebut à affecter
 	 
@@ -110,13 +95,20 @@ public class AbsenceDto extends BaseEntityDto implements Serializable{
 
 
 	/**
+	 * @return le typeAbsence
+	 */
+	public TypeAbsence getTypeAbsence() {
+		return typeAbsence;
+	}
+
+
+
+	/**
 	 * @return le interventionId
 	 */
 	public long getInterventionId() {
 		return interventionId;
 	}
-
-
 
 	/**
 	 * @param interventionId le interventionId à affecter
@@ -125,17 +117,6 @@ public class AbsenceDto extends BaseEntityDto implements Serializable{
 	public void setInterventionId(long interventionId) {
 		this.interventionId = interventionId;
 	}
-
-
-
-	/**
-	 * @return le typeAbsence
-	 */
-	public TypeAbsence getTypeAbsence() {
-		return typeAbsence;
-	}
-
-
 
 	/**
 	 * @param typeAbsence le typeAbsence à affecter
