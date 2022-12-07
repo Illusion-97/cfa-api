@@ -66,6 +66,7 @@ import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.LivretEvaluation;
+import fr.dawan.AppliCFABack.entities.LivretEvaluation.EtatLivertEval;
 import fr.dawan.AppliCFABack.entities.Positionnement;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
@@ -913,7 +914,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 			for (EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
 
 				// Etudiant etudiantDg2 = mapper.etudiantUtilisateurDG2DtoToEtudiant(eDG2);
-				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>" + eDG2.getPersonId());
 				Optional<Utilisateur> utiLisateurOptional = utilisateurRepository
 						.findDistinctByIdDg2(eDG2.getPersonId());
 				Utilisateur utilisateurDg2 = mapper.etudiantUtilisateurDG2DtoToUtilisateur(eDG2);
@@ -1006,7 +1006,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 					etudiant.setUtilisateur(utilisateurDg2);
 
 				}
-				System.out.println(">>>> uti " +utilisateurDg2.toString());
 				utilisateurRepository.saveAndFlush(utilisateurDg2);
 				
 				Etudiant etuSaved = etudiantRepository.saveAndFlush(etudiant);
@@ -1016,6 +1015,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 					livert.setEtudiant(etuSaved);
 					livert.setTitreProfessionnel(promotion.get().getCursus());
 					livert.setObservation("Cliquez ici pour taper du texte.");
+					livert.setOrganismeFormation(promotion.get().getCentreFormation());
+					livert.setEtat(EtatLivertEval.ENATTENTEDEVALIDATION);
 					livert = livretEvaluationRepository.saveAndFlush(livert);
 					Set<ActiviteType> activiteTypes = promotion.get().getCursus().getActiviteTypes();
 					

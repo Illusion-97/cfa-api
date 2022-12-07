@@ -27,8 +27,8 @@ public class Validation extends BaseEntity implements Serializable {
 	@ManyToOne
 	private Signature signature;
 
-	@OneToOne(mappedBy = "validation")
-	private LivretEvaluation livretEvaluation;
+//	@OneToOne(mappedBy = "validation")
+//	private LivretEvaluation livretEvaluation;
 
 	public enum Etat {
 		REFUSE, NONVALIDE, NONTRAITE, ENATTENTEDEVALIDATION, VALIDE,
@@ -67,16 +67,6 @@ public class Validation extends BaseEntity implements Serializable {
 	/**
 	 * @return le livretEvaluation
 	 */
-	public LivretEvaluation getLivretEvaluation() {
-		return livretEvaluation;
-	}
 
-	/**
-	 * @param livretEvaluation le livretEvaluation à affecter
-	 * 
-	 */
-	public void setLivretEvaluation(LivretEvaluation livretEvaluation) {
-		this.livretEvaluation = livretEvaluation;
-	}
 
 }
