@@ -18,9 +18,9 @@ public class ToPdf extends Exception{
 	 */
 	public static void convertHtmlToPdf(String htmlContent,  String outputPdf) throws Exception {
 		
-		OutputStream os = new BufferedOutputStream(new FileOutputStream(outputPdf));
-		HtmlConverter.convertToPdf(htmlContent, os);
-		os.close();	
+		try(OutputStream os = new BufferedOutputStream(new FileOutputStream(outputPdf))){
+			HtmlConverter.convertToPdf(htmlContent, os);
+		}
 	}
 	
 	public ToPdf (String message) {

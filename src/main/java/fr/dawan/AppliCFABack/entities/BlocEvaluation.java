@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -20,7 +22,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class BlocEvaluation extends BaseEntity implements Serializable {
 	
-	@OneToMany
+	@ManyToMany
 	private List<EvaluationFormation> evaluationsFormations;
 	@ManyToOne
 	private LivretEvaluation livretEvaluation;

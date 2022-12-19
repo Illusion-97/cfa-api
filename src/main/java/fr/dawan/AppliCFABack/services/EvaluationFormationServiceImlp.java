@@ -14,8 +14,10 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EvaluationFormationDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
+import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.EvaluationFormation;
+import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.EvaluationFormationRepository;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
@@ -29,6 +31,9 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 
 	@Autowired
 	CompetenceProfessionnelleRepository competenceProfessionnelleRepository;
+	
+	@Autowired
+	BlocEvaluationRepository blocEvaluationRepository;
 	
 	@Override
 	public EvaluationFormationDto getById(long id) {
@@ -48,9 +53,7 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 			List<CompetenceProfessionnelle> compEvaluee = new ArrayList<>();
 			for (long competenceId : tDto.getCompetencesEvalueesId()) {
 				CompetenceProfessionnelle comp = competenceProfessionnelleRepository.getOne(competenceId);
-				compEvaluee.add(comp);				
-				
-		
+				compEvaluee.add(comp);						
 		}
 		EvaluationFormation evaluationF = DtoTools.convert(tDto, EvaluationFormation.class);
 		evaluationF.setCompetencesEvaluees(compEvaluee);
@@ -67,12 +70,31 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 
 	@Override
 	public void delete(long id) {
-		evaluationFormationRepository.deleteById(id);
+	 	EvaluationFormation evaluationFormation = evaluationFormationRepository.getOne(id);
+	 	evaluationFormation.setCompetencesEvaluees(null);
+	 	List<BlocEvaluation> blocEvaluations = blocEvaluationRepository.finAllByEvaluationsFormationsId(evaluationFormation.getId());
+	 	for (BlocEvaluation blocEvaluation : blocEvaluations) {
+			blocEvaluation.getEvaluationsFormations().remove(evaluationFormation);
+			blocEvaluationRepository.saveAndFlush(blocEvaluation);
+		}
+		evaluationFormationRepository.delete(evaluationFormation);
 	}
 
 	@Override
 	public List<EvaluationFormationDto> getByPromotionIdAndActiviteTypeId(long promotionId, long activiteTypeId) {
 		List<EvaluationFormation> evaluationFormations = evaluationFormationRepository.getByPrmotionIdAndActiviteTypeId(promotionId,activiteTypeId);
+		List<EvaluationFormationDto> result = new ArrayList<>();
+
+		for (EvaluationFormation evaluationFormation : evaluationFormations) {
+			result.add(DtoTools.convert(evaluationFormation, EvaluationFormationDto.class));
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<EvaluationFormationDto> getByInterventionId(long idIntervention) {
+		List<EvaluationFormation> evaluationFormations = evaluationFormationRepository.findAllByInterventionId(idIntervention);
 		List<EvaluationFormationDto> result = new ArrayList<>();
 
 		for (EvaluationFormation evaluationFormation : evaluationFormations) {

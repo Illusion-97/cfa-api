@@ -24,5 +24,10 @@ public class EvaluationFormationController extends GenericController<EvaluationF
 		return ((EvaluationFormationService)service).getByPromotionIdAndActiviteTypeId(idPrmotion, idActiviteType);
 		
 	}
+	@GetMapping(value = "intervention/{idIntervention}")
+	public List<EvaluationFormationDto> getByInterventionId(@PathVariable("idIntervention") long idIntervention){
+		return ((EvaluationFormationService)service).getByInterventionId(idIntervention);
+		
+	}
 
 }

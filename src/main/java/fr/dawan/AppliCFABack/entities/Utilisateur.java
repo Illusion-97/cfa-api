@@ -55,7 +55,9 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	private Formateur formateur;
 	@OneToOne
 	private CEF cef;
-
+	
+	@OneToOne
+	private Signature signature;
 
 	public Utilisateur() {
 		super();
@@ -209,6 +211,22 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	public void setCentreFormation(CentreFormation centreFormation) {
 		this.centreFormation = centreFormation;
 	}
+	
+	/**
+	 * @return le signature
+	 */
+	public Signature getSignature() {
+		return signature;
+	}
+
+	/**
+	 * @param signature le signature à affecter
+	 
+	 */
+	public void setSignature(Signature signature) {
+		this.signature = signature;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

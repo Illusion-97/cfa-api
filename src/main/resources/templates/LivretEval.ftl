@@ -256,7 +256,8 @@
 
     .competences {
         border: 1px solid #bfbfbf;
-        margin: 10px 0
+        margin: 10px 0;
+        min-height: 180px;
     }
 
     .competences * {
@@ -640,7 +641,7 @@
             </section>
              <#list livertEval.evaluations  as evaluation>
              
-            <section class="ficheResultat">
+            <section class="ficheResultat" style="margin-top:10px;">
                 <div class="fiche">
                     <h2> Fiche de résultats des évaluations</h2>
                 </div>
@@ -660,7 +661,12 @@
                     <p><span> ${competence.numeroFiche}.</span>${competence.libelle}</p>
                     </#list>
                 </div>
-                <table class="minimalistBlackEvaluation">
+                <#if (evaluation.activiteType.competenceProfessionnelles?size) gt 5 >
+                <table class="minimalistBlackEvaluation" style=" height: 500px;">
+                <#else>
+                <table class="minimalistBlackEvaluation" >
+
+                </#if>
                     <thead>
                         <tr>
                             <th>Description des évaluations mises en œuvre</th>
@@ -797,7 +803,7 @@
                     </tbody>
                 </table>
                 <!-- si 2 formateur margin-top 15px -->
-                <table class="minimalistBlack" style="margin-top:85px;">
+                <table class="minimalistBlack" style="margin-top:105px;">
                     <tbody>
                         <tr>
                             <td>SIGLE</td>
@@ -841,12 +847,12 @@
                     </div>
                     <div class="divTableBody">
                         <div class="divTableRow">
-                            <div class="divTableCell" style="width:250px; height: 155px ">
+                            <div class="divTableCell" style="width:250px; height: 158px ">
                                 <h5>
                                      ${evaluation.activiteType.libelle}
                                 </h5>
                             </div>
-                            <div class="divTableCell" style="width:450px ;height: 155px">
+                            <div class="divTableCell" style="width:430px ;height: 158px">
                                   <#list evaluation.activiteType.competenceProfessionnelles?sort_by("numeroFiche") as  competence>
                    					 <p><span> ${competence.numeroFiche}.</span>${competence.libelle}</p>
                   				  </#list>
@@ -866,7 +872,7 @@
                     </div>
                 </div>
    			  </#list>
-                <table class="minimalistBlack" style="margin-top:80px;">
+                <table class="minimalistBlack" style="margin-top:50px;">
                     <tbody>
                         <tr>
                             <td>SIGLE</td>
@@ -916,7 +922,7 @@
                                 <div style=" display: inline-block;" class="arrow-right arrow-formateur"></div>
 								${formateur.dateSignature}                            </td>
                             <td>
-                                <img src="" alt="" width="100px" height="50px">Signature
+                                <img src="  ${formateur.formateurEvaluateur.utilisateur.signature.pieceJointe}" alt="" width="100px" height="50px">
                             </td>
                         </tr>
                     </tbody>
@@ -948,9 +954,11 @@
                 </p>
                 <h4>
                     Signature du candidat pour information:
+                    
                 </h4>
+                <img src="  ${livertEval.etudiant.utilisateur.signature.pieceJointe}" alt="" width="100px" height="70px">
         </footer>
-        <table class="minimalistBlack" style="margin-top:80px;">
+        <table class="minimalistBlack" style="margin-top:210px;">
                     <tbody>
                         <tr>
                             <td>SIGLE</td>

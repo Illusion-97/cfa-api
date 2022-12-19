@@ -12,7 +12,9 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.SignatureDto;
 import fr.dawan.AppliCFABack.entities.Signature;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.repositories.SignatureRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 /***
  * 
@@ -29,6 +31,8 @@ public class SignatureServiceImpl implements SignatureService{
 
 	@Autowired
 	private SignatureRepository signatureRepository;
+	@Autowired
+	private UtilisateurRepository utilisateurRepository;
 	
 	/**
 	 * Récupération de la signature en fonction de son id
@@ -55,7 +59,9 @@ public class SignatureServiceImpl implements SignatureService{
 	 */
 	@Override
 	public SignatureDto saveOrUpdate(SignatureDto tDto) throws SaveInvalidException {
+		Utilisateur uti =  utilisateurRepository.getOne(tDto.getUtilisateurId());
 		Signature s = DtoTools.convert(tDto, Signature.class);
+		uti.setSignature(s);
 		s = signatureRepository.saveAndFlush(s);
 		return DtoTools.convert(s, SignatureDto.class);
 	}
