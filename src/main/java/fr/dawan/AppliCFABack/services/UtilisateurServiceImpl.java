@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -30,13 +29,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.univocity.parsers.common.processor.AbstractRowProcessor;
 import com.univocity.parsers.common.record.Record;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 
 import fr.dawan.AppliCFABack.dto.AdresseDto;
-import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
@@ -705,7 +702,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		List<UtilisateurDto> res = new ArrayList<>();
 		for (Utilisateur u : users) {
-			res.add(mapper.utilisateurToUtilisateurDto(u));
+			UtilisateurDto uDto = mapper.utilisateurToUtilisateurDto(u);
+			
+			List<UtilisateurRoleDto> userRolesDto = new ArrayList<>();
+			for(UtilisateurRole ur : u.getRoles()) {
+				userRolesDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(ur));
+			}
+			uDto.setRolesDto(userRolesDto);
+			res.add(uDto);
 		}
 		return res;
 	}

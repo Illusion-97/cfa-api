@@ -6,12 +6,27 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import fr.dawan.AppliCFABack.dto.customdtos.*;
-import fr.dawan.AppliCFABack.entities.*;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
+import fr.dawan.AppliCFABack.dto.customdtos.MembreEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Formation;
+import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
+import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.Note;
+import fr.dawan.AppliCFABack.entities.Positionnement;
+import fr.dawan.AppliCFABack.entities.Projet;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.tools.DateConverter;
 /**
 *
