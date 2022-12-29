@@ -64,4 +64,5 @@ public interface UtilisateurService {
 	void fetchAllDG2Employees(String email, String password)
 			throws FetchDG2Exception, URISyntaxException, JsonProcessingException;
 
+
 }

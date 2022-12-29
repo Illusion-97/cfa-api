@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
@@ -141,5 +142,6 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
         utilisateurRoleRepository.deleteById(id);
 
     }
+
 
 }

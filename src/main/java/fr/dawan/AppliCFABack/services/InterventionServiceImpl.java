@@ -466,17 +466,22 @@ public class InterventionServiceImpl implements InterventionService {
 						.findByUtilisateurId(UtilisateurOptional.get().getId());
 				Formateur formateur = new Formateur();
 				List<Intervention> interventions = new ArrayList<>();
-				if (formateurOpt.isPresent()) {
-					Optional<Intervention> interventionDbGroup = interventionRepository.findInterventionBydateFormationAndFormateur(interventionDG2.getDateDebut(),interventionDG2.getDateFin(),formateurOpt.get().getId());
-					if (interventionDbGroup.isPresent()) {
-						if(!interventionDbGroup.get().getPromotionId().contains(promotionOpt.get().getId()))
-						{
-							interventionDbGroup.get().getPromotions().add(promotionOpt.get());
-							promotionOpt.get().getInterventions().add(interventionDbGroup.get());
-							result.add(interventionDbGroup.get());
-							continue;
+				try {
+					if (formateurOpt.isPresent()) { //doublon de résultat dg2 (données en double dans la base ?)
+						Optional<Intervention> interventionDbGroup = interventionRepository.findInterventionBydateFormationAndFormateur(interventionDG2.getDateDebut(),interventionDG2.getDateFin(),formateurOpt.get().getId());
+						if (interventionDbGroup.isPresent()) {
+							if(!interventionDbGroup.get().getPromotionId().contains(promotionOpt.get().getId()))
+							{
+								interventionDbGroup.get().getPromotions().add(promotionOpt.get());
+								promotionOpt.get().getInterventions().add(interventionDbGroup.get());
+								result.add(interventionDbGroup.get());
+								continue;
+							}
 						}
 					}
+
+				} catch (Exception e) {
+					continue;
 				}
 
 				if (!formateurOpt.isPresent()) {
