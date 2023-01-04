@@ -944,7 +944,7 @@
                                 30/12/2022
                             </td>
                             <td>
-                                <img src="" alt="" width="100px" height="50px">Signature
+                                <img src="${backendUrl}/pictures/JeromeSignature.png" alt="" width="100px" height="50px">
                             </td>
                         </tr>
                     </tbody>
