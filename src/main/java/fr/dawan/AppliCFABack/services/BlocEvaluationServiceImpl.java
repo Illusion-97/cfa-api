@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -14,6 +16,7 @@ import fr.dawan.AppliCFABack.dto.EvaluationFormationDto;
 import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import fr.dawan.AppliCFABack.entities.EvaluationFormation;
 import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
+import fr.dawan.AppliCFABack.repositories.EvaluationFormationRepository;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 /**
  * 
@@ -27,6 +30,8 @@ import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 public class BlocEvaluationServiceImpl implements BlocEvaluationService  {
 @Autowired
 private BlocEvaluationRepository blocEvaluationRepository;
+@Autowired
+private EvaluationFormationRepository evaluationFormationRepository;
 	@Override
 	public BlocEvaluationDto getById(long id) {
 		Optional<BlocEvaluation> blocEvaluation = blocEvaluationRepository.findById(id);
@@ -39,9 +44,16 @@ private BlocEvaluationRepository blocEvaluationRepository;
 
 	@Override
 	public BlocEvaluationDto saveOrUpdate(BlocEvaluationDto tDto) throws SaveInvalidException {
-		BlocEvaluation blocE = DtoTools.convert(tDto, BlocEvaluation.class);
-		blocE = blocEvaluationRepository.saveAndFlush(blocE);
 		
+		List<EvaluationFormation> evaluationFormations = new ArrayList<>();
+		for (Long id : tDto.getEvaluationsFormationsId()) {
+		EvaluationFormation evaF = 	 evaluationFormationRepository.getOne(id);
+		evaluationFormations.add(evaF);
+		}
+		
+		BlocEvaluation blocE = DtoTools.convert(tDto, BlocEvaluation.class);
+		blocE.setEvaluationFormations(evaluationFormations);
+		blocE = blocEvaluationRepository.saveAndFlush(blocE);
 		return DtoTools.convert(blocE, BlocEvaluationDto.class);
 	}
 

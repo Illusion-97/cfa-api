@@ -21,7 +21,7 @@ public class LivretEvaluationDto extends BaseEntityDto implements Serializable{
 	private long formateurEvaluateurId;
 	private LocalDate dateSignature;
 	private EtatLivertEval etat;
-
+	private String titreProfessionnelTitre;
 
 	/**
 	 * @return le etudiantId
@@ -117,8 +117,20 @@ public class LivretEvaluationDto extends BaseEntityDto implements Serializable{
 	public void setEtat(EtatLivertEval etat) {
 		this.etat = etat;
 	}
+	/**
+	 * @return le titreProfessionnelTitre
+	 */
+	public String getTitreProfessionnelTitre() {
+		return titreProfessionnelTitre;
+	}
+	/**
+	 * @param titreProfessionnelTitre le titreProfessionnelTitre à affecter
+	 
+	 */
+	public void setTitreProfessionnelTitre(String titreProfessionnelTitre) {
+		this.titreProfessionnelTitre = titreProfessionnelTitre;
+	}
 
-	
 	
 	
 }

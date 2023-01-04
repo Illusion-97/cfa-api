@@ -190,7 +190,7 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	
 			EvaluationDto evaluationDto = new EvaluationDto();
 			evaluationDto.setActiviteType(activiteType);
-			BlocEvaluation blocEvaluation = blocEvaluationRepository.findByActiviteTypeId(activiteType.getId());
+			BlocEvaluation blocEvaluation = blocEvaluationRepository.findByActiviteTypeIdAndLivretEvaluationId(activiteType.getId(),livretEvaluation.get().getId()).get();
 			evaluationDto.setBlocEvaluation(blocEvaluation);
 			formateursEvaluateurs.add(blocEvaluation);
 			List<EvaluationFormation> evaluationFormations = blocEvaluation.getEvaluationsFormations();
