@@ -25,11 +25,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
@@ -884,7 +886,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 		}
 
 	}
-
+	
+	@Async("myTaskExecutor")
 	@Override
 	public void fetchAllEtudiantDG2ByIdPromotion(String email, String password, long idPromotionDg2)
 			throws FetchDG2Exception, JsonProcessingException, URISyntaxException {
@@ -908,6 +911,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		if (repWs.getStatusCode() == HttpStatus.OK) {
 			String json = repWs.getBody();
+			importUserFromJson(json, promotion);
+			
 			cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {
 			});
 
@@ -1040,7 +1045,140 @@ public class EtudiantServiceImpl implements EtudiantService {
 		}
 	}
 
-	@Override
+	@Async("myTaskExecutor")
+	private void importUserFromJson(String json, Optional<Promotion> promotion) throws JsonMappingException, JsonProcessingException {
+	    ObjectMapper objectMapper = new ObjectMapper();
+        List<EtudiantUtilisateurDG2Dto> cResJson;
+        
+	    cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {
+        });
+
+        for (EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
+
+            // Etudiant etudiantDg2 = mapper.etudiantUtilisateurDG2DtoToEtudiant(eDG2);
+            Optional<Utilisateur> utiLisateurOptional = utilisateurRepository
+                    .findDistinctByIdDg2(eDG2.getPersonId());
+            Utilisateur utilisateurDg2 = mapper.etudiantUtilisateurDG2DtoToUtilisateur(eDG2);
+            System.out.println("DG2 " + utilisateurDg2.toString());
+            Adresse adresseDg2 = mapper.etudiantUtilisateurDG2DtoToAdresse(eDG2);
+            Etudiant etudiant = new Etudiant();
+            if (utiLisateurOptional.isPresent()) {
+                System.out.println(utiLisateurOptional.get());
+                if (utiLisateurOptional.get().getEtudiant() != null) {
+                    etudiant = utiLisateurOptional.get().getEtudiant();
+                }
+
+                if (!adresseDg2.equals(utiLisateurOptional.get().getAdresse())) {
+                    if (utiLisateurOptional.get().getAdresse() != null) {
+                        adresseDg2.setId(utiLisateurOptional.get().getAdresse().getId());
+                        adresseDg2.setVersion(utiLisateurOptional.get().getAdresse().getVersion());
+                        adresseRepository.saveAndFlush(adresseDg2);
+                    } else {
+                        adresseDg2 = adresseRepository.saveAndFlush(adresseDg2);
+                        utiLisateurOptional.get().setAdresse(adresseDg2);
+                    }
+
+                }
+
+                utilisateurDg2.setPassword(utiLisateurOptional.get().getPassword());
+                utilisateurDg2.setId(utiLisateurOptional.get().getId());
+                utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
+                if (utilisateurDg2.equals(utiLisateurOptional.get()) && etudiant.getPromotions().contains(promotion.get())) {
+                    continue;
+                } else {
+
+                        utilisateurDg2.setId(utiLisateurOptional.get().getId());
+                        utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
+                        if (etudiant != null) {
+                            List<Etudiant> etudiants = new ArrayList<>();
+                            List<Promotion> promotions = new ArrayList<>();
+                            if (etudiant.getPromotions() != null) {
+                                promotions.addAll(etudiant.getPromotions());
+                            }
+                            if (!promotions.contains(promotion.get())) {
+                                promotions.add(promotion.get());
+                            }
+                            etudiant.setPromotions(promotions);
+                            if (promotion.get().getEtudiants() != null) {
+                                etudiants.addAll(promotion.get().getEtudiants());
+                            }
+                            if (!etudiants.contains(etudiant)) {
+                                etudiants.add(etudiant);
+                            }
+                            promotion.get().setEtudiants(etudiants);
+                            
+                            
+                        }
+                }
+
+                utilisateurDg2.setEtudiant(etudiant);
+                etudiant.setUtilisateur(utilisateurDg2);
+
+            } else {
+                List<Promotion> promotions = new ArrayList<>();
+                promotions.add(promotion.get());
+                utilisateurDg2.setAdresse(adresseDg2);
+
+                etudiant.setPromotions(promotions);
+                List<Etudiant> etudiants = new ArrayList<>();
+                etudiants.add(etudiant);
+                if (promotion.get().getEtudiants() != null) {
+                    etudiants.addAll(promotion.get().getEtudiants());
+                }
+                promotion.get().setEtudiants(etudiants);
+                try {
+                    utilisateurDg2.setPassword(HashTools.hashSHA512("password"));
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, "setPassword failed", e);
+                }
+
+                List<UtilisateurRole> roles = new ArrayList<>();
+                List<Utilisateur> utilisateurs = new ArrayList<>();
+                UtilisateurRole etudiantRole = utilisateurRoleRepository.findByIntituleContaining("ETUDIANT");
+                roles.add(etudiantRole);
+
+                utilisateurs.add(utilisateurDg2);
+                if (etudiantRole.getUtilisateurs() != null) {
+                    utilisateurs.addAll(etudiantRole.getUtilisateurs());
+
+                }
+                utilisateurDg2.setRoles(roles);
+                etudiantRole.setUtilisateurs(utilisateurs);
+                utilisateurDg2.setEtudiant(etudiant);
+                etudiant.setUtilisateur(utilisateurDg2);
+
+            }
+            utilisateurRepository.saveAndFlush(utilisateurDg2);
+            
+            Etudiant etuSaved = etudiantRepository.saveAndFlush(etudiant);
+            Optional<LivretEvaluation> evaOptional = livretEvaluationRepository.findByEtudiantIdAndTitreProfessionnelId(etuSaved.getId(), promotion.get().getCursus().getId());
+            if (!evaOptional.isPresent()) {
+                LivretEvaluation livert = new LivretEvaluation();
+                livert.setEtudiant(etuSaved);
+                livert.setTitreProfessionnel(promotion.get().getCursus());
+                livert.setObservation("Cliquez ici pour taper du texte.");
+                livert.setOrganismeFormation(promotion.get().getCentreFormation());
+                livert.setEtat(EtatLivertEval.ENATTENTEDEVALIDATION);
+                livert = livretEvaluationRepository.saveAndFlush(livert);
+                Set<ActiviteType> activiteTypes = promotion.get().getCursus().getActiviteTypes();
+                
+                for (ActiviteType at : activiteTypes) {
+                    
+                    BlocEvaluation blocEvaluation = new BlocEvaluation();
+                    blocEvaluation.setLivretEvaluation(livert);
+                    blocEvaluation.setActiviteType(at);
+                    blocEvaluationRepository.saveAndFlush(blocEvaluation);
+                    
+                }
+            }
+            
+
+        }
+
+        
+    }
+
+    @Override
 	public AccueilEtudiantDto getAccueilEtudiant(long id) {
 		Optional<Etudiant> e = etudiantRepository.findById(id);
 		if(e.isPresent()) {
