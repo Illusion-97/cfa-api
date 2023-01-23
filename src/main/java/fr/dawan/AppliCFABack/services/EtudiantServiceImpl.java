@@ -911,7 +911,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		if (repWs.getStatusCode() == HttpStatus.OK) {
 			String json = repWs.getBody();
-			importUserFromJson(json, promotion);
+			//importUserFromJson(json, promotion);
 			
 			cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {
 			});

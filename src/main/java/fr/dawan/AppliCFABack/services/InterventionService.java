@@ -33,7 +33,7 @@ public interface InterventionService {
 
 	List<FormateurDto> findFormateursByInterventionsId(long id);
 
-	List<Intervention> getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
+	void getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
 			throws FetchDG2Exception, URISyntaxException;
 	int fetchDGInterventions(String email, String password) throws FetchDG2Exception, URISyntaxException;
 

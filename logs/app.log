@@ -1422,3 +1422,217 @@ Caused by: java.sql.SQLSyntaxErrorException: (conn=3) Base 'cfadb' inconnue
 2023-01-23 14:43:03.112  INFO 17420 --- [RMI TCP Connection(17)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-01-23 14:43:03.123  INFO 17420 --- [RMI TCP Connection(17)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-01-23 14:43:03.131  INFO 17420 --- [RMI TCP Connection(17)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-01-23 16:33:12.687  INFO 2180 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on DESKTOP-S19O773 with PID 2180 (C:\CODE_BACK\cfa-portal-api\target\classes started by Nicolas in C:\CODE_BACK\cfa-portal-api)
+2023-01-23 16:33:12.691  INFO 2180 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-01-23 16:33:15.641  INFO 2180 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-01-23 16:33:16.177  INFO 2180 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 522ms. Found 36 JPA repository interfaces.
+2023-01-23 16:33:17.229  INFO 2180 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2023-01-23 16:33:17.251  INFO 2180 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-01-23 16:33:17.253  INFO 2180 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-01-23 16:33:17.552  INFO 2180 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-01-23 16:33:17.553  INFO 2180 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4770 ms
+2023-01-23 16:33:18.113  INFO 2180 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-23 16:33:18.213  INFO 2180 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-01-23 16:33:18.529  INFO 2180 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-01-23 16:33:18.709  INFO 2180 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-01-23 16:33:18.876  INFO 2180 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-01-23 16:33:18.919  INFO 2180 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-01-23 16:33:21.523  WARN 2180 --- [main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table experience_professionnelle add constraint FKs5nvl3f94lc6bmb0mot2w7m14 foreign key (dossier_professionnel_id) references dossier_professionnel (id)" via JDBC Statement
+
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table experience_professionnelle add constraint FKs5nvl3f94lc6bmb0mot2w7m14 foreign key (dossier_professionnel_id) references dossier_professionnel (id)" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applyForeignKeys(AbstractSchemaMigrator.java:433)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:249)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:378)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1855)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1792)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:595)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1109)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:551)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at fr.dawan.AppliCFABack.AppliCfaBackApplication.main(AppliCfaBackApplication.java:21)
+Caused by: java.sql.SQLIntegrityConstraintViolationException: (conn=106) Cannot add or update a child row: a foreign key constraint fails (`cfadb`.`#sql-2bf8_6a`, CONSTRAINT `FKs5nvl3f94lc6bmb0mot2w7m14` FOREIGN KEY (`dossier_professionnel_id`) REFERENCES `dossier_professionnel` (`id`))
+	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:70)
+	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
+	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
+	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:362)
+	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:499)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
+	... 34 common frames omitted
+Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: Cannot add or update a child row: a foreign key constraint fails (`cfadb`.`#sql-2bf8_6a`, CONSTRAINT `FKs5nvl3f94lc6bmb0mot2w7m14` FOREIGN KEY (`dossier_professionnel_id`) REFERENCES `dossier_professionnel` (`id`))
+	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
+	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:356)
+	... 38 common frames omitted
+Caused by: java.sql.SQLException: Cannot add or update a child row: a foreign key constraint fails (`cfadb`.`#sql-2bf8_6a`, CONSTRAINT `FKs5nvl3f94lc6bmb0mot2w7m14` FOREIGN KEY (`dossier_professionnel_id`) REFERENCES `dossier_professionnel` (`id`))
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1674)
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1536)
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1499)
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
+	... 39 common frames omitted
+
+2023-01-23 16:33:25.035  INFO 2180 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-23 16:33:25.051  INFO 2180 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-23 16:33:26.271  INFO 2180 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-01-23 16:33:26.272  INFO 2180 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-01-23 16:33:26.351  WARN 2180 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-23 16:33:29.448  INFO 2180 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2023-01-23 16:33:29.805  INFO 2180 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-01-23 16:33:29.806  INFO 2180 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-01-23 16:33:29.807  INFO 2180 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-01-23 16:33:29.970  INFO 2180 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-01-23 16:33:29.971  INFO 2180 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 510 ms
+2023-01-23 16:33:30.013  INFO 2180 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-01-23 16:33:30.019  INFO 2180 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-01-23 16:33:30.019  INFO 2180 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-01-23 16:33:30.038  INFO 2180 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 18 ms
+2023-01-23 16:33:31.593  INFO 2180 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-01-23 16:33:31.596  INFO 2180 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-01-23 16:33:35.544  INFO 2180 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-01-23 16:33:35.546  INFO 2180 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-01-23 16:33:35.547  INFO 2180 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-01-23 16:33:35.552  INFO 2180 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 23.569 seconds (JVM running for 25.803)
+2023-01-23 16:39:01.442  INFO 2180 --- [http-nio-8085-exec-1] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:01.443  INFO 2180 --- [http-nio-8085-exec-1] global                                   : URI =/utilisateurs/1/planning
+2023-01-23 16:39:01.444  INFO 2180 --- [http-nio-8085-exec-1] global                                   : Header (authorization) :null
+2023-01-23 16:39:01.517  INFO 2180 --- [http-nio-8085-exec-2] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:01.517  INFO 2180 --- [http-nio-8085-exec-2] global                                   : URI =/utilisateurs/1/planning
+2023-01-23 16:39:01.518  INFO 2180 --- [http-nio-8085-exec-2] global                                   : Header (authorization) :Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZmFAZGF3YW4uZnIiLCJ1c2VyX2VtYWlsIjoiY2ZhQGRhd2FuLmZyIiwidXNlcl9pZCI6MSwiZXhwIjoxNjc0NDk5MjUzLCJpYXQiOjE2NzQ0ODEyNTN9.qcgs7T6MbNDrwBK4IePgV0B98BBpIHnA0MwqyLYlFktR5nwyLH7E-MDJKkEagOp5GZ_kQw3VwCidGPdQLXPB2g
+2023-01-23 16:39:02.237 ERROR 2180 --- [http-nio-8085-exec-2] unknown.jul.logger                       : fr.dawan.AppliCFABack.interceptors.TokenException: Erreur : jeton non reconnu !
+	at fr.dawan.AppliCFABack.interceptors.TokenInterceptor.preHandle(TokenInterceptor.java:45)
+	at org.springframework.web.servlet.HandlerExecutionChain.applyPreHandle(HandlerExecutionChain.java:141)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1035)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.servlet.resource.ResourceUrlEncodingFilter.doFilter(ResourceUrlEncodingFilter.java:64)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:373)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+2023-01-23 16:39:09.927  INFO 2180 --- [http-nio-8085-exec-4] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:09.928  INFO 2180 --- [http-nio-8085-exec-4] global                                   : URI =/authenticate
+2023-01-23 16:39:09.928  INFO 2180 --- [http-nio-8085-exec-4] global                                   : Header (authorization) :null
+2023-01-23 16:39:09.935  INFO 2180 --- [http-nio-8085-exec-5] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:09.936  INFO 2180 --- [http-nio-8085-exec-5] global                                   : URI =/authenticate
+2023-01-23 16:39:09.936  INFO 2180 --- [http-nio-8085-exec-5] global                                   : Header (authorization) :null
+2023-01-23 16:39:10.304  INFO 2180 --- [http-nio-8085-exec-6] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:10.305  INFO 2180 --- [http-nio-8085-exec-6] global                                   : URI =/utilisateurs/email=cfa@dawan.fr
+2023-01-23 16:39:10.305  INFO 2180 --- [http-nio-8085-exec-6] global                                   : Header (authorization) :null
+2023-01-23 16:39:10.316  INFO 2180 --- [http-nio-8085-exec-7] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:10.317  INFO 2180 --- [http-nio-8085-exec-7] global                                   : URI =/utilisateurs/email=cfa@dawan.fr
+2023-01-23 16:39:10.317  INFO 2180 --- [http-nio-8085-exec-7] global                                   : Header (authorization) :Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZmFAZGF3YW4uZnIiLCJ1c2VyX2VtYWlsIjoiY2ZhQGRhd2FuLmZyIiwidXNlcl9pZCI6MSwiZXhwIjoxNjc0NTA2MzUwLCJpYXQiOjE2NzQ0ODgzNTB9.1JxisCPuep7J9CCIrJn1ybzEJaF9DOsxw9touYfl5g3IGgrr0LxrXT31A3QfmC4xaLylygPe42k9Zlz8DcKg4A
+2023-01-23 16:39:10.376  INFO 2180 --- [http-nio-8085-exec-8] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:10.376  INFO 2180 --- [http-nio-8085-exec-8] global                                   : URI =/utilisateurs/1/isReferent
+2023-01-23 16:39:10.376  INFO 2180 --- [http-nio-8085-exec-8] global                                   : Header (authorization) :null
+2023-01-23 16:39:10.394  INFO 2180 --- [http-nio-8085-exec-9] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:10.394  INFO 2180 --- [http-nio-8085-exec-9] global                                   : URI =/utilisateurs/1/isReferent
+2023-01-23 16:39:10.394  INFO 2180 --- [http-nio-8085-exec-9] global                                   : Header (authorization) :Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZmFAZGF3YW4uZnIiLCJ1c2VyX2VtYWlsIjoiY2ZhQGRhd2FuLmZyIiwidXNlcl9pZCI6MSwiZXhwIjoxNjc0NTA2MzUwLCJpYXQiOjE2NzQ0ODgzNTB9.1JxisCPuep7J9CCIrJn1ybzEJaF9DOsxw9touYfl5g3IGgrr0LxrXT31A3QfmC4xaLylygPe42k9Zlz8DcKg4A
+2023-01-23 16:39:10.435  INFO 2180 --- [http-nio-8085-exec-1] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:10.436  INFO 2180 --- [http-nio-8085-exec-10] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:10.436  INFO 2180 --- [http-nio-8085-exec-10] global                                   : URI =/utilisateurs/0/7
+2023-01-23 16:39:10.436  INFO 2180 --- [http-nio-8085-exec-10] global                                   : Header (authorization) :null
+2023-01-23 16:39:10.436  INFO 2180 --- [http-nio-8085-exec-1] global                                   : URI =/utilisateurs/count
+2023-01-23 16:39:10.437  INFO 2180 --- [http-nio-8085-exec-1] global                                   : Header (authorization) :null
+2023-01-23 16:39:10.449  INFO 2180 --- [http-nio-8085-exec-2] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:10.450  INFO 2180 --- [http-nio-8085-exec-2] global                                   : URI =/utilisateursRoles
+2023-01-23 16:39:10.450  INFO 2180 --- [http-nio-8085-exec-2] global                                   : Header (authorization) :null
+2023-01-23 16:39:10.464  INFO 2180 --- [http-nio-8085-exec-3] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:10.465  INFO 2180 --- [http-nio-8085-exec-3] global                                   : URI =/utilisateurs/0/7
+2023-01-23 16:39:10.465  INFO 2180 --- [http-nio-8085-exec-3] global                                   : Header (authorization) :Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZmFAZGF3YW4uZnIiLCJ1c2VyX2VtYWlsIjoiY2ZhQGRhd2FuLmZyIiwidXNlcl9pZCI6MSwiZXhwIjoxNjc0NTA2MzUwLCJpYXQiOjE2NzQ0ODgzNTB9.1JxisCPuep7J9CCIrJn1ybzEJaF9DOsxw9touYfl5g3IGgrr0LxrXT31A3QfmC4xaLylygPe42k9Zlz8DcKg4A
+2023-01-23 16:39:10.474  INFO 2180 --- [http-nio-8085-exec-4] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:10.474  INFO 2180 --- [http-nio-8085-exec-4] global                                   : URI =/utilisateurs/count
+2023-01-23 16:39:10.474  INFO 2180 --- [http-nio-8085-exec-4] global                                   : Header (authorization) :Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZmFAZGF3YW4uZnIiLCJ1c2VyX2VtYWlsIjoiY2ZhQGRhd2FuLmZyIiwidXNlcl9pZCI6MSwiZXhwIjoxNjc0NTA2MzUwLCJpYXQiOjE2NzQ0ODgzNTB9.1JxisCPuep7J9CCIrJn1ybzEJaF9DOsxw9touYfl5g3IGgrr0LxrXT31A3QfmC4xaLylygPe42k9Zlz8DcKg4A
+2023-01-23 16:39:10.479  INFO 2180 --- [http-nio-8085-exec-5] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:10.480  INFO 2180 --- [http-nio-8085-exec-5] global                                   : URI =/utilisateursRoles
+2023-01-23 16:39:10.480  INFO 2180 --- [http-nio-8085-exec-5] global                                   : Header (authorization) :Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZmFAZGF3YW4uZnIiLCJ1c2VyX2VtYWlsIjoiY2ZhQGRhd2FuLmZyIiwidXNlcl9pZCI6MSwiZXhwIjoxNjc0NTA2MzUwLCJpYXQiOjE2NzQ0ODgzNTB9.1JxisCPuep7J9CCIrJn1ybzEJaF9DOsxw9touYfl5g3IGgrr0LxrXT31A3QfmC4xaLylygPe42k9Zlz8DcKg4A
+2023-01-23 16:39:24.273  INFO 2180 --- [http-nio-8085-exec-10] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:24.274  INFO 2180 --- [http-nio-8085-exec-10] global                                   : URI =/etudiants/dg2
+2023-01-23 16:39:24.274  INFO 2180 --- [http-nio-8085-exec-10] global                                   : Header (authorization) :null
+2023-01-23 16:39:24.276  INFO 2180 --- [http-nio-8085-exec-2] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:24.277  INFO 2180 --- [http-nio-8085-exec-2] global                                   : URI =/utilisateurs/count
+2023-01-23 16:39:24.277  INFO 2180 --- [http-nio-8085-exec-2] global                                   : Header (authorization) :Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZmFAZGF3YW4uZnIiLCJ1c2VyX2VtYWlsIjoiY2ZhQGRhd2FuLmZyIiwidXNlcl9pZCI6MSwiZXhwIjoxNjc0NTA2MzUwLCJpYXQiOjE2NzQ0ODgzNTB9.1JxisCPuep7J9CCIrJn1ybzEJaF9DOsxw9touYfl5g3IGgrr0LxrXT31A3QfmC4xaLylygPe42k9Zlz8DcKg4A
+2023-01-23 16:39:24.279  INFO 2180 --- [http-nio-8085-exec-1] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:24.279  INFO 2180 --- [http-nio-8085-exec-1] global                                   : URI =/utilisateurs/0/7
+2023-01-23 16:39:24.282  INFO 2180 --- [http-nio-8085-exec-1] global                                   : Header (authorization) :Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZmFAZGF3YW4uZnIiLCJ1c2VyX2VtYWlsIjoiY2ZhQGRhd2FuLmZyIiwidXNlcl9pZCI6MSwiZXhwIjoxNjc0NTA2MzUwLCJpYXQiOjE2NzQ0ODgzNTB9.1JxisCPuep7J9CCIrJn1ybzEJaF9DOsxw9touYfl5g3IGgrr0LxrXT31A3QfmC4xaLylygPe42k9Zlz8DcKg4A
+2023-01-23 16:39:24.285  INFO 2180 --- [http-nio-8085-exec-9] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:39:24.285  INFO 2180 --- [http-nio-8085-exec-9] global                                   : URI =/etudiants/dg2
+2023-01-23 16:39:24.285  INFO 2180 --- [http-nio-8085-exec-9] global                                   : Header (authorization) :Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZmFAZGF3YW4uZnIiLCJ1c2VyX2VtYWlsIjoiY2ZhQGRhd2FuLmZyIiwidXNlcl9pZCI6MSwiZXhwIjoxNjc0NTA2MzUwLCJpYXQiOjE2NzQ0ODgzNTB9.1JxisCPuep7J9CCIrJn1ybzEJaF9DOsxw9touYfl5g3IGgrr0LxrXT31A3QfmC4xaLylygPe42k9Zlz8DcKg4A
+2023-01-23 16:41:48.013  INFO 2180 --- [http-nio-8085-exec-8] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:41:48.014  INFO 2180 --- [http-nio-8085-exec-8] global                                   : URI =/utilisateurs/count
+2023-01-23 16:41:48.014  INFO 2180 --- [http-nio-8085-exec-8] global                                   : Header (authorization) :null
+2023-01-23 16:41:48.014  INFO 2180 --- [http-nio-8085-exec-7] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:41:48.015  INFO 2180 --- [http-nio-8085-exec-7] global                                   : URI =/utilisateurs/0/7
+2023-01-23 16:41:48.015  INFO 2180 --- [http-nio-8085-exec-7] global                                   : Header (authorization) :null
+2023-01-23 16:41:48.019  INFO 2180 --- [http-nio-8085-exec-6] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:41:48.019  INFO 2180 --- [http-nio-8085-exec-6] global                                   : URI =/utilisateurs/count
+2023-01-23 16:41:48.019  INFO 2180 --- [http-nio-8085-exec-6] global                                   : Header (authorization) :Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZmFAZGF3YW4uZnIiLCJ1c2VyX2VtYWlsIjoiY2ZhQGRhd2FuLmZyIiwidXNlcl9pZCI6MSwiZXhwIjoxNjc0NTA2MzUwLCJpYXQiOjE2NzQ0ODgzNTB9.1JxisCPuep7J9CCIrJn1ybzEJaF9DOsxw9touYfl5g3IGgrr0LxrXT31A3QfmC4xaLylygPe42k9Zlz8DcKg4A
+2023-01-23 16:41:48.020  INFO 2180 --- [http-nio-8085-exec-10] global                                   : >>>>>> inside Token Interceptor...
+2023-01-23 16:41:48.020  INFO 2180 --- [http-nio-8085-exec-10] global                                   : URI =/utilisateurs/0/7
+2023-01-23 16:41:48.020  INFO 2180 --- [http-nio-8085-exec-10] global                                   : Header (authorization) :Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZmFAZGF3YW4uZnIiLCJ1c2VyX2VtYWlsIjoiY2ZhQGRhd2FuLmZyIiwidXNlcl9pZCI6MSwiZXhwIjoxNjc0NTA2MzUwLCJpYXQiOjE2NzQ0ODgzNTB9.1JxisCPuep7J9CCIrJn1ybzEJaF9DOsxw9touYfl5g3IGgrr0LxrXT31A3QfmC4xaLylygPe42k9Zlz8DcKg4A

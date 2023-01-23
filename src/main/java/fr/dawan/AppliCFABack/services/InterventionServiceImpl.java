@@ -18,6 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -387,17 +388,20 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public int fetchDGInterventions(String email, String password, long idPrmotionDg2)
 			throws FetchDG2Exception, URISyntaxException {
-		List<Intervention> interventions = new ArrayList<>();
-		interventions.addAll(getInterventionDG2ByIdPromotionDG2(email, password, idPrmotionDg2));
-		for (Intervention i : interventions) {
-			try {
-				interventionRepository.saveAndFlush(i);
-				// saveOrUpdate(DtoTools.convert(i, InterventionDto.class));
-			} catch (Exception e) {
-				logger.log(Level.WARNING, "save and flush intervention dg2 failed", e);
-			}
-		}
-		return interventions.size();
+//		List<Intervention> interventions = new ArrayList<>();
+//		interventions.addAll(getInterventionDG2ByIdPromotionDG2(email, password, idPrmotionDg2));
+//		for (Intervention i : interventions) {
+//			try {
+//				interventionRepository.saveAndFlush(i);
+//				// saveOrUpdate(DtoTools.convert(i, InterventionDto.class));
+//			} catch (Exception e) {
+//				logger.log(Level.WARNING, "save and flush intervention dg2 failed", e);
+//			}
+//		}
+//		return interventions.size();
+	    getInterventionDG2ByIdPromotionDG2(email, password, idPrmotionDg2);
+	    return 0;
+	    //TODO return string import...
 	}
 	/**
 	 * Va permettre l'import des intervention de Dg2
@@ -409,7 +413,7 @@ public class InterventionServiceImpl implements InterventionService {
 	 * @throws URISyntaxException, FetchDG2Exception
 	 */
 	@Override
-	public List<Intervention> getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
+	public void getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
 			throws FetchDG2Exception, URISyntaxException {
 		Optional<Promotion> promotionOpt = promoRepository.findByIdDg2(idPrmotionDg2);
 
@@ -430,153 +434,304 @@ public class InterventionServiceImpl implements InterventionService {
 
 		if (rep.getStatusCode() == HttpStatus.OK) {
 			String json = rep.getBody();
-
-			try {
-				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {
-				});
-			} catch (Exception e) {
-				logger.log(Level.WARNING, "json intervention dg2 failed", e);
-			}
-
-			for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
-				
-				Optional<Intervention> interventionDb = interventionRepository.findByIdDg2(iDtoDG2.getId());
-				DtoTools dtoTools = new DtoTools();
-				Intervention interventionDG2 = new Intervention();
-				try {
-					interventionDG2 = dtoTools.promotionOrInterventionDG2DtoToIntervention(iDtoDG2);
-				} catch (Exception e) {
-					logger.log(Level.WARNING, "mapper intervention dg2 failed", e);
-				}
-
-				Optional<Utilisateur> UtilisateurOptional = utilisateurRepository
-						.findByIdDg2(iDtoDG2.getTrainerPersonId());
-				if (!UtilisateurOptional.isPresent()) {
-					continue;
-				}
-				Optional<Formation> formationOpt = formationRepository.findByIdDg2(iDtoDG2.getCourseId());
-				if (formationOpt.isPresent()) {
-					interventionDG2.setFormation(formationOpt.get());
-//					throw new Exception("Formation introuvable veuiller mettre à jour les formations");
-				}
-				List<Formateur> formateurs = new ArrayList<>();
-				List<Promotion> promotions = new ArrayList<>();
-
-				Optional<Formateur> formateurOpt = formateurRepository
-						.findByUtilisateurId(UtilisateurOptional.get().getId());
-				Formateur formateur = new Formateur();
-				List<Intervention> interventions = new ArrayList<>();
-
-				if (formateurOpt.isPresent()) {
-					
-					try {  //doublon de résultat dg2 (données en double dans la base ?)
-
-						Optional<Intervention> interventionDbGroup = interventionRepository.findInterventionBydateFormationAndFormateur(interventionDG2.getDateDebut(),interventionDG2.getDateFin(),formateurOpt.get().getId());
-						if (interventionDbGroup.isPresent()) {
-							if(!interventionDbGroup.get().getPromotionId().contains(promotionOpt.get().getId()))
-							{
-								interventionDbGroup.get().getPromotions().add(promotionOpt.get());
-								promotionOpt.get().getInterventions().add(interventionDbGroup.get());
-								result.add(interventionDbGroup.get());
-								continue;
-							}
-						}
-
-					} catch (Exception e) {
-						
-						e.printStackTrace();
-						continue;
-					}
-				}
-
-				if (!formateurOpt.isPresent()) {
-					
-					UtilisateurRole formateurRole = utilisateurRoleRepository.findByIntituleContaining("FORMATEUR");
-					List<Utilisateur> utilisateurs = new ArrayList<>();
-					utilisateurs.add(UtilisateurOptional.get());
-					if (formateurRole.getUtilisateurs() != null) {
-						utilisateurs.addAll(formateurRole.getUtilisateurs());
-					} 
-					formateurRole.setUtilisateurs(utilisateurs);
-					if (UtilisateurOptional.get().getRoles() != null) {
-						if (!UtilisateurOptional.get().getRoles().contains(formateurRole)) {
-							UtilisateurOptional.get().getRoles().add(formateurRole);
-						}
-					} else {
-						List<UtilisateurRole> roles = new ArrayList<>();
-						roles.add(formateurRole);
-						UtilisateurOptional.get().setRoles(roles);
-					}
-					formateur.setUtilisateur(UtilisateurOptional.get());
-					formateur = formateurRepository.saveAndFlush(formateur);
-					UtilisateurOptional.get().setFormateur(formateur);
-					utilisateurRepository.saveAndFlush(UtilisateurOptional.get());
-				} else {
-					formateur.setId(formateurOpt.get().getId());
-					formateur.setVersion(formateurOpt.get().getVersion());
-					if (formateurOpt.get().getInterventions() != null) {
-						if (interventionDb.isPresent()) {
-							if (!formateurOpt.get().getInterventions().contains(interventionDb.get())) {
-								interventions.add(interventionDG2);
-							}
-						} else {
-							interventions.add(interventionDG2);
-						}
-
-						interventions.addAll(formateurOpt.get().getInterventions());
-					}
-				}
-
-				formateur.setUtilisateur(UtilisateurOptional.get());
-				UtilisateurOptional.get().setFormateur(formateur);
-				formateur.setInterventions(interventions);
-
-				if (!interventionDb.isPresent()) {
-
-					formateurs.add(formateur);
-					interventionDG2.setFormateurs(formateurs);
-
-					promotions.add(promotionOpt.get());
-
-					interventionDG2.setPromotions(promotions);
-					result.add(interventionDG2);
-
-					// si existe en BDD -> comparer tous les champs et si différents -> faire update
-				} else {
-					List<Long> formateursId = new ArrayList<Long>();
-					List<Long> promotionsId = new ArrayList<Long>();
-
-					if (interventionDb.get().getFormateurs() != null) {
-						formateursId = interventionDb.get().getFormateurs().stream().map(f -> f.getId())
-								.collect(Collectors.toList());
-						formateurs.addAll(interventionDb.get().getFormateurs());
-					}
-					if (!formateursId.contains(formateur.getId())) {
-						formateurs.add(formateur);
-					}
-					if (interventionDb.get().getPromotions() != null) {
-						promotionsId = interventionDb.get().getPromotionId();
-						promotions.addAll(interventionDb.get().getPromotions());
-					}
-					if (!promotionsId.contains(promotionOpt.get().getId())) {
-						promotions.add(promotionOpt.get());
-					}
-					interventionDG2.setFormateurs(formateurs);
-					interventionDG2.setPromotions(promotions);
-					if (interventionDb.get().equals(interventionDG2)) {
-						continue;
-
-					} else {
-						interventionDG2.setId(interventionDb.get().getId());
-						interventionDG2.setVersion(interventionDb.get().getVersion());
-						result.add(interventionDG2);
-					}
-				}
-			}
+			importInterventionFromJson(json, promotionOpt, fetchResJson, result);
+			
+//			try {
+//				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {
+//				});
+//			} catch (Exception e) {
+//				logger.log(Level.WARNING, "json intervention dg2 failed", e);
+//			}
+//
+//			for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
+//				
+//				Optional<Intervention> interventionDb = interventionRepository.findByIdDg2(iDtoDG2.getId());
+//				DtoTools dtoTools = new DtoTools();
+//				Intervention interventionDG2 = new Intervention();
+//				try {
+//					interventionDG2 = dtoTools.promotionOrInterventionDG2DtoToIntervention(iDtoDG2);
+//				} catch (Exception e) {
+//					logger.log(Level.WARNING, "mapper intervention dg2 failed", e);
+//				}
+//
+//				Optional<Utilisateur> UtilisateurOptional = utilisateurRepository
+//						.findByIdDg2(iDtoDG2.getTrainerPersonId());
+//				if (!UtilisateurOptional.isPresent()) {
+//					continue;
+//				}
+//				Optional<Formation> formationOpt = formationRepository.findByIdDg2(iDtoDG2.getCourseId());
+//				if (formationOpt.isPresent()) {
+//					interventionDG2.setFormation(formationOpt.get());
+////					throw new Exception("Formation introuvable veuiller mettre à jour les formations");
+//				}
+//				List<Formateur> formateurs = new ArrayList<>();
+//				List<Promotion> promotions = new ArrayList<>();
+//
+//				Optional<Formateur> formateurOpt = formateurRepository
+//						.findByUtilisateurId(UtilisateurOptional.get().getId());
+//				Formateur formateur = new Formateur();
+//				List<Intervention> interventions = new ArrayList<>();
+//
+//				if (formateurOpt.isPresent()) {
+//					
+//					try {  //doublon de résultat dg2 (données en double dans la base ?)
+//
+//						Optional<Intervention> interventionDbGroup = interventionRepository.findInterventionBydateFormationAndFormateur(interventionDG2.getDateDebut(),interventionDG2.getDateFin(),formateurOpt.get().getId());
+//						if (interventionDbGroup.isPresent()) {
+//							if(!interventionDbGroup.get().getPromotionId().contains(promotionOpt.get().getId()))
+//							{
+//								interventionDbGroup.get().getPromotions().add(promotionOpt.get());
+//								promotionOpt.get().getInterventions().add(interventionDbGroup.get());
+//								result.add(interventionDbGroup.get());
+//								continue;
+//							}
+//						}
+//
+//					} catch (Exception e) {
+//						
+//						e.printStackTrace();
+//						continue;
+//					}
+//				}
+//
+//				if (!formateurOpt.isPresent()) {
+//					
+//					UtilisateurRole formateurRole = utilisateurRoleRepository.findByIntituleContaining("FORMATEUR");
+//					List<Utilisateur> utilisateurs = new ArrayList<>();
+//					utilisateurs.add(UtilisateurOptional.get());
+//					if (formateurRole.getUtilisateurs() != null) {
+//						utilisateurs.addAll(formateurRole.getUtilisateurs());
+//					} 
+//					formateurRole.setUtilisateurs(utilisateurs);
+//					if (UtilisateurOptional.get().getRoles() != null) {
+//						if (!UtilisateurOptional.get().getRoles().contains(formateurRole)) {
+//							UtilisateurOptional.get().getRoles().add(formateurRole);
+//						}
+//					} else {
+//						List<UtilisateurRole> roles = new ArrayList<>();
+//						roles.add(formateurRole);
+//						UtilisateurOptional.get().setRoles(roles);
+//					}
+//					formateur.setUtilisateur(UtilisateurOptional.get());
+//					formateur = formateurRepository.saveAndFlush(formateur);
+//					UtilisateurOptional.get().setFormateur(formateur);
+//					utilisateurRepository.saveAndFlush(UtilisateurOptional.get());
+//				} else {
+//					formateur.setId(formateurOpt.get().getId());
+//					formateur.setVersion(formateurOpt.get().getVersion());
+//					if (formateurOpt.get().getInterventions() != null) {
+//						if (interventionDb.isPresent()) {
+//							if (!formateurOpt.get().getInterventions().contains(interventionDb.get())) {
+//								interventions.add(interventionDG2);
+//							}
+//						} else {
+//							interventions.add(interventionDG2);
+//						}
+//
+//						interventions.addAll(formateurOpt.get().getInterventions());
+//					}
+//				}
+//
+//				formateur.setUtilisateur(UtilisateurOptional.get());
+//				UtilisateurOptional.get().setFormateur(formateur);
+//				formateur.setInterventions(interventions);
+//
+//				if (!interventionDb.isPresent()) {
+//
+//					formateurs.add(formateur);
+//					interventionDG2.setFormateurs(formateurs);
+//
+//					promotions.add(promotionOpt.get());
+//
+//					interventionDG2.setPromotions(promotions);
+//					result.add(interventionDG2);
+//
+//					// si existe en BDD -> comparer tous les champs et si différents -> faire update
+//				} else {
+//					List<Long> formateursId = new ArrayList<Long>();
+//					List<Long> promotionsId = new ArrayList<Long>();
+//
+//					if (interventionDb.get().getFormateurs() != null) {
+//						formateursId = interventionDb.get().getFormateurs().stream().map(f -> f.getId())
+//								.collect(Collectors.toList());
+//						formateurs.addAll(interventionDb.get().getFormateurs());
+//					}
+//					if (!formateursId.contains(formateur.getId())) {
+//						formateurs.add(formateur);
+//					}
+//					if (interventionDb.get().getPromotions() != null) {
+//						promotionsId = interventionDb.get().getPromotionId();
+//						promotions.addAll(interventionDb.get().getPromotions());
+//					}
+//					if (!promotionsId.contains(promotionOpt.get().getId())) {
+//						promotions.add(promotionOpt.get());
+//					}
+//					interventionDG2.setFormateurs(formateurs);
+//					interventionDG2.setPromotions(promotions);
+//					if (interventionDb.get().equals(interventionDG2)) {
+//						continue;
+//
+//					} else {
+//						interventionDG2.setId(interventionDb.get().getId());
+//						interventionDG2.setVersion(interventionDb.get().getVersion());
+//						result.add(interventionDG2);
+//					}
+//				}
+//			}
 		} else {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
-		return result;
+		//return result;
 	}
+
+	@Async("myTaskExecutor")
+    private void importInterventionFromJson(String json, Optional<Promotion> promotionOpt, List<PromotionOrInterventionDG2Dto> fetchResJson, List<Intervention> result) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+        try {
+            fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {
+            });
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "json intervention dg2 failed", e);
+        }
+
+        for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
+            
+            Optional<Intervention> interventionDb = interventionRepository.findByIdDg2(iDtoDG2.getId());
+            DtoTools dtoTools = new DtoTools();
+            Intervention interventionDG2 = new Intervention();
+            try {
+                interventionDG2 = dtoTools.promotionOrInterventionDG2DtoToIntervention(iDtoDG2);
+            } catch (Exception e) {
+                logger.log(Level.WARNING, "mapper intervention dg2 failed", e);
+            }
+
+            Optional<Utilisateur> UtilisateurOptional = utilisateurRepository
+                    .findByIdDg2(iDtoDG2.getTrainerPersonId());
+            if (!UtilisateurOptional.isPresent()) {
+                continue;
+            }
+            Optional<Formation> formationOpt = formationRepository.findByIdDg2(iDtoDG2.getCourseId());
+            if (formationOpt.isPresent()) {
+                interventionDG2.setFormation(formationOpt.get());
+//              throw new Exception("Formation introuvable veuiller mettre à jour les formations");
+            }
+            List<Formateur> formateurs = new ArrayList<>();
+            List<Promotion> promotions = new ArrayList<>();
+
+            Optional<Formateur> formateurOpt = formateurRepository
+                    .findByUtilisateurId(UtilisateurOptional.get().getId());
+            Formateur formateur = new Formateur();
+            List<Intervention> interventions = new ArrayList<>();
+
+            if (formateurOpt.isPresent()) {
+                
+                try {  //doublon de résultat dg2 (données en double dans la base ?)
+
+                    Optional<Intervention> interventionDbGroup = interventionRepository.findInterventionBydateFormationAndFormateur(interventionDG2.getDateDebut(),interventionDG2.getDateFin(),formateurOpt.get().getId());
+                    if (interventionDbGroup.isPresent()) {
+                        if(!interventionDbGroup.get().getPromotionId().contains(promotionOpt.get().getId()))
+                        {
+                            interventionDbGroup.get().getPromotions().add(promotionOpt.get());
+                            promotionOpt.get().getInterventions().add(interventionDbGroup.get());
+                            result.add(interventionDbGroup.get());
+                            continue;
+                        }
+                    }
+
+                } catch (Exception e) {
+                    
+                    e.printStackTrace();
+                    continue;
+                }
+            }
+
+            if (!formateurOpt.isPresent()) {
+                
+                UtilisateurRole formateurRole = utilisateurRoleRepository.findByIntituleContaining("FORMATEUR");
+                List<Utilisateur> utilisateurs = new ArrayList<>();
+                utilisateurs.add(UtilisateurOptional.get());
+                if (formateurRole.getUtilisateurs() != null) {
+                    utilisateurs.addAll(formateurRole.getUtilisateurs());
+                } 
+                formateurRole.setUtilisateurs(utilisateurs);
+                if (UtilisateurOptional.get().getRoles() != null) {
+                    if (!UtilisateurOptional.get().getRoles().contains(formateurRole)) {
+                        UtilisateurOptional.get().getRoles().add(formateurRole);
+                    }
+                } else {
+                    List<UtilisateurRole> roles = new ArrayList<>();
+                    roles.add(formateurRole);
+                    UtilisateurOptional.get().setRoles(roles);
+                }
+                formateur.setUtilisateur(UtilisateurOptional.get());
+                formateur = formateurRepository.saveAndFlush(formateur);
+                UtilisateurOptional.get().setFormateur(formateur);
+                utilisateurRepository.saveAndFlush(UtilisateurOptional.get());
+            } else {
+                formateur.setId(formateurOpt.get().getId());
+                formateur.setVersion(formateurOpt.get().getVersion());
+                if (formateurOpt.get().getInterventions() != null) {
+                    if (interventionDb.isPresent()) {
+                        if (!formateurOpt.get().getInterventions().contains(interventionDb.get())) {
+                            interventions.add(interventionDG2);
+                        }
+                    } else {
+                        interventions.add(interventionDG2);
+                    }
+
+                    interventions.addAll(formateurOpt.get().getInterventions());
+                }
+            }
+
+            formateur.setUtilisateur(UtilisateurOptional.get());
+            UtilisateurOptional.get().setFormateur(formateur);
+            formateur.setInterventions(interventions);
+
+            if (!interventionDb.isPresent()) {
+
+                formateurs.add(formateur);
+                interventionDG2.setFormateurs(formateurs);
+
+                promotions.add(promotionOpt.get());
+
+                interventionDG2.setPromotions(promotions);
+                result.add(interventionDG2);
+
+                // si existe en BDD -> comparer tous les champs et si différents -> faire update
+            } else {
+                List<Long> formateursId = new ArrayList<Long>();
+                List<Long> promotionsId = new ArrayList<Long>();
+
+                if (interventionDb.get().getFormateurs() != null) {
+                    formateursId = interventionDb.get().getFormateurs().stream().map(f -> f.getId())
+                            .collect(Collectors.toList());
+                    formateurs.addAll(interventionDb.get().getFormateurs());
+                }
+                if (!formateursId.contains(formateur.getId())) {
+                    formateurs.add(formateur);
+                }
+                if (interventionDb.get().getPromotions() != null) {
+                    promotionsId = interventionDb.get().getPromotionId();
+                    promotions.addAll(interventionDb.get().getPromotions());
+                }
+                if (!promotionsId.contains(promotionOpt.get().getId())) {
+                    promotions.add(promotionOpt.get());
+                }
+                interventionDG2.setFormateurs(formateurs);
+                interventionDG2.setPromotions(promotions);
+                if (interventionDb.get().equals(interventionDG2)) {
+                    continue;
+
+                } else {
+                    interventionDG2.setId(interventionDb.get().getId());
+                    interventionDG2.setVersion(interventionDb.get().getVersion());
+                    //result.add(interventionDG2);
+                    interventionRepository.saveAndFlush(interventionDG2);
+                }
+            }
+        }
+        
+    }
 
 }
