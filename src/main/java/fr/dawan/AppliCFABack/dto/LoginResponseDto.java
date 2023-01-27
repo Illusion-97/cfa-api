@@ -13,9 +13,30 @@ public class LoginResponseDto implements Serializable{
 
 	private String token;	
 	private long id;
+	private UtilisateurDto user;
+	
+	
+	public UtilisateurDto getUser() {
+		return user;
+	}
+
+	public void setUser(UtilisateurDto user) {
+		this.user = user;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public LoginResponseDto() {
 		
+	}
+
+	public LoginResponseDto(String token, long id, UtilisateurDto user) {
+		super();
+		this.token = token;
+		this.id = id;
+		this.user = user;
 	}
 
 	public LoginResponseDto(String token, long id) {

@@ -7,15 +7,27 @@ import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javax.naming.Context;
+import javax.naming.NamingEnumeration;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -39,6 +51,8 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EmployeeDG2Dto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.dto.LoginDto;
+import fr.dawan.AppliCFABack.dto.LoginResponseDto;
 import fr.dawan.AppliCFABack.dto.ResetResponse;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
@@ -69,6 +83,8 @@ import fr.dawan.AppliCFABack.tools.FileException;
 import fr.dawan.AppliCFABack.tools.HashTools;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+
+
 
 @Service
 @Transactional
@@ -114,6 +130,63 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	private HttpServletRequest request;
+
+	
+	@Value("${app.ldap.url}")
+	private String ldapUrl;
+	
+	@Value("${app.ldap.protocol}")
+	private String ldapProtocol;
+	
+	@Value("${app.ldap.technical.dn}")
+	private String ldapTechnicalAccDN;
+
+	@Value("${app.ldap.technical.pwd}")
+	private String ldapTechnicalAccPwd;
+
+	
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	public String getLdapUrl() {
+		return ldapUrl;
+	}
+
+	public void setLdapUrl(String ldapUrl) {
+		this.ldapUrl = ldapUrl;
+	}
+
+	public String getLdapProtocol() {
+		return ldapProtocol;
+	}
+
+	public void setLdapProtocol(String ldapProtocol) {
+		this.ldapProtocol = ldapProtocol;
+	}
+
+	public String getLdapTechnicalAccDN() {
+		return ldapTechnicalAccDN;
+	}
+
+	public void setLdapTechnicalAccDN(String ldapTechnicalAccDN) {
+		this.ldapTechnicalAccDN = ldapTechnicalAccDN;
+	}
+
+	public String getLdapTechnicalAccPwd() {
+		return ldapTechnicalAccPwd;
+	}
+
+	public void setLdapTechnicalAccPwd(String ldapTechnicalAccPwd) {
+		this.ldapTechnicalAccPwd = ldapTechnicalAccPwd;
+	}
 	
 	private static Logger logger = Logger.getGlobal();
 
@@ -971,5 +1044,126 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 	}
+	
+	
+	@Override
+	public LoginResponseDto checkLogin(LoginDto loginDto) throws Exception {
+
+		if (loginDto.getLogin().contains("@dawan.fr") // TODO externalize domains in application.properties and split
+				|| loginDto.getLogin().contains("@jehann.fr")) {
+
+			// login via LDAP
+			try {
+				Hashtable<String, String> environment = new Hashtable<String, String>();
+				environment.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+				environment.put(Context.PROVIDER_URL, ldapUrl); 
+				environment.put(Context.SECURITY_PROTOCOL, ldapProtocol); 
+				environment.put(Context.SECURITY_AUTHENTICATION, "simple");
+
+				String organizationUnit = "Dawan";
+				String uid = loginDto.getLogin().substring(0, loginDto.getLogin().indexOf('@'));
+				// les utilisateurs jehann se loggent avec un compte : xxxx-jehann
+				if (loginDto.getLogin().contains("@jehann.fr")) {
+					uid = uid + "-jehann";
+					organizationUnit = "jehann";
+				}
+				environment.put(Context.SECURITY_PRINCIPAL,"uid=" + uid + ",ou=" + organizationUnit + ",ou=Utilisateurs,dc=dawan,dc=fr");
+				environment.put(Context.SECURITY_CREDENTIALS, loginDto.getPassword());
+				DirContext ctx = new InitialDirContext(environment);
+				logger.info("Login of user " + loginDto.getLogin() + " from : " + request.getRemoteAddr());
+				ctx.close();
+
+				// check if user exist in application Db
+				Utilisateur u = utilisateurRepository.findByEmail(loginDto.getLogin());
+				if (u != null) { //user found in DB
+					if(u.isActive())
+						return createTokenFromUser(u);
+					else
+						throw new Exception("Error : Blocked Account. Contact administrator !");
+				}else { //user authenticated via LDAP but no present in DB
+					//recherche des infos
+					//on passe sur le compte technique pour pouvoir lire des infos
+					environment.put(Context.SECURITY_PRINCIPAL, ldapTechnicalAccDN); 
+					environment.put(Context.SECURITY_CREDENTIALS, ldapTechnicalAccPwd); 
+			
+					try {
+						ctx = new InitialDirContext(environment);
+						SearchControls searchCtls = new SearchControls();
+						searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+
+						String searchFilter = "objectClass=inetOrgPerson";
+						NamingEnumeration<?> namingEnum = ctx.search("uid="+uid + ",ou="+organizationUnit+",ou=Utilisateurs,dc=dawan,dc=fr", searchFilter, searchCtls);
+						while (namingEnum.hasMore()) {
+							SearchResult result = (SearchResult) namingEnum.next();
+							Attributes userAttr = result.getAttributes();
+							//System.out.println("uId = " + userAttr.get("uid"));
+							//System.out.println("Mail = " + userAttr.get("mail").get(0).toString());
+							//System.out.println("adFirstName = "+userAttr.get("givenName").get(0).toString());
+						    //System.out.println("adLastName = "+userAttr.get("sn").get(0).toString());
+						    //System.out.println("name = "+userAttr.get("cn").get(0).toString());
+						  
+							Utilisateur newUser = new Utilisateur();
+							//newUser.setRole(Utilisateur.Role.BASIC_USER); //TODO ROLE TUTEUR EXTERNE PAR DEFAUT
+							newUser.setActive(true); 
+							newUser.setLogin(loginDto.getLogin());
+							newUser.setPassword(HashTools.hashSHA512("defaultUs43%_T!_bA0uT(&2"));
+							newUser.setExternalAccount(true); //pas de stockage du password
+							
+							try {
+								newUser.setNom(userAttr.get("sn").get(0).toString());	
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							
+							try {
+								newUser.setPrenom(userAttr.get("givenName").get(0).toString());	
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							newUser = utilisateurRepository.saveAndFlush(newUser);
+							return createTokenFromUser(newUser);
+						}
+						namingEnum.close();
+						ctx.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+						throw new Exception("Error : Directory search Error !");
+					}
+				}
+
+			} catch (Exception ex) {
+				//ex.printStackTrace(); // TODO comment before prod
+				throw new Exception("Error : invalid credentials !");
+			}
+		} else { // login via Db ================================================================================
+			Utilisateur u = utilisateurRepository.findByEmail(loginDto.getLogin());
+			if (u != null && u.getPassword().equals(HashTools.hashSHA512(loginDto.getPassword())) && u.isActive()) {
+				return createTokenFromUser(u);
+			} else {
+				logger.info("Login failed of" + loginDto.getLogin() + " from " + request.getRemoteAddr());
+				throw new Exception("Error : invalid credentials !");
+			}
+		}
+		throw new Exception("Error : invalid credentials !");
+
+	}
+	
+	private LoginResponseDto createTokenFromUser(Utilisateur u) throws Exception {
+		LoginResponseDto result = DtoTools.convert(u, LoginResponseDto.class);
+		Map<String, Object> claims = new HashMap<String, Object>();
+		claims.put("user_id", u.getId());
+		claims.put("user_fullName", u.getPrenom() + " " + u.getNom());
+		claims.put("user_role", u.getRolesStr());
+
+		String token = jwtTokenUtil.doGenerateToken(claims, u.getLogin());
+		fr.dawan.AppliCFABack.interceptors.TokenSaver.tokensByEmail.put(u.getLogin(), token);
+		result.setToken(token);
+
+		logger.info("Login of user " + u.getId() + " from : " + request.getRemoteAddr());
+
+		return result;
+	}
+	
+	
 	
 }

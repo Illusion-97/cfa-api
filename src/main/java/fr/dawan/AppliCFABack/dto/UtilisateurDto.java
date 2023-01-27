@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.Column;
-
-import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 
 /**
@@ -36,6 +33,28 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 	private CEFDto cefDto;
 	private long idDg2;
 	private long centreFormationId;
+	private boolean externalAccount;
+	private boolean active;
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public boolean isExternalAccount() {
+		return externalAccount;
+	}
+
+	public void setExternalAccount(boolean externalAccount) {
+		this.externalAccount = externalAccount;
+	}
+
+	public String getFullName() {
+		return getNom() + " " + getPrenom();
+	}
 
 	public UtilisateurDto() {
 		super();
@@ -217,16 +236,13 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 		this.cefDto = cefDto;
 	}
 
-	
 	public void setEntrepriseDto(Entreprise entrepriseDto) {
 		this.entrepriseDto = entrepriseDto;
 	}
 
-	
 	public Entreprise getEntrepriseDto() {
 		return entrepriseDto;
 	}
-	
 
 	/**
 	 * @return le idDg2
@@ -237,7 +253,7 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 
 	/**
 	 * @param idDg2 le idDg2 à affecter
-	 
+	 * 
 	 */
 	public void setIdDg2(long idDg2) {
 		this.idDg2 = idDg2;
@@ -252,7 +268,7 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 
 	/**
 	 * @param centreFormationId le centreFormationId à affecter
-	 
+	 * 
 	 */
 	public void setCentreFormationId(long centreFormationId) {
 		this.centreFormationId = centreFormationId;
@@ -263,8 +279,8 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 		return "UtilisateurDto{" + "id=" + id + ", login='" + login + '\'' + ", password='" + password + '\''
 				+ ", prenom='" + prenom + '\'' + ", nom='" + nom + '\'' + ", civilite='" + civilite + '\''
 				+ ", dateDeNaissance=" + dateDeNaissance + ", telephone='" + telephone + '\'' + ", adresseDto="
-				+ adresseDto + ", entrepriseDto=" + entrepriseDto + ", rolesDto=" + rolesDto + ", etudiantDto=" + etudiantDto + ", formateurDto="
-				+ formateurDto + ", cefDto=" + cefDto +'}';
+				+ adresseDto + ", entrepriseDto=" + entrepriseDto + ", rolesDto=" + rolesDto + ", etudiantDto="
+				+ etudiantDto + ", formateurDto=" + formateurDto + ", cefDto=" + cefDto + '}';
 	}
 
 }

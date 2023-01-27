@@ -17,7 +17,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 255)
 	private String login;
 
-	@Column(nullable = false, length = 255)
+	@Column(nullable = true, length = 255)
 	private String password;
 
 	@Column(nullable = false, length = 255)
@@ -59,9 +59,35 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@OneToOne
 	private Signature signature;
 
+	/**
+	 * External account = managed account by LDAP
+	 */
+	private boolean externalAccount;
+	
+	private boolean active;
+	
+	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	public Utilisateur() {
 		super();
 	}
+	
+	public boolean isExternalAccount() {
+		return externalAccount;
+	}
+
+	public void setExternalAccount(boolean externalAccount) {
+		this.externalAccount = externalAccount;
+	}
+	
+	
 
 	public String getLogin() {
 		return login;
@@ -107,6 +133,15 @@ public class Utilisateur extends BaseEntity implements Serializable {
 		return roles;
 	}
 
+	public String getRolesStr() {
+		StringBuilder sb = new StringBuilder();
+		for (UtilisateurRole ur : roles) {
+			sb.append(ur.getIntitule()).append(" ");
+		}
+		return sb.toString();
+	}
+
+	
 	public void setRoles(List<UtilisateurRole> roles) {
 		this.roles = roles;
 	}
@@ -226,6 +261,8 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	public void setSignature(Signature signature) {
 		this.signature = signature;
 	}
+	
+	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -280,5 +317,6 @@ public class Utilisateur extends BaseEntity implements Serializable {
 				+ ", formateur=" + formateur + ", cef=" + cef 
 				+ "version=" + this.getVersion()+ "]";
 	}
+	
 	
 }
