@@ -32,6 +32,9 @@ public class Etudiant extends BaseEntity implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<DossierProjet> dossierProjet;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Tuteur> tuteurs;
 
 	public Etudiant() {
 		super();
@@ -93,8 +96,17 @@ public class Etudiant extends BaseEntity implements Serializable {
 	public void setNotes(Set<Note> notes) {
 		this.notes = notes;
 	}
+	
 
-	@Override
+	public List<Tuteur> getTuteurs() {
+        return tuteurs;
+    }
+
+    public void setTuteurs(List<Tuteur> tuteurs) {
+        this.tuteurs = tuteurs;
+    }
+
+    @Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Etudiant)) return false;
