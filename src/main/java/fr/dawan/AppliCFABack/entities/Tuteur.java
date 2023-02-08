@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 
 
 @SuppressWarnings("serial")
-@Entity
+@Entity //unmapped prb
 public class Tuteur extends BaseEntity implements Serializable{
 	
 	@ManyToOne
