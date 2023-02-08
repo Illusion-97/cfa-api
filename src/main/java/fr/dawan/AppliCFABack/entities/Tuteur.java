@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -13,12 +14,21 @@ import javax.persistence.OneToOne;
 @Entity
 public class Tuteur extends BaseEntity implements Serializable{
 	
-	@OneToOne
+	@ManyToOne
 	private Utilisateur utilisateur;
 	
-	@OneToMany(mappedBy = "tuteurs")
+	
+	@OneToMany(mappedBy = "tuteur")
 	private List<Etudiant> etudiants;
 	
+
+	public List<Etudiant> getEtudiants() {
+		return etudiants;
+	}
+
+	public void setEtudiants(List<Etudiant> etudiants) {
+		this.etudiants = etudiants;
+	}
 
 	public Tuteur() {
 		super();
@@ -27,7 +37,7 @@ public class Tuteur extends BaseEntity implements Serializable{
 	public Tuteur(Utilisateur utilisateur, List<Etudiant> etudiants) {
 		super();
 		this.utilisateur = utilisateur;
-		this.etudiants = etudiants;
+		
 	}
 
 	public Utilisateur getUtilisateur() {
@@ -38,13 +48,7 @@ public class Tuteur extends BaseEntity implements Serializable{
 		this.utilisateur = utilisateur;
 	}
 
-	public List<Etudiant> getEtudiants() {
-		return etudiants;
-	}
-
-	public void setEtudiants(List<Etudiant> etudiants) {
-		this.etudiants = etudiants;
-	}
+	
 	
 	
 	

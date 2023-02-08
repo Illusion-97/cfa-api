@@ -23,6 +23,8 @@ public class DossierProfessionnelDto extends BaseEntityDto implements Serializab
 	private EtudiantDto etudiantDto;
 
 	private List<AnnexeDto> annexeDtos;
+	
+	private List<FacultatifDto> facultatifDto;
 
 	public DossierProfessionnelDto() {
 		super();
@@ -83,4 +85,14 @@ public class DossierProfessionnelDto extends BaseEntityDto implements Serializab
 	public void setAnnexeDtos(List<AnnexeDto> annexeDtos) {
 		this.annexeDtos = annexeDtos;
 	}
+
+	public List<FacultatifDto> getFacultatifDto() {
+		return facultatifDto;
+	}
+
+	public void setFacultatifDto(List<FacultatifDto> facultatifDto) {
+		this.facultatifDto = facultatifDto;
+	}
+	
+	
 }

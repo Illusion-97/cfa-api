@@ -31,6 +31,7 @@ import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.RemunerationDto;
+import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
@@ -58,6 +59,7 @@ import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Remuneration;
+import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-06T16:30:03+0100",
+    date = "2023-02-08T10:03:25+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.300.v20221108-0856, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -301,6 +303,21 @@ public class DtoMapperImpl implements DtoMapper {
         formationDto.setTitre( formation.getTitre() );
 
         return formationDto;
+    }
+
+    @Override
+    public TuteurDto tuteurTotuteurDto(Tuteur tuteur) {
+        if ( tuteur == null ) {
+            return null;
+        }
+
+        TuteurDto tuteurDto = new TuteurDto();
+
+        tuteurDto.setId( tuteur.getId() );
+        tuteurDto.setVersion( tuteur.getVersion() );
+        tuteurDto.setUtilisateur( tuteur.getUtilisateur() );
+
+        return tuteurDto;
     }
 
     @Override

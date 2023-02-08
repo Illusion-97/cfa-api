@@ -37,6 +37,7 @@ import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.RemunerationDto;
+import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
@@ -64,6 +65,7 @@ import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Remuneration;
+import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 
@@ -110,6 +112,9 @@ public interface DtoMapper {
 
     @Mapping(source = ".", target = ".")
     FormationDto formationToFormationDto(Formation formation);
+    
+    @Mapping(source = ".", target = ".")
+    TuteurDto tuteurTotuteurDto(Tuteur tuteur);
 
     @Mapping(source = ".", target = ".")
     GroupeEtudiantDto groupeEtudiantToGroupEtudiantDto(GroupeEtudiant groupeEtudiant);
