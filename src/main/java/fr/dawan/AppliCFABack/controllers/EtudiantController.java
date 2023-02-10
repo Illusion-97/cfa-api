@@ -233,5 +233,19 @@ public class EtudiantController {
 	public AccueilEtudiantDto getAccueilEtudiant(@PathVariable("id") long id) {
 		return etudiantService.getAccueilEtudiant(id);
 	}
+	
+	@GetMapping(produces = "application/json", value = "/{id}/etudiants/{page}/{size}")
+	public List<EtudiantDto> getEtudiantsByTuteurId(@PathVariable("id") long id,
+			@PathVariable("page") int page, @PathVariable("size") int size) 
+	{
+			return etudiantService.getAllByTuteurId(id, page, size);
+	}
+	
+	@GetMapping(value = "/count/{id}")
+	public CountDto count(@PathVariable("id") long id) {
+		
+			return etudiantService.countByTuteurId(id);
+	}
+
 
 }

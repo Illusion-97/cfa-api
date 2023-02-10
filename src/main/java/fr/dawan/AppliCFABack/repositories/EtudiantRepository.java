@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Intervention;
 
 @Repository
 public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
@@ -29,6 +30,12 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 	List<Etudiant> findAllDistinctByPromotionsInterventionsId(long id, String search);
 
 	List<Etudiant> findAllDistinctByPromotionsInterventionsId(long id);
+	
+	Page<Etudiant> findAllByTuteurId(long id, Pageable pageable);
+	
+	long countByTuteurId(long id);
+	
+	
 
  
 }

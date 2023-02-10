@@ -42,12 +42,13 @@ public class Etudiant extends BaseEntity implements Serializable {
 	}
 
 	public Etudiant(List<Promotion> promotions, List<GroupeEtudiant> groupes, List<DossierProjet> dossierProjet,
-			List<DossierProfessionnel> dossierProfessionnel) {
+			List<DossierProfessionnel> dossierProfessionnel, Tuteur tuteur) {
 		super();
 		this.promotions = promotions;
 		this.groupes = groupes;
 		this.dossierProfessionnel = dossierProfessionnel;
 		this.dossierProjet = dossierProjet;
+		this.tuteur=tuteur;
 	}
 
 	public List<Promotion> getPromotions() {
@@ -96,6 +97,14 @@ public class Etudiant extends BaseEntity implements Serializable {
 
 	public void setNotes(Set<Note> notes) {
 		this.notes = notes;
+	}
+
+	public Tuteur getTuteur() {
+		return tuteur;
+	}
+
+	public void setTuteur(Tuteur tuteur) {
+		this.tuteur = tuteur;
 	}
 
 	@Override
