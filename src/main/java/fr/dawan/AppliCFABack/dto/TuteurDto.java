@@ -9,7 +9,7 @@ import fr.dawan.AppliCFABack.entities.Utilisateur;
 @SuppressWarnings("serial")
 public class TuteurDto extends BaseEntityDto implements Serializable{
 
-	private Utilisateur utilisateur;
+	private UtilisateurDto utilisateurDto;
 	//private List<Etudiant> etudiants;
 	
 	
@@ -18,14 +18,15 @@ public class TuteurDto extends BaseEntityDto implements Serializable{
 	}
 
 
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
+	public UtilisateurDto getUtilisateurDto() {
+		return utilisateurDto;
 	}
 
 
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
+	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
+		this.utilisateurDto = utilisateurDto;
 	}
+
 
 
 	
