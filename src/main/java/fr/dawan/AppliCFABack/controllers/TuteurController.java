@@ -68,12 +68,10 @@ public class TuteurController {
 			{
 					return tuteurService.getAllByEtudiatId(id, page, size);
 			}
+			
+			
 		
-			@GetMapping(value = "/count/{id}")
-			public CountDto count(@PathVariable("id") long id) {
-				
-					return tuteurService.countByTuteurId(id);
-			}
+			
 			
 			
 }

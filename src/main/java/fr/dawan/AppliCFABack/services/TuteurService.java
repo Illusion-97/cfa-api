@@ -22,7 +22,7 @@ public interface TuteurService {
 	
 	List<EtudiantDto> getAllByEtudiatId(long id, int page, int size);
 	
-	CountDto countByTuteurId(long id);
+	
 	
 	//CountDto count(String string);
 	

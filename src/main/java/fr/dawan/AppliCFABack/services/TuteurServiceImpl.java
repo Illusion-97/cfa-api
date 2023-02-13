@@ -119,14 +119,10 @@ public class TuteurServiceImpl implements TuteurService{
 
 	
 
-	@Override
-	public CountDto countByTuteurId(long id) {
-		return new CountDto(tuteurRepository.countByTuteurId(id));
-	}
 
 	@Override
 	public List<EtudiantDto> getAllByEtudiatId(long id, int page, int size) {
-		List<Etudiant> lstetud= tuteurRepository.findAllByEtudiantId(id, PageRequest.of(page, size))
+		List<Etudiant> lstetud= tuteurRepository.findAllByEtudiantsId(id, PageRequest.of(page, size))
 				.get()
 				.collect(Collectors.toList());
 				List<EtudiantDto> lstetudDto = new ArrayList<>();
@@ -143,6 +139,9 @@ public class TuteurServiceImpl implements TuteurService{
 				}
 				return lstetudDto;
 	}
+
+	
+
 
 	/*@Override
 	public CountDto count(String search) {
