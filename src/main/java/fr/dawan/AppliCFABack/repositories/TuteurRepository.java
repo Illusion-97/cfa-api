@@ -11,6 +11,7 @@ import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Tuteur;
 
 @Repository
@@ -26,7 +27,11 @@ public interface TuteurRepository extends JpaRepository<Tuteur , Long>{
 
 	Optional<Tuteur> findByUtilisateurId(long id);
 
-	Page<Etudiant> findAllByEtudiantsId(long id, PageRequest p);
+	//Page<Etudiant> findAllByEtudiantsId(long id, PageRequest p);
+	
+	List<Etudiant> findAllByEtudiantsId(long id);
+	
+	Page<Etudiant> findAllByEtudiants(long id, Pageable p);
 
 	
 	

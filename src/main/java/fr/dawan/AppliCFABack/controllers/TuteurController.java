@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.services.TuteurService;
 
@@ -62,14 +63,17 @@ public class TuteurController {
 				return tuteurService.saveOrUpdate(tuteurDto);
 			}
 			
-			@GetMapping(produces = "application/json", value = "/{id}/etudiants/{page}/{size}")
-			public List<EtudiantDto> getEtudiantsByTuteurId(@PathVariable("id") long id,
-					@PathVariable("page") int page, @PathVariable("size") int size) 
+			@GetMapping(produces = "application/json", value = "/{id}/etudiants")
+			public List<EtudiantDto> getEtudiantsByTuteurId(@PathVariable("id") long id) 
 			{
-					return tuteurService.getAllByEtudiatId(id, page, size);
+					return tuteurService.findAllByEtudiants(id);
 			}
 			
-			
+			@GetMapping(produces = "application/json", value = "/{id}/etudiants/{page}/{size}")
+			public List<EtudiantDto> getEtudiantsByTuteurId(@PathVariable("id") long id,
+					@PathVariable("page") int page, @PathVariable("size") int size) {
+				return tuteurService.getAllEtudiantsByTuteurIdPerPage(id, page, size);
+			}
 		
 			
 			

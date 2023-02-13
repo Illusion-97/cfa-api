@@ -117,10 +117,48 @@ public class TuteurServiceImpl implements TuteurService{
 		return mapper.tuteurTotuteurDto(tuteur);
 	}
 
+	@Override
+	public List<EtudiantDto> findAllByEtudiants(long id) {
+		List<Etudiant> lstetud= tuteurRepository.findAllByEtudiantsId(id);
+				List<EtudiantDto> lstetudDto = new ArrayList<>();
+				for (Etudiant etudiant : lstetud) 
+				{
+					if (etudiant != null) {
+						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
+
+						TuteurDto tuteurDto = mapper.tuteurTotuteurDto(etudiant.getTuteur());
+
+						etudDto.setTuteurDto(tuteurDto);
+						lstetudDto.add(etudDto);
+				}
+				}
+				return lstetudDto;
+	}
+
+	@Override
+	public List<EtudiantDto> getAllEtudiantsByTuteurIdPerPage(long id, int page, int size) {
+		List<Etudiant> lstetud= tuteurRepository.findAllByEtudiants(id, PageRequest.of(page, size))
+				.get()
+				.collect(Collectors.toList());
+				List<EtudiantDto> lstetudDto = new ArrayList<>();
+				for (Etudiant etudiant : lstetud) 
+				{
+					if (etudiant != null) {
+						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
+
+						TuteurDto tuteurDto = mapper.tuteurTotuteurDto(etudiant.getTuteur());
+
+						etudDto.setTuteurDto(tuteurDto);
+						lstetudDto.add(etudDto);
+				}
+				}
+				return lstetudDto;
+	}
+
 	
 
 
-	@Override
+/*	@Override
 	public List<EtudiantDto> getAllByEtudiatId(long id, int page, int size) {
 		List<Etudiant> lstetud= tuteurRepository.findAllByEtudiantsId(id, PageRequest.of(page, size))
 				.get()
@@ -138,7 +176,7 @@ public class TuteurServiceImpl implements TuteurService{
 				}
 				}
 				return lstetudDto;
-	}
+	}*/
 
 	
 

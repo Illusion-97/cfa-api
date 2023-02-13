@@ -5,7 +5,9 @@ import java.util.List;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
+import fr.dawan.AppliCFABack.entities.Etudiant;
 
 
 public interface TuteurService {
@@ -20,9 +22,10 @@ public interface TuteurService {
 	
 	TuteurDto saveOrUpdate(TuteurDto tuteurDto);
 	
-	List<EtudiantDto> getAllByEtudiatId(long id, int page, int size);
+	//List<EtudiantDto> getAllByEtudiatId(long id, int page, int size);
+	List<EtudiantDto> findAllByEtudiants(long id);
 	
-	
+	List<EtudiantDto> getAllEtudiantsByTuteurIdPerPage(long id, int page, int size);
 	
 	//CountDto count(String string);
 	
