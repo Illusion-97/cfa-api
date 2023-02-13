@@ -20,6 +20,10 @@ public interface TuteurService {
 	
 	TuteurDto saveOrUpdate(TuteurDto tuteurDto);
 	
+	List<EtudiantDto> getAllByEtudiatId(long id, int page, int size);
+	
+	CountDto countByTuteurId(long id);
+	
 	//CountDto count(String string);
 	
 }

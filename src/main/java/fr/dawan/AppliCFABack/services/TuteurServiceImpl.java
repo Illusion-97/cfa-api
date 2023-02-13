@@ -117,6 +117,33 @@ public class TuteurServiceImpl implements TuteurService{
 		return mapper.tuteurTotuteurDto(tuteur);
 	}
 
+	
+
+	@Override
+	public CountDto countByTuteurId(long id) {
+		return new CountDto(tuteurRepository.countByTuteurId(id));
+	}
+
+	@Override
+	public List<EtudiantDto> getAllByEtudiatId(long id, int page, int size) {
+		List<Etudiant> lstetud= tuteurRepository.findAllByEtudiantId(id, PageRequest.of(page, size))
+				.get()
+				.collect(Collectors.toList());
+				List<EtudiantDto> lstetudDto = new ArrayList<>();
+				for (Etudiant etudiant : lstetud) 
+				{
+					if (etudiant != null) {
+						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
+
+						TuteurDto tuteurDto = mapper.tuteurTotuteurDto(etudiant.getTuteur());
+
+						etudDto.setTuteurDto(tuteurDto);
+						lstetudDto.add(etudDto);
+				}
+				}
+				return lstetudDto;
+	}
+
 	/*@Override
 	public CountDto count(String search) {
 		return new CountDto(tuteurRepository.countTuteursTitreContainingAllIgnoreCase(search));

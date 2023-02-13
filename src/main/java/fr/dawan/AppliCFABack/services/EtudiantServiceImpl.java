@@ -1051,28 +1051,5 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return null;
 	}
 
-	@Override
-	public List<EtudiantDto> getAllByTuteurId(long id, int page, int size) {
-		List<Etudiant> lstetud= etudiantRepository.findAllByTuteurId(id, PageRequest.of(page, size))
-		.get()
-		.collect(Collectors.toList());
-		List<EtudiantDto> lstetudDto = new ArrayList<>();
-		for (Etudiant etudiant : lstetud) 
-		{
-			if (etudiant != null) {
-				EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
-
-				TuteurDto tuteurDto = mapper.tuteurTotuteurDto(etudiant.getTuteur());
-
-				etudDto.setTuteurDto(tuteurDto);
-				lstetudDto.add(etudDto);
-		}
-		}
-		return lstetudDto;
-	}
-
-	@Override
-	public CountDto countByTuteurId(long id) {
-		return new CountDto(etudiantRepository.countByTuteurId(id));
-	}
+	
 }
