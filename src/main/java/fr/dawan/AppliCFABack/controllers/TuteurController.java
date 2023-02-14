@@ -66,7 +66,7 @@ public class TuteurController {
 			@GetMapping(produces = "application/json", value = "/{id}/etudiants")
 			public List<EtudiantDto> getEtudiantsByTuteurId(@PathVariable("id") long id) 
 			{
-					return tuteurService.findAllByEtudiants(id);
+					return tuteurService.findAllByTuteurId(id);
 			}
 			
 			@GetMapping(produces = "application/json", value = "/{id}/etudiants/{page}/{size}")

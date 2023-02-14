@@ -57,6 +57,11 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	private CEF cef;
 	
 	@OneToOne
+	private Tuteur tuteur;
+	
+
+
+	@OneToOne
 	private Signature signature;
 
 	public Utilisateur() {
@@ -210,6 +215,14 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	 */
 	public void setCentreFormation(CentreFormation centreFormation) {
 		this.centreFormation = centreFormation;
+	}
+	
+	public Tuteur getTuteur() {
+		return tuteur;
+	}
+
+	public void setTuteur(Tuteur tuteur) {
+		this.tuteur = tuteur;
 	}
 	
 	/**

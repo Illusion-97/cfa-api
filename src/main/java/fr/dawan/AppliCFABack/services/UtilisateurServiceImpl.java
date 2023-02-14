@@ -356,7 +356,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				if (role.getIntitule().equals("CEF")) {
 					isCEF = true;
 				}
-				if (role.getIntitule().equals("PRESTATAIREEXTERNE")) {
+				if (role.getIntitule().equals("TUTEUR")) {
 					isPrestataireExterne = true;
 				}
 			}

@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
@@ -29,12 +31,11 @@ public interface TuteurRepository extends JpaRepository<Tuteur , Long>{
 
 	//Page<Etudiant> findAllByEtudiantsId(long id, PageRequest p);
 	
-	List<Etudiant> findAllByEtudiantsId(long id);
+	@Query("SELECT e FROM Etudiant e JOIN e.tuteur tuteur WHERE tuteur.id=:id ")
+	List<Etudiant> findAllByTuteurId(@Param("id")long id );
 	
-	Page<Etudiant> findAllByEtudiants(long id, Pageable p);
-
-	
-	
+	@Query("SELECT e FROM Etudiant e JOIN e.tuteur tuteur WHERE tuteur.id=:id ")
+	Page<Etudiant> findAllByTuteurId(@Param("id")long id, Pageable p);
 
 	
 }

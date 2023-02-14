@@ -118,8 +118,8 @@ public class TuteurServiceImpl implements TuteurService{
 	}
 
 	@Override
-	public List<EtudiantDto> findAllByEtudiants(long id) {
-		List<Etudiant> lstetud= tuteurRepository.findAllByEtudiantsId(id);
+	public List<EtudiantDto> findAllByTuteurId(long id) {
+		List<Etudiant> lstetud= tuteurRepository.findAllByTuteurId(id);
 				List<EtudiantDto> lstetudDto = new ArrayList<>();
 				for (Etudiant etudiant : lstetud) 
 				{
@@ -137,7 +137,7 @@ public class TuteurServiceImpl implements TuteurService{
 
 	@Override
 	public List<EtudiantDto> getAllEtudiantsByTuteurIdPerPage(long id, int page, int size) {
-		List<Etudiant> lstetud= tuteurRepository.findAllByEtudiants(id, PageRequest.of(page, size))
+		List<Etudiant> lstetud= etudiantRepository.findAllByTuteurId(id, PageRequest.of(page, size))
 				.get()
 				.collect(Collectors.toList());
 				List<EtudiantDto> lstetudDto = new ArrayList<>();
@@ -146,9 +146,9 @@ public class TuteurServiceImpl implements TuteurService{
 					if (etudiant != null) {
 						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
 
-						TuteurDto tuteurDto = mapper.tuteurTotuteurDto(etudiant.getTuteur());
+						//TuteurDto tuteurDto = mapper.tuteurTotuteurDto(etudiant.getTuteur());
 
-						etudDto.setTuteurDto(tuteurDto);
+						//etudDto.setTuteurDto(tuteurDto);
 						lstetudDto.add(etudDto);
 				}
 				}

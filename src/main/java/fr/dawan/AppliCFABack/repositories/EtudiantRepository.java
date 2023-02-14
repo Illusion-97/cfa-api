@@ -31,7 +31,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 
 	List<Etudiant> findAllDistinctByPromotionsInterventionsId(long id);
 	
-	
+	Page<Etudiant> findAllByTuteurId(long id, Pageable p);
 	
 	
 

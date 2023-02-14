@@ -23,7 +23,7 @@ public interface TuteurService {
 	TuteurDto saveOrUpdate(TuteurDto tuteurDto);
 	
 	//List<EtudiantDto> getAllByEtudiatId(long id, int page, int size);
-	List<EtudiantDto> findAllByEtudiants(long id);
+	List<EtudiantDto> findAllByTuteurId(long id);
 	
 	List<EtudiantDto> getAllEtudiantsByTuteurIdPerPage(long id, int page, int size);
 	
