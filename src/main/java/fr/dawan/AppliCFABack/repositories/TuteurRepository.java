@@ -17,7 +17,6 @@ import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Tuteur;
 
 @Repository
-
 public interface TuteurRepository extends JpaRepository<Tuteur , Long>{
 	
 	long countByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(String prenom, String nom);
@@ -34,8 +33,12 @@ public interface TuteurRepository extends JpaRepository<Tuteur , Long>{
 	@Query("SELECT e FROM Etudiant e JOIN e.tuteur tuteur WHERE tuteur.id=:id ")
 	List<Etudiant> findAllByTuteurId(@Param("id")long id );
 	
-	@Query("SELECT e FROM Etudiant e JOIN e.tuteur tuteur WHERE tuteur.id=:id ")
+	@Query("SELECT e FROM Etudiant e JOIN e.tuteur t WHERE t.id=:id ")	
 	Page<Etudiant> findAllByTuteurId(@Param("id")long id, Pageable p);
 
+	@Query("SELECT e FROM Etudiant e JOIN e.tuteur t WHERE t.id=:id AND e.utilisateur.nom LIKE :search OR e.utilisateur.prenom  LIKE :search ")	
+	Page<Etudiant> findEtudiantBySearch(@Param("id")long id, Pageable p, String search);
 	
+	long countByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(
+			String search, String search2);
 }

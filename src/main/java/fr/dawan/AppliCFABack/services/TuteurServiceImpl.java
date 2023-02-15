@@ -18,13 +18,16 @@ import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.Tuteur;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
@@ -145,10 +148,7 @@ public class TuteurServiceImpl implements TuteurService{
 				{
 					if (etudiant != null) {
 						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
-
-						//TuteurDto tuteurDto = mapper.tuteurTotuteurDto(etudiant.getTuteur());
-
-						//etudDto.setTuteurDto(tuteurDto);
+						etudDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(etudiant.getUtilisateur()));	
 						lstetudDto.add(etudDto);
 				}
 				}
@@ -158,9 +158,9 @@ public class TuteurServiceImpl implements TuteurService{
 	
 
 
-/*	@Override
-	public List<EtudiantDto> getAllByEtudiatId(long id, int page, int size) {
-		List<Etudiant> lstetud= tuteurRepository.findAllByEtudiantsId(id, PageRequest.of(page, size))
+	@Override
+	public List<EtudiantDto> getEtudiatBySearch(long id, int page, int size, String search) {
+		List<Etudiant> lstetud= tuteurRepository.findEtudiantBySearch(id, PageRequest.of(page, size), search)
 				.get()
 				.collect(Collectors.toList());
 				List<EtudiantDto> lstetudDto = new ArrayList<>();
@@ -168,23 +168,17 @@ public class TuteurServiceImpl implements TuteurService{
 				{
 					if (etudiant != null) {
 						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
-
-						TuteurDto tuteurDto = mapper.tuteurTotuteurDto(etudiant.getTuteur());
-
-						etudDto.setTuteurDto(tuteurDto);
+						etudDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(etudiant.getUtilisateur()));	
 						lstetudDto.add(etudDto);
 				}
 				}
 				return lstetudDto;
-	}*/
+	}
 
-	
-
-
-	/*@Override
+	@Override
 	public CountDto count(String search) {
-		return new CountDto(tuteurRepository.countTuteursTitreContainingAllIgnoreCase(search));
-	}*/
+		return new CountDto(tuteurRepository.countByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(search, search));
+	}
 	
 
 	

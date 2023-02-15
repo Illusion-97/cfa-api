@@ -22,11 +22,11 @@ public interface TuteurService {
 	
 	TuteurDto saveOrUpdate(TuteurDto tuteurDto);
 	
-	//List<EtudiantDto> getAllByEtudiatId(long id, int page, int size);
 	List<EtudiantDto> findAllByTuteurId(long id);
 	
 	List<EtudiantDto> getAllEtudiantsByTuteurIdPerPage(long id, int page, int size);
 	
-	//CountDto count(String string);
+	List<EtudiantDto> getEtudiatBySearch(long id, int page, int size, String search);
 	
+	CountDto count(String string);
 }

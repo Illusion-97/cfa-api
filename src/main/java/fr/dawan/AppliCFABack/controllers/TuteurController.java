@@ -70,13 +70,37 @@ public class TuteurController {
 			}
 			
 			@GetMapping(produces = "application/json", value = "/{id}/etudiants/{page}/{size}")
-			public List<EtudiantDto> getEtudiantsByTuteurId(@PathVariable("id") long id,
-					@PathVariable("page") int page, @PathVariable("size") int size) {
+			public List<EtudiantDto> getEtudiantsByTuteurId(
+					@PathVariable("id") long id,
+					@PathVariable("page") int page, 
+					@PathVariable("size") int size) {
 				return tuteurService.getAllEtudiantsByTuteurIdPerPage(id, page, size);
 			}
 		
+			@GetMapping(produces = "application/json", value = "/{id}/etudiants/{page}/{size}/{search}")
+			public List<EtudiantDto> getEtudiantsByTuteurId(
+					@PathVariable("id") long id, 
+					@PathVariable("page") int page, 
+					@PathVariable(value = "size") int size,
+					@PathVariable(value = "search", required = false) Optional<String> search) {
+				if (search.isPresent())
+					return tuteurService.getEtudiatBySearch(id, page, size, search.get());
+				else
+					return tuteurService.getEtudiatBySearch(id, page, size, "");
+			}
 			
-			
+			@GetMapping(value = "/count", produces = "application/json")
+			public CountDto count() {
+				return tuteurService.count("");
+			}
+
+			@GetMapping(value = "/count/{search}", produces = "application/json")
+			public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
+				if (search.isPresent())
+					return tuteurService.count(search.get());
+				else
+					return tuteurService.count("");
+			}
 			
 }
 
