@@ -1,237 +1,21 @@
-2023-02-14 09:01:44.271  WARN 22464 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15h47m13s811ms549µs100ns).
-2023-02-14 09:36:46.506 ERROR 22464 --- [http-nio-8085-exec-10] unknown.jul.logger                       : org.springframework.core.convert.ConverterNotFoundException: No converter found capable of converting from type [fr.dawan.AppliCFABack.entities.Tuteur] to type [fr.dawan.AppliCFABack.entities.Etudiant]
-	at org.springframework.core.convert.support.GenericConversionService.handleConverterNotFound(GenericConversionService.java:321)
-	at org.springframework.core.convert.support.GenericConversionService.convert(GenericConversionService.java:194)
-	at org.springframework.core.convert.support.GenericConversionService.convert(GenericConversionService.java:174)
-	at org.springframework.data.repository.query.ResultProcessor$ProjectingConverter.convert(ResultProcessor.java:297)
-	at org.springframework.data.repository.query.ResultProcessor$ChainingConverter.lambda$and$0(ResultProcessor.java:217)
-	at org.springframework.data.repository.query.ResultProcessor$ChainingConverter.convert(ResultProcessor.java:228)
-	at org.springframework.data.repository.query.ResultProcessor.processResult(ResultProcessor.java:156)
-	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.doExecute(AbstractJpaQuery.java:157)
-	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.execute(AbstractJpaQuery.java:142)
-	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor$QueryMethodInvoker.invoke(QueryExecutorMethodInterceptor.java:195)
-	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:152)
-	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:130)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:80)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:367)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:118)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:139)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:149)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:95)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:212)
-	at com.sun.proxy.$Proxy210.findAllByEtudiantsId(Unknown Source)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:344)
-	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:205)
-	at com.sun.proxy.$Proxy149.findAllByEtudiantsId(Unknown Source)
-	at fr.dawan.AppliCFABack.services.TuteurServiceImpl.findAllByEtudiants(TuteurServiceImpl.java:122)
-	at fr.dawan.AppliCFABack.services.TuteurServiceImpl$$FastClassBySpringCGLIB$$aec69c34.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:771)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:367)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:118)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
-	at fr.dawan.AppliCFABack.services.TuteurServiceImpl$$EnhancerBySpringCGLIB$$5440590b.findAllByEtudiants(<generated>)
-	at fr.dawan.AppliCFABack.controllers.TuteurController.getEtudiantsByTuteurId(TuteurController.java:69)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:879)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:793)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.servlet.resource.ResourceUrlEncodingFilter.doFilter(ResourceUrlEncodingFilter.java:64)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:373)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:748)
-
-2023-02-14 09:37:45.254 ERROR 22464 --- [http-nio-8085-exec-5] unknown.jul.logger                       : org.springframework.core.convert.ConverterNotFoundException: No converter found capable of converting from type [fr.dawan.AppliCFABack.entities.Tuteur] to type [fr.dawan.AppliCFABack.entities.Etudiant]
-	at org.springframework.core.convert.support.GenericConversionService.handleConverterNotFound(GenericConversionService.java:321)
-	at org.springframework.core.convert.support.GenericConversionService.convert(GenericConversionService.java:194)
-	at org.springframework.core.convert.support.GenericConversionService.convert(GenericConversionService.java:174)
-	at org.springframework.data.repository.query.ResultProcessor$ProjectingConverter.convert(ResultProcessor.java:297)
-	at org.springframework.data.repository.query.ResultProcessor$ChainingConverter.lambda$and$0(ResultProcessor.java:217)
-	at org.springframework.data.repository.query.ResultProcessor$ChainingConverter.convert(ResultProcessor.java:228)
-	at org.springframework.data.repository.query.ResultProcessor.processResult(ResultProcessor.java:156)
-	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.doExecute(AbstractJpaQuery.java:157)
-	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.execute(AbstractJpaQuery.java:142)
-	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor$QueryMethodInvoker.invoke(QueryExecutorMethodInterceptor.java:195)
-	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:152)
-	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:130)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:80)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:367)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:118)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:139)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:149)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:95)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:212)
-	at com.sun.proxy.$Proxy210.findAllByEtudiantsId(Unknown Source)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:344)
-	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:205)
-	at com.sun.proxy.$Proxy149.findAllByEtudiantsId(Unknown Source)
-	at fr.dawan.AppliCFABack.services.TuteurServiceImpl.findAllByEtudiants(TuteurServiceImpl.java:122)
-	at fr.dawan.AppliCFABack.services.TuteurServiceImpl$$FastClassBySpringCGLIB$$aec69c34.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:771)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:367)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:118)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
-	at fr.dawan.AppliCFABack.services.TuteurServiceImpl$$EnhancerBySpringCGLIB$$5440590b.findAllByEtudiants(<generated>)
-	at fr.dawan.AppliCFABack.controllers.TuteurController.getEtudiantsByTuteurId(TuteurController.java:69)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:879)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:793)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.servlet.resource.ResourceUrlEncodingFilter.doFilter(ResourceUrlEncodingFilter.java:64)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:373)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:748)
-
-2023-02-14 09:38:14.682  INFO 22464 --- [RMI TCP Connection(112)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2023-02-14 09:38:15.213  INFO 22464 --- [RMI TCP Connection(112)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-02-14 09:38:15.215  INFO 22464 --- [RMI TCP Connection(112)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
-2023-02-14 09:38:15.216  INFO 22464 --- [RMI TCP Connection(112)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2023-02-14 09:38:15.221  INFO 22464 --- [RMI TCP Connection(112)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2023-02-14 09:38:17.496  INFO 29944 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7710-2VGQK72 with PID 29944 (C:\cfa-portal-api\cfa-portal-api\target\classes started by Admin Stagiaire in C:\cfa-portal-api\cfa-portal-api)
-2023-02-14 09:38:17.499  INFO 29944 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
-2023-02-14 09:38:18.796  INFO 29944 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
-2023-02-14 09:38:19.051  INFO 29944 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 248ms. Found 37 JPA repository interfaces.
-2023-02-14 09:38:19.610  INFO 29944 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
-2023-02-14 09:38:19.621  INFO 29944 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-02-14 09:38:19.621  INFO 29944 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
-2023-02-14 09:38:19.822  INFO 29944 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-02-14 09:38:19.823  INFO 29944 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2285 ms
-2023-02-14 09:38:20.078  INFO 29944 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2023-02-14 09:38:20.145  INFO 29944 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-02-14 09:38:20.215  INFO 29944 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
-2023-02-14 09:38:20.415  INFO 29944 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
-2023-02-14 09:38:20.546  INFO 29944 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-02-14 09:38:20.609  INFO 29944 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-02-14 09:38:20.635  INFO 29944 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
-2023-02-14 09:38:20.785  WARN 29944 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-02-14 09:38:22.134  WARN 29944 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "create table cerfa (id bigint not null auto_increment, version integer not null, assurance_chomage varchar(255), autre varchar(255), caisse_de_retraite varchar(255), cfa_entreprise varchar(255), cfa_responsable varchar(255), cfa_siret varchar(255), cfa_uai varchar(255), code_idcc_convention varchar(255), code_rncp varchar(255), commune_naissance varchar(255), complement_apprentit varchar(255), complement_employeur varchar(255), complement_representant varchar(255), complement_responsable varchar(255), contrat_num varchar(255), contrat_type varchar(255), convention_collective_applicable varchar(255), date_avenant date, date_conclusion date, date_de_naissance varchar(255), date_de_naissance_deuxieme_tuteur varchar(255), date_de_naissance_premier_tuteur varchar(255), date_debut_contrat date, date_debut_formation date, date_decision date, date_examen date, date_fin_contrat date, departement_naissance varchar(255), dernier_diplome varchar(255), derniere_classe_suivi varchar(255), derogation_type varchar(255), diplome_code varchar(255), diplome_le_plus_eleve_obtenu varchar(255), diplome_vise varchar(255), effectif_entreprise varchar(255), egilibilite_fonction varchar(255), email_apprenti varchar(255), email_employeur varchar(255), employeur_prive_ou_public varchar(255), employeur_specifique varchar(255), employeur_type varchar(255), faita varchar(255), formation_duree varchar(255), handicape varchar(255), heure_travail varchar(255), intitule_precis_dernier_diplome varchar(255), intitule_precis_diplome_vise varchar(255), logement varchar(255), machine_risque varchar(255), minute_travail varchar(255), mode_contractuel_apprentissage varchar(255), naf varchar(255), nationalite varchar(255), nir_apprenti varchar(255), nom_deuxieme_tuteur varchar(255), nom_employeur varchar(255), nom_naissance_apprenti varchar(255), nom_organisme varchar(255), nom_premier_tuteur varchar(255), nom_representant varchar(255), nourriture varchar(255), num_avenant varchar(255), num_depot varchar(255), prenom_apprenti varchar(255), prenom_deuxieme_tuteur varchar(255), prenom_employeur varchar(255), prenom_premier_tuteur varchar(255), prenom_representant varchar(255), reception_dossier date, regime_social varchar(255), salaire_brut varchar(255), sexe varchar(255), siret_etablissement varchar(255), siret_organisme varchar(255), situation_avant_contrat varchar(255), sportifs varchar(255), tel_apprenti varchar(255), tel_employeur varchar(255), validation_employeur varchar(255), adresse_apprenti_id bigint, adresse_employeur_id bigint, adresse_representant_id bigint, adresse_responsable_id bigint, etudiant_id bigint, remuneration1_id bigint, remuneration2_id bigint, remuneration3_id bigint, remuneration4_id bigint, primary key (id)) engine=InnoDB" via JDBC Statement
+2023-02-16 14:41:58.622  INFO 14868 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7710-2VGQK72 with PID 14868 (C:\cfa-portal-api\cfa-portal-api\target\classes started by Admin Stagiaire in C:\cfa-portal-api\cfa-portal-api)
+2023-02-16 14:41:58.625  INFO 14868 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-02-16 14:41:59.526  INFO 14868 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-02-16 14:41:59.722  INFO 14868 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 188ms. Found 37 JPA repository interfaces.
+2023-02-16 14:42:00.187  INFO 14868 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2023-02-16 14:42:00.194  INFO 14868 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-16 14:42:00.195  INFO 14868 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-02-16 14:42:00.346  INFO 14868 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-02-16 14:42:00.346  INFO 14868 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1689 ms
+2023-02-16 14:42:00.546  INFO 14868 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2023-02-16 14:42:00.607  INFO 14868 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-16 14:42:00.673  INFO 14868 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-02-16 14:42:00.833  INFO 14868 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-02-16 14:42:00.947  INFO 14868 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-02-16 14:42:01.005  INFO 14868 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-02-16 14:42:01.024  INFO 14868 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-02-16 14:42:01.148  WARN 14868 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-16 14:42:02.133  WARN 14868 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "create table cerfa (id bigint not null auto_increment, version integer not null, assurance_chomage varchar(255), autre varchar(255), caisse_de_retraite varchar(255), cfa_entreprise varchar(255), cfa_responsable varchar(255), cfa_siret varchar(255), cfa_uai varchar(255), code_idcc_convention varchar(255), code_rncp varchar(255), commune_naissance varchar(255), complement_apprentit varchar(255), complement_employeur varchar(255), complement_representant varchar(255), complement_responsable varchar(255), contrat_num varchar(255), contrat_type varchar(255), convention_collective_applicable varchar(255), date_avenant date, date_conclusion date, date_de_naissance varchar(255), date_de_naissance_deuxieme_tuteur varchar(255), date_de_naissance_premier_tuteur varchar(255), date_debut_contrat date, date_debut_formation date, date_decision date, date_examen date, date_fin_contrat date, departement_naissance varchar(255), dernier_diplome varchar(255), derniere_classe_suivi varchar(255), derogation_type varchar(255), diplome_code varchar(255), diplome_le_plus_eleve_obtenu varchar(255), diplome_vise varchar(255), effectif_entreprise varchar(255), egilibilite_fonction varchar(255), email_apprenti varchar(255), email_employeur varchar(255), employeur_prive_ou_public varchar(255), employeur_specifique varchar(255), employeur_type varchar(255), faita varchar(255), formation_duree varchar(255), handicape varchar(255), heure_travail varchar(255), intitule_precis_dernier_diplome varchar(255), intitule_precis_diplome_vise varchar(255), logement varchar(255), machine_risque varchar(255), minute_travail varchar(255), mode_contractuel_apprentissage varchar(255), naf varchar(255), nationalite varchar(255), nir_apprenti varchar(255), nom_deuxieme_tuteur varchar(255), nom_employeur varchar(255), nom_naissance_apprenti varchar(255), nom_organisme varchar(255), nom_premier_tuteur varchar(255), nom_representant varchar(255), nourriture varchar(255), num_avenant varchar(255), num_depot varchar(255), prenom_apprenti varchar(255), prenom_deuxieme_tuteur varchar(255), prenom_employeur varchar(255), prenom_premier_tuteur varchar(255), prenom_representant varchar(255), reception_dossier date, regime_social varchar(255), salaire_brut varchar(255), sexe varchar(255), siret_etablissement varchar(255), siret_organisme varchar(255), situation_avant_contrat varchar(255), sportifs varchar(255), tel_apprenti varchar(255), tel_employeur varchar(255), validation_employeur varchar(255), adresse_apprenti_id bigint, adresse_employeur_id bigint, adresse_representant_id bigint, adresse_responsable_id bigint, etudiant_id bigint, remuneration1_id bigint, remuneration2_id bigint, remuneration3_id bigint, remuneration4_id bigint, primary key (id)) engine=InnoDB" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table cerfa (id bigint not null auto_increment, version integer not null, assurance_chomage varchar(255), autre varchar(255), caisse_de_retraite varchar(255), cfa_entreprise varchar(255), cfa_responsable varchar(255), cfa_siret varchar(255), cfa_uai varchar(255), code_idcc_convention varchar(255), code_rncp varchar(255), commune_naissance varchar(255), complement_apprentit varchar(255), complement_employeur varchar(255), complement_representant varchar(255), complement_responsable varchar(255), contrat_num varchar(255), contrat_type varchar(255), convention_collective_applicable varchar(255), date_avenant date, date_conclusion date, date_de_naissance varchar(255), date_de_naissance_deuxieme_tuteur varchar(255), date_de_naissance_premier_tuteur varchar(255), date_debut_contrat date, date_debut_formation date, date_decision date, date_examen date, date_fin_contrat date, departement_naissance varchar(255), dernier_diplome varchar(255), derniere_classe_suivi varchar(255), derogation_type varchar(255), diplome_code varchar(255), diplome_le_plus_eleve_obtenu varchar(255), diplome_vise varchar(255), effectif_entreprise varchar(255), egilibilite_fonction varchar(255), email_apprenti varchar(255), email_employeur varchar(255), employeur_prive_ou_public varchar(255), employeur_specifique varchar(255), employeur_type varchar(255), faita varchar(255), formation_duree varchar(255), handicape varchar(255), heure_travail varchar(255), intitule_precis_dernier_diplome varchar(255), intitule_precis_diplome_vise varchar(255), logement varchar(255), machine_risque varchar(255), minute_travail varchar(255), mode_contractuel_apprentissage varchar(255), naf varchar(255), nationalite varchar(255), nir_apprenti varchar(255), nom_deuxieme_tuteur varchar(255), nom_employeur varchar(255), nom_naissance_apprenti varchar(255), nom_organisme varchar(255), nom_premier_tuteur varchar(255), nom_representant varchar(255), nourriture varchar(255), num_avenant varchar(255), num_depot varchar(255), prenom_apprenti varchar(255), prenom_deuxieme_tuteur varchar(255), prenom_employeur varchar(255), prenom_premier_tuteur varchar(255), prenom_representant varchar(255), reception_dossier date, regime_social varchar(255), salaire_brut varchar(255), sexe varchar(255), siret_etablissement varchar(255), siret_organisme varchar(255), situation_avant_contrat varchar(255), sportifs varchar(255), tel_apprenti varchar(255), tel_employeur varchar(255), validation_employeur varchar(255), adresse_apprenti_id bigint, adresse_employeur_id bigint, adresse_representant_id bigint, adresse_responsable_id bigint, etudiant_id bigint, remuneration1_id bigint, remuneration2_id bigint, remuneration3_id bigint, remuneration4_id bigint, primary key (id)) engine=InnoDB" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -253,7 +37,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=2121) Ligne trop grande. Le taille maximale d'une ligne, sauf les BLOBs, est 65535. Changez le type de quelques colonnes en BLOB
+Caused by: java.sql.SQLSyntaxErrorException: (conn=2808) Ligne trop grande. Le taille maximale d'une ligne, sauf les BLOBs, est 65535. Changez le type de quelques colonnes en BLOB
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -276,7 +60,7 @@ Caused by: java.sql.SQLException: Ligne trop grande. Le taille maximale d'une li
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 23 common frames omitted
 
-2023-02-14 09:38:22.203  WARN 29944 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK59lvi67stxclu1qi7xcnyn2ck foreign key (adresse_apprenti_id) references adresse (id)" via JDBC Statement
+2023-02-16 14:42:02.186  WARN 14868 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK59lvi67stxclu1qi7xcnyn2ck foreign key (adresse_apprenti_id) references adresse (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK59lvi67stxclu1qi7xcnyn2ck foreign key (adresse_apprenti_id) references adresse (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -297,7 +81,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=2121) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=2808) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -320,7 +104,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-02-14 09:38:22.204  WARN 29944 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK5uclvt6uc9e2qhro3p01ixive foreign key (adresse_employeur_id) references adresse (id)" via JDBC Statement
+2023-02-16 14:42:02.187  WARN 14868 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK5uclvt6uc9e2qhro3p01ixive foreign key (adresse_employeur_id) references adresse (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK5uclvt6uc9e2qhro3p01ixive foreign key (adresse_employeur_id) references adresse (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -341,7 +125,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=2121) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=2808) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -364,7 +148,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-02-14 09:38:22.206  WARN 29944 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKfrq9kq7hd4an1ygahipo9nq8u foreign key (adresse_representant_id) references adresse (id)" via JDBC Statement
+2023-02-16 14:42:02.188  WARN 14868 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKfrq9kq7hd4an1ygahipo9nq8u foreign key (adresse_representant_id) references adresse (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKfrq9kq7hd4an1ygahipo9nq8u foreign key (adresse_representant_id) references adresse (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -385,7 +169,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=2121) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=2808) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -408,7 +192,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-02-14 09:38:22.207  WARN 29944 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKt97kxbiftvvgjyn5ud5e5br4n foreign key (adresse_responsable_id) references adresse (id)" via JDBC Statement
+2023-02-16 14:42:02.189  WARN 14868 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKt97kxbiftvvgjyn5ud5e5br4n foreign key (adresse_responsable_id) references adresse (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKt97kxbiftvvgjyn5ud5e5br4n foreign key (adresse_responsable_id) references adresse (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -429,7 +213,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=2121) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=2808) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -452,7 +236,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-02-14 09:38:22.207  WARN 29944 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKs69obwmyeupfu4nko8n98xjmg foreign key (etudiant_id) references etudiant (id)" via JDBC Statement
+2023-02-16 14:42:02.189  WARN 14868 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKs69obwmyeupfu4nko8n98xjmg foreign key (etudiant_id) references etudiant (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKs69obwmyeupfu4nko8n98xjmg foreign key (etudiant_id) references etudiant (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -473,7 +257,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=2121) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=2808) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -496,7 +280,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-02-14 09:38:22.208  WARN 29944 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKlkgv2obeikkra8w1hbvibjua2 foreign key (remuneration1_id) references remuneration (id)" via JDBC Statement
+2023-02-16 14:42:02.191  WARN 14868 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKlkgv2obeikkra8w1hbvibjua2 foreign key (remuneration1_id) references remuneration (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKlkgv2obeikkra8w1hbvibjua2 foreign key (remuneration1_id) references remuneration (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -517,7 +301,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=2121) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=2808) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -540,7 +324,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-02-14 09:38:22.209  WARN 29944 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKqdd8g2fpm2ipyk8q41ucifp5i foreign key (remuneration2_id) references remuneration (id)" via JDBC Statement
+2023-02-16 14:42:02.193  WARN 14868 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKqdd8g2fpm2ipyk8q41ucifp5i foreign key (remuneration2_id) references remuneration (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKqdd8g2fpm2ipyk8q41ucifp5i foreign key (remuneration2_id) references remuneration (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -561,7 +345,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=2121) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=2808) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -584,7 +368,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-02-14 09:38:22.209  WARN 29944 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK3t58jqpuv3ga8ua2ojrbxaost foreign key (remuneration3_id) references remuneration (id)" via JDBC Statement
+2023-02-16 14:42:02.193  WARN 14868 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK3t58jqpuv3ga8ua2ojrbxaost foreign key (remuneration3_id) references remuneration (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK3t58jqpuv3ga8ua2ojrbxaost foreign key (remuneration3_id) references remuneration (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -605,7 +389,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=2121) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=2808) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -628,7 +412,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-02-14 09:38:22.210  WARN 29944 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK8rbxne83rxwm1iekev9q2umu0 foreign key (remuneration4_id) references remuneration (id)" via JDBC Statement
+2023-02-16 14:42:02.194  WARN 14868 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK8rbxne83rxwm1iekev9q2umu0 foreign key (remuneration4_id) references remuneration (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK8rbxne83rxwm1iekev9q2umu0 foreign key (remuneration4_id) references remuneration (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -649,7 +433,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=2121) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=2808) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -672,26 +456,21 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-02-14 09:38:22.548  INFO 29944 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-02-14 09:38:22.556  INFO 29944 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-02-14 09:38:22.654  INFO 29944 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
-2023-02-14 09:38:22.717  INFO 29944 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
-2023-02-14 09:38:22.718  INFO 29944 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-02-14 09:38:22.719  INFO 29944 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
-2023-02-14 09:38:22.737  INFO 29944 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2023-02-14 09:38:22.737  INFO 29944 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 79 ms
-2023-02-14 09:38:22.749  INFO 29944 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-2023-02-14 09:38:22.971  INFO 29944 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
-2023-02-14 09:38:22.971  INFO 29944 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
-2023-02-14 09:38:24.064  INFO 29944 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
-2023-02-14 09:38:24.066  INFO 29944 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
-2023-02-14 09:38:24.066  INFO 29944 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
-2023-02-14 09:38:24.076  INFO 29944 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 6.874 seconds (JVM running for 7.952)
-2023-02-14 09:38:25.250  INFO 29944 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-02-14 09:38:25.250  INFO 29944 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-02-14 09:38:25.257  INFO 29944 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
-2023-02-14 11:06:45.820  INFO 29944 --- [RMI TCP Connection(95)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2023-02-14 11:06:46.415  INFO 29944 --- [RMI TCP Connection(95)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-02-14 11:06:46.417  INFO 29944 --- [RMI TCP Connection(95)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
-2023-02-14 11:06:46.419  INFO 29944 --- [RMI TCP Connection(95)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2023-02-14 11:06:46.425  INFO 29944 --- [RMI TCP Connection(95)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-02-16 14:42:02.423  INFO 14868 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-16 14:42:02.430  INFO 14868 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-16 14:42:02.503  INFO 14868 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2023-02-16 14:42:02.558  INFO 14868 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-02-16 14:42:02.558  INFO 14868 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-16 14:42:02.559  INFO 14868 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-02-16 14:42:02.575  INFO 14868 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-02-16 14:42:02.575  INFO 14868 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 69 ms
+2023-02-16 14:42:02.584  INFO 14868 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-02-16 14:42:02.771  INFO 14868 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-02-16 14:42:02.772  INFO 14868 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-02-16 14:42:03.716  INFO 14868 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-02-16 14:42:03.717  INFO 14868 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-02-16 14:42:03.718  INFO 14868 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-02-16 14:42:03.725  INFO 14868 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 5.335 seconds (JVM running for 6.11)
+2023-02-16 14:42:04.521  INFO 14868 --- [RMI TCP Connection(4)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-02-16 14:42:04.521  INFO 14868 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-02-16 14:42:04.527  INFO 14868 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
