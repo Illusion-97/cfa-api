@@ -254,11 +254,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         examenDto.setId( examen.getId() );
         examenDto.setVersion( examen.getVersion() );
-        examenDto.setDateExamen( examen.getDateExamen() );
+        examenDto.setTitre( examen.getTitre() );
         examenDto.setDescriptif( examen.getDescriptif() );
         examenDto.setDuree( examen.getDuree() );
         examenDto.setPieceJointe( examen.getPieceJointe() );
-        examenDto.setTitre( examen.getTitre() );
+        examenDto.setDateExamen( examen.getDateExamen() );
 
         return examenDto;
     }
@@ -397,6 +397,7 @@ public class DtoMapperImpl implements DtoMapper {
         promotionDto.setVersion( promotion.getVersion() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
+        promotionDto.setIdDg2( promotion.getIdDg2() );
         promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
