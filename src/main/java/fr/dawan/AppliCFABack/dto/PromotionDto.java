@@ -27,6 +27,8 @@ public class PromotionDto extends BaseEntityDto implements Serializable {
 	private UtilisateurDto referentPedagogiqueDto;
 	private CursusDto cursusDto;
 	private String centreFormationAdresseVille;
+	private Long idDg2;
+	
 	public PromotionDto() {
 		super();
 	}
@@ -186,4 +188,13 @@ public class PromotionDto extends BaseEntityDto implements Serializable {
 		this.centreFormationAdresseVille = centreFormationAdresseVille;
 	}
 
+    public Long getIdDg2() {
+        return idDg2;
+    }
+
+    public void setIdDg2(Long idDg2) {
+        this.idDg2 = idDg2;
+    }
+
+	
 }
