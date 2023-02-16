@@ -219,6 +219,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				uDto.setFormateurDto(mapper.formateurToFormateurDto(userOpt.get().getFormateur()));
 			if (userOpt.get().getCef() != null)
 				uDto.setCefDto(mapper.cefToCEFDto(userOpt.get().getCef()));
+			if (userOpt.get().getTuteur() != null)
+				uDto.setTuteurDto(mapper.tuteurTotuteurDto(userOpt.get().getTuteur()));
 
 			return uDto;
 		}
@@ -256,6 +258,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		utilisateurDto.setEtudiantDto(mapper.etudiantToEtudiantDto(user.getEtudiant()));
 		utilisateurDto.setFormateurDto(mapper.formateurToFormateurDto(user.getFormateur()));
 		utilisateurDto.setCefDto(mapper.cefToCEFDto(user.getCef()));
+		utilisateurDto.setTuteurDto(mapper.tuteurTotuteurDto(user.getTuteur()));
 
 		return utilisateurDto;
 	}

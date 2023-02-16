@@ -41,4 +41,8 @@ public interface TuteurRepository extends JpaRepository<Tuteur , Long>{
 	
 	long countByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(
 			String search, String search2);
+	
+	//long countByIdAndEtudiantsUtilisateurPrenomContainingIgnoringCase(long id, String search);
+
+
 }

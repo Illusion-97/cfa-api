@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.FormateurDto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
+import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.TuteurService;
 
 @RestController
@@ -26,6 +25,9 @@ public class TuteurController {
 	
 	@Autowired
 	TuteurService tuteurService;
+	
+	@Autowired
+	EtudiantService etudiantService;
 	
 
 	@GetMapping(produces = "application/json")
@@ -84,23 +86,26 @@ public class TuteurController {
 					@PathVariable(value = "size") int size,
 					@PathVariable(value = "search", required = false) Optional<String> search) {
 				if (search.isPresent())
-					return tuteurService.getEtudiatBySearch(id, page, size, search.get());
+					return etudiantService.getEtudiantByIdTuteurBySearch(id, page, size, search.get());
 				else
-					return tuteurService.getEtudiatBySearch(id, page, size, "");
+					return etudiantService.getEtudiantByIdTuteurBySearch(id, page, size, "");
 			}
 			
-			@GetMapping(value = "/count", produces = "application/json")
-			public CountDto count() {
-				return tuteurService.count("");
-			}
+			/*@GetMapping(value = "/{id}/count", produces = "application/json")
+			public CountDto count(
+					@PathVariable("id") long id) {
+				return etudiantService.countTuteur(id);
+			}*/
 
-			@GetMapping(value = "/count/{search}", produces = "application/json")
-			public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
+			/*@GetMapping(value = "/{id}/count/{search}", produces = "application/json")
+			public CountDto count(
+					@PathVariable("id") long id,
+					@PathVariable(value = "search", required = false) Optional<String> search) {
 				if (search.isPresent())
-					return tuteurService.count(search.get());
+					return etudiantService.countTuteur(id, search.get());
 				else
-					return tuteurService.count("");
-			}
+					return etudiantService.countTuteur(id);
+			}*/
 			
 }
 

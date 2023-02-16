@@ -170,7 +170,7 @@ public class TuteurServiceImpl implements TuteurService{
 						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
 						etudDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(etudiant.getUtilisateur()));	
 						lstetudDto.add(etudDto);
-				}
+					}
 				}
 				return lstetudDto;
 	}

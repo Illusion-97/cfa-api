@@ -89,6 +89,7 @@ import fr.dawan.AppliCFABack.repositories.LivretEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.NoteRepository;
 import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.TuteurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
@@ -100,6 +101,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Autowired
 	EtudiantRepository etudiantRepository;
+	
+	@Autowired
+	TuteurRepository tuteurRepository;
 
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
@@ -738,7 +742,21 @@ public class EtudiantServiceImpl implements EtudiantService {
 				.countDistinctByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContaining(
 						search, search, search, search));
 	}
-
+	
+	/*@Override
+	public CountDto countTuteur(long id, String search) {
+		return new CountDto(tuteurRepository
+				.countByIdTuteurAndEtudiantsUtilisateurPrenomContainingIgnoringCase(
+						id, search));
+	}*/
+	
+	/*public CountDto countTuteur(long id) {
+		return new CountDto(etudiantRepository
+				.findByTuteurId(
+						id));
+	}*/
+	
+	
 	/**
 	 * Va permettre de récupérer tous les etudiants avec pagination recherche par
 	 * nom / prenom / promo / groupe
@@ -1049,6 +1067,23 @@ public class EtudiantServiceImpl implements EtudiantService {
 			return mapperTools.etudiantToAccueilEtudiantDto(e.get());
 		}
 		return null;
+	}
+	
+	@Override
+	public List<EtudiantDto> getEtudiantByIdTuteurBySearch(long id, int page, int size, String search) {
+		List<Etudiant> lstetud= etudiantRepository.findEtudiantBySearch(id, PageRequest.of(page, size), search)
+				.get()
+				.collect(Collectors.toList());
+				List<EtudiantDto> lstetudDto = new ArrayList<>();
+				for (Etudiant etudiant : lstetud) 
+				{
+					if (etudiant != null) {
+						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
+						etudDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(etudiant.getUtilisateur()));	
+						lstetudDto.add(etudDto);
+					}
+				}
+				return lstetudDto;
 	}
 
 	
