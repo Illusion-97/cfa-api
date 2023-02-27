@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -90,22 +91,24 @@ public class TuteurController {
 				else
 					return etudiantService.getEtudiantByIdTuteurBySearch(id, page, size, "");
 			}
+						
+			@GetMapping(value = "/{id}/etudiants/count")
+			public CountDto countByTuteurId(@PathVariable("id") long id) {
+				return tuteurService.countEtudiantByIdTuteur(id);
+			}
 			
-			/*@GetMapping(value = "/{id}/count", produces = "application/json")
-			public CountDto count(
-					@PathVariable("id") long id) {
-				return etudiantService.countTuteur(id);
-			}*/
-
-			/*@GetMapping(value = "/{id}/count/{search}", produces = "application/json")
-			public CountDto count(
+			@GetMapping(value = "/{id}/etudiants/count/{search}")
+			public CountDto countByTuteurId(
 					@PathVariable("id") long id,
-					@PathVariable(value = "search", required = false) Optional<String> search) {
-				if (search.isPresent())
-					return etudiantService.countTuteur(id, search.get());
-				else
-					return etudiantService.countTuteur(id);
-			}*/
+					@PathVariable("search")Optional<String> search)
+			{
+				if (search.isPresent()) {
+					return tuteurService.countEtudiantByIdTuteur(id, search.get());
+				}
+				return tuteurService.countEtudiantByIdTuteur(id);
+				 
+			}
+	}
 			
-}
+
 

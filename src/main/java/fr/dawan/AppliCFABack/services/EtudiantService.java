@@ -30,13 +30,7 @@ public interface EtudiantService {
 
 	List<EtudiantDto> getAllByPage(int page, int size, String search);
 
-	CountDto count(String search);
-	
-	//CountDto countTuteur(long id, String search);
-	
-	//CountDto countTuteur(long id);
-	
-	
+	CountDto count(String search);	
 
 	EtudiantDto getById(long id);
 

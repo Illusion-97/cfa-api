@@ -174,13 +174,17 @@ public class TuteurServiceImpl implements TuteurService{
 				}
 				return lstetudDto;
 	}
+	
+	@Override
+	public CountDto countEtudiantByIdTuteur(long id) {
+		return new CountDto(etudiantRepository.countByTuteurId(id));
+	}
 
 	@Override
-	public CountDto count(String search) {
-		return new CountDto(tuteurRepository.countByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCase(search, search));
+	public CountDto countEtudiantByIdTuteur(long id, String search) {
+		// TODO Auto-generated method stub
+		return new CountDto(tuteurRepository.countByIdAndEtudiantsUtilisateurNomContainingAllIgnoringCase(id, search));
 	}
-	
-
 	
 	
 

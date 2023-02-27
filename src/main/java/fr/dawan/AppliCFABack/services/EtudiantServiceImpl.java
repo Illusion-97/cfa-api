@@ -743,20 +743,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 						search, search, search, search));
 	}
 	
-	/*@Override
-	public CountDto countTuteur(long id, String search) {
-		return new CountDto(tuteurRepository
-				.countByIdTuteurAndEtudiantsUtilisateurPrenomContainingIgnoringCase(
-						id, search));
-	}*/
-	
-	/*public CountDto countTuteur(long id) {
-		return new CountDto(etudiantRepository
-				.findByTuteurId(
-						id));
-	}*/
-	
-	
 	/**
 	 * Va permettre de récupérer tous les etudiants avec pagination recherche par
 	 * nom / prenom / promo / groupe
