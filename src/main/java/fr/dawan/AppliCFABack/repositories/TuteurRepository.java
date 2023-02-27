@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
@@ -33,8 +35,14 @@ public interface TuteurRepository extends JpaRepository<Tuteur , Long>{
 	
 	Page<Etudiant> findAllByEtudiants(long id, Pageable p);
 
+	@Query("SELECT e FROM Etudiant e JOIN e.tuteur t WHERE t.id=:id AND e.utilisateur.nom LIKE :search OR e.utilisateur.prenom  LIKE :search ")	
+	Page<Etudiant> findEtudiantBySearch(@Param("id")long id, Pageable p, String search);
 	
+	long countByIdAndEtudiantsUtilisateurNomContainingAllIgnoringCase(long id, String search);
 	
+	long countById(long id);
+
+
 
 	
 }

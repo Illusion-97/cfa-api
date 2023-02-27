@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import fr.dawan.AppliCFABack.entities.Etudiant;
@@ -31,8 +32,13 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 
 	List<Etudiant> findAllDistinctByPromotionsInterventionsId(long id);
 	
+	@Query("SELECT e FROM Etudiant e JOIN e.tuteur t WHERE t.id=:id AND e.utilisateur.nom LIKE :search OR e.utilisateur.prenom  LIKE :search ")	
+	Page<Etudiant> findEtudiantBySearch(@Param("id")long id, Pageable p, String search);
 	
-	
+	Page<Etudiant> findAllByTuteurId(long id, Pageable p);
+		
+	long countByTuteurId(long id);
+
 	
 
  

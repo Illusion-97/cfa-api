@@ -1051,5 +1051,23 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return null;
 	}
 
+	@Override
+	public List<EtudiantDto> getEtudiantByIdTuteurBySearch(long id, int page, int size, String search) {
+		List<Etudiant> lstetud= etudiantRepository.findEtudiantBySearch(id, PageRequest.of(page, size), search)
+				.get()
+				.collect(Collectors.toList());
+				List<EtudiantDto> lstetudDto = new ArrayList<>();
+				for (Etudiant etudiant : lstetud) 
+				{
+					if (etudiant != null) {
+						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
+						etudDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(etudiant.getUtilisateur()));	
+						lstetudDto.add(etudDto);
+					}
+				}
+				return lstetudDto;
+
+	}
+
 	
 }

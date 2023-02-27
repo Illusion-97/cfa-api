@@ -155,6 +155,34 @@ public class TuteurServiceImpl implements TuteurService{
 				return lstetudDto;
 	}
 
+	@Override
+	public List<EtudiantDto> getEtudiatBySearch(long id, int page, int size, String search) {
+		List<Etudiant> lstetud= tuteurRepository.findEtudiantBySearch(id, PageRequest.of(page, size), search)
+				.get()
+				.collect(Collectors.toList());
+				List<EtudiantDto> lstetudDto = new ArrayList<>();
+				for (Etudiant etudiant : lstetud) 
+				{
+					if (etudiant != null) {
+						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
+						etudDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(etudiant.getUtilisateur()));	
+						lstetudDto.add(etudDto);
+					}
+				}
+				return lstetudDto;
+
+	}
+
+	@Override
+	public CountDto countEtudiantByIdTuteur(long id) {
+		return new CountDto(etudiantRepository.countByTuteurId(id));
+	}
+
+	@Override
+	public CountDto countEtudiantByIdTuteur(long id, String search) {
+		return new CountDto(tuteurRepository.countByIdAndEtudiantsUtilisateurNomContainingAllIgnoringCase(id, search));
+	}
+
 	
 
 

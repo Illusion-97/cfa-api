@@ -18,6 +18,7 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
+import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.TuteurService;
 
 @RestController
@@ -27,6 +28,10 @@ public class TuteurController {
 	@Autowired
 	TuteurService tuteurService;
 	
+	@Autowired
+	EtudiantService etudiantService;
+	
+
 
 	@GetMapping(produces = "application/json")
 	public List<TuteurDto> getAll() {
@@ -75,7 +80,35 @@ public class TuteurController {
 				return tuteurService.getAllEtudiantsByTuteurIdPerPage(id, page, size);
 			}
 		
+			@GetMapping(produces = "application/json", value = "/{id}/etudiants/{page}/{size}/{search}")
+			public List<EtudiantDto> getEtudiantsByTuteurId(
+					@PathVariable("id") long id, 
+					@PathVariable("page") int page, 
+					@PathVariable(value = "size") int size,
+					@PathVariable(value = "search", required = false) Optional<String> search) {
+				if (search.isPresent())
+					return etudiantService.getEtudiantByIdTuteurBySearch(id, page, size, search.get());
+				else
+					return etudiantService.getEtudiantByIdTuteurBySearch(id, page, size, "");
+			}
+						
+			@GetMapping(value = "/{id}/etudiants/count")
+			public CountDto countByTuteurId(@PathVariable("id") long id) {
+				return tuteurService.countEtudiantByIdTuteur(id);
+			}
 			
+			@GetMapping(value = "/{id}/etudiants/count/{search}")
+			public CountDto countByTuteurId(
+					@PathVariable("id") long id,
+					@PathVariable("search")Optional<String> search)
+			{
+				if (search.isPresent()) {
+					return tuteurService.countEtudiantByIdTuteur(id, search.get());
+				}
+				return tuteurService.countEtudiantByIdTuteur(id);
+				 
+			}
+
 			
 			
 }

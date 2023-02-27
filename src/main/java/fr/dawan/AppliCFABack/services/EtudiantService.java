@@ -89,4 +89,6 @@ public interface EtudiantService {
 	AccueilEtudiantDto getAccueilEtudiant(long id);
 	
 	
+	List<EtudiantDto> getEtudiantByIdTuteurBySearch(long id, int page, int size, String search);
+	
 }
