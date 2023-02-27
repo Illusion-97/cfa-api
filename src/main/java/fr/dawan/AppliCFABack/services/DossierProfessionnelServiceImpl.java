@@ -199,6 +199,18 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
             exp.setDossierProfessionnel(dp);
             optEtudiant.ifPresent(exp::setEtudiant);
         }
+        
+        List<Facultatif> facultatif = dp.getFacultatifs();
+        for(Facultatif f : facultatif) {
+            f.setDossierProfessionnel(dp);
+        }
+
+        //on récupère la liste des annexes d'un dossier professionnel et on les met à jour (en n'oubliant pas de set les clés étrangères de la table annexe)
+        List<Annexe> annexes = dp.getAnnexes();
+        for(Annexe annexe : annexes) {
+            annexe.setDossierProfessionnel(dp);
+        }
+
 
         EtudiantDossierDto eDto = etudiantService.getByEtudiantIdForDossierPro(id);
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
