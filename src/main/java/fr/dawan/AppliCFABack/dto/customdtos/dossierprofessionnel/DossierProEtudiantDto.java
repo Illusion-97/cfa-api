@@ -3,7 +3,9 @@ package fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel;
 import java.io.Serializable;
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.AnnexeDto;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
+import fr.dawan.AppliCFABack.dto.FacultatifDto;
 
 @SuppressWarnings("serial")
 public class DossierProEtudiantDto implements Serializable {
@@ -12,6 +14,8 @@ public class DossierProEtudiantDto implements Serializable {
     private String nom;
     private CursusDossierProDto cursus;
     private List<ExperienceProfessionnelleDto> experienceProfessionnelles;
+    private List<AnnexeDto> annexes;
+    private List<FacultatifDto> facultatif;
     private int version;
 
     public long getId() {
@@ -53,4 +57,21 @@ public class DossierProEtudiantDto implements Serializable {
     public void setExperienceProfessionnelles(List<ExperienceProfessionnelleDto> experienceProfessionnelles) {
         this.experienceProfessionnelles = experienceProfessionnelles;
     }
+
+	public List<AnnexeDto> getAnnexes() {
+		return annexes;
+	}
+
+	public void setAnnexes(List<AnnexeDto> annexes) {
+		this.annexes = annexes;
+	}
+
+	public List<FacultatifDto> getFacultatif() {
+		return facultatif;
+	}
+
+	public void setFacultatif(List<FacultatifDto> facultatif) {
+		this.facultatif = facultatif;
+	}
+    
 }
