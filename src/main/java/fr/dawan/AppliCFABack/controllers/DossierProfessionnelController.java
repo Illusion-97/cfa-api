@@ -72,11 +72,11 @@ public class DossierProfessionnelController {
 	}
 
 	@PostMapping(value = "/save/{id}", consumes = "application/json", produces = "application/json")
-	public DossierProfessionnelDto save(@PathVariable("id") long id, @RequestBody DossierProfessionnelDto dpDto) {
+	public DossierProfessionnelDto saveOrUpdate(@PathVariable("id") long id, @RequestBody DossierProfessionnelDto dpDto) {
 		DossierProfessionnelDto dpDto1 = dossierProService.getByName(dpDto.getNom());
-		if (dpDto1 != null) {
+		/*if (dpDto1 != null) {
 			return null;
-		}
+		}*/
 		DossierProfessionnelDto dp = dossierProService.saveOrUpdate(dpDto);
 		EtudiantDto eDto = etudiantService.getById(id);
 		eDto.getDossierProfessionnel().add(dp);
@@ -104,19 +104,7 @@ public class DossierProfessionnelController {
 
 	}
 
-	@PutMapping(value = "/save/{id}", consumes = "application/json", produces = "application/json")
-	public DossierProfessionnelDto update(@RequestBody DossierProfessionnelDto dpDto, @PathVariable("id") long id) {
-		DossierProfessionnelDto dpDto1 = dossierProService.getByName(dpDto.getNom());
-		if (dpDto1 != null) {
-			return null;
-		}
-		DossierProfessionnelDto dp = dossierProService.saveOrUpdate(dpDto);
-		EtudiantDto eDto = etudiantService.getById(id);
-		eDto.getDossierProfessionnel().add(dp);
-		etudiantService.saveOrUpdate(eDto);
-		return dp;
-	}
-
+	
 	@PostMapping(value = "/save/etudiant/{id}", consumes = "application/json", produces = "application/json")
 	public DossierProEtudiantDto saveDossierProfessionnel(@RequestBody DossierProEtudiantDto dpDto, @PathVariable("id") long id) {
 		return dossierProService.saveOrUpdateDossierProfessionnel(dpDto, id);

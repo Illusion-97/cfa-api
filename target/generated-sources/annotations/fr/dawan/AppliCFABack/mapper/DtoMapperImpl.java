@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.mapper;
 
 import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.AnnexeDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
@@ -19,6 +20,7 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
+import fr.dawan.AppliCFABack.dto.FacultatifDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
@@ -36,6 +38,7 @@ import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.Annexe;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Cerfa;
@@ -49,6 +52,7 @@ import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
+import fr.dawan.AppliCFABack.entities.Facultatif;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
@@ -68,7 +72,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-27T16:58:54+0100",
+    date = "2023-02-28T16:48:26+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.300.v20221108-0856, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -428,15 +432,15 @@ public class DtoMapperImpl implements DtoMapper {
 
         utilisateurDto.setId( utilisateur.getId() );
         utilisateurDto.setVersion( utilisateur.getVersion() );
-        utilisateurDto.setLogin( utilisateur.getLogin() );
-        utilisateurDto.setPassword( utilisateur.getPassword() );
-        utilisateurDto.setPrenom( utilisateur.getPrenom() );
-        utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setCivilite( utilisateur.getCivilite() );
         utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
+        utilisateurDto.setIdDg2( utilisateur.getIdDg2() );
+        utilisateurDto.setLogin( utilisateur.getLogin() );
+        utilisateurDto.setNom( utilisateur.getNom() );
+        utilisateurDto.setPassword( utilisateur.getPassword() );
+        utilisateurDto.setPrenom( utilisateur.getPrenom() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
         utilisateurDto.setTelephoneFixe( utilisateur.getTelephoneFixe() );
-        utilisateurDto.setIdDg2( utilisateur.getIdDg2() );
 
         return utilisateurDto;
     }
@@ -469,6 +473,39 @@ public class DtoMapperImpl implements DtoMapper {
         dossierProfessionnelDto.setNom( dossierProfessionnel.getNom() );
 
         return dossierProfessionnelDto;
+    }
+
+    @Override
+    public AnnexeDto AnnexeToAnnexeDto(Annexe annexe) {
+        if ( annexe == null ) {
+            return null;
+        }
+
+        AnnexeDto annexeDto = new AnnexeDto();
+
+        annexeDto.setId( annexe.getId() );
+        annexeDto.setVersion( annexe.getVersion() );
+        annexeDto.setLibelle( annexe.getLibelle() );
+        annexeDto.setPieceJointe( annexe.getPieceJointe() );
+
+        return annexeDto;
+    }
+
+    @Override
+    public FacultatifDto FacultatifToFacultatifDto(Facultatif facultatif) {
+        if ( facultatif == null ) {
+            return null;
+        }
+
+        FacultatifDto facultatifDto = new FacultatifDto();
+
+        facultatifDto.setId( facultatif.getId() );
+        facultatifDto.setVersion( facultatif.getVersion() );
+        facultatifDto.setDate( facultatif.getDate() );
+        facultatifDto.setIntitule( facultatif.getIntitule() );
+        facultatifDto.setOrganisme( facultatif.getOrganisme() );
+
+        return facultatifDto;
     }
 
     @Override
