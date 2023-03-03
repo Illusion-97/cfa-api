@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
@@ -47,15 +45,16 @@ import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
-import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PositionnementDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
@@ -1186,6 +1185,15 @@ public class EtudiantServiceImpl implements EtudiantService {
 		}
 		return null;
 	}
+
+    @Override
+    public EtudiantDossierProjetDto getByEtudiantIdForDossierProjet(long id) {
+        Optional<Etudiant> e = etudiantRepository.findById(id);
+        if (!e.isPresent())
+            return null;
+        return DtoTools.convert(e.get(), EtudiantDossierProjetDto.class);
+
+    }
 
 
 }

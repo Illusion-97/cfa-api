@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 
@@ -16,9 +17,11 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 	private String nom;
 
 	private ProjetDto projet;
+	
+	private List<AnnexeDossierProjetDto> annexeDossierProjetDtos;
 
 	public DossierProjetDto() {
-
+	    super();
 	}
 
 	public DossierProjetDto(String nom) {
@@ -52,5 +55,15 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 	public void setProjet(ProjetDto projet) {
 		this.projet = projet;
 	}
+
+    public List<AnnexeDossierProjetDto> getAnnexeDossierProjetDtos() {
+        return annexeDossierProjetDtos;
+    }
+
+    public void setAnnexeDossierProjetDtos(List<AnnexeDossierProjetDto> annexeDossierProjetDtos) {
+        this.annexeDossierProjetDtos = annexeDossierProjetDtos;
+    }
+	
+	
 
 }
