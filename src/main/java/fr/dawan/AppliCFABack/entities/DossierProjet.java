@@ -25,6 +25,16 @@ public class DossierProjet extends BaseEntity implements Serializable {
 
 	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
     private List<AnnexeDossierProjet> annexeDossierProjets;
+	
+	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
+    private List<InfoDossierProjet> infoDossierProjets;
+	
+	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
+    private List<ContenuDossierProjet> contenuDossierProjets;
+	
+	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
+    private List<ResumeDossierProjet> resumeDossierProjets;
+	
 
 
 	public String getNom() {
@@ -59,6 +69,29 @@ public class DossierProjet extends BaseEntity implements Serializable {
         this.annexeDossierProjets = annexeDossierProjets;
     }
 
+	public List<InfoDossierProjet> getInfoDossierProjets() {
+		return infoDossierProjets;
+	}
+
+	public void setInfoDossierProjets(List<InfoDossierProjet> infoDossierProjets) {
+		this.infoDossierProjets = infoDossierProjets;
+	}
+
+	public List<ContenuDossierProjet> getContenuDossierProjets() {
+		return contenuDossierProjets;
+	}
+
+	public void setContenuDossierProjets(List<ContenuDossierProjet> contenuDossierProjets) {
+		this.contenuDossierProjets = contenuDossierProjets;
+	}
+
+	public List<ResumeDossierProjet> getResumeDossierProjets() {
+		return resumeDossierProjets;
+	}
+
+	public void setResumeDossierProjets(List<ResumeDossierProjet> resumeDossierProjets) {
+		this.resumeDossierProjets = resumeDossierProjets;
+	}
 	
 	
 

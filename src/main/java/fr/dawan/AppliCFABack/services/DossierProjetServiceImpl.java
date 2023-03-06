@@ -17,9 +17,13 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
+import fr.dawan.AppliCFABack.entities.ContenuDossierProjet;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.InfoDossierProjet;
+import fr.dawan.AppliCFABack.entities.ResumeDossierProjet;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 
@@ -159,8 +163,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
     @Override
     public DossierProjetEtudiantDto saveOrUpdateDossierProjet(DossierProjetEtudiantDto dpDto, long id) {
-        DossierProjet dp = DtoTools.convert(dpDto, DossierProjet.class);
-
+//        DossierProjet dp = DtoTools.convert(dpDto, DossierProjet.class);
+        DossierProjet dp = mapper.dossierProjetDtoToDossierProjet(dpDto);
         //on récupère la liste des experiences d'un dossier projet et on les met à jour (en n'oubliant pas de set les clés étrangères de la table experience_professionnelle)
         assert dp != null;
 
@@ -168,6 +172,21 @@ public class DossierProjetServiceImpl implements DossierProjetService {
         List<AnnexeDossierProjet> annexes = dp.getAnnexeDossierProjets();
         for(AnnexeDossierProjet annexe : annexes) {
             annexe.setDossierProjet(dp);
+        }
+        
+        List<InfoDossierProjet> infos = dp.getInfoDossierProjets();
+        for(InfoDossierProjet info : infos) {
+        	info.setDossierProjet(dp);
+        }
+        
+        List<ContenuDossierProjet> contenus = dp.getContenuDossierProjets();
+        for(ContenuDossierProjet contenu : contenus) {
+        	contenu.setDossierProjet(dp);
+        }
+        
+        List<ResumeDossierProjet> resumes = dp.getResumeDossierProjets();
+        for(ResumeDossierProjet resume : resumes) {
+        	resume.setDossierProjet(dp);
         }
 
         //on met à jour la clé étrangère etudiant de la table dossier_professionnel (dans le cas d'un save)

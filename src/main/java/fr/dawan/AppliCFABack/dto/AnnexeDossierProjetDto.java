@@ -3,12 +3,21 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 
+import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
+
 public class AnnexeDossierProjetDto extends BaseEntityDto implements Serializable {
 
 
     private String pieceJointe;
 
     private long dossierProjetId;
+    
+    public AnnexeDossierProjet toAnnexeProjet() {
+        AnnexeDossierProjet annexeProjet = new AnnexeDossierProjet();
+        annexeProjet.setPieceJointe(this.pieceJointe);
+        return annexeProjet;
+    }
+
 
     public String getPieceJointe() {
         return pieceJointe;

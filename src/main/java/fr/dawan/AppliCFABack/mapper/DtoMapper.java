@@ -39,6 +39,8 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
@@ -166,6 +168,15 @@ public interface DtoMapper {
     @Mapping(source = "prerequisites", target = "prerequis")
     Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
 
+    @Mapping(source ="id", target = "id")
+    @Mapping(source ="nom", target = "nom")
+    @Mapping(source ="projets", target = "projet")
+    @Mapping(source ="annexeDossierProjets", target = "annexeDossierProjets")
+    @Mapping(source ="infoDossierProjets", target = "infoDossierProjets")
+    @Mapping(source ="contenuDossierProjets", target = "contenuDossierProjets")
+    @Mapping(source ="resumeDossierProjets", target = "resumeDossierProjets")
+    DossierProjet dossierProjetDtoToDossierProjet(DossierProjetEtudiantDto dpDto);
+    
     @Mapping(target = "activiteTypes", ignore = true)
     @Mapping(target = "formations", ignore = true)
     @Mapping(source = "id", target = "idDg2")
