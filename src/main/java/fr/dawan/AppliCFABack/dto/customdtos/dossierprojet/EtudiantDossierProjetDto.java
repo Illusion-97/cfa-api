@@ -30,7 +30,7 @@ public class EtudiantDossierProjetDto implements Serializable {
     }
 
     public void setVersion(int version) {
-        this.version = version;
+        this.version = ++version;
     }
 
   

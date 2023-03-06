@@ -75,7 +75,7 @@ public class DossierProjetEtudiantDto implements Serializable {
     }
 	
     public void setVersion(int version) {
-        this.version = version;
+        this.version = ++version;
     }
     
     
