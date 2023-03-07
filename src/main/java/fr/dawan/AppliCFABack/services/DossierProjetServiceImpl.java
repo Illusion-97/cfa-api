@@ -157,8 +157,27 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	
 	@Override
 	public List<DossierProjetDto> getByIdEtudiant(long id) {
-		EtudiantDto e = etudiantService.getById(id);
-		return e.getDossierProjet();
+	    Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+	    List<DossierProjetDto> dossierProjetDtoList = new ArrayList<>();
+	        Etudiant e = etudiant.get();
+	        List<DossierProjet> dossierProjetList = e.getDossierProjet();
+            DossierProjetDto dossierProjetDto = DtoTools.convert(dossierProjetList, DossierProjetDto.class);
+	        for (DossierProjet dp : dossierProjetList) {
+
+	            //DossierProjetDto dossierProjetDto = mapper.dossierProjetToDossierProjetDto(dp);
+	            
+	            dossierProjetDto.setId(dp.getId());
+	            dossierProjetDto.setNom(dp.getNom());
+	            dossierProjetDto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
+	            dossierProjetDto.setAnnexeDossierProjetDtos(mapper.annexeProjetToAnnexeProjetDto(dp.getAnnexeDossierProjets()));
+	            dossierProjetDto.setContenuDossierProjetDtos(mapper.contenuToContenuDto(dp.getContenuDossierProjets()));
+	            dossierProjetDto.setInfoDossierProjetDtos(mapper.infoToInfoDto(dp.getInfoDossierProjets()));
+	            dossierProjetDto.setResumeDossierProjetDtos(mapper.resumeToResumeDto(dp.getResumeDossierProjets()));
+	            
+	            dossierProjetDtoList.add(dossierProjetDto);
+	        }
+	    
+	    return dossierProjetDtoList;
 	}
 
     @Override
@@ -190,7 +209,6 @@ public class DossierProjetServiceImpl implements DossierProjetService {
         }
 
         //on met à jour la clé étrangère etudiant de la table dossier_professionnel (dans le cas d'un save)
-        EtudiantDossierProjetDto eDto = etudiantService.getByEtudiantIdForDossierProjet(id);
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
         if(etudiant.isPresent()){
             dp.setEtudiant(etudiant.get());

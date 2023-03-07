@@ -6,7 +6,6 @@ import java.util.List;
 import fr.dawan.AppliCFABack.dto.AnnexeDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.ContenuDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.InfoDossierProjetDto;
-import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.ResumeDossierProjetDto;
 
 @SuppressWarnings("serial")
