@@ -37,7 +37,7 @@ public class DossierProjetController {
 	}
 	
 	@GetMapping(value = "/{id}",produces = "application/json")
-	public DossierProjetDto getById(@PathVariable("id") long id) {
+	public DossierProjetEtudiantDto getById(@PathVariable("id") long id) {
 		return dossierProService.getById(id);
 	}
 	@GetMapping(value = "/etudiant/{id}",produces = "application/json")

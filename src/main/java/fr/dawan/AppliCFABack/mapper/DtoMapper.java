@@ -44,6 +44,7 @@ import fr.dawan.AppliCFABack.dto.ResumeDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
@@ -134,6 +135,9 @@ public interface DtoMapper {
 
     @Mapping(source = ".", target = ".")
     ProjetDto projetToProjetDto(Projet projet);
+    
+    @Mapping(source = ".", target = ".")
+    ProjetDossierProjetDto projetToProjetDto1(Projet projet);
 
     @Mapping(source = ".", target = ".")
     @Mapping(source = "cursus", target = "cursusDto")
@@ -149,8 +153,14 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     DossierProfessionnelDto dossierProfessionnelToDossierProfessionnelDto(DossierProfessionnel dossierProfessionnel);
 
-    @Mapping(source = ".", target = ".")
-    DossierProjetDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet);
+    @Mapping(source ="id", target = "id")
+    @Mapping(source ="nom", target = "nom")
+    @Mapping(source ="projet", target = "projets")
+    @Mapping(source ="annexeDossierProjets", target = "annexeDossierProjets")
+    @Mapping(source ="infoDossierProjets", target = "infoDossierProjets")
+    @Mapping(source ="contenuDossierProjets", target = "contenuDossierProjets")
+    @Mapping(source ="resumeDossierProjets", target = "resumeDossierProjets")
+    DossierProjetEtudiantDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet);
 
     @Mapping(source = ".", target = ".")
     MaitreApprentissageDto maitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage);

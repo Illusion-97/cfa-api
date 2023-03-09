@@ -9,7 +9,7 @@ public interface DossierProjetService {
 
 	List<DossierProjetDto> getAll();
 
-	DossierProjetDto getById(long id);
+	DossierProjetEtudiantDto getById(long id);
 	
 	DossierProjetDto getByName(String nom);
 

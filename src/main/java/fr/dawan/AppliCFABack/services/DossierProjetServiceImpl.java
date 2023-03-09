@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.univocity.parsers.annotations.Convert;
+
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
@@ -21,11 +23,12 @@ import fr.dawan.AppliCFABack.entities.ContenuDossierProjet;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.InfoDossierProjet;
+import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.ResumeDossierProjet;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.ProjetRepository;
 
 @Service
 @Transactional
@@ -40,6 +43,9 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	@Autowired
 	EtudiantService etudiantService;
 
+	@Autowired
+	private ProjetRepository projetRepository;
+	
 	@Autowired
 	private DtoMapper mapper;
 
@@ -69,11 +75,12 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 */
 	
 	@Override
-	public DossierProjetDto getById(long id) {
+	public DossierProjetEtudiantDto getById(long id) {
 		Optional<DossierProjet> dp = dossierProRepo.findById(id);
+		Optional<Projet> p = projetRepository.findById(id);
 		if(dp.isPresent()) {
-			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp.get());
-			dpDto.setProjet(mapper.projetToProjetDto(dp.get().getProjet()));
+			DossierProjetEtudiantDto dpDto = mapper.dossierProjetToDossierProjetDto(dp.get());
+			dpDto.setProjets(mapper.projetToProjetDto1(p.get()));
 			return dpDto;
 		}
 		return null;
