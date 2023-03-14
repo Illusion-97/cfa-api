@@ -7,17 +7,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
@@ -47,15 +45,15 @@ import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
-import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PositionnementDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
@@ -149,7 +147,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static Logger logger = Logger.getGlobal();
+	private static Logger logger =  LoggerFactory.getLogger(EtudiantServiceImpl.class);
 
 	@Autowired
 	private AdresseRepository adresseRepository;
@@ -345,7 +343,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 					}
 				}
 			} catch (Exception ex) {
-				logger.log(Level.WARNING, "Error save etudiant", ex);
+				logger.warn("Error save etudiant", ex);
 			}
 
 			// Pour le dossier
@@ -354,7 +352,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			try {
 				Files.createDirectories(path);
 			} catch (IOException ex) {
-				logger.log(Level.WARNING, "Error creation du dossier", ex);
+				logger.warn("Error creation du dossier", ex);
 			}
 		}
 
@@ -464,7 +462,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		try {
 			lst = getEtudiantById(id).getPromotions();
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "getEtudiantById(id).getPromotions() failed", e);
+			logger.error("getEtudiantById(id).getPromotions() failed", e);
 		}
 		List<PromotionDto> lstDto = new ArrayList<>();
 
@@ -495,7 +493,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		try {
 			lst = getEtudiantById(id).getGroupes();
 		} catch (Exception ex) {
-			logger.log(Level.SEVERE, "getEtudiantById(id).getGroupes()", ex);
+			logger.error("getEtudiantById(id).getGroupes() failed", ex);
 		}
 		List<GroupeEtudiantDto> lstDto = new ArrayList<>();
 		for (GroupeEtudiant g : lst) {
@@ -708,7 +706,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 					}
 				}
 			} catch (Exception ex) {
-				logger.log(Level.WARNING, "Error save dossier etudiant", ex);
+				logger.warn("Error save dossier etudiant", ex);
 			}
 
 			// Pour le dossier
@@ -717,7 +715,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			try {
 				Files.createDirectories(path);
 			} catch (IOException ex) {
-				logger.log(Level.WARNING, "Error dossier create", ex);
+				logger.warn("Error dossier create", ex);
 			}
 		}
 
@@ -894,6 +892,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 			throws FetchDG2Exception, JsonProcessingException, URISyntaxException {
 		Optional<Promotion> promotion = promotionRepository.findByIdDg2(idPromotionDg2);
 		System.out.println(">>>>>>>promo>>>>" + promotion.get().getIdDg2());
+		logger.info(">>>>>>>promo>>>>" + promotion.get().getIdDg2());
+		logger.info("FetchDg2Etudiant >>> START");
 		if (!promotion.isPresent()) {
 			throw new FetchDG2Exception("Promotion Introuvable");
 
@@ -993,7 +993,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 					try {
 						utilisateurDg2.setPassword(HashTools.hashSHA512("password"));
 					} catch (Exception e) {
-						logger.log(Level.SEVERE, "setPassword failed", e);
+						logger.error("setPassword failed", e);
 					}
 
 					List<UtilisateurRole> roles = new ArrayList<>();
@@ -1035,13 +1035,14 @@ public class EtudiantServiceImpl implements EtudiantService {
 						
 					}
 				}
-				
+				logger.info("FetchDg2Etudiant>>>>>>END");
 
 			}
 
 		} else
 
 		{
+			logger.error("FetchDg2Etudiant>>>>>>>>ERROR End failed");
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 	}
@@ -1130,7 +1131,7 @@ public class EtudiantServiceImpl implements EtudiantService {
                 try {
                     utilisateurDg2.setPassword(HashTools.hashSHA512("password"));
                 } catch (Exception e) {
-                    logger.log(Level.SEVERE, "setPassword failed", e);
+                    logger.error("setPassword failed", e);
                 }
 
                 List<UtilisateurRole> roles = new ArrayList<>();
