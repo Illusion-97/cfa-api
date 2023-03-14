@@ -1,9 +1,14 @@
 package fr.dawan.AppliCFABack;
 
+import java.util.concurrent.Executor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -15,6 +20,7 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 
 @SpringBootApplication
+@EnableAsync
 public class AppliCfaBackApplication {
 
 	public static void main(String[] args) {
@@ -26,7 +32,10 @@ public class AppliCfaBackApplication {
 
 	@Bean
 	public RestTemplate restTemplate() {
-		return new RestTemplate();
+		SimpleClientHttpRequestFactory clientHttpRequestFactory  = new SimpleClientHttpRequestFactory();
+        clientHttpRequestFactory.setConnectTimeout(20_000);
+        clientHttpRequestFactory.setReadTimeout(0);
+        return new RestTemplate(clientHttpRequestFactory);
 	}
 
 	@Bean
@@ -34,6 +43,16 @@ public class AppliCfaBackApplication {
 		return new DtoMapperImpl();
 	}
 
+	@Bean("myTaskExecutor")
+    public Executor asyncExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(6);
+        executor.setQueueCapacity(100);
+        executor.setThreadNamePrefix("asyncThread-");
+        executor.initialize();
+        return executor;
+    }
+	
 	@Bean
 	public WebMvcConfigurer myMvcConfigurer() {
 
