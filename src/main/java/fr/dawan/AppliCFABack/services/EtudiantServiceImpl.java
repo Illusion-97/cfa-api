@@ -877,6 +877,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return etudiantAbsencesDevoirsDtos;
 	}
 
+	@Async("myTaskExecutor")
 	public void fetchAllEtudiantDG2(String email, String password) throws Exception {
 		List<Promotion> promotions = promotionRepository.findAll();
 
