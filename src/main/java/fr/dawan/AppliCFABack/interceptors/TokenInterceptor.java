@@ -26,7 +26,9 @@ public class TokenInterceptor implements HandlerInterceptor {
 		logger.info(">>>>>> inside Token Interceptor...");
 		logger.info("URI =" + request.getRequestURI());
 		logger.info("Header (authorization) :" + request.getHeader("Authorization"));
-		if (!request.getMethod().equals("OPTIONS")) {
+		if (!request.getMethod().equals("OPTIONS")
+				&& !request.getRequestURI().equals("/")
+				&& !request.getRequestURI().equals("/error"))
 			if (!request.getRequestURI().equals("/authenticate")
 					&& !request.getRequestURI().equals("/forgot")
 					&& !request.getRequestURI().equals("/reset-password")) {
@@ -47,7 +49,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 				// TODO autres extractions du jeton ou autres traitements
 
 			}
-		}
 		return true;
 	}
 
