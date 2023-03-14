@@ -42,16 +42,6 @@ public class AppliCfaBackApplication {
 	public DtoMapper dtoMapper() {
 		return new DtoMapperImpl();
 	}
-
-	@Bean("myTaskExecutor")
-    public Executor asyncExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(6);
-        executor.setQueueCapacity(100);
-        executor.setThreadNamePrefix("asyncThread-");
-        executor.initialize();
-        return executor;
-    }
 	
 	@Bean
 	public WebMvcConfigurer myMvcConfigurer() {
