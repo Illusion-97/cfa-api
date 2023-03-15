@@ -385,6 +385,7 @@ public class InterventionServiceImpl implements InterventionService {
 		return result;
 	}
 
+	@Async("myTaskExecutor")
 	@Override
 	public int fetchDGInterventions(String email, String password, long idPrmotionDg2)
 			throws FetchDG2Exception, URISyntaxException {
@@ -412,6 +413,7 @@ public class InterventionServiceImpl implements InterventionService {
 	 * @return List Liste des interventions
 	 * @throws URISyntaxException, FetchDG2Exception
 	 */
+	@Async("myTaskExecutor")
 	@Override
 	public void getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
 			throws FetchDG2Exception, URISyntaxException {

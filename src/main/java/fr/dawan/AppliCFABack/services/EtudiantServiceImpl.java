@@ -895,6 +895,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		logger.info(">>>>>>>promo>>>>" + promotion.get().getIdDg2());
 		logger.info("FetchDg2Etudiant >>> START");
 		if (!promotion.isPresent()) {
+			logger.error("FetchDg2Etudiant>>>>>>>>ERROR failed Pas de promo");
 			throw new FetchDG2Exception("Promotion Introuvable");
 
 		}
