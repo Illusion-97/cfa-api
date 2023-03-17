@@ -23,9 +23,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		logger.info(">>>>>> inside Token Interceptor...");
-		logger.info("URI =" + request.getRequestURI());
-		logger.info("Header (authorization) :" + request.getHeader("Authorization"));
+		
 		if (!request.getMethod().equals("OPTIONS")
 				)
 			if (!request.getRequestURI().equals("/authenticate")
@@ -34,6 +32,9 @@ public class TokenInterceptor implements HandlerInterceptor {
 					&& !request.getRequestURI().equals("/forgot")
 					&& !request.getRequestURI().equals("/reset-password")) {
 				String headerAuth = request.getHeader("Authorization");
+				logger.info(">>>>>> inside Token Interceptor...");
+				logger.info("URI =" + request.getRequestURI());
+				logger.info("Header (authorization) :" + request.getHeader("Authorization"));
 				if (headerAuth == null || headerAuth.trim().equals("") || headerAuth.length() < 7) {
 					throw new TokenException("Erreur : jeton absent ou invalide !");
 				}

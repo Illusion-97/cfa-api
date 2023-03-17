@@ -19,6 +19,8 @@ import fr.dawan.AppliCFABack.dto.APIError;
 
 @ControllerAdvice
 public class MyExceptionHandler extends ResponseEntityExceptionHandler {
+	
+	private static Logger logger = Logger.getGlobal();
 
 	@ExceptionHandler(value = { TokenException.class })
 	protected ResponseEntity<?> handleTokenException(Exception ex, WebRequest request) {
@@ -64,7 +66,7 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler {
 		PrintWriter pw = new PrintWriter(sw);
 		ex.printStackTrace(pw);
 		pw.close();
-		Logger.getAnonymousLogger().log(Level.SEVERE, sw.toString());
+		logger.log(Level.SEVERE, sw.toString());
 		
 		APIError myError = new APIError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
 		//On peut remplacer l'objet myError par une Map<String,Object>
