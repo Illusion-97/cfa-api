@@ -418,8 +418,9 @@ public class InterventionServiceImpl implements InterventionService {
 	public void getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
 			throws FetchDG2Exception, URISyntaxException {
 		Optional<Promotion> promotionOpt = promoRepository.findByIdDg2(idPrmotionDg2);
-
+		logger.info("FetchDg2Etudiant >>> START");
 		if (!promotionOpt.isPresent()) {
+			logger.error("FetchDg2Etudiant >>> error");
 			throw new FetchDG2Exception("Promotion introuvable veuiller mettre à jour les promotions");
 		}
 
@@ -433,6 +434,7 @@ public class InterventionServiceImpl implements InterventionService {
 		headers.add("x-auth-token", email + ":" + password);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+		logger.info("FetchDg2Etudiant >>> START /children OK");
 
 		if (rep.getStatusCode() == HttpStatus.OK) {
 			String json = rep.getBody();
@@ -599,7 +601,7 @@ public class InterventionServiceImpl implements InterventionService {
         }
 
         for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
-            
+        	logger.info("FetchDg2Etudiant >>> START /for" + iDtoDG2.getId());
             Optional<Intervention> interventionDb = interventionRepository.findByIdDg2(iDtoDG2.getId());
             DtoTools dtoTools = new DtoTools();
             Intervention interventionDG2 = new Intervention();
@@ -733,8 +735,9 @@ public class InterventionServiceImpl implements InterventionService {
                     interventionRepository.saveAndFlush(interventionDG2);
                 }
             }
-            logger.info("mapper intervention dg2 END");
+            
         }
+        logger.info("mapper intervention dg2 END");
         
         
     }
