@@ -910,8 +910,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
 		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-
+		logger.info("FetchDg2Etudiant >>> START /registration");
 		if (repWs.getStatusCode() == HttpStatus.OK) {
+			logger.info("FetchDg2Etudiant >>> START /registration OK");
 			String json = repWs.getBody();
 			//importUserFromJson(json, promotion);
 			

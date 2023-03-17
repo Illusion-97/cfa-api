@@ -5,12 +5,12 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
@@ -92,7 +92,7 @@ public class InterventionServiceImpl implements InterventionService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static Logger logger = Logger.getGlobal();
+	private static Logger logger =  LoggerFactory.getLogger(InterventionServiceImpl.class);
 
 	/**
 	 * Récupération de toutes les interventions
@@ -590,11 +590,12 @@ public class InterventionServiceImpl implements InterventionService {
     private void importInterventionFromJson(String json, Optional<Promotion> promotionOpt, List<PromotionOrInterventionDG2Dto> fetchResJson, List<Intervention> result) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+        logger.info("json intervention dg2 START");
         try {
             fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {
             });
         } catch (Exception e) {
-            logger.log(Level.WARNING, "json intervention dg2 failed", e);
+    		logger.info("json intervention dg2 failed", e);
         }
 
         for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
@@ -605,7 +606,7 @@ public class InterventionServiceImpl implements InterventionService {
             try {
                 interventionDG2 = dtoTools.promotionOrInterventionDG2DtoToIntervention(iDtoDG2);
             } catch (Exception e) {
-                logger.log(Level.WARNING, "mapper intervention dg2 failed", e);
+                logger.info("mapper intervention dg2 failed", e);
             }
 
             Optional<Utilisateur> UtilisateurOptional = utilisateurRepository
@@ -732,7 +733,9 @@ public class InterventionServiceImpl implements InterventionService {
                     interventionRepository.saveAndFlush(interventionDG2);
                 }
             }
+            logger.info("mapper intervention dg2 END");
         }
+        
         
     }
 
