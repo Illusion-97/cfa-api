@@ -911,6 +911,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
 		logger.info("FetchDg2Etudiant >>> START /registration");
+
 		if (repWs.getStatusCode() == HttpStatus.OK) {
 			logger.info("FetchDg2Etudiant >>> START /registration OK");
 			String json = repWs.getBody();
@@ -920,7 +921,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			});
 
 			for (EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
-
+				logger.info("FetchDg2Etudiant >>> START /for" + eDG2.getPersonId());
 				// Etudiant etudiantDg2 = mapper.etudiantUtilisateurDG2DtoToEtudiant(eDG2);
 				Optional<Utilisateur> utiLisateurOptional = utilisateurRepository
 						.findDistinctByIdDg2(eDG2.getPersonId());
@@ -1037,16 +1038,17 @@ public class EtudiantServiceImpl implements EtudiantService {
 						
 					}
 				}
-				logger.info("FetchDg2Etudiant>>>>>>END");
-
+				
 			}
-
+			logger.info("FetchDg2Etudiant>>>>>>END");
 		} else
 
 		{
 			logger.error("FetchDg2Etudiant>>>>>>>>ERROR End failed");
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
+		
+		
 	}
 
 	@Async("myTaskExecutor")
