@@ -12,10 +12,10 @@ public class DossierProEtudiantDto implements Serializable {
 
     private long id;
     private String nom;
-    private CursusDossierProDto cursus;
-    private List<ExperienceProfessionnelleDto> experienceProfessionnelles;
-    private List<AnnexeDto> annexes;
-    private List<FacultatifDto> facultatif;
+    private CursusDossierProDto cursusDto;
+    private List<ExperienceProfessionnelleDto> experienceProfessionnelleDtos;
+    private List<AnnexeDto> annexeDtos;
+    private List<FacultatifDto> facultatifDto;
     private int version;
 
     public long getId() {
@@ -34,44 +34,49 @@ public class DossierProEtudiantDto implements Serializable {
         this.nom = nom;
     }
 
-    public CursusDossierProDto getCursus() {
-        return cursus;
-    }
+ 
 
-    public void setCursus(CursusDossierProDto cursus) {
-        this.cursus = cursus;
-    }
+    public CursusDossierProDto getCursusDto() {
+		return cursusDto;
+	}
 
-    public int getVersion() {
+	public void setCursusDto(CursusDossierProDto cursusDto) {
+		this.cursusDto = cursusDto;
+	}
+
+	public int getVersion() {
         return version;
     }
 
     public void setVersion(int version) {
         this.version = version;
     }
+	
 
-    public List<ExperienceProfessionnelleDto> getExperienceProfessionnelles() {
-        return experienceProfessionnelles;
-    }
-
-    public void setExperienceProfessionnelles(List<ExperienceProfessionnelleDto> experienceProfessionnelles) {
-        this.experienceProfessionnelles = experienceProfessionnelles;
-    }
-
-	public List<AnnexeDto> getAnnexes() {
-		return annexes;
+	public List<ExperienceProfessionnelleDto> getExperienceProfessionnelleDtos() {
+		return experienceProfessionnelleDtos;
 	}
 
-	public void setAnnexes(List<AnnexeDto> annexes) {
-		this.annexes = annexes;
+	public void setExperienceProfessionnelleDtos(List<ExperienceProfessionnelleDto> experienceProfessionnelleDtos) {
+		this.experienceProfessionnelleDtos = experienceProfessionnelleDtos;
 	}
 
-	public List<FacultatifDto> getFacultatif() {
-		return facultatif;
+	public List<AnnexeDto> getAnnexeDtos() {
+		return annexeDtos;
 	}
 
-	public void setFacultatif(List<FacultatifDto> facultatif) {
-		this.facultatif = facultatif;
+	public void setAnnexeDtos(List<AnnexeDto> annexeDtos) {
+		this.annexeDtos = annexeDtos;
 	}
+
+	public List<FacultatifDto> getFacultatifDto() {
+		return facultatifDto;
+	}
+
+	public void setFacultatifDto(List<FacultatifDto> facultatifDto) {
+		this.facultatifDto = facultatifDto;
+	}
+
+  
     
 }

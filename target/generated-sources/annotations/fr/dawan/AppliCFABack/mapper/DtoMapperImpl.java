@@ -36,6 +36,10 @@ import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.ActiviteTypeDossierProDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CompetenceDossierProDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.Annexe;
@@ -67,12 +71,14 @@ import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-28T16:48:26+0100",
+    date = "2023-03-07T10:19:22+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.300.v20221108-0856, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -476,6 +482,25 @@ public class DtoMapperImpl implements DtoMapper {
     }
 
     @Override
+    public DossierProfessionnel dossierProfessionnelDtoToDossierProfessionnel(DossierProEtudiantDto dosierProEtudiant) {
+        if ( dosierProEtudiant == null ) {
+            return null;
+        }
+
+        DossierProfessionnel dossierProfessionnel = new DossierProfessionnel();
+
+        dossierProfessionnel.setId( dosierProEtudiant.getId() );
+        dossierProfessionnel.setNom( dosierProEtudiant.getNom() );
+        dossierProfessionnel.setCursus( cursusDossierProDtoToCursus( dosierProEtudiant.getCursusDto() ) );
+        dossierProfessionnel.setExperienceProfessionnelles( experienceProfessionnelleDtoListToExperienceProfessionnelleList1( dosierProEtudiant.getExperienceProfessionnelleDtos() ) );
+        dossierProfessionnel.setAnnexes( annexeDtoListToAnnexeList( dosierProEtudiant.getAnnexeDtos() ) );
+        dossierProfessionnel.setFacultatifs( facultatifDtoListToFacultatifList( dosierProEtudiant.getFacultatifDto() ) );
+        dossierProfessionnel.setVersion( dosierProEtudiant.getVersion() );
+
+        return dossierProfessionnel;
+    }
+
+    @Override
     public AnnexeDto AnnexeToAnnexeDto(Annexe annexe) {
         if ( annexe == null ) {
             return null;
@@ -831,6 +856,48 @@ public class DtoMapperImpl implements DtoMapper {
         return adresse;
     }
 
+    @Override
+    public List<AnnexeDto> annexeToAnnexeDto(List<Annexe> annexes) {
+        if ( annexes == null ) {
+            return null;
+        }
+
+        List<AnnexeDto> list = new ArrayList<AnnexeDto>( annexes.size() );
+        for ( Annexe annexe : annexes ) {
+            list.add( AnnexeToAnnexeDto( annexe ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<FacultatifDto> facultatifToFacultatifDto(List<Facultatif> facultatifs) {
+        if ( facultatifs == null ) {
+            return null;
+        }
+
+        List<FacultatifDto> list = new ArrayList<FacultatifDto>( facultatifs.size() );
+        for ( Facultatif facultatif : facultatifs ) {
+            list.add( FacultatifToFacultatifDto( facultatif ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<ExperienceProfessionnelleDto> experienceProfessionnelleToExperienceProfessionnelleDto(List<ExperienceProfessionnelle> experienceProfessionnelles) {
+        if ( experienceProfessionnelles == null ) {
+            return null;
+        }
+
+        List<ExperienceProfessionnelleDto> list = new ArrayList<ExperienceProfessionnelleDto>( experienceProfessionnelles.size() );
+        for ( ExperienceProfessionnelle experienceProfessionnelle : experienceProfessionnelles ) {
+            list.add( experienceProfessionnelleToExperienceProfessionnelleDto( experienceProfessionnelle ) );
+        }
+
+        return list;
+    }
+
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {
         if ( list == null ) {
             return null;
@@ -852,6 +919,180 @@ public class DtoMapperImpl implements DtoMapper {
         List<DossierProjetDto> list1 = new ArrayList<DossierProjetDto>( list.size() );
         for ( DossierProjet dossierProjet : list ) {
             list1.add( dossierProjetToDossierProjetDto( dossierProjet ) );
+        }
+
+        return list1;
+    }
+
+    protected ExperienceProfessionnelle experienceProfessionnelleDtoToExperienceProfessionnelle(ExperienceProfessionnelleDto experienceProfessionnelleDto) {
+        if ( experienceProfessionnelleDto == null ) {
+            return null;
+        }
+
+        ExperienceProfessionnelle experienceProfessionnelle = new ExperienceProfessionnelle();
+
+        experienceProfessionnelle.setId( experienceProfessionnelleDto.getId() );
+        experienceProfessionnelle.setVersion( experienceProfessionnelleDto.getVersion() );
+        experienceProfessionnelle.setTacheRealisee( experienceProfessionnelleDto.getTacheRealisee() );
+        experienceProfessionnelle.setMoyenUtilise( experienceProfessionnelleDto.getMoyenUtilise() );
+        experienceProfessionnelle.setCollaborateur( experienceProfessionnelleDto.getCollaborateur() );
+        experienceProfessionnelle.setContexte( experienceProfessionnelleDto.getContexte() );
+        experienceProfessionnelle.setInformation( experienceProfessionnelleDto.getInformation() );
+
+        return experienceProfessionnelle;
+    }
+
+    protected List<ExperienceProfessionnelle> experienceProfessionnelleDtoListToExperienceProfessionnelleList(List<ExperienceProfessionnelleDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<ExperienceProfessionnelle> list1 = new ArrayList<ExperienceProfessionnelle>( list.size() );
+        for ( ExperienceProfessionnelleDto experienceProfessionnelleDto : list ) {
+            list1.add( experienceProfessionnelleDtoToExperienceProfessionnelle( experienceProfessionnelleDto ) );
+        }
+
+        return list1;
+    }
+
+    protected CompetenceProfessionnelle competenceDossierProDtoToCompetenceProfessionnelle(CompetenceDossierProDto competenceDossierProDto) {
+        if ( competenceDossierProDto == null ) {
+            return null;
+        }
+
+        CompetenceProfessionnelle competenceProfessionnelle = new CompetenceProfessionnelle();
+
+        competenceProfessionnelle.setId( competenceDossierProDto.getId() );
+        competenceProfessionnelle.setVersion( competenceDossierProDto.getVersion() );
+        competenceProfessionnelle.setExperienceProfessionnelles( experienceProfessionnelleDtoListToExperienceProfessionnelleList( competenceDossierProDto.getExperienceProfessionnelles() ) );
+        competenceProfessionnelle.setLibelle( competenceDossierProDto.getLibelle() );
+        competenceProfessionnelle.setNumeroFiche( competenceDossierProDto.getNumeroFiche() );
+
+        return competenceProfessionnelle;
+    }
+
+    protected Set<CompetenceProfessionnelle> competenceDossierProDtoSetToCompetenceProfessionnelleSet(Set<CompetenceDossierProDto> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<CompetenceProfessionnelle> set1 = new HashSet<CompetenceProfessionnelle>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( CompetenceDossierProDto competenceDossierProDto : set ) {
+            set1.add( competenceDossierProDtoToCompetenceProfessionnelle( competenceDossierProDto ) );
+        }
+
+        return set1;
+    }
+
+    protected ActiviteType activiteTypeDossierProDtoToActiviteType(ActiviteTypeDossierProDto activiteTypeDossierProDto) {
+        if ( activiteTypeDossierProDto == null ) {
+            return null;
+        }
+
+        ActiviteType activiteType = new ActiviteType();
+
+        activiteType.setId( activiteTypeDossierProDto.getId() );
+        activiteType.setVersion( activiteTypeDossierProDto.getVersion() );
+        activiteType.setCompetenceProfessionnelles( competenceDossierProDtoSetToCompetenceProfessionnelleSet( activiteTypeDossierProDto.getCompetenceProfessionnelles() ) );
+        activiteType.setLibelle( activiteTypeDossierProDto.getLibelle() );
+        activiteType.setNumeroFiche( activiteTypeDossierProDto.getNumeroFiche() );
+
+        return activiteType;
+    }
+
+    protected Set<ActiviteType> activiteTypeDossierProDtoSetToActiviteTypeSet(Set<ActiviteTypeDossierProDto> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<ActiviteType> set1 = new HashSet<ActiviteType>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( ActiviteTypeDossierProDto activiteTypeDossierProDto : set ) {
+            set1.add( activiteTypeDossierProDtoToActiviteType( activiteTypeDossierProDto ) );
+        }
+
+        return set1;
+    }
+
+    protected Cursus cursusDossierProDtoToCursus(CursusDossierProDto cursusDossierProDto) {
+        if ( cursusDossierProDto == null ) {
+            return null;
+        }
+
+        Cursus cursus = new Cursus();
+
+        cursus.setId( cursusDossierProDto.getId() );
+        cursus.setVersion( cursusDossierProDto.getVersion() );
+        cursus.setActiviteTypes( activiteTypeDossierProDtoSetToActiviteTypeSet( cursusDossierProDto.getActiviteTypes() ) );
+        cursus.setTitre( cursusDossierProDto.getTitre() );
+
+        return cursus;
+    }
+
+    protected List<ExperienceProfessionnelle> experienceProfessionnelleDtoListToExperienceProfessionnelleList1(List<ExperienceProfessionnelleDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<ExperienceProfessionnelle> list1 = new ArrayList<ExperienceProfessionnelle>( list.size() );
+        for ( ExperienceProfessionnelleDto experienceProfessionnelleDto : list ) {
+            list1.add( experienceProfessionnelleDtoToExperienceProfessionnelle( experienceProfessionnelleDto ) );
+        }
+
+        return list1;
+    }
+
+    protected Annexe annexeDtoToAnnexe(AnnexeDto annexeDto) {
+        if ( annexeDto == null ) {
+            return null;
+        }
+
+        Annexe annexe = new Annexe();
+
+        annexe.setId( annexeDto.getId() );
+        annexe.setVersion( annexeDto.getVersion() );
+        annexe.setLibelle( annexeDto.getLibelle() );
+        annexe.setPieceJointe( annexeDto.getPieceJointe() );
+
+        return annexe;
+    }
+
+    protected List<Annexe> annexeDtoListToAnnexeList(List<AnnexeDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<Annexe> list1 = new ArrayList<Annexe>( list.size() );
+        for ( AnnexeDto annexeDto : list ) {
+            list1.add( annexeDtoToAnnexe( annexeDto ) );
+        }
+
+        return list1;
+    }
+
+    protected Facultatif facultatifDtoToFacultatif(FacultatifDto facultatifDto) {
+        if ( facultatifDto == null ) {
+            return null;
+        }
+
+        Facultatif facultatif = new Facultatif();
+
+        facultatif.setId( facultatifDto.getId() );
+        facultatif.setVersion( facultatifDto.getVersion() );
+        facultatif.setOrganisme( facultatifDto.getOrganisme() );
+        facultatif.setIntitule( facultatifDto.getIntitule() );
+        facultatif.setDate( facultatifDto.getDate() );
+
+        return facultatif;
+    }
+
+    protected List<Facultatif> facultatifDtoListToFacultatifList(List<FacultatifDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<Facultatif> list1 = new ArrayList<Facultatif>( list.size() );
+        for ( FacultatifDto facultatifDto : list ) {
+            list1.add( facultatifDtoToFacultatif( facultatifDto ) );
         }
 
         return list1;

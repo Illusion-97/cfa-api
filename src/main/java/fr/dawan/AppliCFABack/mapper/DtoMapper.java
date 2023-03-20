@@ -42,6 +42,7 @@ import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.Annexe;
@@ -145,9 +146,16 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     UtilisateurRoleDto utilisateurRoleToUtilisateurRoleDto(UtilisateurRole utilisateurRole);
 
-   
-    @Mapping(source = ".", target = ".")
+    @Mapping(source=".", target=".")
     DossierProfessionnelDto dossierProfessionnelToDossierProfessionnelDto(DossierProfessionnel dossierProfessionnel);
+   
+    @Mapping(source="id", target="id")
+    @Mapping(source="nom", target="nom")
+    @Mapping(source="cursusDto", target="cursus")
+    @Mapping(source="experienceProfessionnelleDtos", target="experienceProfessionnelles")
+    @Mapping(source="annexeDtos", target="annexes")
+    @Mapping(source="facultatifDto", target="facultatifs")
+    DossierProfessionnel dossierProfessionnelDtoToDossierProfessionnel(DossierProEtudiantDto dosierProEtudiant);
 
     @Mapping(source = ".", target = ".")
     AnnexeDto AnnexeToAnnexeDto(Annexe annexe);
@@ -205,7 +213,7 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     ExperienceProfessionnelleDto experienceProfessionnelleToExperienceProfessionnelleDto(
             ExperienceProfessionnelle experienceProfessionnelle);
-
+   
 
 
 	@Mapping(source = "personId", target ="idDg2" )
@@ -233,4 +241,14 @@ public interface DtoMapper {
 	@Mapping(source = "street", target = "libelle")
 
     Adresse etudiantUtilisateurDG2DtoToAdresse(EtudiantUtilisateurDG2Dto eDG2);
+
+	@Mapping(source = ".", target = ".")
+	List<AnnexeDto> annexeToAnnexeDto(List<Annexe> annexes);
+	
+	@Mapping(source = ".", target = ".")
+	List<FacultatifDto> facultatifToFacultatifDto(List<Facultatif> facultatifs);
+
+	@Mapping(source = ".", target = ".")
+	List<ExperienceProfessionnelleDto> experienceProfessionnelleToExperienceProfessionnelleDto(
+			List<ExperienceProfessionnelle> experienceProfessionnelles);
 }
