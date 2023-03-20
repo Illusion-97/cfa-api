@@ -8,12 +8,14 @@ import org.springframework.stereotype.Component;
 
 import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.AnnexeDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CerfaDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.ContenuDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.CursusDG2Dto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
@@ -29,6 +31,7 @@ import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InfoDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.MaitreApprentissageDto;
@@ -37,15 +40,20 @@ import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.RemunerationDto;
+import fr.dawan.AppliCFABack.dto.ResumeDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Cerfa;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.ContenuDossierProjet;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
@@ -57,6 +65,7 @@ import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
+import fr.dawan.AppliCFABack.entities.InfoDossierProjet;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
 import fr.dawan.AppliCFABack.entities.Note;
@@ -64,6 +73,7 @@ import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Remuneration;
+import fr.dawan.AppliCFABack.entities.ResumeDossierProjet;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 
@@ -125,6 +135,9 @@ public interface DtoMapper {
 
     @Mapping(source = ".", target = ".")
     ProjetDto projetToProjetDto(Projet projet);
+    
+    @Mapping(source = ".", target = ".")
+    ProjetDossierProjetDto projetToProjetDto1(Projet projet);
 
     @Mapping(source = ".", target = ".")
     @Mapping(source = "cursus", target = "cursusDto")
@@ -140,8 +153,17 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     DossierProfessionnelDto dossierProfessionnelToDossierProfessionnelDto(DossierProfessionnel dossierProfessionnel);
 
-    @Mapping(source = ".", target = ".")
-    DossierProjetDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet);
+    @Mapping(source ="id", target = "id")
+    @Mapping(source ="nom", target = "nom")
+    @Mapping(source ="projet", target = "projets")
+    @Mapping(source ="annexeDossierProjets", target = "annexeDossierProjets")
+    @Mapping(source ="infoDossierProjets", target = "infoDossierProjets")
+    @Mapping(source ="contenuDossierProjets", target = "contenuDossierProjets")
+    @Mapping(source ="resumeDossierProjets", target = "resumeDossierProjets")
+    DossierProjetEtudiantDto dossierProjetToDossierProjetEtudiantDto(DossierProjet dossierProjet);
+    
+    @Mapping( source = ".", target = ".")
+    DossierProjetDto dossierProjetToDossierProjetDto (DossierProjet dossierProjet);
 
     @Mapping(source = ".", target = ".")
     MaitreApprentissageDto maitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage);
@@ -166,6 +188,28 @@ public interface DtoMapper {
     @Mapping(source = "prerequisites", target = "prerequis")
     Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
 
+    @Mapping(source ="id", target = "id")
+    @Mapping(source ="nom", target = "nom")
+    @Mapping(source ="projets", target = "projet")
+    @Mapping(source ="annexeDossierProjets", target = "annexeDossierProjets")
+    @Mapping(source ="infoDossierProjets", target = "infoDossierProjets")
+    @Mapping(source ="contenuDossierProjets", target = "contenuDossierProjets")
+    @Mapping(source ="resumeDossierProjets", target = "resumeDossierProjets")
+    DossierProjet dossierProjetDtoToDossierProjet(DossierProjetEtudiantDto dpDto);
+    
+    @Mapping(source = ".", target=".")
+    @Mapping(source = "dossierProjet", target="dossierProjetDto")
+    List<AnnexeDossierProjetDto> annexeProjetToAnnexeProjetDto(List<AnnexeDossierProjet> anexeProjets);
+    
+    @Mapping(source = ".", target=".")
+    List<InfoDossierProjetDto> infoToInfoDto(List<InfoDossierProjet> infos);
+    
+    @Mapping(source = ".", target=".")
+    List<ContenuDossierProjetDto> contenuToContenuDto (List<ContenuDossierProjet> contenus);
+    
+    @Mapping(source = ".", target=".")
+    List<ResumeDossierProjetDto> resumeToResumeDto (List<ResumeDossierProjet> resume);
+    
     @Mapping(target = "activiteTypes", ignore = true)
     @Mapping(target = "formations", ignore = true)
     @Mapping(source = "id", target = "idDg2")

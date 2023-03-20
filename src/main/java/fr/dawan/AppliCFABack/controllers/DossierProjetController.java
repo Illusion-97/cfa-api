@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.services.DossierProjetService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 
@@ -36,7 +37,7 @@ public class DossierProjetController {
 	}
 	
 	@GetMapping(value = "/{id}",produces = "application/json")
-	public DossierProjetDto getById(@PathVariable("id") long id) {
+	public DossierProjetEtudiantDto getById(@PathVariable("id") long id) {
 		return dossierProService.getById(id);
 	}
 	@GetMapping(value = "/etudiant/{id}",produces = "application/json")
@@ -105,4 +106,10 @@ public class DossierProjetController {
 		etudiantService.saveOrUpdate(eDto);
 		return dp;
 	}
+	
+	@PutMapping(value = "/update/etudiant/{id}", consumes = "application/json", produces = "application/json")
+    public DossierProjetEtudiantDto updateDossierProjet(@PathVariable("id") long id, @RequestBody DossierProjetEtudiantDto dpDto) {
+        return dossierProService.saveOrUpdateDossierProjet(dpDto, id);
+    }
+
 }

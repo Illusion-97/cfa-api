@@ -2,12 +2,14 @@ package fr.dawan.AppliCFABack.mapper;
 
 import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.AnnexeDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CerfaDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.ContenuDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.CursusDG2Dto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
@@ -23,6 +25,7 @@ import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InfoDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.MaitreApprentissageDto;
@@ -31,15 +34,20 @@ import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.RemunerationDto;
+import fr.dawan.AppliCFABack.dto.ResumeDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Cerfa;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.ContenuDossierProjet;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Devoir;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
@@ -51,6 +59,7 @@ import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
+import fr.dawan.AppliCFABack.entities.InfoDossierProjet;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
 import fr.dawan.AppliCFABack.entities.Note;
@@ -58,6 +67,7 @@ import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Remuneration;
+import fr.dawan.AppliCFABack.entities.ResumeDossierProjet;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import java.util.ArrayList;
@@ -66,8 +76,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-13T15:03:58+0100",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
+    date = "2023-03-20T12:01:47+0100",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.300.v20221108-0856, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -385,6 +395,21 @@ public class DtoMapperImpl implements DtoMapper {
     }
 
     @Override
+    public ProjetDossierProjetDto projetToProjetDto1(Projet projet) {
+        if ( projet == null ) {
+            return null;
+        }
+
+        ProjetDossierProjetDto projetDossierProjetDto = new ProjetDossierProjetDto();
+
+        projetDossierProjetDto.setId( projet.getId() );
+        projetDossierProjetDto.setNom( projet.getNom() );
+        projetDossierProjetDto.setVersion( projet.getVersion() );
+
+        return projetDossierProjetDto;
+    }
+
+    @Override
     public PromotionDto promotionToPromotionDto(Promotion promotion) {
         if ( promotion == null ) {
             return null;
@@ -414,16 +439,16 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateurDto.setId( utilisateur.getId() );
         utilisateurDto.setVersion( utilisateur.getVersion() );
         utilisateurDto.setActive( utilisateur.isActive() );
-        utilisateurDto.setExternalAccount( utilisateur.isExternalAccount() );
-        utilisateurDto.setLogin( utilisateur.getLogin() );
-        utilisateurDto.setPassword( utilisateur.getPassword() );
-        utilisateurDto.setPrenom( utilisateur.getPrenom() );
-        utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setCivilite( utilisateur.getCivilite() );
         utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
+        utilisateurDto.setExternalAccount( utilisateur.isExternalAccount() );
+        utilisateurDto.setIdDg2( utilisateur.getIdDg2() );
+        utilisateurDto.setLogin( utilisateur.getLogin() );
+        utilisateurDto.setNom( utilisateur.getNom() );
+        utilisateurDto.setPassword( utilisateur.getPassword() );
+        utilisateurDto.setPrenom( utilisateur.getPrenom() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
         utilisateurDto.setTelephoneFixe( utilisateur.getTelephoneFixe() );
-        utilisateurDto.setIdDg2( utilisateur.getIdDg2() );
 
         return utilisateurDto;
     }
@@ -459,6 +484,26 @@ public class DtoMapperImpl implements DtoMapper {
     }
 
     @Override
+    public DossierProjetEtudiantDto dossierProjetToDossierProjetEtudiantDto(DossierProjet dossierProjet) {
+        if ( dossierProjet == null ) {
+            return null;
+        }
+
+        DossierProjetEtudiantDto dossierProjetEtudiantDto = new DossierProjetEtudiantDto();
+
+        dossierProjetEtudiantDto.setId( dossierProjet.getId() );
+        dossierProjetEtudiantDto.setNom( dossierProjet.getNom() );
+        dossierProjetEtudiantDto.setProjets( projetToProjetDto1( dossierProjet.getProjet() ) );
+        dossierProjetEtudiantDto.setAnnexeDossierProjets( annexeProjetToAnnexeProjetDto( dossierProjet.getAnnexeDossierProjets() ) );
+        dossierProjetEtudiantDto.setInfoDossierProjets( infoToInfoDto( dossierProjet.getInfoDossierProjets() ) );
+        dossierProjetEtudiantDto.setContenuDossierProjets( contenuToContenuDto( dossierProjet.getContenuDossierProjets() ) );
+        dossierProjetEtudiantDto.setResumeDossierProjets( resumeToResumeDto( dossierProjet.getResumeDossierProjets() ) );
+        dossierProjetEtudiantDto.setVersion( dossierProjet.getVersion() );
+
+        return dossierProjetEtudiantDto;
+    }
+
+    @Override
     public DossierProjetDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet) {
         if ( dossierProjet == null ) {
             return null;
@@ -470,6 +515,7 @@ public class DtoMapperImpl implements DtoMapper {
         dossierProjetDto.setVersion( dossierProjet.getVersion() );
         dossierProjetDto.setNom( dossierProjet.getNom() );
         dossierProjetDto.setProjet( projetToProjetDto( dossierProjet.getProjet() ) );
+        dossierProjetDto.setEtudiant( etudiantToEtudiantDto( dossierProjet.getEtudiant() ) );
 
         return dossierProjetDto;
     }
@@ -662,6 +708,82 @@ public class DtoMapperImpl implements DtoMapper {
     }
 
     @Override
+    public DossierProjet dossierProjetDtoToDossierProjet(DossierProjetEtudiantDto dpDto) {
+        if ( dpDto == null ) {
+            return null;
+        }
+
+        DossierProjet dossierProjet = new DossierProjet();
+
+        dossierProjet.setId( dpDto.getId() );
+        dossierProjet.setNom( dpDto.getNom() );
+        dossierProjet.setProjet( projetDossierProjetDtoToProjet( dpDto.getProjets() ) );
+        dossierProjet.setAnnexeDossierProjets( annexeDossierProjetDtoListToAnnexeDossierProjetList( dpDto.getAnnexeDossierProjets() ) );
+        dossierProjet.setInfoDossierProjets( infoDossierProjetDtoListToInfoDossierProjetList( dpDto.getInfoDossierProjets() ) );
+        dossierProjet.setContenuDossierProjets( contenuDossierProjetDtoListToContenuDossierProjetList( dpDto.getContenuDossierProjets() ) );
+        dossierProjet.setResumeDossierProjets( resumeDossierProjetDtoListToResumeDossierProjetList( dpDto.getResumeDossierProjets() ) );
+        dossierProjet.setVersion( dpDto.getVersion() );
+
+        return dossierProjet;
+    }
+
+    @Override
+    public List<AnnexeDossierProjetDto> annexeProjetToAnnexeProjetDto(List<AnnexeDossierProjet> anexeProjets) {
+        if ( anexeProjets == null ) {
+            return null;
+        }
+
+        List<AnnexeDossierProjetDto> list = new ArrayList<AnnexeDossierProjetDto>( anexeProjets.size() );
+        for ( AnnexeDossierProjet annexeDossierProjet : anexeProjets ) {
+            list.add( annexeDossierProjetToAnnexeDossierProjetDto( annexeDossierProjet ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<InfoDossierProjetDto> infoToInfoDto(List<InfoDossierProjet> infos) {
+        if ( infos == null ) {
+            return null;
+        }
+
+        List<InfoDossierProjetDto> list = new ArrayList<InfoDossierProjetDto>( infos.size() );
+        for ( InfoDossierProjet infoDossierProjet : infos ) {
+            list.add( infoDossierProjetToInfoDossierProjetDto( infoDossierProjet ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<ContenuDossierProjetDto> contenuToContenuDto(List<ContenuDossierProjet> contenus) {
+        if ( contenus == null ) {
+            return null;
+        }
+
+        List<ContenuDossierProjetDto> list = new ArrayList<ContenuDossierProjetDto>( contenus.size() );
+        for ( ContenuDossierProjet contenuDossierProjet : contenus ) {
+            list.add( contenuDossierProjetToContenuDossierProjetDto( contenuDossierProjet ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<ResumeDossierProjetDto> resumeToResumeDto(List<ResumeDossierProjet> resume) {
+        if ( resume == null ) {
+            return null;
+        }
+
+        List<ResumeDossierProjetDto> list = new ArrayList<ResumeDossierProjetDto>( resume.size() );
+        for ( ResumeDossierProjet resumeDossierProjet : resume ) {
+            list.add( resumeDossierProjetToResumeDossierProjetDto( resumeDossierProjet ) );
+        }
+
+        return list;
+    }
+
+    @Override
     public Cursus cursusDG2DtoToCursus(CursusDG2Dto cursusDG2Dto) {
         if ( cursusDG2Dto == null ) {
             return null;
@@ -805,6 +927,184 @@ public class DtoMapperImpl implements DtoMapper {
         }
 
         return list1;
+    }
+
+    protected Projet projetDossierProjetDtoToProjet(ProjetDossierProjetDto projetDossierProjetDto) {
+        if ( projetDossierProjetDto == null ) {
+            return null;
+        }
+
+        Projet projet = new Projet();
+
+        projet.setId( projetDossierProjetDto.getId() );
+        projet.setVersion( projetDossierProjetDto.getVersion() );
+        projet.setNom( projetDossierProjetDto.getNom() );
+
+        return projet;
+    }
+
+    protected AnnexeDossierProjet annexeDossierProjetDtoToAnnexeDossierProjet(AnnexeDossierProjetDto annexeDossierProjetDto) {
+        if ( annexeDossierProjetDto == null ) {
+            return null;
+        }
+
+        AnnexeDossierProjet annexeDossierProjet = new AnnexeDossierProjet();
+
+        annexeDossierProjet.setId( annexeDossierProjetDto.getId() );
+        annexeDossierProjet.setVersion( annexeDossierProjetDto.getVersion() );
+        annexeDossierProjet.setPieceJointe( annexeDossierProjetDto.getPieceJointe() );
+
+        return annexeDossierProjet;
+    }
+
+    protected List<AnnexeDossierProjet> annexeDossierProjetDtoListToAnnexeDossierProjetList(List<AnnexeDossierProjetDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<AnnexeDossierProjet> list1 = new ArrayList<AnnexeDossierProjet>( list.size() );
+        for ( AnnexeDossierProjetDto annexeDossierProjetDto : list ) {
+            list1.add( annexeDossierProjetDtoToAnnexeDossierProjet( annexeDossierProjetDto ) );
+        }
+
+        return list1;
+    }
+
+    protected InfoDossierProjet infoDossierProjetDtoToInfoDossierProjet(InfoDossierProjetDto infoDossierProjetDto) {
+        if ( infoDossierProjetDto == null ) {
+            return null;
+        }
+
+        InfoDossierProjet infoDossierProjet = new InfoDossierProjet();
+
+        infoDossierProjet.setId( infoDossierProjetDto.getId() );
+        infoDossierProjet.setVersion( infoDossierProjetDto.getVersion() );
+        infoDossierProjet.setInformation_projet( infoDossierProjetDto.getInformation_projet() );
+
+        return infoDossierProjet;
+    }
+
+    protected List<InfoDossierProjet> infoDossierProjetDtoListToInfoDossierProjetList(List<InfoDossierProjetDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<InfoDossierProjet> list1 = new ArrayList<InfoDossierProjet>( list.size() );
+        for ( InfoDossierProjetDto infoDossierProjetDto : list ) {
+            list1.add( infoDossierProjetDtoToInfoDossierProjet( infoDossierProjetDto ) );
+        }
+
+        return list1;
+    }
+
+    protected ContenuDossierProjet contenuDossierProjetDtoToContenuDossierProjet(ContenuDossierProjetDto contenuDossierProjetDto) {
+        if ( contenuDossierProjetDto == null ) {
+            return null;
+        }
+
+        ContenuDossierProjet contenuDossierProjet = new ContenuDossierProjet();
+
+        contenuDossierProjet.setId( contenuDossierProjetDto.getId() );
+        contenuDossierProjet.setVersion( contenuDossierProjetDto.getVersion() );
+        contenuDossierProjet.setContenu_projet( contenuDossierProjetDto.getContenu_projet() );
+
+        return contenuDossierProjet;
+    }
+
+    protected List<ContenuDossierProjet> contenuDossierProjetDtoListToContenuDossierProjetList(List<ContenuDossierProjetDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<ContenuDossierProjet> list1 = new ArrayList<ContenuDossierProjet>( list.size() );
+        for ( ContenuDossierProjetDto contenuDossierProjetDto : list ) {
+            list1.add( contenuDossierProjetDtoToContenuDossierProjet( contenuDossierProjetDto ) );
+        }
+
+        return list1;
+    }
+
+    protected ResumeDossierProjet resumeDossierProjetDtoToResumeDossierProjet(ResumeDossierProjetDto resumeDossierProjetDto) {
+        if ( resumeDossierProjetDto == null ) {
+            return null;
+        }
+
+        ResumeDossierProjet resumeDossierProjet = new ResumeDossierProjet();
+
+        resumeDossierProjet.setId( resumeDossierProjetDto.getId() );
+        resumeDossierProjet.setVersion( resumeDossierProjetDto.getVersion() );
+        resumeDossierProjet.setResume_projet( resumeDossierProjetDto.getResume_projet() );
+
+        return resumeDossierProjet;
+    }
+
+    protected List<ResumeDossierProjet> resumeDossierProjetDtoListToResumeDossierProjetList(List<ResumeDossierProjetDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<ResumeDossierProjet> list1 = new ArrayList<ResumeDossierProjet>( list.size() );
+        for ( ResumeDossierProjetDto resumeDossierProjetDto : list ) {
+            list1.add( resumeDossierProjetDtoToResumeDossierProjet( resumeDossierProjetDto ) );
+        }
+
+        return list1;
+    }
+
+    protected AnnexeDossierProjetDto annexeDossierProjetToAnnexeDossierProjetDto(AnnexeDossierProjet annexeDossierProjet) {
+        if ( annexeDossierProjet == null ) {
+            return null;
+        }
+
+        AnnexeDossierProjetDto annexeDossierProjetDto = new AnnexeDossierProjetDto();
+
+        annexeDossierProjetDto.setId( annexeDossierProjet.getId() );
+        annexeDossierProjetDto.setVersion( annexeDossierProjet.getVersion() );
+        annexeDossierProjetDto.setPieceJointe( annexeDossierProjet.getPieceJointe() );
+
+        return annexeDossierProjetDto;
+    }
+
+    protected InfoDossierProjetDto infoDossierProjetToInfoDossierProjetDto(InfoDossierProjet infoDossierProjet) {
+        if ( infoDossierProjet == null ) {
+            return null;
+        }
+
+        InfoDossierProjetDto infoDossierProjetDto = new InfoDossierProjetDto();
+
+        infoDossierProjetDto.setId( infoDossierProjet.getId() );
+        infoDossierProjetDto.setVersion( infoDossierProjet.getVersion() );
+        infoDossierProjetDto.setInformation_projet( infoDossierProjet.getInformation_projet() );
+
+        return infoDossierProjetDto;
+    }
+
+    protected ContenuDossierProjetDto contenuDossierProjetToContenuDossierProjetDto(ContenuDossierProjet contenuDossierProjet) {
+        if ( contenuDossierProjet == null ) {
+            return null;
+        }
+
+        ContenuDossierProjetDto contenuDossierProjetDto = new ContenuDossierProjetDto();
+
+        contenuDossierProjetDto.setId( contenuDossierProjet.getId() );
+        contenuDossierProjetDto.setVersion( contenuDossierProjet.getVersion() );
+        contenuDossierProjetDto.setContenu_projet( contenuDossierProjet.getContenu_projet() );
+
+        return contenuDossierProjetDto;
+    }
+
+    protected ResumeDossierProjetDto resumeDossierProjetToResumeDossierProjetDto(ResumeDossierProjet resumeDossierProjet) {
+        if ( resumeDossierProjet == null ) {
+            return null;
+        }
+
+        ResumeDossierProjetDto resumeDossierProjetDto = new ResumeDossierProjetDto();
+
+        resumeDossierProjetDto.setId( resumeDossierProjet.getId() );
+        resumeDossierProjetDto.setVersion( resumeDossierProjet.getVersion() );
+        resumeDossierProjetDto.setResume_projet( resumeDossierProjet.getResume_projet() );
+
+        return resumeDossierProjetDto;
     }
 
     protected Cursus interventionDG2DtoToCursus(InterventionDG2Dto interventionDG2Dto) {

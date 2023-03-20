@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
 
 import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
@@ -17,6 +18,9 @@ import fr.dawan.AppliCFABack.dto.customdtos.MembreEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
@@ -60,7 +64,10 @@ public class DtoTools {
 //            mapper.map(src -> src.getEtudiantNoteId(), (dest, v) -> dest.getEtudiantNote().setId((long) v));
 //
 //        });
-
+    	
+//    	myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+    	myMapper.getConfiguration().setAmbiguityIgnored(true);
+    	
         myMapper.typeMap(Etudiant.class, EtudiantInfoInterventionDto.class).addMappings(m ->{
         	m.map(src -> src.getId(), EtudiantInfoInterventionDto::setIdEtudiant);
         	m.map(src -> src.getUtilisateur().getNom(), EtudiantInfoInterventionDto::setNom);
@@ -277,6 +284,32 @@ public class DtoTools {
         return convert(etudiant, AccueilEtudiantDto.class, etudiantToAccueilEtudiantDtoConverter);
     }
 
+    Converter<DossierProjetEtudiantDto,DossierProjet> dossierProjetDtoToDossierProjetConverter = context -> {
+    	DossierProjetEtudiantDto dpDto = context.getSource();
+    	DossierProjet dp = new DossierProjet();
+    	
+    	 dp.setNom(dpDto.getNom());
+//    	 dp.setAnnexeDossierProjets(dpDto.getAnnexeDossierProjetDtos());
+    	 dp.setAnnexeDossierProjets(dpDto.getAnnexeDossierProjets().stream()
+    	            .map(AnnexeDossierProjetDto::toAnnexeProjet)
+    	            .collect(Collectors.toList()));
+    	 dp.setContenuDossierProjets(dpDto.getContenuDossierProjets().stream()
+    			 	.map(ContenuDossierProjetDto::toContenuProjet)
+    			 	.collect(Collectors.toList()));
+    	 dp.setInfoDossierProjets(dpDto.getInfoDossierProjets().stream()
+    			 	.map(InfoDossierProjetDto::toInfoProjet)
+    			 	.collect(Collectors.toList()));
+    	 dp.setResumeDossierProjets(dpDto.getResumeDossierProjets().stream()
+    			 	.map(ResumeDossierProjetDto::toResumeProjet)
+    			 	.collect(Collectors.toList()));
+    	
+        return dp;
+    };
+
+
+	public DossierProjet dossierProjetDtoToDossierProjet (DossierProjetEtudiantDto dpDto) {
+		return convert(dpDto, DossierProjet.class, dossierProjetDtoToDossierProjetConverter);
+	};
 
 
 }

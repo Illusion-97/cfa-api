@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.controllers.DossierProjetController;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -107,7 +108,7 @@ class DossierProjetControllerTests {
 	void testUpdate() {
 
 		try {
-			DossierProjetDto dpDto = dossierProjetController.getById(idDossierProjet+1);
+			DossierProjetEtudiantDto dpDto = dossierProjetController.getById(idDossierProjet+1);
 			dpDto.setNom("nom DossierProjet update");
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);

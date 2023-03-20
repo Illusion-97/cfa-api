@@ -17,6 +17,7 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 
 
@@ -87,4 +88,6 @@ public interface EtudiantService {
 
 
 	AccueilEtudiantDto getAccueilEtudiant(long id);
+
+    EtudiantDossierProjetDto getByEtudiantIdForDossierProjet(long id);
 }

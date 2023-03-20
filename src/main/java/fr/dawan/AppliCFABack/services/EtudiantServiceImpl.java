@@ -14,8 +14,11 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+//<<<<<<< HEAD
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+//=======
+//>>>>>>> DossierProjet
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
@@ -54,6 +57,10 @@ import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
+//<<<<<<< HEAD
+//=======
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
+//>>>>>>> DossierProjet
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
@@ -1189,6 +1196,15 @@ public class EtudiantServiceImpl implements EtudiantService {
 		}
 		return null;
 	}
+
+    @Override
+    public EtudiantDossierProjetDto getByEtudiantIdForDossierProjet(long id) {
+        Optional<Etudiant> e = etudiantRepository.findById(id);
+        if (!e.isPresent())
+            return null;
+        return DtoTools.convert(e.get(), EtudiantDossierProjetDto.class);
+
+    }
 
 
 }

@@ -11,12 +11,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.univocity.parsers.annotations.Convert;
+
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
+import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
+import fr.dawan.AppliCFABack.entities.ContenuDossierProjet;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.InfoDossierProjet;
+import fr.dawan.AppliCFABack.entities.Projet;
+import fr.dawan.AppliCFABack.entities.ResumeDossierProjet;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.ProjetRepository;
 
 @Service
 @Transactional
@@ -26,8 +38,14 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	DossierProjetRepository dossierProRepo;
 	
 	@Autowired
+    EtudiantRepository etudiantRepository;
+	
+	@Autowired
 	EtudiantService etudiantService;
 
+	@Autowired
+	private ProjetRepository projetRepository;
+	
 	@Autowired
 	private DtoMapper mapper;
 
@@ -57,11 +75,12 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 */
 	
 	@Override
-	public DossierProjetDto getById(long id) {
+	public DossierProjetEtudiantDto getById(long id) {
 		Optional<DossierProjet> dp = dossierProRepo.findById(id);
+		Optional<Projet> p = projetRepository.findById(id);
 		if(dp.isPresent()) {
-			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp.get());
-			dpDto.setProjet(mapper.projetToProjetDto(dp.get().getProjet()));
+			DossierProjetEtudiantDto dpDto = mapper.dossierProjetToDossierProjetEtudiantDto(dp.get());
+			dpDto.setProjets(mapper.projetToProjetDto1(p.get()));
 			return dpDto;
 		}
 		return null;
@@ -145,8 +164,67 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	
 	@Override
 	public List<DossierProjetDto> getByIdEtudiant(long id) {
-		EtudiantDto e = etudiantService.getById(id);
-		return e.getDossierProjet();
+	    Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+	    List<DossierProjetDto> dossierProjetDtoList = new ArrayList<>();
+	        Etudiant e = etudiant.get();
+	        List<DossierProjet> dossierProjetList = e.getDossierProjet();
+            //DossierProjetDto dossierProjetDto = DtoTools.convert(dossierProjetList, DossierProjetDto.class);
+	        for (DossierProjet dp : dossierProjetList) {
+
+	            DossierProjetDto dossierProjetDto = mapper.dossierProjetToDossierProjetDto(dp);
+	            
+	            dossierProjetDto.setId(dp.getId());
+	            dossierProjetDto.setNom(dp.getNom());
+	            dossierProjetDto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
+	            dossierProjetDto.setAnnexeDossierProjetDtos(mapper.annexeProjetToAnnexeProjetDto(dp.getAnnexeDossierProjets()));
+	            dossierProjetDto.setContenuDossierProjetDtos(mapper.contenuToContenuDto(dp.getContenuDossierProjets()));
+	            dossierProjetDto.setInfoDossierProjetDtos(mapper.infoToInfoDto(dp.getInfoDossierProjets()));
+	            dossierProjetDto.setResumeDossierProjetDtos(mapper.resumeToResumeDto(dp.getResumeDossierProjets()));
+	            
+	            dossierProjetDtoList.add(dossierProjetDto);
+	        }
+	    
+	    return dossierProjetDtoList;
 	}
+
+    @Override
+    public DossierProjetEtudiantDto saveOrUpdateDossierProjet(DossierProjetEtudiantDto dpDto, long id) {
+//        DossierProjet dp = DtoTools.convert(dpDto, DossierProjet.class);
+        DossierProjet dp = mapper.dossierProjetDtoToDossierProjet(dpDto);
+        //on récupère la liste des experiences d'un dossier projet et on les met à jour (en n'oubliant pas de set les clés étrangères de la table experience_professionnelle)
+        assert dp != null;
+
+        //on récupère la liste des annexes d'un dossier projet et on les met à jour (en n'oubliant pas de set les clés étrangères de la table annexe)
+        List<AnnexeDossierProjet> annexes = dp.getAnnexeDossierProjets();
+        for(AnnexeDossierProjet annexe : annexes) {
+            annexe.setDossierProjet(dp);
+        }
+        
+        List<InfoDossierProjet> infos = dp.getInfoDossierProjets();
+        for(InfoDossierProjet info : infos) {
+        	info.setDossierProjet(dp);
+        }
+        
+        List<ContenuDossierProjet> contenus = dp.getContenuDossierProjets();
+        for(ContenuDossierProjet contenu : contenus) {
+        	contenu.setDossierProjet(dp);
+        }
+        
+        List<ResumeDossierProjet> resumes = dp.getResumeDossierProjets();
+        for(ResumeDossierProjet resume : resumes) {
+        	resume.setDossierProjet(dp);
+        }
+
+        //on met à jour la clé étrangère etudiant de la table dossier_professionnel (dans le cas d'un save)
+        Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+        if(etudiant.isPresent()){
+            dp.setEtudiant(etudiant.get());
+        }
+        //on insert ou met à jour le dossier en question
+        dp = dossierProRepo.saveAndFlush(dp);
+
+        return DtoTools.convert(dp, DossierProjetEtudiantDto.class);
+
+    }
 
 }
