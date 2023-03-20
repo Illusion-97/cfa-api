@@ -79,7 +79,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		Optional<DossierProjet> dp = dossierProRepo.findById(id);
 		Optional<Projet> p = projetRepository.findById(id);
 		if(dp.isPresent()) {
-			DossierProjetEtudiantDto dpDto = mapper.dossierProjetToDossierProjetDto(dp.get());
+			DossierProjetEtudiantDto dpDto = mapper.dossierProjetToDossierProjetEtudiantDto(dp.get());
 			dpDto.setProjets(mapper.projetToProjetDto1(p.get()));
 			return dpDto;
 		}
@@ -168,10 +168,10 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	    List<DossierProjetDto> dossierProjetDtoList = new ArrayList<>();
 	        Etudiant e = etudiant.get();
 	        List<DossierProjet> dossierProjetList = e.getDossierProjet();
-            DossierProjetDto dossierProjetDto = DtoTools.convert(dossierProjetList, DossierProjetDto.class);
+            //DossierProjetDto dossierProjetDto = DtoTools.convert(dossierProjetList, DossierProjetDto.class);
 	        for (DossierProjet dp : dossierProjetList) {
 
-	            //DossierProjetDto dossierProjetDto = mapper.dossierProjetToDossierProjetDto(dp);
+	            DossierProjetDto dossierProjetDto = mapper.dossierProjetToDossierProjetDto(dp);
 	            
 	            dossierProjetDto.setId(dp.getId());
 	            dossierProjetDto.setNom(dp.getNom());

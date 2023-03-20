@@ -160,7 +160,10 @@ public interface DtoMapper {
     @Mapping(source ="infoDossierProjets", target = "infoDossierProjets")
     @Mapping(source ="contenuDossierProjets", target = "contenuDossierProjets")
     @Mapping(source ="resumeDossierProjets", target = "resumeDossierProjets")
-    DossierProjetEtudiantDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet);
+    DossierProjetEtudiantDto dossierProjetToDossierProjetEtudiantDto(DossierProjet dossierProjet);
+    
+    @Mapping( source = ".", target = ".")
+    DossierProjetDto dossierProjetToDossierProjetDto (DossierProjet dossierProjet);
 
     @Mapping(source = ".", target = ".")
     MaitreApprentissageDto maitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage);
