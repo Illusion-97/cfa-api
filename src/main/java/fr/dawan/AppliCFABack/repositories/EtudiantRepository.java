@@ -24,7 +24,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 
 	Page<Etudiant> findAllByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCaseOrUtilisateurLoginContainingIgnoringCase(
 			String search, String search2, String search3, Pageable pageable);
-
+ 
 	long countByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingIgnoringCaseOrUtilisateurLoginContainingIgnoringCase(
 			String search, String search2, String search3);
 	
