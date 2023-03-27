@@ -120,5 +120,14 @@ public class NoteController {
 		return noteService.getNotesByIdEtudiant(id);
 	}
 
+	/**
+	 * @param id de l'étudiant
+	 * @return dans un get, le service qui va récupérer toutes les informations nécessaires pour remplir la section Contrôles Continus
+	 * de l'espace étudiant partie front
+	 */
+	@GetMapping(value = "/note-etudiant-list/{id}", produces = "application/json")
+	public List<NoteControleContinuDto> getNotesByIdEtudiantNoTitle(@PathVariable("id") long id) {
+		return noteService.getNotesByIdEtudiantNoTitle(id);
+	}
 
 }
