@@ -31,7 +31,7 @@ public interface EtudiantService {
 
 	List<EtudiantDto> getAllByPage(int page, int size, String search);
 
-	CountDto count(String search);
+	CountDto count(String search);	
 
 	EtudiantDto getById(long id);
 
@@ -90,4 +90,7 @@ public interface EtudiantService {
 	AccueilEtudiantDto getAccueilEtudiant(long id);
 
     EtudiantDossierProjetDto getByEtudiantIdForDossierProjet(long id);
+	
+	List<EtudiantDto> getEtudiantByIdTuteurBySearch(long id, int page, int size, String search);
+	
 }

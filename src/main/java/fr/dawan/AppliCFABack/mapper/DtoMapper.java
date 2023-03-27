@@ -41,6 +41,7 @@ import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.ResumeDossierProjetDto;
+import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
@@ -74,6 +75,7 @@ import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Remuneration;
 import fr.dawan.AppliCFABack.entities.ResumeDossierProjet;
+import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 
@@ -109,6 +111,7 @@ public interface DtoMapper {
     EntrepriseDto entrepriseToEntrepriseDto(Entreprise entreprise);
 
     @Mapping(source = ".", target = ".")
+    @Mapping(source = "tuteur", target = "tuteurDto")           
     EtudiantDto etudiantToEtudiantDto(Etudiant etudiant);
 
     @Mapping(source = ".", target = ".")
@@ -120,6 +123,9 @@ public interface DtoMapper {
 
     @Mapping(source = ".", target = ".")
     FormationDto formationToFormationDto(Formation formation);
+    
+    @Mapping(source = ".", target = ".")
+    TuteurDto tuteurTotuteurDto(Tuteur tuteur);
 
     @Mapping(source = ".", target = ".")
     GroupeEtudiantDto groupeEtudiantToGroupEtudiantDto(GroupeEtudiant groupeEtudiant);
