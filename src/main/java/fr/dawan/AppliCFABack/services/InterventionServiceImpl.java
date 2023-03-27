@@ -583,6 +583,7 @@ public class InterventionServiceImpl implements InterventionService {
 //				}
 //			}
 		} else {
+			logger.info("ResponseEntity from the webservice WDG2 not correct Failed");
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 		//return result;
