@@ -1,5 +1,9 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletResponse;
 
@@ -91,13 +95,26 @@ public class FilesController {
 		else
 			return "KO";
 	}
-	@PostMapping(value = "/{directory}/{id}/{directory2}", consumes = "multipart/form-data")
-	public String postFileByDirectoryAndIdAndDirectory(@PathVariable("directory") String directory,@PathVariable("directory2") String directory2, @PathVariable("id") long id,
+	
+	/*
+	 * Enregistre un fichier dans une arborescence de deux fichier
+	 * directory reste fix
+	 * newDirectory : nom du dossier que l'on crée
+	 * 
+	 * */
+	@PostMapping(value = "/test/{directory}/{newDirectory}", consumes = "multipart/form-data")
+	public String postFileByDirectoryAndDirectory(@PathVariable("directory") String directory, 
+			@RequestParam(name = "newDirectory") String newDirectory,
 			@RequestParam("file") MultipartFile file) {
 
-		String filePath = directory + "/" + id + "/" + directory2 + "/";
-		fileService.createDirectory(filePath);
+		String filePath = directory + "/" + newDirectory + "/";
 		
+		fileService.createDirectory(filePath);
+		try {
+			Files.createDirectories(Paths.get(filePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if(fileService.postFile(filePath, file))
 			return "OK";
 		else
