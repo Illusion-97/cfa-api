@@ -284,32 +284,5 @@ public class DtoTools {
         return convert(etudiant, AccueilEtudiantDto.class, etudiantToAccueilEtudiantDtoConverter);
     }
 
-    Converter<DossierProjetEtudiantDto,DossierProjet> dossierProjetDtoToDossierProjetConverter = context -> {
-    	DossierProjetEtudiantDto dpDto = context.getSource();
-    	DossierProjet dp = new DossierProjet();
-    	
-    	 dp.setNom(dpDto.getNom());
-//    	 dp.setAnnexeDossierProjets(dpDto.getAnnexeDossierProjetDtos());
-    	 dp.setAnnexeDossierProjets(dpDto.getAnnexeDossierProjets().stream()
-    	            .map(AnnexeDossierProjetDto::toAnnexeProjet)
-    	            .collect(Collectors.toList()));
-    	 dp.setContenuDossierProjets(dpDto.getContenuDossierProjets().stream()
-    			 	.map(ContenuDossierProjetDto::toContenuProjet)
-    			 	.collect(Collectors.toList()));
-    	 dp.setInfoDossierProjets(dpDto.getInfoDossierProjets().stream()
-    			 	.map(InfoDossierProjetDto::toInfoProjet)
-    			 	.collect(Collectors.toList()));
-    	 dp.setResumeDossierProjets(dpDto.getResumeDossierProjets().stream()
-    			 	.map(ResumeDossierProjetDto::toResumeProjet)
-    			 	.collect(Collectors.toList()));
-    	
-        return dp;
-    };
-
-
-	public DossierProjet dossierProjetDtoToDossierProjet (DossierProjetEtudiantDto dpDto) {
-		return convert(dpDto, DossierProjet.class, dossierProjetDtoToDossierProjetConverter);
-	};
-
 
 }

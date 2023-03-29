@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -20,7 +21,7 @@ public class Absence extends BaseEntity implements Serializable {
 	private LocalDateTime dateFin;
 
 	@Column(length = 255)
-	private String justificatif;
+	private String justificatif; //path vers le dossier justificatif-etudiant
 
 	@ManyToOne
 	private Etudiant etudiant;
