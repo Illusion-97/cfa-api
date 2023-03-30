@@ -1,15 +1,22 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import com.univocity.parsers.annotations.Convert;
 
@@ -29,6 +36,15 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.ProjetRepository;
+import fr.dawan.AppliCFABack.tools.DossierProjetException;
+import fr.dawan.AppliCFABack.tools.LivretEvaluationException;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.core.ParseException;
+import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 @Service
 @Transactional
@@ -45,6 +61,17 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 	@Autowired
 	private ProjetRepository projetRepository;
+	
+	@Value("${app.storagefolder}")
+	private String storageFolder;
+	
+	@Value("${backend.url}")
+	private String backendUrl;
+	
+	@Autowired
+	private Configuration freemarkerConfig;
+	
+	private static Logger logger = Logger.getGlobal();
 	
 	@Autowired
 	private DtoMapper mapper;
@@ -77,10 +104,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	@Override
 	public DossierProjetEtudiantDto getById(long id) {
 		Optional<DossierProjet> dp = dossierProRepo.findById(id);
-		Optional<Projet> p = projetRepository.findById(id);
 		if(dp.isPresent()) {
 			DossierProjetEtudiantDto dpDto = mapper.dossierProjetToDossierProjetEtudiantDto(dp.get());
-			dpDto.setProjets(mapper.projetToProjetDto1(p.get()));
 			return dpDto;
 		}
 		return null;
@@ -225,6 +250,34 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
         return DtoTools.convert(dp, DossierProjetEtudiantDto.class);
 
+    }
+    
+    @Override
+    public String genererDossierProjet(long idDossierProjet) throws TemplateNotFoundException,
+	MalformedTemplateNameException, ParseException, IOException, TemplateException, DossierProjetException {
+    	
+    	Optional<DossierProjet> dossierProjet = dossierProRepo.findById(idDossierProjet);
+    	
+    	if (!dossierProjet.isPresent()) {
+    		throw new DossierProjetException("Dossier projet non trouvé");
+		}
+		DossierProjetEtudiantDto dossierProjetFile = mapper.dossierProjetToDossierProjetEtudiantDto(dossierProjet.get());
+    	
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("backendUrl", backendUrl);
+    	model.put("dossierProjet", dossierProjetFile);
+		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+		Template template = freemarkerConfig.getTemplate("DossierProjet.ftl");
+
+		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+		String outputPdf = storageFolder + "dossierProjet/dossierProjet.pdf";
+		try {
+			ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
+		}
+
+		return outputPdf;
     }
 
 }
