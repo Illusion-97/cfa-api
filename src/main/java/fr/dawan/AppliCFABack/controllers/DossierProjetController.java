@@ -127,7 +127,7 @@ public class DossierProjetController {
     public DossierProjetEtudiantDto updateDossierProjet(@PathVariable("id") long id, 
     		@RequestParam("dossierProjet") String dpDto,
     		@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException{
-		
+		//Chemin a changer selon les directives
 		String path = storageFolder + "DossierProjet" + "/" ;
         fileService.createDirectory(path);
         DossierProjetEtudiantDto dpEtuDto = objectMapper.readValue(dpDto, DossierProjetEtudiantDto.class);
