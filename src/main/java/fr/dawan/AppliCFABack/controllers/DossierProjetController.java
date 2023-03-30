@@ -19,11 +19,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.services.DossierProjetService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.FileService;
+import fr.dawan.AppliCFABack.services.FilesService;
 
 @RestController
 @RequestMapping("/dossierProjet")
@@ -33,7 +39,11 @@ public class DossierProjetController {
 	DossierProjetService dossierProService;
 	@Autowired
 	EtudiantService etudiantService;
-
+	@Autowired
+	FilesService fileService;
+	@Autowired
+	private ObjectMapper objectMapper;
+	
 	@Value("${app.storagefolder}")
 	private String storageFolder;
 	
@@ -113,15 +123,36 @@ public class DossierProjetController {
 		return dp;
 	}
 	
-	@PutMapping(value = "/update/etudiant/{id}", consumes = "application/json", produces = "application/json")
+	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
     public DossierProjetEtudiantDto updateDossierProjet(@PathVariable("id") long id, 
-    		@RequestBody DossierProjetEtudiantDto dpDto
-    		 ) {
+    		@RequestParam("dossierProjet") String dpDto,
+    		@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException{
 		
-		
-		String path = storageFolder + "/DossierProjet";
-        
-		return dossierProService.saveOrUpdateDossierProjet(dpDto, id);
+		String path = storageFolder + "DossierProjet" + "/" ;
+        fileService.createDirectory(path);
+        DossierProjetEtudiantDto dpEtuDto = objectMapper.readValue(dpDto, DossierProjetEtudiantDto.class);
+		return dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, file);
     }
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
