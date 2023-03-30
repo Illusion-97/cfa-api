@@ -34,6 +34,8 @@ public interface NoteService {
      */
 
 	Map<Set<String>, List<NoteControleContinuDto>> getNotesByIdEtudiant(long id) ;
+	
+	List<NoteControleContinuDto> getNotesByIdEtudiantNoTitle(long id);
 
 	List<NoteDto> getAllByPromotionIdAndExamenId(long idPromotion, long idExamen);
 

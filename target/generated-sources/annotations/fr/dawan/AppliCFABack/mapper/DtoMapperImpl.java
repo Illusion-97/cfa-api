@@ -35,6 +35,7 @@ import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.ResumeDossierProjetDto;
+import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
@@ -68,6 +69,7 @@ import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Remuneration;
 import fr.dawan.AppliCFABack.entities.ResumeDossierProjet;
+import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import java.util.ArrayList;
@@ -76,7 +78,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-30T12:31:29+0200",
+    date = "2023-03-30T12:36:31+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.4.300.v20221108-0856, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -246,6 +248,7 @@ public class DtoMapperImpl implements DtoMapper {
 
         EtudiantDto etudiantDto = new EtudiantDto();
 
+        etudiantDto.setTuteurDto( tuteurTotuteurDto( etudiant.getTuteur() ) );
         etudiantDto.setId( etudiant.getId() );
         etudiantDto.setVersion( etudiant.getVersion() );
         etudiantDto.setDossierProfessionnel( dossierProfessionnelListToDossierProfessionnelDtoList( etudiant.getDossierProfessionnel() ) );
@@ -311,6 +314,20 @@ public class DtoMapperImpl implements DtoMapper {
         formationDto.setPlan( formation.getPlan() );
 
         return formationDto;
+    }
+
+    @Override
+    public TuteurDto tuteurTotuteurDto(Tuteur tuteur) {
+        if ( tuteur == null ) {
+            return null;
+        }
+
+        TuteurDto tuteurDto = new TuteurDto();
+
+        tuteurDto.setId( tuteur.getId() );
+        tuteurDto.setVersion( tuteur.getVersion() );
+
+        return tuteurDto;
     }
 
     @Override

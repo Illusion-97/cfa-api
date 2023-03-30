@@ -1,5 +1,10 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,11 +26,13 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.services.DossierProjetService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.GenericService;
+import fr.dawan.AppliCFABack.services.LivretEvaluationService;
 
 @RestController
 @RequestMapping("/dossierProjet")
 public class DossierProjetController {
-
+	
 	@Autowired
 	DossierProjetService dossierProService;
 	@Autowired
@@ -111,5 +118,19 @@ public class DossierProjetController {
     public DossierProjetEtudiantDto updateDossierProjet(@PathVariable("id") long id, @RequestBody DossierProjetEtudiantDto dpDto) {
         return dossierProService.saveOrUpdateDossierProjet(dpDto, id);
     }
+	
+	@GetMapping(value = "/generer/{idDossierProjet}", produces = "text/plain")
+	public ResponseEntity<String> genererDossierProj(
+			@PathVariable("idDossierProjet") long idDossierProjet) throws Exception {
+
+		String outpoutPath = (dossierProService.genererDossierProjet(idDossierProjet));
+		File f = new File(outpoutPath);
+		
+		Path path = Paths.get(f.getAbsolutePath());
+		byte[] bytes =  Files.readAllBytes(path);
+		String base64 = Base64.getEncoder().encodeToString(bytes);
+
+		return ResponseEntity.ok().body(base64);
+	}
 
 }

@@ -233,5 +233,8 @@ public class EtudiantController {
 	public AccueilEtudiantDto getAccueilEtudiant(@PathVariable("id") long id) {
 		return etudiantService.getAccueilEtudiant(id);
 	}
+	
+
+
 
 }

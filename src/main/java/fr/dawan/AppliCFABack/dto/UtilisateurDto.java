@@ -30,6 +30,7 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 	private List<UtilisateurRoleDto> rolesDto;
 	private EtudiantDto etudiantDto;
 	private FormateurDto formateurDto;
+	private TuteurDto tuteurDto;
 	private CEFDto cefDto;
 	private long idDg2;
 	private long centreFormationId;
@@ -222,6 +223,14 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 		this.formateurDto = formateurDto;
 	}
 
+	public TuteurDto getTuteurDto() {
+		return tuteurDto;
+	}
+
+	public void setTuteurDto(TuteurDto tuteurDto) {
+		this.tuteurDto = tuteurDto;
+	}
+	
 	/**
 	 * @return the cefDto
 	 */
