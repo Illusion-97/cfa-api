@@ -109,6 +109,7 @@ public class DtoTools {
     Converter<FormationDG2Dto, Formation> formationDG2DtoToFormationConverter = context -> {
     	FormationDG2Dto fDG2 = context.getSource();
     	Formation formation = new Formation();
+    	
     	formation.setTitre(fDG2.getTitle());
     	formation.setIdDg2(fDG2.getId());
     	formation.setSlug(fDG2.getSlug());

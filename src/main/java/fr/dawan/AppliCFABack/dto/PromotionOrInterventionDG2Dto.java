@@ -3,9 +3,10 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @SuppressWarnings("serial")
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PromotionOrInterventionDG2Dto implements Serializable {
 
 	private long id;
@@ -15,7 +16,6 @@ public class PromotionOrInterventionDG2Dto implements Serializable {
 	private String slug;
 	private long courseId;
 	private String type;
-	@JsonIgnore
 	private long nbParticipants;
 	private long trainerPersonId;
 	/**

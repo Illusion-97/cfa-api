@@ -3,15 +3,14 @@ package fr.dawan.AppliCFABack.services;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
@@ -60,7 +59,7 @@ public class FormationServiceImpl implements FormationService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	private static Logger logger = Logger.getGlobal();
+	private static Logger logger = LoggerFactory.getLogger(FormationServiceImpl.class);
 
 //	@Autowired
 //	private RestTemplate restTemplate;
@@ -263,7 +262,7 @@ public class FormationServiceImpl implements FormationService {
 			try {
 				saveOrUpdate(DtoTools.convert(formation, FormationDto.class));
 			} catch (Exception e) {
-				logger.log(Level.SEVERE,"SaveOrUpdate failed", e);
+				logger.error("SaveOrUpdate failed", e);
 			}
 		}
 		return formations.size();
@@ -279,12 +278,15 @@ public class FormationServiceImpl implements FormationService {
 	 * @exception Exception retourne une exception, si erreur dans la récupération
 	 *                      des formations
 	 */
+	
 	@Override
 	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
 
 		Optional<Cursus> cursusDb = cursusRepository.findByIdDg2(idCursusDg2);
-
+		logger.info(">>>>>>>crusus>>>>>" + cursusDb.get().getIdDg2());
+		logger.info("FetchDg2Formation >>> START");
 		if (!cursusDb.isPresent()) {
+			logger.error("FetchDg2Formation>>>>>>>>ERROR failed Pas de cursus");
 			throw new FetchDG2Exception("Cursus non présent dans la BDD veuiller mettre à jour les cursus");
 		}
 
@@ -312,22 +314,23 @@ public class FormationServiceImpl implements FormationService {
 				fetchResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() {
 				});
 			} catch (Exception e) {
-				logger.log(Level.WARNING, "objectMapper failed", e);
+				logger.warn("objectMapper failed", e);
 			}
 		}
 
+		DtoTools dtoTools = new DtoTools();
 		// Comparer formationsDG2 & formationsDB
 		for (FormationDG2Dto fDtoDG2 : fetchResJson) {
+			
 			// chercher en BDD <Optional> findByIdDg2
 			Optional<Formation> formationDb = formationRepository.findByIdDg2(fDtoDG2.getId());
 
-			DtoTools dtoTools = new DtoTools();
-			Formation formationDG2 = new Formation();
+			Formation formationImported = new Formation();
 
 			try {
-				formationDG2 = dtoTools.formationDG2DtoToFormation(fDtoDG2);
+				formationImported = dtoTools.formationDG2DtoToFormation(fDtoDG2);
 			} catch (Exception e) {
-				logger.log(Level.WARNING, "mapper failed", e);
+				logger.warn("mapper failed", e);
 			}
 
 			// Si !isPresent() alors ajout
@@ -335,27 +338,115 @@ public class FormationServiceImpl implements FormationService {
 
 				List<Cursus> newCursusDb = new ArrayList<>();
 				newCursusDb.add(cursusDb.get());
-				formationDG2.setCursusLst(newCursusDb);
-				result.add(formationDG2);
+				formationImported.setCursusLst(newCursusDb);
+				result.add(formationImported);
+				
 			} else {
 				// Si != modif
 				List<Cursus> cursus = formationDb.get().getCursusLst();
-				formationDG2.setCursusLst(cursus);
+				formationImported.setCursusLst(cursus);
 				// Si la liste ne contient pas le cursus en cours on le rajoute
-				if (!formationDG2.getCursusLst().contains(cursusDb.get())) {
+				if (!formationImported.getCursusLst().contains(cursusDb.get())) {
 					cursus.add(cursusDb.get());
-					formationDG2.setCursusLst(cursus);
+					formationImported.setCursusLst(cursus);
 				}
-				if (!formationDb.get().equals(formationDG2)) {
-					formationDG2.setVersion(formationDb.get().getVersion());
-					formationDG2.setId(formationDb.get().getId());
-					result.add(formationDG2);
+				if (!formationDb.get().equals(formationImported)) {
+					formationImported.setVersion(formationDb.get().getVersion());
+					formationImported.setId(formationDb.get().getId());
+					result.add(formationImported);
 				}
 			}
+			logger.info("formationImported >>> " + formationImported.getIdDg2());
 		}
 
 		return result;
 
 	}
+	
+	
+//	@Override
+//	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
+//
+//		Optional<Cursus> cursusOpt = cursusRepository.findByIdDg2(idCursusDg2);
+//		logger.info(">>>>>>>crusus>>>>>" + cursusOpt.get().getIdDg2());
+//		logger.info("FetchDg2Formation >>> START");
+//		if (!cursusOpt.isPresent()) {
+//			logger.error("FetchDg2Formation>>>>>>>>ERROR failed Pas de cursus");
+//			throw new FetchDG2Exception("Cursus non présent dans la BDD veuiller mettre à jour les cursus");
+//		}
+//
+//		List<Formation> result = new ArrayList<>();
+//
+//		List<FormationDG2Dto> fetchResJson = new ArrayList<>();
+//
+//		// Récupérer la liste formation DG2
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+//
+//		// Ma requête
+//		URI url = new URI("https://dawan.org/api2/cfa/pro-titles/" + idCursusDg2 + "/children");
+//
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("x-auth-token", email + ":" + password);
+//		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+//		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+//
+//		// si statusCode OK
+//		if (rep.getStatusCode() == HttpStatus.OK) {
+//			String json = rep.getBody();
+//
+//			try {
+//				fetchResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() {
+//				});
+//			} catch (Exception e) {
+//				logger.warn("json formation dg2 failed", e);
+//			}
+//		}
+//
+//		DtoTools dtoTools = new DtoTools();
+//		
+//		if(!fetchResJson.isEmpty()) {
+//			
+//			for(FormationDG2Dto fDtoDg2 : fetchResJson) {
+//				logger.info("FetchDg2Formation >>> START /for" + fDtoDg2.getId());
+//				
+//				Formation formationImported = dtoTools.formationDG2DtoToFormation(fDtoDg2);
+//				
+//				Optional<Formation> optFormation = formationRepository.findByIdDg2(fDtoDg2.getId());
+//				
+//				List<Cursus> lstCursus = optFormation.get().getCursusLst();
+//				
+//				if(!optFormation.isPresent()) {
+//					
+//					lstCursus.add(cursusOpt.get());
+//					formationImported.setCursusLst(lstCursus);
+//					result.add(formationImported);
+//				}
+//				else {
+//					
+//					formationImported.setCursusLst(lstCursus);
+//					// Si la liste ne contient pas le cursus en cours on le rajoute
+//					if (!formationImported.getCursusLst().contains(cursusOpt.get())) {
+//						lstCursus.add(cursusOpt.get());
+//						formationImported.setCursusLst(lstCursus);
+//					}
+//					if (!optFormation.get().equals(formationImported)) {
+//						formationImported.setVersion(optFormation.get().getVersion());
+//						formationImported.setId(optFormation.get().getId());
+//						result.add(formationImported);
+//					}
+//
+//
+//				}
+//				
+//				//List<Cursus> lstCursus = cursusRepository.findByIdDg2(fDtoDg2.);
+//				
+//				logger.info("formationImported >>> " + formationImported);
+//			}
+//		}
+//
+//		return result;
+//
+//	}
 
 }
