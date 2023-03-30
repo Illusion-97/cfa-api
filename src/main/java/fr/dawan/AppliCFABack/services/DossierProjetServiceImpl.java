@@ -1,5 +1,10 @@
 package fr.dawan.AppliCFABack.services;
 
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +22,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import com.univocity.parsers.annotations.Convert;
 
@@ -69,12 +76,13 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	private String backendUrl;
 	
 	@Autowired
-	private Configuration freemarkerConfig;
+	private Configuration freemarkerConfig; 
 	
 	private static Logger logger = Logger.getGlobal();
 	
 	@Autowired
 	private DtoMapper mapper;
+
 
 	/**
 	 * Récupération de la liste des dossiers projets
@@ -213,17 +221,36 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	}
 
     @Override
-    public DossierProjetEtudiantDto saveOrUpdateDossierProjet(DossierProjetEtudiantDto dpDto, long id) {
-//        DossierProjet dp = DtoTools.convert(dpDto, DossierProjet.class);
+    public DossierProjetEtudiantDto saveOrUpdateDossierProjet(DossierProjetEtudiantDto dpDto, long id, List<MultipartFile> files) {
         DossierProjet dp = mapper.dossierProjetDtoToDossierProjet(dpDto);
         //on récupère la liste des experiences d'un dossier projet et on les met à jour (en n'oubliant pas de set les clés étrangères de la table experience_professionnelle)
         assert dp != null;
-
+        String path = storageFolder + "DossierProjet" + "/";
         //on récupère la liste des annexes d'un dossier projet et on les met à jour (en n'oubliant pas de set les clés étrangères de la table annexe)
         List<AnnexeDossierProjet> annexes = dp.getAnnexeDossierProjets();
+        int i = 0;
+        for(MultipartFile file : files) {
+            String pathFile = path + file.getOriginalFilename();
+            
+            File newAnnexe = new File(pathFile);
+            AnnexeDossierProjet annexe = annexes.get(i++);
+            annexe.setPieceJointe(pathFile);
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))){
+                try {
+                    bos.write(file.getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
         for(AnnexeDossierProjet annexe : annexes) {
             annexe.setDossierProjet(dp);
         }
+        
         
         List<InfoDossierProjet> infos = dp.getInfoDossierProjets();
         for(InfoDossierProjet info : infos) {

@@ -11,14 +11,8 @@ public class AnnexeDossierProjetDto extends BaseEntityDto implements Serializabl
     private String pieceJointe;
 
     private long dossierProjetId;
+
     
-    public AnnexeDossierProjet toAnnexeProjet() {
-        AnnexeDossierProjet annexeProjet = new AnnexeDossierProjet();
-        annexeProjet.setPieceJointe(this.pieceJointe);
-        return annexeProjet;
-    }
-
-
     public String getPieceJointe() {
         return pieceJointe;
     }
