@@ -1,21 +1,27 @@
-2023-03-20 09:12:09.547  INFO 20972 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7710-2VGQK72 with PID 20972 (C:\cfa-portal-api\cfa-portal-api\target\classes started by Admin Stagiaire in C:\cfa-portal-api\cfa-portal-api)
-2023-03-20 09:12:09.553  INFO 20972 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
-2023-03-20 09:12:10.980  INFO 20972 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
-2023-03-20 09:12:11.245  INFO 20972 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 252ms. Found 37 JPA repository interfaces.
-2023-03-20 09:12:11.930  INFO 20972 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
-2023-03-20 09:12:11.942  INFO 20972 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-03-20 09:12:11.942  INFO 20972 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
-2023-03-20 09:12:12.156  INFO 20972 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-03-20 09:12:12.156  INFO 20972 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2557 ms
-2023-03-20 09:12:12.438  INFO 20972 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2023-03-20 09:12:12.508  INFO 20972 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-03-20 09:12:12.585  INFO 20972 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
-2023-03-20 09:12:12.802  INFO 20972 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
-2023-03-20 09:12:12.939  INFO 20972 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-03-20 09:12:13.012  INFO 20972 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-03-20 09:12:13.038  INFO 20972 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
-2023-03-20 09:12:13.185  WARN 20972 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-03-20 09:12:14.804  WARN 20972 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "create table cerfa (id bigint not null auto_increment, version integer not null, assurance_chomage varchar(255), autre varchar(255), caisse_de_retraite varchar(255), cfa_entreprise varchar(255), cfa_responsable varchar(255), cfa_siret varchar(255), cfa_uai varchar(255), code_idcc_convention varchar(255), code_rncp varchar(255), commune_naissance varchar(255), complement_apprentit varchar(255), complement_employeur varchar(255), complement_representant varchar(255), complement_responsable varchar(255), contrat_num varchar(255), contrat_type varchar(255), convention_collective_applicable varchar(255), date_avenant date, date_conclusion date, date_de_naissance varchar(255), date_de_naissance_deuxieme_tuteur varchar(255), date_de_naissance_premier_tuteur varchar(255), date_debut_contrat date, date_debut_formation date, date_decision date, date_examen date, date_fin_contrat date, departement_naissance varchar(255), dernier_diplome varchar(255), derniere_classe_suivi varchar(255), derogation_type varchar(255), diplome_code varchar(255), diplome_le_plus_eleve_obtenu varchar(255), diplome_vise varchar(255), effectif_entreprise varchar(255), egilibilite_fonction varchar(255), email_apprenti varchar(255), email_employeur varchar(255), employeur_prive_ou_public varchar(255), employeur_specifique varchar(255), employeur_type varchar(255), faita varchar(255), formation_duree varchar(255), handicape varchar(255), heure_travail varchar(255), intitule_precis_dernier_diplome varchar(255), intitule_precis_diplome_vise varchar(255), logement varchar(255), machine_risque varchar(255), minute_travail varchar(255), mode_contractuel_apprentissage varchar(255), naf varchar(255), nationalite varchar(255), nir_apprenti varchar(255), nom_deuxieme_tuteur varchar(255), nom_employeur varchar(255), nom_naissance_apprenti varchar(255), nom_organisme varchar(255), nom_premier_tuteur varchar(255), nom_representant varchar(255), nourriture varchar(255), num_avenant varchar(255), num_depot varchar(255), prenom_apprenti varchar(255), prenom_deuxieme_tuteur varchar(255), prenom_employeur varchar(255), prenom_premier_tuteur varchar(255), prenom_representant varchar(255), reception_dossier date, regime_social varchar(255), salaire_brut varchar(255), sexe varchar(255), siret_etablissement varchar(255), siret_organisme varchar(255), situation_avant_contrat varchar(255), sportifs varchar(255), tel_apprenti varchar(255), tel_employeur varchar(255), validation_employeur varchar(255), adresse_apprenti_id bigint, adresse_employeur_id bigint, adresse_representant_id bigint, adresse_responsable_id bigint, etudiant_id bigint, remuneration1_id bigint, remuneration2_id bigint, remuneration3_id bigint, remuneration4_id bigint, primary key (id)) engine=InnoDB" via JDBC Statement
+2023-03-31 08:55:51.473  WARN 11132 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15h27m58s576ms900µs300ns).
+2023-03-31 11:39:40.104  INFO 11132 --- [RMI TCP Connection(320)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-03-31 11:39:40.715  INFO 11132 --- [RMI TCP Connection(320)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-03-31 11:39:40.724  INFO 11132 --- [RMI TCP Connection(320)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2023-03-31 11:39:40.725  INFO 11132 --- [RMI TCP Connection(320)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-03-31 11:39:40.731  INFO 11132 --- [RMI TCP Connection(320)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-03-31 11:39:43.001  INFO 14692 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7710-2VGQK72 with PID 14692 (C:\cfa-portal-api\cfa-portal-api\target\classes started by Admin Stagiaire in C:\cfa-portal-api\cfa-portal-api)
+2023-03-31 11:39:43.004  INFO 14692 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-03-31 11:39:44.359  INFO 14692 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-03-31 11:39:44.628  INFO 14692 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 262ms. Found 37 JPA repository interfaces.
+2023-03-31 11:39:45.235  INFO 14692 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2023-03-31 11:39:45.246  INFO 14692 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-03-31 11:39:45.246  INFO 14692 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-03-31 11:39:45.461  INFO 14692 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-03-31 11:39:45.462  INFO 14692 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2423 ms
+2023-03-31 11:39:45.722  INFO 14692 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2023-03-31 11:39:45.792  INFO 14692 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-31 11:39:45.869  INFO 14692 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-03-31 11:39:46.069  INFO 14692 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-03-31 11:39:46.196  INFO 14692 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-03-31 11:39:46.261  INFO 14692 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-03-31 11:39:46.289  INFO 14692 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-03-31 11:39:46.453  WARN 14692 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-03-31 11:39:47.845  WARN 14692 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "create table cerfa (id bigint not null auto_increment, version integer not null, assurance_chomage varchar(255), autre varchar(255), caisse_de_retraite varchar(255), cfa_entreprise varchar(255), cfa_responsable varchar(255), cfa_siret varchar(255), cfa_uai varchar(255), code_idcc_convention varchar(255), code_rncp varchar(255), commune_naissance varchar(255), complement_apprentit varchar(255), complement_employeur varchar(255), complement_representant varchar(255), complement_responsable varchar(255), contrat_num varchar(255), contrat_type varchar(255), convention_collective_applicable varchar(255), date_avenant date, date_conclusion date, date_de_naissance varchar(255), date_de_naissance_deuxieme_tuteur varchar(255), date_de_naissance_premier_tuteur varchar(255), date_debut_contrat date, date_debut_formation date, date_decision date, date_examen date, date_fin_contrat date, departement_naissance varchar(255), dernier_diplome varchar(255), derniere_classe_suivi varchar(255), derogation_type varchar(255), diplome_code varchar(255), diplome_le_plus_eleve_obtenu varchar(255), diplome_vise varchar(255), effectif_entreprise varchar(255), egilibilite_fonction varchar(255), email_apprenti varchar(255), email_employeur varchar(255), employeur_prive_ou_public varchar(255), employeur_specifique varchar(255), employeur_type varchar(255), faita varchar(255), formation_duree varchar(255), handicape varchar(255), heure_travail varchar(255), intitule_precis_dernier_diplome varchar(255), intitule_precis_diplome_vise varchar(255), logement varchar(255), machine_risque varchar(255), minute_travail varchar(255), mode_contractuel_apprentissage varchar(255), naf varchar(255), nationalite varchar(255), nir_apprenti varchar(255), nom_deuxieme_tuteur varchar(255), nom_employeur varchar(255), nom_naissance_apprenti varchar(255), nom_organisme varchar(255), nom_premier_tuteur varchar(255), nom_representant varchar(255), nourriture varchar(255), num_avenant varchar(255), num_depot varchar(255), prenom_apprenti varchar(255), prenom_deuxieme_tuteur varchar(255), prenom_employeur varchar(255), prenom_premier_tuteur varchar(255), prenom_representant varchar(255), reception_dossier date, regime_social varchar(255), salaire_brut varchar(255), sexe varchar(255), siret_etablissement varchar(255), siret_organisme varchar(255), situation_avant_contrat varchar(255), sportifs varchar(255), tel_apprenti varchar(255), tel_employeur varchar(255), validation_employeur varchar(255), adresse_apprenti_id bigint, adresse_employeur_id bigint, adresse_representant_id bigint, adresse_responsable_id bigint, etudiant_id bigint, remuneration1_id bigint, remuneration2_id bigint, remuneration3_id bigint, remuneration4_id bigint, primary key (id)) engine=InnoDB" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table cerfa (id bigint not null auto_increment, version integer not null, assurance_chomage varchar(255), autre varchar(255), caisse_de_retraite varchar(255), cfa_entreprise varchar(255), cfa_responsable varchar(255), cfa_siret varchar(255), cfa_uai varchar(255), code_idcc_convention varchar(255), code_rncp varchar(255), commune_naissance varchar(255), complement_apprentit varchar(255), complement_employeur varchar(255), complement_representant varchar(255), complement_responsable varchar(255), contrat_num varchar(255), contrat_type varchar(255), convention_collective_applicable varchar(255), date_avenant date, date_conclusion date, date_de_naissance varchar(255), date_de_naissance_deuxieme_tuteur varchar(255), date_de_naissance_premier_tuteur varchar(255), date_debut_contrat date, date_debut_formation date, date_decision date, date_examen date, date_fin_contrat date, departement_naissance varchar(255), dernier_diplome varchar(255), derniere_classe_suivi varchar(255), derogation_type varchar(255), diplome_code varchar(255), diplome_le_plus_eleve_obtenu varchar(255), diplome_vise varchar(255), effectif_entreprise varchar(255), egilibilite_fonction varchar(255), email_apprenti varchar(255), email_employeur varchar(255), employeur_prive_ou_public varchar(255), employeur_specifique varchar(255), employeur_type varchar(255), faita varchar(255), formation_duree varchar(255), handicape varchar(255), heure_travail varchar(255), intitule_precis_dernier_diplome varchar(255), intitule_precis_diplome_vise varchar(255), logement varchar(255), machine_risque varchar(255), minute_travail varchar(255), mode_contractuel_apprentissage varchar(255), naf varchar(255), nationalite varchar(255), nir_apprenti varchar(255), nom_deuxieme_tuteur varchar(255), nom_employeur varchar(255), nom_naissance_apprenti varchar(255), nom_organisme varchar(255), nom_premier_tuteur varchar(255), nom_representant varchar(255), nourriture varchar(255), num_avenant varchar(255), num_depot varchar(255), prenom_apprenti varchar(255), prenom_deuxieme_tuteur varchar(255), prenom_employeur varchar(255), prenom_premier_tuteur varchar(255), prenom_representant varchar(255), reception_dossier date, regime_social varchar(255), salaire_brut varchar(255), sexe varchar(255), siret_etablissement varchar(255), siret_organisme varchar(255), situation_avant_contrat varchar(255), sportifs varchar(255), tel_apprenti varchar(255), tel_employeur varchar(255), validation_employeur varchar(255), adresse_apprenti_id bigint, adresse_employeur_id bigint, adresse_representant_id bigint, adresse_responsable_id bigint, etudiant_id bigint, remuneration1_id bigint, remuneration2_id bigint, remuneration3_id bigint, remuneration4_id bigint, primary key (id)) engine=InnoDB" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -37,7 +43,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=17) Ligne trop grande. Le taille maximale d'une ligne, sauf les BLOBs, est 65535. Changez le type de quelques colonnes en BLOB
+Caused by: java.sql.SQLSyntaxErrorException: (conn=1867) Ligne trop grande. Le taille maximale d'une ligne, sauf les BLOBs, est 65535. Changez le type de quelques colonnes en BLOB
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -60,7 +66,7 @@ Caused by: java.sql.SQLException: Ligne trop grande. Le taille maximale d'une li
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 23 common frames omitted
 
-2023-03-20 09:12:14.910  WARN 20972 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK59lvi67stxclu1qi7xcnyn2ck foreign key (adresse_apprenti_id) references adresse (id)" via JDBC Statement
+2023-03-31 11:39:47.920  WARN 14692 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK59lvi67stxclu1qi7xcnyn2ck foreign key (adresse_apprenti_id) references adresse (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK59lvi67stxclu1qi7xcnyn2ck foreign key (adresse_apprenti_id) references adresse (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -81,7 +87,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=17) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=1867) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -104,7 +110,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-03-20 09:12:14.912  WARN 20972 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK5uclvt6uc9e2qhro3p01ixive foreign key (adresse_employeur_id) references adresse (id)" via JDBC Statement
+2023-03-31 11:39:47.921  WARN 14692 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK5uclvt6uc9e2qhro3p01ixive foreign key (adresse_employeur_id) references adresse (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK5uclvt6uc9e2qhro3p01ixive foreign key (adresse_employeur_id) references adresse (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -125,7 +131,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=17) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=1867) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -148,7 +154,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-03-20 09:12:14.913  WARN 20972 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKfrq9kq7hd4an1ygahipo9nq8u foreign key (adresse_representant_id) references adresse (id)" via JDBC Statement
+2023-03-31 11:39:47.922  WARN 14692 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKfrq9kq7hd4an1ygahipo9nq8u foreign key (adresse_representant_id) references adresse (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKfrq9kq7hd4an1ygahipo9nq8u foreign key (adresse_representant_id) references adresse (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -169,7 +175,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=17) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=1867) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -192,7 +198,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-03-20 09:12:14.914  WARN 20972 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKt97kxbiftvvgjyn5ud5e5br4n foreign key (adresse_responsable_id) references adresse (id)" via JDBC Statement
+2023-03-31 11:39:47.923  WARN 14692 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKt97kxbiftvvgjyn5ud5e5br4n foreign key (adresse_responsable_id) references adresse (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKt97kxbiftvvgjyn5ud5e5br4n foreign key (adresse_responsable_id) references adresse (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -213,7 +219,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=17) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=1867) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -236,7 +242,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-03-20 09:12:14.915  WARN 20972 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKs69obwmyeupfu4nko8n98xjmg foreign key (etudiant_id) references etudiant (id)" via JDBC Statement
+2023-03-31 11:39:47.924  WARN 14692 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKs69obwmyeupfu4nko8n98xjmg foreign key (etudiant_id) references etudiant (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKs69obwmyeupfu4nko8n98xjmg foreign key (etudiant_id) references etudiant (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -257,7 +263,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=17) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=1867) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -280,7 +286,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-03-20 09:12:14.915  WARN 20972 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKlkgv2obeikkra8w1hbvibjua2 foreign key (remuneration1_id) references remuneration (id)" via JDBC Statement
+2023-03-31 11:39:47.925  WARN 14692 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKlkgv2obeikkra8w1hbvibjua2 foreign key (remuneration1_id) references remuneration (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKlkgv2obeikkra8w1hbvibjua2 foreign key (remuneration1_id) references remuneration (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -301,7 +307,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=17) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=1867) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -324,7 +330,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-03-20 09:12:14.916  WARN 20972 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKqdd8g2fpm2ipyk8q41ucifp5i foreign key (remuneration2_id) references remuneration (id)" via JDBC Statement
+2023-03-31 11:39:47.926  WARN 14692 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKqdd8g2fpm2ipyk8q41ucifp5i foreign key (remuneration2_id) references remuneration (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKqdd8g2fpm2ipyk8q41ucifp5i foreign key (remuneration2_id) references remuneration (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -345,7 +351,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=17) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=1867) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -368,7 +374,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-03-20 09:12:14.916  WARN 20972 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK3t58jqpuv3ga8ua2ojrbxaost foreign key (remuneration3_id) references remuneration (id)" via JDBC Statement
+2023-03-31 11:39:47.926  WARN 14692 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK3t58jqpuv3ga8ua2ojrbxaost foreign key (remuneration3_id) references remuneration (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK3t58jqpuv3ga8ua2ojrbxaost foreign key (remuneration3_id) references remuneration (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -389,7 +395,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=17) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=1867) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -412,7 +418,7 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-03-20 09:12:14.918  WARN 20972 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK8rbxne83rxwm1iekev9q2umu0 foreign key (remuneration4_id) references remuneration (id)" via JDBC Statement
+2023-03-31 11:39:47.927  WARN 14692 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK8rbxne83rxwm1iekev9q2umu0 foreign key (remuneration4_id) references remuneration (id)" via JDBC Statement
 
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK8rbxne83rxwm1iekev9q2umu0 foreign key (remuneration4_id) references remuneration (id)" via JDBC Statement
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
@@ -433,7 +439,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=17) La table 'cfa.cerfa' n'existe pas
+Caused by: java.sql.SQLSyntaxErrorException: (conn=1867) La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
 	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
 	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
@@ -456,502 +462,19 @@ Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
 	... 22 common frames omitted
 
-2023-03-20 09:12:15.308  INFO 20972 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-03-20 09:12:15.316  INFO 20972 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-03-20 09:12:15.418  INFO 20972 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
-2023-03-20 09:12:15.485  INFO 20972 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
-2023-03-20 09:12:15.485  INFO 20972 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-03-20 09:12:15.486  INFO 20972 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
-2023-03-20 09:12:15.509  INFO 20972 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2023-03-20 09:12:15.509  INFO 20972 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 86 ms
-2023-03-20 09:12:15.521  INFO 20972 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-2023-03-20 09:12:15.741  INFO 20972 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
-2023-03-20 09:12:15.742  INFO 20972 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
-2023-03-20 09:12:16.925  INFO 20972 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
-2023-03-20 09:12:16.938  INFO 20972 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
-2023-03-20 09:12:16.938  INFO 20972 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
-2023-03-20 09:12:16.947  INFO 20972 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 7.776 seconds (JVM running for 8.806)
-2023-03-20 09:12:18.411  INFO 20972 --- [RMI TCP Connection(4)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-03-20 09:12:18.412  INFO 20972 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-03-20 09:12:18.418  INFO 20972 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
-2023-03-20 09:16:23.784  INFO 20972 --- [RMI TCP Connection(9)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2023-03-20 09:16:24.313  INFO 20972 --- [RMI TCP Connection(9)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-03-20 09:16:24.315  INFO 20972 --- [RMI TCP Connection(9)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
-2023-03-20 09:16:24.316  INFO 20972 --- [RMI TCP Connection(9)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2023-03-20 09:16:24.323  INFO 20972 --- [RMI TCP Connection(9)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2023-03-20 09:16:26.562  INFO 5176 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7710-2VGQK72 with PID 5176 (C:\cfa-portal-api\cfa-portal-api\target\classes started by Admin Stagiaire in C:\cfa-portal-api\cfa-portal-api)
-2023-03-20 09:16:26.565  INFO 5176 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
-2023-03-20 09:16:27.789  INFO 5176 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
-2023-03-20 09:16:28.050  INFO 5176 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 253ms. Found 37 JPA repository interfaces.
-2023-03-20 09:16:28.586  INFO 5176 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
-2023-03-20 09:16:28.595  INFO 5176 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-03-20 09:16:28.595  INFO 5176 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
-2023-03-20 09:16:28.793  INFO 5176 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-03-20 09:16:28.793  INFO 5176 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2189 ms
-2023-03-20 09:16:29.065  INFO 5176 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2023-03-20 09:16:29.132  INFO 5176 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-03-20 09:16:29.188  INFO 5176 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
-2023-03-20 09:16:29.337  INFO 5176 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
-2023-03-20 09:16:29.459  INFO 5176 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-03-20 09:16:29.524  INFO 5176 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-03-20 09:16:29.547  INFO 5176 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
-2023-03-20 09:16:29.850  WARN 5176 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-03-20 09:16:31.209  WARN 5176 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "create table cerfa (id bigint not null auto_increment, version integer not null, assurance_chomage varchar(255), autre varchar(255), caisse_de_retraite varchar(255), cfa_entreprise varchar(255), cfa_responsable varchar(255), cfa_siret varchar(255), cfa_uai varchar(255), code_idcc_convention varchar(255), code_rncp varchar(255), commune_naissance varchar(255), complement_apprentit varchar(255), complement_employeur varchar(255), complement_representant varchar(255), complement_responsable varchar(255), contrat_num varchar(255), contrat_type varchar(255), convention_collective_applicable varchar(255), date_avenant date, date_conclusion date, date_de_naissance varchar(255), date_de_naissance_deuxieme_tuteur varchar(255), date_de_naissance_premier_tuteur varchar(255), date_debut_contrat date, date_debut_formation date, date_decision date, date_examen date, date_fin_contrat date, departement_naissance varchar(255), dernier_diplome varchar(255), derniere_classe_suivi varchar(255), derogation_type varchar(255), diplome_code varchar(255), diplome_le_plus_eleve_obtenu varchar(255), diplome_vise varchar(255), effectif_entreprise varchar(255), egilibilite_fonction varchar(255), email_apprenti varchar(255), email_employeur varchar(255), employeur_prive_ou_public varchar(255), employeur_specifique varchar(255), employeur_type varchar(255), faita varchar(255), formation_duree varchar(255), handicape varchar(255), heure_travail varchar(255), intitule_precis_dernier_diplome varchar(255), intitule_precis_diplome_vise varchar(255), logement varchar(255), machine_risque varchar(255), minute_travail varchar(255), mode_contractuel_apprentissage varchar(255), naf varchar(255), nationalite varchar(255), nir_apprenti varchar(255), nom_deuxieme_tuteur varchar(255), nom_employeur varchar(255), nom_naissance_apprenti varchar(255), nom_organisme varchar(255), nom_premier_tuteur varchar(255), nom_representant varchar(255), nourriture varchar(255), num_avenant varchar(255), num_depot varchar(255), prenom_apprenti varchar(255), prenom_deuxieme_tuteur varchar(255), prenom_employeur varchar(255), prenom_premier_tuteur varchar(255), prenom_representant varchar(255), reception_dossier date, regime_social varchar(255), salaire_brut varchar(255), sexe varchar(255), siret_etablissement varchar(255), siret_organisme varchar(255), situation_avant_contrat varchar(255), sportifs varchar(255), tel_apprenti varchar(255), tel_employeur varchar(255), validation_employeur varchar(255), adresse_apprenti_id bigint, adresse_employeur_id bigint, adresse_representant_id bigint, adresse_responsable_id bigint, etudiant_id bigint, remuneration1_id bigint, remuneration2_id bigint, remuneration3_id bigint, remuneration4_id bigint, primary key (id)) engine=InnoDB" via JDBC Statement
-
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table cerfa (id bigint not null auto_increment, version integer not null, assurance_chomage varchar(255), autre varchar(255), caisse_de_retraite varchar(255), cfa_entreprise varchar(255), cfa_responsable varchar(255), cfa_siret varchar(255), cfa_uai varchar(255), code_idcc_convention varchar(255), code_rncp varchar(255), commune_naissance varchar(255), complement_apprentit varchar(255), complement_employeur varchar(255), complement_representant varchar(255), complement_responsable varchar(255), contrat_num varchar(255), contrat_type varchar(255), convention_collective_applicable varchar(255), date_avenant date, date_conclusion date, date_de_naissance varchar(255), date_de_naissance_deuxieme_tuteur varchar(255), date_de_naissance_premier_tuteur varchar(255), date_debut_contrat date, date_debut_formation date, date_decision date, date_examen date, date_fin_contrat date, departement_naissance varchar(255), dernier_diplome varchar(255), derniere_classe_suivi varchar(255), derogation_type varchar(255), diplome_code varchar(255), diplome_le_plus_eleve_obtenu varchar(255), diplome_vise varchar(255), effectif_entreprise varchar(255), egilibilite_fonction varchar(255), email_apprenti varchar(255), email_employeur varchar(255), employeur_prive_ou_public varchar(255), employeur_specifique varchar(255), employeur_type varchar(255), faita varchar(255), formation_duree varchar(255), handicape varchar(255), heure_travail varchar(255), intitule_precis_dernier_diplome varchar(255), intitule_precis_diplome_vise varchar(255), logement varchar(255), machine_risque varchar(255), minute_travail varchar(255), mode_contractuel_apprentissage varchar(255), naf varchar(255), nationalite varchar(255), nir_apprenti varchar(255), nom_deuxieme_tuteur varchar(255), nom_employeur varchar(255), nom_naissance_apprenti varchar(255), nom_organisme varchar(255), nom_premier_tuteur varchar(255), nom_representant varchar(255), nourriture varchar(255), num_avenant varchar(255), num_depot varchar(255), prenom_apprenti varchar(255), prenom_deuxieme_tuteur varchar(255), prenom_employeur varchar(255), prenom_premier_tuteur varchar(255), prenom_representant varchar(255), reception_dossier date, regime_social varchar(255), salaire_brut varchar(255), sexe varchar(255), siret_etablissement varchar(255), siret_organisme varchar(255), situation_avant_contrat varchar(255), sportifs varchar(255), tel_apprenti varchar(255), tel_employeur varchar(255), validation_employeur varchar(255), adresse_apprenti_id bigint, adresse_employeur_id bigint, adresse_representant_id bigint, adresse_responsable_id bigint, etudiant_id bigint, remuneration1_id bigint, remuneration2_id bigint, remuneration3_id bigint, remuneration4_id bigint, primary key (id)) engine=InnoDB" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.createTable(AbstractSchemaMigrator.java:277)
-	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:71)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:207)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=37) Ligne trop grande. Le taille maximale d'une ligne, sauf les BLOBs, est 65535. Changez le type de quelques colonnes en BLOB
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
-	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:362)
-	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:499)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 18 common frames omitted
-Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: Ligne trop grande. Le taille maximale d'une ligne, sauf les BLOBs, est 65535. Changez le type de quelques colonnes en BLOB
-	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:356)
-	... 22 common frames omitted
-Caused by: java.sql.SQLException: Ligne trop grande. Le taille maximale d'une ligne, sauf les BLOBs, est 65535. Changez le type de quelques colonnes en BLOB
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1674)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1536)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1499)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
-	... 23 common frames omitted
-
-2023-03-20 09:16:31.290  WARN 5176 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK59lvi67stxclu1qi7xcnyn2ck foreign key (adresse_apprenti_id) references adresse (id)" via JDBC Statement
-
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK59lvi67stxclu1qi7xcnyn2ck foreign key (adresse_apprenti_id) references adresse (id)" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applyForeignKeys(AbstractSchemaMigrator.java:433)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:249)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=37) La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
-	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:362)
-	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:499)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 17 common frames omitted
-Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:356)
-	... 21 common frames omitted
-Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1674)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1536)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1499)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
-	... 22 common frames omitted
-
-2023-03-20 09:16:31.290  WARN 5176 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK5uclvt6uc9e2qhro3p01ixive foreign key (adresse_employeur_id) references adresse (id)" via JDBC Statement
-
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK5uclvt6uc9e2qhro3p01ixive foreign key (adresse_employeur_id) references adresse (id)" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applyForeignKeys(AbstractSchemaMigrator.java:433)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:249)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=37) La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
-	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:362)
-	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:499)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 17 common frames omitted
-Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:356)
-	... 21 common frames omitted
-Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1674)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1536)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1499)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
-	... 22 common frames omitted
-
-2023-03-20 09:16:31.293  WARN 5176 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKfrq9kq7hd4an1ygahipo9nq8u foreign key (adresse_representant_id) references adresse (id)" via JDBC Statement
-
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKfrq9kq7hd4an1ygahipo9nq8u foreign key (adresse_representant_id) references adresse (id)" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applyForeignKeys(AbstractSchemaMigrator.java:433)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:249)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=37) La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
-	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:362)
-	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:499)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 17 common frames omitted
-Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:356)
-	... 21 common frames omitted
-Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1674)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1536)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1499)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
-	... 22 common frames omitted
-
-2023-03-20 09:16:31.295  WARN 5176 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKt97kxbiftvvgjyn5ud5e5br4n foreign key (adresse_responsable_id) references adresse (id)" via JDBC Statement
-
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKt97kxbiftvvgjyn5ud5e5br4n foreign key (adresse_responsable_id) references adresse (id)" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applyForeignKeys(AbstractSchemaMigrator.java:433)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:249)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=37) La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
-	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:362)
-	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:499)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 17 common frames omitted
-Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:356)
-	... 21 common frames omitted
-Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1674)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1536)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1499)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
-	... 22 common frames omitted
-
-2023-03-20 09:16:31.296  WARN 5176 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKs69obwmyeupfu4nko8n98xjmg foreign key (etudiant_id) references etudiant (id)" via JDBC Statement
-
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKs69obwmyeupfu4nko8n98xjmg foreign key (etudiant_id) references etudiant (id)" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applyForeignKeys(AbstractSchemaMigrator.java:433)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:249)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=37) La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
-	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:362)
-	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:499)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 17 common frames omitted
-Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:356)
-	... 21 common frames omitted
-Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1674)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1536)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1499)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
-	... 22 common frames omitted
-
-2023-03-20 09:16:31.297  WARN 5176 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKlkgv2obeikkra8w1hbvibjua2 foreign key (remuneration1_id) references remuneration (id)" via JDBC Statement
-
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKlkgv2obeikkra8w1hbvibjua2 foreign key (remuneration1_id) references remuneration (id)" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applyForeignKeys(AbstractSchemaMigrator.java:433)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:249)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=37) La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
-	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:362)
-	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:499)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 17 common frames omitted
-Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:356)
-	... 21 common frames omitted
-Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1674)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1536)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1499)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
-	... 22 common frames omitted
-
-2023-03-20 09:16:31.298  WARN 5176 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FKqdd8g2fpm2ipyk8q41ucifp5i foreign key (remuneration2_id) references remuneration (id)" via JDBC Statement
-
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FKqdd8g2fpm2ipyk8q41ucifp5i foreign key (remuneration2_id) references remuneration (id)" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applyForeignKeys(AbstractSchemaMigrator.java:433)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:249)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=37) La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
-	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:362)
-	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:499)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 17 common frames omitted
-Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:356)
-	... 21 common frames omitted
-Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1674)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1536)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1499)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
-	... 22 common frames omitted
-
-2023-03-20 09:16:31.299  WARN 5176 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK3t58jqpuv3ga8ua2ojrbxaost foreign key (remuneration3_id) references remuneration (id)" via JDBC Statement
-
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK3t58jqpuv3ga8ua2ojrbxaost foreign key (remuneration3_id) references remuneration (id)" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applyForeignKeys(AbstractSchemaMigrator.java:433)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:249)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=37) La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
-	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:362)
-	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:499)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 17 common frames omitted
-Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:356)
-	... 21 common frames omitted
-Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1674)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1536)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1499)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
-	... 22 common frames omitted
-
-2023-03-20 09:16:31.300  WARN 5176 --- [task-1] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table cerfa add constraint FK8rbxne83rxwm1iekev9q2umu0 foreign key (remuneration4_id) references remuneration (id)" via JDBC Statement
-
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table cerfa add constraint FK8rbxne83rxwm1iekev9q2umu0 foreign key (remuneration4_id) references remuneration (id)" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applyForeignKeys(AbstractSchemaMigrator.java:433)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:249)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.sql.SQLSyntaxErrorException: (conn=37) La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
-	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
-	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:273)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:362)
-	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:499)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 17 common frames omitted
-Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
-	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:356)
-	... 21 common frames omitted
-Caused by: java.sql.SQLException: La table 'cfa.cerfa' n'existe pas
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1674)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1536)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1499)
-	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
-	... 22 common frames omitted
-
-2023-03-20 09:16:31.705  INFO 5176 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-03-20 09:16:31.716  INFO 5176 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-03-20 09:16:31.810  INFO 5176 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
-2023-03-20 09:16:31.885  INFO 5176 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
-2023-03-20 09:16:31.886  INFO 5176 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-03-20 09:16:31.887  INFO 5176 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
-2023-03-20 09:16:31.909  INFO 5176 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2023-03-20 09:16:31.909  INFO 5176 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 94 ms
-2023-03-20 09:16:31.923  INFO 5176 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-2023-03-20 09:16:32.168  INFO 5176 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
-2023-03-20 09:16:32.170  INFO 5176 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
-2023-03-20 09:16:33.455  INFO 5176 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
-2023-03-20 09:16:33.458  INFO 5176 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
-2023-03-20 09:16:33.458  INFO 5176 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
-2023-03-20 09:16:33.470  INFO 5176 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 7.203 seconds (JVM running for 8.237)
-2023-03-20 09:16:34.377  INFO 5176 --- [RMI TCP Connection(4)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-03-20 09:16:34.378  INFO 5176 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-03-20 09:16:34.390  INFO 5176 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 12 ms
+2023-03-31 11:39:48.322  INFO 14692 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-31 11:39:48.330  INFO 14692 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-31 11:39:48.425  INFO 14692 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2023-03-31 11:39:48.489  INFO 14692 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-03-31 11:39:48.490  INFO 14692 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-03-31 11:39:48.490  INFO 14692 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-03-31 11:39:48.510  INFO 14692 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-03-31 11:39:48.510  INFO 14692 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 83 ms
+2023-03-31 11:39:48.522  INFO 14692 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-03-31 11:39:48.755  INFO 14692 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-03-31 11:39:48.756  INFO 14692 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-03-31 11:39:50.032  INFO 14692 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-03-31 11:39:50.037  INFO 14692 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-03-31 11:39:50.038  INFO 14692 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-03-31 11:39:50.050  INFO 14692 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 7.345 seconds (JVM running for 8.35)
+2023-03-31 11:39:51.044  INFO 14692 --- [RMI TCP Connection(5)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'

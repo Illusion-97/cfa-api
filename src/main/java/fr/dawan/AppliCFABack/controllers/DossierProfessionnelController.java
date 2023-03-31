@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -22,14 +23,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.services.DossierProfessionnelService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.FilesService;
 
 @RestController
 @RequestMapping("/dossierProfessionnel")
@@ -39,6 +47,17 @@ public class DossierProfessionnelController {
 	DossierProfessionnelService dossierProService;
 	@Autowired
 	EtudiantService etudiantService;
+
+	@Value("${app.storagefolder}")
+	private String storageFolder;
+	
+	@Autowired
+	FilesService fileService;
+
+	@Autowired
+	private ObjectMapper objMap;
+
+
 
 	@GetMapping(produces = "application/json")
 	public List<DossierProfessionnelDto> getAll() {
@@ -119,9 +138,13 @@ public class DossierProfessionnelController {
 
 
 	
-	@PostMapping(value = "/save/etudiant/{id}", consumes = "application/json", produces = "application/json")
-	public DossierProEtudiantDto saveDossierProfessionnel(@RequestBody DossierProEtudiantDto dpDto, @PathVariable("id") long id) {
-		DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpDto, id);
+	@PostMapping(value = "/save/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
+	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id ,
+			@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
+		String path = storageFolder + "DossierProfessionnel" + "/";
+		 fileService.createDirectory(path);
+		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
+		DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
 		return dpE;
 	}
 
@@ -135,9 +158,13 @@ public class DossierProfessionnelController {
 		return dossierProService.getAllDossierProfessionnelByEtudiant(id);
 	}
 
-	@PutMapping(value = "/update/etudiant/{id}", consumes = "application/json", produces = "application/json")
-	public DossierProEtudiantDto updateDossierProfessionnel(@PathVariable("id") long id, @RequestBody DossierProEtudiantDto dpDto) {
-		return dossierProService.saveOrUpdateDossierProfessionnel(dpDto, id);
+	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
+	public DossierProEtudiantDto updateDossierProfessionnel(@PathVariable("id") long id, @RequestParam("dossierProfessionnel") String dpDto,
+			@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
+		 String path = storageFolder + "DossierProfessionnel" + "/";
+		 fileService.createDirectory(path);
+		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
+		return dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
 	}
 
 	@GetMapping(value="/dossier-professionnel/{etudiantId}/{promotionId}", produces="application/octet-stream")

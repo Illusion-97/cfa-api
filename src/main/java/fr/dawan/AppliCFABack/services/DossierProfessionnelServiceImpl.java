@@ -1,5 +1,9 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
@@ -72,6 +77,9 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Value("src/main/resources/files/bulletinsEvaluations")
     private String storageFolder;
+    
+    @Value("src/main/resources/files/")
+    private String storageFolder2;
     
     private static Logger logger = Logger.getGlobal();
 
@@ -202,45 +210,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         return null;
     }
 
-    @Override
-    public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id) {
-    	
-    	  // DossierProfessionnel dp = DtoTools.convert(dpDto, DossierProfessionnel.class);
-    	DossierProfessionnel dp = mapper.dossierProfessionnelDtoToDossierProfessionnel(dpDto);
-           assert dp != null;
-           
-           List<ExperienceProfessionnelle> exps = dp.getExperienceProfessionnelles();
-           for(ExperienceProfessionnelle exp : exps)
-           {
-               Optional<Etudiant> optEtudiant = etudiantRepository.findById(id);
-               exp.setDossierProfessionnel(dp);              
-               optEtudiant.ifPresent(exp::setEtudiant);
-           }
-
-           //on récupère la liste des diplômes facultatifs d'un dossier professionnel et on les met à jour (en n'oubliant pas de set les clés étrangères de la table diplome_facultatif)
-           List<Facultatif> facultatif = dp.getFacultatifs();
-           for(Facultatif f : facultatif) {
-               f.setDossierProfessionnel(dp);
-           }
-
-           //on récupère la liste des annexes d'un dossier professionnel et on les met à jour (en n'oubliant pas de set les clés étrangères de la table annexe)
-           List<Annexe> annexes = dp.getAnnexes();
-           for(Annexe annexe : annexes) {
-               annexe.setDossierProfessionnel(dp);
-           }
-
-           //on met à jour la clé étrangère etudiant de la table dossier_professionnel (dans le cas d'un save)
-           EtudiantDossierDto eDto = etudiantService.getByEtudiantIdForDossierPro(id);
-           Optional<Etudiant> etudiant = etudiantRepository.findById(id);
-           if(etudiant.isPresent()){
-                dp.setEtudiant(etudiant.get());
-           }
-           //on insert ou met à jour le dossier en question
-           dp = dossierProRepo.saveAndFlush(dp);
-
-           return DtoTools.convert(dp, DossierProEtudiantDto.class);
-    }
-    
+   
     @Override
     public List<DossierProEtudiantDto> getAllDossierProfessionnel() {
         List<DossierProfessionnel> lstDossierProfessionnel = dossierProRepo.findAllDossierPro();
@@ -428,5 +398,76 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         return eDto;
     }
 
+	
 
-}
+	@Override
+	public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id,List<MultipartFile> file) 
+	{
+		DossierProfessionnel dp = mapper.dossierProfessionnelDtoToDossierProfessionnel(dpDto);
+        assert dp != null;
+        
+    
+        List<ExperienceProfessionnelle> exps = dp.getExperienceProfessionnelles();
+        for(ExperienceProfessionnelle exp : exps)
+        {
+            Optional<Etudiant> optEtudiant = etudiantRepository.findById(id);
+            exp.setDossierProfessionnel(dp);              
+            optEtudiant.ifPresent(exp::setEtudiant);
+        }
+
+        //on récupère la liste des diplômes facultatifs d'un dossier professionnel et on les met à jour (en n'oubliant pas de set les clés étrangères de la table diplome_facultatif)
+        List<Facultatif> facultatif = dp.getFacultatifs();
+        for(Facultatif f : facultatif) {
+            f.setDossierProfessionnel(dp);
+        }
+
+        //on récupère la liste des annexes d'un dossier professionnel et on les met à jour (en n'oubliant pas de set les clés étrangères de la table annexe)
+        String path = storageFolder2 + "DossierProfessionnel" + "/";
+        List<Annexe> annexes = dp.getAnnexes();
+        int i = 0;
+        for(MultipartFile fil : file) {
+            String pathFile = path + fil.getOriginalFilename();
+            File newAnnexe = new File(pathFile);
+            Annexe annex = annexes.get(i++);
+            annex.setPieceJointe(pathFile);
+            
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))){
+                try 
+                {
+                    bos.write(fil.getBytes());
+                }
+                catch (IOException e) 
+                {
+                    e.printStackTrace();
+                }
+            } 
+            catch (FileNotFoundException e1)
+            {
+                e1.printStackTrace();
+            } 
+            catch (IOException e1) 
+            {
+                e1.printStackTrace();
+            }
+        }
+         
+        for(Annexe annexe : annexes) {
+            annexe.setDossierProfessionnel(dp);
+        }
+
+        //on met à jour la clé étrangère etudiant de la table dossier_professionnel (dans le cas d'un save)
+        EtudiantDossierDto eDto = etudiantService.getByEtudiantIdForDossierPro(id);
+        Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+        if(etudiant.isPresent()){
+             dp.setEtudiant(etudiant.get());
+        }
+        //on insert ou met à jour le dossier en question
+        dp = dossierProRepo.saveAndFlush(dp);
+
+        return DtoTools.convert(dp, DossierProEtudiantDto.class);
+		
+		
+	}
+
+	}
+
