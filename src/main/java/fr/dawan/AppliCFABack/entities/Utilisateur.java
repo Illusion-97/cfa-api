@@ -262,6 +262,11 @@ public class Utilisateur extends BaseEntity implements Serializable {
 		this.signature = signature;
 	}
 	
+	public String getFullName() {
+		
+		return getNom() + " " + getPrenom();
+	}
+	
 	
 
 	@Override
@@ -317,6 +322,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 				+ ", formateur=" + formateur + ", cef=" + cef 
 				+ "version=" + this.getVersion()+ "]";
 	}
+
 	
 	
 }

@@ -15,7 +15,7 @@ public class GrillePositionnementDto {
 
 	private String module;
 
-	private List<String> formateurs;
+	private String formateur;
 
 	private String objectifPedagogiques;
 
@@ -69,16 +69,16 @@ public class GrillePositionnementDto {
 	/**
 	 * @return le formateurs
 	 */
-	public List<String> getFormateurs() {
-		return formateurs;
+	public String getFormateur() {
+		return formateur;
 	}
 
 	/**
 	 * @param formateurs le formateurs à affecter
 	 
 	 */
-	public void setFormateurs(List<String> formateurs) {
-		this.formateurs = formateurs;
+	public void setFormateur(String formateur) {
+		this.formateur = formateur;
 	}
 
 	/**

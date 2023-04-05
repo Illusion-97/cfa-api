@@ -543,10 +543,7 @@ public class PromotionServiceImpl implements PromotionService {
 				gpd.setModule("Pas de Formation");
 			}
 			gpd.setObjectifPedagogiques("A définir");
-			List<String> formateursNomPrenom = i.getFormateurs().stream().map(
-					fr -> fr.getUtilisateur().getNom() + " " + fr.getUtilisateur().getPrenom()
-					).collect(Collectors.toList());
-			gpd.setFormateurs(formateursNomPrenom);
+			gpd.setFormateur(i.getFormateur().getUtilisateur().getFullName());
 			Map<String, Positionnement> etudiantsPositionnement = new HashMap<>();
 			List<Positionnement> positionnements =  positionnementRepository.getAllByInterventionId(i.getId());
 			

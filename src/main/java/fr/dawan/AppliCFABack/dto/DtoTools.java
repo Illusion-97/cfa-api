@@ -146,7 +146,7 @@ public class DtoTools {
         cDto.setDateDebut(p.getDateDebut());
         cDto.setDateFin(p.getDateFin());
         cDto.setPlanningsEtudiantDto(p.getInterventions().stream().map(i -> {
-            Utilisateur u = i.getFormateurs().get(0).getUtilisateur();
+            Utilisateur u = i.getFormateur().getUtilisateur();
             String identity = u.getPrenom() + " " + u.getNom();
             return new PlanningEtudiantDto(i.getDateDebut(), i.getDateFin(), i.getFormation().getTitre(), identity);
         }).collect(Collectors.toList()));
@@ -266,7 +266,7 @@ public class DtoTools {
         a.setMembreEtudiantDtos(e.getGroupes().stream().map(groupeEtudiant -> groupeEtudiant.getEtudiants().stream().map(etudiant -> new MembreEtudiantDto(etudiant.getUtilisateur().getNom(), etudiant.getUtilisateur().getPrenom(), etudiant.getUtilisateur().getRoles().stream().map(UtilisateurRole::getIntitule)))));
         a.setProchainCours(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
                 (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getInterventions).findAny().orElse(null)).stream().map(intervention -> {
-            Utilisateur u = intervention.getFormateurs().get(0).getUtilisateur();
+            Utilisateur u = intervention.getFormateur().getUtilisateur();
             String identity = u.getPrenom() + " " + u.getNom();
             return new PlanningEtudiantDto(intervention.getDateDebut(), intervention.getDateFin(), intervention.getFormation().getTitre(), identity);
         }).collect(Collectors.toList()).stream().filter(planningEtudiantDto ->

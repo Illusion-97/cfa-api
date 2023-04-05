@@ -66,7 +66,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-29T17:29:42+0200",
+    date = "2023-04-04T15:56:04+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -288,17 +288,17 @@ public class DtoMapperImpl implements DtoMapper {
 
         formationDto.setId( formation.getId() );
         formationDto.setVersion( formation.getVersion() );
+        formationDto.setTitre( formation.getTitre() );
         List<Long> list = formation.getCursusLstId();
         if ( list != null ) {
             formationDto.setCursusLstId( new ArrayList<Long>( list ) );
         }
-        formationDto.setDuration( formation.getDuration() );
         formationDto.setIdDg2( formation.getIdDg2() );
-        formationDto.setObjectif( formation.getObjectif() );
-        formationDto.setPlan( formation.getPlan() );
-        formationDto.setPrerequis( formation.getPrerequis() );
         formationDto.setSlug( formation.getSlug() );
-        formationDto.setTitre( formation.getTitre() );
+        formationDto.setDuration( formation.getDuration() );
+        formationDto.setObjectif( formation.getObjectif() );
+        formationDto.setPrerequis( formation.getPrerequis() );
+        formationDto.setPlan( formation.getPlan() );
 
         return formationDto;
     }
@@ -395,10 +395,10 @@ public class DtoMapperImpl implements DtoMapper {
         promotionDto.setCursusDto( cursusToCursusDto( promotion.getCursus() ) );
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
+        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
         promotionDto.setIdDg2( promotion.getIdDg2() );
-        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }

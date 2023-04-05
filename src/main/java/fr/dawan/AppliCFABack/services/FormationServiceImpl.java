@@ -76,11 +76,11 @@ public class FormationServiceImpl implements FormationService {
 
 		List<FormationDto> lstDto = new ArrayList<>();
 		for (Formation f : lst) {
-			FormationDto formationDto = DtoTools.convert(f,FormationDto.class);
+			FormationDto formationDto = DtoTools.convert(f, FormationDto.class);
 			List<Intervention> interventions = interventionRepository.findAllByFormationId(f.getId());
 			List<InterventionDto> interventionDtos = new ArrayList<>();
 			if (interventions != null) {
-				
+
 				for (Intervention i : interventions) {
 					interventionDtos.add(DtoTools.convert(i, InterventionDto.class));
 				}
@@ -113,11 +113,11 @@ public class FormationServiceImpl implements FormationService {
 
 		List<FormationDto> lstDto = new ArrayList<>();
 		for (Formation f : lst) {
-			FormationDto formationDto = DtoTools.convert(f,FormationDto.class);
+			FormationDto formationDto = DtoTools.convert(f, FormationDto.class);
 			List<Intervention> interventions = interventionRepository.findAllByFormationId(f.getId());
 			List<InterventionDto> interventionDtos = new ArrayList<>();
 			if (interventions != null) {
-				
+
 				for (Intervention i : interventions) {
 					interventionDtos.add(DtoTools.convert(i, InterventionDto.class));
 				}
@@ -180,7 +180,7 @@ public class FormationServiceImpl implements FormationService {
 		formation = formationRepository.saveAndFlush(formation);
 
 		return DtoTools.convert(formation, FormationDto.class);
-		
+
 	}
 
 	/**
@@ -224,12 +224,12 @@ public class FormationServiceImpl implements FormationService {
 	 * @param email    Email l'utilsateur dg2
 	 * @param password Mot de passe de l'utlisateur dg2
 	 * @return nombre de formation sauvgardé ou mise à jour
-	 * @throws URISyntaxException 
+	 * @throws URISyntaxException
 	 * @exception Exception retourne une exception, si erreur dans la sauvgarde des
 	 *                      formations
 	 */
 	@Override
-	public int fetchDG2Formations(String email, String password) throws FetchDG2Exception, URISyntaxException{
+	public int fetchDG2Formations(String email, String password) throws FetchDG2Exception, URISyntaxException {
 		List<Long> cursusDg2Ids = cursusRepository.findAll().stream().map(Cursus::getIdDg2)
 				.collect(Collectors.toList());
 		int result = 0;
@@ -248,11 +248,12 @@ public class FormationServiceImpl implements FormationService {
 	 * @param password    Mot de passe de l'utlisateur dg2
 	 * @param idCursusDg2 Identifiant du cursus
 	 * @return nombre de formation sauvgardé ou mise à jour
-	 * @throws URISyntaxException 
-	 * @throws Exception 
+	 * @throws URISyntaxException
+	 * @throws Exception
 	 */
 	@Override
-	public int fetchDG2Formations(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
+	public int fetchDG2Formations(String email, String password, long idCursusDg2)
+			throws FetchDG2Exception, URISyntaxException {
 
 		List<Formation> formations = new ArrayList<>();
 
@@ -274,39 +275,115 @@ public class FormationServiceImpl implements FormationService {
 	 * @param email    Email l'utilsateur dg2
 	 * @param password Mot de passe de l'utlisateur dg2
 	 * @return Liste de formation à partir de DG2
-	 * @throws URISyntaxException 
+	 * @throws URISyntaxException
 	 * @exception Exception retourne une exception, si erreur dans la récupération
 	 *                      des formations
 	 */
-	
+
+//	@Override
+//	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
+//
+//	    Optional<Cursus> cursusDb = cursusRepository.findByIdDg2(idCursusDg2);
+//	    logger.info(">>>>>>>crusus>>>>>" + cursusDb.get().getIdDg2());
+//	    logger.info("FetchDg2Formation >>> START");
+//	    if (!cursusDb.isPresent()) {
+//	        logger.error("FetchDg2Formation>>>>>>>>ERROR failed Pas de cursus");
+//	        throw new FetchDG2Exception("Cursus non présent dans la BDD veuiller mettre à jour les cursus");
+//	    }
+//
+//	    List<Formation> result = new ArrayList<>();
+//
+//	    List<FormationDG2Dto> fetchResJson = new ArrayList<>();
+//
+//	    // Récupérer la liste formation DG2
+//	    ObjectMapper objectMapper = new ObjectMapper();
+//	    objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+//
+//	    // Ma requête
+//	    URI url = new URI("https://dawan.org/api2/cfa/pro-titles/" + idCursusDg2 + "/children");
+//
+//	    HttpHeaders headers = new HttpHeaders();
+//	    headers.add("x-auth-token", email + ":" + password);
+//	    HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+//	    ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+//
+//	    // si statusCode OK
+//	    if (rep.getStatusCode() == HttpStatus.OK) {
+//	        String json = rep.getBody();
+//
+//	        try {
+//	            fetchResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() {
+//	            });
+//	        } catch (Exception e) {
+//	            logger.warn("objectMapper failed", e);
+//	        }
+//	    }
+//
+//	    DtoTools dtoTools = new DtoTools();
+//	    // Comparer formationsDG2 & formationsDB
+//	    for (FormationDG2Dto fDtoDG2 : fetchResJson) {
+//
+//	        // chercher en BDD <Optional> findByIdDg2
+//	        Optional<Formation> formationDb = formationRepository.findByIdDg2(fDtoDG2.getId());
+//
+//	        Formation formationImported = null;
+//
+//	        try {
+//	            formationImported = dtoTools.formationDG2DtoToFormation(fDtoDG2);
+//	        } catch (Exception e) {
+//	            logger.warn("mapper failed", e);
+//	        }
+//
+//	        // Si !isPresent() alors ajout
+//	        if (!formationDb.isPresent()) {
+//
+//	            List<Cursus> newCursusDb = new ArrayList<>();
+//	            newCursusDb.add(cursusDb.get());
+//	            formationImported.setCursusLst(newCursusDb);
+//	            result.add(formationImported);
+//
+//	        } else {
+//	            // Si != modif
+//	            List<Cursus> cursus = formationDb.get().getCursusLst();
+//	            formationImported.setCursusLst(cursus);
+//	            // Si la liste ne contient pas le cursus en cours on le rajoute
+//	            if (!formationImported.getCursusLst().contains(cursusDb.get())) {
+//	                cursus.add(cursusDb.get());
+//	                formationImported.setCursusLst(cursus);
+//	            }
+//	            if (!formationDb.get().equals(formationImported)) {
+//	                formationImported.setVersion(formationDb.get().getVersion());
+//	                formationImported.setId(formationDb.get().getId());
+//	                result.add(formationImported);
+//	            }
+//	        }
+//	        logger.info("formationImported >>> " + formationImported.getIdDg2());
+//	    }
+//	    
+//	    return result;
+//	}
+
 	@Override
-	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
+	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2)
+			throws FetchDG2Exception, URISyntaxException {
 
 		Optional<Cursus> cursusDb = cursusRepository.findByIdDg2(idCursusDg2);
-		logger.info(">>>>>>>crusus>>>>>" + cursusDb.get().getIdDg2());
-		logger.info("FetchDg2Formation >>> START");
 		if (!cursusDb.isPresent()) {
-			logger.error("FetchDg2Formation>>>>>>>>ERROR failed Pas de cursus");
-			throw new FetchDG2Exception("Cursus non présent dans la BDD veuiller mettre à jour les cursus");
+			throw new FetchDG2Exception("Cursus non présent dans la BDD veuillez mettre à jour les cursus");
 		}
 
 		List<Formation> result = new ArrayList<>();
-
 		List<FormationDG2Dto> fetchResJson = new ArrayList<>();
 
-		// Récupérer la liste formation DG2
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 
-		// Ma requête
 		URI url = new URI("https://dawan.org/api2/cfa/pro-titles/" + idCursusDg2 + "/children");
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
 
-		// si statusCode OK
 		if (rep.getStatusCode() == HttpStatus.OK) {
 			String json = rep.getBody();
 
@@ -319,12 +396,10 @@ public class FormationServiceImpl implements FormationService {
 		}
 
 		DtoTools dtoTools = new DtoTools();
-		// Comparer formationsDG2 & formationsDB
-		for (FormationDG2Dto fDtoDG2 : fetchResJson) {
-			
-			// chercher en BDD <Optional> findByIdDg2
-			Optional<Formation> formationDb = formationRepository.findByIdDg2(fDtoDG2.getId());
 
+		for (FormationDG2Dto fDtoDG2 : fetchResJson) {
+
+			Optional<Formation> formationDb = formationRepository.findByIdDg2(fDtoDG2.getId());
 			Formation formationImported = new Formation();
 
 			try {
@@ -333,120 +408,19 @@ public class FormationServiceImpl implements FormationService {
 				logger.warn("mapper failed", e);
 			}
 
-			// Si !isPresent() alors ajout
-			if (!formationDb.isPresent()) {
+			if (formationDb.isPresent()) {
+				if (formationDb.get().equals(formationImported)) {
+					continue;
+				}
 
-				List<Cursus> newCursusDb = new ArrayList<>();
-				newCursusDb.add(cursusDb.get());
-				formationImported.setCursusLst(newCursusDb);
-				result.add(formationImported);
-				
-			} else {
-				// Si != modif
-				List<Cursus> cursus = formationDb.get().getCursusLst();
-				formationImported.setCursusLst(cursus);
-				// Si la liste ne contient pas le cursus en cours on le rajoute
-				if (!formationImported.getCursusLst().contains(cursusDb.get())) {
-					cursus.add(cursusDb.get());
-					formationImported.setCursusLst(cursus);
-				}
-				if (!formationDb.get().equals(formationImported)) {
-					formationImported.setVersion(formationDb.get().getVersion());
-					formationImported.setId(formationDb.get().getId());
-					result.add(formationImported);
-				}
+				formationImported.setId(formationDb.get().getId());
+				formationImported.setVersion(formationDb.get().getVersion());
 			}
-			logger.info("formationImported >>> " + formationImported.getIdDg2());
+			formationRepository.saveAndFlush(formationImported);
+			logger.info("formationImported" + formationImported);
 		}
 
 		return result;
-
 	}
-	
-	
-//	@Override
-//	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
-//
-//		Optional<Cursus> cursusOpt = cursusRepository.findByIdDg2(idCursusDg2);
-//		logger.info(">>>>>>>crusus>>>>>" + cursusOpt.get().getIdDg2());
-//		logger.info("FetchDg2Formation >>> START");
-//		if (!cursusOpt.isPresent()) {
-//			logger.error("FetchDg2Formation>>>>>>>>ERROR failed Pas de cursus");
-//			throw new FetchDG2Exception("Cursus non présent dans la BDD veuiller mettre à jour les cursus");
-//		}
-//
-//		List<Formation> result = new ArrayList<>();
-//
-//		List<FormationDG2Dto> fetchResJson = new ArrayList<>();
-//
-//		// Récupérer la liste formation DG2
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-//
-//		// Ma requête
-//		URI url = new URI("https://dawan.org/api2/cfa/pro-titles/" + idCursusDg2 + "/children");
-//
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("x-auth-token", email + ":" + password);
-//		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-//		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-//
-//		// si statusCode OK
-//		if (rep.getStatusCode() == HttpStatus.OK) {
-//			String json = rep.getBody();
-//
-//			try {
-//				fetchResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() {
-//				});
-//			} catch (Exception e) {
-//				logger.warn("json formation dg2 failed", e);
-//			}
-//		}
-//
-//		DtoTools dtoTools = new DtoTools();
-//		
-//		if(!fetchResJson.isEmpty()) {
-//			
-//			for(FormationDG2Dto fDtoDg2 : fetchResJson) {
-//				logger.info("FetchDg2Formation >>> START /for" + fDtoDg2.getId());
-//				
-//				Formation formationImported = dtoTools.formationDG2DtoToFormation(fDtoDg2);
-//				
-//				Optional<Formation> optFormation = formationRepository.findByIdDg2(fDtoDg2.getId());
-//				
-//				List<Cursus> lstCursus = optFormation.get().getCursusLst();
-//				
-//				if(!optFormation.isPresent()) {
-//					
-//					lstCursus.add(cursusOpt.get());
-//					formationImported.setCursusLst(lstCursus);
-//					result.add(formationImported);
-//				}
-//				else {
-//					
-//					formationImported.setCursusLst(lstCursus);
-//					// Si la liste ne contient pas le cursus en cours on le rajoute
-//					if (!formationImported.getCursusLst().contains(cursusOpt.get())) {
-//						lstCursus.add(cursusOpt.get());
-//						formationImported.setCursusLst(lstCursus);
-//					}
-//					if (!optFormation.get().equals(formationImported)) {
-//						formationImported.setVersion(optFormation.get().getVersion());
-//						formationImported.setId(optFormation.get().getId());
-//						result.add(formationImported);
-//					}
-//
-//
-//				}
-//				
-//				//List<Cursus> lstCursus = cursusRepository.findByIdDg2(fDtoDg2.);
-//				
-//				logger.info("formationImported >>> " + formationImported);
-//			}
-//		}
-//
-//		return result;
-//
-//	}
 
 }
