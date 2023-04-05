@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
-import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
@@ -39,19 +38,16 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 		while(compteur.compareTo(i.getDateFin()) <= 0) {
 			if(estJoursOuvrable(compteur)) {
 				
-				List<FormateurDto> formateurs = new ArrayList<>();
 								
-				for(Formateur f : i.getFormateurs()) {
-					FormateurDto formDto = mapper.formateurToFormateurDto(f);
-					formDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(f.getUtilisateur()));
-					formateurs.add(formDto);
-				}
+				FormateurDto formDto = mapper.formateurToFormateurDto(i.getFormateur());
+				formDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(i.getFormateur().getUtilisateur()));
+				FormateurDto formateur = formDto;
 				
 				Formation f = i.getFormation();
 				
 				FormationDto fDto = mapper.formationToFormationDto(f);
 				
-				JourneePlanningDto journee = new JourneePlanningDto(compteur, fDto, formateurs);
+				JourneePlanningDto journee = new JourneePlanningDto(compteur, fDto, formateur);
 				journee.setIdIntervention(i.getId());
                 
 				result.add(journee);

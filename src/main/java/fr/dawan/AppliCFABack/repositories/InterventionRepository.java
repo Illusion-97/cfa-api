@@ -27,21 +27,28 @@ public interface InterventionRepository extends JpaRepository<Intervention, Long
 	@Query("SELECT i FROM Intervention i JOIN i.promotions promotion WHERE promotion.id=:id ")
 	List<Intervention> getInterventionsByIdPromotion(@Param("id") long id);
 
-	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++ **/
-	Page<Intervention> findAllByFormateursId(long id, Pageable p); // Interventions du formateur
-	List<Intervention> findAllByFormateursId(long id); // Interventions du formateur
-
 	// Interventions du formateur + recherche par mot clé
-	Page<Intervention> findByFormateursIdAndFormationTitreContainingAllIgnoreCase(long id, String titre, Pageable p);
+	@Query("SELECT i FROM Intervention i JOIN i.formateur f JOIN i.formation fo WHERE f.id = :id AND LOWER(fo.titre) LIKE CONCAT('%', LOWER(:titre), '%')")
+	Page<Intervention> findByFormateurIdAndFormationTitreContainingAllIgnoreCase(long id, String titre, Pageable p);
 
-	long countByFormateursIdAndFormationTitreAllIgnoreCase(long id, String search);
+	@Query("FROM Intervention i LEFT JOIN FETCH Formateur f LEFT JOIN FETCH Formation fo WHERE f.id=:id AND fo.titre=:search")
+	long countByFormateurIdAndFormationTitreAllIgnoreCase(long id, String search);
 
-	long countByFormateursId(long id);
+	@Query("FROM Intervention i LEFT JOIN FETCH Formateur f WHERE f.id=:id")
+	long countByFormateurId(long id);
 
 	/** ++++++++++++++ INTERVENTION FORMATION ++++++++++++++ **/
 	List<Intervention> findAllByFormationId(long id);
 
 	Optional<Intervention> findByIdDg2(long id);
-	@Query("SELECT i FROM Intervention i JOIN i.formateurs f WHERE f.id =:id And i.dateDebut =:dateDebut And i.dateFin =:dateFin")
+	
+	@Query("SELECT i FROM Intervention i LEFT JOIN FETCH Formateur f WHERE f.id =:id And i.dateDebut =:dateDebut And i.dateFin =:dateFin")
 	Optional<Intervention> findInterventionBydateFormationAndFormateur(LocalDate dateDebut, LocalDate dateFin, long id);
+
+	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++ **/
+	@Query("SELECT i FROM Intervention i JOIN i.formateur f WHERE f.id =:id")
+	Page<Intervention> findAllByFormateurId(long id, Pageable p);
+	
+	@Query("SELECT i FROM Intervention i JOIN i.formateur f WHERE f.id =:id")
+	List<Intervention> findAllByFormateurId(long id);
 }

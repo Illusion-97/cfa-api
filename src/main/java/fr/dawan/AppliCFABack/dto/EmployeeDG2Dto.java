@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 /**
  * 
  * @author  Feres BG.
@@ -8,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @since 1.0
  * @version 1.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EmployeeDG2Dto {
 
 	@JsonIgnore

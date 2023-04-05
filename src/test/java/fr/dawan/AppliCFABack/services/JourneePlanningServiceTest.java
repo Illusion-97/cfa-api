@@ -60,14 +60,11 @@ class JourneePlanningServiceTest {
 //		formation2.setContenu("formation 2 contenu");
 		formation2.setTitre("formation 2 titre");
 		
-		List<Formateur> formateurs = new ArrayList<Formateur>();
-		formateurs.add(formateur1);
-		formateurs.add(formateur2);
 		
-		intervention1.setFormateurs(formateurs);
+		intervention1.setFormateur(formateur1);
 		intervention1.setFormation(formation1);
 		
-		intervention2.setFormateurs(formateurs);
+		intervention2.setFormateur(formateur2);
 		intervention2.setFormation(formation2);
 		
 		List<JourneePlanningDto> result = new ArrayList<JourneePlanningDto>();
@@ -83,14 +80,14 @@ class JourneePlanningServiceTest {
 		
 		//Journee 0
 		assertEquals(LocalDate.of(2021, 4, 1), result.get(0).getDate());
-		assertEquals("formateur 1 nom", result.get(0).getFormateurDto().get(0).getUtilisateurDto().getNom());
-		assertEquals("formateur 2 nom", result.get(0).getFormateurDto().get(1).getUtilisateurDto().getNom());
+		assertEquals("formateur 1 nom", result.get(0).getFormateurDto().getUtilisateurDto().getNom());
+		assertEquals("formateur 2 nom", result.get(0).getFormateurDto().getUtilisateurDto().getNom());
 		assertEquals("formation 1 titre", result.get(0).getFormationDto().getTitre());
 		
 		//Journee 4
 		assertEquals(LocalDate.of(2021, 11, 2), result.get(4).getDate());
-		assertEquals("formateur 1 nom", result.get(4).getFormateurDto().get(0).getUtilisateurDto().getNom());
-		assertEquals("formateur 2 nom", result.get(4).getFormateurDto().get(1).getUtilisateurDto().getNom());
+		assertEquals("formateur 1 nom", result.get(4).getFormateurDto().getUtilisateurDto().getNom());
+		assertEquals("formateur 2 nom", result.get(4).getFormateurDto().getUtilisateurDto().getNom());
 		assertEquals("formation 2 titre", result.get(4).getFormationDto().getTitre());
 		
 		for(JourneePlanningDto j : result) {
