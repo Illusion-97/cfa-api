@@ -3,11 +3,13 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class AnnexeDto extends BaseEntityDto implements Serializable {
 
     private String libelle;
 
-    private String pieceJointe;
+    private MultipartFile pieceJointe;
 
     private long dossierProfessionnelId;
 
@@ -19,11 +21,11 @@ public class AnnexeDto extends BaseEntityDto implements Serializable {
         this.libelle = libelle;
     }
 
-    public String getPieceJointe() {
+    public MultipartFile getPieceJointe() {
         return pieceJointe;
     }
 
-    public void setPieceJointe(String pieceJointe) {
+    public void setPieceJointe(MultipartFile pieceJointe) {
         this.pieceJointe = pieceJointe;
     }
 

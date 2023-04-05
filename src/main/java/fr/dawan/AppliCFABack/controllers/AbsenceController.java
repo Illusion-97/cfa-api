@@ -13,25 +13,23 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.services.AbsenceService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FileService;
+import fr.dawan.AppliCFABack.services.FilesService;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 /**
@@ -62,6 +60,9 @@ public class AbsenceController extends GenericController<AbsenceDto> {
 	
 	@Autowired
 	FileService fileSevice; 
+	
+	@Autowired
+	FilesService filesService;
 	
 	private static Logger logger = Logger.getGlobal();
 	
@@ -115,7 +116,7 @@ public class AbsenceController extends GenericController<AbsenceDto> {
 	
 	@PutMapping(consumes="multipart/form-data", produces="application/json")
 	public AbsenceDto update(@RequestParam("absence") String absStr, 
-			@RequestPart("fileJustificatif") MultipartFile file) throws SaveInvalidException, IOException{
+			@RequestParam("fileJustificatif") MultipartFile file) throws SaveInvalidException, IOException{
 		
 		
 		//A changer : bien rentrer le nom du fichier
@@ -129,6 +130,22 @@ public class AbsenceController extends GenericController<AbsenceDto> {
 		return ((AbsenceService) service).saveOrUpdate(absDto);
 	}
 
+	
+	@PostMapping(value="/envoi-justificatif" ,consumes="multipart/form-data", produces="application/json")
+	public AbsenceDto postAbsence(@RequestParam(name = "absence") String absStr, 
+			@RequestParam("fileJustificatif") MultipartFile file) throws SaveInvalidException, IOException{
+		
+		//A changer : bien rentrer le nom du fichier
+		String pathJustificatif = storageFolder + "/justificatifAbsenceEtudiant/" + file.getOriginalFilename();
+		File f = new File(pathJustificatif);
+		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f));
+		bos.write(file.getBytes());
+		bos.close();
+				
+		AbsenceDto absDto = objectMapper.readValue(absStr, AbsenceDto.class);
+		absDto.setJustificatif(pathJustificatif);		
+		return ((AbsenceService) service).saveOrUpdate(absDto);
+	}
 	
 
 	// ##################################################

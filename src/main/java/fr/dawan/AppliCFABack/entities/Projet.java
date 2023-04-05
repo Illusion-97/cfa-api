@@ -19,6 +19,7 @@ public class Projet extends BaseEntity implements Serializable {
 	@ManyToOne
 	private GroupeEtudiant groupe;
 
+	
 
 	public Projet() {
 		super();

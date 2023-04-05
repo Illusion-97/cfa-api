@@ -1,22 +1,57 @@
 package fr.dawan.AppliCFABack.services;
 
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+
+import com.univocity.parsers.annotations.Convert;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
+import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
+import fr.dawan.AppliCFABack.entities.ContenuDossierProjet;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.InfoDossierProjet;
+import fr.dawan.AppliCFABack.entities.Projet;
+import fr.dawan.AppliCFABack.entities.ResumeDossierProjet;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.ProjetRepository;
+import fr.dawan.AppliCFABack.tools.DossierProjetException;
+import fr.dawan.AppliCFABack.tools.LivretEvaluationException;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.core.ParseException;
+import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 @Service
 @Transactional
@@ -26,10 +61,28 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	DossierProjetRepository dossierProRepo;
 	
 	@Autowired
+    EtudiantRepository etudiantRepository;
+	
+	@Autowired
 	EtudiantService etudiantService;
 
 	@Autowired
+	private ProjetRepository projetRepository;
+	
+	@Value("${app.storagefolder}")
+	private String storageFolder;
+	
+	@Value("${backend.url}")
+	private String backendUrl;
+	
+	@Autowired
+	private Configuration freemarkerConfig; 
+	
+	private static Logger logger = Logger.getGlobal();
+	
+	@Autowired
 	private DtoMapper mapper;
+
 
 	/**
 	 * Récupération de la liste des dossiers projets
@@ -57,11 +110,10 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 */
 	
 	@Override
-	public DossierProjetDto getById(long id) {
+	public DossierProjetEtudiantDto getById(long id) {
 		Optional<DossierProjet> dp = dossierProRepo.findById(id);
 		if(dp.isPresent()) {
-			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp.get());
-			dpDto.setProjet(mapper.projetToProjetDto(dp.get().getProjet()));
+			DossierProjetEtudiantDto dpDto = mapper.dossierProjetToDossierProjetEtudiantDto(dp.get());
 			return dpDto;
 		}
 		return null;
@@ -145,8 +197,114 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	
 	@Override
 	public List<DossierProjetDto> getByIdEtudiant(long id) {
-		EtudiantDto e = etudiantService.getById(id);
-		return e.getDossierProjet();
+	    Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+	    List<DossierProjetDto> dossierProjetDtoList = new ArrayList<>();
+	        Etudiant e = etudiant.get();
+	        List<DossierProjet> dossierProjetList = e.getDossierProjet();
+            //DossierProjetDto dossierProjetDto = DtoTools.convert(dossierProjetList, DossierProjetDto.class);
+	        for (DossierProjet dp : dossierProjetList) {
+
+	            DossierProjetDto dossierProjetDto = mapper.dossierProjetToDossierProjetDto(dp);
+	            
+	            dossierProjetDto.setId(dp.getId());
+	            dossierProjetDto.setNom(dp.getNom());
+	            dossierProjetDto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
+	            dossierProjetDto.setAnnexeDossierProjetDtos(mapper.annexeProjetToAnnexeProjetDto(dp.getAnnexeDossierProjets()));
+	            dossierProjetDto.setContenuDossierProjetDtos(mapper.contenuToContenuDto(dp.getContenuDossierProjets()));
+	            dossierProjetDto.setInfoDossierProjetDtos(mapper.infoToInfoDto(dp.getInfoDossierProjets()));
+	            dossierProjetDto.setResumeDossierProjetDtos(mapper.resumeToResumeDto(dp.getResumeDossierProjets()));
+	            
+	            dossierProjetDtoList.add(dossierProjetDto);
+	        }
+	    
+	    return dossierProjetDtoList;
 	}
+
+    @Override
+    public DossierProjetEtudiantDto saveOrUpdateDossierProjet(DossierProjetEtudiantDto dpDto, long id, List<MultipartFile> files) {
+        DossierProjet dp = mapper.dossierProjetDtoToDossierProjet(dpDto);
+        //on récupère la liste des experiences d'un dossier projet et on les met à jour (en n'oubliant pas de set les clés étrangères de la table experience_professionnelle)
+        assert dp != null;
+        String path = storageFolder + "DossierProjet" + "/";
+        //on récupère la liste des annexes d'un dossier projet et on les met à jour (en n'oubliant pas de set les clés étrangères de la table annexe)
+        List<AnnexeDossierProjet> annexes = dp.getAnnexeDossierProjets();
+        int i = 0;
+        for(MultipartFile file : files) {
+            String pathFile = path + file.getOriginalFilename();
+            
+            File newAnnexe = new File(pathFile);
+            AnnexeDossierProjet annexe = annexes.get(i++);
+            annexe.setPieceJointe(pathFile);
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))){
+                try {
+                    bos.write(file.getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+        for(AnnexeDossierProjet annexe : annexes) {
+            annexe.setDossierProjet(dp);
+        }
+        
+        
+        List<InfoDossierProjet> infos = dp.getInfoDossierProjets();
+        for(InfoDossierProjet info : infos) {
+        	info.setDossierProjet(dp);
+        }
+        
+        List<ContenuDossierProjet> contenus = dp.getContenuDossierProjets();
+        for(ContenuDossierProjet contenu : contenus) {
+        	contenu.setDossierProjet(dp);
+        }
+        
+        List<ResumeDossierProjet> resumes = dp.getResumeDossierProjets();
+        for(ResumeDossierProjet resume : resumes) {
+        	resume.setDossierProjet(dp);
+        }
+
+        //on met à jour la clé étrangère etudiant de la table dossier_professionnel (dans le cas d'un save)
+        Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+        if(etudiant.isPresent()){
+            dp.setEtudiant(etudiant.get());
+        }
+        //on insert ou met à jour le dossier en question
+        dp = dossierProRepo.saveAndFlush(dp);
+
+        return DtoTools.convert(dp, DossierProjetEtudiantDto.class);
+
+    }
+    
+    @Override
+    public String genererDossierProjet(long idDossierProjet) throws TemplateNotFoundException,
+	MalformedTemplateNameException, ParseException, IOException, TemplateException, DossierProjetException {
+    	
+    	Optional<DossierProjet> dossierProjet = dossierProRepo.findById(idDossierProjet);
+    	
+    	if (!dossierProjet.isPresent()) {
+    		throw new DossierProjetException("Dossier projet non trouvé");
+		}
+		DossierProjetEtudiantDto dossierProjetFile = mapper.dossierProjetToDossierProjetEtudiantDto(dossierProjet.get());
+    	
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("backendUrl", backendUrl);
+    	model.put("dossierProjet", dossierProjetFile);
+		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+		Template template = freemarkerConfig.getTemplate("DossierProjet.ftl");
+
+		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+		String outputPdf = storageFolder + "dossierProjet/dossierProjet.pdf";
+		try {
+			ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
+		}
+
+		return outputPdf;
+    }
 
 }

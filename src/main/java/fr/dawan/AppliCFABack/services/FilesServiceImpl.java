@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,6 +56,29 @@ public class FilesServiceImpl implements FilesService{
 		return deleteDirectory(directory);
 	}
 	
+	@Override
+	public boolean deleteContentByDirectory(String path) {
+
+		File fileInDirectory = new File(myParentdirectory + path );
+		
+		boolean deleted = fileInDirectory.delete();
+		
+		// Vérifier si la suppression a réussi
+	    if (deleted) {
+	        System.out.println("Le fichier  a été supprimé du répertoire ");
+	        return true;
+	    } else {
+	        System.out.println("La suppression du fichier  a échoué dans le répertoire ");
+	        return false;
+	    }
+		
+	}
+	
+	/*
+	 * Méthode servant de base aux autres méthodes delete
+	 * 
+	 * 
+	 * */
 	private boolean deleteDirectory(File directoryToBeDeleted) {
 		File[] allContents = directoryToBeDeleted.listFiles();
 	    if (allContents != null) {
@@ -64,10 +88,14 @@ public class FilesServiceImpl implements FilesService{
 	    }
 	    return directoryToBeDeleted.delete();
 	}
+	/*
+	 * 
+	 * 
+	 * */
 
 	@Override
-	public String[] getAllNamesByDirectory(String string) {
-		File workingDirectoryFile = new File(myParentdirectory + string);
+	public String[] getAllNamesByDirectory(String path) {
+		File workingDirectoryFile = new File(myParentdirectory + path);
 
 		if (!workingDirectoryFile.exists())
 			return new String[0];
@@ -76,19 +104,24 @@ public class FilesServiceImpl implements FilesService{
 	}
 	
 
+	//permet de créer un sous dossier ou de l'update + envoi d'un ou plusieurs fichiers a la fois
+	
 	@Override
-	public boolean postFile(String filePath, MultipartFile file) {
+	public boolean postFile(String filePath, List<MultipartFile> files) {
 		try {
-			File f = new File(myParentdirectory + filePath + file.getOriginalFilename());
-			try (BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(f))) {
-				bw.write(file.getBytes());
+			for (MultipartFile file : files) {
+				File f = new File(myParentdirectory + filePath + file.getOriginalFilename());
+
+				try (BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(f))) {
+					bw.write(file.getBytes());
+				}
 			}
+			
 			return true;
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "postFile failed", e);
 			return false;
 		}
-		
 	}
 
 	@Override

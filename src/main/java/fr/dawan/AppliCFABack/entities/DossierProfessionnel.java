@@ -23,6 +23,9 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 
 	@OneToMany(mappedBy = "dossierProfessionnel", cascade = CascadeType.ALL)
 	private List<Annexe> annexes;
+	
+	@OneToMany(mappedBy = "dossierProfessionnel", cascade = CascadeType.ALL)
+	private List<Facultatif> facultatifs;
 
 	public String getNom() {
 		return nom;
@@ -63,4 +66,14 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 	public void setAnnexes(List<Annexe> annexes) {
 		this.annexes = annexes;
 	}
+
+	public List<Facultatif> getFacultatifs() {
+		return facultatifs;
+	}
+
+	public void setFacultatifs(List<Facultatif> facultatifs) {
+		this.facultatifs = facultatifs;
+	}
+	
+	
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -33,20 +34,22 @@ public class Etudiant extends BaseEntity implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<DossierProjet> dossierProjet;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Tuteur> tuteurs;
+
+	@ManyToOne
+	private Tuteur tuteur;
 
 	public Etudiant() {
 		super();
 	}
 
 	public Etudiant(List<Promotion> promotions, List<GroupeEtudiant> groupes, List<DossierProjet> dossierProjet,
-			List<DossierProfessionnel> dossierProfessionnel) {
+			List<DossierProfessionnel> dossierProfessionnel, Tuteur tuteur) {
 		super();
 		this.promotions = promotions;
 		this.groupes = groupes;
 		this.dossierProfessionnel = dossierProfessionnel;
 		this.dossierProjet = dossierProjet;
+		this.tuteur=tuteur;
 	}
 
 	public List<Promotion> getPromotions() {
@@ -98,15 +101,15 @@ public class Etudiant extends BaseEntity implements Serializable {
 	}
 	
 
-	public List<Tuteur> getTuteurs() {
-        return tuteurs;
-    }
+	public Tuteur getTuteur() {
+		return tuteur;
+	}
 
-    public void setTuteurs(List<Tuteur> tuteurs) {
-        this.tuteurs = tuteurs;
-    }
+	public void setTuteur(Tuteur tuteur) {
+		this.tuteur = tuteur;
+	}
 
-    @Override
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Etudiant)) return false;

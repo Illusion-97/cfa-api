@@ -14,8 +14,11 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+//<<<<<<< HEAD
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+//=======
+//>>>>>>> DossierProjet
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
@@ -42,18 +45,24 @@ import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
+import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PositionnementDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
+//<<<<<<< HEAD
+//=======
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
+//>>>>>>> DossierProjet
 import fr.dawan.AppliCFABack.entities.Absence;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
@@ -87,6 +96,7 @@ import fr.dawan.AppliCFABack.repositories.LivretEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.NoteRepository;
 import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.TuteurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
@@ -98,6 +108,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Autowired
 	EtudiantRepository etudiantRepository;
+	
+	@Autowired
+	TuteurRepository tuteurRepository;
 
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
@@ -736,7 +749,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 				.countDistinctByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContaining(
 						search, search, search, search));
 	}
-
+	
 	/**
 	 * Va permettre de récupérer tous les etudiants avec pagination recherche par
 	 * nom / prenom / promo / groupe
@@ -1192,6 +1205,31 @@ public class EtudiantServiceImpl implements EtudiantService {
 		}
 		return null;
 	}
+	
+	@Override
+	public List<EtudiantDto> getEtudiantByIdTuteurBySearch(long id, int page, int size, String search) {
+		List<Etudiant> lstetud= etudiantRepository.findEtudiantBySearch(id, PageRequest.of(page, size), search)
+				.get()
+				.collect(Collectors.toList());
+				List<EtudiantDto> lstetudDto = new ArrayList<>();
+				for (Etudiant etudiant : lstetud) 
+				{
+					if (etudiant != null) {
+						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
+						etudDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(etudiant.getUtilisateur()));	
+						lstetudDto.add(etudDto);
+					}
+				}
+				return lstetudDto;
+	}
 
+    @Override
+    public EtudiantDossierProjetDto getByEtudiantIdForDossierProjet(long id) {
+        Optional<Etudiant> e = etudiantRepository.findById(id);
+        if (!e.isPresent())
+            return null;
+        return DtoTools.convert(e.get(), EtudiantDossierProjetDto.class);
+
+    }
 
 }
