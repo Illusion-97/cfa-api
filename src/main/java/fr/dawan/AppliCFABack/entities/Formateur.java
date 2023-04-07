@@ -1,8 +1,8 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Formateur extends BaseEntity implements Serializable {
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Utilisateur utilisateur;
 
 	public Formateur() {
@@ -31,5 +31,15 @@ public class Formateur extends BaseEntity implements Serializable {
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (!(obj instanceof Formateur)) return false;
+		Formateur formateur = (Formateur) obj;
+		return   Objects.equals(getUtilisateur(), formateur.getUtilisateur());
+	}
+	
+	
 
 }

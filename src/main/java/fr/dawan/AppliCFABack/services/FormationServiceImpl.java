@@ -367,6 +367,7 @@ public class FormationServiceImpl implements FormationService {
 	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2)
 			throws FetchDG2Exception, URISyntaxException {
 
+		// Récupérer l'entité Cursus depuis la base de données
 		Optional<Cursus> cursusDb = cursusRepository.findByIdDg2(idCursusDg2);
 		if (!cursusDb.isPresent()) {
 			throw new FetchDG2Exception("Cursus non présent dans la BDD veuillez mettre à jour les cursus");
@@ -416,11 +417,19 @@ public class FormationServiceImpl implements FormationService {
 				formationImported.setId(formationDb.get().getId());
 				formationImported.setVersion(formationDb.get().getVersion());
 			}
-			formationRepository.saveAndFlush(formationImported);
-			logger.info("formationImported" + formationImported);
+
+			// Sauvegarder la formation importée dans la base de données
+			formationImported = formationRepository.saveAndFlush(formationImported);
+
+			// Ajouter la formation importée à la liste de formations du cursus
+			cursusDb.get().getFormations().add(formationImported);
 		}
+
+		// Mettre à jour l'entité Cursus dans la base de données
+		cursusRepository.saveAndFlush(cursusDb.get());
 
 		return result;
 	}
+
 
 }
