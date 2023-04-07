@@ -635,7 +635,6 @@ public class InterventionServiceImpl implements InterventionService {
 
 					Optional<Intervention> intervInDb = interventionRepository.findByIdDg2(iDtoDG2.getId());
 
-					// TODO gérer le fait que les promo soient bien lié avec les interventions
 					if (intervInDb.isPresent()) {
 						if (interventionImported.equals(intervInDb.get())) {
 							continue;
@@ -683,10 +682,14 @@ public class InterventionServiceImpl implements InterventionService {
 						logger.warn("Formateur not found with idDg2 : " + iDtoDG2.getTrainerPersonId());
 						continue;
 					}
+				
 					interventionImported.setFormateur(formateur.get());
 
-					logger.info(
-							"interventionImported >>> " + interventionRepository.saveAndFlush(interventionImported));
+					interventionRepository.saveAndFlush(interventionImported);
+					
+					//utilisateurRepository.saveAndFlush(formateur.get().getUtilisateur());
+					
+					logger.info("interventionImported >>> " );
 
 				}
 

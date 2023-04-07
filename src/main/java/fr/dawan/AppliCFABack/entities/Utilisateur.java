@@ -51,7 +51,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Etudiant etudiant;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Formateur formateur;
 	@OneToOne
 	private CEF cef;
