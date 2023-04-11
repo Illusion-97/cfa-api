@@ -28,11 +28,11 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 	
 	private List<ResumeDossierProjetDto> resumeDossierProjetDtos;
 
-	
+	private List<CompetenceProfessionnelleDto> competenceProfessionnelleDtos;
 	
 	public DossierProjetDto(String nom, ProjetDto projet, List<AnnexeDossierProjetDto> annexeDossierProjetDtos,
 			List<InfoDossierProjetDto> infoDossierProjetDtos, List<ContenuDossierProjetDto> contenuDossierProjetDtos,
-			List<ResumeDossierProjetDto> resumeDossierProjetDtos) {
+			List<ResumeDossierProjetDto> resumeDossierProjetDtos,List<CompetenceProfessionnelleDto> competenceProfessionnelleDtos) {
 		super();
 		this.nom = nom;
 		this.projet = projet;
@@ -40,6 +40,7 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 		this.infoDossierProjetDtos = infoDossierProjetDtos;
 		this.contenuDossierProjetDtos = contenuDossierProjetDtos;
 		this.resumeDossierProjetDtos = resumeDossierProjetDtos;
+		this.setCompetenceProfessionnelleDtos(competenceProfessionnelleDtos);
 	}
 
 	public DossierProjetDto() {
@@ -116,6 +117,14 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 
 	public void setEtudiant(EtudiantDto etudiant) {
 		this.etudiant = etudiant;
+	}
+
+	public List<CompetenceProfessionnelleDto> getCompetenceProfessionnelleDtos() {
+		return competenceProfessionnelleDtos;
+	}
+
+	public void setCompetenceProfessionnelleDtos(List<CompetenceProfessionnelleDto> competenceProfessionnelleDtos) {
+		this.competenceProfessionnelleDtos = competenceProfessionnelleDtos;
 	}
 	
 	

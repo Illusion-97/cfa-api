@@ -33,6 +33,7 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
+import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.ContenuDossierProjet;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
@@ -83,7 +84,18 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	@Autowired
 	private DtoMapper mapper;
 
+	/**
+	 * 
+	 * Méthode Génerique pour boucler sur les Listes du DossierProjet
+	 * 
+	 * */
 
+	public static <T extends IDossierProjetList> void setDossierProjetListGeneric(List<T> e, DossierProjet dp) {
+		for(T element : e) {
+			element.setDossierProjet(dp);
+	    }
+	}
+	
 	/**
 	 * Récupération de la liste des dossiers projets
 	 * 
@@ -213,7 +225,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	            dossierProjetDto.setContenuDossierProjetDtos(mapper.contenuToContenuDto(dp.getContenuDossierProjets()));
 	            dossierProjetDto.setInfoDossierProjetDtos(mapper.infoToInfoDto(dp.getInfoDossierProjets()));
 	            dossierProjetDto.setResumeDossierProjetDtos(mapper.resumeToResumeDto(dp.getResumeDossierProjets()));
-	            
+	            dossierProjetDto.setCompetenceProfessionnelleDtos(mapper.competenceProfessionnelleDPToCompetenceProfessionnelleDPDto(dp.getCompetenceProfessionnelles()));
 	            dossierProjetDtoList.add(dossierProjetDto);
 	        }
 	    
@@ -251,6 +263,10 @@ public class DossierProjetServiceImpl implements DossierProjetService {
             annexe.setDossierProjet(dp);
         }
         
+        List<CompetenceProfessionnelle> cp = dp.getCompetenceProfessionnelles();
+        for(CompetenceProfessionnelle compProfessionnelle : cp) {
+        	compProfessionnelle.setDossierProjet(dp);
+        }
         
         List<InfoDossierProjet> infos = dp.getInfoDossierProjets();
         for(InfoDossierProjet info : infos) {
@@ -275,7 +291,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
         //on insert ou met à jour le dossier en question
         dp = dossierProRepo.saveAndFlush(dp);
 
-        return DtoTools.convert(dp, DossierProjetEtudiantDto.class);
+        return mapper.dossierProjetToDossierProjetEtudiantDto(dp);
 
     }
     

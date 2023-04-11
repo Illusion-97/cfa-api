@@ -18,7 +18,8 @@ public class CompetenceProfessionnelleDto extends BaseEntityDto implements Seria
 	private byte numeroFiche;
 	private List<ExamenDto> examensDto;
 	private long activiteTypeId;
-
+    private long dossierProjetId;
+    
 	public CompetenceProfessionnelleDto() {
 		super();
 	}
@@ -91,6 +92,14 @@ public class CompetenceProfessionnelleDto extends BaseEntityDto implements Seria
 	 */
 	public void setActiviteTypeId(long activiteTypeId) {
 		this.activiteTypeId = activiteTypeId;
+	}
+
+	public long getDossierProjetId() {
+		return dossierProjetId;
+	}
+
+	public void setDossierProjetId(long dossierProjetId) {
+		this.dossierProjetId = dossierProjetId;
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 @SuppressWarnings("serial")
@@ -34,7 +35,9 @@ public class DossierProjet extends BaseEntity implements Serializable {
 	
 	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
     private List<ResumeDossierProjet> resumeDossierProjets;
-	
+
+	@OneToMany
+	private List<CompetenceProfessionnelle> competenceProfessionnelles;
 
 
 	public String getNom() {
@@ -91,6 +94,14 @@ public class DossierProjet extends BaseEntity implements Serializable {
 
 	public void setResumeDossierProjets(List<ResumeDossierProjet> resumeDossierProjets) {
 		this.resumeDossierProjets = resumeDossierProjets;
+	}
+
+	public List<CompetenceProfessionnelle> getCompetenceProfessionnelles() {
+		return competenceProfessionnelles;
+	}
+
+	public void setCompetenceProfessionnelles(List<CompetenceProfessionnelle> competenceProfessionnelles) {
+		this.competenceProfessionnelles = competenceProfessionnelles;
 	}
 	
 	

@@ -166,6 +166,7 @@ public interface DtoMapper {
     @Mapping(source ="infoDossierProjets", target = "infoDossierProjets")
     @Mapping(source ="contenuDossierProjets", target = "contenuDossierProjets")
     @Mapping(source ="resumeDossierProjets", target = "resumeDossierProjets")
+    @Mapping(source ="competenceProfessionnelles", target = "competenceProfessionnelles")
     DossierProjetEtudiantDto dossierProjetToDossierProjetEtudiantDto(DossierProjet dossierProjet);
     
     @Mapping( source = ".", target = ".")
@@ -184,9 +185,12 @@ public interface DtoMapper {
     ActiviteTypeDto activiteTypeToActiviteTypeDto(ActiviteType activiteType);
 
     @Mapping(source = ".", target = ".")
-    CompetenceProfessionnelleDto competenceProfessionnelleToCompetenceProfessionnelleDto(
-            CompetenceProfessionnelle competenceProfessionnelle);
+    CompetenceProfessionnelleDto competenceProfessionnelleToCompetenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
 
+    @Mapping(source = ".", target = ".")
+    CompetenceProfessionnelleDto competenceProfessionnelleDPToCompetenceProfessionnelleDPDto(List<CompetenceProfessionnelle> competenceProfessionnelle);
+
+    
     @Mapping(target = "cursusLst", ignore = true)
     @Mapping(source = "id", target = "idDg2")
     @Mapping(source = "title", target = "titre")
@@ -201,6 +205,7 @@ public interface DtoMapper {
     @Mapping(source ="infoDossierProjets", target = "infoDossierProjets")
     @Mapping(source ="contenuDossierProjets", target = "contenuDossierProjets")
     @Mapping(source ="resumeDossierProjets", target = "resumeDossierProjets")
+    @Mapping(source ="competenceProfessionnelles", target = "competenceProfessionnelles")
     DossierProjet dossierProjetDtoToDossierProjet(DossierProjetEtudiantDto dpDto);
     
     @Mapping(source = ".", target=".")

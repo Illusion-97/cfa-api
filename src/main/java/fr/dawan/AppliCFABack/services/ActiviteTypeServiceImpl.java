@@ -58,6 +58,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 
 			atDto.setExamensDto(examensDto);
 			atDto.setCursusActiviteTypeId(activiteType.getCursusActiviteType().getId());
+			
 			activiteTypesDto.add(atDto);
 		}
 		return activiteTypesDto;

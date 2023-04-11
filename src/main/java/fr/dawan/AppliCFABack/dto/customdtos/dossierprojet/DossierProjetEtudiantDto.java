@@ -7,6 +7,7 @@ import fr.dawan.AppliCFABack.dto.AnnexeDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.ContenuDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.InfoDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.ResumeDossierProjetDto;
+import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 
 @SuppressWarnings("serial")
 public class DossierProjetEtudiantDto implements Serializable {
@@ -18,6 +19,7 @@ public class DossierProjetEtudiantDto implements Serializable {
     private List<InfoDossierProjetDto> infoDossierProjets;
     private List<ContenuDossierProjetDto> contenuDossierProjets;
     private List<ResumeDossierProjetDto> resumeDossierProjets;
+    private List<CompetenceProfessionnelle> competenceProfessionnelles;
     private int version;
     
     
@@ -76,6 +78,12 @@ public class DossierProjetEtudiantDto implements Serializable {
     public void setVersion(int version) {
         this.version = ++version;
     }
+	public List<CompetenceProfessionnelle> getCompetenceProfessionnelles() {
+		return competenceProfessionnelles;
+	}
+	public void setCompetenceProfessionnelles(List<CompetenceProfessionnelle> competenceProfessionnelles) {
+		this.competenceProfessionnelles = competenceProfessionnelles;
+	}
     
     
 
