@@ -42,7 +42,6 @@ import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
-import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
@@ -184,14 +183,14 @@ public class InterventionServiceImpl implements InterventionService {
 					lstPromoDto.add(mapper.promotionToPromotionDto(promotion));
 			}
 
-			List<FormateurDto> lstFormDto = new ArrayList<>();
-			for (Formateur formateur : intervention.getFormateurs()) {
-				if (formateur != null)
-					lstFormDto.add(DtoTools.convert(formateur, FormateurDto.class));
-			}
+			FormateurDto lstFormDto = new FormateurDto();
+//			for (Formateur formateur : intervention.getFormateurs()) {
+//				if (formateur != null)
+//					lstFormDto.add(DtoTools.convert(formateur, FormateurDto.class));
+//			}TODO
 
 			// On ajoute la liste des formateurs a l'intervention
-			interventionDto.setFormateursDto(lstFormDto);
+			interventionDto.setFormateurDto(lstFormDto);
 
 			// On ajoute la liste de promotions a l'intervention
 			interventionDto.setPromotionsDto(lstPromoDto);
@@ -222,13 +221,13 @@ public class InterventionServiceImpl implements InterventionService {
 					lstPromoDto.add(mapper.promotionToPromotionDto(promo));
 			}
 
-			List<FormateurDto> lstFormaDto = new ArrayList<>();
-			for (Formateur formateur : i.get().getFormateurs()) {
-				if (formateur != null)
-					lstFormaDto.add(mapper.formateurToFormateurDto(formateur));
-			}
+			FormateurDto lstFormaDto = new FormateurDto();
+//			for (Formateur formateur : i.get().getFormateurs()) {
+//				if (formateur != null)
+//					lstFormaDto.add(mapper.formateurToFormateurDto(formateur));
+//			}TODO
 
-			interventionDto.setFormateursDto(lstFormaDto);
+			interventionDto.setFormateurDto(lstFormaDto);
 			interventionDto.setPromotionsDto(lstPromoDto);
 			interventionDto.setFormationDto(formationDto);
 			interventionDto.setHeuresDisponsees();
@@ -352,14 +351,12 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Override
 	public List<FormateurDto> findFormateursByInterventionsId(long id) {
-		List<Formateur> lstForm = formateurRepository.findByInterventionsId(id);
+		Formateur formateur = formateurRepository.findByInterventionId(id);
 		List<FormateurDto> lstFormDto = new ArrayList<>();
-		for (Formateur form : lstForm) {
-			if (form != null) {
-				FormateurDto fDto = mapper.formateurToFormateurDto(form);
-				fDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(form.getUtilisateur()));
+		if (formateur != null) {
+				FormateurDto fDto = mapper.formateurToFormateurDto(formateur);
+				fDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(formateur.getUtilisateur()));
 				lstFormDto.add(fDto);
-			}
 		}
 		return lstFormDto;
 	}
@@ -374,7 +371,6 @@ public class InterventionServiceImpl implements InterventionService {
 	 * @throws Exception
 	 */
 
-	
 	@Override
 	public int fetchDGInterventions(String email, String password) throws Exception {
 		List<Promotion> promoLst = new ArrayList<>();
@@ -387,7 +383,6 @@ public class InterventionServiceImpl implements InterventionService {
 
 		return result;
 	}
-
 
 	@Override
 	public int fetchDGInterventions(String email, String password, long idPrmotionDg2) throws Exception {
@@ -412,7 +407,7 @@ public class InterventionServiceImpl implements InterventionService {
 	 * @param email    Email l'utilsateur dg2
 	 * @param password Mot de passe de l'utlisateur dg2
 	 * @return List Liste des interventions
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 
 //	@Async("myTaskExecutor")
@@ -590,64 +585,151 @@ public class InterventionServiceImpl implements InterventionService {
 //		}
 //		return result;
 //	}
+//}
+//		
 
+	@Async("myTaskExecutor")
+	@Override
+	public List<Intervention> getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
+			throws Exception, FetchDG2Exception, URISyntaxException {
+		Optional<Promotion> promotionOpt = promoRepository.findByIdDg2(idPrmotionDg2);
+		logger.info(">>>>>>>promo>>>>>" + promotionOpt.get().getIdDg2());
+		logger.info("FetchDg2Intervention >>> START");
+		if (!promotionOpt.isPresent()) {
+			logger.error("FetchDg2Intervention>>>>>>>>ERROR failed Pas de promo");
+			throw new FetchDG2Exception("Promotion introuvable veuiller mettre à jour les promotions");
+		}
 
-		@Async("myTaskExecutor")
-		@Override
-		public List<Intervention> getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
-				throws Exception {
-			Optional<Promotion> promotionOpt = promoRepository.findByIdDg2(idPrmotionDg2);
-			logger.info(">>>>>>>promo>>>>>" + promotionOpt.get().getIdDg2());
-			logger.info("FetchDg2Intervention >>> START");
-			if (!promotionOpt.isPresent()) {
-				logger.error("FetchDg2Intervention>>>>>>>>ERROR failed Pas de promo");
-				throw new FetchDG2Exception("Promotion introuvable veuiller mettre à jour les promotions");
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>();
+		List<Intervention> result = new ArrayList<>();
+
+		URI url = new URI("https://dawan.org/api2/cfa/sessions/" + idPrmotionDg2 + "/children");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("x-auth-token", email + ":" + password);
+		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+		logger.info("FetchDg2Intervention >>> START /children");
+		if (rep.getStatusCode() == HttpStatus.OK) {
+			String json = rep.getBody();
+
+			try {
+				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {
+				});
+			} catch (Exception e) {
+				logger.warn("json intervention dg2 failed", e);
 			}
-	
-			ObjectMapper objectMapper = new ObjectMapper();
-			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-			List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>();
-			List<Intervention> result = new ArrayList<>();
-	
-			URI url = new URI("https://dawan.org/api2/cfa/sessions/" + idPrmotionDg2 + "/children");
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("x-auth-token", email + ":" + password);
-			HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-			ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-			logger.info("FetchDg2Intervention >>> START /children");
-			if (rep.getStatusCode() == HttpStatus.OK) {
-				String json = rep.getBody();
-	
-				try {
-					fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {
-					});
-				} catch (Exception e) {
-					logger.warn("json intervention dg2 failed", e);
-				}
-				DtoTools dtoTools = new DtoTools();
-				if (!fetchResJson.isEmpty()) {
-					for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
-						logger.info("FetchDg2Intervention >>> START /for" + iDtoDG2.getCourseId());
-	
-						Intervention interventionImported = dtoTools.promotionOrInterventionDG2DtoToIntervention(iDtoDG2);
-						
-						Optional<Formation> formation = formationRepository.findByIdDg2(iDtoDG2.getCourseId());
-						if (!formation.isPresent()) {
+			DtoTools dtoTools = new DtoTools();
+			if (!fetchResJson.isEmpty()) {
+
+//				int countFormateurs = findFormateur(fetchResJson);
+//				logger.info("Nombre de formateurs ajoutés : " + countFormateurs);
+
+				findFormateur(fetchResJson);
+				logger.info("FetchDg2Intervention >>> START /for");
+				for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
+					
+
+					Intervention interventionImported = dtoTools.promotionOrInterventionDG2DtoToIntervention(iDtoDG2);
+
+					Optional<Intervention> intervInDb = interventionRepository.findByIdDg2(iDtoDG2.getId());
+
+					if (intervInDb.isPresent()) {
+						if (interventionImported.equals(intervInDb.get())) {
 							continue;
 						}
-						interventionImported.setFormation(formation.get());
-						
-						List<Formateur> lstFormateurs = formateurRepository
-								.findByInterventionsIdDg2(iDtoDG2.getTrainerPersonId());
-						if (lstFormateurs.isEmpty())
+						Optional<Promotion> promotion = promoRepository.findByIdDg2(idPrmotionDg2);
+						if (promotion.isPresent() && !interventionImported.getPromotions().contains(promotion.get())) {
+							// Ajout de la promotion à la liste des promotions de l'intervention importée
+							interventionImported.getPromotions().add(promotion.get());
+						} else {
+							logger.warn("Promotion not found with idDg2 : " + idPrmotionDg2);
 							continue;
-						interventionImported.setFormateurs(lstFormateurs);
-						logger.info("interventionImported >>> " + interventionImported);
-	
-					} 
+						}
+						// Récupération de la liste des promotions de l'intervention en base
+						List<Promotion> promotionsInDb = intervInDb.get().getPromotions();
+						if (promotionsInDb != null && !promotionsInDb.isEmpty()) {
+							// Ajout de la liste des promotions de l'intervention en base à la liste des
+							// promotions de l'intervention importée
+							interventionImported.getPromotions().addAll(promotionsInDb);
+						}
+					} else {
+						// Récupération de la promotion correspondante à l'ID en paramètre
+						Optional<Promotion> promotion = promoRepository.findByIdDg2(idPrmotionDg2);
+						if (interventionImported != null && promotion != null && promotion.isPresent()) {
+					        if (interventionImported.getPromotions() == null) {
+					            interventionImported.setPromotions(new ArrayList<>());
+					        }
+					        interventionImported.getPromotions().add(promotion.get());
+						} else {
+							logger.warn("Promotion not found with idDg2 : " + idPrmotionDg2);
+							continue;
+						}
+					}
+
+					Optional<Formation> formation = formationRepository.findByIdDg2(iDtoDG2.getCourseId());
+					if (!formation.isPresent()) {
+						logger.warn("Formation not found with idDg2 : " + iDtoDG2.getCourseId());
+						continue;
+					}
+					interventionImported.setFormation(formation.get());
+
+					Optional<Formateur> formateur = formateurRepository.findByIdDg2(iDtoDG2.getTrainerPersonId());
+					logger.info("ID DG2 du formateur  : " + formateur);
+
+					if (!formateur.isPresent()) {
+						logger.warn("Formateur not found with idDg2 : " + iDtoDG2.getTrainerPersonId());
+						continue;
+					}
+				
+					interventionImported.setFormateur(formateur.get());
+
+					interventionRepository.saveAndFlush(interventionImported);
+					
+					//utilisateurRepository.saveAndFlush(formateur.get().getUtilisateur());
+					
+					logger.info("interventionImported >>> " );
+
 				}
+
 			}
-	
-			return result;
+			logger.info("FetchDg2Intervention>>>>>>END");
+		} else {
+			logger.error("FetchDg2Intervention>>>>>>>>ERROR End failed");
+			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
+
+		return result;
+	}
+
+	public int findFormateur(List<PromotionOrInterventionDG2Dto> iDtoDG2) {
+
+		int count = 0;
+
+		for (PromotionOrInterventionDG2Dto i : iDtoDG2) {
+
+			Optional<Utilisateur> userInDb = utilisateurRepository.findByIdDg2(i.getTrainerPersonId());
+			logger.info("ID DG2 user  : " + userInDb);
+
+			if (!userInDb.isPresent()) {
+				continue;
+			}
+
+			Optional<Formateur> formateurInDB = formateurRepository.findByUtilisateurId(userInDb.get().getId());
+			if (formateurInDB.isPresent()) {
+				continue;
+
+			}
+			Formateur formateur = new Formateur();
+			formateur.setUtilisateur(userInDb.get());
+			formateurRepository.saveAndFlush(formateur);
+
+			count++;
+
+		}
+		return count;
+
+	}
+	
 }

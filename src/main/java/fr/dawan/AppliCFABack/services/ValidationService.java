@@ -4,4 +4,5 @@ import fr.dawan.AppliCFABack.dto.ValidationDto;
 
 public interface ValidationService extends GenericService<ValidationDto>{
 
+	
 }

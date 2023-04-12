@@ -27,6 +27,8 @@ public class EmployeeDG2Dto {
 	@JsonIgnore
 	private String job;
 	@JsonIgnore
+	private String planningGroups; 
+	@JsonIgnore
 	private String name;
 	@JsonIgnore
 	private String skill;
@@ -162,8 +164,11 @@ public class EmployeeDG2Dto {
 	public void setSlug(String slug) {
 		this.slug = slug;
 	}
-	
-	
-
+	public String getPlanningGroups() {
+		return planningGroups;
+	}
+	public void setPlanningGroups(String planningGroups) {
+		this.planningGroups = planningGroups;
+	}
 	
 }

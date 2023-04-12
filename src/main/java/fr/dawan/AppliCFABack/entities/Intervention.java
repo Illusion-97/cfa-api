@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -38,8 +36,11 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 	@ManyToMany
 	private List<Promotion> promotions; // CDA 2021
 
-	@ManyToMany(cascade = CascadeType.MERGE)
-	private List<Formateur> formateurs;
+//	@ManyToMany(cascade = CascadeType.MERGE)
+//	private List<Formateur> formateurs;
+	
+	@ManyToOne
+	private Formateur formateur;
 
 	@ManyToMany(mappedBy = "interventions")
 	private List<SupportCours> supportsCours;
@@ -111,13 +112,13 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 		this.promotions = promotions;
 	}
 
-	public List<Formateur> getFormateurs() {
-		return formateurs;
-	}
-
-	public void setFormateurs(List<Formateur> formateurs) {
-		this.formateurs = formateurs;
-	}
+//	public List<Formateur> getFormateurs() {
+//		return formateurs;
+//	}
+//
+//	public void setFormateurs(List<Formateur> formateurs) {
+//		this.formateurs = formateurs;
+//	}
 
 	public String getNoteInfoPersonnel() {
 		return noteInfoPersonnel;
@@ -141,6 +142,14 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 	public void setIdDg2(long idDg2) {
 		this.idDg2 = idDg2;
 	}
+	
+	public Formateur getFormateur() {
+		return formateur;
+	}
+
+	public void setFormateur(Formateur formateur) {
+		this.formateur = formateur;
+	}
 
 	public List<Long> getPromotionId(){
 		List<Long> promotionsId = new ArrayList<>();
@@ -158,7 +167,7 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 		result = prime * result + ((dateDebut == null) ? 0 : dateFin.hashCode());
 		result = prime * result + ((dateFin== null) ? 0 : dateFin.hashCode());
 		result = prime * result + ((promotions == null) ? 0 : promotions.hashCode());
-		result = prime * result + ((formateurs== null) ? 0 : formateurs.hashCode());
+//		result = prime * result + ((formateurs== null) ? 0 : formateurs.hashCode());
 		result = prime * result + (int) (idDg2 ^ (idDg2 >>> 32));
 		return result;}
 
@@ -190,12 +199,12 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 		} else if (!promotions.stream().map(p ->p.getId()).collect(Collectors.toList()).equals(other.promotions.stream().map(p ->p.getId())
 				.collect(Collectors.toList())))
 			return false;
-		if (formateurs == null) {
-			if (other.formateurs != null)
-				return false;
-		} else if (!formateurs.stream().map(f ->f.getId()).collect(Collectors.toList()).equals(other.formateurs.stream().map(f ->f.getId())
-				.collect(Collectors.toList())))
-			return false;
+//		if (formateurs == null) {
+//			if (other.formateurs != null)
+//				return false;
+//		} else if (!formateurs.stream().map(f ->f.getId()).collect(Collectors.toList()).equals(other.formateurs.stream().map(f ->f.getId())
+//				.collect(Collectors.toList())))
+//			return false;
 		
 		return true;
 	}

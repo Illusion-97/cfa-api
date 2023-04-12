@@ -2,59 +2,51 @@ package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+
 
 @SuppressWarnings("serial")
-@Entity
+@Entity //unmapped prb
 public class Tuteur extends BaseEntity implements Serializable{
-    
-    @ManyToOne
-    private Utilisateur utilisateur;
-    
-    @ManyToOne
-    private Etudiant etudiant;
-    
-    @ManyToOne
-    private Promotion promotion;
-    
-    public Tuteur() {
-        super();
-    }
-    
-    public Tuteur(Utilisateur utilisateur, Etudiant etudiant, Promotion promotion) {
-        super();
-        this.utilisateur = utilisateur;
-        this.etudiant = etudiant;
-        this.promotion = promotion;
-    }
+	
+	@ManyToOne
+	private Utilisateur utilisateur;
+	
+	
+	@OneToMany(mappedBy = "tuteur")
+	private List<Etudiant> etudiants;
+	
 
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
-    }
+	public List<Etudiant> getEtudiants() {
+		return etudiants;
+	}
 
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
+	public void setEtudiants(List<Etudiant> etudiants) {
+		this.etudiants = etudiants;
+	}
 
-    public Etudiant getEtudiant() {
-        return etudiant;
-    }
+	public Tuteur() {
+		super();
+	}
 
-    public void setEtudiant(Etudiant etudiant) {
-        this.etudiant = etudiant;
-    }
+	public Tuteur(Utilisateur utilisateur, List<Etudiant> etudiants) {
+		super();
+		this.utilisateur = utilisateur;
+		
+	}
 
-    public Promotion getPromotion() {
-        return promotion;
-    }
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
 
-    public void setPromotion(Promotion promotion) {
-        this.promotion = promotion;
-    }
-    
-    
-    
-    
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
 
 }

@@ -3,6 +3,8 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import fr.dawan.AppliCFABack.entities.Tuteur;
+
 /**
  * 
  * @author Valentin C, Feres BG.
@@ -19,6 +21,7 @@ public class EtudiantDto extends BaseEntityDto implements Serializable {
 	private List<GroupeEtudiantDto> groupesDto;
 	private List<DossierProfessionnelDto> dossierProfessionnel;
 	private List<DossierProjetDto> dossierProjet;
+	private TuteurDto tuteurDto;
 
 	public EtudiantDto() {
 		super();
@@ -93,5 +96,15 @@ public class EtudiantDto extends BaseEntityDto implements Serializable {
 	public void setDossierProjet(List<DossierProjetDto> dossierProjet) {
 		this.dossierProjet = dossierProjet;
 	}
+
+	public TuteurDto getTuteurDto() {
+		return tuteurDto;
+	}
+
+	public void setTuteurDto(TuteurDto tuteurDto) {
+		this.tuteurDto = tuteurDto;
+	}
+	
+	
 
 }

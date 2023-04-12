@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -160,41 +161,44 @@ public class FormateurServiceImpl implements FormateurService {
 	
 	@Override
 	public void deleteById(long id) {
-		Optional<Formateur> formateur = formateurRepository.findById(id);
-		
-		List<Intervention> lstInterventions = formateur.get().getInterventions();
-
-		if (formateur.isPresent())
-			for (Intervention interv : lstInterventions) {
-				for (Formateur form : interv.getFormateurs()) {
-					if (form.getId() == formateur.get().getId()) {
-
-					}
-				}
-			}
+		//TODO REFAIRE LA METHODE DELETE
+//		Optional<Formateur> formateur = formateurRepository.findById(id);
+//		
+//		//List<Intervention> lstInterventions = formateur.get().getInterventions();
+//		List<Intervention> lstInterventions = 
+//
+//		if (formateur.isPresent())
+//			for (Intervention interv : lstInterventions) {
+//				for (Formateur form : interv.getFormateur()) {
+//					if (form.getId() == formateur.get().getId()) {
+//
+//					}
+//				}
+//			}
 		formateurRepository.deleteById(id);
-
+//
 	}
 
 	@Override
 	public List<FormateurDto> getAllWithObject() {
+		//TODO refaire la methode
 		List<Formateur> lstFor = formateurRepository.findAll();
 		List<FormateurDto> lstDto = new ArrayList<>();
-
-		for (Formateur formateur : lstFor) {
-
-			FormateurDto formateurDto = mapper.formateurToFormateurDto(formateur);
-
-			List<Intervention> lstInter = formateur.getInterventions();
-			List<InterventionDto> lstInterDto = new ArrayList<>();
-			for (Intervention intervention : lstInter) {
-				if (intervention != null)
-					lstInterDto.add(mapper.interventionToInterventionDto(intervention));
-			}
-			formateurDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(formateur.getUtilisateur()));
-			formateurDto.setInterventionsDto(lstInterDto);
-			lstDto.add(formateurDto);
-		}
+//
+//		for (Formateur formateur : lstFor) {
+//
+//			FormateurDto formateurDto = mapper.formateurToFormateurDto(formateur);
+//
+//			List<Intervention> lstInter = formateur.getInterventions();
+//			List<InterventionDto> lstInterDto = new ArrayList<>();
+//			for (Intervention intervention : lstInter) {
+//				if (intervention != null)
+//					lstInterDto.add(mapper.interventionToInterventionDto(intervention));
+//			}
+//			formateurDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(formateur.getUtilisateur()));
+//			formateurDto.setInterventionsDto(lstInterDto);
+//			lstDto.add(formateurDto);
+//		}
 		return lstDto;
 	}
 
@@ -221,7 +225,7 @@ public class FormateurServiceImpl implements FormateurService {
 	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++ **/
 	@Override // affiche toute les interventions du formateur
 	public List<InterventionDto> getAllInterventionsByFormateurIdPerPage(long id, int page, int size) {
-		List<Intervention> lstIn = interventionRepository.findAllByFormateursId(id, PageRequest.of(page, size)).get()
+		List<Intervention> lstIn = interventionRepository.findAllByFormateurId(id, PageRequest.of(page, size)).get()
 				.collect(Collectors.toList());
 		List<InterventionDto> lstInDto = new ArrayList<>();
 		for (Intervention intervention : lstIn) {
@@ -251,21 +255,16 @@ public class FormateurServiceImpl implements FormateurService {
 	@Override // affiche toute les interventions du formateur + recherche par mot clé
 	public List<InterventionDto> getAllInterventionsByFormateurIdPerPageByKeyword(long id, int page, int size,
 			String search) {
-		List<Intervention> lstIn = interventionRepository
-				.findByFormateursIdAndFormationTitreContainingAllIgnoreCase(id, search, PageRequest.of(page, size))
-				.get().collect(Collectors.toList());
-		List<InterventionDto> lstInDto = new ArrayList<>();
-		for (Intervention intervention : lstIn) {
-			if (intervention != null) {
-				InterventionDto interDto = mapper.interventionToInterventionDto(intervention);
-
-				FormationDto formDto = mapper.formationToFormationDto(intervention.getFormation());
-
-				interDto.setFormationDto(formDto);
-				lstInDto.add(interDto);
-			}
+		Page<Intervention> interventionPage = interventionRepository.findByFormateurIdAndFormationTitreContainingAllIgnoreCase(id, search, PageRequest.of(page, size));
+		List<InterventionDto> interventionDtos = new ArrayList<>();
+		
+		for (Intervention intervention : interventionPage.getContent()) {
+			InterventionDto interventionDto = mapper.interventionToInterventionDto(intervention);
+			interventionDto.setFormationDto(mapper.formationToFormationDto(intervention.getFormation()));
+			interventionDtos.add(interventionDto);
 		}
-		return lstInDto;
+		
+		return interventionDtos;		
 	}
 
 	/**
@@ -289,7 +288,7 @@ public class FormateurServiceImpl implements FormateurService {
 	
 	@Override // nb interventions du formateur
 	public CountDto countInterventionById(long id) {
-		return new CountDto(interventionRepository.countByFormateursId(id));
+		return new CountDto(interventionRepository.countByFormateurId(id));
 	}
 
 	/**
@@ -304,7 +303,7 @@ public class FormateurServiceImpl implements FormateurService {
 		List<JourneePlanningDto> journeeDto = new ArrayList<>();
 		List<Intervention> interventions = new ArrayList<>();
 
-		interventions.addAll(interventionRepository.findAllByFormateursId(id));
+		interventions.addAll(interventionRepository.findAllByFormateurId(id));
 		for (Intervention i : interventions)
 			journeeDto.addAll(journeePlanningService.getJourneePlanningFromIntervention(i));
 

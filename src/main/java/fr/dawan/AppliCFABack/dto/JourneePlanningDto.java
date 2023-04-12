@@ -15,13 +15,13 @@ public class JourneePlanningDto {
 	private long idIntervention;
 	private LocalDate date;
 	private FormationDto formationDto;
-	private List<FormateurDto> formateurDto;
+	private FormateurDto formateurDto;
 
 	public JourneePlanningDto() {
 		super();
 	}
 
-	public JourneePlanningDto(LocalDate date, FormationDto formationDto, List<FormateurDto> formateurDto) {
+	public JourneePlanningDto(LocalDate date, FormationDto formationDto, FormateurDto formateurDto) {
 		super();
 		this.date = date;
 		this.formationDto = formationDto;
@@ -73,14 +73,14 @@ public class JourneePlanningDto {
 	/**
 	 * @return the formateurDto
 	 */
-	public List<FormateurDto> getFormateurDto() {
+	public FormateurDto getFormateurDto() {
 		return formateurDto;
 	}
 
 	/**
 	 * @param formateurDto the formateurDto to set
 	 */
-	public void setFormateurDto(List<FormateurDto> formateurDto) {
+	public void setFormateurDto(FormateurDto formateurDto) {
 		this.formateurDto = formateurDto;
 	}
 

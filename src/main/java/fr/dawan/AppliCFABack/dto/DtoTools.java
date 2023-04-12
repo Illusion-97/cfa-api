@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
 
 import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
@@ -17,7 +18,17 @@ import fr.dawan.AppliCFABack.dto.customdtos.MembreEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetCursusDossierProDto;
+import fr.dawan.AppliCFABack.entities.Annexe;
+import fr.dawan.AppliCFABack.entities.Cursus;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Facultatif;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
@@ -60,7 +71,10 @@ public class DtoTools {
 //            mapper.map(src -> src.getEtudiantNoteId(), (dest, v) -> dest.getEtudiantNote().setId((long) v));
 //
 //        });
-
+    	
+//    	myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+    	myMapper.getConfiguration().setAmbiguityIgnored(true);
+    	
         myMapper.typeMap(Etudiant.class, EtudiantInfoInterventionDto.class).addMappings(m ->{
         	m.map(src -> src.getId(), EtudiantInfoInterventionDto::setIdEtudiant);
         	m.map(src -> src.getUtilisateur().getNom(), EtudiantInfoInterventionDto::setNom);
@@ -146,12 +160,16 @@ public class DtoTools {
         cDto.setDateDebut(p.getDateDebut());
         cDto.setDateFin(p.getDateFin());
         cDto.setPlanningsEtudiantDto(p.getInterventions().stream().map(i -> {
-            Utilisateur u = i.getFormateurs().get(0).getUtilisateur();
+            Utilisateur u = i.getFormateur().getUtilisateur();
             String identity = u.getPrenom() + " " + u.getNom();
             return new PlanningEtudiantDto(i.getDateDebut(), i.getDateFin(), i.getFormation().getTitre(), identity);
         }).collect(Collectors.toList()));
         return cDto;
     };
+    
+    
+    
+ 
 
     /**
      * méthode appelée dans le PromotionServiceImpl
@@ -161,6 +179,8 @@ public class DtoTools {
     public PromotionEtudiantDto promotionToPromotionEtudiantDto(Promotion promotion) {
         return convert(promotion, PromotionEtudiantDto.class, promotionToPromotionEtudiantDtoConverter);
     }
+    
+   
 
     public NiveauDto niveauToNiveauDto (Positionnement.Niveau niveau) {
 
@@ -266,7 +286,7 @@ public class DtoTools {
         a.setMembreEtudiantDtos(e.getGroupes().stream().map(groupeEtudiant -> groupeEtudiant.getEtudiants().stream().map(etudiant -> new MembreEtudiantDto(etudiant.getUtilisateur().getNom(), etudiant.getUtilisateur().getPrenom(), etudiant.getUtilisateur().getRoles().stream().map(UtilisateurRole::getIntitule)))));
         a.setProchainCours(Objects.requireNonNull(e.getPromotions().stream().filter(promotion ->
                 (promotion.getDateDebut().getYear() == ZonedDateTime.now().getYear() || promotion.getDateFin().getYear() == ZonedDateTime.now().getYear())).map(Promotion::getInterventions).findAny().orElse(null)).stream().map(intervention -> {
-            Utilisateur u = intervention.getFormateurs().get(0).getUtilisateur();
+            Utilisateur u = intervention.getFormateur().getUtilisateur();
             String identity = u.getPrenom() + " " + u.getNom();
             return new PlanningEtudiantDto(intervention.getDateDebut(), intervention.getDateFin(), intervention.getFormation().getTitre(), identity);
         }).collect(Collectors.toList()).stream().filter(planningEtudiantDto ->
@@ -277,7 +297,6 @@ public class DtoTools {
     public AccueilEtudiantDto etudiantToAccueilEtudiantDto(Etudiant etudiant) {
         return convert(etudiant, AccueilEtudiantDto.class, etudiantToAccueilEtudiantDtoConverter);
     }
-
 
 
 }

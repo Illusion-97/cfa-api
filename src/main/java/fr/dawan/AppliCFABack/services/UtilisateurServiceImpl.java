@@ -12,8 +12,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.naming.Context;
@@ -26,6 +24,9 @@ import javax.naming.directory.SearchResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -84,8 +85,6 @@ import fr.dawan.AppliCFABack.tools.HashTools;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
-
-
 @Service
 @Transactional
 public class UtilisateurServiceImpl implements UtilisateurService {
@@ -106,7 +105,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	CEFRepository cefRepository;
 	@Autowired
 	MaitreApprentissageRepository maitreApprentissageRepository;
-
 	@Autowired
 	EtudiantService etudiantService;
 	@Autowired
@@ -121,33 +119,31 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	EntrepriseRepository entrepriseRepository;
 	@Autowired
 	CentreFormationRepository centreFormationRepository;
-	
+
 	@Autowired
 	private DtoMapper mapper;
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Autowired
 	private HttpServletRequest request;
 
-	
 	@Value("${app.ldap.url}")
 	private String ldapUrl;
-	
+
 	@Value("${app.ldap.protocol}")
 	private String ldapProtocol;
-	
+
 	@Value("${app.ldap.technical.dn}")
 	private String ldapTechnicalAccDN;
 
 	@Value("${app.ldap.technical.pwd}")
 	private String ldapTechnicalAccPwd;
 
-	
 	public HttpServletRequest getRequest() {
 		return request;
 	}
@@ -187,13 +183,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public void setLdapTechnicalAccPwd(String ldapTechnicalAccPwd) {
 		this.ldapTechnicalAccPwd = ldapTechnicalAccPwd;
 	}
-	
-	private static Logger logger = Logger.getGlobal();
+
+	private static Logger logger = LoggerFactory.getLogger(UtilisateurRoleServiceImpl.class);
 
 	/**
 	 * Récupération de la liste des utilisateurs
 	 * 
-	 * @return res	Liste des objets utilisateurs
+	 * @return res Liste des objets utilisateurs
 	 */
 	@Override
 	public List<UtilisateurDto> getAll() {
@@ -215,15 +211,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	/**
-	 * Va permettre de récupérer tous les utilisateurs avec pagination
-	 * et recherche
+	 * Va permettre de récupérer tous les utilisateurs avec pagination et recherche
 	 * 
-	 * @param page	numero de la page
-	 * @param size	éléments sur la page
-	 * @param search	éléments utilisateurs (nom,prenom,login,adresse)
+	 * @param page   numero de la page
+	 * @param size   éléments sur la page
+	 * @param search éléments utilisateurs (nom,prenom,login,adresse)
 	 * @return res Liste des objets utilisateurs
 	 */
-	
+
 	@Override
 	public List<UtilisateurDto> getAllUtilisateurs(int page, int size, String search) {
 
@@ -253,7 +248,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	 * 
 	 * @param search recherche par prenom / nom / login / adresse
 	 */
-	
+
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(utilisateurRepository
@@ -264,13 +259,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Récupération des utilisateurs en fonction de l'id
 	 * 
-	 * @param id	id de l'utilisateur
+	 * @param id id de l'utilisateur
 	 * @return uDto objet utilsateur
 	 */
-	
+
 	@Override
 	public UtilisateurDto getById(long id) {
-		logger.log(Level.INFO, "id : ", id);
+		logger.info("id : ", id);
 		Optional<Utilisateur> userOpt = utilisateurRepository.findById(id);
 		if (userOpt.isPresent()) {
 			UtilisateurDto uDto = mapper.utilisateurToUtilisateurDto(userOpt.get());
@@ -292,6 +287,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				uDto.setFormateurDto(mapper.formateurToFormateurDto(userOpt.get().getFormateur()));
 			if (userOpt.get().getCef() != null)
 				uDto.setCefDto(mapper.cefToCEFDto(userOpt.get().getCef()));
+			if (userOpt.get().getTuteur() != null)
+				uDto.setTuteurDto(mapper.tuteurTotuteurDto(userOpt.get().getTuteur()));
 
 			return uDto;
 		}
@@ -303,9 +300,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	 * Récupération des utilisateurs en fonction de l'email
 	 * 
 	 * @param email email utilisateur
-	 * @return utilisateurDto	objet utilisateur
+	 * @return utilisateurDto objet utilisateur
 	 */
-	
+
 	@Override
 	public UtilisateurDto findByEmail(String email) {
 		Utilisateur user = utilisateurRepository.findByEmail(email);
@@ -329,6 +326,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		utilisateurDto.setEtudiantDto(mapper.etudiantToEtudiantDto(user.getEtudiant()));
 		utilisateurDto.setFormateurDto(mapper.formateurToFormateurDto(user.getFormateur()));
 		utilisateurDto.setCefDto(mapper.cefToCEFDto(user.getCef()));
+		utilisateurDto.setTuteurDto(mapper.tuteurTotuteurDto(user.getTuteur()));
 
 		return utilisateurDto;
 	}
@@ -338,7 +336,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	 * 
 	 * @param name nom de l'utilisateur
 	 */
-	
+
 	@Override
 	public UtilisateurDto getName(String name) {
 		Utilisateur user = utilisateurRepository.findByName(name);
@@ -346,16 +344,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			return mapper.utilisateurToUtilisateurDto(user);
 		return null;
 	}
-	
+
 	/**
 	 * Sauvegarde ou mise à jour d'un utilisateur
 	 * 
 	 * @param uDto objet utilisateur
 	 * @return result objet utilisateur (nouveau ou modifier)
-	 * @throws SaveInvalidException 
+	 * @throws SaveInvalidException
 	 * 
 	 */
-	
+
 	@Override
 	public UtilisateurDto insertUpdate(UtilisateurDto uDto) throws SaveInvalidException {
 
@@ -374,7 +372,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		try {
 			// Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
 			if (user.getId() == 0) {
-				if ( user.getPassword() == null|| user.getPassword().equals("") ) {
+				if (user.getPassword() == null || user.getPassword().equals("")) {
 					user.setPassword(generatePassword());
 					// emailService.newPassword(user.getLogin(), user.getPassword());
 					user.setPassword(HashTools.hashSHA512(user.getPassword()));
@@ -391,7 +389,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				}
 			}
 		} catch (Exception e) {
-			logger.log(Level.SEVERE,"hashPwd failed", e);
+			logger.error("hashPwd failed", e);
 		}
 
 		// On save l'addresse avant de save l'utilisateur
@@ -429,7 +427,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				if (role.getIntitule().equals("CEF")) {
 					isCEF = true;
 				}
-				if (role.getIntitule().equals("PRESTATAIREEXTERNE")) {
+				if (role.getIntitule().equals("TUTEUR")) {
 					isPrestataireExterne = true;
 				}
 			}
@@ -460,13 +458,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			cef = cefRepository.saveAndFlush(cef);
 			user.setCef(cef);
 			cef.setUtilisateur(user);
-			
+
 			cefRepository.saveAndFlush(cef);
 		}
-		if (isPrestataireExterne ) {
+		if (isPrestataireExterne) {
 			Utilisateur userExterne = new Utilisateur();
 			userExterne = utilisateurRepository.saveAndFlush(user);
-		
+
 		}
 
 		// Si on supprime un role
@@ -501,7 +499,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 //			cefService.deleteById(cef.getId());	
 		}
 
-
 		user = utilisateurRepository.saveAndFlush(user);
 
 		// On créer les dossier pour l'utilisateur dans le shared
@@ -520,9 +517,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Suppression d'un utilisateur
 	 * 
-	 * @param id	Id concernant un utilisateur
+	 * @param id Id concernant un utilisateur
 	 */
-	
+
 	@Override
 	public void deleteById(long id) {
 
@@ -567,10 +564,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Récupération des utilisateurs par adresse en fonction de la ville
 	 * 
-	 * @param ville	adresse etudiant
-	 * @return res	Liste utilisateur
+	 * @param ville adresse etudiant
+	 * @return res Liste utilisateur
 	 */
-	
+
 	@Override
 	public List<UtilisateurDto> findByAdresse(String ville) {
 		List<Utilisateur> users = utilisateurRepository.findByAdresseVille(ville);
@@ -594,8 +591,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Planning de l'utilisateur
 	 * 
-	 * @param id	id de l'utilisateur
-	 * @return result	Liste journee planning de l'utilisateur
+	 * @param id id de l'utilisateur
+	 * @return result Liste journee planning de l'utilisateur
 	 */
 	@Override
 	public List<JourneePlanningDto> getAllJourneePlanningByIdUtilisateur(long id) {
@@ -623,10 +620,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Congé de l'utilisateur
 	 * 
-	 * @param id	id de l'utilisateur
-	 * @return result	liste des objets conge de l'utilisateur
+	 * @param id id de l'utilisateur
+	 * @return result liste des objets conge de l'utilisateur
 	 */
-	
+
 	@Override
 	public List<CongeDto> getAllCongesByIdUtilisateur(long id) {
 		List<CongeDto> result = new ArrayList<>();
@@ -643,10 +640,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Récupération de l'adresse en fonction de l'id de l'utilisateur
 	 * 
-	 * @param id	id de l'utilisateur
+	 * @param id id de l'utilisateur
 	 * @return l'adresse utilisateur
 	 */
-	
+
 	@Override
 	public AdresseDto getAdresseByIdUtilisateur(long id) {
 		return mapper.adresseToAdresseDto(getUtilisateurById(id).getAdresse());
@@ -711,12 +708,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	/**
-	 * Récupération des utilisateur pa role 
+	 * Récupération des utilisateur pa role
 	 * 
-	 * @param idRole	objet utilisateur role
-	 * @return resfinal		liste des utilisateurs en fonction du role
+	 * @param idRole objet utilisateur role
+	 * @return resfinal liste des utilisateurs en fonction du role
 	 */
-	
+
 	@Override
 	public List<UtilisateurDto> findByRole(long idRole) {
 		List<UtilisateurDto> res = getAll();
@@ -758,13 +755,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	// recuperation des user par role + pagination + recherche
 	/**
-	 * Va permettre de récupérer tous utilisateurs par role avec pagination
-	 * et recherche
+	 * Va permettre de récupérer tous utilisateurs par role avec pagination et
+	 * recherche
 	 * 
-	 * @param page	numero de la page
-	 * @param size	éléments sur la page
-	 * @param search	éléments role utilisateur (prenom, nom, login)
-	 * @return res	liste des utilisateurs du role concerné
+	 * @param page   numero de la page
+	 * @param size   éléments sur la page
+	 * @param search éléments role utilisateur (prenom, nom, login)
+	 * @return res liste des utilisateurs du role concerné
 	 */
 	@Override
 	public List<UtilisateurDto> findAllByRoleByPage(int page, int size, String role, String search) {
@@ -776,9 +773,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<UtilisateurDto> res = new ArrayList<>();
 		for (Utilisateur u : users) {
 			UtilisateurDto uDto = mapper.utilisateurToUtilisateurDto(u);
-			
+
 			List<UtilisateurRoleDto> userRolesDto = new ArrayList<>();
-			for(UtilisateurRole ur : u.getRoles()) {
+			for (UtilisateurRole ur : u.getRoles()) {
 				userRolesDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(ur));
 			}
 			uDto.setRolesDto(userRolesDto);
@@ -790,23 +787,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Recherche par role / nombre
 	 * 
-	 * @param role	objet role utilisateur
+	 * @param role   objet role utilisateur
 	 * @param search recherche par nom / prenom / login
 	 */
-	
+
 	@Override
 	public CountDto countByRole(String role, String search) {
 		return new CountDto(utilisateurRepository
 				.countByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
 						role, search, role, search, role, search));
 	}
-	
+
 	/**
 	 * Utilisateur referent ou non
 	 * 
-	 * @param id	id referent
+	 * @param id id referent
 	 */
-	
+
 	@Override
 	public Boolean isReferent(long id) {
 		List<Promotion> result = promotionRespository.findAllByReferentPedagogiqueId(id);
@@ -816,10 +813,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * File upload
-	 * @throws FileException IOException 
+	 * 
+	 * @throws FileException IOException
 	 * 
 	 */
-	
+
 	@Override
 	public void uploadFile(MultipartFile file, long idUser) throws FileException, IOException {
 // J'ai 'renforcé' la secu en mappant l'id de l'utilisateur. Seul l'admin pourra uplaod des fichier. A voir si je laisse
@@ -871,7 +869,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 							// On appelle la methode pour inserer un utilisateur
 							insertUpdate(utilisateurDto);
 						} catch (Exception e) {
-							logger.log(Level.SEVERE,"insertUpdate failed", e);
+							logger.error("insertUpdate failed", e);
 						}
 					});
 				} else { // sinon => ERROR
@@ -890,7 +888,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Récupération de l'utilisateur en fonction de l'id
 	 * 
-	 * @param id	id de l'utilisateur
+	 * @param id id de l'utilisateur
 	 */
 	private Utilisateur getUtilisateurById(long id) {
 		Optional<Utilisateur> e = utilisateurRepository.findById(id);
@@ -905,14 +903,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Génération du mot de passe
 	 * 
-	 * @return generatedString	mot de passe généré
+	 * @return generatedString mot de passe généré
 	 */
 	// generation pwd
 	public String generatePassword() {
 		int leftLimit = 48; // numeral '0'
 		int rightLimit = 122; // letter 'z'
 		int targetStringLength = 10;
-		//Random random = new Random();
+		// Random random = new Random();
 		SecureRandom random = new SecureRandom();
 
 		// Genere un mot de passe aleatoire de 0 à 9 et de A à Z(Majuscule/minuscule
@@ -928,7 +926,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Reset du mot de passe
-	 * @throws EmailResetPasswordException 
+	 * 
+	 * @throws EmailResetPasswordException
 	 * 
 	 */
 	// reset pwd
@@ -967,6 +966,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 
 	}
+
 	/**
 	 * Enregistre en base de données le employees récupéré de DG2
 	 * 
@@ -1003,7 +1003,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					utilisateurImport.setCentreFormation(centreFormationOpt.get());
 				}
 				else {
-					logger.log(Level.SEVERE,"SaveAndFlush failed","Centre de formation Introuvable");
+					logger.error("SaveAndFlush failed","Centre de formation Introuvable");
 					throw new FetchDG2Exception("Centre de formation Introuvable");
 				}
 				
@@ -1023,7 +1023,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					utilisateurRepository.saveAndFlush(utilisateurImport);
 
 					} catch (Exception e) {
-						logger.log(Level.SEVERE,"SaveAndFlush failed", e);
+						logger.error("SaveAndFlush failed", e);
 
 					}
 				} else {
@@ -1034,7 +1034,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 
 					} catch (Exception e) {
-						logger.log(Level.SEVERE,"SaveAndFlush failed", e);
+						logger.error("SaveAndFlush failed", e);
 
 					
 					}
@@ -1044,8 +1044,84 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 	}
-	
-	
+
+//	@Override
+//	public void fetchAllDG2Employees(String email, String password)
+//			throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
+//		// Appel du web service DG2 pour récupérer les employés
+//		List<EmployeeDG2Dto> employees = callDG2WebService(email, password);
+//
+//		// Traitement des employés récupérés
+//		for (EmployeeDG2Dto employeeDG2 : employees) {
+//			Utilisateur utilisateurImport = mapper.employeeDg2ToUtilisateur(employeeDG2);
+//			CentreFormation centreFormation = getCentreFormationByLocationId(employeeDG2.getLocationId());
+//			Optional<Utilisateur> optUtilisateur = utilisateurRepository.findByIdDg2(utilisateurImport.getIdDg2());
+//			
+//			//logger.info("ID DG2 USER", employeeDG2.getPersonId());
+//			
+//			// Vérification si le centre de formation existe
+//			if (centreFormation == null) {
+//				logger.error("Centre de formation introuvable");
+//				throw new FetchDG2Exception("Centre de formation introuvable");
+//			}
+//
+//			// Vérification si l'utilisateur existe déjà
+//			if (optUtilisateur.isPresent()) {
+//				Utilisateur utilisateur = optUtilisateur.get();
+//				if (utilisateur.equals(utilisateurImport)
+//						&& utilisateur.getCentreFormation().getId() == centreFormation.getId()) {
+//					continue;
+//				} else {
+//					if (utilisateurImport != null) {
+//						utilisateurImport.setPassword(utilisateur.getPassword());
+//						utilisateurImport.setId(utilisateur.getId());
+//						utilisateurImport.setVersion(utilisateur.getVersion());
+//					}
+//				}
+//				try {
+//					utilisateurRepository.saveAndFlush(utilisateurImport);
+//				} catch (Exception e) {
+//					logger.error("SaveAndFlush failed", e);
+//				}
+//			} else {
+//				try {
+//					utilisateurImport.setPassword(HashTools.hashSHA512("password"));
+//					utilisateurRepository.saveAndFlush(utilisateurImport);
+//				} catch (Exception e) {
+//					logger.error("SaveAndFlush failed", e);
+//				}
+//			}
+//		}
+//	}
+//
+//	private List<EmployeeDG2Dto> callDG2WebService(String email, String password)
+//			throws URISyntaxException, FetchDG2Exception, JsonProcessingException {
+//		// URL DG2 qui concerne la récupération des employés
+//		URI url = new URI("https://dawan.org/api2/cfa/employees");
+//
+//		// Récupération des headers / email / password DG2
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("x-auth-token", email + ":" + password);
+//
+//		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+//
+//		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+//
+//		if (response.getStatusCode() == HttpStatus.OK) {
+//			String json = response.getBody();
+//			ObjectMapper objectMapper = new ObjectMapper();
+//			return objectMapper.readValue(json, new TypeReference<List<EmployeeDG2Dto>>() {
+//			});
+//		} else {
+//			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
+//		}
+//	}
+//
+//	private CentreFormation getCentreFormationByLocationId(Long locationId) {
+//		Optional<CentreFormation> centreFormationOpt = centreFormationRepository.findByIdDg2(locationId);
+//		return centreFormationOpt.orElse(null);
+//	}
+
 	@Override
 	public LoginResponseDto checkLogin(LoginDto loginDto) throws Exception {
 
@@ -1056,8 +1132,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			try {
 				Hashtable<String, String> environment = new Hashtable<String, String>();
 				environment.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-				environment.put(Context.PROVIDER_URL, ldapUrl); 
-				environment.put(Context.SECURITY_PROTOCOL, ldapProtocol); 
+				environment.put(Context.PROVIDER_URL, ldapUrl);
+				environment.put(Context.SECURITY_PROTOCOL, ldapProtocol);
 				environment.put(Context.SECURITY_AUTHENTICATION, "simple");
 
 				String organizationUnit = "Dawan";
@@ -1067,7 +1143,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					uid = uid + "-jehann";
 					organizationUnit = "jehann";
 				}
-				environment.put(Context.SECURITY_PRINCIPAL,"uid=" + uid + ",ou=" + organizationUnit + ",ou=Utilisateurs,dc=dawan,dc=fr");
+				environment.put(Context.SECURITY_PRINCIPAL,
+						"uid=" + uid + ",ou=" + organizationUnit + ",ou=Utilisateurs,dc=dawan,dc=fr");
 				environment.put(Context.SECURITY_CREDENTIALS, loginDto.getPassword());
 				DirContext ctx = new InitialDirContext(environment);
 				logger.info("Login of user " + loginDto.getLogin() + " from : " + request.getRemoteAddr());
@@ -1075,48 +1152,52 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 				// check if user exist in application Db
 				Utilisateur u = utilisateurRepository.findByEmail(loginDto.getLogin());
-				if (u != null) { //user found in DB
-					if(u.isActive())
+				if (u != null) { // user found in DB
+					if (u.isActive())
 						return createTokenFromUser(u);
 					else
 						throw new Exception("Error : Blocked Account. Contact administrator !");
-				}else { //user authenticated via LDAP but no present in DB
-					//recherche des infos
-					//on passe sur le compte technique pour pouvoir lire des infos
-					environment.put(Context.SECURITY_PRINCIPAL, ldapTechnicalAccDN); 
-					environment.put(Context.SECURITY_CREDENTIALS, ldapTechnicalAccPwd); 
-			
+				} else { // user authenticated via LDAP but no present in DB
+					// recherche des infos
+					// on passe sur le compte technique pour pouvoir lire des infos
+					environment.put(Context.SECURITY_PRINCIPAL, ldapTechnicalAccDN);
+					environment.put(Context.SECURITY_CREDENTIALS, ldapTechnicalAccPwd);
+
 					try {
 						ctx = new InitialDirContext(environment);
 						SearchControls searchCtls = new SearchControls();
 						searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
 						String searchFilter = "objectClass=inetOrgPerson";
-						NamingEnumeration<?> namingEnum = ctx.search("uid="+uid + ",ou="+organizationUnit+",ou=Utilisateurs,dc=dawan,dc=fr", searchFilter, searchCtls);
+						NamingEnumeration<?> namingEnum = ctx.search(
+								"uid=" + uid + ",ou=" + organizationUnit + ",ou=Utilisateurs,dc=dawan,dc=fr",
+								searchFilter, searchCtls);
 						while (namingEnum.hasMore()) {
 							SearchResult result = (SearchResult) namingEnum.next();
 							Attributes userAttr = result.getAttributes();
-							//System.out.println("uId = " + userAttr.get("uid"));
-							//System.out.println("Mail = " + userAttr.get("mail").get(0).toString());
-							//System.out.println("adFirstName = "+userAttr.get("givenName").get(0).toString());
-						    //System.out.println("adLastName = "+userAttr.get("sn").get(0).toString());
-						    //System.out.println("name = "+userAttr.get("cn").get(0).toString());
-						  
+							// System.out.println("uId = " + userAttr.get("uid"));
+							// System.out.println("Mail = " + userAttr.get("mail").get(0).toString());
+							// System.out.println("adFirstName =
+							// "+userAttr.get("givenName").get(0).toString());
+							// System.out.println("adLastName = "+userAttr.get("sn").get(0).toString());
+							// System.out.println("name = "+userAttr.get("cn").get(0).toString());
+
 							Utilisateur newUser = new Utilisateur();
-							//newUser.setRole(Utilisateur.Role.BASIC_USER); //TODO ROLE TUTEUR EXTERNE PAR DEFAUT
-							newUser.setActive(true); 
+							// newUser.setRole(Utilisateur.Role.BASIC_USER); //TODO ROLE TUTEUR EXTERNE PAR
+							// DEFAUT
+							newUser.setActive(true);
 							newUser.setLogin(loginDto.getLogin());
 							newUser.setPassword(HashTools.hashSHA512("defaultUs43%_T!_bA0uT(&2"));
-							newUser.setExternalAccount(true); //pas de stockage du password
-							
+							newUser.setExternalAccount(true); // pas de stockage du password
+
 							try {
-								newUser.setNom(userAttr.get("sn").get(0).toString());	
+								newUser.setNom(userAttr.get("sn").get(0).toString());
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
-							
+
 							try {
-								newUser.setPrenom(userAttr.get("givenName").get(0).toString());	
+								newUser.setPrenom(userAttr.get("givenName").get(0).toString());
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -1132,10 +1213,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				}
 
 			} catch (Exception ex) {
-				//ex.printStackTrace(); // TODO comment before prod
+				// ex.printStackTrace(); // TODO comment before prod
 				throw new Exception("Error : invalid credentials !");
 			}
-		} else { // login via Db ================================================================================
+		} else { // login via Db
+					// ================================================================================
 			Utilisateur u = utilisateurRepository.findByEmail(loginDto.getLogin());
 			if (u != null && u.getPassword().equals(HashTools.hashSHA512(loginDto.getPassword())) && u.isActive()) {
 				return createTokenFromUser(u);
@@ -1147,7 +1229,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		throw new Exception("Error : invalid credentials !");
 
 	}
-	
+
 	private LoginResponseDto createTokenFromUser(Utilisateur u) throws Exception {
 		LoginResponseDto result = DtoTools.convert(u, LoginResponseDto.class);
 		Map<String, Object> claims = new HashMap<String, Object>();
@@ -1163,7 +1245,5 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return result;
 	}
-	
-	
-	
+
 }

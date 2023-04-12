@@ -367,7 +367,7 @@ class InitDataBase {
 		List<CentreFormation> lstCentre = new ArrayList<CentreFormation>();
 		List<Cursus> lstCursus = new ArrayList<Cursus>();
 		List<Examen> lstExamen = new ArrayList<Examen>();
-		List<Formateur> lstFormateur = new ArrayList<Formateur>();
+		Formateur Formateur = new Formateur();
 		List<PassageExamen> lstPassageExamen = new ArrayList<PassageExamen>();
 		List<Projet> lstProjet = new ArrayList<Projet>();
 
@@ -401,7 +401,6 @@ class InitDataBase {
 		lstCursus.add(cursus1);
 		lstCursus.add(cursus2);
 		lstExamen.add(exam);
-		lstFormateur.add(formateur);
 		lstPassageExamen.add(passageExamen);
 		lstProjet.add(projet);
 
@@ -440,19 +439,19 @@ class InitDataBase {
 //		etudiant.setManager(monCEF);	
 		
 
-		intervention.setFormateurs(lstFormateur);
+		intervention.setFormateur(formateur);
 		intervention.setFormation(formation);
 		intervention.setPromotions(lstPromotion1);
 
-		intervention2.setFormateurs(lstFormateur);
+		intervention2.setFormateur(formateur);
 		intervention2.setFormation(formation2);
 		intervention2.setPromotions(lstPromotion1);
 
-		intervention3.setFormateurs(lstFormateur);
+		intervention3.setFormateur(formateur);
 		intervention3.setFormation(formation3);
 		intervention3.setPromotions(lstPromotion1);
 
-		intervention4.setFormateurs(lstFormateur);
+		intervention4.setFormateur(formateur);
 		intervention4.setFormation(formation4);
 		intervention4.setPromotions(lstPromotion1);		
 
@@ -493,7 +492,7 @@ class InitDataBase {
 		mApprentissage.setUtilisateur(monFormateur);
 		//monFormateur.setMaitreApprentissage(mApprentissage);
 
-		formateur.setInterventions(lstInterventions);
+		//formateur.setInterventions(lstInterventions);
 		formateur.setUtilisateur(monFormateur);
 
 		formation.setCursusLst(lstCursus);		

@@ -51,11 +51,16 @@ public class Utilisateur extends BaseEntity implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Etudiant etudiant;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Formateur formateur;
 	@OneToOne
 	private CEF cef;
 	
+	@OneToOne
+	private Tuteur tuteur;
+	
+
+
 	@OneToOne
 	private Signature signature;
 
@@ -247,6 +252,14 @@ public class Utilisateur extends BaseEntity implements Serializable {
 		this.centreFormation = centreFormation;
 	}
 	
+	public Tuteur getTuteur() {
+		return tuteur;
+	}
+
+	public void setTuteur(Tuteur tuteur) {
+		this.tuteur = tuteur;
+	}
+	
 	/**
 	 * @return le signature
 	 */
@@ -260,6 +273,11 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	 */
 	public void setSignature(Signature signature) {
 		this.signature = signature;
+	}
+	
+	public String getFullName() {
+		
+		return getNom() + " " + getPrenom();
 	}
 	
 	
@@ -317,6 +335,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 				+ ", formateur=" + formateur + ", cef=" + cef 
 				+ "version=" + this.getVersion()+ "]";
 	}
+
 	
 	
 }
