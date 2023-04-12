@@ -574,10 +574,13 @@ public class DtoMapperImpl implements DtoMapper {
 
         AnnexeDto annexeDto = new AnnexeDto();
 
+
         annexeDto.setId( annexe.getId() );
         annexeDto.setVersion( annexe.getVersion() );
         annexeDto.setLibelle( annexe.getLibelle() );
         annexeDto.setPieceJointe( annexe.getPieceJointe() );
+
+
 
         return annexeDto;
     }
