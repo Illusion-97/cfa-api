@@ -7,31 +7,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
 public class Facultatif extends BaseEntity implements Serializable{
 
 	
-	 @Column(nullable = false)
-	    private String libelle;
-	 
-	 @Column(nullable = false)
+	 @Column(length = 50)
 	   private String organisme;
 	 
-	 @Column(nullable = false)
+	 @Column(length = 50)
 	   private String intitule;
 	 
 	   private LocalDate date;
 	   
      @ManyToOne
 	   private DossierProfessionnel dossierProfessionnel;
-
-	public String getLibelle() {
-		return libelle;
-	}
-
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
 
 	public String getOrganisme() {
 		return organisme;
