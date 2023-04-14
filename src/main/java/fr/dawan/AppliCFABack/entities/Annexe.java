@@ -4,14 +4,17 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
 @Entity
 public class Annexe extends BaseEntity implements Serializable {
 
-    @Column(nullable = false)
-    private String libelle;
+	@Column(name = "libelle", columnDefinition = "VARCHAR(255) DEFAULT 'libl'", nullable = false)
+	private String libelle;
 
     @Column(nullable = false)
     private String pieceJointe;

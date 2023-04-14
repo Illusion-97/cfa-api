@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import fr.dawan.AppliCFABack.dto.AnnexeDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
@@ -401,7 +402,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 	
 
 	@Override
-	public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id,List<MultipartFile> file) 
+	public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id, List<MultipartFile> file) 
 	{
 		DossierProfessionnel dp = mapper.dossierProfessionnelDtoToDossierProfessionnel(dpDto);
         assert dp != null;
@@ -430,6 +431,8 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
             File newAnnexe = new File(pathFile);
             Annexe annex = annexes.get(i++);
             annex.setPieceJointe(pathFile);
+           
+           
             
             try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))){
                 try 
@@ -461,8 +464,10 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         if(etudiant.isPresent()){
              dp.setEtudiant(etudiant.get());
         }
+       
         //on insert ou met à jour le dossier en question
         dp = dossierProRepo.saveAndFlush(dp);
+        
 
         return DtoTools.convert(dp, DossierProEtudiantDto.class);
 		
