@@ -23,4 +23,6 @@ public interface DossierProfessionnelRepository extends JpaRepository<DossierPro
 
 	@Query("SELECT d FROM DossierProfessionnel d JOIN d.etudiant e ON e.id = :id JOIN e.promotions p JOIN p.cursus c WHERE d.cursus.id = c.id")
     List<DossierProfessionnel> findDossierProByEtudiantIdAndCursusId(long id);
+	
+	long countByNom(String nom);
 }

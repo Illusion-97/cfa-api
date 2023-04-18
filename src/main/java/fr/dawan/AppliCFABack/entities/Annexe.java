@@ -13,8 +13,8 @@ import java.io.Serializable;
 @Entity
 public class Annexe extends BaseEntity implements Serializable {
 
-	@Column(name = "libelle", columnDefinition = "VARCHAR(255) DEFAULT 'libl'", nullable = false)
-	private String libelle;
+	@Column(nullable = false)
+	private String libelleAnnexe;
 
     @Column(nullable = false)
     private String pieceJointe;
@@ -22,15 +22,15 @@ public class Annexe extends BaseEntity implements Serializable {
     @ManyToOne
     private DossierProfessionnel dossierProfessionnel;
 
-    public String getLibelle() {
-        return libelle;
-    }
+	public String getLibelleAnnexe() {
+		return libelleAnnexe;
+	}
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
+	public void setLibelleAnnexe(String libelleAnnexe) {
+		this.libelleAnnexe = libelleAnnexe;
+	}
 
-    public String getPieceJointe() {
+	public String getPieceJointe() {
         return pieceJointe;
     }
 

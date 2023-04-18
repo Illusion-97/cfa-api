@@ -20,6 +20,8 @@ import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfActivite
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfCompetenceDto;
 import fr.dawan.AppliCFABack.entities.*;
 import fr.dawan.AppliCFABack.repositories.*;
+
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import fr.dawan.AppliCFABack.dto.AnnexeDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
@@ -42,7 +45,8 @@ import freemarker.template.TemplateNotFoundException;
 
 @Service
 @Transactional
-public class DossierProfessionnelServiceImpl implements DossierProfessionnelService {
+public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierProfessionnel, DossierProfessionnelDto> implements DossierProfessionnelService {
+
 
     @Autowired
     DossierProfessionnelRepository dossierProRepo;
@@ -60,6 +64,9 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Autowired
     private EtudiantRepository etudiantRepository;
+    
+    @Autowired
+    private AnnexeRepository annexeRepository;
 
     @Autowired
     private ActiviteTypeRepository activiteTypeRepository;
@@ -72,6 +79,13 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Autowired
     private Configuration freemarkerConfig;
+    
+    @Autowired
+    public DossierProfessionnelServiceImpl(DossierProfessionnelRepository dossierProRepo) {
+    	super(dossierProRepo, DossierProfessionnelDto.class, DossierProfessionnel.class);
+        this.dossierProRepo = dossierProRepo;   
+       
+    }
 
     @Value("${backend.url}")
     private String backendUrl;
@@ -190,9 +204,28 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Override
     public List<DossierProfessionnelDto> getByIdEtudiant(long id) {
-        EtudiantDto e = etudiantService.getById(id);
+    	
+    	Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+ 	    List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
+ 	        Etudiant e = etudiant.get();
+ 	        List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
+             
+ 	        for (DossierProfessionnel dp : lstDossierProfessionnel) {
 
-        return e.getDossierProfessionnel();
+ 	            DossierProfessionnelDto dossierProDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
+ 	            
+ 	            dossierProDto.setId(dp.getId());
+ 	            dossierProDto.setNom(dp.getNom());
+ 	            dossierProDto.setAnnexeDtos(mapper.annexeToAnnexeDto(dp.getAnnexes()));
+ 	            dossierProDto.setCursusDto(mapper.cursusToCursusDto(dp.getCursus()));
+ 	            dossierProDto.setExperienceProfessionnelleDtos(mapper.experienceProfessionnelleToExperienceProfessionnelleDto(dp.getExperienceProfessionnelles()));
+ 	            dossierProDto.setFacultatifDto(mapper.facultatifToFacultatifDto(dp.getFacultatifs()));
+ 	          
+ 	            
+ 	           lstDossierProfessionnelDto.add(dossierProDto);
+ 	        }
+ 	    
+ 	    return lstDossierProfessionnelDto;
     }
 
     /**
@@ -431,8 +464,8 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
             File newAnnexe = new File(pathFile);
             Annexe annex = annexes.get(i++);
             annex.setPieceJointe(pathFile);
-           
-           
+            //annex.setLibelle("lib2");
+      
             
             try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))){
                 try 
@@ -471,6 +504,31 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
         return DtoTools.convert(dp, DossierProEtudiantDto.class);
 		
+		
+	}
+
+	@Override
+	public CountDto count(String search) {
+		long nb = dossierProRepo.countByNom(search);
+		CountDto result =  new CountDto();
+		result.setNb(nb);
+		return result;
+	}
+
+	@Override
+	public void delete(long id) {
+		Optional<DossierProfessionnel> opt = dossierProRepo.findById(id);
+		if(opt.isPresent())
+		{
+			DossierProfessionnel d = opt.get();
+			d.setEtudiant(null);
+            d.setExperienceProfessionnelles(null);
+            d.setCursus(null);
+            d.setAnnexes(null);
+            d.setFacultatifs(null);
+			dossierProRepo.delete(d);
+			
+		}
 		
 	}
 

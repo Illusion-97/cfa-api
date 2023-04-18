@@ -88,7 +88,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-14T16:14:42+0200",
+    date = "2023-04-18T10:28:54+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -504,8 +504,12 @@ public class DtoMapperImpl implements DtoMapper {
         DossierProfessionnelDto dossierProfessionnelDto = new DossierProfessionnelDto();
 
         dossierProfessionnelDto.setId( dossierProfessionnel.getId() );
-        dossierProfessionnelDto.setVersion( dossierProfessionnel.getVersion() );
         dossierProfessionnelDto.setNom( dossierProfessionnel.getNom() );
+        dossierProfessionnelDto.setCursusDto( cursusToCursusDto( dossierProfessionnel.getCursus() ) );
+        dossierProfessionnelDto.setExperienceProfessionnelleDtos( experienceProfessionnelleToExperienceProfessionnelleDto( dossierProfessionnel.getExperienceProfessionnelles() ) );
+        dossierProfessionnelDto.setAnnexeDtos( annexeToAnnexeDto( dossierProfessionnel.getAnnexes() ) );
+        dossierProfessionnelDto.setFacultatifDto( facultatifToFacultatifDto( dossierProfessionnel.getFacultatifs() ) );
+        dossierProfessionnelDto.setVersion( dossierProfessionnel.getVersion() );
 
         return dossierProfessionnelDto;
     }
@@ -575,9 +579,9 @@ public class DtoMapperImpl implements DtoMapper {
         AnnexeDto annexeDto = new AnnexeDto();
 
         annexeDto.setId( annexe.getId() );
-        annexeDto.setVersion( annexe.getVersion() );
-        annexeDto.setLibelle( annexe.getLibelle() );
+        annexeDto.setLibelleAnnexe( annexe.getLibelleAnnexe() );
         annexeDto.setPieceJointe( annexe.getPieceJointe() );
+        annexeDto.setVersion( annexe.getVersion() );
 
         return annexeDto;
     }
@@ -1176,7 +1180,7 @@ public class DtoMapperImpl implements DtoMapper {
 
         annexe.setId( annexeDto.getId() );
         annexe.setVersion( annexeDto.getVersion() );
-        annexe.setLibelle( annexeDto.getLibelle() );
+        annexe.setLibelleAnnexe( annexeDto.getLibelleAnnexe() );
         annexe.setPieceJointe( annexeDto.getPieceJointe() );
 
         return annexe;

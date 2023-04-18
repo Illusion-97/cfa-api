@@ -12,9 +12,11 @@ import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
+import fr.dawan.AppliCFABack.dto.BaseEntityDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 
-public interface DossierProfessionnelService {
+public interface DossierProfessionnelService extends GenericService<DossierProfessionnelDto>{
+	
 	List<DossierProfessionnelDto> getAll();
 
 	DossierProfessionnelDto getById(long id);

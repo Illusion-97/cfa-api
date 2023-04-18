@@ -162,7 +162,12 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     UtilisateurRoleDto utilisateurRoleToUtilisateurRoleDto(UtilisateurRole utilisateurRole);
 
-    @Mapping(source=".", target=".")
+    @Mapping(source="id", target="id")
+    @Mapping(source="nom", target="nom")
+    @Mapping(source="cursus", target="cursusDto")
+    @Mapping(source="experienceProfessionnelles", target="experienceProfessionnelleDtos")
+    @Mapping(source="annexes", target="annexeDtos")
+    @Mapping(source="facultatifs", target="facultatifDto")
     DossierProfessionnelDto dossierProfessionnelToDossierProfessionnelDto(DossierProfessionnel dossierProfessionnel);
    
     @Mapping(source="id", target="id")
@@ -187,7 +192,9 @@ public interface DtoMapper {
     DossierProjetEtudiantDto dossierProjetToDossierProjetEtudiantDto(DossierProjet dossierProjet);
     
    
-    @Mapping(source = ".", target = ".")
+    @Mapping(source ="id", target = "id")
+    @Mapping(source ="libelleAnnexe", target = "libelleAnnexe")
+    @Mapping(source ="pieceJointe", target = "pieceJointe")
     AnnexeDto AnnexeToAnnexeDto(Annexe annexe);
     
     @Mapping(source = ".", target = ".")
@@ -289,7 +296,6 @@ public interface DtoMapper {
 	@Mapping(source = "city", target = "ville")
 	@Mapping(source = "country", target = "countryCode")
 	@Mapping(source = "street", target = "libelle")
-
     Adresse etudiantUtilisateurDG2DtoToAdresse(EtudiantUtilisateurDG2Dto eDG2);
 
 	@Mapping(source = ".", target = ".")

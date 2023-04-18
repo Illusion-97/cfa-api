@@ -7,7 +7,8 @@ import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
 
 public class AnnexeDossierProjetDto extends BaseEntityDto implements Serializable {
 
-
+    private String libelleAnnexe;
+    
     private String pieceJointe;
 
     private long dossierProjetId;
@@ -19,9 +20,17 @@ public class AnnexeDossierProjetDto extends BaseEntityDto implements Serializabl
 
     public void setPieceJointe(String pieceJointe) {
         this.pieceJointe = pieceJointe;
-    }
+    } 
 
-    public long getDossierProjetId() {
+    public String getLibelleAnnexe() {
+		return libelleAnnexe;
+	}
+
+	public void setLibelleAnnexe(String libelleAnnexe) {
+		this.libelleAnnexe = libelleAnnexe;
+	}
+
+	public long getDossierProjetId() {
         return dossierProjetId;
     }
 
