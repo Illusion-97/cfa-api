@@ -19,12 +19,15 @@ import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 
+
+
 @SpringBootApplication
 @EnableAsync
 public class AppliCfaBackApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppliCfaBackApplication.class, args);
+		
 	}
 
 	@Autowired

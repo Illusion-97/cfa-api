@@ -7,29 +7,30 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class AnnexeDto extends BaseEntityDto implements Serializable {
 
-    private String libelle;
+    private String libelleAnnexe;
 
-    private MultipartFile pieceJointe;
+    private String pieceJointe;
 
     private long dossierProfessionnelId;
 
-    public String getLibelle() {
-        return libelle;
-    }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
+	public String getLibelleAnnexe() {
+		return libelleAnnexe;
+	}
 
-    public MultipartFile getPieceJointe() {
-        return pieceJointe;
-    }
+	public void setLibelleAnnexe(String libelleAnnexe) {
+		this.libelleAnnexe = libelleAnnexe;
+	}
 
-    public void setPieceJointe(MultipartFile pieceJointe) {
-        this.pieceJointe = pieceJointe;
-    }
+	public String getPieceJointe() {
+		return pieceJointe;
+	}
 
-    public long getDossierProfessionnelId() {
+	public void setPieceJointe(String pieceJointe) {
+		this.pieceJointe = pieceJointe;
+	}
+
+	public long getDossierProfessionnelId() {
         return dossierProfessionnelId;
     }
 

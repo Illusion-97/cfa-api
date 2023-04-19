@@ -3,6 +3,8 @@ package fr.dawan.AppliCFABack.services;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
 import fr.dawan.AppliCFABack.tools.PdfTools;
@@ -10,9 +12,11 @@ import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
+import fr.dawan.AppliCFABack.dto.BaseEntityDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 
-public interface DossierProfessionnelService {
+public interface DossierProfessionnelService extends GenericService<DossierProfessionnelDto>{
+	
 	List<DossierProfessionnelDto> getAll();
 
 	DossierProfessionnelDto getById(long id);
@@ -28,11 +32,13 @@ public interface DossierProfessionnelService {
 	DossierProfessionnelDto getByName(String nom);
 
 
-	DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id);
+	DossierProEtudiantDto saveOrUpdateDossierProfessionnel (DossierProEtudiantDto dpDto, long id, List<MultipartFile> file);
 
 	List<DossierProEtudiantDto> getAllDossierProfessionnel();
 
     String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws PdfTools, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
 	GetDossierProDto getAllDossierProfessionnelByEtudiant(long id);
+	
+
 }

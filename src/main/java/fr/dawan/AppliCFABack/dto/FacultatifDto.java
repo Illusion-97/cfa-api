@@ -4,20 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class FacultatifDto extends BaseEntityDto implements Serializable{
-
-	 private String libelle; 
+ 
 	 private String organisme;
 	 private String intitule;	 
 	 private LocalDate date;
 	 private long dossierProfessionnelId;
 	 
 	 
-	public String getLibelle() {
-		return libelle;
-	}
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
 	public String getOrganisme() {
 		return organisme;
 	}

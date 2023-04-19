@@ -11,7 +11,7 @@ import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 
 
-public interface TuteurService {
+public interface TuteurService extends GenericService<TuteurDto>{
 
 	List<TuteurDto> getAll();
 
@@ -27,9 +27,13 @@ public interface TuteurService {
 	
 	List<EtudiantDto> getAllEtudiantsByTuteurIdPerPage(long id, int page, int size);
 	
-	List<EtudiantDto> getEtudiatBySearch(long id, int page, int size, String search);
-		
+	List<EtudiantDto> getEtudiantBySearch(long id, int page, int size, String search);
+	
 	CountDto countEtudiantByIdTuteur(long id);
 
-	CountDto countEtudiantByIdTuteur(long id, String search);
+	CountDto countEtudiantByIdTuteurSearch(long id, String search);
+
+	//CountDto count(String string);
+	
+
 }

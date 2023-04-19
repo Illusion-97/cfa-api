@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.support.GenericConversionService;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
@@ -22,6 +24,7 @@ import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
@@ -37,7 +40,7 @@ import fr.dawan.AppliCFABack.tools.HashTools;
 
 @Service
 @Transactional
-public class TuteurServiceImpl implements TuteurService{
+public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> implements TuteurService{
 
 	@Autowired
 	TuteurRepository tuteurRepository;
@@ -45,6 +48,13 @@ public class TuteurServiceImpl implements TuteurService{
 	EtudiantRepository etudiantRepository;
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
+	
+	@Autowired
+	public TuteurServiceImpl(TuteurRepository tuteurRepository)
+	{
+		super(tuteurRepository, TuteurDto.class, Tuteur.class);
+		this.tuteurRepository = tuteurRepository;
+	}
 	
 	private static Logger logger = Logger.getGlobal();
 	
@@ -155,11 +165,8 @@ public class TuteurServiceImpl implements TuteurService{
 				return lstetudDto;
 	}
 
-	
-
-
 	@Override
-	public List<EtudiantDto> getEtudiatBySearch(long id, int page, int size, String search) {
+	public List<EtudiantDto> getEtudiantBySearch(long id, int page, int size, String search) {
 		List<Etudiant> lstetud= tuteurRepository.findEtudiantBySearch(id, PageRequest.of(page, size), search)
 				.get()
 				.collect(Collectors.toList());
@@ -173,17 +180,42 @@ public class TuteurServiceImpl implements TuteurService{
 					}
 				}
 				return lstetudDto;
+
 	}
-	
+
 	@Override
 	public CountDto countEtudiantByIdTuteur(long id) {
 		return new CountDto(etudiantRepository.countByTuteurId(id));
 	}
 
 	@Override
-	public CountDto countEtudiantByIdTuteur(long id, String search) {
-		// TODO Auto-generated method stub
+	public CountDto countEtudiantByIdTuteurSearch(long id, String search) {
 		return new CountDto(tuteurRepository.countByIdAndEtudiantsUtilisateurNomContainingAllIgnoringCase(id, search));
 	}
 
+	@Override
+	public CountDto count(String search) {
+		long nb = tuteurRepository.countByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(search, search);
+		CountDto result =  new CountDto();
+		result.setNb(nb);
+		return result;
+	}
+
+	@Override
+	public void delete(long id) {
+		Optional<Tuteur> opt = tuteurRepository.findById(id);
+		if(opt.isPresent())
+		{
+			Tuteur t = opt.get();
+			t.setEtudiants(null);
+			t.setUtilisateur(null);
+			tuteurRepository.delete(t);
+			
+		}
+		
+	}
+
+	
+
+	
 }

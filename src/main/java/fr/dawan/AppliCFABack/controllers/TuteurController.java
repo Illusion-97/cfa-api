@@ -103,12 +103,13 @@ public class TuteurController {
 					@PathVariable("search")Optional<String> search)
 			{
 				if (search.isPresent()) {
-					return tuteurService.countEtudiantByIdTuteur(id, search.get());
+					return tuteurService.countEtudiantByIdTuteurSearch(id, search.get());
 				}
 				return tuteurService.countEtudiantByIdTuteur(id);
 				 
 			}
 	}
+
 			
 
 
