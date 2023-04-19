@@ -1,8 +1,10 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -58,6 +60,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 
 			atDto.setExamensDto(examensDto);
 			atDto.setCursusActiviteTypeId(activiteType.getCursusActiviteType().getId());
+			
 			activiteTypesDto.add(atDto);
 		}
 		return activiteTypesDto;
@@ -134,6 +137,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 
 		List<ActiviteType> activiteTypes = activiteTypeRepo.getActiviteTypesByPromotionId(id);
 		List<ActiviteTypeDto> activiteTypeDto = new ArrayList<>();
+		
 		for (ActiviteType activiteType : activiteTypes) {
 			ActiviteTypeDto atDto = mapper.activiteTypeToActiviteDto(activiteType);
 			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<>();
@@ -149,22 +153,28 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 	@Override
 	public List<ActiviteTypeDto> getAllActiviteTypesByCursus(long id) {
 
-		List<ActiviteType> activiteTypes = activiteTypeRepo.getActiviteTypesByCursus(id);
-		List<ActiviteTypeDto> activiteTypeDto = new ArrayList<>();
-		for (ActiviteType activiteType : activiteTypes) {
+	    List<ActiviteType> activiteTypes = activiteTypeRepo.getActiviteTypesByCursus(id);
+	    List<ActiviteTypeDto> activiteTypeDto = new ArrayList<>();
+	    for (ActiviteType activiteType : activiteTypes) {
 
-			ActiviteTypeDto atDto = mapper.activiteTypeToActiviteDto(activiteType);
-			atDto.setCursusActiviteTypeId(activiteType.getCursusActiviteType().getId());
-			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<>();
+	        ActiviteTypeDto atDto = mapper.activiteTypeToActiviteDto(activiteType);
+	        atDto.setCursusActiviteTypeId(activiteType.getCursusActiviteType().getId());
+	        List<CompetenceProfessionnelleDto> cpDto = new ArrayList<>();
 
-			for (CompetenceProfessionnelle cp : activiteType.getCompetenceProfessionnelles()) {
-				cpDto.add(mapper.competenceProfessionnelleToCompetenceProfessionnelleDto(cp));
-		
-				atDto.setCompetenceProfessionnellesDto(cpDto);
-			}
-			activiteTypeDto.add(atDto);
-		}
-		return activiteTypeDto;
+	        //on set pour renvoyé un ensemble set
+	        Set<CompetenceProfessionnelle> cps = activiteType.getCompetenceProfessionnelles();
+	        //on transform en list pour pouvoir trier
+	        List<CompetenceProfessionnelle> cpList = new ArrayList<>(cps); 
+	        //trie par id croissant
+	        cpList.sort(Comparator.comparing(CompetenceProfessionnelle::getId)); // sort the list
+
+	        for (CompetenceProfessionnelle cp : cpList) {
+	            cpDto.add(mapper.competenceProfessionnelleToCompetenceProfessionnelleDto(cp));
+	        }
+	        atDto.setCompetenceProfessionnellesDto(cpDto);
+	        activiteTypeDto.add(atDto);
+	    }
+	    return activiteTypeDto;
 	}
 
 }

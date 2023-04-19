@@ -59,8 +59,8 @@ class CompetenceProfessionnelleControllerTests {
 		
 		when(tokenInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		
-		competenceProfessionnellesDto.add(new CompetenceProfessionnelleDto(1,"TestCompetenceProfessionnelles", (byte) 1 ,1));
-		competenceProfessionnellesDto.add(new CompetenceProfessionnelleDto(2,"TestCompetenceProfessionnelles2", (byte) 2 ,1));
+//		competenceProfessionnellesDto.add(new CompetenceProfessionnelleDto(1,"TestCompetenceProfessionnelles", (byte) 1 ,1));
+//		competenceProfessionnellesDto.add(new CompetenceProfessionnelleDto(2,"TestCompetenceProfessionnelles2", (byte) 2 ,1));
 	}
 	@Test
 	void contextLoads() {

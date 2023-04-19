@@ -16,6 +16,7 @@ public class DossierProjetEtudiantDto implements Serializable {
     private ProjetDossierProjetDto projets;
     private List<AnnexeDossierProjetDto> annexeDossierProjets;
     private List<InfoDossierProjetDto> infoDossierProjets;
+    private List<Long> competenceProfessionnelleIds;
     private List<ContenuDossierProjetDto> contenuDossierProjets;
     private List<ResumeDossierProjetDto> resumeDossierProjets;
     private int version;
@@ -76,6 +77,13 @@ public class DossierProjetEtudiantDto implements Serializable {
     public void setVersion(int version) {
         this.version = ++version;
     }
+
+	public List<Long> getCompetenceProfessionnelleIds() {
+		return competenceProfessionnelleIds;
+	}
+	public void setCompetenceProfessionnelleIds(List<Long> competenceProfessionnelleIds) {
+		this.competenceProfessionnelleIds = competenceProfessionnelleIds;
+	}
     
     
 

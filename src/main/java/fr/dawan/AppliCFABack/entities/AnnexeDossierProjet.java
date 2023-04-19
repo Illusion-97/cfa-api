@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Nicolas
  *
  */
+@SuppressWarnings("serial")
 @Entity
 public class AnnexeDossierProjet extends BaseEntity implements Serializable {
 

@@ -44,6 +44,7 @@ import fr.dawan.AppliCFABack.dto.ResumeDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.CompetenceCouvertesDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
@@ -166,6 +167,7 @@ public interface DtoMapper {
     @Mapping(source ="infoDossierProjets", target = "infoDossierProjets")
     @Mapping(source ="contenuDossierProjets", target = "contenuDossierProjets")
     @Mapping(source ="resumeDossierProjets", target = "resumeDossierProjets")
+    //@Mapping(source= "competenceProfessionnelles", target="competenceProfessionnelleIds")
     DossierProjetEtudiantDto dossierProjetToDossierProjetEtudiantDto(DossierProjet dossierProjet);
     
     @Mapping( source = ".", target = ".")
@@ -184,9 +186,8 @@ public interface DtoMapper {
     ActiviteTypeDto activiteTypeToActiviteTypeDto(ActiviteType activiteType);
 
     @Mapping(source = ".", target = ".")
-    CompetenceProfessionnelleDto competenceProfessionnelleToCompetenceProfessionnelleDto(
-            CompetenceProfessionnelle competenceProfessionnelle);
-
+    CompetenceProfessionnelleDto competenceProfessionnelleToCompetenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
+    
     @Mapping(target = "cursusLst", ignore = true)
     @Mapping(source = "id", target = "idDg2")
     @Mapping(source = "title", target = "titre")
@@ -194,6 +195,9 @@ public interface DtoMapper {
     @Mapping(source = "prerequisites", target = "prerequis")
     Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
 
+    
+    
+    
     @Mapping(source ="id", target = "id")
     @Mapping(source ="nom", target = "nom")
     @Mapping(source ="projets", target = "projet")
@@ -216,6 +220,12 @@ public interface DtoMapper {
     @Mapping(source = ".", target=".")
     List<ResumeDossierProjetDto> resumeToResumeDto (List<ResumeDossierProjet> resume);
     
+    @Mapping(source = ".", target = ".")
+    List<CompetenceCouvertesDossierProjetDto> competenceProfessionnelleToCompetenceCouvertesDto(List<CompetenceProfessionnelle> competenceProfessionnelle);
+    
+//    @Mapping(source = ".", target = ".")
+//    List<CompetenceProfessionnelleDto> ListcompetenceProfessionnelleToListCompetenceCouvertesDto(List<CompetenceProfessionnelle> competenceProfessionnelle);
+//    
     @Mapping(target = "activiteTypes", ignore = true)
     @Mapping(target = "formations", ignore = true)
     @Mapping(source = "id", target = "idDg2")
