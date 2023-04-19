@@ -1,8 +1,10 @@
-package fr.dawan.AppliCFABack.dto;
+package fr.dawan.AppliCFABack.dto.customdtos.dossierprojet;
 
 import java.io.Serializable;
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.BaseEntityDto;
+import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 
 /**
@@ -14,14 +16,15 @@ import fr.dawan.AppliCFABack.entities.DossierProjet;
  * @return DTO-Competence professionnelle Entity
  */
 @SuppressWarnings("serial")
-public class CompetenceProfessionnelleDto extends BaseEntityDto implements Serializable {
+public class CompetenceCouvertesDossierProjetDto extends BaseEntityDto implements Serializable {
 
 	private String libelle;
 	private byte numeroFiche;
 	private List<ExamenDto> examensDto;
 	private long activiteTypeId;
+	private long dossierProjetId;
     
-	public CompetenceProfessionnelleDto() {
+	public CompetenceCouvertesDossierProjetDto() {
 		super();
 	}
 
@@ -31,12 +34,13 @@ public class CompetenceProfessionnelleDto extends BaseEntityDto implements Seria
 	 * @param examensDto
 	 * @param activiteTypeId
 	 */
-	public CompetenceProfessionnelleDto(long id, String libelle, byte numeroFiche, long activiteTypeId, long dossierProjetId) {
+	public CompetenceCouvertesDossierProjetDto(long id, String libelle, byte numeroFiche, long activiteTypeId, long dossierProjetId) {
 		super();
 		this.id = id;
 		this.libelle = libelle;
 		this.numeroFiche = numeroFiche;
 		this.activiteTypeId = activiteTypeId;
+		this.dossierProjetId = dossierProjetId;
 	}
 
 	/**
@@ -95,5 +99,12 @@ public class CompetenceProfessionnelleDto extends BaseEntityDto implements Seria
 		this.activiteTypeId = activiteTypeId;
 	}
 
+	public long getDossierProjetId() {
+		return dossierProjetId;
+	}
+
+	public void setDossierProjetId(long dossierProjetId) {
+		this.dossierProjetId = dossierProjetId;
+	}
 
 }

@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -30,9 +31,6 @@ public class Etudiant extends BaseEntity implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<DossierProfessionnel> dossierProfessionnel;
-
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<DossierProjet> dossierProjet;
 	
 
 	@ManyToOne
@@ -48,7 +46,6 @@ public class Etudiant extends BaseEntity implements Serializable {
 		this.promotions = promotions;
 		this.groupes = groupes;
 		this.dossierProfessionnel = dossierProfessionnel;
-		this.dossierProjet = dossierProjet;
 		this.tuteur=tuteur;
 	}
 
@@ -74,14 +71,6 @@ public class Etudiant extends BaseEntity implements Serializable {
 
 	public void setDossierProfessionnel(List<DossierProfessionnel> dossierProfessionnel) {
 		this.dossierProfessionnel = dossierProfessionnel;
-	}
-
-	public List<DossierProjet> getDossierProjet() {
-		return dossierProjet;
-	}
-
-	public void setDossierProjet(List<DossierProjet> dossierProjet) {
-		this.dossierProjet = dossierProjet;
 	}
 
 	public Utilisateur getUtilisateur() {

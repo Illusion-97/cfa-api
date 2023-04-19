@@ -1,14 +1,17 @@
 package fr.dawan.AppliCFABack.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 
 @SuppressWarnings("serial")
@@ -36,9 +39,19 @@ public class DossierProjet extends BaseEntity implements Serializable {
 	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
     private List<ResumeDossierProjet> resumeDossierProjets;
 
-	@OneToMany
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(name = "dossier_projet_competence_professionnelles",
+	    joinColumns = @JoinColumn(name = "dossier_projet_id"),
+	    inverseJoinColumns = @JoinColumn(name = "competence_professionnelle_id"))
 	private List<CompetenceProfessionnelle> competenceProfessionnelles;
-
+	
+	public List<Long> getCompetenceProfessionnelleDtos() {
+		List<Long> competenceProfessionnelleIds = new ArrayList<>();
+		for(CompetenceProfessionnelle cp : competenceProfessionnelles ) {
+			competenceProfessionnelleIds.add(cp.getId());
+		}
+		return competenceProfessionnelleIds;
+	}
 
 	public String getNom() {
 		return nom;

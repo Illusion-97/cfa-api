@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,8 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
@@ -61,7 +60,7 @@ public class DossierProjetController {
 	}
 	
 	@GetMapping(value = "/{id}",produces = "application/json")
-	public DossierProjetEtudiantDto getById(@PathVariable("id") long id) {
+	public DossierProjetDto getById(@PathVariable("id") long id) {
 		return dossierProService.getById(id);
 	}
 	@GetMapping(value = "/etudiant/{id}",produces = "application/json")
@@ -83,21 +82,19 @@ public class DossierProjetController {
  		else
  			return dossierProService.getAllByPage(page, size, "");
  	}
-	
-	@PostMapping(value = "/save/{id}" ,consumes = "application/json", produces = "application/json")
-	public DossierProjetDto save(@RequestBody DossierProjetDto dpDto, @PathVariable("id") long id) {
-		DossierProjetDto dpDto1 = dossierProService.getByName(dpDto.getNom());
-		if (dpDto1!= null) {
-			return null;
-		}
-		DossierProjetDto dp = dossierProService.saveOrUpdate(dpDto);
-		EtudiantDto eDto = etudiantService.getById(id);
-		eDto.getDossierProjet().add(dp);
-		etudiantService.saveOrUpdate(eDto);
-		return dp;
+	@GetMapping(value = "/generer/{idDossierProjet}", produces = "text/plain")
+	public ResponseEntity<String> genererDossierProj(
+			@PathVariable("idDossierProjet") long idDossierProjet) throws Exception {
+
+		String outpoutPath = (dossierProService.genererDossierProjet(idDossierProjet));
+		File f = new File(outpoutPath);
+		
+		Path path = Paths.get(f.getAbsolutePath());
+		byte[] bytes =  Files.readAllBytes(path);
+		String base64 = Base64.getEncoder().encodeToString(bytes);
+
+		return ResponseEntity.ok().body(base64);
 	}
-	
-	
 	@DeleteMapping(value = "/{idEtudiant}/delete/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable("idEtudiant") long idEtudiant, @PathVariable("id") long id) {
 		try {
@@ -117,24 +114,10 @@ public class DossierProjetController {
 
 	}
 	
-	
-	@PutMapping(value = "/save/{id}" ,consumes = "application/json", produces = "application/json")
-	public DossierProjetDto update(@RequestBody DossierProjetDto dpDto, @PathVariable("id") long id) {
-		DossierProjetDto dpDto1 = dossierProService.getByName(dpDto.getNom());
-		if (dpDto1!= null) {
-			return null;
-		}
-		DossierProjetDto dp = dossierProService.saveOrUpdate(dpDto);
-		EtudiantDto eDto = etudiantService.getById(id);
-		eDto.getDossierProjet().add(dp);
-		etudiantService.saveOrUpdate(eDto);
-		return dp;
-	}
-	
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
     public DossierProjetEtudiantDto updateDossierProjet(@PathVariable("id") long id, 
     		@RequestParam("dossierProjet") String dpDto,
-    		@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException{
+    		@RequestParam("pieceJointe") List<MultipartFile> file) throws IOException{
 		//Chemin a changer selon les directives
 		String path = storageFolder + "DossierProjet" + "/" ;
         fileService.createDirectory(path);
@@ -142,20 +125,33 @@ public class DossierProjetController {
 		return dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, file);
     }
 	
+	@PostMapping(value = "/creation/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
+    public ResponseEntity<DossierProjetEtudiantDto> creationDossierProjet(@PathVariable("id") long id, 
+    		@RequestParam("dossierProjet") String dpDto,
+    		@RequestParam("pieceJointe") List<MultipartFile> file) throws IOException{
+		//Chemin a changer selon les directives
+		String path = storageFolder + "DossierProjet" + "/" ;
+        fileService.createDirectory(path);
+        DossierProjetEtudiantDto dpEtuDto = objectMapper.readValue(dpDto, DossierProjetEtudiantDto.class);
+        DossierProjetEtudiantDto created = dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, file);
+		return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
 	
-	@GetMapping(value = "/generer/{idDossierProjet}", produces = "text/plain")
-	public ResponseEntity<String> genererDossierProj(
-			@PathVariable("idDossierProjet") long idDossierProjet) throws Exception {
+	@PostMapping(value = "/import/etudiant/{id}", consumes ="multipart/form-data", produces ="application/json")
+	public ResponseEntity<DossierProjetEtudiantDto> uploadDossierProjet(@PathVariable("id") long id, 
+    		@RequestParam("dossierProjet") String dpDto,
+    		@RequestParam("annexes") List<MultipartFile> annexe,@RequestParam("contenus") List<MultipartFile> contenu,
+    		@RequestParam("resumes") List<MultipartFile> resume,@RequestParam("Infos") List<MultipartFile> info) throws IOException{
 
-		String outpoutPath = (dossierProService.genererDossierProjet(idDossierProjet));
-		File f = new File(outpoutPath);
+		//Chemin a changer selon les directives
+				String path = storageFolder + "DossierProjet" + "/" ;
+		        fileService.createDirectory(path);
+		        DossierProjetEtudiantDto dpEtuDto = objectMapper.readValue(dpDto, DossierProjetEtudiantDto.class);
+		        DossierProjetEtudiantDto created = dossierProService.uploadDossierProjet(dpEtuDto, id, annexe, contenu, resume, info);
+				return ResponseEntity.status(HttpStatus.CREATED).body(created);
 		
-		Path path = Paths.get(f.getAbsolutePath());
-		byte[] bytes =  Files.readAllBytes(path);
-		String base64 = Base64.getEncoder().encodeToString(bytes);
-
-		return ResponseEntity.ok().body(base64);
 	}
+
 
 	
 	
