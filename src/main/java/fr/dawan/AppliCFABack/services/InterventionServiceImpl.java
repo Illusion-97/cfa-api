@@ -270,6 +270,7 @@ public class InterventionServiceImpl implements InterventionService {
 	 * @param Id Id concernant l'intervention
 	 */
 
+	@SuppressWarnings("unused")
 	@Override
 	public void deleteById(long id) {
 		// On regarde si un devoir est lié à une intervention
@@ -354,9 +355,9 @@ public class InterventionServiceImpl implements InterventionService {
 		Formateur formateur = formateurRepository.findByInterventionId(id);
 		List<FormateurDto> lstFormDto = new ArrayList<>();
 		if (formateur != null) {
-				FormateurDto fDto = mapper.formateurToFormateurDto(formateur);
-				fDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(formateur.getUtilisateur()));
-				lstFormDto.add(fDto);
+			FormateurDto fDto = mapper.formateurToFormateurDto(formateur);
+			fDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(formateur.getUtilisateur()));
+			lstFormDto.add(fDto);
 		}
 		return lstFormDto;
 	}
@@ -629,7 +630,6 @@ public class InterventionServiceImpl implements InterventionService {
 				findFormateur(fetchResJson);
 				logger.info("FetchDg2Intervention >>> START /for");
 				for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
-					
 
 					Intervention interventionImported = dtoTools.promotionOrInterventionDG2DtoToIntervention(iDtoDG2);
 
@@ -658,10 +658,10 @@ public class InterventionServiceImpl implements InterventionService {
 						// Récupération de la promotion correspondante à l'ID en paramètre
 						Optional<Promotion> promotion = promoRepository.findByIdDg2(idPrmotionDg2);
 						if (interventionImported != null && promotion != null && promotion.isPresent()) {
-					        if (interventionImported.getPromotions() == null) {
-					            interventionImported.setPromotions(new ArrayList<>());
-					        }
-					        interventionImported.getPromotions().add(promotion.get());
+							if (interventionImported.getPromotions() == null) {
+								interventionImported.setPromotions(new ArrayList<>());
+							}
+							interventionImported.getPromotions().add(promotion.get());
 						} else {
 							logger.warn("Promotion not found with idDg2 : " + idPrmotionDg2);
 							continue;
@@ -682,15 +682,15 @@ public class InterventionServiceImpl implements InterventionService {
 						logger.warn("Formateur not found with idDg2 : " + iDtoDG2.getTrainerPersonId());
 						continue;
 					}
-				
+
 					interventionImported.setFormateur(formateur.get());
 
 					interventionRepository.saveAndFlush(interventionImported);
-					
-					//utilisateurRepository.saveAndFlush(formateur.get().getUtilisateur());
-					
-					logger.info("interventionImported >>> " );
 
+					// utilisateurRepository.saveAndFlush(formateur.get().getUtilisateur());
+
+					logger.info("interventionImported >>> ");
+					result.add(interventionImported);
 				}
 
 			}
@@ -699,7 +699,6 @@ public class InterventionServiceImpl implements InterventionService {
 			logger.error("FetchDg2Intervention>>>>>>>>ERROR End failed");
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
-
 		return result;
 	}
 
@@ -731,5 +730,5 @@ public class InterventionServiceImpl implements InterventionService {
 		return count;
 
 	}
-	
+
 }

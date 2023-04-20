@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 
 @Repository
@@ -38,5 +39,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	Optional<Utilisateur> findByIdDg2(long idDg2);
 
 	Optional<Utilisateur> findDistinctByIdDg2(long personId);
+	
+	Optional<Utilisateur> findByFormateur(Formateur formateur);
 
 }
