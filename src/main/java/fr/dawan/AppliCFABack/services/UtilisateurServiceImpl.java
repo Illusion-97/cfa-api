@@ -1029,7 +1029,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				} else {
 					
 					try {
-						utilisateurImport.setPassword(HashTools.hashSHA512("password"));
+						utilisateurImport.setPassword(HashTools.hashSHA512("cfa123_+Nawad%!"));
 					    utilisateurRepository.saveAndFlush(utilisateurImport);
 
 
