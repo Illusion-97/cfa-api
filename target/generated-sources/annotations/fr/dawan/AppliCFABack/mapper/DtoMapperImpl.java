@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.mapper;
 import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
 import fr.dawan.AppliCFABack.dto.AdresseDto;
 import fr.dawan.AppliCFABack.dto.AnnexeDossierProjetDto;
+import fr.dawan.AppliCFABack.dto.AnnexeDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
@@ -21,6 +22,7 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
+import fr.dawan.AppliCFABack.dto.FacultatifDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
@@ -38,10 +40,15 @@ import fr.dawan.AppliCFABack.dto.ResumeDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.ActiviteTypeDossierProDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CompetenceDossierProDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.Annexe;
 import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
@@ -57,6 +64,7 @@ import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
+import fr.dawan.AppliCFABack.entities.Facultatif;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
@@ -73,12 +81,14 @@ import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-20T15:26:08+0200",
+    date = "2023-04-21T15:49:39+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -125,9 +135,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         adresseDto.setId( adresse.getId() );
         adresseDto.setVersion( adresse.getVersion() );
-        adresseDto.setCodePostal( adresse.getCodePostal() );
         adresseDto.setLibelle( adresse.getLibelle() );
         adresseDto.setVille( adresse.getVille() );
+        adresseDto.setCodePostal( adresse.getCodePostal() );
 
         return adresseDto;
     }
@@ -174,10 +184,10 @@ public class DtoMapperImpl implements DtoMapper {
         congeDto.setVersion( conge.getVersion() );
         congeDto.setDateDebut( conge.getDateDebut() );
         congeDto.setDateFin( conge.getDateFin() );
-        congeDto.setJustificatif( conge.getJustificatif() );
         congeDto.setMotif( conge.getMotif() );
-        congeDto.setStatus( conge.getStatus() );
         congeDto.setType( conge.getType() );
+        congeDto.setStatus( conge.getStatus() );
+        congeDto.setJustificatif( conge.getJustificatif() );
 
         return congeDto;
     }
@@ -192,14 +202,14 @@ public class DtoMapperImpl implements DtoMapper {
 
         cursusDto.setId( cursus.getId() );
         cursusDto.setVersion( cursus.getVersion() );
-        cursusDto.setCodeTitre( cursus.getCodeTitre() );
+        cursusDto.setTitre( cursus.getTitre() );
         cursusDto.setDuree( cursus.getDuree() );
+        cursusDto.setSlug( cursus.getSlug() );
         cursusDto.setIdDg2( cursus.getIdDg2() );
-        cursusDto.setMillesime( cursus.getMillesime() );
         cursusDto.setNiveau( cursus.getNiveau() );
         cursusDto.setSigle( cursus.getSigle() );
-        cursusDto.setSlug( cursus.getSlug() );
-        cursusDto.setTitre( cursus.getTitre() );
+        cursusDto.setMillesime( cursus.getMillesime() );
+        cursusDto.setCodeTitre( cursus.getCodeTitre() );
 
         return cursusDto;
     }
@@ -231,11 +241,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         entrepriseDto.setId( entreprise.getId() );
         entrepriseDto.setVersion( entreprise.getVersion() );
-        entrepriseDto.setEffectifTotal( entreprise.getEffectifTotal() );
-        entrepriseDto.setEmployeurType( entreprise.getEmployeurType() );
-        entrepriseDto.setNaf( entreprise.getNaf() );
         entrepriseDto.setRaisonSociale( entreprise.getRaisonSociale() );
         entrepriseDto.setSiret( entreprise.getSiret() );
+        entrepriseDto.setNaf( entreprise.getNaf() );
+        entrepriseDto.setEffectifTotal( entreprise.getEffectifTotal() );
+        entrepriseDto.setEmployeurType( entreprise.getEmployeurType() );
 
         return entrepriseDto;
     }
@@ -267,11 +277,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         examenDto.setId( examen.getId() );
         examenDto.setVersion( examen.getVersion() );
-        examenDto.setDateExamen( examen.getDateExamen() );
+        examenDto.setTitre( examen.getTitre() );
         examenDto.setDescriptif( examen.getDescriptif() );
         examenDto.setDuree( examen.getDuree() );
         examenDto.setPieceJointe( examen.getPieceJointe() );
-        examenDto.setTitre( examen.getTitre() );
+        examenDto.setDateExamen( examen.getDateExamen() );
 
         return examenDto;
     }
@@ -301,17 +311,17 @@ public class DtoMapperImpl implements DtoMapper {
 
         formationDto.setId( formation.getId() );
         formationDto.setVersion( formation.getVersion() );
+        formationDto.setTitre( formation.getTitre() );
         List<Long> list = formation.getCursusLstId();
         if ( list != null ) {
             formationDto.setCursusLstId( new ArrayList<Long>( list ) );
         }
-        formationDto.setDuration( formation.getDuration() );
         formationDto.setIdDg2( formation.getIdDg2() );
-        formationDto.setObjectif( formation.getObjectif() );
-        formationDto.setPlan( formation.getPlan() );
-        formationDto.setPrerequis( formation.getPrerequis() );
         formationDto.setSlug( formation.getSlug() );
-        formationDto.setTitre( formation.getTitre() );
+        formationDto.setDuration( formation.getDuration() );
+        formationDto.setObjectif( formation.getObjectif() );
+        formationDto.setPrerequis( formation.getPrerequis() );
+        formationDto.setPlan( formation.getPlan() );
 
         return formationDto;
     }
@@ -373,8 +383,8 @@ public class DtoMapperImpl implements DtoMapper {
         noteDto.setId( note.getId() );
         noteDto.setVersion( note.getVersion() );
         noteDto.setNoteObtenue( note.getNoteObtenue() );
-        noteDto.setObservation( note.getObservation() );
         noteDto.setSatisfaction( note.getSatisfaction() );
+        noteDto.setObservation( note.getObservation() );
 
         return noteDto;
     }
@@ -405,8 +415,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         projetDto.setId( projet.getId() );
         projetDto.setVersion( projet.getVersion() );
-        projetDto.setDescription( projet.getDescription() );
         projetDto.setNom( projet.getNom() );
+        projetDto.setDescription( projet.getDescription() );
 
         return projetDto;
     }
@@ -437,10 +447,10 @@ public class DtoMapperImpl implements DtoMapper {
         promotionDto.setCursusDto( cursusToCursusDto( promotion.getCursus() ) );
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
+        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
         promotionDto.setIdDg2( promotion.getIdDg2() );
-        promotionDto.setNom( promotion.getNom() );
 
         return promotionDto;
     }
@@ -456,16 +466,16 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateurDto.setId( utilisateur.getId() );
         utilisateurDto.setVersion( utilisateur.getVersion() );
         utilisateurDto.setActive( utilisateur.isActive() );
-        utilisateurDto.setCivilite( utilisateur.getCivilite() );
-        utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
         utilisateurDto.setExternalAccount( utilisateur.isExternalAccount() );
-        utilisateurDto.setIdDg2( utilisateur.getIdDg2() );
         utilisateurDto.setLogin( utilisateur.getLogin() );
-        utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setPassword( utilisateur.getPassword() );
         utilisateurDto.setPrenom( utilisateur.getPrenom() );
+        utilisateurDto.setNom( utilisateur.getNom() );
+        utilisateurDto.setCivilite( utilisateur.getCivilite() );
+        utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
         utilisateurDto.setTelephoneFixe( utilisateur.getTelephoneFixe() );
+        utilisateurDto.setIdDg2( utilisateur.getIdDg2() );
 
         return utilisateurDto;
     }
@@ -501,6 +511,42 @@ public class DtoMapperImpl implements DtoMapper {
     }
 
     @Override
+    public DossierProfessionnel dossierProfessionnelDtoToDossierProfessionnel(DossierProEtudiantDto dosierProEtudiant) {
+        if ( dosierProEtudiant == null ) {
+            return null;
+        }
+
+        DossierProfessionnel dossierProfessionnel = new DossierProfessionnel();
+
+        dossierProfessionnel.setId( dosierProEtudiant.getId() );
+        dossierProfessionnel.setNom( dosierProEtudiant.getNom() );
+        dossierProfessionnel.setCursus( cursusDossierProDtoToCursus( dosierProEtudiant.getCursusDto() ) );
+        dossierProfessionnel.setExperienceProfessionnelles( experienceProfessionnelleDtoListToExperienceProfessionnelleList1( dosierProEtudiant.getExperienceProfessionnelleDtos() ) );
+        dossierProfessionnel.setAnnexes( annexeDtoListToAnnexeList( dosierProEtudiant.getAnnexeDtos() ) );
+        dossierProfessionnel.setFacultatifs( facultatifDtoListToFacultatifList( dosierProEtudiant.getFacultatifDto() ) );
+        dossierProfessionnel.setVersion( dosierProEtudiant.getVersion() );
+
+        return dossierProfessionnel;
+    }
+
+    @Override
+    public DossierProjetDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet) {
+        if ( dossierProjet == null ) {
+            return null;
+        }
+
+        DossierProjetDto dossierProjetDto = new DossierProjetDto();
+
+        dossierProjetDto.setId( dossierProjet.getId() );
+        dossierProjetDto.setVersion( dossierProjet.getVersion() );
+        dossierProjetDto.setNom( dossierProjet.getNom() );
+        dossierProjetDto.setProjet( projetToProjetDto( dossierProjet.getProjet() ) );
+        dossierProjetDto.setEtudiant( etudiantToEtudiantDto( dossierProjet.getEtudiant() ) );
+
+        return dossierProjetDto;
+    }
+
+    @Override
     public DossierProjetEtudiantDto dossierProjetToDossierProjetEtudiantDto(DossierProjet dossierProjet) {
         if ( dossierProjet == null ) {
             return null;
@@ -521,20 +567,36 @@ public class DtoMapperImpl implements DtoMapper {
     }
 
     @Override
-    public DossierProjetDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet) {
-        if ( dossierProjet == null ) {
+    public AnnexeDto AnnexeToAnnexeDto(Annexe annexe) {
+        if ( annexe == null ) {
             return null;
         }
 
-        DossierProjetDto dossierProjetDto = new DossierProjetDto();
+        AnnexeDto annexeDto = new AnnexeDto();
 
-        dossierProjetDto.setId( dossierProjet.getId() );
-        dossierProjetDto.setVersion( dossierProjet.getVersion() );
-        dossierProjetDto.setEtudiant( etudiantToEtudiantDto( dossierProjet.getEtudiant() ) );
-        dossierProjetDto.setNom( dossierProjet.getNom() );
-        dossierProjetDto.setProjet( projetToProjetDto( dossierProjet.getProjet() ) );
+        annexeDto.setId( annexe.getId() );
+        annexeDto.setVersion( annexe.getVersion() );
+        annexeDto.setLibelle( annexe.getLibelle() );
+        annexeDto.setPieceJointe( annexe.getPieceJointe() );
 
-        return dossierProjetDto;
+        return annexeDto;
+    }
+
+    @Override
+    public FacultatifDto FacultatifToFacultatifDto(Facultatif facultatif) {
+        if ( facultatif == null ) {
+            return null;
+        }
+
+        FacultatifDto facultatifDto = new FacultatifDto();
+
+        facultatifDto.setId( facultatif.getId() );
+        facultatifDto.setVersion( facultatif.getVersion() );
+        facultatifDto.setOrganisme( facultatif.getOrganisme() );
+        facultatifDto.setIntitule( facultatif.getIntitule() );
+        facultatifDto.setDate( facultatif.getDate() );
+
+        return facultatifDto;
     }
 
     @Override
@@ -561,94 +623,94 @@ public class DtoMapperImpl implements DtoMapper {
 
         cerfaDto.setId( cerfa.getId() );
         cerfaDto.setVersion( cerfa.getVersion() );
-        cerfaDto.setAdresseApprenti( adresseToAdresseDto( cerfa.getAdresseApprenti() ) );
-        cerfaDto.setAdresseEmployeur( adresseToAdresseDto( cerfa.getAdresseEmployeur() ) );
-        cerfaDto.setAdresseRepresentant( adresseToAdresseDto( cerfa.getAdresseRepresentant() ) );
-        cerfaDto.setAdresseResponsable( adresseToAdresseDto( cerfa.getAdresseResponsable() ) );
-        cerfaDto.setAssuranceChomage( cerfa.getAssuranceChomage() );
-        cerfaDto.setAutre( cerfa.getAutre() );
-        cerfaDto.setCaisseDeRetraite( cerfa.getCaisseDeRetraite() );
-        cerfaDto.setCfaEntreprise( cerfa.getCfaEntreprise() );
-        cerfaDto.setCfaResponsable( cerfa.getCfaResponsable() );
-        cerfaDto.setCfaSiret( cerfa.getCfaSiret() );
-        cerfaDto.setCfaUai( cerfa.getCfaUai() );
-        cerfaDto.setCodeIdccConvention( cerfa.getCodeIdccConvention() );
-        cerfaDto.setCodeRncp( cerfa.getCodeRncp() );
-        cerfaDto.setCommuneNaissance( cerfa.getCommuneNaissance() );
-        cerfaDto.setComplementApprentit( cerfa.getComplementApprentit() );
+        cerfaDto.setModeContractuelApprentissage( cerfa.getModeContractuelApprentissage() );
         cerfaDto.setComplementEmployeur( cerfa.getComplementEmployeur() );
+        cerfaDto.setEmployeurType( cerfa.getEmployeurType() );
+        cerfaDto.setAssuranceChomage( cerfa.getAssuranceChomage() );
+        cerfaDto.setComplementApprentit( cerfa.getComplementApprentit() );
         cerfaDto.setComplementRepresentant( cerfa.getComplementRepresentant() );
+        cerfaDto.setEgilibiliteFonction( cerfa.getEgilibiliteFonction() );
         cerfaDto.setComplementResponsable( cerfa.getComplementResponsable() );
-        cerfaDto.setContratNum( cerfa.getContratNum() );
-        cerfaDto.setContratType( cerfa.getContratType() );
+        cerfaDto.setFaitA( cerfa.getFaitA() );
+        cerfaDto.setEmployeurPriveOuPublic( cerfa.getEmployeurPriveOuPublic() );
+        cerfaDto.setNomEmployeur( cerfa.getNomEmployeur() );
+        cerfaDto.setPrenomEmployeur( cerfa.getPrenomEmployeur() );
+        cerfaDto.setAdresseEmployeur( adresseToAdresseDto( cerfa.getAdresseEmployeur() ) );
+        cerfaDto.setTelEmployeur( cerfa.getTelEmployeur() );
+        cerfaDto.setEmailEmployeur( cerfa.getEmailEmployeur() );
+        cerfaDto.setSiretEtablissement( cerfa.getSiretEtablissement() );
+        cerfaDto.setEmployeurSpecifique( cerfa.getEmployeurSpecifique() );
+        cerfaDto.setNaf( cerfa.getNaf() );
+        cerfaDto.setEffectifEntreprise( cerfa.getEffectifEntreprise() );
         cerfaDto.setConventionCollectiveApplicable( cerfa.getConventionCollectiveApplicable() );
-        cerfaDto.setDateAvenant( cerfa.getDateAvenant() );
-        cerfaDto.setDateConclusion( cerfa.getDateConclusion() );
+        cerfaDto.setCodeIdccConvention( cerfa.getCodeIdccConvention() );
+        cerfaDto.setNomNaissanceApprenti( cerfa.getNomNaissanceApprenti() );
+        cerfaDto.setPrenomApprenti( cerfa.getPrenomApprenti() );
+        cerfaDto.setNirApprenti( cerfa.getNirApprenti() );
         cerfaDto.setDateDeNaissance( cerfa.getDateDeNaissance() );
-        cerfaDto.setDateDeNaissanceDeuxiemeTuteur( cerfa.getDateDeNaissanceDeuxiemeTuteur() );
-        cerfaDto.setDateDeNaissancePremierTuteur( cerfa.getDateDeNaissancePremierTuteur() );
-        cerfaDto.setDateDebutContrat( cerfa.getDateDebutContrat() );
-        cerfaDto.setDateDebutFormation( cerfa.getDateDebutFormation() );
-        cerfaDto.setDateDecision( cerfa.getDateDecision() );
-        cerfaDto.setDateExamen( cerfa.getDateExamen() );
-        cerfaDto.setDateFinContrat( cerfa.getDateFinContrat() );
+        cerfaDto.setSexe( cerfa.getSexe() );
+        cerfaDto.setAdresseApprenti( adresseToAdresseDto( cerfa.getAdresseApprenti() ) );
         cerfaDto.setDepartementNaissance( cerfa.getDepartementNaissance() );
+        cerfaDto.setCommuneNaissance( cerfa.getCommuneNaissance() );
+        cerfaDto.setTelApprenti( cerfa.getTelApprenti() );
+        cerfaDto.setEmailApprenti( cerfa.getEmailApprenti() );
+        cerfaDto.setNationalite( cerfa.getNationalite() );
+        cerfaDto.setRegimeSocial( cerfa.getRegimeSocial() );
+        cerfaDto.setSportifs( cerfa.getSportifs() );
+        cerfaDto.setHandicape( cerfa.getHandicape() );
+        cerfaDto.setSituationAvantContrat( cerfa.getSituationAvantContrat() );
         cerfaDto.setDernierDiplome( cerfa.getDernierDiplome() );
         cerfaDto.setDerniereClasseSuivi( cerfa.getDerniereClasseSuivi() );
-        cerfaDto.setDerogationType( cerfa.getDerogationType() );
-        cerfaDto.setDiplomeCode( cerfa.getDiplomeCode() );
-        cerfaDto.setDiplomeLePlusEleveObtenu( cerfa.getDiplomeLePlusEleveObtenu() );
-        cerfaDto.setDiplomeVise( cerfa.getDiplomeVise() );
-        cerfaDto.setEffectifEntreprise( cerfa.getEffectifEntreprise() );
-        cerfaDto.setEgilibiliteFonction( cerfa.getEgilibiliteFonction() );
-        cerfaDto.setEmailApprenti( cerfa.getEmailApprenti() );
-        cerfaDto.setEmailEmployeur( cerfa.getEmailEmployeur() );
-        cerfaDto.setEmployeurPriveOuPublic( cerfa.getEmployeurPriveOuPublic() );
-        cerfaDto.setEmployeurSpecifique( cerfa.getEmployeurSpecifique() );
-        cerfaDto.setEmployeurType( cerfa.getEmployeurType() );
-        cerfaDto.setEtudiant( etudiantToEtudiantDto( cerfa.getEtudiant() ) );
-        cerfaDto.setFaitA( cerfa.getFaitA() );
-        cerfaDto.setFormationDuree( cerfa.getFormationDuree() );
-        cerfaDto.setHandicape( cerfa.getHandicape() );
-        cerfaDto.setHeureTravail( cerfa.getHeureTravail() );
         cerfaDto.setIntitulePrecisDernierDiplome( cerfa.getIntitulePrecisDernierDiplome() );
-        cerfaDto.setIntitulePrecisDiplomeVise( cerfa.getIntitulePrecisDiplomeVise() );
-        cerfaDto.setLogement( cerfa.getLogement() );
-        cerfaDto.setMachineRisque( cerfa.getMachineRisque() );
-        cerfaDto.setMinuteTravail( cerfa.getMinuteTravail() );
-        cerfaDto.setModeContractuelApprentissage( cerfa.getModeContractuelApprentissage() );
-        cerfaDto.setNaf( cerfa.getNaf() );
-        cerfaDto.setNationalite( cerfa.getNationalite() );
-        cerfaDto.setNirApprenti( cerfa.getNirApprenti() );
-        cerfaDto.setNomDeuxiemeTuteur( cerfa.getNomDeuxiemeTuteur() );
-        cerfaDto.setNomEmployeur( cerfa.getNomEmployeur() );
-        cerfaDto.setNomNaissanceApprenti( cerfa.getNomNaissanceApprenti() );
-        cerfaDto.setNomOrganisme( cerfa.getNomOrganisme() );
-        cerfaDto.setNomPremierTuteur( cerfa.getNomPremierTuteur() );
+        cerfaDto.setDiplomeLePlusEleveObtenu( cerfa.getDiplomeLePlusEleveObtenu() );
         cerfaDto.setNomRepresentant( cerfa.getNomRepresentant() );
-        cerfaDto.setNourriture( cerfa.getNourriture() );
-        cerfaDto.setNumAvenant( cerfa.getNumAvenant() );
-        cerfaDto.setNumDepot( cerfa.getNumDepot() );
-        cerfaDto.setPrenomApprenti( cerfa.getPrenomApprenti() );
-        cerfaDto.setPrenomDeuxiemeTuteur( cerfa.getPrenomDeuxiemeTuteur() );
-        cerfaDto.setPrenomEmployeur( cerfa.getPrenomEmployeur() );
-        cerfaDto.setPrenomPremierTuteur( cerfa.getPrenomPremierTuteur() );
         cerfaDto.setPrenomRepresentant( cerfa.getPrenomRepresentant() );
-        cerfaDto.setReceptionDossier( cerfa.getReceptionDossier() );
-        cerfaDto.setRegimeSocial( cerfa.getRegimeSocial() );
+        cerfaDto.setAdresseRepresentant( adresseToAdresseDto( cerfa.getAdresseRepresentant() ) );
+        cerfaDto.setNomPremierTuteur( cerfa.getNomPremierTuteur() );
+        cerfaDto.setPrenomPremierTuteur( cerfa.getPrenomPremierTuteur() );
+        cerfaDto.setDateDeNaissancePremierTuteur( cerfa.getDateDeNaissancePremierTuteur() );
+        cerfaDto.setNomDeuxiemeTuteur( cerfa.getNomDeuxiemeTuteur() );
+        cerfaDto.setPrenomDeuxiemeTuteur( cerfa.getPrenomDeuxiemeTuteur() );
+        cerfaDto.setDateDeNaissanceDeuxiemeTuteur( cerfa.getDateDeNaissanceDeuxiemeTuteur() );
+        cerfaDto.setContratType( cerfa.getContratType() );
+        cerfaDto.setDerogationType( cerfa.getDerogationType() );
+        cerfaDto.setContratNum( cerfa.getContratNum() );
+        cerfaDto.setDateConclusion( cerfa.getDateConclusion() );
+        cerfaDto.setDateDebutContrat( cerfa.getDateDebutContrat() );
+        cerfaDto.setDateAvenant( cerfa.getDateAvenant() );
+        cerfaDto.setDateFinContrat( cerfa.getDateFinContrat() );
+        cerfaDto.setHeureTravail( cerfa.getHeureTravail() );
+        cerfaDto.setMinuteTravail( cerfa.getMinuteTravail() );
+        cerfaDto.setMachineRisque( cerfa.getMachineRisque() );
         cerfaDto.setRemuneration1( remunerationTORemunerationDto( cerfa.getRemuneration1() ) );
         cerfaDto.setRemuneration2( remunerationTORemunerationDto( cerfa.getRemuneration2() ) );
         cerfaDto.setRemuneration3( remunerationTORemunerationDto( cerfa.getRemuneration3() ) );
         cerfaDto.setRemuneration4( remunerationTORemunerationDto( cerfa.getRemuneration4() ) );
         cerfaDto.setSalaireBrut( cerfa.getSalaireBrut() );
-        cerfaDto.setSexe( cerfa.getSexe() );
-        cerfaDto.setSiretEtablissement( cerfa.getSiretEtablissement() );
-        cerfaDto.setSiretOrganisme( cerfa.getSiretOrganisme() );
-        cerfaDto.setSituationAvantContrat( cerfa.getSituationAvantContrat() );
-        cerfaDto.setSportifs( cerfa.getSportifs() );
-        cerfaDto.setTelApprenti( cerfa.getTelApprenti() );
-        cerfaDto.setTelEmployeur( cerfa.getTelEmployeur() );
+        cerfaDto.setCaisseDeRetraite( cerfa.getCaisseDeRetraite() );
+        cerfaDto.setNourriture( cerfa.getNourriture() );
+        cerfaDto.setLogement( cerfa.getLogement() );
+        cerfaDto.setAutre( cerfa.getAutre() );
+        cerfaDto.setCfaEntreprise( cerfa.getCfaEntreprise() );
+        cerfaDto.setCfaResponsable( cerfa.getCfaResponsable() );
+        cerfaDto.setDiplomeVise( cerfa.getDiplomeVise() );
+        cerfaDto.setIntitulePrecisDiplomeVise( cerfa.getIntitulePrecisDiplomeVise() );
+        cerfaDto.setCfaUai( cerfa.getCfaUai() );
+        cerfaDto.setCfaSiret( cerfa.getCfaSiret() );
+        cerfaDto.setDiplomeCode( cerfa.getDiplomeCode() );
+        cerfaDto.setCodeRncp( cerfa.getCodeRncp() );
+        cerfaDto.setAdresseResponsable( adresseToAdresseDto( cerfa.getAdresseResponsable() ) );
+        cerfaDto.setDateDebutFormation( cerfa.getDateDebutFormation() );
+        cerfaDto.setDateExamen( cerfa.getDateExamen() );
+        cerfaDto.setFormationDuree( cerfa.getFormationDuree() );
         cerfaDto.setValidationEmployeur( cerfa.getValidationEmployeur() );
+        cerfaDto.setNomOrganisme( cerfa.getNomOrganisme() );
+        cerfaDto.setSiretOrganisme( cerfa.getSiretOrganisme() );
+        cerfaDto.setReceptionDossier( cerfa.getReceptionDossier() );
+        cerfaDto.setDateDecision( cerfa.getDateDecision() );
+        cerfaDto.setNumDepot( cerfa.getNumDepot() );
+        cerfaDto.setNumAvenant( cerfa.getNumAvenant() );
+        cerfaDto.setEtudiant( etudiantToEtudiantDto( cerfa.getEtudiant() ) );
 
         return cerfaDto;
     }
@@ -717,9 +779,9 @@ public class DtoMapperImpl implements DtoMapper {
         formation.setPrerequis( formationDG2Dto.getPrerequisites() );
         formation.setId( formationDG2Dto.getId() );
         formation.setVersion( formationDG2Dto.getVersion() );
+        formation.setSlug( formationDG2Dto.getSlug() );
         formation.setDuration( formationDG2Dto.getDuration() );
         formation.setPlan( formationDG2Dto.getPlan() );
-        formation.setSlug( formationDG2Dto.getSlug() );
 
         return formation;
     }
@@ -855,12 +917,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExperienceProfessionnelleDto experienceProfessionnelleDto = new ExperienceProfessionnelleDto();
 
+        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
+        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
         experienceProfessionnelleDto.setCollaborateur( experienceProfessionnelle.getCollaborateur() );
         experienceProfessionnelleDto.setContexte( experienceProfessionnelle.getContexte() );
-        experienceProfessionnelleDto.setId( experienceProfessionnelle.getId() );
         experienceProfessionnelleDto.setInformation( experienceProfessionnelle.getInformation() );
-        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
-        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
+        experienceProfessionnelleDto.setId( experienceProfessionnelle.getId() );
         experienceProfessionnelleDto.setVersion( experienceProfessionnelle.getVersion() );
 
         return experienceProfessionnelleDto;
@@ -920,6 +982,48 @@ public class DtoMapperImpl implements DtoMapper {
         return adresse;
     }
 
+    @Override
+    public List<AnnexeDto> annexeToAnnexeDto(List<Annexe> annexes) {
+        if ( annexes == null ) {
+            return null;
+        }
+
+        List<AnnexeDto> list = new ArrayList<AnnexeDto>( annexes.size() );
+        for ( Annexe annexe : annexes ) {
+            list.add( AnnexeToAnnexeDto( annexe ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<FacultatifDto> facultatifToFacultatifDto(List<Facultatif> facultatifs) {
+        if ( facultatifs == null ) {
+            return null;
+        }
+
+        List<FacultatifDto> list = new ArrayList<FacultatifDto>( facultatifs.size() );
+        for ( Facultatif facultatif : facultatifs ) {
+            list.add( FacultatifToFacultatifDto( facultatif ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<ExperienceProfessionnelleDto> experienceProfessionnelleToExperienceProfessionnelleDto(List<ExperienceProfessionnelle> experienceProfessionnelles) {
+        if ( experienceProfessionnelles == null ) {
+            return null;
+        }
+
+        List<ExperienceProfessionnelleDto> list = new ArrayList<ExperienceProfessionnelleDto>( experienceProfessionnelles.size() );
+        for ( ExperienceProfessionnelle experienceProfessionnelle : experienceProfessionnelles ) {
+            list.add( experienceProfessionnelleToExperienceProfessionnelleDto( experienceProfessionnelle ) );
+        }
+
+        return list;
+    }
+
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {
         if ( list == null ) {
             return null;
@@ -941,6 +1045,180 @@ public class DtoMapperImpl implements DtoMapper {
         List<DossierProjetDto> list1 = new ArrayList<DossierProjetDto>( list.size() );
         for ( DossierProjet dossierProjet : list ) {
             list1.add( dossierProjetToDossierProjetDto( dossierProjet ) );
+        }
+
+        return list1;
+    }
+
+    protected ExperienceProfessionnelle experienceProfessionnelleDtoToExperienceProfessionnelle(ExperienceProfessionnelleDto experienceProfessionnelleDto) {
+        if ( experienceProfessionnelleDto == null ) {
+            return null;
+        }
+
+        ExperienceProfessionnelle experienceProfessionnelle = new ExperienceProfessionnelle();
+
+        experienceProfessionnelle.setId( experienceProfessionnelleDto.getId() );
+        experienceProfessionnelle.setVersion( experienceProfessionnelleDto.getVersion() );
+        experienceProfessionnelle.setTacheRealisee( experienceProfessionnelleDto.getTacheRealisee() );
+        experienceProfessionnelle.setMoyenUtilise( experienceProfessionnelleDto.getMoyenUtilise() );
+        experienceProfessionnelle.setCollaborateur( experienceProfessionnelleDto.getCollaborateur() );
+        experienceProfessionnelle.setContexte( experienceProfessionnelleDto.getContexte() );
+        experienceProfessionnelle.setInformation( experienceProfessionnelleDto.getInformation() );
+
+        return experienceProfessionnelle;
+    }
+
+    protected List<ExperienceProfessionnelle> experienceProfessionnelleDtoListToExperienceProfessionnelleList(List<ExperienceProfessionnelleDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<ExperienceProfessionnelle> list1 = new ArrayList<ExperienceProfessionnelle>( list.size() );
+        for ( ExperienceProfessionnelleDto experienceProfessionnelleDto : list ) {
+            list1.add( experienceProfessionnelleDtoToExperienceProfessionnelle( experienceProfessionnelleDto ) );
+        }
+
+        return list1;
+    }
+
+    protected CompetenceProfessionnelle competenceDossierProDtoToCompetenceProfessionnelle(CompetenceDossierProDto competenceDossierProDto) {
+        if ( competenceDossierProDto == null ) {
+            return null;
+        }
+
+        CompetenceProfessionnelle competenceProfessionnelle = new CompetenceProfessionnelle();
+
+        competenceProfessionnelle.setId( competenceDossierProDto.getId() );
+        competenceProfessionnelle.setVersion( competenceDossierProDto.getVersion() );
+        competenceProfessionnelle.setLibelle( competenceDossierProDto.getLibelle() );
+        competenceProfessionnelle.setNumeroFiche( competenceDossierProDto.getNumeroFiche() );
+        competenceProfessionnelle.setExperienceProfessionnelles( experienceProfessionnelleDtoListToExperienceProfessionnelleList( competenceDossierProDto.getExperienceProfessionnelles() ) );
+
+        return competenceProfessionnelle;
+    }
+
+    protected Set<CompetenceProfessionnelle> competenceDossierProDtoSetToCompetenceProfessionnelleSet(Set<CompetenceDossierProDto> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<CompetenceProfessionnelle> set1 = new HashSet<CompetenceProfessionnelle>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( CompetenceDossierProDto competenceDossierProDto : set ) {
+            set1.add( competenceDossierProDtoToCompetenceProfessionnelle( competenceDossierProDto ) );
+        }
+
+        return set1;
+    }
+
+    protected ActiviteType activiteTypeDossierProDtoToActiviteType(ActiviteTypeDossierProDto activiteTypeDossierProDto) {
+        if ( activiteTypeDossierProDto == null ) {
+            return null;
+        }
+
+        ActiviteType activiteType = new ActiviteType();
+
+        activiteType.setId( activiteTypeDossierProDto.getId() );
+        activiteType.setVersion( activiteTypeDossierProDto.getVersion() );
+        activiteType.setLibelle( activiteTypeDossierProDto.getLibelle() );
+        activiteType.setNumeroFiche( activiteTypeDossierProDto.getNumeroFiche() );
+        activiteType.setCompetenceProfessionnelles( competenceDossierProDtoSetToCompetenceProfessionnelleSet( activiteTypeDossierProDto.getCompetenceProfessionnelles() ) );
+
+        return activiteType;
+    }
+
+    protected Set<ActiviteType> activiteTypeDossierProDtoSetToActiviteTypeSet(Set<ActiviteTypeDossierProDto> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<ActiviteType> set1 = new HashSet<ActiviteType>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( ActiviteTypeDossierProDto activiteTypeDossierProDto : set ) {
+            set1.add( activiteTypeDossierProDtoToActiviteType( activiteTypeDossierProDto ) );
+        }
+
+        return set1;
+    }
+
+    protected Cursus cursusDossierProDtoToCursus(CursusDossierProDto cursusDossierProDto) {
+        if ( cursusDossierProDto == null ) {
+            return null;
+        }
+
+        Cursus cursus = new Cursus();
+
+        cursus.setId( cursusDossierProDto.getId() );
+        cursus.setVersion( cursusDossierProDto.getVersion() );
+        cursus.setTitre( cursusDossierProDto.getTitre() );
+        cursus.setActiviteTypes( activiteTypeDossierProDtoSetToActiviteTypeSet( cursusDossierProDto.getActiviteTypes() ) );
+
+        return cursus;
+    }
+
+    protected List<ExperienceProfessionnelle> experienceProfessionnelleDtoListToExperienceProfessionnelleList1(List<ExperienceProfessionnelleDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<ExperienceProfessionnelle> list1 = new ArrayList<ExperienceProfessionnelle>( list.size() );
+        for ( ExperienceProfessionnelleDto experienceProfessionnelleDto : list ) {
+            list1.add( experienceProfessionnelleDtoToExperienceProfessionnelle( experienceProfessionnelleDto ) );
+        }
+
+        return list1;
+    }
+
+    protected Annexe annexeDtoToAnnexe(AnnexeDto annexeDto) {
+        if ( annexeDto == null ) {
+            return null;
+        }
+
+        Annexe annexe = new Annexe();
+
+        annexe.setId( annexeDto.getId() );
+        annexe.setVersion( annexeDto.getVersion() );
+        annexe.setLibelle( annexeDto.getLibelle() );
+        annexe.setPieceJointe( annexeDto.getPieceJointe() );
+
+        return annexe;
+    }
+
+    protected List<Annexe> annexeDtoListToAnnexeList(List<AnnexeDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<Annexe> list1 = new ArrayList<Annexe>( list.size() );
+        for ( AnnexeDto annexeDto : list ) {
+            list1.add( annexeDtoToAnnexe( annexeDto ) );
+        }
+
+        return list1;
+    }
+
+    protected Facultatif facultatifDtoToFacultatif(FacultatifDto facultatifDto) {
+        if ( facultatifDto == null ) {
+            return null;
+        }
+
+        Facultatif facultatif = new Facultatif();
+
+        facultatif.setId( facultatifDto.getId() );
+        facultatif.setVersion( facultatifDto.getVersion() );
+        facultatif.setOrganisme( facultatifDto.getOrganisme() );
+        facultatif.setIntitule( facultatifDto.getIntitule() );
+        facultatif.setDate( facultatifDto.getDate() );
+
+        return facultatif;
+    }
+
+    protected List<Facultatif> facultatifDtoListToFacultatifList(List<FacultatifDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<Facultatif> list1 = new ArrayList<Facultatif>( list.size() );
+        for ( FacultatifDto facultatifDto : list ) {
+            list1.add( facultatifDtoToFacultatif( facultatifDto ) );
         }
 
         return list1;

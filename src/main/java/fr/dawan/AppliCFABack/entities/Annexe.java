@@ -1,10 +1,12 @@
 package fr.dawan.AppliCFABack.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 @Entity
 public class Annexe extends BaseEntity implements Serializable {
 

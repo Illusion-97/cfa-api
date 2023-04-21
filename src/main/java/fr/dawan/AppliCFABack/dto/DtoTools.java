@@ -21,7 +21,14 @@ import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetCursusDossierProDto;
+import fr.dawan.AppliCFABack.entities.Annexe;
+import fr.dawan.AppliCFABack.entities.Cursus;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Facultatif;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 import fr.dawan.AppliCFABack.entities.Intervention;
@@ -159,6 +166,10 @@ public class DtoTools {
         }).collect(Collectors.toList()));
         return cDto;
     };
+    
+    
+    
+ 
 
     /**
      * méthode appelée dans le PromotionServiceImpl
@@ -168,6 +179,8 @@ public class DtoTools {
     public PromotionEtudiantDto promotionToPromotionEtudiantDto(Promotion promotion) {
         return convert(promotion, PromotionEtudiantDto.class, promotionToPromotionEtudiantDtoConverter);
     }
+    
+   
 
     public NiveauDto niveauToNiveauDto (Positionnement.Niveau niveau) {
 

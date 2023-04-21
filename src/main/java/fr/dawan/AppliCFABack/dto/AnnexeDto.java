@@ -9,7 +9,7 @@ public class AnnexeDto extends BaseEntityDto implements Serializable {
 
     private String libelle;
 
-    private MultipartFile pieceJointe;
+    private String pieceJointe;
 
     private long dossierProfessionnelId;
 
@@ -21,15 +21,15 @@ public class AnnexeDto extends BaseEntityDto implements Serializable {
         this.libelle = libelle;
     }
 
-    public MultipartFile getPieceJointe() {
-        return pieceJointe;
-    }
+    public String getPieceJointe() {
+		return pieceJointe;
+	}
 
-    public void setPieceJointe(MultipartFile pieceJointe) {
-        this.pieceJointe = pieceJointe;
-    }
+	public void setPieceJointe(String pieceJointe) {
+		this.pieceJointe = pieceJointe;
+	}
 
-    public long getDossierProfessionnelId() {
+	public long getDossierProfessionnelId() {
         return dossierProfessionnelId;
     }
 
