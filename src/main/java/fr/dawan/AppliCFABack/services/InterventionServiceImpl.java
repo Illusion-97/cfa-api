@@ -42,6 +42,7 @@ import fr.dawan.AppliCFABack.entities.Intervention;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
@@ -720,9 +721,33 @@ public class InterventionServiceImpl implements InterventionService {
 				continue;
 
 			}
+			//Test
 			Formateur formateur = new Formateur();
+			UtilisateurRole formateurRole = utilisateurRoleRepository.findByIntituleContaining("FORMATEUR");
+			List<Utilisateur> utilisateurs = new ArrayList<>();
+			utilisateurs.add(userInDb.get());
+			if (formateurRole.getUtilisateurs() != null) {
+				utilisateurs.addAll(formateurRole.getUtilisateurs());
+			}
+			formateurRole.setUtilisateurs(utilisateurs);
+			if (userInDb.get().getRoles() != null) {
+				if (!userInDb.get().getRoles().contains(formateurRole)) {
+					userInDb.get().getRoles().add(formateurRole);
+				}
+			} else {
+				List<UtilisateurRole> roles = new ArrayList<>();
+				roles.add(formateurRole);
+				userInDb.get().setRoles(roles);
+			}
 			formateur.setUtilisateur(userInDb.get());
-			formateurRepository.saveAndFlush(formateur);
+			formateur = formateurRepository.saveAndFlush(formateur);
+			userInDb.get().setFormateur(formateur);
+			utilisateurRepository.saveAndFlush(userInDb.get());
+			
+			//CODE OK
+//			Formateur formateur = new Formateur();
+//			formateur.setUtilisateur(userInDb.get());
+//			formateurRepository.saveAndFlush(formateur);
 
 			count++;
 
