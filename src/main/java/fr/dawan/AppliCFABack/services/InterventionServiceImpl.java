@@ -245,6 +245,7 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public InterventionDto saveOrUpdate(InterventionDto iDto) {
 		Intervention i = DtoTools.convert(iDto, Intervention.class);
+		Long idInterventionLong = iDto.getId();
 
 		if (iDto.getPromotionsId() != null) {
 			for (long id : iDto.getPromotionsId()) {
@@ -257,6 +258,15 @@ public class InterventionServiceImpl implements InterventionService {
 			}
 		}
 
+		if (iDto.getFormateurDto() != null) {
+			Formateur formateur = formateurRepository.findByInterventionId(idInterventionLong);
+				i.getFormateur().setId(formateur.getId());
+		}
+		if (iDto.getFormationDto() != null) {
+			Formation formation = formationRepository.findByInterventionId(idInterventionLong);
+			i.getFormation().setId(formation.getId());
+		}
+		
 		i = interventionRepository.saveAndFlush(i);
 
 		filesService.createDirectory("interventions/" + i.getId());
