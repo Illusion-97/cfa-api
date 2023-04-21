@@ -79,6 +79,7 @@ import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirEtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
+import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
@@ -101,6 +102,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Autowired
 	EtudiantRepository etudiantRepository;
 	
+	@Autowired
+	DossierProjetRepository dossierProRepo;
 	@Autowired
 	TuteurRepository tuteurRepository;
 
@@ -195,14 +198,14 @@ public class EtudiantServiceImpl implements EtudiantService {
 				if (promotion != null)
 					lstPromoDto.add(mapper.promotionToPromotionDto(promotion));
 			}
-			List<DossierProjet> lstDossierProjet = e.getDossierProjet();
-			List<DossierProjetDto> lstDossierProjetDto = new ArrayList<>();
-			for (DossierProjet dp : lstDossierProjet) {
-				DossierProjetDto dpdto = mapper.dossierProjetToDossierProjetDto(dp);
-				dpdto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
-				lstDossierProjetDto.add(dpdto);
+//			List<DossierProjet> dpEtu = dossierProRepo.findByIdEtudiant(id);
+//			List<DossierProjetDto> lstDossierProjetDto = new ArrayList<>();
+//			for (DossierProjet dp : dpEtu) {
+//				DossierProjetDto dpdto = mapper.dossierProjetToDossierProjetDto(dp);
+//				dpdto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
+//				lstDossierProjetDto.add(dpdto);
 
-			}
+//			}
 
 			List<UtilisateurRoleDto> uRDto = new ArrayList<>();
 			for (UtilisateurRole r : e.getUtilisateur().getRoles()) {
@@ -227,7 +230,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			etuDto.setPromotionsDto(lstPromoDto);
 //			etuDto.setFormateurReferentDto(refDto);
 			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
-			etuDto.setDossierProjet(lstDossierProjetDto);
+//			etuDto.setDossierProjet(lstDossierProjetDto);
 
 			res.add(etuDto);
 		}
@@ -303,9 +306,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 			promotions.add(pDto);
 		}
 		eDto.setPromotionsDto(promotions);
-		List<DossierProjet> lstDossierProjet = e.get().getDossierProjet();
+		List<DossierProjet> dpEtu = dossierProRepo.findByIdEtudiant(id);
 		List<DossierProjetDto> lstDossierProjetDto = new ArrayList<>();
-		for (DossierProjet dp : lstDossierProjet) {
+		for (DossierProjet dp : dpEtu) {
 			DossierProjetDto dpdto = mapper.dossierProjetToDossierProjetDto(dp);
 			dpdto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
 			lstDossierProjetDto.add(dpdto);
@@ -783,14 +786,14 @@ public class EtudiantServiceImpl implements EtudiantService {
 				if (promotion != null)
 					lstPromoDto.add(mapper.promotionToPromotionDto(promotion));
 			}
-			List<DossierProjet> lstDossierProjet = e.getDossierProjet();
-			List<DossierProjetDto> lstDossierProjetDto = new ArrayList<>();
-			for (DossierProjet dp : lstDossierProjet) {
-				DossierProjetDto dpdto = mapper.dossierProjetToDossierProjetDto(dp);
-				dpdto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
-				lstDossierProjetDto.add(dpdto);
+//			List<DossierProjet> lstDossierProjet = e.getDossierProjet();
+//			List<DossierProjetDto> lstDossierProjetDto = new ArrayList<>();
+//			for (DossierProjet dp : lstDossierProjet) {
+//				DossierProjetDto dpdto = mapper.dossierProjetToDossierProjetDto(dp);
+//				dpdto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
+//				lstDossierProjetDto.add(dpdto);
 
-			}
+//			}
 			List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
 			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
 			for (DossierProfessionnel dp : lstDossierProfessionnel) {
@@ -809,7 +812,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 //			etuDto.setManagerDto(managDto);
 
 			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
-			etuDto.setDossierProjet(lstDossierProjetDto);
+//			etuDto.setDossierProjet(lstDossierProjetDto);
 			res.add(etuDto);
 		}
 
