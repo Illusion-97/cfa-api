@@ -278,6 +278,7 @@ public class InterventionServiceImpl implements InterventionService {
             intervention = DtoTools.convert(iDto, Intervention.class);
         }
 
+
         // Charger les entités liées avant de les assigner à l'intervention
         Formateur formateur = intervention.getFormateur();
         if (formateur != null) {
