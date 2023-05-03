@@ -420,7 +420,9 @@
     suis l'auteur(e) des réalisations jointes. <br><br><br><br><br><br>
     Fait à ${et.utilisateur.adresse.ville}, le ${dateNow} <br><br>
     pour faire valoir ce que de droit. <br><br><br><br>
-    Signature : ${signature.pieceJointe}
+    Signature : <#if signature??>
+             ${signature.pieceJointe}
+               </#if>
 </p>
 <#-------------------------------------------Page 31---------------------------------------------->
 <div class="divTitlePage4">

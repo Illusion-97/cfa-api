@@ -178,6 +178,13 @@ public interface DtoMapper {
     @Mapping(source="facultatifDto", target="facultatifs")
     DossierProfessionnel dossierProfessionnelDtoToDossierProfessionnel(DossierProEtudiantDto dosierProEtudiant);
 
+    @Mapping(source = "id", target = "id")
+    @Mapping(source="nom", target="nom")
+    @Mapping(source="cursus", target="cursusDto")
+    @Mapping(source="experienceProfessionnelles", target="experienceProfessionnelleDtos")
+    @Mapping(source="annexes", target="annexeDtos")
+    @Mapping(source="facultatifs", target="facultatifDto")
+    DossierProEtudiantDto dossierProfessionnelToDossierProEtudiantDto(DossierProfessionnel dossierPro);
     
     @Mapping( source = ".", target = ".")
     DossierProjetDto dossierProjetToDossierProjetDto (DossierProjet dossierProjet);
