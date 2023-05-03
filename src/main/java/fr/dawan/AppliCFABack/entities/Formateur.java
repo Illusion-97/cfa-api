@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @SuppressWarnings("serial")
@@ -11,6 +12,7 @@ import javax.persistence.OneToOne;
 public class Formateur extends BaseEntity implements Serializable {
 
 	@OneToOne
+	@JoinColumn(name = "utilisateur_id")
 	private Utilisateur utilisateur;
 
 	public Formateur() {

@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
 
+@SuppressWarnings("serial")
 public class AnnexeDossierProjetDto extends BaseEntityDto implements Serializable {
 
     private String libelleAnnexe;
