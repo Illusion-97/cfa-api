@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,14 +31,7 @@ public interface DossierProjetService {
 	String genererDossierProjet(long idDossierProjet) throws DossierProjetException, TemplateNotFoundException,
 		MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
-	DossierProjetEtudiantDto saveOrUpdateDossierProjet(DossierProjetEtudiantDto dpDto, long id, List<MultipartFile> file) throws IOException;
-
-	/**
-	 * @throws IOException ***********************************************************************************************************/
-	DossierProjetEtudiantDto uploadDossierProjet(DossierProjetEtudiantDto dpDto, long id, List<MultipartFile> file1,
-			List<MultipartFile> file2, List<MultipartFile> file3, List<MultipartFile> file4) throws IOException;
-
-
+	DossierProjetEtudiantDto saveOrUpdateDossierProjet(DossierProjetEtudiantDto dpDto, long id, List<MultipartFile> files, MultipartFile file) throws IOException;
 	
 
 }

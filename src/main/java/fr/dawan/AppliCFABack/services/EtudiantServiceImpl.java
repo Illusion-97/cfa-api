@@ -309,7 +309,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		List<DossierProjet> dpEtu = dossierProRepo.findByIdEtudiant(id);
 		List<DossierProjetDto> lstDossierProjetDto = new ArrayList<>();
 		for (DossierProjet dp : dpEtu) {
-			DossierProjetDto dpdto = mapper.dossierProjetToDossierProjetDto(dp);
+			DossierProjetDto dpdto = mapper.dossierProjetToDpDto(dp);
 			dpdto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
 			lstDossierProjetDto.add(dpdto);
 		}

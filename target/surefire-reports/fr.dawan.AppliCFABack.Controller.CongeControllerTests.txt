@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: fr.dawan.AppliCFABack.Controller.CongeControllerTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.026 s <<< FAILURE! - in fr.dawan.AppliCFABack.Controller.CongeControllerTests
-fr.dawan.AppliCFABack.Controller.CongeControllerTests  Time elapsed: 0.026 s  <<< ERROR!
-java.lang.IllegalStateException: Failed to load ApplicationContext
-Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'APPLICATION_STORAGE_VOLUME' in value "${APPLICATION_STORAGE_VOLUME}/app.log"
-
