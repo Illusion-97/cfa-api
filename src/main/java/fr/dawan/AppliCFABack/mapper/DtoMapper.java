@@ -158,7 +158,12 @@ public interface DtoMapper {
     PromotionDto promotionToPromotionDto(Promotion promotion);
 
     @Mapping(source = ".", target = ".")
+
+    @Mapping(source = "tuteur", target = "tuteurDto")
     UtilisateurDto utilisateurToUtilisateurDto(Utilisateur utilisateur);
+    
+    // @Mapping(source = ".", target = ".")
+    Utilisateur utilisateurDtoToUtilisateur(UtilisateurDto utilisateurDto);
 
     @Mapping(source = ".", target = ".")
     UtilisateurRoleDto utilisateurRoleToUtilisateurRoleDto(UtilisateurRole utilisateurRole);

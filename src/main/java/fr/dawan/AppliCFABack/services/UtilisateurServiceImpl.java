@@ -60,10 +60,12 @@ import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
@@ -76,7 +78,9 @@ import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.TuteurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.FileException;
@@ -91,6 +95,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
 	@Autowired
+	UtilisateurRoleRepository utilisateurRoleRepository;
+	@Autowired
 	AdresseRepository adresseRepository;
 	@Autowired
 	CongeRepository congeRepository;
@@ -102,6 +108,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	FormateurRepository formateurRepository;
 	@Autowired
 	CEFRepository cefRepository;
+	@Autowired
+	TuteurRepository tuteurRepository;
 	@Autowired
 	MaitreApprentissageRepository maitreApprentissageRepository;
 	@Autowired
@@ -352,7 +360,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	 * @throws SaveInvalidException
 	 * 
 	 */
-
+	
+	
 	@Override
 	public UtilisateurDto insertUpdate(UtilisateurDto uDto) throws SaveInvalidException {
 
@@ -512,6 +521,56 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		result.setCefDto(mapper.cefToCEFDto(user.getCef()));
 
 		return result;
+	}
+	
+	
+	
+	@Override
+	public UtilisateurDto insertTuteur(UtilisateurDto uDto) throws SaveInvalidException {
+		
+		if (uDto.getId() == 0 && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
+			System.out.println("toto");
+			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin()
+					+ " findByEmail " + findByEmail(uDto.getLogin()).toString());
+		}
+		
+		try {
+			// Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+			if (uDto.getId() == 0) {
+				if (uDto.getPassword() == null || uDto.getPassword().equals("")) {
+					uDto.setPassword(generatePassword());
+					uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+
+				} else {
+					uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+				}
+
+			} else {
+				// Si on a modifié le mdp
+				Utilisateur userInDB = utilisateurRepository.getOne(uDto.getId());
+				if (!userInDB.getPassword().equals(uDto.getPassword())) {
+					uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+				}
+			}
+		} catch (Exception e) {
+			logger.error("hashPwd failed", e);
+		}
+		
+		Utilisateur user = mapper.utilisateurDtoToUtilisateur(uDto);
+		UtilisateurRole tuteurRole = utilisateurRoleRepository.findByIntituleContaining("TUTEUR");
+		List<UtilisateurRole> utilisateurRoles = new ArrayList<>();
+		utilisateurRoles.add(tuteurRole);
+		user.setRoles(utilisateurRoles);
+		
+		Tuteur tuteur = new Tuteur();
+		tuteur.setUtilisateur(user);
+		user.setTuteur(tuteur);
+		
+		user = utilisateurRepository.save(user);
+		
+		UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
+		
+		return userDto;
 	}
 
 	/**

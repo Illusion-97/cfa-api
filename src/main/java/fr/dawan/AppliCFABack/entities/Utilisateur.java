@@ -53,13 +53,11 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	private Etudiant etudiant;
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "utilisateur")
 	private Formateur formateur;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.MERGE)
 	private CEF cef;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "utilisateur")
 	private Tuteur tuteur;
-	
-
 
 	@OneToOne
 	private Signature signature;
