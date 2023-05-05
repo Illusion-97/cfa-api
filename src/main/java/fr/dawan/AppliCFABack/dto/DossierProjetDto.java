@@ -21,7 +21,7 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 	private ProjetDto projet;
 	
 	private EtudiantDto etudiant;
-	
+	private String dossierImport;
 	private List<AnnexeDossierProjetDto> annexeDossierProjetDtos;
 	
 	private List<InfoDossierProjetDto> infoDossierProjetDtos;
@@ -88,6 +88,14 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
     public void setAnnexeDossierProjetDtos(List<AnnexeDossierProjetDto> annexeDossierProjetDtos) {
         this.annexeDossierProjetDtos = annexeDossierProjetDtos;
     }
+
+	public String getDossierImport() {
+		return dossierImport;
+	}
+
+	public void setDossierImport(String dossierImport) {
+		this.dossierImport = dossierImport;
+	}
 
 	public List<InfoDossierProjetDto> getInfoDossierProjetDtos() {
 		return infoDossierProjetDtos;

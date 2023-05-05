@@ -1,5 +1,20 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
+import fr.dawan.AppliCFABack.services.DossierProjetService;
+import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.FilesService;
+import io.micrometer.core.lang.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,34 +23,6 @@ import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
-import fr.dawan.AppliCFABack.services.DossierProjetService;
-import fr.dawan.AppliCFABack.services.EtudiantService;
-import fr.dawan.AppliCFABack.services.GenericService;
-import fr.dawan.AppliCFABack.services.LivretEvaluationService;
-import fr.dawan.AppliCFABack.services.FileService;
-import fr.dawan.AppliCFABack.services.FilesService;
 
 
 @RestController
@@ -117,40 +104,27 @@ public class DossierProjetController {
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
     public DossierProjetEtudiantDto updateDossierProjet(@PathVariable("id") long id, 
     		@RequestParam("dossierProjet") String dpDto,
-    		@RequestParam("pieceJointe") List<MultipartFile> file) throws IOException{
+    		@RequestParam("pieceJointe") List<MultipartFile> files, @RequestParam("import")MultipartFile file) throws IOException{
 		//Chemin a changer selon les directives
 		String path = storageFolder + "DossierProjet" + "/" ;
         fileService.createDirectory(path);
         DossierProjetEtudiantDto dpEtuDto = objectMapper.readValue(dpDto, DossierProjetEtudiantDto.class);
-		return dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, file);
+		return dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, files, file);
     }
 	
 	@PostMapping(value = "/creation/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
-    public ResponseEntity<DossierProjetEtudiantDto> creationDossierProjet(@PathVariable("id") long id, 
+    public ResponseEntity<DossierProjetEtudiantDto> creationDossierProjet(@PathVariable("id") long id,
     		@RequestParam("dossierProjet") String dpDto,
-    		@RequestParam("pieceJointe") List<MultipartFile> file) throws IOException{
-		//Chemin a changer selon les directives
-		String path = storageFolder + "DossierProjet" + "/" ;
-        fileService.createDirectory(path);
-        DossierProjetEtudiantDto dpEtuDto = objectMapper.readValue(dpDto, DossierProjetEtudiantDto.class);
-        DossierProjetEtudiantDto created = dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, file);
-		return ResponseEntity.status(HttpStatus.CREATED).body(created);
-    }
-	
-	@PostMapping(value = "/import/etudiant/{id}", consumes ="multipart/form-data", produces ="application/json")
-	public ResponseEntity<DossierProjetEtudiantDto> uploadDossierProjet(@PathVariable("id") long id, 
-    		@RequestParam("dossierProjet") String dpDto,
-    		@RequestParam("annexes") List<MultipartFile> annexe,@RequestParam("contenus") List<MultipartFile> contenu,
-    		@RequestParam("resumes") List<MultipartFile> resume,@RequestParam("Infos") List<MultipartFile> info) throws IOException{
+    		@RequestParam("pieceJointe") List<MultipartFile> files,@Nullable @RequestParam("import")MultipartFile file) throws IOException{
 
 		//Chemin a changer selon les directives
-				String path = storageFolder + "DossierProjet" + "/" ;
-		        fileService.createDirectory(path);
-		        DossierProjetEtudiantDto dpEtuDto = objectMapper.readValue(dpDto, DossierProjetEtudiantDto.class);
-		        DossierProjetEtudiantDto created = dossierProService.uploadDossierProjet(dpEtuDto, id, annexe, contenu, resume, info);
-				return ResponseEntity.status(HttpStatus.CREATED).body(created);
-		
-	}
+			String path = storageFolder + "DossierProjet" + "/" ;
+        	fileService.createDirectory(path);
+
+        DossierProjetEtudiantDto dpEtuDto = objectMapper.readValue(dpDto, DossierProjetEtudiantDto.class);
+        DossierProjetEtudiantDto created = dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, files, file);
+		return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
 
 
 	

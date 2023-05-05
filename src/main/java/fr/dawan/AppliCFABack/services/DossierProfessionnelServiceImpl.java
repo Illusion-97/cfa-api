@@ -18,6 +18,7 @@ import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.*;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfActiviteDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfCompetenceDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.entities.*;
 import fr.dawan.AppliCFABack.repositories.*;
 
@@ -35,7 +36,10 @@ import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
+import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import fr.dawan.AppliCFABack.tools.PdfTools;
+import fr.dawan.AppliCFABack.tools.ToPdf;
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
 import freemarker.template.MalformedTemplateNameException;
@@ -498,6 +502,8 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
              dp.setEtudiant(etudiant.get());
         }
        
+       
+  
         //on insert ou met à jour le dossier en question
         dp = dossierProRepo.saveAndFlush(dp);
         
@@ -530,6 +536,36 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 			
 		}
 		
+	}
+
+	@Override
+	public String genererDossierProfessionnel(long idDossierPro) throws DossierProfessionnelException,
+			TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+		
+		
+          Optional<DossierProfessionnel> dossierPro = dossierProRepo.findById(idDossierPro);
+    	
+    	if (!dossierPro.isPresent()) {
+    		throw new DossierProfessionnelException("le DossierProfessionnel et non trouvable");
+		}
+		DossierProEtudiantDto dossierproFile = mapper.dossierProfessionnelToDossierProEtudiantDto(dossierPro.get());
+    	
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("backendUrl", backendUrl);
+    	model.put("dossierPro", dossierproFile);
+		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+		Template template = freemarkerConfig.getTemplate("DossierProfessionnel.ftl");
+
+		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+		
+		String outputPdf = storageFolder2 + "/DossierProfessionnel" + "/dossier-professionnel" + idDossierPro + ".pdf";
+		try {
+			ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
+		}
+
+		return outputPdf;
 	}
 
 	}

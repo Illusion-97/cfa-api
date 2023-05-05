@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -181,5 +182,19 @@ public class DossierProfessionnelController {
 		headers.add("Expires","0");
 
 		return ResponseEntity.ok().headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+	}
+	
+	@GetMapping(value = "/generer/{idDossierPro}", produces = "text/plain")
+	public ResponseEntity<String> genererDossierProfessionnel(
+			@PathVariable("idDossierPro") long idDossierPro) throws Exception {
+
+		String outpoutPath = (dossierProService.genererDossierProfessionnel(idDossierPro));
+		File f = new File(outpoutPath);
+		
+		Path path = Paths.get(f.getAbsolutePath());
+		byte[] bytes =  Files.readAllBytes(path);
+		String base64 = Base64.getEncoder().encodeToString(bytes);
+
+		return ResponseEntity.ok().body(base64);
 	}
 }
