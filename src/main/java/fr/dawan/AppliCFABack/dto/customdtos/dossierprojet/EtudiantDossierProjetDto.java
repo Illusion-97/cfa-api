@@ -17,6 +17,7 @@ public class EtudiantDossierProjetDto implements Serializable {
         this.id = id;
     }
 
+
     public List<DossierProjetEtudiantDto> getDossierProjet() {
         return dossierProjet;
     }

@@ -89,8 +89,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-03T11:59:53+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
+    date = "2023-05-04T17:12:10+0200",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_362 (Amazon.com Inc.)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -553,7 +553,7 @@ public class DtoMapperImpl implements DtoMapper {
     }
 
     @Override
-    public DossierProjetDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet) {
+    public DossierProjetDto dossierProjetToDpDto(DossierProjet dossierProjet) {
         if ( dossierProjet == null ) {
             return null;
         }
@@ -564,6 +564,7 @@ public class DtoMapperImpl implements DtoMapper {
         dossierProjetDto.setVersion( dossierProjet.getVersion() );
         dossierProjetDto.setNom( dossierProjet.getNom() );
         dossierProjetDto.setProjet( projetToProjetDto( dossierProjet.getProjet() ) );
+        dossierProjetDto.setDossierImport( dossierProjet.getDossierImport() );
         dossierProjetDto.setEtudiant( etudiantToEtudiantDto( dossierProjet.getEtudiant() ) );
         List<Long> list = dossierProjet.getCompetenceProfessionnelleDtos();
         if ( list != null ) {
@@ -581,9 +582,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         DossierProjetEtudiantDto dossierProjetEtudiantDto = new DossierProjetEtudiantDto();
 
+        dossierProjetEtudiantDto.setCompetenceProfessionnelleIds( competenceProToId( dossierProjet.getCompetenceProfessionnelles() ) );
         dossierProjetEtudiantDto.setId( dossierProjet.getId() );
         dossierProjetEtudiantDto.setNom( dossierProjet.getNom() );
-        dossierProjetEtudiantDto.setProjets( projetToProjetDto1( dossierProjet.getProjet() ) );
+        dossierProjetEtudiantDto.setDossierImport( dossierProjet.getDossierImport() );
+        dossierProjetEtudiantDto.setProjet( projetToProjetDto1( dossierProjet.getProjet() ) );
         dossierProjetEtudiantDto.setAnnexeDossierProjets( annexeProjetToAnnexeProjetDto( dossierProjet.getAnnexeDossierProjets() ) );
         dossierProjetEtudiantDto.setInfoDossierProjets( infoToInfoDto( dossierProjet.getInfoDossierProjets() ) );
         dossierProjetEtudiantDto.setContenuDossierProjets( contenuToContenuDto( dossierProjet.getContenuDossierProjets() ) );
@@ -591,6 +594,84 @@ public class DtoMapperImpl implements DtoMapper {
         dossierProjetEtudiantDto.setVersion( dossierProjet.getVersion() );
 
         return dossierProjetEtudiantDto;
+    }
+
+    @Override
+    public DossierProjet dossierProjetDtoToDossierProjet(DossierProjetEtudiantDto dpDto) {
+        if ( dpDto == null ) {
+            return null;
+        }
+
+        DossierProjet dossierProjet = new DossierProjet();
+
+        dossierProjet.setCompetenceProfessionnelles( idToCompetencePro( dpDto.getCompetenceProfessionnelleIds() ) );
+        dossierProjet.setId( dpDto.getId() );
+        dossierProjet.setVersion( dpDto.getVersion() );
+        dossierProjet.setDossierImport( dpDto.getDossierImport() );
+        dossierProjet.setNom( dpDto.getNom() );
+        dossierProjet.setProjet( projetDossierProjetDtoToProjet( dpDto.getProjet() ) );
+        dossierProjet.setAnnexeDossierProjets( annexeDossierProjetDtoListToAnnexeDossierProjetList( dpDto.getAnnexeDossierProjets() ) );
+        dossierProjet.setInfoDossierProjets( infoDossierProjetDtoListToInfoDossierProjetList( dpDto.getInfoDossierProjets() ) );
+        dossierProjet.setContenuDossierProjets( contenuDossierProjetDtoListToContenuDossierProjetList( dpDto.getContenuDossierProjets() ) );
+        dossierProjet.setResumeDossierProjets( resumeDossierProjetDtoListToResumeDossierProjetList( dpDto.getResumeDossierProjets() ) );
+
+        return dossierProjet;
+    }
+
+    @Override
+    public List<AnnexeDossierProjetDto> annexeProjetToAnnexeProjetDto(List<AnnexeDossierProjet> anexeProjets) {
+        if ( anexeProjets == null ) {
+            return null;
+        }
+
+        List<AnnexeDossierProjetDto> list = new ArrayList<AnnexeDossierProjetDto>( anexeProjets.size() );
+        for ( AnnexeDossierProjet annexeDossierProjet : anexeProjets ) {
+            list.add( annexeDossierProjetToAnnexeDossierProjetDto( annexeDossierProjet ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<InfoDossierProjetDto> infoToInfoDto(List<InfoDossierProjet> infos) {
+        if ( infos == null ) {
+            return null;
+        }
+
+        List<InfoDossierProjetDto> list = new ArrayList<InfoDossierProjetDto>( infos.size() );
+        for ( InfoDossierProjet infoDossierProjet : infos ) {
+            list.add( infoDossierProjetToInfoDossierProjetDto( infoDossierProjet ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<ContenuDossierProjetDto> contenuToContenuDto(List<ContenuDossierProjet> contenus) {
+        if ( contenus == null ) {
+            return null;
+        }
+
+        List<ContenuDossierProjetDto> list = new ArrayList<ContenuDossierProjetDto>( contenus.size() );
+        for ( ContenuDossierProjet contenuDossierProjet : contenus ) {
+            list.add( contenuDossierProjetToContenuDossierProjetDto( contenuDossierProjet ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<ResumeDossierProjetDto> resumeToResumeDto(List<ResumeDossierProjet> resume) {
+        if ( resume == null ) {
+            return null;
+        }
+
+        List<ResumeDossierProjetDto> list = new ArrayList<ResumeDossierProjetDto>( resume.size() );
+        for ( ResumeDossierProjet resumeDossierProjet : resume ) {
+            list.add( resumeDossierProjetToResumeDossierProjetDto( resumeDossierProjet ) );
+        }
+
+        return list;
     }
 
     @Override
@@ -723,82 +804,6 @@ public class DtoMapperImpl implements DtoMapper {
         formation.setPlan( formationDG2Dto.getPlan() );
 
         return formation;
-    }
-
-    @Override
-    public DossierProjet dossierProjetDtoToDossierProjet(DossierProjetEtudiantDto dpDto) {
-        if ( dpDto == null ) {
-            return null;
-        }
-
-        DossierProjet dossierProjet = new DossierProjet();
-
-        dossierProjet.setId( dpDto.getId() );
-        dossierProjet.setNom( dpDto.getNom() );
-        dossierProjet.setProjet( projetDossierProjetDtoToProjet( dpDto.getProjets() ) );
-        dossierProjet.setAnnexeDossierProjets( annexeDossierProjetDtoListToAnnexeDossierProjetList( dpDto.getAnnexeDossierProjets() ) );
-        dossierProjet.setInfoDossierProjets( infoDossierProjetDtoListToInfoDossierProjetList( dpDto.getInfoDossierProjets() ) );
-        dossierProjet.setContenuDossierProjets( contenuDossierProjetDtoListToContenuDossierProjetList( dpDto.getContenuDossierProjets() ) );
-        dossierProjet.setResumeDossierProjets( resumeDossierProjetDtoListToResumeDossierProjetList( dpDto.getResumeDossierProjets() ) );
-        dossierProjet.setVersion( dpDto.getVersion() );
-
-        return dossierProjet;
-    }
-
-    @Override
-    public List<AnnexeDossierProjetDto> annexeProjetToAnnexeProjetDto(List<AnnexeDossierProjet> anexeProjets) {
-        if ( anexeProjets == null ) {
-            return null;
-        }
-
-        List<AnnexeDossierProjetDto> list = new ArrayList<AnnexeDossierProjetDto>( anexeProjets.size() );
-        for ( AnnexeDossierProjet annexeDossierProjet : anexeProjets ) {
-            list.add( annexeDossierProjetToAnnexeDossierProjetDto( annexeDossierProjet ) );
-        }
-
-        return list;
-    }
-
-    @Override
-    public List<InfoDossierProjetDto> infoToInfoDto(List<InfoDossierProjet> infos) {
-        if ( infos == null ) {
-            return null;
-        }
-
-        List<InfoDossierProjetDto> list = new ArrayList<InfoDossierProjetDto>( infos.size() );
-        for ( InfoDossierProjet infoDossierProjet : infos ) {
-            list.add( infoDossierProjetToInfoDossierProjetDto( infoDossierProjet ) );
-        }
-
-        return list;
-    }
-
-    @Override
-    public List<ContenuDossierProjetDto> contenuToContenuDto(List<ContenuDossierProjet> contenus) {
-        if ( contenus == null ) {
-            return null;
-        }
-
-        List<ContenuDossierProjetDto> list = new ArrayList<ContenuDossierProjetDto>( contenus.size() );
-        for ( ContenuDossierProjet contenuDossierProjet : contenus ) {
-            list.add( contenuDossierProjetToContenuDossierProjetDto( contenuDossierProjet ) );
-        }
-
-        return list;
-    }
-
-    @Override
-    public List<ResumeDossierProjetDto> resumeToResumeDto(List<ResumeDossierProjet> resume) {
-        if ( resume == null ) {
-            return null;
-        }
-
-        List<ResumeDossierProjetDto> list = new ArrayList<ResumeDossierProjetDto>( resume.size() );
-        for ( ResumeDossierProjet resumeDossierProjet : resume ) {
-            list.add( resumeDossierProjetToResumeDossierProjetDto( resumeDossierProjet ) );
-        }
-
-        return list;
     }
 
     @Override

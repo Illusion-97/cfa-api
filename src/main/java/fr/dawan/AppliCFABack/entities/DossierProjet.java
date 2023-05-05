@@ -7,8 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -26,7 +25,8 @@ public class DossierProjet extends BaseEntity implements Serializable {
 	
 	@ManyToOne
     private Etudiant etudiant;
-
+	@Column(nullable = true, name = "import", length = 100)
+	private String dossierImport;
 	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
     private List<AnnexeDossierProjet> annexeDossierProjets;
 	
@@ -39,18 +39,23 @@ public class DossierProjet extends BaseEntity implements Serializable {
 	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
     private List<ResumeDossierProjet> resumeDossierProjets;
 
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name = "dossier_projet_competence_professionnelles",
-	    joinColumns = @JoinColumn(name = "dossier_projet_id"),
-	    inverseJoinColumns = @JoinColumn(name = "competence_professionnelle_id"))
+	@ManyToMany
 	private List<CompetenceProfessionnelle> competenceProfessionnelles;
-	
+
 	public List<Long> getCompetenceProfessionnelleDtos() {
 		List<Long> competenceProfessionnelleIds = new ArrayList<>();
 		for(CompetenceProfessionnelle cp : competenceProfessionnelles ) {
 			competenceProfessionnelleIds.add(cp.getId());
 		}
 		return competenceProfessionnelleIds;
+	}
+
+	public String getDossierImport() {
+		return dossierImport;
+	}
+
+	public void setDossierImport(String dossierImport) {
+		this.dossierImport = dossierImport;
 	}
 
 	public String getNom() {
