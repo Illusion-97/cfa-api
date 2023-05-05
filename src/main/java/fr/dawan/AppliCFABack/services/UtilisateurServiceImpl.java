@@ -527,7 +527,34 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	@Override
 	public UtilisateurDto insertTuteur(UtilisateurDto uDto) throws SaveInvalidException {
-		//Utilisateur user = DtoTools.convert(uDto, Utilisateur.class);
+		
+		if (uDto.getId() == 0 && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
+			System.out.println("toto");
+			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin()
+					+ " findByEmail " + findByEmail(uDto.getLogin()).toString());
+		}
+		
+		try {
+			// Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+			if (uDto.getId() == 0) {
+				if (uDto.getPassword() == null || uDto.getPassword().equals("")) {
+					uDto.setPassword(generatePassword());
+					uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+
+				} else {
+					uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+				}
+
+			} else {
+				// Si on a modifié le mdp
+				Utilisateur userInDB = utilisateurRepository.getOne(uDto.getId());
+				if (!userInDB.getPassword().equals(uDto.getPassword())) {
+					uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+				}
+			}
+		} catch (Exception e) {
+			logger.error("hashPwd failed", e);
+		}
 		
 		Utilisateur user = mapper.utilisateurDtoToUtilisateur(uDto);
 		UtilisateurRole tuteurRole = utilisateurRoleRepository.findByIntituleContaining("TUTEUR");

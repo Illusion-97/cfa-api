@@ -89,7 +89,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-04T11:05:00+0200",
+    date = "2023-05-04T15:09:12+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -463,10 +463,6 @@ public class DtoMapperImpl implements DtoMapper {
 
         UtilisateurDto utilisateurDto = new UtilisateurDto();
 
-        utilisateurDto.setAdresseDto( adresseToAdresseDto( utilisateur.getAdresse() ) );
-        utilisateurDto.setEtudiantDto( etudiantToEtudiantDto( utilisateur.getEtudiant() ) );
-        utilisateurDto.setFormateurDto( formateurToFormateurDto( utilisateur.getFormateur() ) );
-        utilisateurDto.setCefDto( cefToCEFDto( utilisateur.getCef() ) );
         utilisateurDto.setTuteurDto( tuteurTotuteurDto( utilisateur.getTuteur() ) );
         utilisateurDto.setId( utilisateur.getId() );
         utilisateurDto.setVersion( utilisateur.getVersion() );
