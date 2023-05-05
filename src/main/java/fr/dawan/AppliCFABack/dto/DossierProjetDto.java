@@ -3,6 +3,8 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.CompetenceCouvertesDossierProjetDto;
+
 /**
  * 
  * 
@@ -19,7 +21,7 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 	private ProjetDto projet;
 	
 	private EtudiantDto etudiant;
-	
+	private String dossierImport;
 	private List<AnnexeDossierProjetDto> annexeDossierProjetDtos;
 	
 	private List<InfoDossierProjetDto> infoDossierProjetDtos;
@@ -28,11 +30,11 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 	
 	private List<ResumeDossierProjetDto> resumeDossierProjetDtos;
 
-	
+	private List<Long> competenceProfessionnelleIds;
 	
 	public DossierProjetDto(String nom, ProjetDto projet, List<AnnexeDossierProjetDto> annexeDossierProjetDtos,
 			List<InfoDossierProjetDto> infoDossierProjetDtos, List<ContenuDossierProjetDto> contenuDossierProjetDtos,
-			List<ResumeDossierProjetDto> resumeDossierProjetDtos) {
+			List<ResumeDossierProjetDto> resumeDossierProjetDtos,List<Long> competenceProfessionnelleIds) {
 		super();
 		this.nom = nom;
 		this.projet = projet;
@@ -40,6 +42,7 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 		this.infoDossierProjetDtos = infoDossierProjetDtos;
 		this.contenuDossierProjetDtos = contenuDossierProjetDtos;
 		this.resumeDossierProjetDtos = resumeDossierProjetDtos;
+		this.competenceProfessionnelleIds = competenceProfessionnelleIds;
 	}
 
 	public DossierProjetDto() {
@@ -86,6 +89,14 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
         this.annexeDossierProjetDtos = annexeDossierProjetDtos;
     }
 
+	public String getDossierImport() {
+		return dossierImport;
+	}
+
+	public void setDossierImport(String dossierImport) {
+		this.dossierImport = dossierImport;
+	}
+
 	public List<InfoDossierProjetDto> getInfoDossierProjetDtos() {
 		return infoDossierProjetDtos;
 	}
@@ -116,6 +127,14 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 
 	public void setEtudiant(EtudiantDto etudiant) {
 		this.etudiant = etudiant;
+	}
+
+	public List<Long> getCompetenceProfessionnelleDtos() {
+		return competenceProfessionnelleIds;
+	}
+
+	public void setCompetenceProfessionnelleDtos(List<Long> competenceProfessionnelleIds) {
+		this.competenceProfessionnelleIds = competenceProfessionnelleIds;
 	}
 	
 	

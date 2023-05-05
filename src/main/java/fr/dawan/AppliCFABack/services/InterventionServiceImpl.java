@@ -3,8 +3,10 @@ package fr.dawan.AppliCFABack.services;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -55,6 +57,7 @@ import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+import io.jsonwebtoken.lang.Objects;
 
 @Service
 @Transactional
@@ -242,26 +245,74 @@ public class InterventionServiceImpl implements InterventionService {
 	 * 
 	 */
 
+//	@Override
+//	public InterventionDto saveOrUpdate(InterventionDto iDto) {
+//		Intervention i = DtoTools.convert(iDto, Intervention.class);
+//
+//		if (iDto.getPromotionsId() != null) {
+//			for (long id : iDto.getPromotionsId()) {
+//				Optional<Promotion> promoOpt = promoRepository.findById(id);
+//				if (promoOpt.isPresent()) {
+//					// subtilité sur update si promo déja présent
+//					i.getPromotions().add(promoOpt.get());
+//					promoOpt.get().getInterventions().add(i);
+//				}
+//			}
+//		}
+//
+//		i = interventionRepository.saveAndFlush(i);
+//
+//		filesService.createDirectory("interventions/" + i.getId());
+//
+//		return mapper.interventionToInterventionDto(i);
+//	}
+	
+	
 	@Override
 	public InterventionDto saveOrUpdate(InterventionDto iDto) {
-		Intervention i = DtoTools.convert(iDto, Intervention.class);
+		Intervention intervention;
+		if (iDto.getId() != 0L) {
+            intervention = interventionRepository.getOne(iDto.getId());
+            DtoTools.convert(iDto, Intervention.class);
+        } else {
+            intervention = DtoTools.convert(iDto, Intervention.class);
+        }
 
-		if (iDto.getPromotionsId() != null) {
-			for (long id : iDto.getPromotionsId()) {
-				Optional<Promotion> promoOpt = promoRepository.findById(id);
-				if (promoOpt.isPresent()) {
-					// subtilité sur update si promo déja présent
-					i.getPromotions().add(promoOpt.get());
-					promoOpt.get().getInterventions().add(i);
-				}
-			}
-		}
 
-		i = interventionRepository.saveAndFlush(i);
+        // Charger les entités liées avant de les assigner à l'intervention
+        Formateur formateur = intervention.getFormateur();
+        if (formateur != null) {
+            intervention.setFormateur(formateurRepository.getOne(formateur.getId()));
+        }
 
-		filesService.createDirectory("interventions/" + i.getId());
+        List<Promotion> promotions = intervention.getPromotions();
+        if (promotions != null) {
+            Intervention savedIntervention = interventionRepository.save(intervention);
+            Set<Promotion> existingPromotions = new HashSet<>(savedIntervention.getPromotions());
+            Set<Promotion> newPromotions = new HashSet<>();
+            for (Promotion promotion : promotions) {
+                if (existingPromotions.contains(promotion)) {
+                    existingPromotions.remove(promotion);
+                } else {
+                    newPromotions.add(promoRepository.getOne(promotion.getId()));
+                }
+            }
+            savedIntervention.getPromotions().addAll(newPromotions);
+            savedIntervention.getPromotions().removeAll(existingPromotions);
+            intervention = interventionRepository.save(savedIntervention);
+        } else {
+            intervention = interventionRepository.saveAndFlush(intervention);
+        }
+        
+        // Mettre à jour la noteInfoPersonnel si elle est présente dans l'objet DTO
+        if (iDto.getNoteInfoPersonnel() != null) {
+            intervention.setNoteInfoPersonnel(iDto.getNoteInfoPersonnel());
+            interventionRepository.save(intervention);
+        }
+        
+        filesService.createDirectory("interventions/" + intervention.getId());
 
-		return mapper.interventionToInterventionDto(i);
+        return mapper.interventionToInterventionDto(intervention);
 	}
 
 	/**
@@ -270,6 +321,7 @@ public class InterventionServiceImpl implements InterventionService {
 	 * @param Id Id concernant l'intervention
 	 */
 
+	@SuppressWarnings("unused")
 	@Override
 	public void deleteById(long id) {
 		// On regarde si un devoir est lié à une intervention
@@ -354,9 +406,9 @@ public class InterventionServiceImpl implements InterventionService {
 		Formateur formateur = formateurRepository.findByInterventionId(id);
 		List<FormateurDto> lstFormDto = new ArrayList<>();
 		if (formateur != null) {
-				FormateurDto fDto = mapper.formateurToFormateurDto(formateur);
-				fDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(formateur.getUtilisateur()));
-				lstFormDto.add(fDto);
+			FormateurDto fDto = mapper.formateurToFormateurDto(formateur);
+			fDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(formateur.getUtilisateur()));
+			lstFormDto.add(fDto);
 		}
 		return lstFormDto;
 	}
@@ -629,7 +681,6 @@ public class InterventionServiceImpl implements InterventionService {
 				findFormateur(fetchResJson);
 				logger.info("FetchDg2Intervention >>> START /for");
 				for (PromotionOrInterventionDG2Dto iDtoDG2 : fetchResJson) {
-					
 
 					Intervention interventionImported = dtoTools.promotionOrInterventionDG2DtoToIntervention(iDtoDG2);
 
@@ -658,10 +709,10 @@ public class InterventionServiceImpl implements InterventionService {
 						// Récupération de la promotion correspondante à l'ID en paramètre
 						Optional<Promotion> promotion = promoRepository.findByIdDg2(idPrmotionDg2);
 						if (interventionImported != null && promotion != null && promotion.isPresent()) {
-					        if (interventionImported.getPromotions() == null) {
-					            interventionImported.setPromotions(new ArrayList<>());
-					        }
-					        interventionImported.getPromotions().add(promotion.get());
+							if (interventionImported.getPromotions() == null) {
+								interventionImported.setPromotions(new ArrayList<>());
+							}
+							interventionImported.getPromotions().add(promotion.get());
 						} else {
 							logger.warn("Promotion not found with idDg2 : " + idPrmotionDg2);
 							continue;
@@ -682,15 +733,15 @@ public class InterventionServiceImpl implements InterventionService {
 						logger.warn("Formateur not found with idDg2 : " + iDtoDG2.getTrainerPersonId());
 						continue;
 					}
-				
+
 					interventionImported.setFormateur(formateur.get());
 
 					interventionRepository.saveAndFlush(interventionImported);
-					
-					//utilisateurRepository.saveAndFlush(formateur.get().getUtilisateur());
-					
-					logger.info("interventionImported >>> " );
 
+					// utilisateurRepository.saveAndFlush(formateur.get().getUtilisateur());
+
+					logger.info("interventionImported >>> ");
+					result.add(interventionImported);
 				}
 
 			}
@@ -699,7 +750,6 @@ public class InterventionServiceImpl implements InterventionService {
 			logger.error("FetchDg2Intervention>>>>>>>>ERROR End failed");
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
-
 		return result;
 	}
 
@@ -731,5 +781,5 @@ public class InterventionServiceImpl implements InterventionService {
 		return count;
 
 	}
-	
+
 }

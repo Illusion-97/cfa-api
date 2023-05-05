@@ -1,42 +1,28 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
+import fr.dawan.AppliCFABack.services.DossierProjetService;
+import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.FilesService;
+import io.micrometer.core.lang.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
-import fr.dawan.AppliCFABack.services.DossierProjetService;
-import fr.dawan.AppliCFABack.services.EtudiantService;
-import fr.dawan.AppliCFABack.services.GenericService;
-import fr.dawan.AppliCFABack.services.LivretEvaluationService;
-import fr.dawan.AppliCFABack.services.FileService;
-import fr.dawan.AppliCFABack.services.FilesService;
 
 
 @RestController
@@ -61,7 +47,7 @@ public class DossierProjetController {
 	}
 	
 	@GetMapping(value = "/{id}",produces = "application/json")
-	public DossierProjetEtudiantDto getById(@PathVariable("id") long id) {
+	public DossierProjetDto getById(@PathVariable("id") long id) {
 		return dossierProService.getById(id);
 	}
 	@GetMapping(value = "/etudiant/{id}",produces = "application/json")
@@ -83,21 +69,19 @@ public class DossierProjetController {
  		else
  			return dossierProService.getAllByPage(page, size, "");
  	}
-	
-	@PostMapping(value = "/save/{id}" ,consumes = "application/json", produces = "application/json")
-	public DossierProjetDto save(@RequestBody DossierProjetDto dpDto, @PathVariable("id") long id) {
-		DossierProjetDto dpDto1 = dossierProService.getByName(dpDto.getNom());
-		if (dpDto1!= null) {
-			return null;
-		}
-		DossierProjetDto dp = dossierProService.saveOrUpdate(dpDto);
-		EtudiantDto eDto = etudiantService.getById(id);
-		eDto.getDossierProjet().add(dp);
-		etudiantService.saveOrUpdate(eDto);
-		return dp;
+	@GetMapping(value = "/generer/{idDossierProjet}", produces = "text/plain")
+	public ResponseEntity<String> genererDossierProj(
+			@PathVariable("idDossierProjet") long idDossierProjet) throws Exception {
+
+		String outpoutPath = (dossierProService.genererDossierProjet(idDossierProjet));
+		File f = new File(outpoutPath);
+		
+		Path path = Paths.get(f.getAbsolutePath());
+		byte[] bytes =  Files.readAllBytes(path);
+		String base64 = Base64.getEncoder().encodeToString(bytes);
+
+		return ResponseEntity.ok().body(base64);
 	}
-	
-	
 	@DeleteMapping(value = "/{idEtudiant}/delete/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable("idEtudiant") long idEtudiant, @PathVariable("id") long id) {
 		try {
@@ -117,45 +101,31 @@ public class DossierProjetController {
 
 	}
 	
-	
-	@PutMapping(value = "/save/{id}" ,consumes = "application/json", produces = "application/json")
-	public DossierProjetDto update(@RequestBody DossierProjetDto dpDto, @PathVariable("id") long id) {
-		DossierProjetDto dpDto1 = dossierProService.getByName(dpDto.getNom());
-		if (dpDto1!= null) {
-			return null;
-		}
-		DossierProjetDto dp = dossierProService.saveOrUpdate(dpDto);
-		EtudiantDto eDto = etudiantService.getById(id);
-		eDto.getDossierProjet().add(dp);
-		etudiantService.saveOrUpdate(eDto);
-		return dp;
-	}
-	
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
     public DossierProjetEtudiantDto updateDossierProjet(@PathVariable("id") long id, 
     		@RequestParam("dossierProjet") String dpDto,
-    		@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException{
+    		@RequestParam("pieceJointe") List<MultipartFile> files, @RequestParam("import")MultipartFile file) throws IOException{
 		//Chemin a changer selon les directives
 		String path = storageFolder + "DossierProjet" + "/" ;
         fileService.createDirectory(path);
         DossierProjetEtudiantDto dpEtuDto = objectMapper.readValue(dpDto, DossierProjetEtudiantDto.class);
-		return dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, file);
+		return dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, files, file);
     }
 	
-	
-	@GetMapping(value = "/generer/{idDossierProjet}", produces = "text/plain")
-	public ResponseEntity<String> genererDossierProj(
-			@PathVariable("idDossierProjet") long idDossierProjet) throws Exception {
+	@PostMapping(value = "/creation/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
+    public ResponseEntity<DossierProjetEtudiantDto> creationDossierProjet(@PathVariable("id") long id,
+    		@RequestParam("dossierProjet") String dpDto,
+    		@RequestParam("pieceJointe") List<MultipartFile> files,@Nullable @RequestParam("import")MultipartFile file) throws IOException{
 
-		String outpoutPath = (dossierProService.genererDossierProjet(idDossierProjet));
-		File f = new File(outpoutPath);
-		
-		Path path = Paths.get(f.getAbsolutePath());
-		byte[] bytes =  Files.readAllBytes(path);
-		String base64 = Base64.getEncoder().encodeToString(bytes);
+		//Chemin a changer selon les directives
+			String path = storageFolder + "DossierProjet" + "/" ;
+        	fileService.createDirectory(path);
 
-		return ResponseEntity.ok().body(base64);
-	}
+        DossierProjetEtudiantDto dpEtuDto = objectMapper.readValue(dpDto, DossierProjetEtudiantDto.class);
+        DossierProjetEtudiantDto created = dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, files, file);
+		return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
 
 	
 	

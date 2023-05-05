@@ -13,9 +13,11 @@ public class DossierProjetEtudiantDto implements Serializable {
 
     private long id;
     private String nom;
-    private ProjetDossierProjetDto projets;
+    private String dossierImport;
+    private ProjetDossierProjetDto projet;
     private List<AnnexeDossierProjetDto> annexeDossierProjets;
     private List<InfoDossierProjetDto> infoDossierProjets;
+    private List<Long> competenceProfessionnelleIds;
     private List<ContenuDossierProjetDto> contenuDossierProjets;
     private List<ResumeDossierProjetDto> resumeDossierProjets;
     private int version;
@@ -33,12 +35,20 @@ public class DossierProjetEtudiantDto implements Serializable {
     public void setNom(String nom) {
         this.nom = nom;
     }
-  
-    public ProjetDossierProjetDto getProjets() {
-        return projets;
+
+    public String getDossierImport() {
+        return dossierImport;
     }
-    public void setProjets(ProjetDossierProjetDto projets) {
-        this.projets = projets;
+
+    public void setDossierImport(String dossierImport) {
+        this.dossierImport = dossierImport;
+    }
+
+    public ProjetDossierProjetDto getProjet() {
+        return projet;
+    }
+    public void setProjet(ProjetDossierProjetDto projet) {
+        this.projet = projet;
     }
     public List<AnnexeDossierProjetDto> getAnnexeDossierProjets() {
         return annexeDossierProjets;
@@ -76,6 +86,13 @@ public class DossierProjetEtudiantDto implements Serializable {
     public void setVersion(int version) {
         this.version = ++version;
     }
+
+	public List<Long> getCompetenceProfessionnelleIds() {
+		return competenceProfessionnelleIds;
+	}
+	public void setCompetenceProfessionnelleIds(List<Long> competenceProfessionnelleIds) {
+		this.competenceProfessionnelleIds = competenceProfessionnelleIds;
+	}
     
     
 

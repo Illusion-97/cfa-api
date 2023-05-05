@@ -5,9 +5,9 @@ import java.io.Serializable;
 
 import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
 
+@SuppressWarnings("serial")
 public class AnnexeDossierProjetDto extends BaseEntityDto implements Serializable {
-
-
+    
     private String pieceJointe;
 
     private long dossierProjetId;
@@ -21,7 +21,7 @@ public class AnnexeDossierProjetDto extends BaseEntityDto implements Serializabl
         this.pieceJointe = pieceJointe;
     }
 
-    public long getDossierProjetId() {
+	public long getDossierProjetId() {
         return dossierProjetId;
     }
 

@@ -18,8 +18,11 @@ import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.*;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfActiviteDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfCompetenceDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.entities.*;
 import fr.dawan.AppliCFABack.repositories.*;
+
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -27,11 +30,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import fr.dawan.AppliCFABack.dto.AnnexeDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
+import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import fr.dawan.AppliCFABack.tools.PdfTools;
+import fr.dawan.AppliCFABack.tools.ToPdf;
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
 import freemarker.template.MalformedTemplateNameException;
@@ -41,7 +49,8 @@ import freemarker.template.TemplateNotFoundException;
 
 @Service
 @Transactional
-public class DossierProfessionnelServiceImpl implements DossierProfessionnelService {
+public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierProfessionnel, DossierProfessionnelDto> implements DossierProfessionnelService {
+
 
     @Autowired
     DossierProfessionnelRepository dossierProRepo;
@@ -59,6 +68,9 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Autowired
     private EtudiantRepository etudiantRepository;
+    
+    @Autowired
+    private AnnexeRepository annexeRepository;
 
     @Autowired
     private ActiviteTypeRepository activiteTypeRepository;
@@ -71,6 +83,13 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Autowired
     private Configuration freemarkerConfig;
+    
+    @Autowired
+    public DossierProfessionnelServiceImpl(DossierProfessionnelRepository dossierProRepo) {
+    	super(dossierProRepo, DossierProfessionnelDto.class, DossierProfessionnel.class);
+        this.dossierProRepo = dossierProRepo;   
+       
+    }
 
     @Value("${backend.url}")
     private String backendUrl;
@@ -189,9 +208,28 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 
     @Override
     public List<DossierProfessionnelDto> getByIdEtudiant(long id) {
-        EtudiantDto e = etudiantService.getById(id);
+    	
+    	Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+ 	    List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
+ 	        Etudiant e = etudiant.get();
+ 	        List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
+             
+ 	        for (DossierProfessionnel dp : lstDossierProfessionnel) {
 
-        return e.getDossierProfessionnel();
+ 	            DossierProfessionnelDto dossierProDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
+ 	            
+ 	            dossierProDto.setId(dp.getId());
+ 	            dossierProDto.setNom(dp.getNom());
+ 	            dossierProDto.setAnnexeDtos(mapper.annexeToAnnexeDto(dp.getAnnexes()));
+ 	            dossierProDto.setCursusDto(mapper.cursusToCursusDto(dp.getCursus()));
+ 	            dossierProDto.setExperienceProfessionnelleDtos(mapper.experienceProfessionnelleToExperienceProfessionnelleDto(dp.getExperienceProfessionnelles()));
+ 	            dossierProDto.setFacultatifDto(mapper.facultatifToFacultatifDto(dp.getFacultatifs()));
+ 	          
+ 	            
+ 	           lstDossierProfessionnelDto.add(dossierProDto);
+ 	        }
+ 	    
+ 	    return lstDossierProfessionnelDto;
     }
 
     /**
@@ -401,7 +439,7 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
 	
 
 	@Override
-	public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id,List<MultipartFile> file) 
+	public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id, List<MultipartFile> file) 
 	{
 		DossierProfessionnel dp = mapper.dossierProfessionnelDtoToDossierProfessionnel(dpDto);
         assert dp != null;
@@ -430,6 +468,8 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
             File newAnnexe = new File(pathFile);
             Annexe annex = annexes.get(i++);
             annex.setPieceJointe(pathFile);
+            //annex.setLibelle("lib2");
+      
             
             try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))){
                 try 
@@ -461,12 +501,71 @@ public class DossierProfessionnelServiceImpl implements DossierProfessionnelServ
         if(etudiant.isPresent()){
              dp.setEtudiant(etudiant.get());
         }
+       
+       
+  
         //on insert ou met à jour le dossier en question
         dp = dossierProRepo.saveAndFlush(dp);
+        
 
         return DtoTools.convert(dp, DossierProEtudiantDto.class);
 		
 		
+	}
+
+	@Override
+	public CountDto count(String search) {
+		long nb = dossierProRepo.countByNom(search);
+		CountDto result =  new CountDto();
+		result.setNb(nb);
+		return result;
+	}
+
+	@Override
+	public void delete(long id) {
+		Optional<DossierProfessionnel> opt = dossierProRepo.findById(id);
+		if(opt.isPresent())
+		{
+			DossierProfessionnel d = opt.get();
+			d.setEtudiant(null);
+            d.setExperienceProfessionnelles(null);
+            d.setCursus(null);
+            d.setAnnexes(null);
+            d.setFacultatifs(null);
+			dossierProRepo.delete(d);
+			
+		}
+		
+	}
+
+	@Override
+	public String genererDossierProfessionnel(long idDossierPro) throws DossierProfessionnelException,
+			TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+		
+		
+          Optional<DossierProfessionnel> dossierPro = dossierProRepo.findById(idDossierPro);
+    	
+    	if (!dossierPro.isPresent()) {
+    		throw new DossierProfessionnelException("le DossierProfessionnel et non trouvable");
+		}
+		DossierProEtudiantDto dossierproFile = mapper.dossierProfessionnelToDossierProEtudiantDto(dossierPro.get());
+    	
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("backendUrl", backendUrl);
+    	model.put("dossierPro", dossierproFile);
+		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+		Template template = freemarkerConfig.getTemplate("DossierProfessionnel.ftl");
+
+		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+		
+		String outputPdf = storageFolder2 + "/DossierProfessionnel" + "/dossier-professionnel" + idDossierPro + ".pdf";
+		try {
+			ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
+		}
+
+		return outputPdf;
 	}
 
 	}

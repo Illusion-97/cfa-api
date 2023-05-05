@@ -1,8 +1,8 @@
 package fr.dawan.AppliCFABack.entities;
 
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,9 +40,11 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 	@OneToMany(mappedBy = "competenceProfessionnelle", cascade = CascadeType.ALL)
 	private List<ExperienceProfessionnelle> experienceProfessionnelles;
 	
-	 @ManyToMany(mappedBy="competencesEvaluees")
-	 private List<EvaluationFormation> evaluationsFormations;
+	@ManyToMany(mappedBy="competencesEvaluees")
+	private List<EvaluationFormation> evaluationsFormations;
 
+	@ManyToMany(mappedBy = "competenceProfessionnelles")
+	private List<DossierProjet> dossierProjets;
 //	@OneToMany(mappedBy = "competenceProfessionnelle", cascade = CascadeType.ALL)
 //	private Set<CompetenceExperienceEtudiant> competenceExperienceEtudiants;
 
@@ -121,4 +123,7 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 	public void setExperienceProfessionnelles(List<ExperienceProfessionnelle> experienceProfessionnelles) {
 		this.experienceProfessionnelles = experienceProfessionnelles;
 	}
+
+
+	
 }

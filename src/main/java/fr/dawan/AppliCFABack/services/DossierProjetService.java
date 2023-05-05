@@ -2,13 +2,13 @@ package fr.dawan.AppliCFABack.services;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
-import fr.dawan.AppliCFABack.tools.LivretEvaluationException;
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
@@ -18,13 +18,11 @@ public interface DossierProjetService {
 
 	List<DossierProjetDto> getAll();
 
-	DossierProjetEtudiantDto getById(long id);
+	DossierProjetDto getById(long id);
 	
 	DossierProjetDto getByName(String nom);
 
 	List<DossierProjetDto> getAllByPage(int page, int size, String string);
-
-	DossierProjetDto saveOrUpdate(DossierProjetDto dpDto);
 
 	void deleteById(long id);
 
@@ -33,8 +31,7 @@ public interface DossierProjetService {
 	String genererDossierProjet(long idDossierProjet) throws DossierProjetException, TemplateNotFoundException,
 		MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
-	DossierProjetEtudiantDto saveOrUpdateDossierProjet(DossierProjetEtudiantDto dpDto, long id, List<MultipartFile> file);
-
+	DossierProjetEtudiantDto saveOrUpdateDossierProjet(DossierProjetEtudiantDto dpDto, long id, List<MultipartFile> files, MultipartFile file) throws IOException;
 	
 
 }

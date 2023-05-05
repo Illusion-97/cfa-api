@@ -31,18 +31,18 @@ public interface InterventionRepository extends JpaRepository<Intervention, Long
 	@Query("SELECT i FROM Intervention i JOIN i.formateur f JOIN i.formation fo WHERE f.id = :id AND LOWER(fo.titre) LIKE CONCAT('%', LOWER(:titre), '%')")
 	Page<Intervention> findByFormateurIdAndFormationTitreContainingAllIgnoreCase(long id, String titre, Pageable p);
 
-	@Query("FROM Intervention i LEFT JOIN FETCH Formateur f LEFT JOIN FETCH Formation fo WHERE f.id=:id AND fo.titre=:search")
+	@Query("FROM Intervention i LEFT JOIN FETCH i.formateur f LEFT JOIN FETCH i.formation fo WHERE f.id=:id AND fo.titre=:search")
 	long countByFormateurIdAndFormationTitreAllIgnoreCase(long id, String search);
 
-	@Query("FROM Intervention i LEFT JOIN FETCH Formateur f WHERE f.id=:id")
-	long countByFormateurId(long id);
+	@Query("SELECT count(i.id) FROM Intervention i JOIN i.formateur f WHERE f.id= :id")
+	long countByFormateurId(@Param("id") long id);
 
 	/** ++++++++++++++ INTERVENTION FORMATION ++++++++++++++ **/
 	List<Intervention> findAllByFormationId(long id);
 
 	Optional<Intervention> findByIdDg2(long id);
 	
-	@Query("SELECT i FROM Intervention i LEFT JOIN FETCH Formateur f WHERE f.id =:id And i.dateDebut =:dateDebut And i.dateFin =:dateFin")
+	@Query("SELECT i FROM Intervention i LEFT JOIN FETCH i.formateur f WHERE f.id =:id And i.dateDebut =:dateDebut And i.dateFin =:dateFin")
 	Optional<Intervention> findInterventionBydateFormationAndFormateur(LocalDate dateDebut, LocalDate dateFin, long id);
 
 	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++ **/

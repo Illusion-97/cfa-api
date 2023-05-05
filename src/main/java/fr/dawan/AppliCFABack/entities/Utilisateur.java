@@ -40,7 +40,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@ManyToOne(cascade = {CascadeType.PERSIST })
 	private Adresse adresse;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<UtilisateurRole> roles;
 
 	@ManyToOne
@@ -51,15 +51,13 @@ public class Utilisateur extends BaseEntity implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Etudiant etudiant;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "utilisateur")
 	private Formateur formateur;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.MERGE)
 	private CEF cef;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "utilisateur")
 	private Tuteur tuteur;
-	
-
 
 	@OneToOne
 	private Signature signature;
