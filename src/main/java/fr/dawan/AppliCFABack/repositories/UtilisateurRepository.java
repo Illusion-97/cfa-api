@@ -42,4 +42,6 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	
 	Optional<Utilisateur> findByFormateur(Formateur formateur);
 
+	Optional<Utilisateur> findByFormateur(long trainerPersonId);
+
 }
