@@ -745,9 +745,9 @@ public class InterventionServiceImpl implements InterventionService {
 			utilisateurRepository.saveAndFlush(userInDb.get());
 			
 			//CODE OK
-//			Formateur formateur = new Formateur();
-//			formateur.setUtilisateur(userInDb.get());
-//			formateurRepository.saveAndFlush(formateur);
+			//Formateur formateur = new Formateur();
+			//formateur.setUtilisateur(userInDb.get());
+			//formateurRepository.saveAndFlush(formateur);
 
 			count++;
 
