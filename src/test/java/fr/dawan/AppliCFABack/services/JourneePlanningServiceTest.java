@@ -1,12 +1,10 @@
 package fr.dawan.AppliCFABack.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.Formation;
+import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -14,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
-import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Formation;
-import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
 @AutoConfigureMockMvc

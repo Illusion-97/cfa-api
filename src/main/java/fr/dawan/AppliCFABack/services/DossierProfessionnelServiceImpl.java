@@ -1,28 +1,20 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.*;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfActiviteDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfCompetenceDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.*;
-
-import org.apache.catalina.mapper.Mapper;
+import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
+import fr.dawan.AppliCFABack.tools.PdfTools;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.core.ParseException;
+import freemarker.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -30,22 +22,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import fr.dawan.AppliCFABack.dto.AnnexeDto;
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
-import fr.dawan.AppliCFABack.tools.DossierProjetException;
-import fr.dawan.AppliCFABack.tools.PdfTools;
-import fr.dawan.AppliCFABack.tools.ToPdf;
-import freemarker.core.ParseException;
-import freemarker.template.Configuration;
-import freemarker.template.MalformedTemplateNameException;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
+import javax.transaction.Transactional;
+import java.io.*;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional

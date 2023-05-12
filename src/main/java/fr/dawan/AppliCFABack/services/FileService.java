@@ -1,14 +1,13 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
+import fr.dawan.AppliCFABack.tools.FileException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.tools.FileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 public class FileService {

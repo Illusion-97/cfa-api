@@ -3,8 +3,6 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import fr.dawan.AppliCFABack.entities.Tuteur;
-
 /**
  * 
  * @author Valentin C, Feres BG.

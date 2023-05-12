@@ -1,8 +1,8 @@
 package fr.dawan.AppliCFABack.services;
 
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 @Transactional

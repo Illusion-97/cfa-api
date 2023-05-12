@@ -1,9 +1,5 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.entities.Promotion;
@@ -13,6 +9,10 @@ import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
 
 
 public interface PromotionService {

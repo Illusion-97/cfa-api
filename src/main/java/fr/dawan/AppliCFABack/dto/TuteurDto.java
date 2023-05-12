@@ -1,10 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
-import java.util.List;
-
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
 
 @SuppressWarnings("serial")
 public class TuteurDto extends BaseEntityDto implements Serializable{

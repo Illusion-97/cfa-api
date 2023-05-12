@@ -1,7 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
-import java.util.List;
-
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,14 +9,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import fr.dawan.AppliCFABack.entities.DossierProjet;
+import java.util.List;
 
 @Repository
 public interface DossierProjetRepository extends JpaRepository<DossierProjet, Long> {
 
 	Page<DossierProjet> findByNomContaining(String string, PageRequest of);
 
-	@Query("SELECT d FROM DossierProjet d where nom = :nom")
+	@Query("SELECT d FROM DossierProjet d where d.nom = :nom")
 	DossierProjet getByName(String nom);
 	
 	@Query("SELECT dp FROM DossierProjet dp JOIN dp.etudiant e WHERE e.id = :id")

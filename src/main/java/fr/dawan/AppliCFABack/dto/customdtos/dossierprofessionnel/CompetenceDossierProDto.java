@@ -1,9 +1,9 @@
 package fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel;
 
+import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
+
 import java.io.Serializable;
 import java.util.List;
-
-import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 
 @SuppressWarnings("serial")
 public class CompetenceDossierProDto implements Serializable {

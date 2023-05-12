@@ -1,26 +1,21 @@
 package fr.dawan.AppliCFABack.controllers;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.List;
-
+import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import fr.dawan.AppliCFABack.services.GenericService;
+import fr.dawan.AppliCFABack.services.LivretEvaluationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
-import fr.dawan.AppliCFABack.services.GenericService;
-import fr.dawan.AppliCFABack.services.LivretEvaluationService;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
+import java.util.List;
 /**
  * @author Feres BG.
  * @see fr.dawan.appliCFABack.service

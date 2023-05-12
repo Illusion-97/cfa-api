@@ -1,11 +1,11 @@
 package fr.dawan.AppliCFABack.dto.customdtos;
 
-import java.io.Serializable;
-import java.util.List;
-
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import fr.dawan.AppliCFABack.entities.EvaluationFormation;
+
+import java.io.Serializable;
+import java.util.List;
 /**
  * 
  * @author Feres BG.

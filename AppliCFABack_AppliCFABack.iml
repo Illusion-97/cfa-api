@@ -193,5 +193,6 @@
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-ehcache:5.4.17.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.4.1.Final" level="project" />
     <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache:2.10.6" level="project" />
+    <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.12" level="project" />
   </component>
 </module>

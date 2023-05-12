@@ -1,9 +1,8 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 
 @SuppressWarnings("serial")
 @JsonIgnoreProperties(ignoreUnknown = true)

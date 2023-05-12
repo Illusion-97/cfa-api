@@ -1,16 +1,11 @@
 package fr.dawan.AppliCFABack.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 @SuppressWarnings({ "serial", "unused" })
 @Entity

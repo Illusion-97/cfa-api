@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * 

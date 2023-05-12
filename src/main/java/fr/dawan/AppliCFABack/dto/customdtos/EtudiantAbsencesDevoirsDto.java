@@ -1,12 +1,12 @@
 package fr.dawan.AppliCFABack.dto.customdtos;
 
-import java.io.Serializable;
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
 import fr.dawan.AppliCFABack.dto.NiveauDto;
 import fr.dawan.AppliCFABack.dto.PositionnementDto;
+
+import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 /**

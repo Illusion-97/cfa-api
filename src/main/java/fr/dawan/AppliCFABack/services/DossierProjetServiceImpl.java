@@ -1,8 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
-import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
@@ -86,13 +85,10 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	@Override
 	public List<DossierProjetDto> getAll() {
 		List<DossierProjet> lstDossierProjets = dossierProRepo.findAll();
+
 		List<DossierProjetDto> lstDossierProjetDto = new ArrayList<>();
-
 		for (DossierProjet dossierProjet : lstDossierProjets) {
-			DossierProjetDto dpDto = mapper.dossierProjetToDpDto(dossierProjet);
-			dpDto.setProjet(mapper.projetToProjetDto(dossierProjet.getProjet()));
-			lstDossierProjetDto.add(dpDto);
-
+			lstDossierProjetDto.add(mapper.dossierProjetToDossierProjetDto(dossierProjet));
 		}
 		return lstDossierProjetDto;
 	}
@@ -104,20 +100,11 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 	@Override
 	public DossierProjetDto getById(long id) {
-		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
-			DossierProjetDto dossierProjetDto = mapper.dossierProjetToDpDto(dp);
-
-			dossierProjetDto.setId(dp.getId());
-			dossierProjetDto.setNom(dp.getNom());
-			dossierProjetDto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
-			dossierProjetDto
-					.setAnnexeDossierProjetDtos(mapper.annexeProjetToAnnexeProjetDto(dp.getAnnexeDossierProjets()));
-			dossierProjetDto.setContenuDossierProjetDtos(mapper.contenuToContenuDto(dp.getContenuDossierProjets()));
-			dossierProjetDto.setInfoDossierProjetDtos(mapper.infoToInfoDto(dp.getInfoDossierProjets()));
-			dossierProjetDto.setResumeDossierProjetDtos(mapper.resumeToResumeDto(dp.getResumeDossierProjets()));
-			dossierProjetDto.getCompetenceProfessionnelleDtos();
-			
-			return dossierProjetDto;
+		Optional<DossierProjet>  dp = dossierProRepo.findById(id);
+		if(!dp.isPresent()){
+			return null;
+		}
+		return mapper.dossierProjetToDossierProjetDto(dp.get());
 		
 	}
 
@@ -140,7 +127,6 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		List<DossierProjetDto> lstDto = new ArrayList<>();
 		for (DossierProjet dp : lst) {
 			DossierProjetDto dpDto = mapper.dossierProjetToDpDto(dp);
-			dpDto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
 
 			lstDto.add(dpDto);
 		}
@@ -158,7 +144,6 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		DossierProjetDto dpDto = mapper.dossierProjetToDpDto(dossierProRepo.getByName(nom));
 		if (dpDto != null) {
 			if (dossierProRepo.getByName(nom).getProjet() == null)
-				dpDto.setProjet(mapper.projetToProjetDto(dossierProRepo.getByName(nom).getProjet()));
 			return dpDto;
 		}
 		return null;
@@ -190,17 +175,12 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 		for (DossierProjet dp : dpEtu) {
 
-			DossierProjetDto dossierProjetDto = mapper.dossierProjetToDpDto(dp);
+			DossierProjetDto dossierProjetDto = mapper.dossierProjetToDossierProjetDto(dp);
 
 			dossierProjetDto.setId(dp.getId());
 			dossierProjetDto.setNom(dp.getNom());
 			dossierProjetDto.setDossierImport((dp.getDossierImport()));
-			dossierProjetDto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
-			dossierProjetDto.setAnnexeDossierProjetDtos(mapper.annexeProjetToAnnexeProjetDto(dp.getAnnexeDossierProjets()));
-			dossierProjetDto.setContenuDossierProjetDtos(mapper.contenuToContenuDto(dp.getContenuDossierProjets()));
-			dossierProjetDto.setInfoDossierProjetDtos(mapper.infoToInfoDto(dp.getInfoDossierProjets()));
-			dossierProjetDto.setResumeDossierProjetDtos(mapper.resumeToResumeDto(dp.getResumeDossierProjets()));
-			dossierProjetDto.getCompetenceProfessionnelleDtos();
+			dossierProjetDto.getCompetenceProfessionnelleIds();
 
 			dossierProjetDtoList.add(dossierProjetDto);
 		}
@@ -219,97 +199,34 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 */
 
 	@Override
-	public DossierProjetEtudiantDto saveOrUpdateDossierProjet(DossierProjetEtudiantDto dpDto, long id,
-			List<MultipartFile> fileAnnexe, MultipartFile fileDp) throws IOException {
-		DossierProjet dp = mapper.dossierProjetDtoToDossierProjet(dpDto);
-
-		assert dp != null;
-
-		importDossierProjet(fileDp, dp);
-		saveAnnexesDossierProjet(fileAnnexe, dp);
-
-		saveInfosDossierProjet(dp);
-
-		saveContenusDossierProjet(dp);
-
-		saveResumeDossierProjet(dp);
-
-		saveCompetenceCouvertesDossierProjet(dpDto, dp);
-
-		// on met à jour la clé étrangère etudiant de la table dossier_projet
-		// (dans le cas d'un save)
-		Optional<Etudiant> etudiant = etudiantRepository.findById(id);
-		if (etudiant.isPresent()) {
-			dp.setEtudiant(etudiant.get());
-		}
-
-		// on insert ou met à jour le dossier en question
-		dp = dossierProRepo.saveAndFlush(dp);
-
-		return mapper.dossierProjetToDossierProjetEtudiantDto(dp);
-
+	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) {
+		return mapper.dossierProjetToDossierProjetDto(dossierProRepo.saveAndFlush(mapper.dossierProjetDtoToDossierProjet(dpDto)));
 	}
-
-	/*
-	 * 
-	 * Méthodes refactorisés pour la méthode saveOrUpdateDossierProjet
-	 *
-	 */
-	private void importDossierProjet(MultipartFile files, DossierProjet dp) throws IOException {
-			if (!files.isEmpty()) {
+	public DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException {
+				DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
 				String strr = files.getOriginalFilename();
 				String pathDossierProjet = storageFolder + "/DossierProjet/" + strr;
 				saveFile(files, pathDossierProjet);
 				dp.setDossierImport(strr);
-			}
+				DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
+				return dpDto;
 	}
-	private void saveCompetenceCouvertesDossierProjet(DossierProjetEtudiantDto dpDto, DossierProjet dp) {
-		List<Long> competenceIds = dpDto.getCompetenceProfessionnelleIds();
-		List<CompetenceProfessionnelle> competences = new ArrayList<>();
-		for (Long idComp : competenceIds) {
-			CompetenceProfessionnelle cp = cpRepo.getOne(idComp.longValue());
-			competences.add(cp);
+
+	public DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException {
+		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
+		List<String> getList = dp.getAnnexeDossierProjets();
+		if (getList == null) {
+			dp.setAnnexeDossierProjets(new ArrayList<>());
 		}
-		dp.setCompetenceProfessionnelles(competences);
-	}
-
-	private void saveResumeDossierProjet(DossierProjet dp) {
-		List<ResumeDossierProjet> resumes = dp.getResumeDossierProjets();
-		for (ResumeDossierProjet resume : resumes) {
-			resume.setDossierProjet(dp);
-		}
-	}
-
-	private void saveContenusDossierProjet(DossierProjet dp) {
-		List<ContenuDossierProjet> contenus = dp.getContenuDossierProjets();
-		for (ContenuDossierProjet contenu : contenus) {
-			contenu.setDossierProjet(dp);
-		}
-	}
-
-	private void saveInfosDossierProjet(DossierProjet dp) {
-		List<InfoDossierProjet> infos = dp.getInfoDossierProjets();
-		for (InfoDossierProjet info : infos) {
-			info.setDossierProjet(dp);
-		}
-	}
-
-	private void saveAnnexesDossierProjet(List<MultipartFile> files, DossierProjet dp) throws IOException {
-		List<AnnexeDossierProjet> annexes = dp.getAnnexeDossierProjets();
-
-		int i = 0;
 		for (MultipartFile file : files) {
-		    String pathFile = storageFolder + "/DossierProjet/" + file.getOriginalFilename();
-		    AnnexeDossierProjet annexe = annexes.get(i++);
-		    annexe.setPieceJointe(file.getOriginalFilename());
-		    saveFile(file, pathFile);
+			String pathFile = storageFolder + "/DossierProjet/" + file.getOriginalFilename();
+			dp.getAnnexeDossierProjets().add(file.getOriginalFilename());
+			saveFile(file, pathFile);
 		}
-		for (AnnexeDossierProjet annexe : annexes) {
-			annexe.setDossierProjet(dp);
-		}
+		dp.setAnnexeDossierProjets(getList);
+		DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
+		return dpDto;
 	}
-
-
 	@Override
 	public String genererDossierProjet(long idDossierProjet) throws TemplateNotFoundException,
 			MalformedTemplateNameException, ParseException, IOException, TemplateException, DossierProjetException {
@@ -319,8 +236,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		if (!dossierProjet.isPresent()) {
 			throw new DossierProjetException("Dossier projet non trouvé");
 		}
-		DossierProjetEtudiantDto dossierProjetFile = mapper
-				.dossierProjetToDossierProjetEtudiantDto(dossierProjet.get());
+		DossierProjetDto dossierProjetFile = mapper
+				.dossierProjetToDossierProjetDto(dossierProjet.get());
 
 		Map<String, Object> model = new HashMap<>();
 		model.put("backendUrl", backendUrl);

@@ -1,19 +1,8 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EvaluationFormationDto;
-import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.EvaluationFormation;
@@ -21,6 +10,13 @@ import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.EvaluationFormationRepository;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional

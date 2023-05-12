@@ -1,28 +1,22 @@
 package fr.dawan.AppliCFABack.services;
 
+import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.StatusConge;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
-import fr.dawan.AppliCFABack.dto.CongeDto;
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.StatusConge;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.CongeRepository;
 
 
 @Service

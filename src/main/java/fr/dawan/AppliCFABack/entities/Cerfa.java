@@ -1,16 +1,8 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import java.io.Serializable;
 
 @SuppressWarnings("serial")
 @Entity

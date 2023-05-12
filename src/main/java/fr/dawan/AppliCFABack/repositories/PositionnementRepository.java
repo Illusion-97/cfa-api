@@ -1,12 +1,11 @@
 package fr.dawan.AppliCFABack.repositories;
 
-import java.util.List;
-import java.util.Optional;
-
+import fr.dawan.AppliCFABack.entities.Positionnement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import fr.dawan.AppliCFABack.entities.Positionnement;
+import java.util.List;
+import java.util.Optional;
 /**
  * @author Valentin C, Feres BG.
  * @see fr.dawan.appliCFABack.service

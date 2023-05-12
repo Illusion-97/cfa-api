@@ -1,11 +1,10 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 @Entity

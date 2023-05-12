@@ -1,13 +1,9 @@
 package fr.dawan.AppliCFABack.dto.customdtos;
 
+import fr.dawan.AppliCFABack.entities.*;
+
 import java.util.List;
 import java.util.Map;
-
-import fr.dawan.AppliCFABack.entities.ActiviteType;
-import fr.dawan.AppliCFABack.entities.Cursus;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.EvaluationFormation;
-import fr.dawan.AppliCFABack.entities.LivretEvaluation;
 
 public class LivretEvaluationFileDto {
 

@@ -1,15 +1,10 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import javax.transaction.Transactional;
-import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
+import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.Note;
@@ -19,6 +14,12 @@ import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
 import fr.dawan.AppliCFABack.repositories.NoteRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /***
  * 

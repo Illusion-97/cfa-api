@@ -1,8 +1,8 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.io.Serializable;
-
 import fr.dawan.AppliCFABack.entities.Validation.Etat;
+
+import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class ValidationDto extends BaseEntityDto implements Serializable{

@@ -1,91 +1,16 @@
 package fr.dawan.AppliCFABack.mapper;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.CompetenceCouvertesDossierProjetDto;
+import fr.dawan.AppliCFABack.entities.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
-import fr.dawan.AppliCFABack.dto.ActiviteTypeDto;
-import fr.dawan.AppliCFABack.dto.AdresseDto;
-import fr.dawan.AppliCFABack.dto.AnnexeDossierProjetDto;
-import fr.dawan.AppliCFABack.dto.AnnexeDto;
-import fr.dawan.AppliCFABack.dto.CEFDto;
-import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
-import fr.dawan.AppliCFABack.dto.CentreFormationDto;
-import fr.dawan.AppliCFABack.dto.CerfaDto;
-import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
-import fr.dawan.AppliCFABack.dto.CongeDto;
-import fr.dawan.AppliCFABack.dto.ContenuDossierProjetDto;
-import fr.dawan.AppliCFABack.dto.CursusDG2Dto;
-import fr.dawan.AppliCFABack.dto.CursusDto;
-import fr.dawan.AppliCFABack.dto.DevoirDto;
-import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
-import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.dto.EmployeeDG2Dto;
-import fr.dawan.AppliCFABack.dto.EntrepriseDto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
-import fr.dawan.AppliCFABack.dto.ExamenDto;
-import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
-import fr.dawan.AppliCFABack.dto.FacultatifDto;
-import fr.dawan.AppliCFABack.dto.FormateurDto;
-import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
-import fr.dawan.AppliCFABack.dto.FormationDto;
-import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
-import fr.dawan.AppliCFABack.dto.InfoDossierProjetDto;
-import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
-import fr.dawan.AppliCFABack.dto.MaitreApprentissageDto;
-import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.PassageExamenDto;
-import fr.dawan.AppliCFABack.dto.ProjetDto;
-import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.RemunerationDto;
-import fr.dawan.AppliCFABack.dto.ResumeDossierProjetDto;
-import fr.dawan.AppliCFABack.dto.TuteurDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.CompetenceCouvertesDossierProjetDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
-import fr.dawan.AppliCFABack.entities.ActiviteType;
-import fr.dawan.AppliCFABack.entities.Adresse;
-import fr.dawan.AppliCFABack.entities.AnnexeDossierProjet;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
-import fr.dawan.AppliCFABack.entities.Annexe;
-import fr.dawan.AppliCFABack.entities.CEF;
-import fr.dawan.AppliCFABack.entities.CentreFormation;
-import fr.dawan.AppliCFABack.entities.Cerfa;
-import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
-import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.ContenuDossierProjet;
-import fr.dawan.AppliCFABack.entities.Cursus;
-import fr.dawan.AppliCFABack.entities.Devoir;
-import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
-import fr.dawan.AppliCFABack.entities.DossierProjet;
-import fr.dawan.AppliCFABack.entities.Entreprise;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Examen;
-import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
-import fr.dawan.AppliCFABack.entities.Facultatif;
-import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Formation;
-import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
-import fr.dawan.AppliCFABack.entities.InfoDossierProjet;
-import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.MaitreApprentissage;
-import fr.dawan.AppliCFABack.entities.Note;
-import fr.dawan.AppliCFABack.entities.PassageExamen;
-import fr.dawan.AppliCFABack.entities.Projet;
-import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Remuneration;
-import fr.dawan.AppliCFABack.entities.ResumeDossierProjet;
-import fr.dawan.AppliCFABack.entities.Tuteur;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper
 @Component
@@ -149,9 +74,7 @@ public interface DtoMapper {
 
     @Mapping(source = ".", target = ".")
     ProjetDto projetToProjetDto(Projet projet);
-    
-    @Mapping(source = ".", target = ".")
-    ProjetDossierProjetDto projetToProjetDto1(Projet projet);
+
 
     @Mapping(source = ".", target = ".")
     @Mapping(source = "cursus", target = "cursusDto")
@@ -193,12 +116,12 @@ public interface DtoMapper {
 * */
     @Mapping(source = ".", target = ".")
     DossierProjetDto dossierProjetToDpDto(DossierProjet dossierProjet);
-
+    @Mapping(source = ".", target = ".")
     @Mapping(source = "competenceProfessionnelles", target = "competenceProfessionnelleIds", qualifiedByName = "competenceProToId")
-    DossierProjetEtudiantDto dossierProjetToDossierProjetEtudiantDto(DossierProjet dossierProjet);
+    DossierProjetDto dossierProjetToDossierProjetDto(DossierProjet dossierProjet);
 
     @Mapping(source="competenceProfessionnelleIds", target = "competenceProfessionnelles", qualifiedByName = "idToCompetencePro")
-    DossierProjet dossierProjetDtoToDossierProjet(DossierProjetEtudiantDto dpDto);
+    DossierProjet dossierProjetDtoToDossierProjet(DossierProjetDto dpDto);
 
     /*
      * Attribution d'une List de Competence Professionnelle a une liste de Long
@@ -215,18 +138,6 @@ public interface DtoMapper {
     default List<Long> competenceProToId(List<CompetenceProfessionnelle> competencesPro){
         return competencesPro.stream().map(competencePro -> competencePro.getId()).collect(Collectors.toList());
     }
-    @Mapping(source = ".", target=".")
-    List<AnnexeDossierProjetDto> annexeProjetToAnnexeProjetDto(List<AnnexeDossierProjet> anexeProjets);
-
-    @Mapping(source = ".", target=".")
-    List<InfoDossierProjetDto> infoToInfoDto(List<InfoDossierProjet> infos);
-
-    @Mapping(source = ".", target=".")
-    List<ContenuDossierProjetDto> contenuToContenuDto (List<ContenuDossierProjet> contenus);
-
-    @Mapping(source = ".", target=".")
-    List<ResumeDossierProjetDto> resumeToResumeDto (List<ResumeDossierProjet> resume);
-
 
     //**********************************************************************************//
     @Mapping(source ="id", target = "id")

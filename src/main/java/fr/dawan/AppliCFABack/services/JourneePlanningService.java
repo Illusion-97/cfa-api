@@ -1,10 +1,10 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.entities.Intervention;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public interface JourneePlanningService {
 

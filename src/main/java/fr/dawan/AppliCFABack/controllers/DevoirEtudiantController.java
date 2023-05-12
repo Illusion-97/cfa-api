@@ -1,25 +1,18 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
+import fr.dawan.AppliCFABack.services.DevoirEtudiantService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
-import fr.dawan.AppliCFABack.services.DevoirEtudiantService;
 
 @RestController
 @RequestMapping("/devoirsEtudiants")

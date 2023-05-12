@@ -1,13 +1,13 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.net.URISyntaxException;
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+
+import java.net.URISyntaxException;
+import java.util.List;
 
 
 public interface FormationService {

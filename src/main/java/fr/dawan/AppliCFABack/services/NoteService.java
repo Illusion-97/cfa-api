@@ -1,13 +1,13 @@
 package fr.dawan.AppliCFABack.services;
 
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
+import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
-import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
 
 public interface NoteService {
 

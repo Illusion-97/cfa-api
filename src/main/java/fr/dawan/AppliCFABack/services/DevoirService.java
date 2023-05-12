@@ -1,8 +1,8 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.DevoirDto;
+
+import java.util.List;
 
 
 public interface DevoirService extends GenericService<DevoirDto> {
