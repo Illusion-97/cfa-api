@@ -45,5 +45,7 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 
 	GetDossierProDto getAllDossierProfessionnelByEtudiant(long id);
 	
+	//String FileUpload(long etudiantId, long cursusId, String nom, MultipartFile file);
+	
 
 }

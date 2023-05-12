@@ -26,6 +26,9 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 	
 	@OneToMany(mappedBy = "dossierProfessionnel", cascade = CascadeType.ALL)
 	private List<Facultatif> facultatifs;
+	
+	@Column(name = "fileImport", nullable = true)
+	private String fileImport;
 
 	public String getNom() {
 		return nom;
@@ -73,6 +76,14 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 
 	public void setFacultatifs(List<Facultatif> facultatifs) {
 		this.facultatifs = facultatifs;
+	}
+
+	public String getFileImport() {
+		return fileImport;
+	}
+
+	public void setFileImport(String fileImport) {
+		this.fileImport = fileImport;
 	}
 	
 	

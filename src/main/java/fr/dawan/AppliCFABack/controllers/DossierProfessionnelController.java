@@ -1,14 +1,21 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
+
+import org.modelmapper.internal.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -17,6 +24,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,21 +41,32 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.DossierProfessionnelService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FilesService;
+import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
+import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
 
 @RestController
 @RequestMapping("/dossierProfessionnel")
+@CrossOrigin(origins = "*")
 public class DossierProfessionnelController {
 
 	@Autowired
 	DossierProfessionnelService dossierProService;
+	
 	@Autowired
 	EtudiantService etudiantService;
+	
+	@Autowired
+	CursusService cursusService;
 
 	@Value("${app.storagefolder}")
 	private String storageFolder;
@@ -58,7 +77,8 @@ public class DossierProfessionnelController {
 	@Autowired
 	private ObjectMapper objMap;
 
-
+	 @Value("src/main/resources/files/")
+	    private String storageFolder2;
 
 	@GetMapping(produces = "application/json")
 	public List<DossierProfessionnelDto> getAll() {
@@ -197,4 +217,50 @@ public class DossierProfessionnelController {
 
 		return ResponseEntity.ok().body(base64);
 	}
+	
+	
+	@PostMapping(value = "/upload/{etudiantId}/{cursusId}", consumes = "multipart/form-data", produces = "application/json")
+	public ResponseEntity<String> handleFileUpload(@PathVariable("etudiantId") long etudiantId, @PathVariable("cursusId") long cursusId, @RequestParam("fileImport") MultipartFile file) throws IOException, EtudiantNotFoundException, CursusNotFoundException {
+	    String message = "";
+	    String nom = "";
+	    List<MultipartFile> files = new ArrayList<>();
+	    files.add(file);
+	  
+	    try {    
+	    
+	        // Enregistrer le fichier sur le serveur
+	        byte[] bytes = file.getBytes();
+	        Path path = Paths.get(storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename());
+	        Files.write(path, bytes);
+
+	        // Enregistrer le fichier dans la base de données avec etudiantId
+	        EtudiantDto etudiant = new EtudiantDto();	      
+	        etudiant.setId(etudiantId);
+	        
+	        CursusDossierProDto cursus =  new CursusDossierProDto();
+	        cursus.setId(cursusId);
+	       
+
+	        // Enregistrer le fichier importé pour l'étudiant dans la base de données
+	        DossierProEtudiantDto dossier = new DossierProEtudiantDto();
+	        dossier.setNom(nom);
+	        dossier.setCursusDto(cursus);     
+	        dossier.setExperienceProfessionnelleDtos(new ArrayList<>());
+	        dossier.setAnnexeDtos(new ArrayList<>());
+	        dossier.setFacultatifDto(new ArrayList<>());
+	        dossier.setFileImport(file.getOriginalFilename());
+	        
+	        dossierProService.saveOrUpdateDossierProfessionnel(dossier, etudiantId, files);
+
+	        message = "Le fichier " + file.getOriginalFilename() + " a été téléchargé avec succès   !";
+	        return ResponseEntity.status(HttpStatus.OK).body(message);
+	    } catch (IOException e) {
+	        message = "Impossible de télécharger le fichier " + file.getOriginalFilename() + " !";
+	        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+	    }
+	}
+
+	
+	
+
 }

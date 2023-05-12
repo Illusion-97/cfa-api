@@ -45,6 +45,7 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 
 	@ManyToMany(mappedBy = "competenceProfessionnelles")
 	private List<DossierProjet> dossierProjets;
+	
 //	@OneToMany(mappedBy = "competenceProfessionnelle", cascade = CascadeType.ALL)
 //	private Set<CompetenceExperienceEtudiant> competenceExperienceEtudiants;
 
