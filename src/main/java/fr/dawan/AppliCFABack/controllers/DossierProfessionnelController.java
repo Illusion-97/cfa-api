@@ -1,6 +1,5 @@
 package fr.dawan.AppliCFABack.controllers;
 
-<<<<<<< HEAD
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,7 +16,7 @@ import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
 
 import org.modelmapper.internal.util.Lists;
-=======
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +27,7 @@ import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDt
 import fr.dawan.AppliCFABack.services.DossierProfessionnelService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FilesService;
->>>>>>> f37c272b93b436b2906acc211baca722082d858f
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -37,7 +36,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-<<<<<<< HEAD
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,7 +66,7 @@ import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FilesService;
 import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
 import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
-=======
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -78,7 +77,7 @@ import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
->>>>>>> f37c272b93b436b2906acc211baca722082d858f
+
 
 @RestController
 @RequestMapping("/dossierProfessionnel")

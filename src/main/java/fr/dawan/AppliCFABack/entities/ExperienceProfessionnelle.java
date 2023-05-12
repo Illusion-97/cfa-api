@@ -4,11 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
-<<<<<<< HEAD
 
 import javax.persistence.*;
-=======
->>>>>>> f37c272b93b436b2906acc211baca722082d858f
+
 
 /**
  * @author William P. Rémy C.
