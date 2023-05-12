@@ -1,11 +1,10 @@
 package fr.dawan.AppliCFABack.repositories;
 
-import java.util.List;
-
+import fr.dawan.AppliCFABack.entities.DevoirEtudiant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import fr.dawan.AppliCFABack.entities.DevoirEtudiant;
+import java.util.List;
 /**
  * @author Feres BG, Valentin C.
  * @see fr.dawan.appliCFABack.service

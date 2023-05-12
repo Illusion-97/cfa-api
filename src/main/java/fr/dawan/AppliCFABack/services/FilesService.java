@@ -1,10 +1,10 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.List;
-
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface FilesService {
 	boolean deleteDirectoryWithContent(String path);

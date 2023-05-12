@@ -1,10 +1,9 @@
 package fr.dawan.AppliCFABack.dto.customdtos;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-
 import fr.dawan.AppliCFABack.entities.Positionnement;
+
+import java.time.LocalDate;
+import java.util.Map;
 
 
 public class GrillePositionnementDto {

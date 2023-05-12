@@ -1,10 +1,10 @@
 package fr.dawan.AppliCFABack.services;
 
-import javax.mail.MessagingException;
-
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
+
+import javax.mail.MessagingException;
 
 public interface EmailService {
 	

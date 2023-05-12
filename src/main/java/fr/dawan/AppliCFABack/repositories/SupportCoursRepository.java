@@ -1,9 +1,8 @@
 package fr.dawan.AppliCFABack.repositories;
 
+import fr.dawan.AppliCFABack.entities.SupportCours;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import fr.dawan.AppliCFABack.entities.SupportCours;
 /**
  * @author Valentin C, Feres BG.
  * @see fr.dawan.appliCFABack.service

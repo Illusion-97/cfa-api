@@ -1,9 +1,10 @@
 package fr.dawan.AppliCFABack.dto;
 
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
+
 import java.io.Serializable;
 import java.util.List;
-
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.CompetenceCouvertesDossierProjetDto;
 
 /**
  * 
@@ -16,33 +17,36 @@ import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.CompetenceCouvertesDos
 @SuppressWarnings("serial")
 public class DossierProjetDto extends BaseEntityDto implements Serializable {
 
+	private long id;
 	private String nom;
-
-	private ProjetDto projet;
-	
-	private EtudiantDto etudiant;
-	
-	private List<AnnexeDossierProjetDto> annexeDossierProjetDtos;
-	
-	private List<InfoDossierProjetDto> infoDossierProjetDtos;
-	
-	private List<ContenuDossierProjetDto> contenuDossierProjetDtos;
-	
-	private List<ResumeDossierProjetDto> resumeDossierProjetDtos;
-
+	private String dossierImport;
+	private EtudiantDossierProjetDto etudiant;
+	private ProjetDossierProjetDto projet;
+	private List<String> annexeDossierProjets;
+	private List<String> infoDossierProjets;
 	private List<Long> competenceProfessionnelleIds;
-	
-	public DossierProjetDto(String nom, ProjetDto projet, List<AnnexeDossierProjetDto> annexeDossierProjetDtos,
-			List<InfoDossierProjetDto> infoDossierProjetDtos, List<ContenuDossierProjetDto> contenuDossierProjetDtos,
-			List<ResumeDossierProjetDto> resumeDossierProjetDtos,List<Long> competenceProfessionnelleIds) {
-		super();
+	private List<String> contenuDossierProjets;
+	private List<String> resumeDossierProjets;
+	private int version;
+
+	public DossierProjetDto(long id, String nom, String dossierImport, EtudiantDossierProjetDto etudiant,
+							ProjetDossierProjetDto projet,
+							List<String> annexeDossierProjets,
+							List<String> infoDossierProjets,
+							List<Long> competenceProfessionnelleIds,
+							List<String> contenuDossierProjets,
+							List<String> resumeDossierProjets, int version) {
+		this.id = id;
 		this.nom = nom;
+		this.dossierImport = dossierImport;
+		this.etudiant = etudiant;
 		this.projet = projet;
-		this.annexeDossierProjetDtos = annexeDossierProjetDtos;
-		this.infoDossierProjetDtos = infoDossierProjetDtos;
-		this.contenuDossierProjetDtos = contenuDossierProjetDtos;
-		this.resumeDossierProjetDtos = resumeDossierProjetDtos;
+		this.annexeDossierProjets = annexeDossierProjets;
+		this.infoDossierProjets = infoDossierProjets;
 		this.competenceProfessionnelleIds = competenceProfessionnelleIds;
+		this.contenuDossierProjets = contenuDossierProjets;
+		this.resumeDossierProjets = resumeDossierProjets;
+		this.version = version;
 	}
 
 	public DossierProjetDto() {
@@ -67,68 +71,87 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 		this.nom = nom;
 	}
 
-	/**
-	 * @return the projet
-	 */
-	public ProjetDto getProjet() {
+	@Override
+	public long getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getDossierImport() {
+		return dossierImport;
+	}
+
+	public void setDossierImport(String dossierImport) {
+		this.dossierImport = dossierImport;
+	}
+
+	public ProjetDossierProjetDto getProjet() {
 		return projet;
 	}
 
-	/**
-	 * @param projet the projet to set
-	 */
-	public void setProjet(ProjetDto projet) {
+	public void setProjet(ProjetDossierProjetDto projet) {
 		this.projet = projet;
 	}
 
-    public List<AnnexeDossierProjetDto> getAnnexeDossierProjetDtos() {
-        return annexeDossierProjetDtos;
-    }
-
-    public void setAnnexeDossierProjetDtos(List<AnnexeDossierProjetDto> annexeDossierProjetDtos) {
-        this.annexeDossierProjetDtos = annexeDossierProjetDtos;
-    }
-
-	public List<InfoDossierProjetDto> getInfoDossierProjetDtos() {
-		return infoDossierProjetDtos;
-	}
-
-	public void setInfoDossierProjetDtos(List<InfoDossierProjetDto> infoDossierProjetDtos) {
-		this.infoDossierProjetDtos = infoDossierProjetDtos;
-	}
-
-	public List<ContenuDossierProjetDto> getContenuDossierProjetDtos() {
-		return contenuDossierProjetDtos;
-	}
-
-	public void setContenuDossierProjetDtos(List<ContenuDossierProjetDto> contenuDossierProjetDtos) {
-		this.contenuDossierProjetDtos = contenuDossierProjetDtos;
-	}
-
-	public List<ResumeDossierProjetDto> getResumeDossierProjetDtos() {
-		return resumeDossierProjetDtos;
-	}
-
-	public void setResumeDossierProjetDtos(List<ResumeDossierProjetDto> resumeDossierProjetDtos) {
-		this.resumeDossierProjetDtos = resumeDossierProjetDtos;
-	}
-
-	public EtudiantDto getEtudiant() {
+	public EtudiantDossierProjetDto getEtudiant() {
 		return etudiant;
 	}
 
-	public void setEtudiant(EtudiantDto etudiant) {
+	public void setEtudiant(EtudiantDossierProjetDto etudiant) {
 		this.etudiant = etudiant;
 	}
 
-	public List<Long> getCompetenceProfessionnelleDtos() {
+	public List<String> getAnnexeDossierProjets() {
+		return annexeDossierProjets;
+	}
+
+	public void setAnnexeDossierProjets(List<String> annexeDossierProjets) {
+		this.annexeDossierProjets = annexeDossierProjets;
+	}
+
+	public List<String> getInfoDossierProjets() {
+		return infoDossierProjets;
+	}
+
+	public void setInfoDossierProjets(List<String> infoDossierProjets) {
+		this.infoDossierProjets = infoDossierProjets;
+	}
+
+	public List<String> getContenuDossierProjets() {
+		return contenuDossierProjets;
+	}
+
+	public void setContenuDossierProjets(List<String> contenuDossierProjets) {
+		this.contenuDossierProjets = contenuDossierProjets;
+	}
+
+	public List<String> getResumeDossierProjets() {
+		return resumeDossierProjets;
+	}
+
+	public void setResumeDossierProjets(List<String> resumeDossierProjets) {
+		this.resumeDossierProjets = resumeDossierProjets;
+	}
+
+	@Override
+	public int getVersion() {
+		return version;
+	}
+
+	@Override
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public List<Long> getCompetenceProfessionnelleIds() {
 		return competenceProfessionnelleIds;
 	}
 
-	public void setCompetenceProfessionnelleDtos(List<Long> competenceProfessionnelleIds) {
+	public void setCompetenceProfessionnelleIds(List<Long> competenceProfessionnelleIds) {
 		this.competenceProfessionnelleIds = competenceProfessionnelleIds;
 	}
-	
-	
-
 }

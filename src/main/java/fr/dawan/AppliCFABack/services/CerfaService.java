@@ -1,10 +1,5 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.List;
-
-import fr.dawan.AppliCFABack.dto.CerfaDto;
-import fr.dawan.AppliCFABack.dto.CountDto;
-
 public interface CerfaService {
 
 //	CountDto count(String string);

@@ -1,10 +1,9 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 @SuppressWarnings("serial")
 @Entity

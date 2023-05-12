@@ -1,9 +1,9 @@
 package fr.dawan.AppliCFABack.dto;
 
+import fr.dawan.AppliCFABack.entities.LivretEvaluation.EtatLivertEval;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-
-import fr.dawan.AppliCFABack.entities.LivretEvaluation.EtatLivertEval;
 /**
  * 
  * @author Feres BG.

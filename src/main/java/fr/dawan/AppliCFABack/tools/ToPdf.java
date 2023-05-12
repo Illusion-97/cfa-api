@@ -1,10 +1,10 @@
 package fr.dawan.AppliCFABack.tools;
 
+import com.itextpdf.html2pdf.HtmlConverter;
+
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-
-import com.itextpdf.html2pdf.HtmlConverter;
 
 
 @SuppressWarnings("serial")

@@ -1,13 +1,13 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.io.Serializable;
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.customdtos.EvaluationDto;
 import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.LivretEvaluation;
+
+import java.io.Serializable;
+import java.util.List;
 /**
  * 
  * @author Feres BG.

@@ -1,12 +1,12 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.net.URISyntaxException;
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+
+import java.net.URISyntaxException;
+import java.util.List;
 
 public interface CursusService {
 

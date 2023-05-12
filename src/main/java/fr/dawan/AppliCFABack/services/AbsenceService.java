@@ -1,15 +1,9 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.tools.JustificatifException;
-import freemarker.core.ParseException;
-import freemarker.template.MalformedTemplateNameException;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
+
+import java.util.List;
 /**
  * @author Valentin C, Feres BG.
  * @see fr.dawan.appliCFABack.repository

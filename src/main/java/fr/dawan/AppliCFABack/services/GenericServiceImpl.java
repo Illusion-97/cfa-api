@@ -1,14 +1,13 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import fr.dawan.AppliCFABack.dto.BaseEntityDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.BaseEntity;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
 
 public class GenericServiceImpl<T extends BaseEntity, TDto extends BaseEntityDto> implements GenericService<TDto> {
 

@@ -3,8 +3,6 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class AnnexeDto extends BaseEntityDto implements Serializable {
 
     private String libelleAnnexe;

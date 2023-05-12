@@ -1,22 +1,12 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 
 @SuppressWarnings("serial")
 @Entity
-public class DossierProjet extends BaseEntity implements Serializable {
+public class DossierProjet extends BaseEntity {
 
 	@Column(nullable = false, length = 255)
 	private String nom;
@@ -26,31 +16,29 @@ public class DossierProjet extends BaseEntity implements Serializable {
 	
 	@ManyToOne
     private Etudiant etudiant;
+	@Column(nullable = true, name = "import", length = 100)
+	private String dossierImport;
+	@ElementCollection
+    private List<String> annexeDossierProjets;
+	
+	@ElementCollection
+    private List<String> infoDossierProjets;
 
-	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
-    private List<AnnexeDossierProjet> annexeDossierProjets;
-	
-	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
-    private List<InfoDossierProjet> infoDossierProjets;
-	
-	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
-    private List<ContenuDossierProjet> contenuDossierProjets;
-	
-	@OneToMany(mappedBy = "dossierProjet", cascade = CascadeType.ALL)
-    private List<ResumeDossierProjet> resumeDossierProjets;
+	@ElementCollection
+	private List<String> contenuDossierProjets;
 
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name = "dossier_projet_competence_professionnelles",
-	    joinColumns = @JoinColumn(name = "dossier_projet_id"),
-	    inverseJoinColumns = @JoinColumn(name = "competence_professionnelle_id"))
+	@ElementCollection
+	private List<String> resumeDossierProjets;
+
+	@ManyToMany
 	private List<CompetenceProfessionnelle> competenceProfessionnelles;
-	
-	public List<Long> getCompetenceProfessionnelleDtos() {
-		List<Long> competenceProfessionnelleIds = new ArrayList<>();
-		for(CompetenceProfessionnelle cp : competenceProfessionnelles ) {
-			competenceProfessionnelleIds.add(cp.getId());
-		}
-		return competenceProfessionnelleIds;
+
+	public String getDossierImport() {
+		return dossierImport;
+	}
+
+	public void setDossierImport(String dossierImport) {
+		this.dossierImport = dossierImport;
 	}
 
 	public String getNom() {
@@ -77,36 +65,12 @@ public class DossierProjet extends BaseEntity implements Serializable {
         this.etudiant = etudiant;
     }
 
-    public List<AnnexeDossierProjet> getAnnexeDossierProjets() {
+    public List<String> getAnnexeDossierProjets() {
         return annexeDossierProjets;
     }
 
-    public void setAnnexeDossierProjets(List<AnnexeDossierProjet> annexeDossierProjets) {
-        this.annexeDossierProjets = annexeDossierProjets;
-    }
-
-	public List<InfoDossierProjet> getInfoDossierProjets() {
-		return infoDossierProjets;
-	}
-
-	public void setInfoDossierProjets(List<InfoDossierProjet> infoDossierProjets) {
-		this.infoDossierProjets = infoDossierProjets;
-	}
-
-	public List<ContenuDossierProjet> getContenuDossierProjets() {
-		return contenuDossierProjets;
-	}
-
-	public void setContenuDossierProjets(List<ContenuDossierProjet> contenuDossierProjets) {
-		this.contenuDossierProjets = contenuDossierProjets;
-	}
-
-	public List<ResumeDossierProjet> getResumeDossierProjets() {
-		return resumeDossierProjets;
-	}
-
-	public void setResumeDossierProjets(List<ResumeDossierProjet> resumeDossierProjets) {
-		this.resumeDossierProjets = resumeDossierProjets;
+	public void setAnnexeDossierProjets(List<String> annexeDossierProjets) {
+		this.annexeDossierProjets = annexeDossierProjets;
 	}
 
 	public List<CompetenceProfessionnelle> getCompetenceProfessionnelles() {
@@ -116,7 +80,28 @@ public class DossierProjet extends BaseEntity implements Serializable {
 	public void setCompetenceProfessionnelles(List<CompetenceProfessionnelle> competenceProfessionnelles) {
 		this.competenceProfessionnelles = competenceProfessionnelles;
 	}
-	
-	
 
+	public List<String> getInfoDossierProjets() {
+		return infoDossierProjets;
+	}
+
+	public void setInfoDossierProjets(List<String> infoDossierProjets) {
+		this.infoDossierProjets = infoDossierProjets;
+	}
+
+	public List<String> getContenuDossierProjets() {
+		return contenuDossierProjets;
+	}
+
+	public void setContenuDossierProjets(List<String> contenuDossierProjets) {
+		this.contenuDossierProjets = contenuDossierProjets;
+	}
+
+	public List<String> getResumeDossierProjets() {
+		return resumeDossierProjets;
+	}
+
+	public void setResumeDossierProjets(List<String> resumeDossierProjets) {
+		this.resumeDossierProjets = resumeDossierProjets;
+	}
 }

@@ -1,17 +1,15 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
-
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 public interface DossierProjetService {
 
@@ -30,14 +28,7 @@ public interface DossierProjetService {
 	String genererDossierProjet(long idDossierProjet) throws DossierProjetException, TemplateNotFoundException,
 		MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
-	DossierProjetEtudiantDto saveOrUpdateDossierProjet(DossierProjetEtudiantDto dpDto, long id, List<MultipartFile> file) throws IOException;
-
-	/**
-	 * @throws IOException ***********************************************************************************************************/
-	DossierProjetEtudiantDto uploadDossierProjet(DossierProjetEtudiantDto dpDto, long id, List<MultipartFile> file1,
-			List<MultipartFile> file2, List<MultipartFile> file3, List<MultipartFile> file4) throws IOException;
-
-
-	
-
+	DossierProjetDto saveOrUpdate(DossierProjetDto dpDto);
+	DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException;
+	DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException;
 }

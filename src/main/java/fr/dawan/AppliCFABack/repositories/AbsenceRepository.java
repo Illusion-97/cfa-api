@@ -1,15 +1,13 @@
 package fr.dawan.AppliCFABack.repositories;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
+import fr.dawan.AppliCFABack.entities.Absence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import fr.dawan.AppliCFABack.entities.Absence;
+import java.util.List;
+import java.util.Optional;
 /**
  * @author Valentin C, Feres BG.
  * @see fr.dawan.appliCFABack.service

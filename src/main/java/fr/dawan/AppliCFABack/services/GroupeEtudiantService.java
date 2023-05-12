@@ -1,10 +1,10 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+
+import java.util.List;
 
 public interface GroupeEtudiantService {
 

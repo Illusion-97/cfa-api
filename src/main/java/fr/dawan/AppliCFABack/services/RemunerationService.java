@@ -1,9 +1,9 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.RemunerationDto;
+
+import java.util.List;
 
 public interface RemunerationService {
 	CountDto count(String string);

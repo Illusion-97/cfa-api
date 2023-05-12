@@ -1,10 +1,9 @@
 package fr.dawan.AppliCFABack.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import fr.dawan.AppliCFABack.dto.ValidationDto;
 import fr.dawan.AppliCFABack.services.GenericService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("validation")

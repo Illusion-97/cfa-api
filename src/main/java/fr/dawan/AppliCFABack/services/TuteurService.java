@@ -1,14 +1,11 @@
 package fr.dawan.AppliCFABack.services;
 
 
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.FormateurDto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
-import fr.dawan.AppliCFABack.entities.Etudiant;
+
+import java.util.List;
 
 
 public interface TuteurService extends GenericService<TuteurDto>{
