@@ -7,6 +7,7 @@ import fr.dawan.AppliCFABack.entities.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,6 +16,18 @@ import java.util.stream.Collectors;
 @Mapper
 @Component
 public interface DtoMapper {
+	
+	DtoMapper INSTANCE = Mappers.getMapper(DtoMapper.class);
+	
+	EvaluationFormationDto toEvaluationFormationDto(EvaluationFormation entity);
+
+    EvaluationFormation toEvaluationFormationEntity(EvaluationFormationDto dto);
+    
+    default List<Long> mapCompetencesEvalueesIds(List<CompetenceProfessionnelle> competences) {
+        return competences.stream()
+                .map(CompetenceProfessionnelle::getId)
+                .collect(Collectors.toList());
+    }
 
     @Mapping(source = ".", target = ".")
     CompetenceProfessionnelleDto competenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
