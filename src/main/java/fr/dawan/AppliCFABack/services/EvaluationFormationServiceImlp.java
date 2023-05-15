@@ -6,17 +6,22 @@ import fr.dawan.AppliCFABack.dto.EvaluationFormationDto;
 import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.EvaluationFormation;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.EvaluationFormationRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,11 +36,25 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 	@Autowired
 	BlocEvaluationRepository blocEvaluationRepository;
 	
+	@Autowired
+	InterventionRepository interventionRepository;
+	
+	@Autowired
+	private DtoMapper mapper = new DtoMapperImpl();
+	
 	@Override
 	public EvaluationFormationDto getById(long id) {
 		Optional<EvaluationFormation> evaluationF = evaluationFormationRepository.findById(id);
 		if (evaluationF.isPresent()) {
-			return DtoTools.convert(evaluationF.get(), EvaluationFormationDto.class);
+			
+			EvaluationFormationDto evaluationFormationDto = DtoTools.convert(evaluationF.get(), EvaluationFormationDto.class);
+			
+			List<Long> competencesEvalueesIds = evaluationF.get().getCompetencesEvaluees().stream()
+					.map(CompetenceProfessionnelle::getId).collect(Collectors.toList());
+			
+			evaluationFormationDto.setCompetencesEvalueesId(competencesEvalueesIds);
+			
+			return evaluationFormationDto;
 
 		}
 		return null;
@@ -58,6 +77,43 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 
 		return DtoTools.convert(evaluationFDb, EvaluationFormationDto.class);
 	}
+	
+	public EvaluationFormationDto update(EvaluationFormationDto evaluationFormationDto) throws SaveInvalidException {
+	    // Vérifiez si l'ID de l'évaluation de formation est égal à zéro
+	    if (evaluationFormationDto.getId() == 0L) {
+	        // Nouvelle évaluation de formation, effectuez l'ajout
+	        return saveOrUpdate(evaluationFormationDto);
+	    } else {
+	        // Évaluation de formation existante, effectuez la mise à jour
+	        // Recherchez l'évaluation de formation existante dans la base de données
+	        EvaluationFormation evaluationFormation = evaluationFormationRepository.findById(evaluationFormationDto.getId())
+	                .orElseThrow(() -> new EntityNotFoundException("L'évaluation de formation n'a pas été trouvée."));
+
+	        //  mise à jour sur l'entité en utilisant les valeurs du DTO
+	        evaluationFormation.setContenu(evaluationFormationDto.getContenu());
+	        evaluationFormation.setDateEvaluation(evaluationFormationDto.getDateEvaluation());
+	        evaluationFormation.setIntervention(interventionRepository.findById(evaluationFormationDto.getInterventionId())
+	                .orElseThrow(() -> new EntityNotFoundException("L'intervention n'a pas été trouvée.")));
+
+	        // Mise à jour des compétences évaluées en utilisant le mapper et les IDs du DTO
+	        List<Long> competencesEvalueesIds = evaluationFormationDto.getCompetencesEvalueesId();
+	        List<CompetenceProfessionnelle> competencesEvaluees = new ArrayList<>();
+	        for (Long competenceId : competencesEvalueesIds) {
+	            CompetenceProfessionnelle competence = competenceProfessionnelleRepository.findById(competenceId)
+	                    .orElseThrow(() -> new EntityNotFoundException("La compétence professionnelle n'a pas été trouvée."));
+	            competencesEvaluees.add(competence);
+	        }
+	        evaluationFormation.setCompetencesEvaluees(competencesEvaluees);
+
+	        // Enregistrez les modifications dans la base de données
+	        EvaluationFormation updatedEvaluationFormation = evaluationFormationRepository.save(evaluationFormation);
+
+	        // Retournez le DTO correspondant à l'évaluation de formation mise à jour
+	        return DtoMapper.INSTANCE.toEvaluationFormationDto(updatedEvaluationFormation);
+	    }
+	}
+
+
 
 	@Override
 	public CountDto count(String search) {
