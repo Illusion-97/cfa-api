@@ -18,6 +18,7 @@ import fr.dawan.AppliCFABack.dto.EmployeeDG2Dto;
 import fr.dawan.AppliCFABack.dto.EntrepriseDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
+import fr.dawan.AppliCFABack.dto.EvaluationFormationDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.FacultatifDto;
@@ -57,6 +58,7 @@ import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.EvaluationFormation;
 import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Facultatif;
@@ -81,10 +83,42 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-12T15:54:10+0200",
+    date = "2023-05-22T14:15:25+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
+
+    @Override
+    public EvaluationFormationDto toEvaluationFormationDto(EvaluationFormation entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        EvaluationFormationDto evaluationFormationDto = new EvaluationFormationDto();
+
+        evaluationFormationDto.setId( entity.getId() );
+        evaluationFormationDto.setVersion( entity.getVersion() );
+        evaluationFormationDto.setContenu( entity.getContenu() );
+        evaluationFormationDto.setDateEvaluation( entity.getDateEvaluation() );
+
+        return evaluationFormationDto;
+    }
+
+    @Override
+    public EvaluationFormation toEvaluationFormationEntity(EvaluationFormationDto dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        EvaluationFormation evaluationFormation = new EvaluationFormation();
+
+        evaluationFormation.setId( dto.getId() );
+        evaluationFormation.setVersion( dto.getVersion() );
+        evaluationFormation.setContenu( dto.getContenu() );
+        evaluationFormation.setDateEvaluation( dto.getDateEvaluation() );
+
+        return evaluationFormation;
+    }
 
     @Override
     public CompetenceProfessionnelleDto competenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle) {

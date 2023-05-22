@@ -14,11 +14,13 @@ import freemarker.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import javax.xml.ws.Response;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -212,6 +214,26 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 				return dpDto;
 	}
 
+	public DossierProjetDto deleteFile(MultipartFile file, long id) {
+		String cheminFichier = storageFolder + "/DossierProjet/" + file.getOriginalFilename();
+		File fichier = new File(cheminFichier);
+		if (fichier.exists()) {
+			DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
+			fichier.delete();
+
+			// Supprimer l'élément de fichier de la liste d'annexes du DossierProjet
+			List<String> annexes = dp.getAnnexeDossierProjets();
+			annexes.removeIf(annexe -> annexe.equals(file.getOriginalFilename()));
+			dp.setAnnexeDossierProjets(annexes);
+
+			// Enregistrer les modifications apportées au DossierProjet
+			dp = dossierProRepo.save(dp);
+
+			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
+			return dpDto;
+		}
+		return null;
+	}
 	public DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException {
 		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
 		List<String> getList = dp.getAnnexeDossierProjets();

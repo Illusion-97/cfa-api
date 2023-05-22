@@ -24,4 +24,5 @@ public interface DossierProjetRepository extends JpaRepository<DossierProjet, Lo
 	
 	@Query("SELECT dp FROM DossierProjet dp WHERE dp.id = :id")
 	DossierProjet getByDossierProjetId(@Param("id")long id);
+
 }
