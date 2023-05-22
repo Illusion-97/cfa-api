@@ -120,8 +120,8 @@ public class DossierProjetController {
 		//Chemin a changer selon les directives
 		//String path = storageFolder + "DossierProjet" + "/" ;
 		//fileService.createDirectory(path);
-		DossierProjetDto d = dossierProService.importDossierProjet(file, id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(d);
+		DossierProjetDto dpDto = dossierProService.importDossierProjet(file, id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
 	}
 
 	@PostMapping(value = "/save-annexe/{dpid}", consumes = "multipart/form-data", produces = "application/json")
@@ -130,8 +130,8 @@ public class DossierProjetController {
 		//Chemin a changer selon les directives
 		//String path = storageFolder + "DossierProjet" + "/" ;
 		//fileService.createDirectory(path);
-		DossierProjetDto d =  dossierProService.saveAnnexesDossierProjet(files, id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(d);
+		DossierProjetDto dpDto =  dossierProService.saveAnnexesDossierProjet(files, id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
 	}
 
 	@PutMapping(value = "/update-annexe/{dpid}", consumes = "multipart/form-data", produces = "application/json")
@@ -140,10 +140,15 @@ public class DossierProjetController {
 		//Chemin a changer selon les directives
 		//String path = storageFolder + "DossierProjet" + "/" ;
 		//fileService.createDirectory(path);
-		DossierProjetDto d =  dossierProService.saveAnnexesDossierProjet(files, id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(d);
+		DossierProjetDto dpDto =  dossierProService.saveAnnexesDossierProjet(files, id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
 	}
 	//DossierProjetEtudiantDto created = dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, files, file);
+	@DeleteMapping(value = "/{id}",consumes = "multipart/form-data", produces = "text/plain")
+	public ResponseEntity<DossierProjetDto> deletefile(@RequestParam("file")MultipartFile file, @PathVariable("id") Long id){
+		DossierProjetDto dpDto = dossierProService.deleteFile(file, id);
+		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
+	}
 
 
 
