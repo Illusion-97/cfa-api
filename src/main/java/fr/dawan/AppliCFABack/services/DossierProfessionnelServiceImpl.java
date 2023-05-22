@@ -394,7 +394,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
         GetDossierProDto eDto = DtoTools.convert(etudiant, GetDossierProDto.class);
 
-        List<DossierProfessionnel> dossierProfessionnel = dossierProRepo.findDossierProByEtudiantIdAndCursusId(id);
+       /* List<DossierProfessionnel> dossierProfessionnel = dossierProRepo.findDossierProByEtudiantIdAndCursusId(id);
         for(DossierProfessionnel dp : dossierProfessionnel) {
             DossierProEtudiantDto dpDto = DtoTools.convert(dp, DossierProEtudiantDto.class);
             assert eDto != null;
@@ -416,7 +416,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
                     }).collect(Collectors.toList());
                 }
             }
-        }
+        }*/
         return eDto;
     }
 
@@ -450,10 +450,10 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         for(MultipartFile fil : file) {
             String pathFile = path + fil.getOriginalFilename();
             File newAnnexe = new File(pathFile);
-            Annexe annex = annexes.get(i++);
+            Annexe annex = new Annexe();
+            annex.setLibelleAnnexe("libDossierPro");
             annex.setPieceJointe(pathFile);
-            //annex.setLibelle("lib2");
-      
+           annexes.add(annex);
             
             try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))){
                 try 
