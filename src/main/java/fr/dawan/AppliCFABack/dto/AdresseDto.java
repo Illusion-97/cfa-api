@@ -16,7 +16,7 @@ public class AdresseDto extends BaseEntityDto implements Serializable {
 	private String codePostal;
 	private long idDg2;
 
-	private String country;
+	private String countryCode;
 
 	public AdresseDto() {
 		super();
@@ -61,11 +61,13 @@ public class AdresseDto extends BaseEntityDto implements Serializable {
 		this.idDg2 = idDg2;
 	}
 
-	public String getCountry() {
-		return country;
+	public String getCountryCode() {
+		return countryCode;
 	}
 
-	public void setCountry(String country) {
-		this.country = country;
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
+
+
 }
