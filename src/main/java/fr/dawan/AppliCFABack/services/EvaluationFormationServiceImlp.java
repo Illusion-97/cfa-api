@@ -62,20 +62,14 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 
 	@Override
 	public EvaluationFormationDto saveOrUpdate(EvaluationFormationDto tDto) throws SaveInvalidException {
-		
-		
-			tDto.getCompetencesEvalueesId();
-			List<CompetenceProfessionnelle> compEvaluee = new ArrayList<>();
-			for (long competenceId : tDto.getCompetencesEvalueesId()) {
-				CompetenceProfessionnelle comp = competenceProfessionnelleRepository.getOne(competenceId);
-				compEvaluee.add(comp);						
-		}
-		EvaluationFormation evaluationF = DtoTools.convert(tDto, EvaluationFormation.class);
-		evaluationF.setCompetencesEvaluees(compEvaluee);
-	
-		EvaluationFormation evaluationFDb = evaluationFormationRepository.saveAndFlush(evaluationF);
 
-		return DtoTools.convert(evaluationFDb, EvaluationFormationDto.class);
+		EvaluationFormation evaluationF =  mapper.evaluationDtoToEvaluation(tDto);
+		if(evaluationF.getDateEvaluation().equals(null) || evaluationF.getContenu().equals("")){
+			throw new NullPointerException("Tout les champs doivent être rempli");
+		}
+
+
+		return mapper.evaluationToEvaluationDto(evaluationFormationRepository.saveAndFlush(evaluationF));
 	}
 	
 	public EvaluationFormationDto update(EvaluationFormationDto evaluationFormationDto) throws SaveInvalidException {
@@ -84,6 +78,7 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 	        // Nouvelle évaluation de formation, effectuez l'ajout
 	        return saveOrUpdate(evaluationFormationDto);
 	    } else {
+
 	        // Évaluation de formation existante, effectuez la mise à jour
 	        // Recherchez l'évaluation de formation existante dans la base de données
 	        EvaluationFormation evaluationFormation = evaluationFormationRepository.findById(evaluationFormationDto.getId())
@@ -105,11 +100,9 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 	        }
 	        evaluationFormation.setCompetencesEvaluees(competencesEvaluees);
 
-	        // Enregistrez les modifications dans la base de données
-	        EvaluationFormation updatedEvaluationFormation = evaluationFormationRepository.save(evaluationFormation);
-
 	        // Retournez le DTO correspondant à l'évaluation de formation mise à jour
-	        return DtoMapper.INSTANCE.toEvaluationFormationDto(updatedEvaluationFormation);
+
+	        return mapper.evaluationToEvaluationDto(evaluationFormationRepository.save(evaluationFormation));
 	    }
 	}
 
@@ -138,7 +131,7 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 		List<EvaluationFormationDto> result = new ArrayList<>();
 
 		for (EvaluationFormation evaluationFormation : evaluationFormations) {
-			result.add(DtoTools.convert(evaluationFormation, EvaluationFormationDto.class));
+			result.add(mapper.evaluationToEvaluationDto(evaluationFormation));
 		}
 		
 		return result;
