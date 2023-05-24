@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EvaluationFormationDto;
 import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
@@ -21,7 +20,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -46,16 +44,7 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 	public EvaluationFormationDto getById(long id) {
 		Optional<EvaluationFormation> evaluationF = evaluationFormationRepository.findById(id);
 		if (evaluationF.isPresent()) {
-			
-			EvaluationFormationDto evaluationFormationDto = DtoTools.convert(evaluationF.get(), EvaluationFormationDto.class);
-			
-			List<Long> competencesEvalueesIds = evaluationF.get().getCompetencesEvaluees().stream()
-					.map(CompetenceProfessionnelle::getId).collect(Collectors.toList());
-			
-			evaluationFormationDto.setCompetencesEvalueesId(competencesEvalueesIds);
-			
-			return evaluationFormationDto;
-
+			return mapper.evaluationToEvaluationDto(evaluationF.get());
 		}
 		return null;
 	}
@@ -67,8 +56,6 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 		if(evaluationF.getDateEvaluation().equals(null) || evaluationF.getContenu().equals("") || evaluationF.getCompetencesEvaluees().isEmpty()){
 			throw new NullPointerException("Tout les champs doivent être rempli");
 		}
-
-
 		return mapper.evaluationToEvaluationDto(evaluationFormationRepository.saveAndFlush(evaluationF));
 	}
 	
@@ -129,7 +116,6 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 	public List<EvaluationFormationDto> getByPromotionIdAndActiviteTypeId(long promotionId, long activiteTypeId) {
 		List<EvaluationFormation> evaluationFormations = evaluationFormationRepository.getByPrmotionIdAndActiviteTypeId(promotionId,activiteTypeId);
 		List<EvaluationFormationDto> result = new ArrayList<>();
-
 		for (EvaluationFormation evaluationFormation : evaluationFormations) {
 			result.add(mapper.evaluationToEvaluationDto(evaluationFormation));
 		}
@@ -141,7 +127,6 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 	public List<EvaluationFormationDto> getByInterventionId(long idIntervention) {
 		List<EvaluationFormation> evaluationFormations = evaluationFormationRepository.findAllByInterventionId(idIntervention);
 		List<EvaluationFormationDto> result = new ArrayList<>();
-
 		for (EvaluationFormation evaluationFormation : evaluationFormations) {
 			result.add(mapper.evaluationToEvaluationDto(evaluationFormation));//entite to Dto
 		}
