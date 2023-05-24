@@ -144,8 +144,8 @@ public class DossierProjetController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
 	}
 	//DossierProjetEtudiantDto created = dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, files, file);
-	@DeleteMapping(value = "/{id}",consumes = "multipart/form-data", produces = "text/plain")
-	public ResponseEntity<DossierProjetDto> deletefile(@RequestParam("file")MultipartFile file, @PathVariable("id") Long id){
+	@DeleteMapping(value = "/{id}", produces = "text/plain")
+	public ResponseEntity<DossierProjetDto> deletefile(@RequestParam("file")String file, @PathVariable("id") Long id){
 		DossierProjetDto dpDto = dossierProService.deleteFile(file, id);
 		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
 	}
