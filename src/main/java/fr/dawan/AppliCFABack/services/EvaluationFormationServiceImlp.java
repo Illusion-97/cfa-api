@@ -150,7 +150,7 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 		List<EvaluationFormationDto> result = new ArrayList<>();
 
 		for (EvaluationFormation evaluationFormation : evaluationFormations) {
-			result.add(DtoTools.convert(evaluationFormation, EvaluationFormationDto.class));
+			result.add(mapper.evaluationToEvaluationDto(evaluationFormation));//entite to Dto
 		}
 		
 		return result;

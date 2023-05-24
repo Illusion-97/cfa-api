@@ -252,4 +252,8 @@ public interface DtoMapper {
 	@Mapping(source = ".", target = ".")
 	List<ExperienceProfessionnelleDto> experienceProfessionnelleToExperienceProfessionnelleDto(
 			List<ExperienceProfessionnelle> experienceProfessionnelles);
+    @Mapping(source = ".", target = ".")
+    @Mapping(source = "competencesEvaluees", target = "competencesEvalueesId", qualifiedByName = "competenceProToId")
+    EvaluationFormationDto evaluationToEvaluationDto(EvaluationFormation eval);
+
 }
