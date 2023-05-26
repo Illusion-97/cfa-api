@@ -3,6 +3,8 @@ package fr.dawan.AppliCFABack.entities;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
 @Entity //unmapped prb
 public class Tuteur extends BaseEntity implements Serializable{
 	
-	@ManyToOne
+	@OneToOne
 	private Utilisateur utilisateur;
 	
 	
