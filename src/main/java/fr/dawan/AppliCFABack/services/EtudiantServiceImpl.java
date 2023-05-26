@@ -842,7 +842,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public void fetchAllEtudiantDG2ByIdPromotion(String email, String password, long idPromotionDg2)
 			throws FetchDG2Exception, JsonProcessingException, URISyntaxException {
 		Optional<Promotion> promotion = promotionRepository.findByIdDg2(idPromotionDg2);
-		System.out.println(">>>>>>>promo>>>>" + promotion.get().getIdDg2());
 		logger.info(">>>>>>>promo>>>>" + promotion.get().getIdDg2());
 		logger.info("FetchDg2Etudiant >>> START");
 		if (!promotion.isPresent()) {
@@ -901,12 +900,18 @@ public class EtudiantServiceImpl implements EtudiantService {
 					utilisateurDg2.setPassword(utiLisateurOptional.get().getPassword());
 					utilisateurDg2.setId(utiLisateurOptional.get().getId());
 					utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
+					List<UtilisateurRole> roles = new ArrayList<>();
+					UtilisateurRole etudiantRole = utilisateurRoleRepository.findByIntituleContaining("ETUDIANT");
+					roles.add(etudiantRole);
+					utilisateurDg2.setRoles(roles);
 					if (utilisateurDg2.equals(utiLisateurOptional.get()) && etudiant.getPromotions().contains(promotion.get())) {
 						continue;
 					} else {
 
 							utilisateurDg2.setId(utiLisateurOptional.get().getId());
 							utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
+							roles.add(etudiantRole);
+							utilisateurDg2.setRoles(roles);
 							if (etudiant != null) {
 								List<Etudiant> etudiants = new ArrayList<>();
 								List<Promotion> promotions = new ArrayList<>();
@@ -971,19 +976,19 @@ public class EtudiantServiceImpl implements EtudiantService {
 				Etudiant etuSaved = etudiantRepository.saveAndFlush(etudiant);
 				Optional<LivretEvaluation> evaOptional = livretEvaluationRepository.findByEtudiantIdAndTitreProfessionnelId(etuSaved.getId(), promotion.get().getCursus().getId());
 				if (!evaOptional.isPresent()) {
-					LivretEvaluation livert = new LivretEvaluation();
-					livert.setEtudiant(etuSaved);
-					livert.setTitreProfessionnel(promotion.get().getCursus());
-					livert.setObservation("Cliquez ici pour taper du texte.");
-					livert.setOrganismeFormation(promotion.get().getCentreFormation());
-					livert.setEtat(EtatLivertEval.ENATTENTEDEVALIDATION);
-					livert = livretEvaluationRepository.saveAndFlush(livert);
+					LivretEvaluation livret = new LivretEvaluation();
+					livret.setEtudiant(etuSaved);
+					livret.setTitreProfessionnel(promotion.get().getCursus());
+					livret.setObservation("Cliquez ici pour taper du texte.");
+					livret.setOrganismeFormation(promotion.get().getCentreFormation());
+					livret.setEtat(EtatLivertEval.ENATTENTEDEVALIDATION);
+					livret = livretEvaluationRepository.saveAndFlush(livret);
 					Set<ActiviteType> activiteTypes = promotion.get().getCursus().getActiviteTypes();
 					
 					for (ActiviteType at : activiteTypes) {
 						
 						BlocEvaluation blocEvaluation = new BlocEvaluation();
-						blocEvaluation.setLivretEvaluation(livert);
+						blocEvaluation.setLivretEvaluation(livret);
 						blocEvaluation.setActiviteType(at);
 						blocEvaluationRepository.saveAndFlush(blocEvaluation);
 						

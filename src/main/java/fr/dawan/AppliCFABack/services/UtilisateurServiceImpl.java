@@ -967,6 +967,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 							utilisateurImport.setPassword(optUtlisateur.get().getPassword());
 							utilisateurImport.setId(optUtlisateur.get().getId());
 							utilisateurImport.setVersion(optUtlisateur.get().getVersion());
+							utilisateurImport.setActive(true);
 						
 						}
 					}
