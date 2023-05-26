@@ -422,7 +422,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Boolean isEtudiant = false;
 		Boolean isFormateur = false;
 		Boolean isCEF = false;
-		Boolean isPrestataireExterne = false;
+		Boolean isTuteur = false;
 		if (user.getRoles() != null) {
 
 			for (UtilisateurRole role : user.getRoles()) {
@@ -436,7 +436,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					isCEF = true;
 				}
 				if (role.getIntitule().equals("TUTEUR")) {
-					isPrestataireExterne = true;
+					isTuteur = true;
 				}
 			}
 		}
@@ -469,10 +469,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			cefRepository.saveAndFlush(cef);
 		}
-		if (isPrestataireExterne) {
-			@SuppressWarnings("unused")
-			Utilisateur userExterne = new Utilisateur();
-			userExterne = utilisateurRepository.saveAndFlush(user);
+		if (isTuteur && isTuteur.getClass() == null) {
+			Tuteur tuteur = new Tuteur();
+			tuteur = tuteurRepository.saveAndFlush(tuteur);
+			user.setTuteur(tuteur);
+			tuteur.setUtilisateur(user);
 
 		}
 
@@ -507,6 +508,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			// On delete l'etudiant ?
 //			cefService.deleteById(cef.getId());	
 		}
+		if (!isTuteur && isTuteur.getClass() != null) {
+			Tuteur tuteur = tuteurRepository.getOne(user.getTuteur().getId());
+			tuteur.setUtilisateur(null);
+			user.setTuteur(null);
+
+			tuteurRepository.saveAndFlush(tuteur);
+
+			// On delete l'etudiant ?
+//			cefService.deleteById(cef.getId());	
+		}
 
 		user = utilisateurRepository.saveAndFlush(user);
 
@@ -519,6 +530,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		result.setEtudiantDto(mapper.etudiantToEtudiantDto(user.getEtudiant()));
 		result.setFormateurDto(mapper.formateurToFormateurDto(user.getFormateur()));
 		result.setCefDto(mapper.cefToCEFDto(user.getCef()));
+		result.setTuteurDto(mapper.tuteurTotuteurDto(user.getTuteur()));
 
 		return result;
 	}
@@ -558,15 +570,25 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		Utilisateur user = mapper.utilisateurDtoToUtilisateur(uDto);
 		UtilisateurRole tuteurRole = utilisateurRoleRepository.findByIntituleContaining("TUTEUR");
+		Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).get();
+		Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).get();
+		CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId()).get();
+
 		List<UtilisateurRole> utilisateurRoles = new ArrayList<>();
 		utilisateurRoles.add(tuteurRole);
 		user.setRoles(utilisateurRoles);
+		user.setEntreprise(optEntreprise);
+		user.setAdresse(adresse);
+		user.setCentreFormation(centreFormation);
+				
+		user = utilisateurRepository.save(user);
 		
 		Tuteur tuteur = new Tuteur();
 		tuteur.setUtilisateur(user);
-		user.setTuteur(tuteur);
+		tuteur = tuteurRepository.save(tuteur);
 		
-		user = utilisateurRepository.save(user);
+		user.setTuteur(tuteur);
+		user = utilisateurRepository.saveAndFlush(user);
 		
 		UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
 		

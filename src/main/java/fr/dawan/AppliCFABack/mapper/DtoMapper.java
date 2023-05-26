@@ -159,10 +159,16 @@ public interface DtoMapper {
 
     @Mapping(source = ".", target = ".")
 
-    @Mapping(source = "tuteur", target = "tuteurDto")
+    @Mapping(source = ".", target = ".")
+    @Mapping(source = "adresse", target = "adresseDto")
+    @Mapping(source = "entreprise", target = "entrepriseDto")
+    @Mapping(source = "centreFormation.id", target = "centreFormationId")
     UtilisateurDto utilisateurToUtilisateurDto(Utilisateur utilisateur);
     
-    // @Mapping(source = ".", target = ".")
+    @Mapping(source = ".", target = ".")
+    @Mapping(source = "adresseDto", target = "adresse")
+    @Mapping(source = "entrepriseDto", target = "entreprise")
+    @Mapping(source = "centreFormationId", target = "centreFormation.id")
     Utilisateur utilisateurDtoToUtilisateur(UtilisateurDto utilisateurDto);
 
     @Mapping(source = ".", target = ".")
