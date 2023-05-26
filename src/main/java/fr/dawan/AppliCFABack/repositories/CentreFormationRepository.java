@@ -1,17 +1,21 @@
 package fr.dawan.AppliCFABack.repositories;
 
-import java.util.Optional;
-
+import fr.dawan.AppliCFABack.entities.CentreFormation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import fr.dawan.AppliCFABack.entities.CentreFormation;
+import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface CentreFormationRepository extends JpaRepository<CentreFormation, Long>{
+	
+	@Query("SELECT cf FROM CentreFormation cf ORDER BY cf.nom")
+	List<CentreFormation> findAll();
 
 	long countByNomContaining(String nom);
 	

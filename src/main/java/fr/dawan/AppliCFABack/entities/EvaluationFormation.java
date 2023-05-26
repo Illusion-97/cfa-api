@@ -1,14 +1,15 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
 /***
  * 
  * @author Feres BG Valentin C.
@@ -28,7 +29,8 @@ public class EvaluationFormation extends BaseEntity implements Serializable {
 	@ManyToMany
 	private List<CompetenceProfessionnelle> competencesEvaluees;
 
-	
+	@NotNull(message = "La date ne peut pas être nulle")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateEvaluation;
 	
 	@ManyToOne

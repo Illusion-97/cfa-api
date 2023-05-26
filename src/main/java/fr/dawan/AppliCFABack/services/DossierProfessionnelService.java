@@ -1,22 +1,18 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
-
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
-import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
-import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import fr.dawan.AppliCFABack.tools.PdfTools;
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
-import fr.dawan.AppliCFABack.dto.BaseEntityDto;
-import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 public interface DossierProfessionnelService extends GenericService<DossierProfessionnelDto>{
 	
@@ -44,6 +40,8 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
     String genererDossierProfessionnel(long idDossierPro) throws DossierProfessionnelException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
 	GetDossierProDto getAllDossierProfessionnelByEtudiant(long id);
+	
+	//String FileUpload(long etudiantId, long cursusId, String nom, MultipartFile file);
 	
 
 }

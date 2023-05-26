@@ -1,16 +1,8 @@
 package fr.dawan.AppliCFABack.entities;
 
-import java.beans.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /***
  * 
@@ -45,6 +37,7 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 
 	@ManyToMany(mappedBy = "competenceProfessionnelles")
 	private List<DossierProjet> dossierProjets;
+	
 //	@OneToMany(mappedBy = "competenceProfessionnelle", cascade = CascadeType.ALL)
 //	private Set<CompetenceExperienceEtudiant> competenceExperienceEtudiants;
 

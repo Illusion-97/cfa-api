@@ -2,10 +2,12 @@ package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.ExperienceProfessionnelleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,7 @@ public class ExperienceProfessionnelleServiceImpl implements ExperienceProfessio
 
     @Autowired
     private DtoMapper mapper = new DtoMapperImpl();
-
+    
     @Override
     public List<ExperienceProfessionnelleDto> getAll() {
         List<ExperienceProfessionnelle> lst = expProRepository.findAll();
@@ -44,6 +46,8 @@ public class ExperienceProfessionnelleServiceImpl implements ExperienceProfessio
 
     @Override
     public ExperienceProfessionnelleDto saveOrUpdate(ExperienceProfessionnelleDto epDto) {
+    	
+        
         ExperienceProfessionnelle e = DtoTools.convert(epDto, ExperienceProfessionnelle.class);
         ExperienceProfessionnelle epInDb = expProRepository.saveAndFlush(e);
         return DtoTools.convert(epInDb, ExperienceProfessionnelleDto.class);

@@ -1,15 +1,13 @@
 package fr.dawan.AppliCFABack.repositories;
 
-import java.util.List;
-import java.util.Optional;
-
+import fr.dawan.AppliCFABack.entities.Formateur;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import fr.dawan.AppliCFABack.entities.Formateur;
+import java.util.Optional;
 
 public interface FormateurRepository extends JpaRepository<Formateur, Long> {
 	// nb formateur + recherche par mot clé

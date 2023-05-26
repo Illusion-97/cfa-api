@@ -1,8 +1,8 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.io.Serializable;
-
 import fr.dawan.AppliCFABack.entities.Entreprise.EmployeurType;
+
+import java.io.Serializable;
 
 /**
  * 

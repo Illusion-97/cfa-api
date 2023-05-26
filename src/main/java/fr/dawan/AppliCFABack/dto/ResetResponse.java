@@ -1,10 +1,9 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "login-reponse")

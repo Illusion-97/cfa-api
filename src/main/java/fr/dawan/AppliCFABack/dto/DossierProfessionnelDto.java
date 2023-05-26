@@ -25,6 +25,8 @@ public class DossierProfessionnelDto extends BaseEntityDto implements Serializab
 	private List<AnnexeDto> annexeDtos;
 	
 	private List<FacultatifDto> facultatifDto;
+	
+	private String fileImport;
 
 	public DossierProfessionnelDto() {
 		super();
@@ -92,6 +94,14 @@ public class DossierProfessionnelDto extends BaseEntityDto implements Serializab
 
 	public void setFacultatifDto(List<FacultatifDto> facultatifDto) {
 		this.facultatifDto = facultatifDto;
+	}
+
+	public String getFileImport() {
+		return fileImport;
+	}
+
+	public void setFileImport(String fileImport) {
+		this.fileImport = fileImport;
 	}
 	
 	

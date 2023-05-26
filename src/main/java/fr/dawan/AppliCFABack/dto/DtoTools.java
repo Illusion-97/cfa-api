@@ -1,44 +1,17 @@
 package fr.dawan.AppliCFABack.dto;
 
+import fr.dawan.AppliCFABack.dto.customdtos.*;
+import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.tools.DateConverter;
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
+
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import org.modelmapper.Converter;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.stereotype.Component;
-
-import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
-import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
-import fr.dawan.AppliCFABack.dto.customdtos.MembreEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
-import fr.dawan.AppliCFABack.dto.customdtos.PlanningEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.DossierProjetEtudiantDto;
-import fr.dawan.AppliCFABack.entities.DossierProjet;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetCursusDossierProDto;
-import fr.dawan.AppliCFABack.entities.Annexe;
-import fr.dawan.AppliCFABack.entities.Cursus;
-import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Facultatif;
-import fr.dawan.AppliCFABack.entities.Formation;
-import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
-import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.Note;
-import fr.dawan.AppliCFABack.entities.Positionnement;
-import fr.dawan.AppliCFABack.entities.Projet;
-import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-import fr.dawan.AppliCFABack.entities.UtilisateurRole;
-import fr.dawan.AppliCFABack.tools.DateConverter;
 /**
 *
 * @author Valentin C, Feres BG.

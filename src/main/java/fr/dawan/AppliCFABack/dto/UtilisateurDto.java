@@ -1,12 +1,10 @@
 package fr.dawan.AppliCFABack.dto;
 
+import fr.dawan.AppliCFABack.entities.Entreprise;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import fr.dawan.AppliCFABack.entities.Entreprise;
 
 /**
  * 

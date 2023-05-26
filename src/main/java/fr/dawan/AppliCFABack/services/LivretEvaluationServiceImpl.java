@@ -1,41 +1,30 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
-import fr.dawan.AppliCFABack.entities.*;
-import fr.dawan.AppliCFABack.repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.LivretEvaluationFileDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EvaluationDto;
-import fr.dawan.AppliCFABack.entities.Validation.Etat;
+import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.repositories.*;
 import fr.dawan.AppliCFABack.tools.Filter;
 import fr.dawan.AppliCFABack.tools.LivretEvaluationException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import fr.dawan.AppliCFABack.tools.ToPdf;
 import freemarker.core.ParseException;
-import freemarker.template.Configuration;
-import freemarker.template.MalformedTemplateNameException;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
+import freemarker.template.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+
+import javax.transaction.Transactional;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * 

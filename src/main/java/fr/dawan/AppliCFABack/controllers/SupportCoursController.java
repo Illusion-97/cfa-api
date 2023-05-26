@@ -1,14 +1,13 @@
 package fr.dawan.AppliCFABack.controllers;
 
-import java.util.List;
-
+import fr.dawan.AppliCFABack.dto.SupportCoursDto;
+import fr.dawan.AppliCFABack.services.SupportCoursService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.dawan.AppliCFABack.dto.SupportCoursDto;
-import fr.dawan.AppliCFABack.services.SupportCoursService;
+import java.util.List;
 
 /**
  * @author Valentin C, Feres BG.

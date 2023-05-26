@@ -1,10 +1,9 @@
 package fr.dawan.AppliCFABack.dto;
 
-import java.io.File;
+import fr.dawan.AppliCFABack.entities.Absence.TypeAbsence;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import fr.dawan.AppliCFABack.entities.Absence.TypeAbsence;
 
 @SuppressWarnings("serial")
 public class AbsenceDto extends BaseEntityDto implements Serializable{

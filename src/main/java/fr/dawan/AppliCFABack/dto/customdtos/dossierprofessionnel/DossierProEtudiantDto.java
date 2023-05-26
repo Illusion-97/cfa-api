@@ -1,11 +1,11 @@
 package fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel;
 
-import java.io.Serializable;
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.AnnexeDto;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.FacultatifDto;
+
+import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class DossierProEtudiantDto implements Serializable {
@@ -16,7 +16,16 @@ public class DossierProEtudiantDto implements Serializable {
     private List<ExperienceProfessionnelleDto> experienceProfessionnelleDtos;
     private List<AnnexeDto> annexeDtos;
     private List<FacultatifDto> facultatifDto;
-    private int version;
+    private String fileImport;
+    public String getFileImport() {
+		return fileImport;
+	}
+
+	public void setFileImport(String fileImport) {
+		this.fileImport = fileImport;
+	}
+
+	private int version;
 
     public long getId() {
         return id;

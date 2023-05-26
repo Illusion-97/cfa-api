@@ -1,17 +1,8 @@
 package fr.dawan.AppliCFABack.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-
-import fr.dawan.AppliCFABack.entities.Validation.Etat;
 
 /***
  * 

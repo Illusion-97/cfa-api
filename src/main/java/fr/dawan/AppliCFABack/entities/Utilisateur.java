@@ -1,10 +1,9 @@
 package fr.dawan.AppliCFABack.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-
-import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
@@ -53,11 +52,13 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	private Etudiant etudiant;
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "utilisateur")
 	private Formateur formateur;
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne
 	private CEF cef;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "utilisateur")
+	@OneToOne
 	private Tuteur tuteur;
+	
+
 
 	@OneToOne
 	private Signature signature;

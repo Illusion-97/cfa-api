@@ -1,13 +1,12 @@
 package fr.dawan.AppliCFABack.repositories;
 
-import java.util.List;
-import java.util.Optional;
-
+import fr.dawan.AppliCFABack.entities.BlocEvaluation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import fr.dawan.AppliCFABack.entities.BlocEvaluation;
+import java.util.List;
+import java.util.Optional;
 @Repository
 public interface BlocEvaluationRepository extends JpaRepository<BlocEvaluation,Long> {
 

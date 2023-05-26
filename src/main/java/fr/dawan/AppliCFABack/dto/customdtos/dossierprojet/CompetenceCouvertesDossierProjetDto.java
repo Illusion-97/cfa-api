@@ -1,11 +1,10 @@
 package fr.dawan.AppliCFABack.dto.customdtos.dossierprojet;
 
-import java.io.Serializable;
-import java.util.List;
-
 import fr.dawan.AppliCFABack.dto.BaseEntityDto;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
-import fr.dawan.AppliCFABack.entities.DossierProjet;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 

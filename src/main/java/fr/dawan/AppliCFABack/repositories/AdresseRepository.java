@@ -1,7 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
 
-
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -16,6 +16,8 @@ import fr.dawan.AppliCFABack.entities.Adresse;
 @Repository
 public interface AdresseRepository extends JpaRepository<Adresse, Long>{
 
+	@Query("SELECT a FROM Adresse a ORDER BY a.ville")
+	List<Adresse> findAll();
 
 	Page<Adresse> findAllByLibelleContainingOrVilleContaining(String rue,String ville, Pageable pageable);
 

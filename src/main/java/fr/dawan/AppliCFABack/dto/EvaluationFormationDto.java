@@ -4,12 +4,18 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotNull;
+
 
 @SuppressWarnings("serial")
 public class EvaluationFormationDto  extends BaseEntityDto implements Serializable{
 
 	private String contenu;
 
+	@JsonProperty("competencesEvalueesId")
 	private List<Long> competencesEvalueesId;
 
 	private LocalDate dateEvaluation;

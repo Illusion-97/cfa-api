@@ -1,64 +1,28 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.*;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.FormateurDto;
-import fr.dawan.AppliCFABack.dto.FormationDto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
-import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.PromotionOrInterventionDG2Dto;
-import fr.dawan.AppliCFABack.entities.Devoir;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Formation;
-import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.PassageExamen;
-import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-import fr.dawan.AppliCFABack.entities.UtilisateurRole;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
-import fr.dawan.AppliCFABack.repositories.DevoirRepository;
-import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.FormateurRepository;
-import fr.dawan.AppliCFABack.repositories.FormationRepository;
-import fr.dawan.AppliCFABack.repositories.InterventionRepository;
-import fr.dawan.AppliCFABack.repositories.PassageExamenRepository;
-import fr.dawan.AppliCFABack.repositories.PromotionRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
-import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
-import io.jsonwebtoken.lang.Objects;
+import javax.transaction.Transactional;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -772,33 +736,9 @@ public class InterventionServiceImpl implements InterventionService {
 				continue;
 
 			}
-			//Test
 			Formateur formateur = new Formateur();
-			UtilisateurRole formateurRole = utilisateurRoleRepository.findByIntituleContaining("FORMATEUR");
-			List<Utilisateur> utilisateurs = new ArrayList<>();
-			utilisateurs.add(userInDb.get());
-			if (formateurRole.getUtilisateurs() != null) {
-				utilisateurs.addAll(formateurRole.getUtilisateurs());
-			}
-			formateurRole.setUtilisateurs(utilisateurs);
-			if (userInDb.get().getRoles() != null) {
-				if (!userInDb.get().getRoles().contains(formateurRole)) {
-					userInDb.get().getRoles().add(formateurRole);
-				}
-			} else {
-				List<UtilisateurRole> roles = new ArrayList<>();
-				roles.add(formateurRole);
-				userInDb.get().setRoles(roles);
-			}
 			formateur.setUtilisateur(userInDb.get());
-			formateur = formateurRepository.saveAndFlush(formateur);
-			userInDb.get().setFormateur(formateur);
-			utilisateurRepository.saveAndFlush(userInDb.get());
-			
-			//CODE OK
-			//Formateur formateur = new Formateur();
-			//formateur.setUtilisateur(userInDb.get());
-			//formateurRepository.saveAndFlush(formateur);
+			formateurRepository.saveAndFlush(formateur);
 
 			count++;
 
