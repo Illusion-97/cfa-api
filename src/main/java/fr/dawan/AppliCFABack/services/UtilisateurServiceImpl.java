@@ -967,6 +967,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 							utilisateurImport.setPassword(optUtlisateur.get().getPassword());
 							utilisateurImport.setId(optUtlisateur.get().getId());
 							utilisateurImport.setVersion(optUtlisateur.get().getVersion());
+							utilisateurImport.setActive(true);
 						
 						}
 					}
@@ -995,84 +996,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 	}
-
-//	@Override
-//	public void fetchAllDG2Employees(String email, String password)
-//			throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
-//		// Appel du web service DG2 pour récupérer les employés
-//		List<EmployeeDG2Dto> employees = callDG2WebService(email, password);
-//
-//		// Traitement des employés récupérés
-//		for (EmployeeDG2Dto employeeDG2 : employees) {
-//			Utilisateur utilisateurImport = mapper.employeeDg2ToUtilisateur(employeeDG2);
-//			CentreFormation centreFormation = getCentreFormationByLocationId(employeeDG2.getLocationId());
-//			Optional<Utilisateur> optUtilisateur = utilisateurRepository.findByIdDg2(utilisateurImport.getIdDg2());
-//			
-//			//logger.info("ID DG2 USER", employeeDG2.getPersonId());
-//			
-//			// Vérification si le centre de formation existe
-//			if (centreFormation == null) {
-//				logger.error("Centre de formation introuvable");
-//				throw new FetchDG2Exception("Centre de formation introuvable");
-//			}
-//
-//			// Vérification si l'utilisateur existe déjà
-//			if (optUtilisateur.isPresent()) {
-//				Utilisateur utilisateur = optUtilisateur.get();
-//				if (utilisateur.equals(utilisateurImport)
-//						&& utilisateur.getCentreFormation().getId() == centreFormation.getId()) {
-//					continue;
-//				} else {
-//					if (utilisateurImport != null) {
-//						utilisateurImport.setPassword(utilisateur.getPassword());
-//						utilisateurImport.setId(utilisateur.getId());
-//						utilisateurImport.setVersion(utilisateur.getVersion());
-//					}
-//				}
-//				try {
-//					utilisateurRepository.saveAndFlush(utilisateurImport);
-//				} catch (Exception e) {
-//					logger.error("SaveAndFlush failed", e);
-//				}
-//			} else {
-//				try {
-//					utilisateurImport.setPassword(HashTools.hashSHA512("password"));
-//					utilisateurRepository.saveAndFlush(utilisateurImport);
-//				} catch (Exception e) {
-//					logger.error("SaveAndFlush failed", e);
-//				}
-//			}
-//		}
-//	}
-//
-//	private List<EmployeeDG2Dto> callDG2WebService(String email, String password)
-//			throws URISyntaxException, FetchDG2Exception, JsonProcessingException {
-//		// URL DG2 qui concerne la récupération des employés
-//		URI url = new URI("https://dawan.org/api2/cfa/employees");
-//
-//		// Récupération des headers / email / password DG2
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("x-auth-token", email + ":" + password);
-//
-//		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-//
-//		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-//
-//		if (response.getStatusCode() == HttpStatus.OK) {
-//			String json = response.getBody();
-//			ObjectMapper objectMapper = new ObjectMapper();
-//			return objectMapper.readValue(json, new TypeReference<List<EmployeeDG2Dto>>() {
-//			});
-//		} else {
-//			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
-//		}
-//	}
-//
-//	private CentreFormation getCentreFormationByLocationId(Long locationId) {
-//		Optional<CentreFormation> centreFormationOpt = centreFormationRepository.findByIdDg2(locationId);
-//		return centreFormationOpt.orElse(null);
-//	}
-
+	
 	@Override
 	public LoginResponseDto checkLogin(LoginDto loginDto) throws Exception {
 

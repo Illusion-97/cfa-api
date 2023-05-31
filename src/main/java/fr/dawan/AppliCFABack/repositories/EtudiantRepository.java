@@ -37,4 +37,6 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 	Page<Etudiant> findAllByTuteurId(long id, Pageable p);
 		
 	long countByTuteurId(long id);
+	
+	
 }
