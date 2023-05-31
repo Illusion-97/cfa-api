@@ -31,8 +31,7 @@ public class LivretEvaluation extends BaseEntity implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private EtatLivertEval etat;
 	
-	@Column(columnDefinition = "TEXT")
-
+	@Column(columnDefinition = "TEXT DEFAULT 'Cliquez ici pour taper du texte.'")
 	private String observation;
 
 	private LocalDate dateSignature;
