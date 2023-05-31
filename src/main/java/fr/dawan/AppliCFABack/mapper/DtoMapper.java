@@ -94,7 +94,18 @@ public interface DtoMapper {
     PromotionDto promotionToPromotionDto(Promotion promotion);
 
     @Mapping(source = ".", target = ".")
+
+    @Mapping(source = ".", target = ".")
+    @Mapping(source = "adresse", target = "adresseDto")
+    @Mapping(source = "entreprise", target = "entrepriseDto")
+    @Mapping(source = "centreFormation.id", target = "centreFormationId")
     UtilisateurDto utilisateurToUtilisateurDto(Utilisateur utilisateur);
+    
+    @Mapping(source = ".", target = ".")
+    @Mapping(source = "adresseDto", target = "adresse")
+    @Mapping(source = "entrepriseDto", target = "entreprise")
+    @Mapping(source = "centreFormationId", target = "centreFormation.id")
+    Utilisateur utilisateurDtoToUtilisateur(UtilisateurDto utilisateurDto);
 
     @Mapping(source = ".", target = ".")
     UtilisateurRoleDto utilisateurRoleToUtilisateurRoleDto(UtilisateurRole utilisateurRole);
@@ -252,4 +263,10 @@ public interface DtoMapper {
 	@Mapping(source = ".", target = ".")
 	List<ExperienceProfessionnelleDto> experienceProfessionnelleToExperienceProfessionnelleDto(
 			List<ExperienceProfessionnelle> experienceProfessionnelles);
+    @Mapping(source = "intervention.id", target = "interventionId")
+    @Mapping(source = "competencesEvaluees", target = "competencesEvalueesId", qualifiedByName = "competenceProToId")
+    EvaluationFormationDto evaluationToEvaluationDto(EvaluationFormation eval);
+    @Mapping(source = "interventionId", target = "intervention.id")
+    @Mapping(source = "competencesEvalueesId", target = "competencesEvaluees", qualifiedByName = "idToCompetencePro")
+    EvaluationFormation evaluationDtoToEvaluation(EvaluationFormationDto evalDto);
 }

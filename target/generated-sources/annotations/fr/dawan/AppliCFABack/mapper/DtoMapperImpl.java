@@ -83,7 +83,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-31T10:41:17+0200",
+    date = "2023-05-31T12:37:00+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -165,6 +165,7 @@ public class DtoMapperImpl implements DtoMapper {
         adresseDto.setLibelle( adresse.getLibelle() );
         adresseDto.setVille( adresse.getVille() );
         adresseDto.setCodePostal( adresse.getCodePostal() );
+        adresseDto.setCountryCode( adresse.getCountryCode() );
 
         return adresseDto;
     }
@@ -474,6 +475,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         UtilisateurDto utilisateurDto = new UtilisateurDto();
 
+        utilisateurDto.setAdresseDto( adresseToAdresseDto( utilisateur.getAdresse() ) );
+        utilisateurDto.setEntrepriseDto( utilisateur.getEntreprise() );
+        utilisateurDto.setCentreFormationId( utilisateurCentreFormationId( utilisateur ) );
         utilisateurDto.setId( utilisateur.getId() );
         utilisateurDto.setVersion( utilisateur.getVersion() );
         utilisateurDto.setActive( utilisateur.isActive() );
@@ -489,6 +493,34 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateurDto.setIdDg2( utilisateur.getIdDg2() );
 
         return utilisateurDto;
+    }
+
+    @Override
+    public Utilisateur utilisateurDtoToUtilisateur(UtilisateurDto utilisateurDto) {
+        if ( utilisateurDto == null ) {
+            return null;
+        }
+
+        Utilisateur utilisateur = new Utilisateur();
+
+        utilisateur.setCentreFormation( utilisateurDtoToCentreFormation( utilisateurDto ) );
+        utilisateur.setAdresse( adresseDtoToAdresse( utilisateurDto.getAdresseDto() ) );
+        utilisateur.setEntreprise( utilisateurDto.getEntrepriseDto() );
+        utilisateur.setId( utilisateurDto.getId() );
+        utilisateur.setVersion( utilisateurDto.getVersion() );
+        utilisateur.setActive( utilisateurDto.isActive() );
+        utilisateur.setExternalAccount( utilisateurDto.isExternalAccount() );
+        utilisateur.setLogin( utilisateurDto.getLogin() );
+        utilisateur.setPassword( utilisateurDto.getPassword() );
+        utilisateur.setPrenom( utilisateurDto.getPrenom() );
+        utilisateur.setNom( utilisateurDto.getNom() );
+        utilisateur.setCivilite( utilisateurDto.getCivilite() );
+        utilisateur.setTelephone( utilisateurDto.getTelephone() );
+        utilisateur.setDateDeNaissance( utilisateurDto.getDateDeNaissance() );
+        utilisateur.setTelephoneFixe( utilisateurDto.getTelephoneFixe() );
+        utilisateur.setIdDg2( utilisateurDto.getIdDg2() );
+
+        return utilisateur;
     }
 
     @Override
@@ -978,6 +1010,42 @@ public class DtoMapperImpl implements DtoMapper {
         return list;
     }
 
+    @Override
+    public EvaluationFormationDto evaluationToEvaluationDto(EvaluationFormation eval) {
+        if ( eval == null ) {
+            return null;
+        }
+
+        EvaluationFormationDto evaluationFormationDto = new EvaluationFormationDto();
+
+        evaluationFormationDto.setInterventionId( evalInterventionId( eval ) );
+        evaluationFormationDto.setCompetencesEvalueesId( competenceProToId( eval.getCompetencesEvaluees() ) );
+        evaluationFormationDto.setId( eval.getId() );
+        evaluationFormationDto.setVersion( eval.getVersion() );
+        evaluationFormationDto.setContenu( eval.getContenu() );
+        evaluationFormationDto.setDateEvaluation( eval.getDateEvaluation() );
+
+        return evaluationFormationDto;
+    }
+
+    @Override
+    public EvaluationFormation evaluationDtoToEvaluation(EvaluationFormationDto evalDto) {
+        if ( evalDto == null ) {
+            return null;
+        }
+
+        EvaluationFormation evaluationFormation = new EvaluationFormation();
+
+        evaluationFormation.setIntervention( evaluationFormationDtoToIntervention( evalDto ) );
+        evaluationFormation.setCompetencesEvaluees( idToCompetencePro( evalDto.getCompetencesEvalueesId() ) );
+        evaluationFormation.setId( evalDto.getId() );
+        evaluationFormation.setVersion( evalDto.getVersion() );
+        evaluationFormation.setContenu( evalDto.getContenu() );
+        evaluationFormation.setDateEvaluation( evalDto.getDateEvaluation() );
+
+        return evaluationFormation;
+    }
+
     protected List<DossierProfessionnelDto> dossierProfessionnelListToDossierProfessionnelDtoList(List<DossierProfessionnel> list) {
         if ( list == null ) {
             return null;
@@ -989,6 +1057,47 @@ public class DtoMapperImpl implements DtoMapper {
         }
 
         return list1;
+    }
+
+    private long utilisateurCentreFormationId(Utilisateur utilisateur) {
+        if ( utilisateur == null ) {
+            return 0L;
+        }
+        CentreFormation centreFormation = utilisateur.getCentreFormation();
+        if ( centreFormation == null ) {
+            return 0L;
+        }
+        long id = centreFormation.getId();
+        return id;
+    }
+
+    protected CentreFormation utilisateurDtoToCentreFormation(UtilisateurDto utilisateurDto) {
+        if ( utilisateurDto == null ) {
+            return null;
+        }
+
+        CentreFormation centreFormation = new CentreFormation();
+
+        centreFormation.setId( utilisateurDto.getCentreFormationId() );
+
+        return centreFormation;
+    }
+
+    protected Adresse adresseDtoToAdresse(AdresseDto adresseDto) {
+        if ( adresseDto == null ) {
+            return null;
+        }
+
+        Adresse adresse = new Adresse();
+
+        adresse.setId( adresseDto.getId() );
+        adresse.setVersion( adresseDto.getVersion() );
+        adresse.setLibelle( adresseDto.getLibelle() );
+        adresse.setVille( adresseDto.getVille() );
+        adresse.setCodePostal( adresseDto.getCodePostal() );
+        adresse.setCountryCode( adresseDto.getCountryCode() );
+
+        return adresse;
     }
 
     protected ExperienceProfessionnelle experienceProfessionnelleDtoToExperienceProfessionnelle(ExperienceProfessionnelleDto experienceProfessionnelleDto) {
@@ -1319,5 +1428,29 @@ public class DtoMapperImpl implements DtoMapper {
         cursus.setSlug( interventionDG2Dto.getSlug() );
 
         return cursus;
+    }
+
+    private long evalInterventionId(EvaluationFormation evaluationFormation) {
+        if ( evaluationFormation == null ) {
+            return 0L;
+        }
+        Intervention intervention = evaluationFormation.getIntervention();
+        if ( intervention == null ) {
+            return 0L;
+        }
+        long id = intervention.getId();
+        return id;
+    }
+
+    protected Intervention evaluationFormationDtoToIntervention(EvaluationFormationDto evaluationFormationDto) {
+        if ( evaluationFormationDto == null ) {
+            return null;
+        }
+
+        Intervention intervention = new Intervention();
+
+        intervention.setId( evaluationFormationDto.getInterventionId() );
+
+        return intervention;
     }
 }

@@ -31,4 +31,6 @@ public interface DossierProjetService {
 	DossierProjetDto saveOrUpdate(DossierProjetDto dpDto);
 	DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException;
 	DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException;
-}
+	DossierProjetDto deleteFile(String file, long id);
+
+	}

@@ -32,6 +32,8 @@ public interface UtilisateurService {
 	UtilisateurDto getName(String name);
 
 	UtilisateurDto insertUpdate(UtilisateurDto uDto) throws SaveInvalidException;
+	
+	UtilisateurDto insertTuteur(UtilisateurDto uDto) throws SaveInvalidException;
 
 	void deleteById(long id);
 

@@ -1,5 +1,27 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
@@ -11,22 +33,7 @@ import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import fr.dawan.AppliCFABack.tools.ToPdf;
 import freemarker.core.ParseException;
 import freemarker.template.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 /**
  * 
  * @author Anas J
@@ -203,15 +210,45 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		return mapper.dossierProjetToDossierProjetDto(dossierProRepo.saveAndFlush(mapper.dossierProjetDtoToDossierProjet(dpDto)));
 	}
 	public DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException {
-				DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
-				String strr = files.getOriginalFilename();
-				String pathDossierProjet = storageFolder + "/DossierProjet/" + strr;
-				saveFile(files, pathDossierProjet);
-				dp.setDossierImport(strr);
-				DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
-				return dpDto;
+		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
+		String nom_import = dp.getDossierImport();
+		String cheminFichier = storageFolder + "/DossierProjet/" + nom_import;
+		File fichier = new File(cheminFichier);
+		if (fichier.exists()) {
+			fichier.delete();
+		}
+			String strr = files.getOriginalFilename();
+			String pathDossierProjet = storageFolder + "/DossierProjet/" + strr;
+			saveFile(files, pathDossierProjet);
+			dp.setDossierImport(strr);
+			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
+			return dpDto;
 	}
 
+	public DossierProjetDto deleteFile(String file, long id) {
+		String cheminFichier = storageFolder + "/DossierProjet/" + file;
+		File fichier = new File(cheminFichier);
+		if (fichier.exists()) {
+			DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
+			fichier.delete();
+
+			// Supprimer l'élément de fichier de la liste d'annexes du DossierProjet
+			String importDp = dp.getDossierImport();
+			List<String> annexes = dp.getAnnexeDossierProjets();
+
+			if(annexes.contains(file)) {
+				annexes.removeIf(annexe -> annexe.equals(file));
+				dp.setAnnexeDossierProjets(annexes);
+			}
+			if(importDp.contains(file)){
+				dp.setDossierImport(null);
+			}
+
+			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dossierProRepo.save(dp));
+			return dpDto;
+		}
+		return null;
+	}
 	public DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException {
 		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
 		List<String> getList = dp.getAnnexeDossierProjets();
@@ -223,7 +260,6 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 			dp.getAnnexeDossierProjets().add(file.getOriginalFilename());
 			saveFile(file, pathFile);
 		}
-		dp.setAnnexeDossierProjets(getList);
 		DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
 		return dpDto;
 	}

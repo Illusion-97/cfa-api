@@ -125,6 +125,15 @@ public class UtilisateurController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    
+    @PostMapping(value = "/tuteur", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<?> insertTuteur(@RequestBody UtilisateurDto uDto) {
+        try {
+            return ResponseEntity.ok(utilisateurService.insertTuteur(uDto));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 
     /**
      * 
