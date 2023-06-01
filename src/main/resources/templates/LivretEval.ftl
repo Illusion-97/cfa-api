@@ -512,7 +512,7 @@
     <section id="contaiter">
         <header>
             <section class="header">
-                <img src="${backendUrl}/pictures/frenchRepublic.jpg" alt="image république française">
+                <img src="${backendUrl}pictures/frenchRepublic.jpg" alt="image république française">
                 <div id="titre">
                     <div class="headerhaut"></div>
                     <h1 id="haut">LIVRET D’EVALUATIONS PASSEES</h1>
@@ -944,7 +944,7 @@
                                 30/12/2022
                             </td>
                             <td>
-                                <img src="${backendUrl}/pictures/JeromeSignature.png" alt="" width="100px" height="50px">
+                                <img src="${backendUrl}pictures/JeromeSignature.png" alt="" width="100px" height="50px">
                             </td>
                         </tr>
                     </tbody>

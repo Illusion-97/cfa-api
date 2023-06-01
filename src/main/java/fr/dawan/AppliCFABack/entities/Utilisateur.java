@@ -10,7 +10,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Utilisateur extends BaseEntity implements Serializable {
 	
-	@Column(nullable = true) 
+	@Column(nullable = false) 
 	private long idDg2;
 
 	@Column(nullable = false, length = 255)
@@ -39,7 +39,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@ManyToOne(cascade = {CascadeType.PERSIST })
 	private Adresse adresse;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	private List<UtilisateurRole> roles;
 
 	@ManyToOne
@@ -48,8 +48,9 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@ManyToOne
 	private CentreFormation centreFormation;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "utilisateur")
 	private Etudiant etudiant;
+	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "utilisateur")
 	private Formateur formateur;
 	@OneToOne
