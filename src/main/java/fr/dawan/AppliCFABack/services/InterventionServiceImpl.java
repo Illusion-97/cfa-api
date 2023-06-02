@@ -656,10 +656,13 @@ public class InterventionServiceImpl implements InterventionService {
 							continue;
 						}
 						Optional<Promotion> promotion = promoRepository.findByIdDg2(idPrmotionDg2);
-						if (promotion.isPresent() && !interventionImported.getPromotions().contains(promotion.get())) {
+						if (promotion.isPresent() && interventionImported.getPromotions()!=null) {
+								
+								if( !interventionImported.getPromotions().contains(promotion.get())) {
 							// Ajout de la promotion à la liste des promotions de l'intervention importée
 							interventionImported.getPromotions().add(promotion.get());
-						} else {
+								}
+								} else {
 							logger.warn("Promotion not found with idDg2 : " + idPrmotionDg2);
 							continue;
 						}
@@ -737,8 +740,26 @@ public class InterventionServiceImpl implements InterventionService {
 
 			}
 			Formateur formateur = new Formateur();
+			UtilisateurRole formateurRole = utilisateurRoleRepository.findByIntituleContaining("FORMATEUR");
+			List<Utilisateur> utilisateurs = new ArrayList<>();
+			utilisateurs.add(userInDb.get());
+			if (formateurRole.getUtilisateurs() != null) {
+				utilisateurs.addAll(formateurRole.getUtilisateurs());
+			}
+			formateurRole.setUtilisateurs(utilisateurs);
+			if (userInDb.get().getRoles() != null) {
+				if (!userInDb.get().getRoles().contains(formateurRole)) {
+					userInDb.get().getRoles().add(formateurRole);
+				}
+			} else {
+				List<UtilisateurRole> roles = new ArrayList<>();
+				roles.add(formateurRole);
+				userInDb.get().setRoles(roles);
+			}
 			formateur.setUtilisateur(userInDb.get());
-			formateurRepository.saveAndFlush(formateur);
+			formateur = formateurRepository.saveAndFlush(formateur);
+			userInDb.get().setFormateur(formateur);
+			utilisateurRepository.saveAndFlush(userInDb.get());
 
 			count++;
 
