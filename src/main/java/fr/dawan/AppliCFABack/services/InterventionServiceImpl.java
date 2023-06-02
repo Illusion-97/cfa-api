@@ -656,10 +656,13 @@ public class InterventionServiceImpl implements InterventionService {
 							continue;
 						}
 						Optional<Promotion> promotion = promoRepository.findByIdDg2(idPrmotionDg2);
-						if (promotion.isPresent() && !interventionImported.getPromotions().contains(promotion.get())) {
+						if (promotion.isPresent() && interventionImported.getPromotions()!=null) {
+								
+								if( !interventionImported.getPromotions().contains(promotion.get())) {
 							// Ajout de la promotion à la liste des promotions de l'intervention importée
 							interventionImported.getPromotions().add(promotion.get());
-						} else {
+								}
+								} else {
 							logger.warn("Promotion not found with idDg2 : " + idPrmotionDg2);
 							continue;
 						}
