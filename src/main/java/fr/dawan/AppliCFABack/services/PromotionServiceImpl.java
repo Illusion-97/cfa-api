@@ -89,13 +89,21 @@ public class PromotionServiceImpl implements PromotionService {
 
 	/**
 	 * Récupération des promotions en fonction de l'id
-	 * 
+	 *
 	 * @param id	id de la promotion
 	 * @return pDto	la promo
 	 */
-	
+
 	@Override
-	public PromotionDto getById(long id) {
+	public PromotionDto getById(long id){
+		Optional<Promotion> promotion = promotionRepository.findById(id);
+		PromotionDto pdto = mapper.promotionToPromotionDto(promotion.get());
+		pdto.setType(promotion.get().getType());
+		//pdto.setCentreFormation(promotion.get().getCentreFormation());
+		return pdto;
+	}
+	//@Override
+	/**public PromotionDto getById(long id) {
 		Optional<Promotion> promoOpt = promoRepo.findById(id);
 		Promotion promo = promoRepo.getOne(id);
 		PromotionDto pDto = mapper.promotionToPromotionDto(promo);
@@ -103,8 +111,8 @@ public class PromotionServiceImpl implements PromotionService {
 		pDto.setCursusDto(mapper.cursusToCursusDto(promo.getCursus()));
 		pDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(promo.getCentreFormation()));
 		pDto.setReferentPedagogiqueDto(mapper.utilisateurToUtilisateurDto(promo.getReferentPedagogique()));
-//		pDto.setCefDto(mapper.cefToCEFDto(promo.getCef()));		
-//		pDto.getCefDto().setUtilisateurDto(mapper.utilisateurToUtilisateurDto(promo.getCef().getUtilisateur()));
+		pDto.setCefDto(mapper.cefToCEFDto(promo.getCef()));
+		pDto.getCefDto().setUtilisateurDto(mapper.utilisateurToUtilisateurDto(promo.getCef().getUtilisateur()));
 		pDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(promo.getCentreFormation()));
 		
 		List<Etudiant> etudiants = promo.getEtudiants();
@@ -153,7 +161,7 @@ public class PromotionServiceImpl implements PromotionService {
 		pDto.setExamensDto(examenDtos);
 		return pDto;
 	}
-
+*/
 	/**
 	 * Sauvegarde ou mise à jour d'une promotion
 	 * 
@@ -453,6 +461,8 @@ public class PromotionServiceImpl implements PromotionService {
 				if (centreDeFormationOptional.isPresent()) {
 					promotionDG2.setCentreFormation(centreDeFormationOptional.get());
 				}
+				promotionDG2.setType(pDtoDG2.getType());
+				promotionDG2.setNbParticipants(pDtoDG2.getNbParticipants());
 				//comparer voir sil existe en BDD
 				if(!promoDb.isPresent()) {
 					result.add(promotionDG2);

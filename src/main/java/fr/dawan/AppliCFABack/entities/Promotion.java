@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +11,8 @@ import java.util.Set;
 @SuppressWarnings({ "serial", "unused" })
 @Entity
 public class Promotion extends BaseEntity implements Serializable { // CDA2021
+
+	private String type;
 
 	@Column(nullable = false, length = 255)
 	private String nom;
@@ -20,6 +23,7 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 	
 	private long idDg2;
 
+	private long nbParticipants;
 	@ManyToOne
 	private CEF cef;
 
@@ -45,20 +49,20 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 		super();
 	}
 
-	public Promotion(long id, String nom, LocalDate dateDebut, LocalDate dateFin, CEF cef, List<Etudiant> etudiants,
-			List<Intervention> interventions, CentreFormation centreFormation, Utilisateur referentPedagogique,
-			Cursus cursus) {
-		super();
-		this.id = id;
+	public Promotion(String type, String nom, LocalDate dateDebut, LocalDate dateFin, long idDg2, long nbParticipants, CEF cef, List<Etudiant> etudiants, List<Intervention> interventions, CentreFormation centreFormation, Utilisateur referentPedagogique, Cursus cursus, Set<Examen> examens) {
+		this.type = type;
 		this.nom = nom;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
+		this.idDg2 = idDg2;
+		this.nbParticipants = nbParticipants;
 		this.cef = cef;
 		this.etudiants = etudiants;
 		this.interventions = interventions;
 		this.centreFormation = centreFormation;
 		this.referentPedagogique = referentPedagogique;
 		this.cursus = cursus;
+		this.examens = examens;
 	}
 
 	public String getNom() {
@@ -140,6 +144,13 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 	public void setExamens(Set<Examen> examens) {
 		this.examens = examens;
 	}
+	public long getNbParticipants() {
+		return nbParticipants;
+	}
+
+	public void setNbParticipants(long nbParticipants) {
+		this.nbParticipants = nbParticipants;
+	}
 
 	/**
 	 * @return le idDG2
@@ -154,6 +165,14 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 	 */
 	public void setIdDg2(long idDG2) {
 		this.idDg2 = idDG2;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@Override

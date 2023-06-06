@@ -91,9 +91,9 @@ public interface DtoMapper {
 
     @Mapping(source = ".", target = ".")
     @Mapping(source = "cursus", target = "cursusDto")
+    @Mapping(source = "centreFormation", target = "centreFormationDto")
+    @Mapping(source = "centreFormation.nom", target = "centreFormationAdresseVille")
     PromotionDto promotionToPromotionDto(Promotion promotion);
-
-    @Mapping(source = ".", target = ".")
 
     @Mapping(source = ".", target = ".")
     @Mapping(source = "adresse", target = "adresseDto")
