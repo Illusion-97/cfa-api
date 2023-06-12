@@ -34,6 +34,7 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	 *         paginé
 	 */
 	Page<Promotion> findAllByNomContainingAllIgnoreCase(String nom, Pageable pageable);
+	Page<Promotion> findAllByCentreFormationNomAllIgnoreCase(String ville, Pageable pageable);
 
 	/**
 	 * 

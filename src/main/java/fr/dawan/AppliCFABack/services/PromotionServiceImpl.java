@@ -99,7 +99,6 @@ public class PromotionServiceImpl implements PromotionService {
 		Optional<Promotion> promotion = promotionRepository.findById(id);
 		PromotionDto pdto = mapper.promotionToPromotionDto(promotion.get());
 		pdto.setType(promotion.get().getType());
-		//pdto.setCentreFormation(promotion.get().getCentreFormation());
 		return pdto;
 	}
 	//@Override
@@ -247,14 +246,26 @@ public class PromotionServiceImpl implements PromotionService {
 	
 	@Override
 	public List<PromotionDto> getAllPromotions(int page, int size, String search) {
-		List<Promotion> promo = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Promotion> promoSlug = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Promotion> promoVille = promoRepo.findAllByCentreFormationNomAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<>();
-		for (Promotion p : promo) {
-			PromotionDto promotionDto = DtoTools.convert(p, PromotionDto.class);
-			promotionDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(p.getCentreFormation()));
-			res.add(promotionDto);
-			
+		if (!promoSlug.isEmpty()){
+			for (Promotion p : promoSlug) {
+				PromotionDto promotionDto = DtoTools.convert(p, PromotionDto.class);
+				promotionDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(p.getCentreFormation()));
+				res.add(promotionDto);
+
+			}
 		}
+		if (!promoVille.isEmpty()){
+			for (Promotion p : promoVille) {
+				PromotionDto promotionDto = DtoTools.convert(p, PromotionDto.class);
+				promotionDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(p.getCentreFormation()));
+				res.add(promotionDto);
+
+			}
+		}
+
 		return res;
 	}
 
