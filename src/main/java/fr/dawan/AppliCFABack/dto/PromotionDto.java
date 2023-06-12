@@ -16,6 +16,8 @@ import java.util.Set;
 @SuppressWarnings("serial")
 public class PromotionDto extends BaseEntityDto implements Serializable {
 
+	private String type;
+	private long nbParticipants;
 	private String nom;
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
@@ -196,5 +198,20 @@ public class PromotionDto extends BaseEntityDto implements Serializable {
         this.idDg2 = idDg2;
     }
 
-	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
+	public long getNbParticipants() {
+		return nbParticipants;
+	}
+
+	public void setNbParticipants(int nbParticipants) {
+		this.nbParticipants = nbParticipants;
+	}
 }
