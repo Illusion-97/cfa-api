@@ -251,18 +251,14 @@ public class PromotionServiceImpl implements PromotionService {
 		List<PromotionDto> res = new ArrayList<>();
 		if (!promoSlug.isEmpty()){
 			for (Promotion p : promoSlug) {
-				PromotionDto promotionDto = DtoTools.convert(p, PromotionDto.class);
-				promotionDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(p.getCentreFormation()));
+				PromotionDto promotionDto = mapper.promotionToPromotionDto(p);
 				res.add(promotionDto);
-
 			}
 		}
 		if (!promoVille.isEmpty()){
 			for (Promotion p : promoVille) {
-				PromotionDto promotionDto = DtoTools.convert(p, PromotionDto.class);
-				promotionDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(p.getCentreFormation()));
+				PromotionDto promotionDto = mapper.promotionToPromotionDto(p);
 				res.add(promotionDto);
-
 			}
 		}
 

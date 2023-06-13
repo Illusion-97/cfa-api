@@ -33,9 +33,9 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	 * @return toutes les promotions dont le nom contient le champs de recherche,
 	 *         paginé
 	 */
-	@Query("SELECT p FROM Promotion p ORDER BY p.dateFin DESC,p.nbParticipants DESC")
+	@Query("SELECT p FROM Promotion p WHERE p.nom LIKE %:nom% ORDER BY p.dateFin DESC,p.nbParticipants DESC")
 	Page<Promotion> findAllByNomContainingAllIgnoreCase(String nom, Pageable pageable);
-	@Query("SELECT p FROM Promotion p ORDER BY p.dateFin DESC,p.nbParticipants DESC")
+	@Query("SELECT p FROM Promotion p WHERE p.centreFormation.nom LIKE %:ville% ORDER BY p.dateFin DESC,p.nbParticipants DESC")
 	Page<Promotion> findAllByCentreFormationNomAllIgnoreCase(String ville, Pageable pageable);
 
 	/**
