@@ -86,6 +86,7 @@ import fr.dawan.AppliCFABack.tools.FileException;
 import fr.dawan.AppliCFABack.tools.HashTools;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import javassist.NotFoundException;
 
 @Service
 @Transactional
@@ -1246,5 +1247,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return result;
 	}
+	
+	public void modifierRolesUtilisateur(long utilisateurId, List<Long> nouveauRolesIds) throws NotFoundException {
+        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
+                .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
+
+        List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);
+        utilisateur.modifierRoles(nouveauxRoles);
+
+        utilisateurRepository.save(utilisateur);
+    }
 
 }

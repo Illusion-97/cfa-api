@@ -280,7 +280,13 @@ public class Utilisateur extends BaseEntity implements Serializable {
 		return getNom() + " " + getPrenom();
 	}
 	
-	
+	public void modifierRoles(List<UtilisateurRole> nouveauxRoles) {
+        this.roles.clear();
+        this.roles.addAll(nouveauxRoles);
+        for (UtilisateurRole role : nouveauxRoles) {
+            role.getUtilisateurs().add(this);
+        }
+    }
 
 	@Override
 	public boolean equals(Object obj) {
