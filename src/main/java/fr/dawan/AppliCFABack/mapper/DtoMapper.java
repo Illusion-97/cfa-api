@@ -30,12 +30,6 @@ public interface DtoMapper {
     }
 
     @Mapping(source = ".", target = ".")
-    CompetenceProfessionnelleDto competenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
-
-    @Mapping(source = ".", target = ".")
-    ActiviteTypeDto activiteTypeToActiviteDto(ActiviteType activiteType);
-
-    @Mapping(source = ".", target = ".")
     AdresseDto adresseToAdresseDto(Adresse adresse);
 
     @Mapping(source = ".", target = ".")
@@ -57,10 +51,14 @@ public interface DtoMapper {
     EntrepriseDto entrepriseToEntrepriseDto(Entreprise entreprise);
 
     @Mapping(source = ".", target = ".")
-    @Mapping(source = "tuteur", target = "tuteurDto")           
+    @Mapping(source = "tuteur", target = "tuteurDto")
+    @Mapping(source = "utilisateur", target = "utilisateurDto")
     EtudiantDto etudiantToEtudiantDto(Etudiant etudiant);
 
     @Mapping(source = ".", target = ".")
+    @Mapping(source = "descriptif", target = "descriptif")
+    @Mapping(source = "activiteTypes", target = "activiteTypesDto")
+    @Mapping(source = "competencesProfessionnelles", target = "competencesProfessionnellesDto")
     ExamenDto examenToExamenDto(Examen examen);
 
     @Mapping(source = ".", target = ".")
@@ -94,6 +92,8 @@ public interface DtoMapper {
     @Mapping(source = "centreFormation", target = "centreFormationDto")
     @Mapping(source = "centreFormation.nom", target = "centreFormationAdresseVille")
     @Mapping(source = "etudiants", target = "etudiantsDto")
+    @Mapping(source = "interventions", target = "interventionsDto")
+    @Mapping(source = "examens", target = "examensDto")
     PromotionDto promotionToPromotionDto(Promotion promotion);
 
     @Mapping(source = ".", target = ".")
