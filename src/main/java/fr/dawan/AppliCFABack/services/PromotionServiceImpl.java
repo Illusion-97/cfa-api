@@ -96,10 +96,7 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Override
 	public PromotionDto getById(long id){
-		Optional<Promotion> promotion = promotionRepository.findById(id);
-		PromotionDto pdto = mapper.promotionToPromotionDto(promotion.get());
-		pdto.setType(promotion.get().getType());
-		return pdto;
+		return mapper.promotionToPromotionDto(promotionRepository.findById(id).get());
 	}
 	//@Override
 	/**public PromotionDto getById(long id) {
