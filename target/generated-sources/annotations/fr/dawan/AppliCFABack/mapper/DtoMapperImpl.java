@@ -83,8 +83,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-12T10:10:33+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
+    date = "2023-06-12T11:23:11+0200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -457,12 +457,16 @@ public class DtoMapperImpl implements DtoMapper {
         PromotionDto promotionDto = new PromotionDto();
 
         promotionDto.setCursusDto( cursusToCursusDto( promotion.getCursus() ) );
+        promotionDto.setCentreFormationDto( centreFormationToCentreFormationDto( promotion.getCentreFormation() ) );
+        promotionDto.setCentreFormationAdresseVille( promotionCentreFormationNom( promotion ) );
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
         promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
         promotionDto.setIdDg2( promotion.getIdDg2() );
+        promotionDto.setType( promotion.getType() );
+        promotionDto.setNbParticipants( (int) promotion.getNbParticipants() );
 
         return promotionDto;
     }
@@ -1057,6 +1061,21 @@ public class DtoMapperImpl implements DtoMapper {
         }
 
         return list1;
+    }
+
+    private String promotionCentreFormationNom(Promotion promotion) {
+        if ( promotion == null ) {
+            return null;
+        }
+        CentreFormation centreFormation = promotion.getCentreFormation();
+        if ( centreFormation == null ) {
+            return null;
+        }
+        String nom = centreFormation.getNom();
+        if ( nom == null ) {
+            return null;
+        }
+        return nom;
     }
 
     private long utilisateurCentreFormationId(Utilisateur utilisateur) {
