@@ -64,6 +64,22 @@ public class PromotionController {
 		return promoService.count("");
 	}
 	
+	@GetMapping(value = "/countByCentreFormationId/{id}/{search}", produces = "application/json")
+	public CountDto countByCentreFormationId(
+			@PathVariable(value = "id") long id, 
+			@PathVariable(value = "search",  required = false) Optional<String> search) {
+		if(search.isPresent())
+			return promoService.countByCentreFormationId(id, search.get());
+		else 
+			return promoService.countByCentreFormationId(id, "");
+	}
+	
+	@GetMapping(value = "/countByCentreFormationId/{id}", produces = "application/json")
+	public CountDto countByCentreFormationId(
+			@PathVariable(value = "id") long id) {
+		return promoService.countByCentreFormationId(id, "");
+	}
+	
 	@GetMapping(value = "/count/{search}", produces = "application/json")
 	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
 		if(search.isPresent())
@@ -209,11 +225,23 @@ public class PromotionController {
 
 	}
 	
-	@GetMapping(value = "/centreFormation/{idCentreFormation}/{page}/{size}", produces="application/json")
-	public List<PromotionDto> getPromoByCentreFormationIdPagination(@PathVariable("idCentreFormation") long id, @PathVariable("page") int page,
-			@PathVariable("size") int size){
-		return promoService.getPromoByCentreFormationIdPagination(page, size, id);
+	@GetMapping(value = "/centreFormation/{idCentreFormation}/{page}/{size}/{search}", produces="application/json")
+	public List<PromotionDto> getPromoByCentreFormationIdPagination(
+			@PathVariable("idCentreFormation") long id, 
+			@PathVariable("page") int page,
+			@PathVariable("size") int size,
+			@PathVariable(value = "search",  required = false) Optional<String> search){
+		if (search.isPresent()) 			
+			return promoService.getPromoByCentreFormationIdPagination(page, size, id, search.get());
+		else 
+			return promoService.getPromoByCentreFormationIdPagination(page, size, id, "");
 	}
 	
-	
+	@GetMapping(value = "/centreFormation/{idCentreFormation}/{page}/{size}", produces="application/json")
+	public List<PromotionDto> getPromoByCentreFormationIdPagination(
+			@PathVariable("idCentreFormation") long id, 
+			@PathVariable("page") int page,
+			@PathVariable("size") int size) {
+		return promoService.getPromoByCentreFormationIdPagination(page, size, id, "");
+	}
 }
