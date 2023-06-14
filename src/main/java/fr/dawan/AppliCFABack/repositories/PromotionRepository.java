@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,14 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	 * @return nombre d'occurence du champs de recherche
 	 */
 	long countByNomContaining(String nom);
+	
+	/**
+	 * 
+	 * @param centre de formation id
+	 * @return nombre d'occurence du centre de formation
+	 */
+	//@Query("FROM Promotion p WHERE lower(p.dateDebut) LIKE lower(concat('%', :date, '%')) AND p.centreFormation = :id")
+	long countByCentreFormationIdAndDateDebutContainingAllIgnoringCase(long id, String date);
 
 	/**
 	 * 
@@ -33,7 +42,10 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	 * @return toutes les promotions dont le nom contient le champs de recherche,
 	 *         paginé
 	 */
+	@Query("SELECT p FROM Promotion p WHERE p.nom LIKE %:nom% ORDER BY p.dateFin DESC,p.nbParticipants DESC")
 	Page<Promotion> findAllByNomContainingAllIgnoreCase(String nom, Pageable pageable);
+	@Query("SELECT p FROM Promotion p WHERE p.centreFormation.nom LIKE %:ville% ORDER BY p.dateFin DESC,p.nbParticipants DESC")
+	Page<Promotion> findAllByCentreFormationNomAllIgnoreCase(String ville, Pageable pageable);
 
 	/**
 	 * 
@@ -70,7 +82,7 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	//@Query("SELECT p from Promotion p JOIN FETCH p.etudiants WHERE p.idDg2 = :id")
 	Optional<Promotion> findByIdDg2(long id);
 
-	Page<Promotion> findPromotionsByCentreFormationId(long id, Pageable pageable);
+	Page<Promotion> findPromotionsByCentreFormationIdAndDateDebutContainingAllIgnoringCase(long id, Pageable pageable, String date);
 
 	@Query("From Promotion p WHERE p.idDg2 = :idPromotionDg2")
     List<Promotion> findAllByIdPromotionDg2(long idPromotionDg2);

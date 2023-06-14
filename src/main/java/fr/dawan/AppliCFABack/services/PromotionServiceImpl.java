@@ -1,36 +1,69 @@
 package fr.dawan.AppliCFABack.services;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.dawan.AppliCFABack.dto.*;
-import fr.dawan.AppliCFABack.dto.customdtos.GrillePositionnementDto;
-import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
-import fr.dawan.AppliCFABack.entities.*;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.*;
-import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
-import fr.dawan.AppliCFABack.tools.GrilleException;
-import fr.dawan.AppliCFABack.tools.PdfTools;
-import freemarker.core.ParseException;
-import freemarker.template.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.client.RestTemplate;
 
-import javax.transaction.Transactional;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.NiveauDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.PromotionForSelectDto;
+import fr.dawan.AppliCFABack.dto.PromotionOrInterventionDG2Dto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.customdtos.GrillePositionnementDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
+import fr.dawan.AppliCFABack.entities.CentreFormation;
+import fr.dawan.AppliCFABack.entities.Cursus;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Formation;
+import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.Positionnement;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
+import fr.dawan.AppliCFABack.repositories.CursusRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+import fr.dawan.AppliCFABack.tools.GrilleException;
+import fr.dawan.AppliCFABack.tools.PdfTools;
+import freemarker.core.ParseException;
+import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 @Service
 @Transactional
@@ -96,11 +129,7 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Override
 	public PromotionDto getById(long id){
-		Optional<Promotion> promotion = promotionRepository.findById(id);
-		PromotionDto pdto = mapper.promotionToPromotionDto(promotion.get());
-		pdto.setType(promotion.get().getType());
-		//pdto.setCentreFormation(promotion.get().getCentreFormation());
-		return pdto;
+		return mapper.promotionToPromotionDto(promotionRepository.findById(id).get());
 	}
 	//@Override
 	/**public PromotionDto getById(long id) {
@@ -234,6 +263,12 @@ public class PromotionServiceImpl implements PromotionService {
 	public CountDto count(String search) {
 		return new CountDto(promoRepo.countByNomContaining(search));
 	}
+	
+	@Override
+	public CountDto countByCentreFormationId(long id, String date) {
+		return new CountDto(promoRepo.countByCentreFormationIdAndDateDebutContainingAllIgnoringCase(id, date));
+	}
+
 
 	/**
 	 * Va permettre de récupérer toutes les promotions avec pagination
@@ -247,14 +282,22 @@ public class PromotionServiceImpl implements PromotionService {
 	
 	@Override
 	public List<PromotionDto> getAllPromotions(int page, int size, String search) {
-		List<Promotion> promo = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Promotion> promoSlug = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Promotion> promoVille = promoRepo.findAllByCentreFormationNomAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<>();
-		for (Promotion p : promo) {
-			PromotionDto promotionDto = DtoTools.convert(p, PromotionDto.class);
-			promotionDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(p.getCentreFormation()));
-			res.add(promotionDto);
-			
+		if (!promoSlug.isEmpty()){
+			for (Promotion p : promoSlug) {
+				PromotionDto promotionDto = mapper.promotionToPromotionDto(p);
+				res.add(promotionDto);
+			}
 		}
+		if (!promoVille.isEmpty()){
+			for (Promotion p : promoVille) {
+				PromotionDto promotionDto = mapper.promotionToPromotionDto(p);
+				res.add(promotionDto);
+			}
+		}
+
 		return res;
 	}
 
@@ -539,8 +582,8 @@ public class PromotionServiceImpl implements PromotionService {
 	}
 
 	@Override
-	public List<PromotionDto> getPromoByCentreFormationIdPagination(int page, int size, long id) {
-		List<Promotion> result = promoRepo.findPromotionsByCentreFormationId(id, PageRequest.of(page, size)).get().collect(Collectors.toList());
+	public List<PromotionDto> getPromoByCentreFormationIdPagination(int page, int size, long id, String search) {
+		List<Promotion> result = promoRepo.findPromotionsByCentreFormationIdAndDateDebutContainingAllIgnoringCase(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<>();
 		for(Promotion p: result) {
 			res.add(DtoTools.convert(p, PromotionDto.class));

@@ -83,7 +83,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-12T14:38:00+0200",
+    date = "2023-06-14T11:39:26+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -118,38 +118,6 @@ public class DtoMapperImpl implements DtoMapper {
         evaluationFormation.setDateEvaluation( dto.getDateEvaluation() );
 
         return evaluationFormation;
-    }
-
-    @Override
-    public CompetenceProfessionnelleDto competenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle) {
-        if ( competenceProfessionnelle == null ) {
-            return null;
-        }
-
-        CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto();
-
-        competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
-        competenceProfessionnelleDto.setVersion( competenceProfessionnelle.getVersion() );
-        competenceProfessionnelleDto.setLibelle( competenceProfessionnelle.getLibelle() );
-        competenceProfessionnelleDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
-
-        return competenceProfessionnelleDto;
-    }
-
-    @Override
-    public ActiviteTypeDto activiteTypeToActiviteDto(ActiviteType activiteType) {
-        if ( activiteType == null ) {
-            return null;
-        }
-
-        ActiviteTypeDto activiteTypeDto = new ActiviteTypeDto();
-
-        activiteTypeDto.setId( activiteType.getId() );
-        activiteTypeDto.setVersion( activiteType.getVersion() );
-        activiteTypeDto.setLibelle( activiteType.getLibelle() );
-        activiteTypeDto.setNumeroFiche( activiteType.getNumeroFiche() );
-
-        return activiteTypeDto;
     }
 
     @Override
@@ -287,6 +255,7 @@ public class DtoMapperImpl implements DtoMapper {
         EtudiantDto etudiantDto = new EtudiantDto();
 
         etudiantDto.setTuteurDto( tuteurTotuteurDto( etudiant.getTuteur() ) );
+        etudiantDto.setUtilisateurDto( utilisateurToUtilisateurDto( etudiant.getUtilisateur() ) );
         etudiantDto.setId( etudiant.getId() );
         etudiantDto.setVersion( etudiant.getVersion() );
         etudiantDto.setDossierProfessionnel( dossierProfessionnelListToDossierProfessionnelDtoList( etudiant.getDossierProfessionnel() ) );
@@ -302,10 +271,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExamenDto examenDto = new ExamenDto();
 
+        examenDto.setDescriptif( examen.getDescriptif() );
+        examenDto.setActiviteTypesDto( activiteTypeListToActiviteTypeDtoList( examen.getActiviteTypes() ) );
+        examenDto.setCompetencesProfessionnellesDto( competenceProfessionnelleSetToCompetenceProfessionnelleDtoSet( examen.getCompetencesProfessionnelles() ) );
         examenDto.setId( examen.getId() );
         examenDto.setVersion( examen.getVersion() );
         examenDto.setDateExamen( examen.getDateExamen() );
-        examenDto.setDescriptif( examen.getDescriptif() );
         examenDto.setDuree( examen.getDuree() );
         examenDto.setPieceJointe( examen.getPieceJointe() );
         examenDto.setTitre( examen.getTitre() );
@@ -459,6 +430,9 @@ public class DtoMapperImpl implements DtoMapper {
         promotionDto.setCursusDto( cursusToCursusDto( promotion.getCursus() ) );
         promotionDto.setCentreFormationDto( centreFormationToCentreFormationDto( promotion.getCentreFormation() ) );
         promotionDto.setCentreFormationAdresseVille( promotionCentreFormationNom( promotion ) );
+        promotionDto.setEtudiantsDto( etudiantListToEtudiantDtoList( promotion.getEtudiants() ) );
+        promotionDto.setInterventionsDto( interventionListToInterventionDtoList( promotion.getInterventions() ) );
+        promotionDto.setExamensDto( examenSetToExamenDtoSet( promotion.getExamens() ) );
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
@@ -1063,6 +1037,32 @@ public class DtoMapperImpl implements DtoMapper {
         return list1;
     }
 
+    protected List<ActiviteTypeDto> activiteTypeListToActiviteTypeDtoList(List<ActiviteType> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<ActiviteTypeDto> list1 = new ArrayList<ActiviteTypeDto>( list.size() );
+        for ( ActiviteType activiteType : list ) {
+            list1.add( activiteTypeToActiviteTypeDto( activiteType ) );
+        }
+
+        return list1;
+    }
+
+    protected Set<CompetenceProfessionnelleDto> competenceProfessionnelleSetToCompetenceProfessionnelleDtoSet(Set<CompetenceProfessionnelle> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<CompetenceProfessionnelleDto> set1 = new HashSet<CompetenceProfessionnelleDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( CompetenceProfessionnelle competenceProfessionnelle : set ) {
+            set1.add( competenceProfessionnelleToCompetenceProfessionnelleDto( competenceProfessionnelle ) );
+        }
+
+        return set1;
+    }
+
     private String promotionCentreFormationNom(Promotion promotion) {
         if ( promotion == null ) {
             return null;
@@ -1076,6 +1076,45 @@ public class DtoMapperImpl implements DtoMapper {
             return null;
         }
         return nom;
+    }
+
+    protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<EtudiantDto> list1 = new ArrayList<EtudiantDto>( list.size() );
+        for ( Etudiant etudiant : list ) {
+            list1.add( etudiantToEtudiantDto( etudiant ) );
+        }
+
+        return list1;
+    }
+
+    protected List<InterventionDto> interventionListToInterventionDtoList(List<Intervention> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<InterventionDto> list1 = new ArrayList<InterventionDto>( list.size() );
+        for ( Intervention intervention : list ) {
+            list1.add( interventionToInterventionDto( intervention ) );
+        }
+
+        return list1;
+    }
+
+    protected Set<ExamenDto> examenSetToExamenDtoSet(Set<Examen> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<ExamenDto> set1 = new HashSet<ExamenDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( Examen examen : set ) {
+            set1.add( examenToExamenDto( examen ) );
+        }
+
+        return set1;
     }
 
     private long utilisateurCentreFormationId(Utilisateur utilisateur) {
