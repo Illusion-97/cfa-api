@@ -1108,7 +1108,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				} else {
 					
 					try {
-						utilisateurImport.setPassword(HashTools.hashSHA512("cfa123_+Nawad%!"));
+						
+						utilisateurImport.setPassword(null);
+						utilisateurImport.setActive(true);
 					    utilisateurRepository.saveAndFlush(utilisateurImport);
 
 
