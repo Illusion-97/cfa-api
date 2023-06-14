@@ -517,6 +517,8 @@ public class PromotionServiceImpl implements PromotionService {
 					if(!promoDb.get().equals(promotionDG2)) {
 						promotionDG2.setId(promoDb.get().getId());
 						promotionDG2.setVersion(promoDb.get().getVersion());
+						promotionDG2.setType(pDtoDG2.getType());
+						promotionDG2.setNbParticipants(pDtoDG2.getNbParticipants());
 						result.add(promotionDG2);
 					} 
 				}	
