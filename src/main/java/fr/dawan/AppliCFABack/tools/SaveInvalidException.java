@@ -4,7 +4,7 @@ package fr.dawan.AppliCFABack.tools;
 public class SaveInvalidException extends Exception{
 	
 	public SaveInvalidException(String message) {
-		super.getMessage();
+		super(message);
 	}
 
 }
