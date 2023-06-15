@@ -439,3 +439,8 @@ java.lang.NullPointerException: null
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
 
+2023-06-15 17:00:03.135  INFO 18852 --- [RMI TCP Connection(473)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-06-15 17:00:03.611  INFO 18852 --- [RMI TCP Connection(473)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-06-15 17:00:03.611  INFO 18852 --- [RMI TCP Connection(473)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-06-15 17:00:03.620  INFO 18852 --- [RMI TCP Connection(473)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-06-15 17:00:03.626  INFO 18852 --- [RMI TCP Connection(473)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
