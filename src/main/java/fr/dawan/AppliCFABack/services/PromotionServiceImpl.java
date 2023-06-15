@@ -435,7 +435,8 @@ public class PromotionServiceImpl implements PromotionService {
 		}
 		for(Promotion p : promoLst) {
 			try {
-				promotionRepository.saveAndFlush(p);
+				Promotion pps =	promotionRepository.saveAndFlush(p);
+				System.out.println("pps.getId() = " + pps.getId());
 			} catch (Exception e) {
 				logger.log(Level.SEVERE,"SaveAndFlush failed", e);
 			}
