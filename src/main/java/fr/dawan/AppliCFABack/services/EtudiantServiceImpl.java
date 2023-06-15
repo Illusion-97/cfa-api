@@ -843,6 +843,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public void fetchAllEtudiantDG2ByIdPromotion(String email, String password, long idPromotionDg2)
 			throws FetchDG2Exception, JsonProcessingException, URISyntaxException {
+		List<Etudiant> saved = new ArrayList<>();
 		Optional<Promotion> optionnalPromotion = promotionRepository.findByIdDg2(idPromotionDg2);
 		if (! optionnalPromotion.map(promotion -> {
 		    logger.info(">>>>>>>promo>>>>" + promotion.getIdDg2());
@@ -868,7 +869,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 			try {
 				cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {});
 			} catch (Exception ignored) {}
-
 			for (EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
 				logger.info("FetchDg2Etudiant >>> START /for" + eDG2.getPersonId());
 				// Etudiant etudiantDg2 = mapper.etudiantUtilisateurDG2DtoToEtudiant(eDG2);
@@ -883,8 +883,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 					Adresse userAdresse = utilisateur.getAdresse();
 				    Adresse adresseDg2 = mapper.etudiantUtilisateurDG2DtoToAdresse(eDG2);
 					if (userAdresse != null) {
-                    	adresseDg2.setId(utiLisateurOptional.get().getAdresse().getId());
-                    	adresseDg2.setVersion(utiLisateurOptional.get().getAdresse().getVersion());
+                    	adresseDg2.setId(utilisateur.getAdresse().getId());
+                    	adresseDg2.setVersion(utilisateur.getAdresse().getVersion());
                     	adresseRepository.saveAndFlush(adresseDg2);
                     } else {
 						adresseDg2 = adresseRepository.saveAndFlush(adresseDg2);
@@ -918,13 +918,16 @@ public class EtudiantServiceImpl implements EtudiantService {
                     finalUtilisateurDg2.setRoles(roles);
 					return utilisateurRepository.saveAndFlush(finalUtilisateurDg2);
 				});
-				Etudiant etudiant = utilisateurDg2.getEtudiant();
+				Etudiant etudiant = saved.stream()
+						.filter(e -> e.getUtilisateur().getIdDg2() == finalUtilisateurDg2.getIdDg2())
+						.findFirst().orElse(null);
                 if (etudiant == null) {
 					etudiant = new Etudiant();
                 	etudiant.setUtilisateur(utilisateurDg2);
                 	etudiant = etudiantRepository.saveAndFlush(etudiant);
+					saved.add(etudiant);
                 }
-                Long etudiantId = etudiant.getId();
+                long etudiantId = etudiant.getId();
                 if(promotion.getEtudiants().stream().anyMatch(e -> e.getId() == etudiantId))
                 	continue;
                 else {
@@ -961,7 +964,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	}
 
 	@Async("myTaskExecutor")
-	private void importUserFromJson(String json, Optional<Promotion> promotion) throws JsonMappingException, JsonProcessingException {
+	public void importUserFromJson(String json, Optional<Promotion> promotion) throws JsonMappingException, JsonProcessingException {
 	    ObjectMapper objectMapper = new ObjectMapper();
         List<EtudiantUtilisateurDG2Dto> cResJson;
         

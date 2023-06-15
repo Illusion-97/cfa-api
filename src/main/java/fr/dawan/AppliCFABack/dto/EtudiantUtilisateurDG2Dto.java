@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
