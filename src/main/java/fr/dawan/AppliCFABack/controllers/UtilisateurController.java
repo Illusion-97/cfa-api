@@ -145,11 +145,11 @@ public class UtilisateurController {
     }
     
     @PostMapping(value = "/tuteur", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> insertTuteur(@RequestBody UtilisateurDto uDto) {
+    public ResponseEntity<?> insertTuteur(@RequestBody UtilisateurDto uDto) throws SaveInvalidException {
         try {
             return ResponseEntity.ok(utilisateurService.insertTuteur(uDto));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			throw new SaveInvalidException(e.getMessage());
         }
     }
 

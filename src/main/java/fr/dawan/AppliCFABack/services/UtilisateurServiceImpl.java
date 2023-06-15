@@ -538,9 +538,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public UtilisateurDto insertTuteur(UtilisateurDto uDto) throws SaveInvalidException {
 		
 		if (uDto.getId() == 0 && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
-			System.out.println("toto");
-			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin()
-					+ " findByEmail " + findByEmail(uDto.getLogin()).toString());
+			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin());
 		}
 		
 		try {
@@ -1108,7 +1106,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				} else {
 					
 					try {
-						utilisateurImport.setPassword(HashTools.hashSHA512("cfa123_+Nawad%!"));
+						
+						utilisateurImport.setPassword(null);
+						utilisateurImport.setActive(true);
 					    utilisateurRepository.saveAndFlush(utilisateurImport);
 
 
