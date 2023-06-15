@@ -62,7 +62,7 @@ public class AppliCfaBackApplication {
 			// Intercepteurs
 			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
-			  //registry.addInterceptor(tokenInterceptor);
+			  registry.addInterceptor(tokenInterceptor);
 			}
 
 			@Override
