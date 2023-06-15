@@ -18,10 +18,6 @@ import java.util.stream.Collectors;
 public interface DtoMapper {
 	
 	DtoMapper INSTANCE = Mappers.getMapper(DtoMapper.class);
-	
-	EvaluationFormationDto toEvaluationFormationDto(EvaluationFormation entity);
-
-    EvaluationFormation toEvaluationFormationEntity(EvaluationFormationDto dto);
     
     default List<Long> mapCompetencesEvalueesIds(List<CompetenceProfessionnelle> competences) {
         return competences.stream()
@@ -85,7 +81,6 @@ public interface DtoMapper {
 
     @Mapping(source = ".", target = ".")
     ProjetDto projetToProjetDto(Projet projet);
-
 
     @Mapping(source = ".", target = ".")
     @Mapping(source = "cursus", target = "cursusDto")
@@ -178,43 +173,27 @@ public interface DtoMapper {
     MaitreApprentissageDto maitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage);
 
     @Mapping(source = ".", target = ".")
-    CerfaDto cerfaToCerfaDto(Cerfa cerfa);
-
-    @Mapping(source = ".", target = ".")
-    RemunerationDto remunerationTORemunerationDto(Remuneration remuneration);
-
-    @Mapping(source = ".", target = ".")
     ActiviteTypeDto activiteTypeToActiviteTypeDto(ActiviteType activiteType);
 
     @Mapping(source = ".", target = ".")
+    @Mapping(source = "activiteType.id", target = "activiteTypeId")
     CompetenceProfessionnelleDto competenceProfessionnelleToCompetenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
-    
-    @Mapping(target = "cursusLst", ignore = true)
-    @Mapping(source = "id", target = "idDg2")
-    @Mapping(source = "title", target = "titre")
-    @Mapping(source = "objectives", target = "objectif")
-    @Mapping(source = "prerequisites", target = "prerequis")
-    Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
-
-    
     @Mapping(source = ".", target = ".")
-    List<CompetenceCouvertesDossierProjetDto> competenceProfessionnelleToCompetenceCouvertesDto(List<CompetenceProfessionnelle> competenceProfessionnelle);
-    
-//    @Mapping(source = ".", target = ".")
-//    List<CompetenceProfessionnelleDto> ListcompetenceProfessionnelleToListCompetenceCouvertesDto(List<CompetenceProfessionnelle> competenceProfessionnelle);
-//    
+    @Mapping(source = "activiteTypeId", target = "activiteType.id")
+    CompetenceProfessionnelle competenceProfessionnelleDtoToCompetenceProfessionnelle(CompetenceProfessionnelleDto competenceProfessionnelleDto);
+    //@Mapping(target = "cursusLst", ignore = true)
+    //@Mapping(source = "id", target = "idDg2")
+    //@Mapping(source = "title", target = "titre")
+    //@Mapping(source = "objectives", target = "objectif")
+    //@Mapping(source = "prerequisites", target = "prerequis")
+    //Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto);
+
     @Mapping(target = "activiteTypes", ignore = true)
     @Mapping(target = "formations", ignore = true)
     @Mapping(source = "id", target = "idDg2")
     @Mapping(source = "title", target = "titre")
     @Mapping(source = "duration", target = "duree")
     Cursus cursusDG2DtoToCursus(CursusDG2Dto cursusDG2Dto);
-
-//	@Mapping(target = "formations", ignore = true)
-//	@Mapping(source = "slug", target = "titre")
-//	Cursus cursusDG2DtoToCursus(InterventionDG2Dto cursusDG2Dto);
-
-    List<Cursus> lstCursusDG2DtoToListCursus(List<InterventionDG2Dto> lstCurusDto);
 
     @Mapping(target = "adresse", ignore = true)
     @Mapping(target = "entreprise", ignore = true)
@@ -238,9 +217,6 @@ public interface DtoMapper {
 	@Mapping(source = "mobile", target = "telephone")
     Utilisateur etudiantUtilisateurDG2DtoToUtilisateur(EtudiantUtilisateurDG2Dto eDG2);
 
-//	@Mapping(source = ".", target = ".")
-//	@Mapping(source = "cursus", target = "cursusDescription")
-//	PromotionEtudiantDto PromotionToPromotionEtudiantDto(Promotion promotion);
 	@Mapping(source = "personId", target ="idDg2" )
 	@Mapping(source = "firstName", target = "prenom")
 	@Mapping(source = "lastName", target = "nom")

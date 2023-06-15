@@ -67,7 +67,7 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 	public CompetenceProfessionnelleDto getById(long id) {
 		Optional<CompetenceProfessionnelle> cpt = competenceProfessionnelleRepository.findById(id);
 		if (cpt.isPresent()) {
-			return DtoTools.convert(cpt.get(), CompetenceProfessionnelleDto.class);
+			return mapper.competenceProfessionnelleToCompetenceProfessionnelleDto(cpt.get());
 		}
 
 		return null;
@@ -83,10 +83,9 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 
 	@Override
 	public CompetenceProfessionnelleDto saveOrUpdate(CompetenceProfessionnelleDto cpDto) {
-		CompetenceProfessionnelle cpt = DtoTools.convert(cpDto, CompetenceProfessionnelle.class);
-		CompetenceProfessionnelle cptBd = competenceProfessionnelleRepository.saveAndFlush(cpt);
-
-		return DtoTools.convert(cptBd, CompetenceProfessionnelleDto.class);
+		return mapper.competenceProfessionnelleToCompetenceProfessionnelleDto(
+				competenceProfessionnelleRepository.saveAndFlush(
+						mapper.competenceProfessionnelleDtoToCompetenceProfessionnelle(cpDto)));
 	}
 
 	/**
