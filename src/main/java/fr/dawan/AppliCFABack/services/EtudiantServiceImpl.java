@@ -1,34 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.dawan.AppliCFABack.dto.*;
-import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
-import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
-import fr.dawan.AppliCFABack.entities.*;
-import fr.dawan.AppliCFABack.entities.LivretEvaluation.EtatLivertEval;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.*;
-import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
-import fr.dawan.AppliCFABack.tools.HashTools;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.*;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import javax.transaction.Transactional;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,13 +11,96 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DevoirDto;
+import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
+import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.dto.NoteDto;
+import fr.dawan.AppliCFABack.dto.PositionnementDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
+import fr.dawan.AppliCFABack.entities.Absence;
+import fr.dawan.AppliCFABack.entities.ActiviteType;
+import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.BlocEvaluation;
+import fr.dawan.AppliCFABack.entities.Devoir;
+import fr.dawan.AppliCFABack.entities.DevoirEtudiant;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
+import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.LivretEvaluation;
+import fr.dawan.AppliCFABack.entities.LivretEvaluation.EtatLivertEval;
+import fr.dawan.AppliCFABack.entities.Positionnement;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
+import fr.dawan.AppliCFABack.repositories.AdresseRepository;
+import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
+import fr.dawan.AppliCFABack.repositories.DevoirEtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.DevoirRepository;
+import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.ExamenRepository;
+import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.LivretEvaluationRepository;
+import fr.dawan.AppliCFABack.repositories.NoteRepository;
+import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.TuteurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+import fr.dawan.AppliCFABack.tools.HashTools;
+
 @Service
 @Transactional
 public class EtudiantServiceImpl implements EtudiantService {
 
 	@Autowired
 	EtudiantRepository etudiantRepository;
-	
+
 	@Autowired
 	DossierProjetRepository dossierProRepo;
 	@Autowired
@@ -99,7 +154,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static Logger logger =  LoggerFactory.getLogger(EtudiantServiceImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(EtudiantServiceImpl.class);
 
 	@Autowired
 	private AdresseRepository adresseRepository;
@@ -687,7 +742,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 				.countDistinctByUtilisateurPrenomContainingIgnoringCaseOrUtilisateurNomContainingOrPromotionsNomContainingOrGroupesNomContaining(
 						search, search, search, search));
 	}
-	
+
 	/**
 	 * Va permettre de récupérer tous les etudiants avec pagination recherche par
 	 * nom / prenom / promo / groupe
@@ -836,340 +891,292 @@ public class EtudiantServiceImpl implements EtudiantService {
 		}
 
 	}
-	
+
 	@Async("myTaskExecutor")
 	@Override
 	public void fetchAllEtudiantDG2ByIdPromotion(String email, String password, long idPromotionDg2)
 			throws FetchDG2Exception, JsonProcessingException, URISyntaxException {
-		Optional<Promotion> promotion = promotionRepository.findByIdDg2(idPromotionDg2);
-		System.out.println(">>>>>>>promo>>>>" + promotion.get().getIdDg2());
-		logger.info(">>>>>>>promo>>>>" + promotion.get().getIdDg2());
-		logger.info("FetchDg2Etudiant >>> START");
-		if (!promotion.isPresent()) {
-			logger.error("FetchDg2Etudiant>>>>>>>>ERROR failed Pas de promo");
-			throw new FetchDG2Exception("Promotion Introuvable");
+		List<Etudiant> saved = new ArrayList<>();
+		Optional<Promotion> optionnalPromotion = promotionRepository.findByIdDg2(idPromotionDg2);
 
-		}
-		ObjectMapper objectMapper = new ObjectMapper();
-		List<EtudiantUtilisateurDG2Dto> cResJson;
+		if (!optionnalPromotion.map(promotion -> {
+			logger.info(">>>>>>>promo>>>>" + promotion.getIdDg2());
+			logger.info("FetchDg2Etudiant >>> START");
+			ObjectMapper objectMapper = new ObjectMapper();
+			List<EtudiantUtilisateurDG2Dto> cResJson = new ArrayList<>();
 
-		URI url = new URI("https://dawan.org/api2/cfa/sessions/" + idPromotionDg2 + "/registrations");
+			String url = "https://dawan.org/api2/cfa/sessions/" + idPromotionDg2 + "/registrations";
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("x-auth-token", email + ":" + password);
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("x-auth-token", email + ":" + password);
 
-		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+			HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
-		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-		logger.info("FetchDg2Etudiant >>> START /registration");
+			ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+			logger.info("FetchDg2Etudiant >>> START /registration");
 
-		if (repWs.getStatusCode() == HttpStatus.OK) {
-			logger.info("FetchDg2Etudiant >>> START /registration OK");
-			String json = repWs.getBody();
-			//importUserFromJson(json, promotion);
-			
-			cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {
-			});
+			if (repWs.getStatusCode() == HttpStatus.OK) {
+				logger.info("FetchDg2Etudiant >>> START /registration OK");
+				String json = repWs.getBody();
+				// importUserFromJson(json, promotion);
 
-			for (EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
-				logger.info("FetchDg2Etudiant >>> START /for" + eDG2.getPersonId());
-				// Etudiant etudiantDg2 = mapper.etudiantUtilisateurDG2DtoToEtudiant(eDG2);
-				Optional<Utilisateur> utiLisateurOptional = utilisateurRepository
-						.findDistinctByIdDg2(eDG2.getPersonId());
-				Utilisateur utilisateurDg2 = mapper.etudiantUtilisateurDG2DtoToUtilisateur(eDG2);
-				System.out.println("DG2 " + utilisateurDg2.toString());
-				Adresse adresseDg2 = mapper.etudiantUtilisateurDG2DtoToAdresse(eDG2);
-				Etudiant etudiant = new Etudiant();
-				if (utiLisateurOptional.isPresent()) {
-					System.out.println(utiLisateurOptional.get());
-					if (utiLisateurOptional.get().getEtudiant() != null) {
-						etudiant = utiLisateurOptional.get().getEtudiant();
-					}
+				try {
+					cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {
+					});
+				} catch (Exception ignored) {
+				}
+				for (EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
+					logger.info("FetchDg2Etudiant >>> START /for" + eDG2.getPersonId());
 
-					if (!adresseDg2.equals(utiLisateurOptional.get().getAdresse())) {
-						if (utiLisateurOptional.get().getAdresse() != null) {
-							adresseDg2.setId(utiLisateurOptional.get().getAdresse().getId());
-							adresseDg2.setVersion(utiLisateurOptional.get().getAdresse().getVersion());
+					Optional<Utilisateur> utiLisateurOptional = utilisateurRepository
+							.findDistinctByIdDg2(eDG2.getPersonId());
+					Etudiant etudiant = null;
+					Utilisateur utilisateur = null;
+					if (utiLisateurOptional.isPresent()) { //utilisateur existant, on cherche l'étudiant
+						etudiant = etudiantRepository.findByUtilisateurId(utiLisateurOptional.get().getId());
+						utilisateur = utiLisateurOptional.get();
+					} else { //utilisateur non existant => on le crée
+						utilisateur = mapper.etudiantUtilisateurDG2DtoToUtilisateur(eDG2);
+						Adresse userAdresse = utilisateur.getAdresse();
+						Adresse adresseDg2 = mapper.etudiantUtilisateurDG2DtoToAdresse(eDG2);
+						if (userAdresse != null) {
+							adresseDg2.setId(utilisateur.getAdresse().getId());
+							adresseDg2.setVersion(utilisateur.getAdresse().getVersion());
 							adresseRepository.saveAndFlush(adresseDg2);
 						} else {
 							adresseDg2 = adresseRepository.saveAndFlush(adresseDg2);
-							utiLisateurOptional.get().setAdresse(adresseDg2);
+							utilisateur.setAdresse(adresseDg2);
 						}
-
 					}
-
-					utilisateurDg2.setPassword(utiLisateurOptional.get().getPassword());
-					utilisateurDg2.setId(utiLisateurOptional.get().getId());
-					utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
-					if (utilisateurDg2.equals(utiLisateurOptional.get()) && etudiant.getPromotions().contains(promotion.get())) {
-						continue;
-					} else {
-
-							utilisateurDg2.setId(utiLisateurOptional.get().getId());
-							utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
-							if (etudiant != null) {
-								List<Etudiant> etudiants = new ArrayList<>();
-								List<Promotion> promotions = new ArrayList<>();
-								if (etudiant.getPromotions() != null) {
-									promotions.addAll(etudiant.getPromotions());
-								}
-								if (!promotions.contains(promotion.get())) {
-									promotions.add(promotion.get());
-								}
-								etudiant.setPromotions(promotions);
-								if (promotion.get().getEtudiants() != null) {
-									etudiants.addAll(promotion.get().getEtudiants());
-								}
-								if (!etudiants.contains(etudiant)) {
-									etudiants.add(etudiant);
-								}
-								promotion.get().setEtudiants(etudiants);
-								
-								
-							}
-					}
-
-					utilisateurDg2.setEtudiant(etudiant);
-					etudiant.setUtilisateur(utilisateurDg2);
-
-				} else {
-					List<Promotion> promotions = new ArrayList<>();
-					promotions.add(promotion.get());
-					utilisateurDg2.setAdresse(adresseDg2);
-
-					etudiant.setPromotions(promotions);
-					List<Etudiant> etudiants = new ArrayList<>();
-					etudiants.add(etudiant);
-					if (promotion.get().getEtudiants() != null) {
-						etudiants.addAll(promotion.get().getEtudiants());
-					}
-					promotion.get().setEtudiants(etudiants);
-					try {
-						utilisateurDg2.setPassword(HashTools.hashSHA512("password"));
-					} catch (Exception e) {
-						logger.error("setPassword failed", e);
-					}
-
-					List<UtilisateurRole> roles = new ArrayList<>();
-					List<Utilisateur> utilisateurs = new ArrayList<>();
-					UtilisateurRole etudiantRole = utilisateurRoleRepository.findByIntituleContaining("ETUDIANT");
-					roles.add(etudiantRole);
-
-					utilisateurs.add(utilisateurDg2);
-					if (etudiantRole.getUtilisateurs() != null) {
-						utilisateurs.addAll(etudiantRole.getUtilisateurs());
-
-					}
-					utilisateurDg2.setRoles(roles);
-					etudiantRole.setUtilisateurs(utilisateurs);
-					utilisateurDg2.setEtudiant(etudiant);
-					etudiant.setUtilisateur(utilisateurDg2);
-
-				}
-				utilisateurRepository.saveAndFlush(utilisateurDg2);
-				
-				Etudiant etuSaved = etudiantRepository.saveAndFlush(etudiant);
-				Optional<LivretEvaluation> evaOptional = livretEvaluationRepository.findByEtudiantIdAndTitreProfessionnelId(etuSaved.getId(), promotion.get().getCursus().getId());
-				if (!evaOptional.isPresent()) {
-					LivretEvaluation livert = new LivretEvaluation();
-					livert.setEtudiant(etuSaved);
-					livert.setTitreProfessionnel(promotion.get().getCursus());
-					livert.setObservation("Cliquez ici pour taper du texte.");
-					livert.setOrganismeFormation(promotion.get().getCentreFormation());
-					livert.setEtat(EtatLivertEval.ENATTENTEDEVALIDATION);
-					livert = livretEvaluationRepository.saveAndFlush(livert);
-					Set<ActiviteType> activiteTypes = promotion.get().getCursus().getActiviteTypes();
 					
-					for (ActiviteType at : activiteTypes) {
-						
-						BlocEvaluation blocEvaluation = new BlocEvaluation();
-						blocEvaluation.setLivretEvaluation(livert);
-						blocEvaluation.setActiviteType(at);
-						blocEvaluationRepository.saveAndFlush(blocEvaluation);
-						
+					//modif du rôle
+					List<UtilisateurRole> roles = utilisateur.getRoles() == null ? new ArrayList<>()
+							: utilisateur.getRoles();
+					if (roles.stream().noneMatch(r -> r.getId() == 1L)) {
+						UtilisateurRole r = new UtilisateurRole();
+						r.setId(1L);
+						roles.add(r);
 					}
-				}
-				
-			}
-			logger.info("FetchDg2Etudiant>>>>>>END");
-		} else
+					utilisateur.setRoles(roles);
+					utilisateur.setActive(true);
+					utilisateur.setPassword(null);
+					utilisateurRepository.saveAndFlush(utilisateur);
 
-		{
-			logger.error("FetchDg2Etudiant>>>>>>>>ERROR End failed");
+					final Utilisateur util = utilisateur;
+					if (etudiant == null) {
+						etudiant = saved.stream().filter(e -> e.getUtilisateur().getIdDg2() == util.getIdDg2())
+								.findFirst().orElse(null);
+						if (etudiant == null) {
+							etudiant = new Etudiant();
+							etudiant.setUtilisateur(utilisateur);
+							etudiant = etudiantRepository.saveAndFlush(etudiant);
+							saved.add(etudiant);
+						}
+					} else {
+						saved.add(etudiant);
+					}
+
+					long etudiantId = etudiant.getId();
+					if (promotion.getEtudiants().stream().anyMatch(e -> e.getId() == etudiantId))
+						continue;
+					else {
+						promotion.getEtudiants().add(etudiant);
+						promotionRepository.save(promotion);
+					}
+					Optional<LivretEvaluation> evaOptional = livretEvaluationRepository
+							.findByEtudiantIdAndTitreProfessionnelId(etudiant.getId(), promotion.getCursus().getId());
+					if (!evaOptional.isPresent()) {
+						LivretEvaluation livret = new LivretEvaluation();
+						livret.setEtudiant(etudiant);
+						livret.setTitreProfessionnel(promotion.getCursus());
+						livret.setOrganismeFormation(promotion.getCentreFormation());
+						livret.setEtat(EtatLivertEval.ENATTENTEDEVALIDATION);
+						livret = livretEvaluationRepository.saveAndFlush(livret);
+						final LivretEvaluation fLivret = livret;
+						promotion.getCursus().getActiviteTypes().forEach(at -> {
+							BlocEvaluation blocEvaluation = new BlocEvaluation();
+							blocEvaluation.setLivretEvaluation(fLivret);
+							blocEvaluation.setActiviteType(at);
+							blocEvaluationRepository.saveAndFlush(blocEvaluation);
+						});
+					}
+
+				}
+				logger.info("FetchDg2Etudiant>>>>>>END");
+				return true;
+			} else {
+				logger.error("FetchDg2Etudiant>>>>>>>>ERROR End failed");
+				return false;
+			}
+		}).orElseThrow(() -> new FetchDG2Exception("Promotion Introuvable"))) {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
-		
-		
+		;
 	}
 
 	@Async("myTaskExecutor")
-	private void importUserFromJson(String json, Optional<Promotion> promotion) throws JsonMappingException, JsonProcessingException {
-	    ObjectMapper objectMapper = new ObjectMapper();
-        List<EtudiantUtilisateurDG2Dto> cResJson;
-        
-	    cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {
-        });
+	public void importUserFromJson(String json, Optional<Promotion> promotion)
+			throws JsonMappingException, JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		List<EtudiantUtilisateurDG2Dto> cResJson;
 
-        for (EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
+		cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {
+		});
 
-            // Etudiant etudiantDg2 = mapper.etudiantUtilisateurDG2DtoToEtudiant(eDG2);
-            Optional<Utilisateur> utiLisateurOptional = utilisateurRepository
-                    .findDistinctByIdDg2(eDG2.getPersonId());
-            Utilisateur utilisateurDg2 = mapper.etudiantUtilisateurDG2DtoToUtilisateur(eDG2);
-            System.out.println("DG2 " + utilisateurDg2.toString());
-            Adresse adresseDg2 = mapper.etudiantUtilisateurDG2DtoToAdresse(eDG2);
-            Etudiant etudiant = new Etudiant();
-            if (utiLisateurOptional.isPresent()) {
-                System.out.println(utiLisateurOptional.get());
-                if (utiLisateurOptional.get().getEtudiant() != null) {
-                    etudiant = utiLisateurOptional.get().getEtudiant();
-                }
+		for (EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
 
-                if (!adresseDg2.equals(utiLisateurOptional.get().getAdresse())) {
-                    if (utiLisateurOptional.get().getAdresse() != null) {
-                        adresseDg2.setId(utiLisateurOptional.get().getAdresse().getId());
-                        adresseDg2.setVersion(utiLisateurOptional.get().getAdresse().getVersion());
-                        adresseRepository.saveAndFlush(adresseDg2);
-                    } else {
-                        adresseDg2 = adresseRepository.saveAndFlush(adresseDg2);
-                        utiLisateurOptional.get().setAdresse(adresseDg2);
-                    }
+			// Etudiant etudiantDg2 = mapper.etudiantUtilisateurDG2DtoToEtudiant(eDG2);
+			Optional<Utilisateur> utiLisateurOptional = utilisateurRepository.findDistinctByIdDg2(eDG2.getPersonId());
+			Utilisateur utilisateurDg2 = mapper.etudiantUtilisateurDG2DtoToUtilisateur(eDG2);
+			System.out.println("DG2 " + utilisateurDg2.toString());
+			Adresse adresseDg2 = mapper.etudiantUtilisateurDG2DtoToAdresse(eDG2);
+			Etudiant etudiant = new Etudiant();
+			if (utiLisateurOptional.isPresent()) {
+				System.out.println(utiLisateurOptional.get());
+				if (utiLisateurOptional.get().getEtudiant() != null) {
+					etudiant = utiLisateurOptional.get().getEtudiant();
+				}
 
-                }
+				if (!adresseDg2.equals(utiLisateurOptional.get().getAdresse())) {
+					if (utiLisateurOptional.get().getAdresse() != null) {
+						adresseDg2.setId(utiLisateurOptional.get().getAdresse().getId());
+						adresseDg2.setVersion(utiLisateurOptional.get().getAdresse().getVersion());
+						adresseRepository.saveAndFlush(adresseDg2);
+					} else {
+						adresseDg2 = adresseRepository.saveAndFlush(adresseDg2);
+						utiLisateurOptional.get().setAdresse(adresseDg2);
+					}
 
-                utilisateurDg2.setPassword(utiLisateurOptional.get().getPassword());
-                utilisateurDg2.setId(utiLisateurOptional.get().getId());
-                utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
-                if (utilisateurDg2.equals(utiLisateurOptional.get()) && etudiant.getPromotions().contains(promotion.get())) {
-                    continue;
-                } else {
+				}
 
-                        utilisateurDg2.setId(utiLisateurOptional.get().getId());
-                        utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
-                        if (etudiant != null) {
-                            List<Etudiant> etudiants = new ArrayList<>();
-                            List<Promotion> promotions = new ArrayList<>();
-                            if (etudiant.getPromotions() != null) {
-                                promotions.addAll(etudiant.getPromotions());
-                            }
-                            if (!promotions.contains(promotion.get())) {
-                                promotions.add(promotion.get());
-                            }
-                            etudiant.setPromotions(promotions);
-                            if (promotion.get().getEtudiants() != null) {
-                                etudiants.addAll(promotion.get().getEtudiants());
-                            }
-                            if (!etudiants.contains(etudiant)) {
-                                etudiants.add(etudiant);
-                            }
-                            promotion.get().setEtudiants(etudiants);
-                            
-                            
-                        }
-                }
+				utilisateurDg2.setPassword(utiLisateurOptional.get().getPassword());
+				utilisateurDg2.setId(utiLisateurOptional.get().getId());
+				utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
+				if (utilisateurDg2.equals(utiLisateurOptional.get())
+						&& etudiant.getPromotions().contains(promotion.get())) {
+					continue;
+				} else {
 
-                utilisateurDg2.setEtudiant(etudiant);
-                etudiant.setUtilisateur(utilisateurDg2);
+					utilisateurDg2.setId(utiLisateurOptional.get().getId());
+					utilisateurDg2.setVersion(utiLisateurOptional.get().getVersion());
+					if (etudiant != null) {
+						List<Etudiant> etudiants = new ArrayList<>();
+						List<Promotion> promotions = new ArrayList<>();
+						if (etudiant.getPromotions() != null) {
+							promotions.addAll(etudiant.getPromotions());
+						}
+						if (!promotions.contains(promotion.get())) {
+							promotions.add(promotion.get());
+						}
+						etudiant.setPromotions(promotions);
+						if (promotion.get().getEtudiants() != null) {
+							etudiants.addAll(promotion.get().getEtudiants());
+						}
+						if (!etudiants.contains(etudiant)) {
+							etudiants.add(etudiant);
+						}
+						promotion.get().setEtudiants(etudiants);
 
-            } else {
-                List<Promotion> promotions = new ArrayList<>();
-                promotions.add(promotion.get());
-                utilisateurDg2.setAdresse(adresseDg2);
+					}
+				}
 
-                etudiant.setPromotions(promotions);
-                List<Etudiant> etudiants = new ArrayList<>();
-                etudiants.add(etudiant);
-                if (promotion.get().getEtudiants() != null) {
-                    etudiants.addAll(promotion.get().getEtudiants());
-                }
-                promotion.get().setEtudiants(etudiants);
-                try {
-                    utilisateurDg2.setPassword(HashTools.hashSHA512("password"));
-                } catch (Exception e) {
-                    logger.error("setPassword failed", e);
-                }
+				utilisateurDg2.setEtudiant(etudiant);
+				etudiant.setUtilisateur(utilisateurDg2);
 
-                List<UtilisateurRole> roles = new ArrayList<>();
-                List<Utilisateur> utilisateurs = new ArrayList<>();
-                UtilisateurRole etudiantRole = utilisateurRoleRepository.findByIntituleContaining("ETUDIANT");
-                roles.add(etudiantRole);
+			} else {
+				List<Promotion> promotions = new ArrayList<>();
+				promotions.add(promotion.get());
+				utilisateurDg2.setAdresse(adresseDg2);
 
-                utilisateurs.add(utilisateurDg2);
-                if (etudiantRole.getUtilisateurs() != null) {
-                    utilisateurs.addAll(etudiantRole.getUtilisateurs());
+				etudiant.setPromotions(promotions);
+				List<Etudiant> etudiants = new ArrayList<>();
+				etudiants.add(etudiant);
+				if (promotion.get().getEtudiants() != null) {
+					etudiants.addAll(promotion.get().getEtudiants());
+				}
+				promotion.get().setEtudiants(etudiants);
+				try {
+					utilisateurDg2.setPassword(HashTools.hashSHA512("password"));
+				} catch (Exception e) {
+					logger.error("setPassword failed", e);
+				}
 
-                }
-                utilisateurDg2.setRoles(roles);
-                etudiantRole.setUtilisateurs(utilisateurs);
-                utilisateurDg2.setEtudiant(etudiant);
-                etudiant.setUtilisateur(utilisateurDg2);
+				List<UtilisateurRole> roles = new ArrayList<>();
+				List<Utilisateur> utilisateurs = new ArrayList<>();
+				UtilisateurRole etudiantRole = utilisateurRoleRepository.findByIntituleContaining("ETUDIANT");
+				roles.add(etudiantRole);
 
-            }
-            utilisateurRepository.saveAndFlush(utilisateurDg2);
-            
-            Etudiant etuSaved = etudiantRepository.saveAndFlush(etudiant);
-            Optional<LivretEvaluation> evaOptional = livretEvaluationRepository.findByEtudiantIdAndTitreProfessionnelId(etuSaved.getId(), promotion.get().getCursus().getId());
-            if (!evaOptional.isPresent()) {
-                LivretEvaluation livert = new LivretEvaluation();
-                livert.setEtudiant(etuSaved);
-                livert.setTitreProfessionnel(promotion.get().getCursus());
-                livert.setObservation("Cliquez ici pour taper du texte.");
-                livert.setOrganismeFormation(promotion.get().getCentreFormation());
-                livert.setEtat(EtatLivertEval.ENATTENTEDEVALIDATION);
-                livert = livretEvaluationRepository.saveAndFlush(livert);
-                Set<ActiviteType> activiteTypes = promotion.get().getCursus().getActiviteTypes();
-                
-                for (ActiviteType at : activiteTypes) {
-                    
-                    BlocEvaluation blocEvaluation = new BlocEvaluation();
-                    blocEvaluation.setLivretEvaluation(livert);
-                    blocEvaluation.setActiviteType(at);
-                    blocEvaluationRepository.saveAndFlush(blocEvaluation);
-                    
-                }
-            }
-            
+				utilisateurs.add(utilisateurDg2);
+				if (etudiantRole.getUtilisateurs() != null) {
+					utilisateurs.addAll(etudiantRole.getUtilisateurs());
 
-        }
+				}
+				utilisateurDg2.setRoles(roles);
+				etudiantRole.setUtilisateurs(utilisateurs);
+				utilisateurDg2.setEtudiant(etudiant);
+				etudiant.setUtilisateur(utilisateurDg2);
 
-        
-    }
+			}
+			utilisateurRepository.saveAndFlush(utilisateurDg2);
 
-    @Override
+			Etudiant etuSaved = etudiantRepository.saveAndFlush(etudiant);
+			Optional<LivretEvaluation> evaOptional = livretEvaluationRepository
+					.findByEtudiantIdAndTitreProfessionnelId(etuSaved.getId(), promotion.get().getCursus().getId());
+			if (!evaOptional.isPresent()) {
+				LivretEvaluation livert = new LivretEvaluation();
+				livert.setEtudiant(etuSaved);
+				livert.setTitreProfessionnel(promotion.get().getCursus());
+				livert.setObservation("Cliquez ici pour taper du texte.");
+				livert.setOrganismeFormation(promotion.get().getCentreFormation());
+				livert.setEtat(EtatLivertEval.ENATTENTEDEVALIDATION);
+				livert = livretEvaluationRepository.saveAndFlush(livert);
+				Set<ActiviteType> activiteTypes = promotion.get().getCursus().getActiviteTypes();
+
+				for (ActiviteType at : activiteTypes) {
+
+					BlocEvaluation blocEvaluation = new BlocEvaluation();
+					blocEvaluation.setLivretEvaluation(livert);
+					blocEvaluation.setActiviteType(at);
+					blocEvaluationRepository.saveAndFlush(blocEvaluation);
+
+				}
+			}
+
+		}
+
+	}
+
+	@Override
 	public AccueilEtudiantDto getAccueilEtudiant(long id) {
 		Optional<Etudiant> e = etudiantRepository.findById(id);
-		if(e.isPresent()) {
+		if (e.isPresent()) {
 			return mapperTools.etudiantToAccueilEtudiantDto(e.get());
 		}
 		return null;
 	}
 
-
-	
 	@Override
 	public List<EtudiantDto> getEtudiantByIdTuteurBySearch(long id, int page, int size, String search) {
-		List<Etudiant> lstetud= etudiantRepository.findEtudiantBySearch(id, PageRequest.of(page, size), search)
-				.get()
+		List<Etudiant> lstetud = etudiantRepository.findEtudiantBySearch(id, PageRequest.of(page, size), search).get()
 				.collect(Collectors.toList());
-				List<EtudiantDto> lstetudDto = new ArrayList<>();
-				for (Etudiant etudiant : lstetud) 
-				{
-					if (etudiant != null) {
-						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
-						etudDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(etudiant.getUtilisateur()));	
-						lstetudDto.add(etudDto);
-					}
-				}
-				return lstetudDto;
+		List<EtudiantDto> lstetudDto = new ArrayList<>();
+		for (Etudiant etudiant : lstetud) {
+			if (etudiant != null) {
+				EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
+				etudDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(etudiant.getUtilisateur()));
+				lstetudDto.add(etudDto);
+			}
+		}
+		return lstetudDto;
 	}
 
-    @Override
-    public EtudiantDossierProjetDto getByEtudiantIdForDossierProjet(long id) {
-        Optional<Etudiant> e = etudiantRepository.findById(id);
-        if (!e.isPresent())
-            return null;
-        return DtoTools.convert(e.get(), EtudiantDossierProjetDto.class);
+	@Override
+	public EtudiantDossierProjetDto getByEtudiantIdForDossierProjet(long id) {
+		Optional<Etudiant> e = etudiantRepository.findById(id);
+		if (!e.isPresent())
+			return null;
+		return DtoTools.convert(e.get(), EtudiantDossierProjetDto.class);
 
-    }
+	}
 
 }

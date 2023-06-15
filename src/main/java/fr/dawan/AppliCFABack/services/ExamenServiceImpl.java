@@ -94,7 +94,7 @@ public class ExamenServiceImpl implements ExamenService {
 			Set<CompetenceProfessionnelleDto> lstCpDto = new HashSet<>();
 			for (CompetenceProfessionnelle cp : lstCp) {
 				if (cp != null)
-					lstCpDto.add(mapper.competenceProfessionnelleDto(cp));
+					lstCpDto.add(mapper.competenceProfessionnelleToCompetenceProfessionnelleDto(cp));
 			}
 			
 			Set<Note> lstNotes = e.getNotes();

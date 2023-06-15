@@ -1,39 +1,92 @@
 package fr.dawan.AppliCFABack.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.univocity.parsers.common.record.Record;
-import com.univocity.parsers.csv.CsvParser;
-import com.univocity.parsers.csv.CsvParserSettings;
-import fr.dawan.AppliCFABack.dto.*;
-import fr.dawan.AppliCFABack.entities.*;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.repositories.*;
-import fr.dawan.AppliCFABack.tools.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.naming.Context;
-import javax.naming.NamingEnumeration;
-import javax.naming.directory.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.naming.Context;
+import javax.naming.NamingEnumeration;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.univocity.parsers.common.record.Record;
+import com.univocity.parsers.csv.CsvParser;
+import com.univocity.parsers.csv.CsvParserSettings;
+
+import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EmployeeDG2Dto;
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.dto.LoginDto;
+import fr.dawan.AppliCFABack.dto.LoginResponseDto;
+import fr.dawan.AppliCFABack.dto.ResetResponse;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.CEF;
+import fr.dawan.AppliCFABack.entities.CentreFormation;
+import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Entreprise;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Tuteur;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.repositories.AdresseRepository;
+import fr.dawan.AppliCFABack.repositories.CEFRepository;
+import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
+import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.TuteurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
+import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+import fr.dawan.AppliCFABack.tools.FileException;
+import fr.dawan.AppliCFABack.tools.HashTools;
+import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import javassist.NotFoundException;
 
 @Service
 @Transactional
@@ -69,6 +122,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	EntrepriseRepository entrepriseRepository;
 	@Autowired
 	CentreFormationRepository centreFormationRepository;
+	@Autowired
+	TuteurRepository tuteurRepository;
+	@Autowired
+	UtilisateurRoleRepository utilisateurRoleRepository;
 
 	@Autowired
 	private DtoMapper mapper;
@@ -364,7 +421,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Boolean isEtudiant = false;
 		Boolean isFormateur = false;
 		Boolean isCEF = false;
-		Boolean isPrestataireExterne = false;
+		Boolean isTuteur = false;
 		if (user.getRoles() != null) {
 
 			for (UtilisateurRole role : user.getRoles()) {
@@ -378,7 +435,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					isCEF = true;
 				}
 				if (role.getIntitule().equals("TUTEUR")) {
-					isPrestataireExterne = true;
+					isTuteur = true;
 				}
 			}
 		}
@@ -411,10 +468,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			cefRepository.saveAndFlush(cef);
 		}
-		if (isPrestataireExterne) {
-			@SuppressWarnings("unused")
-			Utilisateur userExterne = new Utilisateur();
-			userExterne = utilisateurRepository.saveAndFlush(user);
+		if (isTuteur && isTuteur.getClass() == null) {
+			Tuteur tuteur = new Tuteur();
+			tuteur = tuteurRepository.saveAndFlush(tuteur);
+			user.setTuteur(tuteur);
+			tuteur.setUtilisateur(user);
 
 		}
 
@@ -449,6 +507,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			// On delete l'etudiant ?
 //			cefService.deleteById(cef.getId());	
 		}
+		if (!isTuteur && isTuteur.getClass() != null) {
+			Tuteur tuteur = tuteurRepository.getOne(user.getTuteur().getId());
+			tuteur.setUtilisateur(null);
+			user.setTuteur(null);
+
+			tuteurRepository.saveAndFlush(tuteur);
+
+			// On delete l'etudiant ?
+//			cefService.deleteById(cef.getId());	
+		}
 
 		user = utilisateurRepository.saveAndFlush(user);
 
@@ -461,8 +529,65 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		result.setEtudiantDto(mapper.etudiantToEtudiantDto(user.getEtudiant()));
 		result.setFormateurDto(mapper.formateurToFormateurDto(user.getFormateur()));
 		result.setCefDto(mapper.cefToCEFDto(user.getCef()));
+		result.setTuteurDto(mapper.tuteurTotuteurDto(user.getTuteur()));
 
 		return result;
+	}	
+	
+	@Override
+	public UtilisateurDto insertTuteur(UtilisateurDto uDto) throws SaveInvalidException {
+		
+		if (uDto.getId() == 0 && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
+			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin());
+		}
+		
+		try {
+			// Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
+			if (uDto.getId() == 0) {
+				if (uDto.getPassword() == null || uDto.getPassword().equals("")) {
+					uDto.setPassword(generatePassword());
+					uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+
+				} else {
+					uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+				}
+
+			} else {
+				// Si on a modifié le mdp
+				Utilisateur userInDB = utilisateurRepository.getOne(uDto.getId());
+				if (!userInDB.getPassword().equals(uDto.getPassword())) {
+					uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+				}
+			}
+		} catch (Exception e) {
+			logger.error("hashPwd failed", e);
+		}
+		
+		Utilisateur user = mapper.utilisateurDtoToUtilisateur(uDto);
+		UtilisateurRole tuteurRole = utilisateurRoleRepository.findByIntituleContaining("TUTEUR");
+		Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).get();
+		Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).get();
+		CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId()).get();
+
+		List<UtilisateurRole> utilisateurRoles = new ArrayList<>();
+		utilisateurRoles.add(tuteurRole);
+		user.setRoles(utilisateurRoles);
+		user.setEntreprise(optEntreprise);
+		user.setAdresse(adresse);
+		user.setCentreFormation(centreFormation);
+				
+		user = utilisateurRepository.save(user);
+		
+		Tuteur tuteur = new Tuteur();
+		tuteur.setUtilisateur(user);
+		tuteur = tuteurRepository.save(tuteur);
+		
+		user.setTuteur(tuteur);
+		user = utilisateurRepository.saveAndFlush(user);
+		
+		UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
+		
+		return userDto;
 	}
 
 	/**
@@ -967,6 +1092,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 							utilisateurImport.setPassword(optUtlisateur.get().getPassword());
 							utilisateurImport.setId(optUtlisateur.get().getId());
 							utilisateurImport.setVersion(optUtlisateur.get().getVersion());
+							utilisateurImport.setActive(true);
 						
 						}
 					}
@@ -980,7 +1106,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				} else {
 					
 					try {
-						utilisateurImport.setPassword(HashTools.hashSHA512("cfa123_+Nawad%!"));
+						
+						utilisateurImport.setPassword(null);
+						utilisateurImport.setActive(true);
 					    utilisateurRepository.saveAndFlush(utilisateurImport);
 
 
@@ -995,84 +1123,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 	}
-
-//	@Override
-//	public void fetchAllDG2Employees(String email, String password)
-//			throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
-//		// Appel du web service DG2 pour récupérer les employés
-//		List<EmployeeDG2Dto> employees = callDG2WebService(email, password);
-//
-//		// Traitement des employés récupérés
-//		for (EmployeeDG2Dto employeeDG2 : employees) {
-//			Utilisateur utilisateurImport = mapper.employeeDg2ToUtilisateur(employeeDG2);
-//			CentreFormation centreFormation = getCentreFormationByLocationId(employeeDG2.getLocationId());
-//			Optional<Utilisateur> optUtilisateur = utilisateurRepository.findByIdDg2(utilisateurImport.getIdDg2());
-//			
-//			//logger.info("ID DG2 USER", employeeDG2.getPersonId());
-//			
-//			// Vérification si le centre de formation existe
-//			if (centreFormation == null) {
-//				logger.error("Centre de formation introuvable");
-//				throw new FetchDG2Exception("Centre de formation introuvable");
-//			}
-//
-//			// Vérification si l'utilisateur existe déjà
-//			if (optUtilisateur.isPresent()) {
-//				Utilisateur utilisateur = optUtilisateur.get();
-//				if (utilisateur.equals(utilisateurImport)
-//						&& utilisateur.getCentreFormation().getId() == centreFormation.getId()) {
-//					continue;
-//				} else {
-//					if (utilisateurImport != null) {
-//						utilisateurImport.setPassword(utilisateur.getPassword());
-//						utilisateurImport.setId(utilisateur.getId());
-//						utilisateurImport.setVersion(utilisateur.getVersion());
-//					}
-//				}
-//				try {
-//					utilisateurRepository.saveAndFlush(utilisateurImport);
-//				} catch (Exception e) {
-//					logger.error("SaveAndFlush failed", e);
-//				}
-//			} else {
-//				try {
-//					utilisateurImport.setPassword(HashTools.hashSHA512("password"));
-//					utilisateurRepository.saveAndFlush(utilisateurImport);
-//				} catch (Exception e) {
-//					logger.error("SaveAndFlush failed", e);
-//				}
-//			}
-//		}
-//	}
-//
-//	private List<EmployeeDG2Dto> callDG2WebService(String email, String password)
-//			throws URISyntaxException, FetchDG2Exception, JsonProcessingException {
-//		// URL DG2 qui concerne la récupération des employés
-//		URI url = new URI("https://dawan.org/api2/cfa/employees");
-//
-//		// Récupération des headers / email / password DG2
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("x-auth-token", email + ":" + password);
-//
-//		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-//
-//		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-//
-//		if (response.getStatusCode() == HttpStatus.OK) {
-//			String json = response.getBody();
-//			ObjectMapper objectMapper = new ObjectMapper();
-//			return objectMapper.readValue(json, new TypeReference<List<EmployeeDG2Dto>>() {
-//			});
-//		} else {
-//			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
-//		}
-//	}
-//
-//	private CentreFormation getCentreFormationByLocationId(Long locationId) {
-//		Optional<CentreFormation> centreFormationOpt = centreFormationRepository.findByIdDg2(locationId);
-//		return centreFormationOpt.orElse(null);
-//	}
-
+	
 	@Override
 	public LoginResponseDto checkLogin(LoginDto loginDto) throws Exception {
 
@@ -1196,5 +1247,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return result;
 	}
+	
+	public void modifierRolesUtilisateur(long utilisateurId, List<Long> nouveauRolesIds) throws NotFoundException {
+        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
+                .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
+
+        List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);
+        utilisateur.modifierRoles(nouveauxRoles);
+
+        utilisateurRepository.save(utilisateur);
+    }
 
 }

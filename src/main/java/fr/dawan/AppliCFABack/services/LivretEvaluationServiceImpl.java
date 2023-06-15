@@ -1,9 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
-import fr.dawan.AppliCFABack.dto.LivretEvaluationFileDto;
+import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EvaluationDto;
 import fr.dawan.AppliCFABack.entities.*;
@@ -48,6 +45,8 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	private String backendUrl;
 	@Autowired
 	private Configuration freemarkerConfig;
+	@Autowired
+	private SignatureService signatureService;
 	@Autowired
 	private EtudiantRepository etudiantRepository;
 	@Autowired
@@ -134,6 +133,12 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 		return result;
 	}
 
+	private void verificationSignature(Optional<Etudiant> etudiant){
+		Optional<SignatureDto> signature = Optional.ofNullable(signatureService.getByUtilisateurId(etudiant.get().getUtilisateur().getId()));
+		if(signature.get().getPieceJointe() == null || signature.get().getPieceJointe().equals("") ){
+			throw new NullPointerException("La Signature de l'étudiant ne doit pas être null");
+		}
+	}
 	/**
 	 * Permet de générer le livret d'évaluation
 	 * @author Feres BG 
@@ -147,7 +152,7 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	public String getLivretEvaluation(long idEtudiant, long idCursus) throws TemplateNotFoundException,
 			MalformedTemplateNameException, ParseException, IOException, TemplateException, LivretEvaluationException {
 		Optional<Etudiant> etudiant = etudiantRepository.findById(idEtudiant);
-
+		verificationSignature(etudiant);
 		if (!etudiant.isPresent())
 			throw new LivretEvaluationException("Etudiant non trouvé");
 

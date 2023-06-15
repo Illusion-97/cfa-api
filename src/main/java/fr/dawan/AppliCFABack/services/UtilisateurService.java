@@ -6,6 +6,8 @@ import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.FileException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import javassist.NotFoundException;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -32,6 +34,8 @@ public interface UtilisateurService {
 	UtilisateurDto getName(String name);
 
 	UtilisateurDto insertUpdate(UtilisateurDto uDto) throws SaveInvalidException;
+	
+	UtilisateurDto insertTuteur(UtilisateurDto uDto) throws SaveInvalidException;
 
 	void deleteById(long id);
 
@@ -63,6 +67,8 @@ public interface UtilisateurService {
 			throws FetchDG2Exception, URISyntaxException, JsonProcessingException;
 	
 	LoginResponseDto checkLogin(LoginDto loginDto) throws Exception;
+
+	void modifierRolesUtilisateur(long utilisateurId, List<Long> nouveauRolesIds) throws NotFoundException;
 
 
 }

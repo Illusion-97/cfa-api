@@ -13,6 +13,7 @@ import freemarker.template.TemplateNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface PromotionService {
@@ -28,6 +29,8 @@ public interface PromotionService {
 	UtilisateurDto getReferentById(long id);
 
 	CountDto count(String string);
+	
+	CountDto countByCentreFormationId(long id, String search);
 
 	List<PromotionDto> getAllPromotions(int page, int size, String string);
 
@@ -58,6 +61,6 @@ public interface PromotionService {
 
 	String getGrillePositionnement(long idPromotion) throws GrilleException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 	
-	List<PromotionDto> getPromoByCentreFormationIdPagination(int page, int size, long id);
+	List<PromotionDto> getPromoByCentreFormationIdPagination(int page, int size, long id, String search);
 
 }

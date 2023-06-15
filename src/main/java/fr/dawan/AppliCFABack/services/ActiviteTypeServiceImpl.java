@@ -133,7 +133,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 		List<ActiviteTypeDto> activiteTypeDto = new ArrayList<>();
 		
 		for (ActiviteType activiteType : activiteTypes) {
-			ActiviteTypeDto atDto = mapper.activiteTypeToActiviteDto(activiteType);
+			ActiviteTypeDto atDto = mapper.activiteTypeToActiviteTypeDto(activiteType);
 			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<>();
 			for (CompetenceProfessionnelle cp : activiteType.getCompetenceProfessionnelles()) {
 				cpDto.add(mapper.competenceProfessionnelleToCompetenceProfessionnelleDto(cp));
@@ -151,7 +151,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 	    List<ActiviteTypeDto> activiteTypeDto = new ArrayList<>();
 	    for (ActiviteType activiteType : activiteTypes) {
 
-	        ActiviteTypeDto atDto = mapper.activiteTypeToActiviteDto(activiteType);
+	        ActiviteTypeDto atDto = mapper.activiteTypeToActiviteTypeDto(activiteType);
 	        atDto.setCursusActiviteTypeId(activiteType.getCursusActiviteType().getId());
 	        List<CompetenceProfessionnelleDto> cpDto = new ArrayList<>();
 
