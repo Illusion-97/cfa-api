@@ -6,7 +6,6 @@ import fr.dawan.AppliCFABack.dto.AnnexeDto;
 import fr.dawan.AppliCFABack.dto.CEFDto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
-import fr.dawan.AppliCFABack.dto.CerfaDto;
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CursusDG2Dto;
@@ -23,17 +22,14 @@ import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.FacultatifDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
-import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
-import fr.dawan.AppliCFABack.dto.InterventionDG2Dto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.MaitreApprentissageDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.RemunerationDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
@@ -41,7 +37,6 @@ import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.ActiviteTypeDos
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CompetenceDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.CompetenceCouvertesDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
@@ -49,7 +44,6 @@ import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.Annexe;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
-import fr.dawan.AppliCFABack.entities.Cerfa;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Cursus;
@@ -71,7 +65,6 @@ import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Remuneration;
 import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
@@ -83,42 +76,10 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-14T17:19:52+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
+    date = "2023-06-15T11:18:09+0200",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
-
-    @Override
-    public EvaluationFormationDto toEvaluationFormationDto(EvaluationFormation entity) {
-        if ( entity == null ) {
-            return null;
-        }
-
-        EvaluationFormationDto evaluationFormationDto = new EvaluationFormationDto();
-
-        evaluationFormationDto.setId( entity.getId() );
-        evaluationFormationDto.setVersion( entity.getVersion() );
-        evaluationFormationDto.setContenu( entity.getContenu() );
-        evaluationFormationDto.setDateEvaluation( entity.getDateEvaluation() );
-
-        return evaluationFormationDto;
-    }
-
-    @Override
-    public EvaluationFormation toEvaluationFormationEntity(EvaluationFormationDto dto) {
-        if ( dto == null ) {
-            return null;
-        }
-
-        EvaluationFormation evaluationFormation = new EvaluationFormation();
-
-        evaluationFormation.setId( dto.getId() );
-        evaluationFormation.setVersion( dto.getVersion() );
-        evaluationFormation.setContenu( dto.getContenu() );
-        evaluationFormation.setDateEvaluation( dto.getDateEvaluation() );
-
-        return evaluationFormation;
-    }
 
     @Override
     public AdresseDto adresseToAdresseDto(Adresse adresse) {
@@ -130,10 +91,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         adresseDto.setId( adresse.getId() );
         adresseDto.setVersion( adresse.getVersion() );
-        adresseDto.setCodePostal( adresse.getCodePostal() );
-        adresseDto.setCountryCode( adresse.getCountryCode() );
         adresseDto.setLibelle( adresse.getLibelle() );
         adresseDto.setVille( adresse.getVille() );
+        adresseDto.setCodePostal( adresse.getCodePostal() );
+        adresseDto.setCountryCode( adresse.getCountryCode() );
 
         return adresseDto;
     }
@@ -180,10 +141,10 @@ public class DtoMapperImpl implements DtoMapper {
         congeDto.setVersion( conge.getVersion() );
         congeDto.setDateDebut( conge.getDateDebut() );
         congeDto.setDateFin( conge.getDateFin() );
-        congeDto.setJustificatif( conge.getJustificatif() );
         congeDto.setMotif( conge.getMotif() );
-        congeDto.setStatus( conge.getStatus() );
         congeDto.setType( conge.getType() );
+        congeDto.setStatus( conge.getStatus() );
+        congeDto.setJustificatif( conge.getJustificatif() );
 
         return congeDto;
     }
@@ -198,14 +159,14 @@ public class DtoMapperImpl implements DtoMapper {
 
         cursusDto.setId( cursus.getId() );
         cursusDto.setVersion( cursus.getVersion() );
-        cursusDto.setCodeTitre( cursus.getCodeTitre() );
+        cursusDto.setTitre( cursus.getTitre() );
         cursusDto.setDuree( cursus.getDuree() );
+        cursusDto.setSlug( cursus.getSlug() );
         cursusDto.setIdDg2( cursus.getIdDg2() );
-        cursusDto.setMillesime( cursus.getMillesime() );
         cursusDto.setNiveau( cursus.getNiveau() );
         cursusDto.setSigle( cursus.getSigle() );
-        cursusDto.setSlug( cursus.getSlug() );
-        cursusDto.setTitre( cursus.getTitre() );
+        cursusDto.setMillesime( cursus.getMillesime() );
+        cursusDto.setCodeTitre( cursus.getCodeTitre() );
 
         return cursusDto;
     }
@@ -237,11 +198,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         entrepriseDto.setId( entreprise.getId() );
         entrepriseDto.setVersion( entreprise.getVersion() );
-        entrepriseDto.setEffectifTotal( entreprise.getEffectifTotal() );
-        entrepriseDto.setEmployeurType( entreprise.getEmployeurType() );
-        entrepriseDto.setNaf( entreprise.getNaf() );
         entrepriseDto.setRaisonSociale( entreprise.getRaisonSociale() );
         entrepriseDto.setSiret( entreprise.getSiret() );
+        entrepriseDto.setNaf( entreprise.getNaf() );
+        entrepriseDto.setEffectifTotal( entreprise.getEffectifTotal() );
+        entrepriseDto.setEmployeurType( entreprise.getEmployeurType() );
 
         return entrepriseDto;
     }
@@ -276,10 +237,10 @@ public class DtoMapperImpl implements DtoMapper {
         examenDto.setCompetencesProfessionnellesDto( competenceProfessionnelleSetToCompetenceProfessionnelleDtoSet( examen.getCompetencesProfessionnelles() ) );
         examenDto.setId( examen.getId() );
         examenDto.setVersion( examen.getVersion() );
-        examenDto.setDateExamen( examen.getDateExamen() );
+        examenDto.setTitre( examen.getTitre() );
         examenDto.setDuree( examen.getDuree() );
         examenDto.setPieceJointe( examen.getPieceJointe() );
-        examenDto.setTitre( examen.getTitre() );
+        examenDto.setDateExamen( examen.getDateExamen() );
 
         return examenDto;
     }
@@ -309,17 +270,17 @@ public class DtoMapperImpl implements DtoMapper {
 
         formationDto.setId( formation.getId() );
         formationDto.setVersion( formation.getVersion() );
+        formationDto.setTitre( formation.getTitre() );
         List<Long> list = formation.getCursusLstId();
         if ( list != null ) {
             formationDto.setCursusLstId( new ArrayList<Long>( list ) );
         }
-        formationDto.setDuration( formation.getDuration() );
         formationDto.setIdDg2( formation.getIdDg2() );
-        formationDto.setObjectif( formation.getObjectif() );
-        formationDto.setPlan( formation.getPlan() );
-        formationDto.setPrerequis( formation.getPrerequis() );
         formationDto.setSlug( formation.getSlug() );
-        formationDto.setTitre( formation.getTitre() );
+        formationDto.setDuration( formation.getDuration() );
+        formationDto.setObjectif( formation.getObjectif() );
+        formationDto.setPrerequis( formation.getPrerequis() );
+        formationDto.setPlan( formation.getPlan() );
 
         return formationDto;
     }
@@ -381,8 +342,8 @@ public class DtoMapperImpl implements DtoMapper {
         noteDto.setId( note.getId() );
         noteDto.setVersion( note.getVersion() );
         noteDto.setNoteObtenue( note.getNoteObtenue() );
-        noteDto.setObservation( note.getObservation() );
         noteDto.setSatisfaction( note.getSatisfaction() );
+        noteDto.setObservation( note.getObservation() );
 
         return noteDto;
     }
@@ -413,8 +374,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         projetDto.setId( projet.getId() );
         projetDto.setVersion( projet.getVersion() );
-        projetDto.setDescription( projet.getDescription() );
         projetDto.setNom( projet.getNom() );
+        projetDto.setDescription( projet.getDescription() );
 
         return projetDto;
     }
@@ -435,12 +396,12 @@ public class DtoMapperImpl implements DtoMapper {
         promotionDto.setExamensDto( examenSetToExamenDtoSet( promotion.getExamens() ) );
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
+        promotionDto.setNom( promotion.getNom() );
         promotionDto.setDateDebut( promotion.getDateDebut() );
         promotionDto.setDateFin( promotion.getDateFin() );
         promotionDto.setIdDg2( promotion.getIdDg2() );
-        promotionDto.setNbParticipants( (int) promotion.getNbParticipants() );
-        promotionDto.setNom( promotion.getNom() );
         promotionDto.setType( promotion.getType() );
+        promotionDto.setNbParticipants( (int) promotion.getNbParticipants() );
 
         return promotionDto;
     }
@@ -459,16 +420,16 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateurDto.setId( utilisateur.getId() );
         utilisateurDto.setVersion( utilisateur.getVersion() );
         utilisateurDto.setActive( utilisateur.isActive() );
-        utilisateurDto.setCivilite( utilisateur.getCivilite() );
-        utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
         utilisateurDto.setExternalAccount( utilisateur.isExternalAccount() );
-        utilisateurDto.setIdDg2( utilisateur.getIdDg2() );
         utilisateurDto.setLogin( utilisateur.getLogin() );
-        utilisateurDto.setNom( utilisateur.getNom() );
         utilisateurDto.setPassword( utilisateur.getPassword() );
         utilisateurDto.setPrenom( utilisateur.getPrenom() );
+        utilisateurDto.setNom( utilisateur.getNom() );
+        utilisateurDto.setCivilite( utilisateur.getCivilite() );
+        utilisateurDto.setDateDeNaissance( utilisateur.getDateDeNaissance() );
         utilisateurDto.setTelephone( utilisateur.getTelephone() );
         utilisateurDto.setTelephoneFixe( utilisateur.getTelephoneFixe() );
+        utilisateurDto.setIdDg2( utilisateur.getIdDg2() );
 
         return utilisateurDto;
     }
@@ -487,16 +448,16 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateur.setId( utilisateurDto.getId() );
         utilisateur.setVersion( utilisateurDto.getVersion() );
         utilisateur.setActive( utilisateurDto.isActive() );
-        utilisateur.setCivilite( utilisateurDto.getCivilite() );
-        utilisateur.setDateDeNaissance( utilisateurDto.getDateDeNaissance() );
         utilisateur.setExternalAccount( utilisateurDto.isExternalAccount() );
-        utilisateur.setIdDg2( utilisateurDto.getIdDg2() );
         utilisateur.setLogin( utilisateurDto.getLogin() );
-        utilisateur.setNom( utilisateurDto.getNom() );
         utilisateur.setPassword( utilisateurDto.getPassword() );
         utilisateur.setPrenom( utilisateurDto.getPrenom() );
+        utilisateur.setNom( utilisateurDto.getNom() );
+        utilisateur.setCivilite( utilisateurDto.getCivilite() );
         utilisateur.setTelephone( utilisateurDto.getTelephone() );
+        utilisateur.setDateDeNaissance( utilisateurDto.getDateDeNaissance() );
         utilisateur.setTelephoneFixe( utilisateurDto.getTelephoneFixe() );
+        utilisateur.setIdDg2( utilisateurDto.getIdDg2() );
 
         return utilisateur;
     }
@@ -584,23 +545,23 @@ public class DtoMapperImpl implements DtoMapper {
 
         DossierProjetDto dossierProjetDto = new DossierProjetDto();
 
+        dossierProjetDto.setNom( dossierProjet.getNom() );
+        dossierProjetDto.setId( dossierProjet.getId() );
+        dossierProjetDto.setDossierImport( dossierProjet.getDossierImport() );
+        dossierProjetDto.setProjet( projetToProjetDossierProjetDto( dossierProjet.getProjet() ) );
+        dossierProjetDto.setEtudiant( etudiantToEtudiantDossierProjetDto( dossierProjet.getEtudiant() ) );
         List<String> list = dossierProjet.getAnnexeDossierProjets();
         if ( list != null ) {
             dossierProjetDto.setAnnexeDossierProjets( new ArrayList<String>( list ) );
         }
-        List<String> list1 = dossierProjet.getContenuDossierProjets();
+        List<String> list1 = dossierProjet.getInfoDossierProjets();
         if ( list1 != null ) {
-            dossierProjetDto.setContenuDossierProjets( new ArrayList<String>( list1 ) );
+            dossierProjetDto.setInfoDossierProjets( new ArrayList<String>( list1 ) );
         }
-        dossierProjetDto.setDossierImport( dossierProjet.getDossierImport() );
-        dossierProjetDto.setEtudiant( etudiantToEtudiantDossierProjetDto( dossierProjet.getEtudiant() ) );
-        dossierProjetDto.setId( dossierProjet.getId() );
-        List<String> list2 = dossierProjet.getInfoDossierProjets();
+        List<String> list2 = dossierProjet.getContenuDossierProjets();
         if ( list2 != null ) {
-            dossierProjetDto.setInfoDossierProjets( new ArrayList<String>( list2 ) );
+            dossierProjetDto.setContenuDossierProjets( new ArrayList<String>( list2 ) );
         }
-        dossierProjetDto.setNom( dossierProjet.getNom() );
-        dossierProjetDto.setProjet( projetToProjetDossierProjetDto( dossierProjet.getProjet() ) );
         List<String> list3 = dossierProjet.getResumeDossierProjets();
         if ( list3 != null ) {
             dossierProjetDto.setResumeDossierProjets( new ArrayList<String>( list3 ) );
@@ -619,23 +580,23 @@ public class DtoMapperImpl implements DtoMapper {
         DossierProjetDto dossierProjetDto = new DossierProjetDto();
 
         dossierProjetDto.setCompetenceProfessionnelleIds( competenceProToId( dossierProjet.getCompetenceProfessionnelles() ) );
+        dossierProjetDto.setNom( dossierProjet.getNom() );
+        dossierProjetDto.setId( dossierProjet.getId() );
+        dossierProjetDto.setDossierImport( dossierProjet.getDossierImport() );
+        dossierProjetDto.setProjet( projetToProjetDossierProjetDto( dossierProjet.getProjet() ) );
+        dossierProjetDto.setEtudiant( etudiantToEtudiantDossierProjetDto( dossierProjet.getEtudiant() ) );
         List<String> list1 = dossierProjet.getAnnexeDossierProjets();
         if ( list1 != null ) {
             dossierProjetDto.setAnnexeDossierProjets( new ArrayList<String>( list1 ) );
         }
-        List<String> list2 = dossierProjet.getContenuDossierProjets();
+        List<String> list2 = dossierProjet.getInfoDossierProjets();
         if ( list2 != null ) {
-            dossierProjetDto.setContenuDossierProjets( new ArrayList<String>( list2 ) );
+            dossierProjetDto.setInfoDossierProjets( new ArrayList<String>( list2 ) );
         }
-        dossierProjetDto.setDossierImport( dossierProjet.getDossierImport() );
-        dossierProjetDto.setEtudiant( etudiantToEtudiantDossierProjetDto( dossierProjet.getEtudiant() ) );
-        dossierProjetDto.setId( dossierProjet.getId() );
-        List<String> list3 = dossierProjet.getInfoDossierProjets();
+        List<String> list3 = dossierProjet.getContenuDossierProjets();
         if ( list3 != null ) {
-            dossierProjetDto.setInfoDossierProjets( new ArrayList<String>( list3 ) );
+            dossierProjetDto.setContenuDossierProjets( new ArrayList<String>( list3 ) );
         }
-        dossierProjetDto.setNom( dossierProjet.getNom() );
-        dossierProjetDto.setProjet( projetToProjetDossierProjetDto( dossierProjet.getProjet() ) );
         List<String> list4 = dossierProjet.getResumeDossierProjets();
         if ( list4 != null ) {
             dossierProjetDto.setResumeDossierProjets( new ArrayList<String>( list4 ) );
@@ -656,22 +617,22 @@ public class DtoMapperImpl implements DtoMapper {
         dossierProjet.setCompetenceProfessionnelles( idToCompetencePro( dpDto.getCompetenceProfessionnelleIds() ) );
         dossierProjet.setId( dpDto.getId() );
         dossierProjet.setVersion( dpDto.getVersion() );
+        dossierProjet.setDossierImport( dpDto.getDossierImport() );
+        dossierProjet.setNom( dpDto.getNom() );
+        dossierProjet.setProjet( projetDossierProjetDtoToProjet( dpDto.getProjet() ) );
+        dossierProjet.setEtudiant( etudiantDossierProjetDtoToEtudiant( dpDto.getEtudiant() ) );
         List<String> list1 = dpDto.getAnnexeDossierProjets();
         if ( list1 != null ) {
             dossierProjet.setAnnexeDossierProjets( new ArrayList<String>( list1 ) );
         }
-        List<String> list2 = dpDto.getContenuDossierProjets();
+        List<String> list2 = dpDto.getInfoDossierProjets();
         if ( list2 != null ) {
-            dossierProjet.setContenuDossierProjets( new ArrayList<String>( list2 ) );
+            dossierProjet.setInfoDossierProjets( new ArrayList<String>( list2 ) );
         }
-        dossierProjet.setDossierImport( dpDto.getDossierImport() );
-        dossierProjet.setEtudiant( etudiantDossierProjetDtoToEtudiant( dpDto.getEtudiant() ) );
-        List<String> list3 = dpDto.getInfoDossierProjets();
+        List<String> list3 = dpDto.getContenuDossierProjets();
         if ( list3 != null ) {
-            dossierProjet.setInfoDossierProjets( new ArrayList<String>( list3 ) );
+            dossierProjet.setContenuDossierProjets( new ArrayList<String>( list3 ) );
         }
-        dossierProjet.setNom( dpDto.getNom() );
-        dossierProjet.setProjet( projetDossierProjetDtoToProjet( dpDto.getProjet() ) );
         List<String> list4 = dpDto.getResumeDossierProjets();
         if ( list4 != null ) {
             dossierProjet.setResumeDossierProjets( new ArrayList<String>( list4 ) );
@@ -706,9 +667,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         facultatifDto.setId( facultatif.getId() );
         facultatifDto.setVersion( facultatif.getVersion() );
-        facultatifDto.setDate( facultatif.getDate() );
-        facultatifDto.setIntitule( facultatif.getIntitule() );
         facultatifDto.setOrganisme( facultatif.getOrganisme() );
+        facultatifDto.setIntitule( facultatif.getIntitule() );
+        facultatifDto.setDate( facultatif.getDate() );
 
         return facultatifDto;
     }
@@ -725,38 +686,6 @@ public class DtoMapperImpl implements DtoMapper {
         maitreApprentissageDto.setVersion( maitreApprentissage.getVersion() );
 
         return maitreApprentissageDto;
-    }
-
-    @Override
-    public CerfaDto cerfaToCerfaDto(Cerfa cerfa) {
-        if ( cerfa == null ) {
-            return null;
-        }
-
-        CerfaDto cerfaDto = new CerfaDto();
-
-        cerfaDto.setId( cerfa.getId() );
-        cerfaDto.setVersion( cerfa.getVersion() );
-
-        return cerfaDto;
-    }
-
-    @Override
-    public RemunerationDto remunerationTORemunerationDto(Remuneration remuneration) {
-        if ( remuneration == null ) {
-            return null;
-        }
-
-        RemunerationDto remunerationDto = new RemunerationDto();
-
-        remunerationDto.setId( remuneration.getId() );
-        remunerationDto.setVersion( remuneration.getVersion() );
-        remunerationDto.setDateDebut( remuneration.getDateDebut() );
-        remunerationDto.setDateFin( remuneration.getDateFin() );
-        remunerationDto.setPourcentage( remuneration.getPourcentage() );
-        remunerationDto.setSmicOuSmc( remuneration.getSmicOuSmc() );
-
-        return remunerationDto;
     }
 
     @Override
@@ -783,6 +712,7 @@ public class DtoMapperImpl implements DtoMapper {
 
         CompetenceProfessionnelleDto competenceProfessionnelleDto = new CompetenceProfessionnelleDto();
 
+        competenceProfessionnelleDto.setActiviteTypeId( competenceProfessionnelleActiviteTypeId( competenceProfessionnelle ) );
         competenceProfessionnelleDto.setId( competenceProfessionnelle.getId() );
         competenceProfessionnelleDto.setVersion( competenceProfessionnelle.getVersion() );
         competenceProfessionnelleDto.setLibelle( competenceProfessionnelle.getLibelle() );
@@ -792,38 +722,20 @@ public class DtoMapperImpl implements DtoMapper {
     }
 
     @Override
-    public Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto) {
-        if ( formationDG2Dto == null ) {
+    public CompetenceProfessionnelle competenceProfessionnelleDtoToCompetenceProfessionnelle(CompetenceProfessionnelleDto competenceProfessionnelleDto) {
+        if ( competenceProfessionnelleDto == null ) {
             return null;
         }
 
-        Formation formation = new Formation();
+        CompetenceProfessionnelle competenceProfessionnelle = new CompetenceProfessionnelle();
 
-        formation.setIdDg2( formationDG2Dto.getId() );
-        formation.setTitre( formationDG2Dto.getTitle() );
-        formation.setObjectif( formationDG2Dto.getObjectives() );
-        formation.setPrerequis( formationDG2Dto.getPrerequisites() );
-        formation.setId( formationDG2Dto.getId() );
-        formation.setVersion( formationDG2Dto.getVersion() );
-        formation.setDuration( formationDG2Dto.getDuration() );
-        formation.setPlan( formationDG2Dto.getPlan() );
-        formation.setSlug( formationDG2Dto.getSlug() );
+        competenceProfessionnelle.setActiviteType( competenceProfessionnelleDtoToActiviteType( competenceProfessionnelleDto ) );
+        competenceProfessionnelle.setId( competenceProfessionnelleDto.getId() );
+        competenceProfessionnelle.setVersion( competenceProfessionnelleDto.getVersion() );
+        competenceProfessionnelle.setLibelle( competenceProfessionnelleDto.getLibelle() );
+        competenceProfessionnelle.setNumeroFiche( competenceProfessionnelleDto.getNumeroFiche() );
 
-        return formation;
-    }
-
-    @Override
-    public List<CompetenceCouvertesDossierProjetDto> competenceProfessionnelleToCompetenceCouvertesDto(List<CompetenceProfessionnelle> competenceProfessionnelle) {
-        if ( competenceProfessionnelle == null ) {
-            return null;
-        }
-
-        List<CompetenceCouvertesDossierProjetDto> list = new ArrayList<CompetenceCouvertesDossierProjetDto>( competenceProfessionnelle.size() );
-        for ( CompetenceProfessionnelle competenceProfessionnelle1 : competenceProfessionnelle ) {
-            list.add( competenceProfessionnelleToCompetenceCouvertesDossierProjetDto( competenceProfessionnelle1 ) );
-        }
-
-        return list;
+        return competenceProfessionnelle;
     }
 
     @Override
@@ -842,20 +754,6 @@ public class DtoMapperImpl implements DtoMapper {
         cursus.setSlug( cursusDG2Dto.getSlug() );
 
         return cursus;
-    }
-
-    @Override
-    public List<Cursus> lstCursusDG2DtoToListCursus(List<InterventionDG2Dto> lstCurusDto) {
-        if ( lstCurusDto == null ) {
-            return null;
-        }
-
-        List<Cursus> list = new ArrayList<Cursus>( lstCurusDto.size() );
-        for ( InterventionDG2Dto interventionDG2Dto : lstCurusDto ) {
-            list.add( interventionDG2DtoToCursus( interventionDG2Dto ) );
-        }
-
-        return list;
     }
 
     @Override
@@ -881,12 +779,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExperienceProfessionnelleDto experienceProfessionnelleDto = new ExperienceProfessionnelleDto();
 
+        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
+        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
         experienceProfessionnelleDto.setCollaborateur( experienceProfessionnelle.getCollaborateur() );
         experienceProfessionnelleDto.setContexte( experienceProfessionnelle.getContexte() );
-        experienceProfessionnelleDto.setId( experienceProfessionnelle.getId() );
         experienceProfessionnelleDto.setInformation( experienceProfessionnelle.getInformation() );
-        experienceProfessionnelleDto.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
-        experienceProfessionnelleDto.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
+        experienceProfessionnelleDto.setId( experienceProfessionnelle.getId() );
         experienceProfessionnelleDto.setVersion( experienceProfessionnelle.getVersion() );
 
         return experienceProfessionnelleDto;
@@ -1150,10 +1048,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         adresse.setId( adresseDto.getId() );
         adresse.setVersion( adresseDto.getVersion() );
-        adresse.setCodePostal( adresseDto.getCodePostal() );
-        adresse.setCountryCode( adresseDto.getCountryCode() );
         adresse.setLibelle( adresseDto.getLibelle() );
         adresse.setVille( adresseDto.getVille() );
+        adresse.setCodePostal( adresseDto.getCodePostal() );
+        adresse.setCountryCode( adresseDto.getCountryCode() );
 
         return adresse;
     }
@@ -1167,11 +1065,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         experienceProfessionnelle.setId( experienceProfessionnelleDto.getId() );
         experienceProfessionnelle.setVersion( experienceProfessionnelleDto.getVersion() );
+        experienceProfessionnelle.setTacheRealisee( experienceProfessionnelleDto.getTacheRealisee() );
+        experienceProfessionnelle.setMoyenUtilise( experienceProfessionnelleDto.getMoyenUtilise() );
         experienceProfessionnelle.setCollaborateur( experienceProfessionnelleDto.getCollaborateur() );
         experienceProfessionnelle.setContexte( experienceProfessionnelleDto.getContexte() );
         experienceProfessionnelle.setInformation( experienceProfessionnelleDto.getInformation() );
-        experienceProfessionnelle.setMoyenUtilise( experienceProfessionnelleDto.getMoyenUtilise() );
-        experienceProfessionnelle.setTacheRealisee( experienceProfessionnelleDto.getTacheRealisee() );
 
         return experienceProfessionnelle;
     }
@@ -1198,9 +1096,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         competenceProfessionnelle.setId( competenceDossierProDto.getId() );
         competenceProfessionnelle.setVersion( competenceDossierProDto.getVersion() );
-        competenceProfessionnelle.setExperienceProfessionnelles( experienceProfessionnelleDtoListToExperienceProfessionnelleList( competenceDossierProDto.getExperienceProfessionnelles() ) );
         competenceProfessionnelle.setLibelle( competenceDossierProDto.getLibelle() );
         competenceProfessionnelle.setNumeroFiche( competenceDossierProDto.getNumeroFiche() );
+        competenceProfessionnelle.setExperienceProfessionnelles( experienceProfessionnelleDtoListToExperienceProfessionnelleList( competenceDossierProDto.getExperienceProfessionnelles() ) );
 
         return competenceProfessionnelle;
     }
@@ -1227,9 +1125,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         activiteType.setId( activiteTypeDossierProDto.getId() );
         activiteType.setVersion( activiteTypeDossierProDto.getVersion() );
-        activiteType.setCompetenceProfessionnelles( competenceDossierProDtoSetToCompetenceProfessionnelleSet( activiteTypeDossierProDto.getCompetenceProfessionnelles() ) );
         activiteType.setLibelle( activiteTypeDossierProDto.getLibelle() );
         activiteType.setNumeroFiche( activiteTypeDossierProDto.getNumeroFiche() );
+        activiteType.setCompetenceProfessionnelles( competenceDossierProDtoSetToCompetenceProfessionnelleSet( activiteTypeDossierProDto.getCompetenceProfessionnelles() ) );
 
         return activiteType;
     }
@@ -1256,8 +1154,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         cursus.setId( cursusDossierProDto.getId() );
         cursus.setVersion( cursusDossierProDto.getVersion() );
-        cursus.setActiviteTypes( activiteTypeDossierProDtoSetToActiviteTypeSet( cursusDossierProDto.getActiviteTypes() ) );
         cursus.setTitre( cursusDossierProDto.getTitre() );
+        cursus.setActiviteTypes( activiteTypeDossierProDtoSetToActiviteTypeSet( cursusDossierProDto.getActiviteTypes() ) );
 
         return cursus;
     }
@@ -1312,9 +1210,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         facultatif.setId( facultatifDto.getId() );
         facultatif.setVersion( facultatifDto.getVersion() );
-        facultatif.setDate( facultatifDto.getDate() );
-        facultatif.setIntitule( facultatifDto.getIntitule() );
         facultatif.setOrganisme( facultatifDto.getOrganisme() );
+        facultatif.setIntitule( facultatifDto.getIntitule() );
+        facultatif.setDate( facultatifDto.getDate() );
 
         return facultatif;
     }
@@ -1339,11 +1237,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         CompetenceDossierProDto competenceDossierProDto = new CompetenceDossierProDto();
 
-        competenceDossierProDto.setExperienceProfessionnelles( experienceProfessionnelleToExperienceProfessionnelleDto( competenceProfessionnelle.getExperienceProfessionnelles() ) );
         competenceDossierProDto.setId( competenceProfessionnelle.getId() );
         competenceDossierProDto.setLibelle( competenceProfessionnelle.getLibelle() );
-        competenceDossierProDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
         competenceDossierProDto.setVersion( competenceProfessionnelle.getVersion() );
+        competenceDossierProDto.setExperienceProfessionnelles( experienceProfessionnelleToExperienceProfessionnelleDto( competenceProfessionnelle.getExperienceProfessionnelles() ) );
+        competenceDossierProDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
 
         return competenceDossierProDto;
     }
@@ -1368,11 +1266,11 @@ public class DtoMapperImpl implements DtoMapper {
 
         ActiviteTypeDossierProDto activiteTypeDossierProDto = new ActiviteTypeDossierProDto();
 
-        activiteTypeDossierProDto.setCompetenceProfessionnelles( competenceProfessionnelleSetToCompetenceDossierProDtoSet( activiteType.getCompetenceProfessionnelles() ) );
         activiteTypeDossierProDto.setId( activiteType.getId() );
         activiteTypeDossierProDto.setLibelle( activiteType.getLibelle() );
-        activiteTypeDossierProDto.setNumeroFiche( activiteType.getNumeroFiche() );
+        activiteTypeDossierProDto.setCompetenceProfessionnelles( competenceProfessionnelleSetToCompetenceDossierProDtoSet( activiteType.getCompetenceProfessionnelles() ) );
         activiteTypeDossierProDto.setVersion( activiteType.getVersion() );
+        activiteTypeDossierProDto.setNumeroFiche( activiteType.getNumeroFiche() );
 
         return activiteTypeDossierProDto;
     }
@@ -1397,25 +1295,12 @@ public class DtoMapperImpl implements DtoMapper {
 
         CursusDossierProDto cursusDossierProDto = new CursusDossierProDto();
 
+        cursusDossierProDto.setTitre( cursus.getTitre() );
         cursusDossierProDto.setActiviteTypes( activiteTypeSetToActiviteTypeDossierProDtoSet( cursus.getActiviteTypes() ) );
         cursusDossierProDto.setId( cursus.getId() );
-        cursusDossierProDto.setTitre( cursus.getTitre() );
         cursusDossierProDto.setVersion( cursus.getVersion() );
 
         return cursusDossierProDto;
-    }
-
-    protected EtudiantDossierProjetDto etudiantToEtudiantDossierProjetDto(Etudiant etudiant) {
-        if ( etudiant == null ) {
-            return null;
-        }
-
-        EtudiantDossierProjetDto etudiantDossierProjetDto = new EtudiantDossierProjetDto();
-
-        etudiantDossierProjetDto.setId( etudiant.getId() );
-        etudiantDossierProjetDto.setVersion( etudiant.getVersion() );
-
-        return etudiantDossierProjetDto;
     }
 
     protected ProjetDossierProjetDto projetToProjetDossierProjetDto(Projet projet) {
@@ -1432,17 +1317,17 @@ public class DtoMapperImpl implements DtoMapper {
         return projetDossierProjetDto;
     }
 
-    protected Etudiant etudiantDossierProjetDtoToEtudiant(EtudiantDossierProjetDto etudiantDossierProjetDto) {
-        if ( etudiantDossierProjetDto == null ) {
+    protected EtudiantDossierProjetDto etudiantToEtudiantDossierProjetDto(Etudiant etudiant) {
+        if ( etudiant == null ) {
             return null;
         }
 
-        Etudiant etudiant = new Etudiant();
+        EtudiantDossierProjetDto etudiantDossierProjetDto = new EtudiantDossierProjetDto();
 
-        etudiant.setId( etudiantDossierProjetDto.getId() );
-        etudiant.setVersion( etudiantDossierProjetDto.getVersion() );
+        etudiantDossierProjetDto.setId( etudiant.getId() );
+        etudiantDossierProjetDto.setVersion( etudiant.getVersion() );
 
-        return etudiant;
+        return etudiantDossierProjetDto;
     }
 
     protected Projet projetDossierProjetDtoToProjet(ProjetDossierProjetDto projetDossierProjetDto) {
@@ -1459,33 +1344,41 @@ public class DtoMapperImpl implements DtoMapper {
         return projet;
     }
 
-    protected CompetenceCouvertesDossierProjetDto competenceProfessionnelleToCompetenceCouvertesDossierProjetDto(CompetenceProfessionnelle competenceProfessionnelle) {
-        if ( competenceProfessionnelle == null ) {
+    protected Etudiant etudiantDossierProjetDtoToEtudiant(EtudiantDossierProjetDto etudiantDossierProjetDto) {
+        if ( etudiantDossierProjetDto == null ) {
             return null;
         }
 
-        CompetenceCouvertesDossierProjetDto competenceCouvertesDossierProjetDto = new CompetenceCouvertesDossierProjetDto();
+        Etudiant etudiant = new Etudiant();
 
-        competenceCouvertesDossierProjetDto.setId( competenceProfessionnelle.getId() );
-        competenceCouvertesDossierProjetDto.setVersion( competenceProfessionnelle.getVersion() );
-        competenceCouvertesDossierProjetDto.setLibelle( competenceProfessionnelle.getLibelle() );
-        competenceCouvertesDossierProjetDto.setNumeroFiche( competenceProfessionnelle.getNumeroFiche() );
+        etudiant.setId( etudiantDossierProjetDto.getId() );
+        etudiant.setVersion( etudiantDossierProjetDto.getVersion() );
 
-        return competenceCouvertesDossierProjetDto;
+        return etudiant;
     }
 
-    protected Cursus interventionDG2DtoToCursus(InterventionDG2Dto interventionDG2Dto) {
-        if ( interventionDG2Dto == null ) {
+    private long competenceProfessionnelleActiviteTypeId(CompetenceProfessionnelle competenceProfessionnelle) {
+        if ( competenceProfessionnelle == null ) {
+            return 0L;
+        }
+        ActiviteType activiteType = competenceProfessionnelle.getActiviteType();
+        if ( activiteType == null ) {
+            return 0L;
+        }
+        long id = activiteType.getId();
+        return id;
+    }
+
+    protected ActiviteType competenceProfessionnelleDtoToActiviteType(CompetenceProfessionnelleDto competenceProfessionnelleDto) {
+        if ( competenceProfessionnelleDto == null ) {
             return null;
         }
 
-        Cursus cursus = new Cursus();
+        ActiviteType activiteType = new ActiviteType();
 
-        cursus.setId( interventionDG2Dto.getId() );
-        cursus.setVersion( interventionDG2Dto.getVersion() );
-        cursus.setSlug( interventionDG2Dto.getSlug() );
+        activiteType.setId( competenceProfessionnelleDto.getActiviteTypeId() );
 
-        return cursus;
+        return activiteType;
     }
 
     private long evalInterventionId(EvaluationFormation evaluationFormation) {
