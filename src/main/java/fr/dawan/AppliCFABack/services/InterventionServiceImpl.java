@@ -12,6 +12,7 @@ import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Async;
@@ -60,6 +61,9 @@ public class InterventionServiceImpl implements InterventionService {
 	private RestTemplate restTemplate;
 
 	private static Logger logger = LoggerFactory.getLogger(InterventionServiceImpl.class);
+	
+	@Value("${base_url_dg2}")
+    private String baseUrl;
 
 	/**
 	 * Récupération de toutes les interventions
@@ -444,7 +448,7 @@ public class InterventionServiceImpl implements InterventionService {
 		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>();
 		List<Intervention> result = new ArrayList<>();
 
-		URI url = new URI("https://dawan.org/api2/cfa/sessions/" + idPrmotionDg2 + "/children");
+		URI url = new URI(baseUrl + "sessions/" + idPrmotionDg2 + "/children");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
