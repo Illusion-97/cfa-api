@@ -22,8 +22,8 @@ public class Etudiant extends BaseEntity implements Serializable {
 	@OneToMany(mappedBy = "etudiantNote", cascade = CascadeType.REMOVE)
 	private Set<Note> notes;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<DossierProfessionnel> dossierProfessionnel;
+	/*@OneToMany(cascade = CascadeType.ALL)
+	private List<DossierProfessionnel> dossierProfessionnel;*/
 	
 
 	@ManyToOne
@@ -33,12 +33,10 @@ public class Etudiant extends BaseEntity implements Serializable {
 		super();
 	}
 
-	public Etudiant(List<Promotion> promotions, List<GroupeEtudiant> groupes, List<DossierProjet> dossierProjet,
-			List<DossierProfessionnel> dossierProfessionnel, Tuteur tuteur) {
+	public Etudiant(List<Promotion> promotions, List<GroupeEtudiant> groupes, List<DossierProjet> dossierProjet, Tuteur tuteur) {
 		super();
 		this.promotions = promotions;
 		this.groupes = groupes;
-		this.dossierProfessionnel = dossierProfessionnel;
 		this.tuteur=tuteur;
 	}
 
@@ -58,13 +56,6 @@ public class Etudiant extends BaseEntity implements Serializable {
 		this.groupes = groupes;
 	}
 
-	public List<DossierProfessionnel> getDossierProfessionnel() {
-		return dossierProfessionnel;
-	}
-
-	public void setDossierProfessionnel(List<DossierProfessionnel> dossierProfessionnel) {
-		this.dossierProfessionnel = dossierProfessionnel;
-	}
 
 	public Utilisateur getUtilisateur() {
 		return utilisateur;

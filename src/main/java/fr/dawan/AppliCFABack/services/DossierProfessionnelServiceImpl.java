@@ -193,12 +193,10 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     @Override
     public List<DossierProfessionnelDto> getByIdEtudiant(long id) {
     	
-    	Optional<Etudiant> etudiant = etudiantRepository.findById(id);
- 	    List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
- 	        Etudiant e = etudiant.get();
- 	        List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
-             
- 	        for (DossierProfessionnel dp : lstDossierProfessionnel) {
+    	  List<DossierProfessionnel> et = dossierProRepo.findDossierProByEtudiantIdAndCursusId(id);
+ 	      List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
+ 	        
+ 	        for (DossierProfessionnel dp : et) {
 
  	            DossierProfessionnelDto dossierProDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
  	            
@@ -208,7 +206,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
  	            dossierProDto.setCursusDto(mapper.cursusToCursusDto(dp.getCursus()));
  	            dossierProDto.setExperienceProfessionnelleDtos(mapper.experienceProfessionnelleToExperienceProfessionnelleDto(dp.getExperienceProfessionnelles()));
  	            dossierProDto.setFacultatifDto(mapper.facultatifToFacultatifDto(dp.getFacultatifs()));
- 	          
+ 	            dossierProDto.setFileImport(dp.getFileImport());
  	            
  	           lstDossierProfessionnelDto.add(dossierProDto);
  	        }

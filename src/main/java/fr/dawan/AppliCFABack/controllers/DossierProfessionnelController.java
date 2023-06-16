@@ -245,9 +245,8 @@ public class DossierProfessionnelController {
 	
 	
 	@PostMapping(value = "/upload/{etudiantId}/{cursusId}", consumes = "multipart/form-data", produces = "application/json")
-	public ResponseEntity<String> handleFileUpload(@PathVariable("etudiantId") long etudiantId, @PathVariable("cursusId") long cursusId, @RequestParam("fileImport") MultipartFile file) throws IOException, EtudiantNotFoundException, CursusNotFoundException {
+	public ResponseEntity<String> handleFileUpload(@PathVariable("etudiantId") long etudiantId, @PathVariable("cursusId") long cursusId, @RequestParam("fileImport") MultipartFile file, @RequestParam("nom") String nom ) throws IOException, EtudiantNotFoundException, CursusNotFoundException {
 	    String message = "";
-	    String nom = "";
 	    List<MultipartFile> files = new ArrayList<>();
 	    files.add(file);
 	  

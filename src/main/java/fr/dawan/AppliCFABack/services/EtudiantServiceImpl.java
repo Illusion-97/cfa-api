@@ -78,6 +78,7 @@ import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirEtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
+import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
@@ -103,6 +104,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Autowired
 	DossierProjetRepository dossierProRepo;
+	
+	@Autowired 
+	DossierProfessionnelRepository dossierRepo;
+	
 	@Autowired
 	TuteurRepository tuteurRepository;
 
@@ -213,13 +218,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 			etuDto.getUtilisateurDto().setRolesDto(uRDto);
 
-			List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
+			/*List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
 			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
 			for (DossierProfessionnel dp : lstDossierProfessionnel) {
 				DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
 				dpDto.setCursusDto(mapper.cursusToCursusDto(dp.getCursus()));
 				lstDossierProfessionnelDto.add(dpDto);
-			}
+			}*/
 
 //			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
 
@@ -228,7 +233,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 //			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
 			etuDto.setPromotionsDto(lstPromoDto);
 //			etuDto.setFormateurReferentDto(refDto);
-			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
+			//etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
 //			etuDto.setDossierProjet(lstDossierProjetDto);
 
 			res.add(etuDto);
@@ -311,7 +316,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			DossierProjetDto dpdto = mapper.dossierProjetToDpDto(dp);
 			lstDossierProjetDto.add(dpdto);
 		}
-		List<DossierProfessionnel> lstDossierProfessionnel = e.get().getDossierProfessionnel();
+		List<DossierProfessionnel> lstDossierProfessionnel = dossierRepo.findDossierProByEtudiantIdAndCursusId(id);
 		List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
 		for (DossierProfessionnel dp : lstDossierProfessionnel) {
 			DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
@@ -792,13 +797,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 //				lstDossierProjetDto.add(dpdto);
 
 //			}
-			List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
+			/*List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
 			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
 			for (DossierProfessionnel dp : lstDossierProfessionnel) {
 				DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
 				dpDto.setCursusDto(mapper.cursusToCursusDto(dp.getCursus()));
 				lstDossierProfessionnelDto.add(dpDto);
-			}
+			}*/
 
 			etuDto.setUtilisateurDto(pDto);
 			etuDto.getUtilisateurDto().setAdresseDto(addrDto);
@@ -809,7 +814,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 //			etuDto.setFormateurReferentDto(refDto);
 //			etuDto.setManagerDto(managDto);
 
-			etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
+			//etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
 //			etuDto.setDossierProjet(lstDossierProjetDto);
 			res.add(etuDto);
 		}
