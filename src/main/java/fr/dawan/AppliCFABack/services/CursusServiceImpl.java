@@ -80,10 +80,8 @@ public class CursusServiceImpl implements CursusService {
 	}
 
 	public Page<PromotionDto> getByIdPromotionAndByPage(long idCursus, int page, int size){
-
-		List<Promotion> promotionDtos = promoRepo.getAllPageablePromotionByCursusId(idCursus, PageRequest.of(page, size));
-		Page<PromotionDto> pagePromotionDto = new PageImpl<>(mapper.promotionListToPromotionDtoList(promotionDtos));
-		return pagePromotionDto;
+		return promoRepo.getAllPageablePromotionByCursusId(idCursus, PageRequest.of(page, size)).map(promo ->
+				mapper.promotionToPromotionDto(promo));
 	}
 	/**
 	 * Va permettre de récupérer tous les cursus avec pagination
