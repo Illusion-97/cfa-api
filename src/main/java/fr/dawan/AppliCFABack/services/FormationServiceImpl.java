@@ -16,6 +16,7 @@ import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,9 @@ public class FormationServiceImpl implements FormationService {
 	private DtoMapper mapper = new DtoMapperImpl();
 
 	private static Logger logger = LoggerFactory.getLogger(FormationServiceImpl.class);
+	
+	@Value("${base_url_dg2}")
+    private String baseUrl;
 
 //	@Autowired
 //	private RestTemplate restTemplate;
@@ -269,89 +273,6 @@ public class FormationServiceImpl implements FormationService {
 	 *                      des formations
 	 */
 
-//	@Override
-//	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
-//
-//	    Optional<Cursus> cursusDb = cursusRepository.findByIdDg2(idCursusDg2);
-//	    logger.info(">>>>>>>crusus>>>>>" + cursusDb.get().getIdDg2());
-//	    logger.info("FetchDg2Formation >>> START");
-//	    if (!cursusDb.isPresent()) {
-//	        logger.error("FetchDg2Formation>>>>>>>>ERROR failed Pas de cursus");
-//	        throw new FetchDG2Exception("Cursus non présent dans la BDD veuiller mettre à jour les cursus");
-//	    }
-//
-//	    List<Formation> result = new ArrayList<>();
-//
-//	    List<FormationDG2Dto> fetchResJson = new ArrayList<>();
-//
-//	    // Récupérer la liste formation DG2
-//	    ObjectMapper objectMapper = new ObjectMapper();
-//	    objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-//
-//	    // Ma requête
-//	    URI url = new URI("https://dawan.org/api2/cfa/pro-titles/" + idCursusDg2 + "/children");
-//
-//	    HttpHeaders headers = new HttpHeaders();
-//	    headers.add("x-auth-token", email + ":" + password);
-//	    HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-//	    ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-//
-//	    // si statusCode OK
-//	    if (rep.getStatusCode() == HttpStatus.OK) {
-//	        String json = rep.getBody();
-//
-//	        try {
-//	            fetchResJson = objectMapper.readValue(json, new TypeReference<List<FormationDG2Dto>>() {
-//	            });
-//	        } catch (Exception e) {
-//	            logger.warn("objectMapper failed", e);
-//	        }
-//	    }
-//
-//	    DtoTools dtoTools = new DtoTools();
-//	    // Comparer formationsDG2 & formationsDB
-//	    for (FormationDG2Dto fDtoDG2 : fetchResJson) {
-//
-//	        // chercher en BDD <Optional> findByIdDg2
-//	        Optional<Formation> formationDb = formationRepository.findByIdDg2(fDtoDG2.getId());
-//
-//	        Formation formationImported = null;
-//
-//	        try {
-//	            formationImported = dtoTools.formationDG2DtoToFormation(fDtoDG2);
-//	        } catch (Exception e) {
-//	            logger.warn("mapper failed", e);
-//	        }
-//
-//	        // Si !isPresent() alors ajout
-//	        if (!formationDb.isPresent()) {
-//
-//	            List<Cursus> newCursusDb = new ArrayList<>();
-//	            newCursusDb.add(cursusDb.get());
-//	            formationImported.setCursusLst(newCursusDb);
-//	            result.add(formationImported);
-//
-//	        } else {
-//	            // Si != modif
-//	            List<Cursus> cursus = formationDb.get().getCursusLst();
-//	            formationImported.setCursusLst(cursus);
-//	            // Si la liste ne contient pas le cursus en cours on le rajoute
-//	            if (!formationImported.getCursusLst().contains(cursusDb.get())) {
-//	                cursus.add(cursusDb.get());
-//	                formationImported.setCursusLst(cursus);
-//	            }
-//	            if (!formationDb.get().equals(formationImported)) {
-//	                formationImported.setVersion(formationDb.get().getVersion());
-//	                formationImported.setId(formationDb.get().getId());
-//	                result.add(formationImported);
-//	            }
-//	        }
-//	        logger.info("formationImported >>> " + formationImported.getIdDg2());
-//	    }
-//	    
-//	    return result;
-//	}
-
 	@Override
 	public List<Formation> getFormationDG2ByIdCursus(String email, String password, long idCursusDg2)
 			throws FetchDG2Exception, URISyntaxException {
@@ -368,7 +289,7 @@ public class FormationServiceImpl implements FormationService {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 
-		URI url = new URI("https://dawan.org/api2/cfa/pro-titles/" + idCursusDg2 + "/children");
+		URI url = new URI(baseUrl + "pro-titles/" + idCursusDg2 + "/children");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);

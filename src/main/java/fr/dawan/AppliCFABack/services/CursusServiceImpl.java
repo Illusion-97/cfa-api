@@ -10,6 +10,7 @@ import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,9 @@ public class CursusServiceImpl implements CursusService {
 	private RestTemplate restTemplate;
 	
 	private static Logger logger = Logger.getGlobal();
+	
+	@Value("${base_url_dg2}")
+    private String baseUrl;
 
 	/**
 	 * Récupération de la liste des cursus
@@ -191,7 +195,7 @@ public class CursusServiceImpl implements CursusService {
 		List<CursusDG2Dto> fResJson = new ArrayList<>();
 		
 		//url dg2 qui concerne la recupération des cursus
-		URI url = new URI("https://dawan.org/api2/cfa/pro-titles");
+		URI url = new URI( baseUrl + "pro-titles");
 		
 		//recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();
