@@ -63,6 +63,8 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	 */
 	List<Promotion> findAllByCursusId(long id);
 
+	@Query("SELECT p FROM Promotion p WHERE p.cursus.id = :idCursus ORDER BY p.dateFin DESC,p.nbParticipants DESC")
+	List<Promotion> getAllPageablePromotionByCursusId (long idCursus, Pageable pageable);
 	/**
 	 * 
 	 * @param id de l'étudiant recherché

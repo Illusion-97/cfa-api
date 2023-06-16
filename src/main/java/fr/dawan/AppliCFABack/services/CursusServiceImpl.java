@@ -5,12 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Formation;
+import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +36,8 @@ public class CursusServiceImpl implements CursusService {
 
 	@Autowired
 	CursusRepository cursusRepo;
-	
+	@Autowired
+	PromotionRepository promoRepo;
 	@Autowired
 	PromotionService promoService;
 
@@ -59,6 +65,12 @@ public class CursusServiceImpl implements CursusService {
 		return lstDto;
 	}
 
+	public Page<PromotionDto> getByIdPromotionAndByPage(long idCursus, int page, int size){
+
+		List<Promotion> promotionDtos = promoRepo.getAllPageablePromotionByCursusId(idCursus, PageRequest.of(page, size));
+		Page<PromotionDto> pagePromotionDto = new PageImpl<>(mapper.promotionListToPromotionDtoList(promotionDtos));
+		return pagePromotionDto;
+	}
 	/**
 	 * Va permettre de récupérer tous les cursus avec pagination
 	 * recherche par titre ou formation

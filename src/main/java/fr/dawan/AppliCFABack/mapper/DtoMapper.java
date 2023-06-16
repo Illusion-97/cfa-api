@@ -91,6 +91,9 @@ public interface DtoMapper {
     @Mapping(source = "examens", target = "examensDto")
     PromotionDto promotionToPromotionDto(Promotion promotion);
 
+
+    @Mapping(source = ".", target = ".")
+    List<PromotionDto> promotionListToPromotionDtoList(List<Promotion> promotion);
     @Mapping(source = ".", target = ".")
     @Mapping(source = "adresse", target = "adresseDto")
     @Mapping(source = "entreprise", target = "entrepriseDto")

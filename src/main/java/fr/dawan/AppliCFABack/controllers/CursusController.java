@@ -6,6 +6,7 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class CursusController {
 	public CursusDto getById(@PathVariable("id") long id) {
 		return cursusService.getById(id);
 	}
-	
+
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<CursusDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
@@ -50,7 +51,12 @@ public class CursusController {
  		else
  			return cursusService.getAllByPage(page, size, "");
  	}
-	
+	@GetMapping(value="/cursus-page/{idCursus}/{page}/{size}", produces = "application/json")
+	public @ResponseBody Page<PromotionDto> getAllPromotionByIdCursusPaginate(@PathVariable("idCursus") long idCursus,
+																			  @PathVariable("page") int page,
+																			  @PathVariable("size") int size){
+		return cursusService.getByIdPromotionAndByPage(idCursus, page, size);
+	}
 	@GetMapping(value = "/promotion/{id}",produces = "application/json")
 	public CursusDto getByIdPromotion(@PathVariable("id") long id) {
 		return cursusService.getByIdPromotion(id);
