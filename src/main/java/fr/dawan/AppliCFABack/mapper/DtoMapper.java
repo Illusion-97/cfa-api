@@ -32,6 +32,8 @@ public interface DtoMapper {
     CEFDto cefToCEFDto(CEF cef);
 
     @Mapping(source = ".", target = ".")
+    @Mapping(source = "entreprise", target = "entrepriseDto")
+    @Mapping(source = "adresse", target = "adresseDto")
     CentreFormationDto centreFormationToCentreFormationDto(CentreFormation centreFormation);
 
     @Mapping(source = ".", target = ".")

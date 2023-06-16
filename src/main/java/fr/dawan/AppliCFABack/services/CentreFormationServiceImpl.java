@@ -104,8 +104,6 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		if (!cf.isPresent()) return null;
 		
 		CentreFormationDto cDto = mapper.centreFormationToCentreFormationDto(cf.get());
-		cDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(cf.get().getEntreprise()));
-		cDto.setAdresseDto(mapper.adresseToAdresseDto(cf.get().getAdresse()));
 		
 		return cDto;
 	}
