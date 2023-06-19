@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -586,7 +587,22 @@ public class PromotionServiceImpl implements PromotionService {
 		return res;
 	}
 
+	@Override
+	public List<PromotionDto> getPromotionByIdFormateur(long id, int page, int size, String search ) {
+		List<Promotion> result = promoRepo.findAllByFormateurId(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
+		List<PromotionDto> res = new ArrayList<>();
+		if (!result.isEmpty()) {
+			for (Promotion p: result) {
+				PromotionDto promotionDto =  mapper.promotionToPromotionDto(p);
+				res.add(promotionDto);
+			}
+		}
+		return res;
+	}
 
-
+	@Override
+	public CountDto countByFormateur(long id, String search) {
+		return new CountDto(promoRepo.countByFormateurId(id, search));
+	}
 
 }

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -55,7 +56,13 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	List<Promotion> findAllByInterventionsId(long id);
 
 	List<Promotion> findAllByReferentPedagogiqueId(long id);
+	
+	@Query("SELECT DISTINCT p FROM Promotion p JOIN p.interventions i JOIN p.centreFormation cf WHERE i.formateur.id = :id AND cf.nom LIKE %:search%")
+	Page<Promotion> findAllByFormateurId(@Param("id") long id, Pageable pageable, String search);
 
+	@Query("SELECT COUNT(DISTINCT p.id) FROM Promotion p JOIN p.interventions i JOIN p.centreFormation cf WHERE i.formateur.id = :id AND cf.nom LIKE %:search%")
+	long countByFormateurId(@Param("id") long id, String search);
+	
 	/**
 	 * 
 	 * @param id du cursus recherché
