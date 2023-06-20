@@ -1,21 +1,5 @@
 package fr.dawan.AppliCFABack.services;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.dawan.AppliCFABack.dto.*;
-import fr.dawan.AppliCFABack.entities.Cursus;
-import fr.dawan.AppliCFABack.entities.Formation;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.CursusRepository;
-import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -25,13 +9,46 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.CursusDG2Dto;
+import fr.dawan.AppliCFABack.dto.CursusDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.entities.Cursus;
+import fr.dawan.AppliCFABack.entities.Formation;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.CursusRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+
 @Transactional
 @Service
 public class CursusServiceImpl implements CursusService {
 
 	@Autowired
 	CursusRepository cursusRepo;
-	
+	@Autowired
+	PromotionRepository promoRepo;
 	@Autowired
 	PromotionService promoService;
 
@@ -42,6 +59,9 @@ public class CursusServiceImpl implements CursusService {
 	private RestTemplate restTemplate;
 	
 	private static Logger logger = Logger.getGlobal();
+	
+	@Value("${base_url_dg2}")
+    private String baseUrl;
 
 	/**
 	 * Récupération de la liste des cursus
@@ -59,6 +79,10 @@ public class CursusServiceImpl implements CursusService {
 		return lstDto;
 	}
 
+	public Page<PromotionDto> getByIdPromotionAndByPage(long idCursus, int page, int size){
+		return promoRepo.getAllPageablePromotionByCursusId(idCursus, PageRequest.of(page, size)).map(promo ->
+				mapper.promotionToPromotionDto(promo));
+	}
 	/**
 	 * Va permettre de récupérer tous les cursus avec pagination
 	 * recherche par titre ou formation
@@ -191,7 +215,7 @@ public class CursusServiceImpl implements CursusService {
 		List<CursusDG2Dto> fResJson = new ArrayList<>();
 		
 		//url dg2 qui concerne la recupération des cursus
-		URI url = new URI("https://dawan.org/api2/cfa/pro-titles");
+		URI url = new URI( baseUrl + "pro-titles");
 		
 		//recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();

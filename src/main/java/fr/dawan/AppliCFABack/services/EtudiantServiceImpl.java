@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -165,6 +166,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 	private AdresseRepository adresseRepository;
 	@Autowired
 	private LivretEvaluationRepository livretEvaluationRepository;
+	
+	@Value("${base_url_dg2}")
+    private String baseUrl;
+	
 	// ##################################################
 	// # CRUD #
 	// ##################################################
@@ -910,7 +915,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 			ObjectMapper objectMapper = new ObjectMapper();
 			List<EtudiantUtilisateurDG2Dto> cResJson = new ArrayList<>();
 
-			String url = "https://dawan.org/api2/cfa/sessions/" + idPromotionDg2 + "/registrations";
+			String url =  baseUrl + "sessions/" + idPromotionDg2 + "/registrations";
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("x-auth-token", email + ":" + password);

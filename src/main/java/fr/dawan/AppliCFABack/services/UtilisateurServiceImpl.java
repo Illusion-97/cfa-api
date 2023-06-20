@@ -150,6 +150,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Value("${app.ldap.technical.pwd}")
 	private String ldapTechnicalAccPwd;
+	
+	@Value("${base_url_dg2}")
+    private String baseUrl;
+	
+	@Value("${domain.dawan}")
+    private String domainDawan;
+
+    @Value("${domain.jehann}")
+    private String domainJehann;
 
 	public HttpServletRequest getRequest() {
 		return request;
@@ -575,7 +584,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		user.setEntreprise(optEntreprise);
 		user.setAdresse(adresse);
 		user.setCentreFormation(centreFormation);
-				
+		user.setActive(true);
+		user.setExternalAccount(true);		
+		
 		user = utilisateurRepository.save(user);
 		
 		Tuteur tuteur = new Tuteur();
@@ -1055,7 +1066,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<EmployeeDG2Dto> cResJson;
 		
 		//url dg2 qui concerne la recupération des locations
-		URI url = new URI("https://dawan.org/api2/cfa/employees");
+		URI url = new URI(baseUrl + "employees");
 		
 		//recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();
@@ -1127,8 +1138,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public LoginResponseDto checkLogin(LoginDto loginDto) throws Exception {
 
-		if (loginDto.getLogin().contains("@dawan.fr") // TODO externalize domains in application.properties and split
-				|| loginDto.getLogin().contains("@jehann.fr")) {
+		if (loginDto.getLogin().contains(domainDawan) 
+				|| loginDto.getLogin().contains(domainJehann)) {
 
 			// login via LDAP
 			try {
