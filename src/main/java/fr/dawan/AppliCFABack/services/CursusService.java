@@ -29,4 +29,6 @@ public interface CursusService {
 
 	void fetchDG2Cursus(String email, String password) throws FetchDG2Exception, URISyntaxException;
 
+	CountDto countPromotion(long id);
+
 }

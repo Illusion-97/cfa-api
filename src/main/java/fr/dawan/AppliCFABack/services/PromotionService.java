@@ -9,6 +9,8 @@ import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -32,14 +34,13 @@ public interface PromotionService {
 	
 	CountDto countByCentreFormationId(long id, String search);
 
-	List<PromotionDto> getAllPromotions(int page, int size, String string);
+	List<PromotionDto> getAllPromotions( int page, int size,int choix, String string);
 
 	List<EtudiantDto> getEtudiantsById(long id);
 
 	List<PromotionDto> getAllByCursusId(long id);
 
 	List<PromotionDto> getPromotionByEtudiantIdAndByCursusId(long id);
-
 	/**
 	 * Erreur méthodes controller-service-repo à refaire avec un dto custom pour l'accueil entier
 	 */

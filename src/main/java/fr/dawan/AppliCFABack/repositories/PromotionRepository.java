@@ -43,11 +43,16 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	 * @return toutes les promotions dont le nom contient le champs de recherche,
 	 *         paginé
 	 */
-	@Query("SELECT p FROM Promotion p WHERE p.nom LIKE %:nom% ORDER BY p.dateFin DESC,p.nbParticipants DESC")
-	Page<Promotion> findAllByNomContainingAllIgnoreCase(String nom, Pageable pageable);
-	@Query("SELECT p FROM Promotion p WHERE p.centreFormation.nom LIKE %:ville% ORDER BY p.dateFin DESC,p.nbParticipants DESC")
-	Page<Promotion> findAllByCentreFormationNomAllIgnoreCase(String ville, Pageable pageable);
+	@Query("SELECT p FROM Promotion p WHERE (:search IS NULL OR p.centreFormation.nom LIKE %:search% OR p.nom LIKE %:search%) ORDER BY p.nbParticipants DESC, p.dateFin DESC")
+	Page<Promotion> findAllByNomOrCentreFormationNomIgnoreCase(
+			@Param("search") String search,
+			Pageable pageable);
 
+
+
+	Page<Promotion> findAllByOrderByNbParticipantsDesc(Pageable pageable);
+	Page<Promotion> findAllByOrderByDateFinDesc(Pageable pageable);
+	Page<Promotion> findAllByOrderByDateDebutDesc(Pageable pageable);
 	/**
 	 * 
 	 * @param id de l'intervention recherchée
@@ -72,6 +77,10 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 
 	@Query("SELECT p FROM Promotion p WHERE p.cursus.id = :idCursus ORDER BY p.dateFin DESC,p.nbParticipants DESC")
 	Page<Promotion> getAllPageablePromotionByCursusId (long idCursus, Pageable pageable);
+	
+	@Query("SELECT COUNT(DISTINCT p.id)FROM Promotion p WHERE p.cursus.id = :idCursus")
+	long countPromotionByCursusId(long idCursus);
+	
 	/**
 	 * 
 	 * @param id de l'étudiant recherché
