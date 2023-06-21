@@ -76,7 +76,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-21T17:02:41+0200",
+    date = "2023-06-21T17:07:20+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -121,6 +121,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         CentreFormationDto centreFormationDto = new CentreFormationDto();
 
+        centreFormationDto.setEntrepriseDto( entrepriseToEntrepriseDto( centreFormation.getEntreprise() ) );
+        centreFormationDto.setAdresseDto( adresseToAdresseDto( centreFormation.getAdresse() ) );
         centreFormationDto.setId( centreFormation.getId() );
         centreFormationDto.setVersion( centreFormation.getVersion() );
         centreFormationDto.setIdDg2( centreFormation.getIdDg2() );
@@ -390,8 +392,6 @@ public class DtoMapperImpl implements DtoMapper {
         promotionDto.setCursusDto( cursusToCursusDto( promotion.getCursus() ) );
         promotionDto.setCentreFormationDto( centreFormationToCentreFormationDto( promotion.getCentreFormation() ) );
         promotionDto.setCentreFormationAdresseVille( promotionCentreFormationNom( promotion ) );
-        promotionDto.setEtudiantsDto( etudiantListToEtudiantDtoList( promotion.getEtudiants() ) );
-        promotionDto.setInterventionsDto( interventionListToInterventionDtoList( promotion.getInterventions() ) );
         promotionDto.setExamensDto( examenSetToExamenDtoSet( promotion.getExamens() ) );
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
@@ -403,6 +403,20 @@ public class DtoMapperImpl implements DtoMapper {
         promotionDto.setNbParticipants( (int) promotion.getNbParticipants() );
 
         return promotionDto;
+    }
+
+    @Override
+    public List<PromotionDto> promotionListToPromotionDtoList(List<Promotion> promotion) {
+        if ( promotion == null ) {
+            return null;
+        }
+
+        List<PromotionDto> list = new ArrayList<PromotionDto>( promotion.size() );
+        for ( Promotion promotion1 : promotion ) {
+            list.add( promotionToPromotionDto( promotion1 ) );
+        }
+
+        return list;
     }
 
     @Override
@@ -960,32 +974,6 @@ public class DtoMapperImpl implements DtoMapper {
             return null;
         }
         return nom;
-    }
-
-    protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<EtudiantDto> list1 = new ArrayList<EtudiantDto>( list.size() );
-        for ( Etudiant etudiant : list ) {
-            list1.add( etudiantToEtudiantDto( etudiant ) );
-        }
-
-        return list1;
-    }
-
-    protected List<InterventionDto> interventionListToInterventionDtoList(List<Intervention> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<InterventionDto> list1 = new ArrayList<InterventionDto>( list.size() );
-        for ( Intervention intervention : list ) {
-            list1.add( interventionToInterventionDto( intervention ) );
-        }
-
-        return list1;
     }
 
     protected Set<ExamenDto> examenSetToExamenDtoSet(Set<Examen> set) {

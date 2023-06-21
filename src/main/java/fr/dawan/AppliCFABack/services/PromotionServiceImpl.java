@@ -3,11 +3,8 @@ package fr.dawan.AppliCFABack.services;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -16,7 +13,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -29,7 +29,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
@@ -102,6 +101,9 @@ public class PromotionServiceImpl implements PromotionService {
 
 	private static Logger logger = Logger.getGlobal();
 	
+	@Value("${base_url_dg2}")
+    private String baseUrl;
+	
 	/**
 	 * Récupération de la liste des promo
 	 * 
@@ -131,66 +133,6 @@ public class PromotionServiceImpl implements PromotionService {
 	public PromotionDto getById(long id){
 		return mapper.promotionToPromotionDto(promotionRepository.findById(id).get());
 	}
-	//@Override
-	/**public PromotionDto getById(long id) {
-		Optional<Promotion> promoOpt = promoRepo.findById(id);
-		Promotion promo = promoRepo.getOne(id);
-		PromotionDto pDto = mapper.promotionToPromotionDto(promo);
-				
-		pDto.setCursusDto(mapper.cursusToCursusDto(promo.getCursus()));
-		pDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(promo.getCentreFormation()));
-		pDto.setReferentPedagogiqueDto(mapper.utilisateurToUtilisateurDto(promo.getReferentPedagogique()));
-		pDto.setCefDto(mapper.cefToCEFDto(promo.getCef()));
-		pDto.getCefDto().setUtilisateurDto(mapper.utilisateurToUtilisateurDto(promo.getCef().getUtilisateur()));
-		pDto.setCentreFormationDto(mapper.centreFormationToCentreFormationDto(promo.getCentreFormation()));
-		
-		List<Etudiant> etudiants = promo.getEtudiants();
-		List<EtudiantDto> eDtos = new ArrayList<>();	
-		for(Etudiant e : etudiants) {
-			EtudiantDto eDto = mapper.etudiantToEtudiantDto(e);
-			List<GroupeEtudiantDto> gDtos = new ArrayList<>();
-			for(GroupeEtudiant g : e.getGroupes()) {
-				gDtos.add(mapper.groupeEtudiantToGroupEtudiantDto(g));
-			}
-			eDto.setGroupesDto(gDtos);
-			eDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(e.getUtilisateur()));
-			eDtos.add(eDto);
-		}
-		pDto.setEtudiantsDto(eDtos);
-		
-		List<Intervention> interventions = promo.getInterventions();
-		List<InterventionDto> iDtos = new ArrayList<>();	
-		for(Intervention i : interventions) {
-			InterventionDto iDto =mapper.interventionToInterventionDto(i);
-			iDto.setFormationDto(mapper.formationToFormationDto(i.getFormation()));
-			iDto.setHeuresDisponsees();
-			iDtos.add(iDto);
-		}
-		pDto.setInterventionsDto(iDtos);
-		Set<Examen> examens = promo.getExamens();
-		Set<ExamenDto> examenDtos = new HashSet<>();
-
-		for (Examen examen : examens) {
-			ExamenDto eDto = mapper.examenToExamenDto(examen);
-			Set<CompetenceProfessionnelle>competenceProfessionnelles = examen.getCompetencesProfessionnelles();
-			Set<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new HashSet<>();
-			for (CompetenceProfessionnelle cptP : competenceProfessionnelles) {
-				competenceProfessionnellesDto.add(mapper.competenceProfessionnelleDto(cptP));
-			}
-			eDto.setCompetencesProfessionnellesDto(competenceProfessionnellesDto);
-			
-			List<ActiviteType> activiteTypes = examen.getActiviteTypes();
-			List<ActiviteTypeDto> activiteTypesDto = new ArrayList<>();
-			for (ActiviteType at : activiteTypes) {
-				activiteTypesDto.add(mapper.activiteTypeToActiviteDto(at));
-			}
-			eDto.setActiviteTypesDto(activiteTypesDto);
-			examenDtos.add(eDto);
-		}		
-		pDto.setExamensDto(examenDtos);
-		return pDto;
-	}
-*/
 	/**
 	 * Sauvegarde ou mise à jour d'une promotion
 	 * 
@@ -199,33 +141,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public PromotionDto saveOrUpdate(PromotionDto pDto) {
 		Promotion p = DtoTools.convert(pDto, Promotion.class);
-		
 		p = promoRepo.saveAndFlush(p);
-		
-		/*
-	
-		//Les interventions sont mappés dans Intervention
-		if(pDto.getInterventionsDto() != null) {
-			//On vérifie pour chaque intervention de promotion
-			for(InterventionDto iDto : pDto.getInterventionsDto()) {
-				Intervention intervention = interventionRepository.findById(iDto.getId()).get();
-				//On vérifie si intervention ne connait pas promotion
-				boolean verif = false;
-				for(Promotion promotion : intervention.getPromotions()) {
-					if(promotion.getId() == p.getId()) verif = true;
-				}
-				//Si intervention ne connait pas promotion :
-				if(!verif) {
-					List<Promotion> promos = intervention.getPromotions();
-					promos.add(promoRepo.getOne(p.getId()));
-					intervention.setPromotions(promos);
-					interventionRepository.saveAndFlush(intervention);
-				}
-			}	
-		}
-		
-		*/
-		
 		filesService.createDirectory("promotions/" + p.getId());
 		
 		return mapper.promotionToPromotionDto(p);
@@ -281,16 +197,19 @@ public class PromotionServiceImpl implements PromotionService {
 	 */
 	
 	@Override
-	public List<PromotionDto> getAllPromotions(int page, int size, String search) {
-		List<Promotion> promoSlug = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
-		List<Promotion> promoVille = promoRepo.findAllByCentreFormationNomAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+	public List<PromotionDto> getAllPromotions(int page, int size, int choix, String search) {
+		//List<Promotion> promoSlug = promoRepo.findAllByNomContainingAllIgnoreCase(search, choix,PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Promotion> promoVille = promoRepo.findAllByNomOrCentreFormationNomIgnoreCase(search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<>();
-		if (!promoSlug.isEmpty()){
-			for (Promotion p : promoSlug) {
-				PromotionDto promotionDto = mapper.promotionToPromotionDto(p);
-				res.add(promotionDto);
-			}
+		switch (choix){
+			case 1: promoVille.sort(Comparator.comparing(Promotion::getNbParticipants).reversed());
+			break;
+			case 2: promoVille.sort(Comparator.comparing(Promotion::getDateFin).reversed());
+			break;
+			case 3: promoVille.sort(Comparator.comparing(Promotion::getDateDebut));
+			break;
 		}
+
 		if (!promoVille.isEmpty()){
 			for (Promotion p : promoVille) {
 				PromotionDto promotionDto = mapper.promotionToPromotionDto(p);
@@ -385,15 +304,6 @@ public class PromotionServiceImpl implements PromotionService {
 	 * 			- dates de début et de fin de la promotion
 	 * 			- plannings de l'étudiant par rapport à ses promotions
 	 */
-//	@Override
-//	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id){
-//		List<PromotionEtudiantDto> result = new ArrayList<>();
-//		List<Promotion> promotions = promoRepo.getByEtudiantId(id);
-//		for(Promotion p : promotions){
-//			result.add(DtoTools.convert(p, PromotionEtudiantDto.class));
-//		}
-//		return result;
-//	}
 
 	@Override
 	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id) {
@@ -464,7 +374,7 @@ public class PromotionServiceImpl implements PromotionService {
 		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>(); 
 		List<Promotion> result = new ArrayList<>();
 		
-		URI url = new URI("https://dawan.org/api2/cfa/trainings/" +idCursusDg2+ "/sessions");
+		URI url = new URI(baseUrl + "trainings/" +idCursusDg2+ "/sessions");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email+ ":" +password);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
@@ -592,7 +502,22 @@ public class PromotionServiceImpl implements PromotionService {
 		return res;
 	}
 
+	@Override
+	public List<PromotionDto> getPromotionByIdFormateur(long id, int page, int size, String search ) {
+		List<Promotion> result = promoRepo.findAllByFormateurId(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
+		List<PromotionDto> res = new ArrayList<>();
+		if (!result.isEmpty()) {
+			for (Promotion p: result) {
+				PromotionDto promotionDto =  mapper.promotionToPromotionDto(p);
+				res.add(promotionDto);
+			}
+		}
+		return res;
+	}
 
-
+	@Override
+	public CountDto countByFormateur(long id, String search) {
+		return new CountDto(promoRepo.countByFormateurId(id, search));
+	}
 
 }
