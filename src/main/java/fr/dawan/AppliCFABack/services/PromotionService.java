@@ -64,4 +64,8 @@ public interface PromotionService {
 	
 	List<PromotionDto> getPromoByCentreFormationIdPagination(int page, int size, long id, String search);
 
+	List<PromotionDto> getPromotionByIdFormateur(long id, int page, int size, String search);
+
+	CountDto countByFormateur(long id, String search);
+
 }

@@ -114,6 +114,10 @@ public class CursusController {
 		return lstCursusDto.get(0);
 	}
 
+	@GetMapping(value = "/countPromotion/{id}", produces = "application/json")
+	public CountDto countPromotion(@PathVariable(value = "id") long id) {
+		return cursusService.countPromotion(id);
+	}
 		
 	@GetMapping(value = "/count", produces = "application/json")
 	public CountDto count() {

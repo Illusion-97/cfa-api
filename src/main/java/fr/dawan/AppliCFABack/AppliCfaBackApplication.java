@@ -1,8 +1,5 @@
 package fr.dawan.AppliCFABack;
 
-import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +11,10 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 
 
 
@@ -62,7 +63,7 @@ public class AppliCfaBackApplication {
 			// Intercepteurs
 			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
-			  //registry.addInterceptor(tokenInterceptor);
+			  registry.addInterceptor(tokenInterceptor);
 			}
 
 			@Override

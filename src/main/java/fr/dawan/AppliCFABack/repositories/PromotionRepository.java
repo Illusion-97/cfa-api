@@ -61,7 +61,13 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	List<Promotion> findAllByInterventionsId(long id);
 
 	List<Promotion> findAllByReferentPedagogiqueId(long id);
+	
+	@Query("SELECT DISTINCT p FROM Promotion p JOIN p.interventions i JOIN p.centreFormation cf WHERE i.formateur.id = :id AND cf.nom LIKE %:search%")
+	Page<Promotion> findAllByFormateurId(@Param("id") long id, Pageable pageable, String search);
 
+	@Query("SELECT COUNT(DISTINCT p.id) FROM Promotion p JOIN p.interventions i JOIN p.centreFormation cf WHERE i.formateur.id = :id AND cf.nom LIKE %:search%")
+	long countByFormateurId(@Param("id") long id, String search);
+	
 	/**
 	 * 
 	 * @param id du cursus recherché
@@ -71,6 +77,10 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 
 	@Query("SELECT p FROM Promotion p WHERE p.cursus.id = :idCursus ORDER BY p.dateFin DESC,p.nbParticipants DESC")
 	Page<Promotion> getAllPageablePromotionByCursusId (long idCursus, Pageable pageable);
+	
+	@Query("SELECT COUNT(DISTINCT p.id)FROM Promotion p WHERE p.cursus.id = :idCursus")
+	long countPromotionByCursusId(long idCursus);
+	
 	/**
 	 * 
 	 * @param id de l'étudiant recherché

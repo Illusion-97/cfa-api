@@ -254,4 +254,44 @@ public class PromotionController {
 			@PathVariable("size") int size) {
 		return promoService.getPromoByCentreFormationIdPagination(page, size, id, "");
 	}
+	
+	@GetMapping(value = "/formateur/{idFormateur}/{page}/{size}/{search}", produces="application/json")
+	public List<PromotionDto> getPromoByFormateurId(
+			@PathVariable("idFormateur") long id, 
+			@PathVariable("page") int page,
+			@PathVariable("size") int size,
+			@PathVariable(value = "search",  required = false) Optional<String> search){
+		
+		if (search.isPresent()) 			
+			return  promoService.getPromotionByIdFormateur(id, page, size, search.get());
+		else 
+			return  promoService.getPromotionByIdFormateur(id, page, size, "");
+	}
+	
+	@GetMapping(value = "/formateur/{idFormateur}/{page}/{size}", produces="application/json")
+	public List<PromotionDto> getPromoByFormateurId(
+			@PathVariable("idFormateur") long id, 
+			@PathVariable("page") int page,
+			@PathVariable("size") int size){
+		
+		return  promoService.getPromotionByIdFormateur(id, page, size, "");
+	}
+	
+	@GetMapping(value = "/countByFormateurId/{idFormateur}/{search}", produces = "application/json")
+	public CountDto countByFormateurId(
+			@PathVariable("idFormateur") long id, 
+			@PathVariable(value = "search",  required = false) Optional<String> search) {
+		
+		if (search.isPresent()) 			
+			return  promoService.countByFormateur(id, search.get());
+		else 
+			return  promoService.countByFormateur(id, "");
+	}
+	
+	@GetMapping(value = "/countByFormateurId/{idFormateur}", produces = "application/json")
+	public CountDto countAllByFormateurId(
+			@PathVariable("idFormateur") long id) {
+		
+			return  promoService.countByFormateur(id, "");
+	}
 }

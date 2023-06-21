@@ -16,6 +16,7 @@ import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,9 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	private RestTemplate restTemplate;
 	
 	private static Logger logger = Logger.getGlobal();
+	
+	@Value("${base_url_dg2}")
+    private String baseUrl;
 
 	/**
 	 * Récupération de la liste des centres de formation
@@ -187,7 +191,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		List<CentreFormationDG2Dto> cResJson;
 		
 		//url dg2 qui concerne la recupération des locations
-		URI url = new URI("https://dawan.org/api2/cfa/locations");
+		URI url = new URI(baseUrl + "locations");
 		
 		//recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();

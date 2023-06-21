@@ -3,7 +3,16 @@ package fr.dawan.AppliCFABack.services;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+<<<<<<< HEAD
 import java.util.*;
+=======
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+>>>>>>> e5840ec4713a3fa064dddd21f529921e2ebafcde
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -99,6 +108,9 @@ public class PromotionServiceImpl implements PromotionService {
 	private DtoTools mapperTools;
 
 	private static Logger logger = Logger.getGlobal();
+	
+	@Value("${base_url_dg2}")
+    private String baseUrl;
 	
 	/**
 	 * Récupération de la liste des promo
@@ -408,15 +420,6 @@ public class PromotionServiceImpl implements PromotionService {
 	 * 			- dates de début et de fin de la promotion
 	 * 			- plannings de l'étudiant par rapport à ses promotions
 	 */
-//	@Override
-//	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id){
-//		List<PromotionEtudiantDto> result = new ArrayList<>();
-//		List<Promotion> promotions = promoRepo.getByEtudiantId(id);
-//		for(Promotion p : promotions){
-//			result.add(DtoTools.convert(p, PromotionEtudiantDto.class));
-//		}
-//		return result;
-//	}
 
 	@Override
 	public List<PromotionEtudiantDto> getCursusByIdEtudiant(long id) {
@@ -487,7 +490,7 @@ public class PromotionServiceImpl implements PromotionService {
 		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>(); 
 		List<Promotion> result = new ArrayList<>();
 		
-		URI url = new URI("https://dawan.org/api2/cfa/trainings/" +idCursusDg2+ "/sessions");
+		URI url = new URI(baseUrl + "trainings/" +idCursusDg2+ "/sessions");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email+ ":" +password);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
@@ -615,7 +618,22 @@ public class PromotionServiceImpl implements PromotionService {
 		return res;
 	}
 
+	@Override
+	public List<PromotionDto> getPromotionByIdFormateur(long id, int page, int size, String search ) {
+		List<Promotion> result = promoRepo.findAllByFormateurId(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
+		List<PromotionDto> res = new ArrayList<>();
+		if (!result.isEmpty()) {
+			for (Promotion p: result) {
+				PromotionDto promotionDto =  mapper.promotionToPromotionDto(p);
+				res.add(promotionDto);
+			}
+		}
+		return res;
+	}
 
-
+	@Override
+	public CountDto countByFormateur(long id, String search) {
+		return new CountDto(promoRepo.countByFormateurId(id, search));
+	}
 
 }
