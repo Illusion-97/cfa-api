@@ -3,11 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -16,7 +12,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -29,7 +28,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
@@ -281,10 +279,35 @@ public class PromotionServiceImpl implements PromotionService {
 	 */
 	
 	@Override
-	public List<PromotionDto> getAllPromotions(int page, int size, String search) {
-		List<Promotion> promoSlug = promoRepo.findAllByNomContainingAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+	public List<PromotionDto> getAllPromotions(int page, int size, int choix, String search) {
+		//List<Promotion> promoSlug = promoRepo.findAllByNomContainingAllIgnoreCase(search, choix,PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Promotion> promoVille = promoRepo.findAllByNomOrCentreFormationNomIgnoreCase(search,PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<PromotionDto> res = new ArrayList<>();
+		switch (choix){
+			case 1: promoVille.sort(Comparator.comparing(Promotion::getNbParticipants).reversed());
+			break;
+			case 2: promoVille.sort(Comparator.comparing(Promotion::getDateFin).reversed());
+			break;
+			case 3: promoVille.sort(Comparator.comparing(Promotion::getDateDebut));
+			break;
+		}
+
+		if (!promoVille.isEmpty()){
+			for (Promotion p : promoVille) {
+				PromotionDto promotionDto = mapper.promotionToPromotionDto(p);
+				res.add(promotionDto);
+			}
+		}
+
+		return res;
+	}
+
+	/*@Override
+	public List<PromotionDto> getPromotionsOrderedBy(String nom, int page, int choix) {
+		List<Promotion> promoSlug = promoRepo.findAllByNomContainingAllIgnoreCase(choix, nom,PageRequest.of(page, 10)).get().collect(Collectors.toList());
 		List<Promotion> promoVille = promoRepo.findAllByCentreFormationNomAllIgnoreCase(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<>();
+
 		if (!promoSlug.isEmpty()){
 			for (Promotion p : promoSlug) {
 				PromotionDto promotionDto = mapper.promotionToPromotionDto(p);
@@ -299,7 +322,7 @@ public class PromotionServiceImpl implements PromotionService {
 		}
 
 		return res;
-	}
+	}*/
 
 	/**
 	 * Récupération des etudiants en fonction de l'id de la promotion

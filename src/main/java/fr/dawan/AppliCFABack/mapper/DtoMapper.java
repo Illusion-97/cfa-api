@@ -88,8 +88,8 @@ public interface DtoMapper {
     @Mapping(source = "cursus", target = "cursusDto")
     @Mapping(source = "centreFormation", target = "centreFormationDto")
     @Mapping(source = "centreFormation.nom", target = "centreFormationAdresseVille")
-    @Mapping(source = "etudiants", target = "etudiantsDto")
-    @Mapping(source = "interventions", target = "interventionsDto")
+    //@Mapping(source = "etudiants", target = "etudiantsDto")
+    //@Mapping(source = "interventions", target = "interventionsDto")
     @Mapping(source = "examens", target = "examensDto")
     PromotionDto promotionToPromotionDto(Promotion promotion);
 

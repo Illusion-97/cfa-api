@@ -76,7 +76,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-16T16:16:31+0200",
+    date = "2023-06-21T11:27:57+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -392,8 +392,6 @@ public class DtoMapperImpl implements DtoMapper {
         promotionDto.setCursusDto( cursusToCursusDto( promotion.getCursus() ) );
         promotionDto.setCentreFormationDto( centreFormationToCentreFormationDto( promotion.getCentreFormation() ) );
         promotionDto.setCentreFormationAdresseVille( promotionCentreFormationNom( promotion ) );
-        promotionDto.setEtudiantsDto( etudiantListToEtudiantDtoList( promotion.getEtudiants() ) );
-        promotionDto.setInterventionsDto( interventionListToInterventionDtoList( promotion.getInterventions() ) );
         promotionDto.setExamensDto( examenSetToExamenDtoSet( promotion.getExamens() ) );
         promotionDto.setId( promotion.getId() );
         promotionDto.setVersion( promotion.getVersion() );
@@ -976,32 +974,6 @@ public class DtoMapperImpl implements DtoMapper {
             return null;
         }
         return nom;
-    }
-
-    protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<EtudiantDto> list1 = new ArrayList<EtudiantDto>( list.size() );
-        for ( Etudiant etudiant : list ) {
-            list1.add( etudiantToEtudiantDto( etudiant ) );
-        }
-
-        return list1;
-    }
-
-    protected List<InterventionDto> interventionListToInterventionDtoList(List<Intervention> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<InterventionDto> list1 = new ArrayList<InterventionDto>( list.size() );
-        for ( Intervention intervention : list ) {
-            list1.add( interventionToInterventionDto( intervention ) );
-        }
-
-        return list1;
     }
 
     protected Set<ExamenDto> examenSetToExamenDtoSet(Set<Examen> set) {
