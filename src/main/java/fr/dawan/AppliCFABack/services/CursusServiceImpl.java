@@ -83,6 +83,13 @@ public class CursusServiceImpl implements CursusService {
 		return promoRepo.getAllPageablePromotionByCursusId(idCursus, PageRequest.of(page, size)).map(promo ->
 				mapper.promotionToPromotionDto(promo));
 	}
+	
+	@Override
+	public CountDto countPromotion(long id) {
+		return new CountDto(
+				promoRepo.countPromotionByCursusId(id));
+	}
+	
 	/**
 	 * Va permettre de récupérer tous les cursus avec pagination
 	 * recherche par titre ou formation
