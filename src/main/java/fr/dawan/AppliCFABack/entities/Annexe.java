@@ -3,17 +3,21 @@ package fr.dawan.AppliCFABack.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+
+
+
+import java.io.File;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
 @Entity
 public class Annexe extends BaseEntity implements Serializable {
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String libelleAnnexe;
 
-    @Column(nullable = false)
-    private String pieceJointe;
+    @Column(nullable = true)
+    private File pieceJointe;
 
     @ManyToOne
     private DossierProfessionnel dossierProfessionnel;
@@ -26,15 +30,16 @@ public class Annexe extends BaseEntity implements Serializable {
 		this.libelleAnnexe = libelleAnnexe;
 	}
 
-	public String getPieceJointe() {
-        return pieceJointe;
-    }
 
-    public void setPieceJointe(String pieceJointe) {
-        this.pieceJointe = pieceJointe;
-    }
+	public File getPieceJointe() {
+		return pieceJointe;
+	}
 
-    public DossierProfessionnel getDossierProfessionnel() {
+	public void setPieceJointe(File pieceJointe) {
+		this.pieceJointe = pieceJointe;
+	}
+
+	public DossierProfessionnel getDossierProfessionnel() {
         return dossierProfessionnel;
     }
 

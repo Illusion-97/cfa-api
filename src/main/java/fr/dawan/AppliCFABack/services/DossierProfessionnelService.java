@@ -11,6 +11,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
