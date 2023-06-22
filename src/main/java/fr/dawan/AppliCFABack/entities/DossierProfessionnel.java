@@ -36,6 +36,7 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+	
 
 	public Cursus getCursus() {
 		return cursus;

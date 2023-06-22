@@ -1,13 +1,14 @@
 package fr.dawan.AppliCFABack.dto;
 
 
+import java.io.File;
 import java.io.Serializable;
 
 public class AnnexeDto extends BaseEntityDto implements Serializable {
 
     private String libelleAnnexe;
 
-    private String pieceJointe;
+    private File pieceJointe;
 
     private long dossierProfessionnelId;
 
@@ -20,19 +21,19 @@ public class AnnexeDto extends BaseEntityDto implements Serializable {
 		this.libelleAnnexe = libelleAnnexe;
 	}
 
-	public String getPieceJointe() {
+    public File getPieceJointe() {
 		return pieceJointe;
 	}
 
-	public void setPieceJointe(String pieceJointe) {
+	public void setPieceJointe(File pieceJointe) {
 		this.pieceJointe = pieceJointe;
 	}
 
 	public long getDossierProfessionnelId() {
-        return dossierProfessionnelId;
-    }
+		return dossierProfessionnelId;
+	}
 
-    public void setDossierProfessionnelId(long dossierProfessionnelId) {
+	public void setDossierProfessionnelId(long dossierProfessionnelId) {
         this.dossierProfessionnelId = dossierProfessionnelId;
     }
 }
