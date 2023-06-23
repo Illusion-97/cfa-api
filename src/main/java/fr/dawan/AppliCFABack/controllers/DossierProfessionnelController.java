@@ -120,20 +120,31 @@ public class DossierProfessionnelController {
 		return dossierProService.getByIdEtudiant(id);
 	}
 
-	@GetMapping(value = "/{page}/{size}", produces = "application/json")
-	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
-			@PathVariable(value = "size") int size) {
-		return dossierProService.getAllByPage(page, size, "");
-	}
+	/*@GetMapping(value = "/{page}/{size}/{idEtudiant}", produces = "application/json")
+	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(
+	    @PathVariable("page") int page,
+	    @PathVariable("size") int size,
+	    @PathVariable(value = "search", required = false) Optional<String> search,
+	    @PathVariable("idEtudiant") long idEtudiant
+	) {
+	    if (search.isPresent()) {
+	        return dossierProService.getAllByPage(page, size, search.get(), idEtudiant);
+	    } else {
+	        return dossierProService.getAllByPage(page, size, "", idEtudiant);
+	    }
+	}*/
+
+
 
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
 	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size,
 			@PathVariable(value = "search", required = false) Optional<String> search) {
-		if (search.isPresent())
-			return dossierProService.getAllByPage(page, size, search.get());
-		else
-			return dossierProService.getAllByPage(page, size, "");
+		if (search.isPresent()) {
+	        return dossierProService.getAllByPage(page, size, search.get());
+	    } else {
+	        return dossierProService.getAllByPage(page, size, "");
+	    }
 	}
 
 	@PostMapping(value = "/save/{id}", consumes = "application/json", produces = "application/json")
@@ -185,14 +196,15 @@ public class DossierProfessionnelController {
 
 	
 	@PostMapping(value = "/save/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
-	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id ,
-			@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
-		String path = storageFolder + "DossierProfessionnel" + "/";
-		 fileService.createDirectory(path);
-		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
-		DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
-		return dpE;
+	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
+	        @RequestParam("pieceJointe") List<MultipartFile> files) throws JsonMappingException, JsonProcessingException {
+	    String path = storageFolder + "DossierProfessionnel" + "/";
+	    fileService.createDirectory(path);
+	    DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
+	    DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, files);
+	    return dpE;
 	}
+
 
 	@GetMapping(value = "/etudiant",produces = "application/json")
 	public List<DossierProEtudiantDto> getAllDossierProfessionnel() {

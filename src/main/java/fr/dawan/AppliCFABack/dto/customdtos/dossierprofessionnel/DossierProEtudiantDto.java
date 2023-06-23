@@ -17,6 +17,7 @@ public class DossierProEtudiantDto implements Serializable {
     private List<AnnexeDto> annexeDtos;
     private List<FacultatifDto> facultatifDto;
     private String fileImport;
+    
     public String getFileImport() {
 		return fileImport;
 	}
