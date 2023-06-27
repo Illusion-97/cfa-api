@@ -1,341 +1,77 @@
-2023-06-23 10:14:35.482  INFO 16520 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
-2023-06-23 10:14:35.497  INFO 16520 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-23 10:14:35.513  INFO 16520 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2023-06-23 10:14:35.519  INFO 16520 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2023-06-23 10:14:45.507  INFO 25096 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on Sharnalk with PID 25096 (C:\Users\anasj\OneDrive\Documents\git_projet_cfa\cfa-portal-api\target\classes started by anasj in C:\Users\anasj\OneDrive\Documents\git_projet_cfa\cfa-portal-api)
-2023-06-23 10:14:45.509  INFO 25096 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
-2023-06-23 10:14:49.742  INFO 25096 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
-2023-06-23 10:14:49.887  INFO 25096 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 137ms. Found 38 JPA repository interfaces.
-2023-06-23 10:14:50.233  INFO 25096 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
-2023-06-23 10:14:50.239  INFO 25096 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-06-23 10:14:50.239  INFO 25096 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
-2023-06-23 10:14:51.366  INFO 25096 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-06-23 10:14:51.366  INFO 25096 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 5832 ms
-2023-06-23 10:14:51.641  INFO 25096 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-23 10:14:51.681  INFO 25096 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
-2023-06-23 10:14:51.776  INFO 25096 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
-2023-06-23 10:14:51.855  INFO 25096 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-06-23 10:14:51.886  INFO 25096 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-06-23 10:14:51.896  INFO 25096 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
-2023-06-23 10:14:53.385  INFO 25096 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-23 10:14:53.390  INFO 25096 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-23 10:14:53.769  INFO 25096 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
-2023-06-23 10:14:53.770  INFO 25096 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
-2023-06-23 10:14:53.808  WARN 25096 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-06-23 10:14:54.501  INFO 25096 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
-2023-06-23 10:14:54.544  INFO 25096 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
-2023-06-23 10:14:54.545  INFO 25096 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-06-23 10:14:54.545  INFO 25096 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
-2023-06-23 10:14:54.555  INFO 25096 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2023-06-23 10:14:54.555  INFO 25096 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 51 ms
-2023-06-23 10:14:54.560  INFO 25096 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-2023-06-23 10:14:54.685  INFO 25096 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
-2023-06-23 10:14:54.685  INFO 25096 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
-2023-06-23 10:14:55.401  INFO 25096 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
-2023-06-23 10:14:55.404  INFO 25096 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
-2023-06-23 10:14:55.405  INFO 25096 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
-2023-06-23 10:14:55.410  INFO 25096 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 10.113 seconds (JVM running for 17.082)
-2023-06-23 10:14:55.990  INFO 25096 --- [RMI TCP Connection(1)-192.168.0.45] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-23 10:14:55.990  INFO 25096 --- [RMI TCP Connection(1)-192.168.0.45] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-06-23 10:14:55.995  INFO 25096 --- [RMI TCP Connection(1)-192.168.0.45] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
-2023-06-23 10:14:57.379  WARN 25096 --- [RMI TCP Connection(2)-192.168.0.45] o.s.b.actuate.mail.MailHealthIndicator   : Mail health check failed
-
-javax.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not accepted. Learn more at
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials z5-20020a5d6545000000b003113bd9ecaesm8841561wrv.116 - gsmtp
-
-	at com.sun.mail.smtp.SMTPTransport$Authenticator.authenticate(SMTPTransport.java:947)
-	at com.sun.mail.smtp.SMTPTransport.authenticate(SMTPTransport.java:858)
-	at com.sun.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:762)
-	at javax.mail.Service.connect(Service.java:342)
-	at org.springframework.mail.javamail.JavaMailSenderImpl.connectTransport(JavaMailSenderImpl.java:518)
-	at org.springframework.mail.javamail.JavaMailSenderImpl.testConnection(JavaMailSenderImpl.java:398)
-	at org.springframework.boot.actuate.mail.MailHealthIndicator.doHealthCheck(MailHealthIndicator.java:42)
-	at org.springframework.boot.actuate.health.AbstractHealthIndicator.health(AbstractHealthIndicator.java:82)
-	at org.springframework.boot.actuate.health.HealthIndicator.getHealth(HealthIndicator.java:37)
-	at org.springframework.boot.actuate.health.HealthEndpoint.getHealth(HealthEndpoint.java:71)
-	at org.springframework.boot.actuate.health.HealthEndpoint.getHealth(HealthEndpoint.java:39)
-	at org.springframework.boot.actuate.health.HealthEndpointSupport.getContribution(HealthEndpointSupport.java:99)
-	at org.springframework.boot.actuate.health.HealthEndpointSupport.getAggregateHealth(HealthEndpointSupport.java:110)
-	at org.springframework.boot.actuate.health.HealthEndpointSupport.getContribution(HealthEndpointSupport.java:96)
-	at org.springframework.boot.actuate.health.HealthEndpointSupport.getHealth(HealthEndpointSupport.java:74)
-	at org.springframework.boot.actuate.health.HealthEndpointSupport.getHealth(HealthEndpointSupport.java:61)
-	at org.springframework.boot.actuate.health.HealthEndpoint.health(HealthEndpoint.java:65)
-	at org.springframework.boot.actuate.health.HealthEndpoint.health(HealthEndpoint.java:55)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:282)
-	at org.springframework.boot.actuate.endpoint.invoke.reflect.ReflectiveOperationInvoker.invoke(ReflectiveOperationInvoker.java:77)
-	at org.springframework.boot.actuate.endpoint.annotation.AbstractDiscoveredOperation.invoke(AbstractDiscoveredOperation.java:60)
-	at org.springframework.boot.actuate.endpoint.jmx.EndpointMBean.invoke(EndpointMBean.java:121)
-	at org.springframework.boot.actuate.endpoint.jmx.EndpointMBean.invoke(EndpointMBean.java:96)
-	at com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:819)
-	at com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:801)
-	at javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:1468)
-	at javax.management.remote.rmi.RMIConnectionImpl.access$300(RMIConnectionImpl.java:76)
-	at javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:1309)
-	at javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:1401)
-	at javax.management.remote.rmi.RMIConnectionImpl.invoke(RMIConnectionImpl.java:829)
-	at sun.reflect.GeneratedMethodAccessor193.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:357)
-	at sun.rmi.transport.Transport$1.run(Transport.java:200)
-	at sun.rmi.transport.Transport$1.run(Transport.java:197)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at sun.rmi.transport.Transport.serviceCall(Transport.java:196)
-	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:573)
-	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:834)
-	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:688)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:687)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-
-2023-06-23 10:23:31.550  INFO 25096 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
-2023-06-23 10:23:31.550  INFO 25096 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-23 10:23:31.563  INFO 25096 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2023-06-23 10:23:31.570  INFO 25096 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2023-06-23 10:23:34.486  INFO 27964 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on Sharnalk with PID 27964 (C:\Users\anasj\OneDrive\Documents\git_projet_cfa\cfa-portal-api\target\classes started by anasj in C:\Users\anasj\OneDrive\Documents\git_projet_cfa\cfa-portal-api)
-2023-06-23 10:23:34.488  INFO 27964 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
-2023-06-23 10:23:37.034  INFO 27964 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
-2023-06-23 10:23:37.177  INFO 27964 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 138ms. Found 38 JPA repository interfaces.
-2023-06-23 10:23:37.520  INFO 27964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
-2023-06-23 10:23:37.525  INFO 27964 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-06-23 10:23:37.526  INFO 27964 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
-2023-06-23 10:23:37.600  INFO 27964 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-06-23 10:23:37.601  INFO 27964 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3085 ms
-2023-06-23 10:23:37.895  INFO 27964 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-23 10:23:37.936  INFO 27964 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
-2023-06-23 10:23:38.049  INFO 27964 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
-2023-06-23 10:23:38.112  INFO 27964 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-06-23 10:23:38.142  INFO 27964 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-06-23 10:23:38.152  INFO 27964 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
-2023-06-23 10:23:39.521  INFO 27964 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-23 10:23:39.527  INFO 27964 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-23 10:23:39.899  INFO 27964 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
-2023-06-23 10:23:39.900  INFO 27964 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
-2023-06-23 10:23:39.937  WARN 27964 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-06-23 10:23:40.547  INFO 27964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
-2023-06-23 10:23:40.588  INFO 27964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
-2023-06-23 10:23:40.590  INFO 27964 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-06-23 10:23:40.590  INFO 27964 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
-2023-06-23 10:23:40.600  INFO 27964 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2023-06-23 10:23:40.600  INFO 27964 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 50 ms
-2023-06-23 10:23:40.607  INFO 27964 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-2023-06-23 10:23:40.752  INFO 27964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
-2023-06-23 10:23:40.752  INFO 27964 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
-2023-06-23 10:23:41.585  INFO 27964 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
-2023-06-23 10:23:41.587  INFO 27964 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
-2023-06-23 10:23:41.587  INFO 27964 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
-2023-06-23 10:23:41.593  INFO 27964 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 7.319 seconds (JVM running for 8.075)
-2023-06-23 10:23:42.090  INFO 27964 --- [RMI TCP Connection(1)-192.168.0.45] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-23 10:23:42.090  INFO 27964 --- [RMI TCP Connection(1)-192.168.0.45] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-06-23 10:23:42.095  INFO 27964 --- [RMI TCP Connection(1)-192.168.0.45] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
-2023-06-23 10:23:42.798  WARN 27964 --- [RMI TCP Connection(2)-192.168.0.45] o.s.b.actuate.mail.MailHealthIndicator   : Mail health check failed
-
-javax.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not accepted. Learn more at
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials f2-20020a056000128200b003062c0ef959sm8976987wrx.69 - gsmtp
-
-	at com.sun.mail.smtp.SMTPTransport$Authenticator.authenticate(SMTPTransport.java:947)
-	at com.sun.mail.smtp.SMTPTransport.authenticate(SMTPTransport.java:858)
-	at com.sun.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:762)
-	at javax.mail.Service.connect(Service.java:342)
-	at org.springframework.mail.javamail.JavaMailSenderImpl.connectTransport(JavaMailSenderImpl.java:518)
-	at org.springframework.mail.javamail.JavaMailSenderImpl.testConnection(JavaMailSenderImpl.java:398)
-	at org.springframework.boot.actuate.mail.MailHealthIndicator.doHealthCheck(MailHealthIndicator.java:42)
-	at org.springframework.boot.actuate.health.AbstractHealthIndicator.health(AbstractHealthIndicator.java:82)
-	at org.springframework.boot.actuate.health.HealthIndicator.getHealth(HealthIndicator.java:37)
-	at org.springframework.boot.actuate.health.HealthEndpoint.getHealth(HealthEndpoint.java:71)
-	at org.springframework.boot.actuate.health.HealthEndpoint.getHealth(HealthEndpoint.java:39)
-	at org.springframework.boot.actuate.health.HealthEndpointSupport.getContribution(HealthEndpointSupport.java:99)
-	at org.springframework.boot.actuate.health.HealthEndpointSupport.getAggregateHealth(HealthEndpointSupport.java:110)
-	at org.springframework.boot.actuate.health.HealthEndpointSupport.getContribution(HealthEndpointSupport.java:96)
-	at org.springframework.boot.actuate.health.HealthEndpointSupport.getHealth(HealthEndpointSupport.java:74)
-	at org.springframework.boot.actuate.health.HealthEndpointSupport.getHealth(HealthEndpointSupport.java:61)
-	at org.springframework.boot.actuate.health.HealthEndpoint.health(HealthEndpoint.java:65)
-	at org.springframework.boot.actuate.health.HealthEndpoint.health(HealthEndpoint.java:55)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:282)
-	at org.springframework.boot.actuate.endpoint.invoke.reflect.ReflectiveOperationInvoker.invoke(ReflectiveOperationInvoker.java:77)
-	at org.springframework.boot.actuate.endpoint.annotation.AbstractDiscoveredOperation.invoke(AbstractDiscoveredOperation.java:60)
-	at org.springframework.boot.actuate.endpoint.jmx.EndpointMBean.invoke(EndpointMBean.java:121)
-	at org.springframework.boot.actuate.endpoint.jmx.EndpointMBean.invoke(EndpointMBean.java:96)
-	at com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:819)
-	at com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:801)
-	at javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:1468)
-	at javax.management.remote.rmi.RMIConnectionImpl.access$300(RMIConnectionImpl.java:76)
-	at javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:1309)
-	at javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:1401)
-	at javax.management.remote.rmi.RMIConnectionImpl.invoke(RMIConnectionImpl.java:829)
-	at sun.reflect.GeneratedMethodAccessor191.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:357)
-	at sun.rmi.transport.Transport$1.run(Transport.java:200)
-	at sun.rmi.transport.Transport$1.run(Transport.java:197)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at sun.rmi.transport.Transport.serviceCall(Transport.java:196)
-	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:573)
-	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:834)
-	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:688)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:687)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-
-2023-06-23 10:26:55.578 ERROR 27964 --- [http-nio-8085-exec-2] global                                   : java.lang.NullPointerException
-	at fr.dawan.AppliCFABack.services.UtilisateurServiceImpl.getAllJourneePlanningByIdUtilisateur(UtilisateurServiceImpl.java:699)
-	at fr.dawan.AppliCFABack.services.UtilisateurServiceImpl$$FastClassBySpringCGLIB$$7d195ba4.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:771)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:367)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:118)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
-	at fr.dawan.AppliCFABack.services.UtilisateurServiceImpl$$EnhancerBySpringCGLIB$$3f728f2c.getAllJourneePlanningByIdUtilisateur(<generated>)
-	at fr.dawan.AppliCFABack.controllers.UtilisateurController.getAllJourneePlanningByIdUtilisateur(UtilisateurController.java:190)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:879)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:793)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.servlet.resource.ResourceUrlEncodingFilter.doFilter(ResourceUrlEncodingFilter.java:64)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:373)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:750)
-
-2023-06-23 10:27:31.117 ERROR 27964 --- [http-nio-8085-exec-3] global                                   : java.lang.NullPointerException
-	at fr.dawan.AppliCFABack.services.UtilisateurServiceImpl.getAllJourneePlanningByIdUtilisateur(UtilisateurServiceImpl.java:699)
-	at fr.dawan.AppliCFABack.services.UtilisateurServiceImpl$$FastClassBySpringCGLIB$$7d195ba4.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:771)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:367)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:118)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
-	at fr.dawan.AppliCFABack.services.UtilisateurServiceImpl$$EnhancerBySpringCGLIB$$3f728f2c.getAllJourneePlanningByIdUtilisateur(<generated>)
-	at fr.dawan.AppliCFABack.controllers.UtilisateurController.getAllJourneePlanningByIdUtilisateur(UtilisateurController.java:190)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:879)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:793)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.servlet.resource.ResourceUrlEncodingFilter.doFilter(ResourceUrlEncodingFilter.java:64)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:373)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:750)
-
-2023-06-23 10:29:39.145  INFO 27964 --- [http-nio-8085-exec-2] global                                   : Controller getAll
-2023-06-23 10:30:10.981  INFO 27964 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
-2023-06-23 10:30:10.981  INFO 27964 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-23 10:30:10.985  INFO 27964 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2023-06-23 10:30:10.991  INFO 27964 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-06-27 09:41:01.717  INFO 27244 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 27244 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-06-27 09:41:01.724  INFO 27244 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-06-27 09:41:06.277  INFO 27244 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-06-27 09:41:06.998  INFO 27244 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 688ms. Found 38 JPA repository interfaces.
+2023-06-27 09:41:09.233  INFO 27244 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-06-27 09:41:09.263  INFO 27244 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-06-27 09:41:09.264  INFO 27244 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-06-27 09:41:09.619  INFO 27244 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-06-27 09:41:09.620  INFO 27244 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 7829 ms
+2023-06-27 09:41:10.591  INFO 27244 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-06-27 09:41:10.900  INFO 27244 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-06-27 09:41:11.549  INFO 27244 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-06-27 09:41:11.782  INFO 27244 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-06-27 09:41:11.891  INFO 27244 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-06-27 09:41:11.965  INFO 27244 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-06-27 09:41:16.887  INFO 27244 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-06-27 09:41:16.917  INFO 27244 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 09:41:19.072  INFO 27244 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-06-27 09:41:19.074  INFO 27244 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-06-27 09:41:19.241  WARN 27244 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-06-27 09:41:22.412  INFO 27244 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-06-27 09:41:22.645  INFO 27244 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-06-27 09:41:22.647  INFO 27244 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-06-27 09:41:22.647  INFO 27244 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-06-27 09:41:22.715  INFO 27244 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-06-27 09:41:22.715  INFO 27244 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 285 ms
+2023-06-27 09:41:22.745  INFO 27244 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-06-27 09:41:22.770  INFO 27244 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-06-27 09:41:22.771  INFO 27244 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-06-27 09:41:22.805  INFO 27244 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 34 ms
+2023-06-27 09:41:23.381  INFO 27244 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-06-27 09:41:23.385  INFO 27244 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-06-27 09:41:27.194  INFO 27244 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-06-27 09:41:27.197  INFO 27244 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-06-27 09:41:27.198  INFO 27244 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-06-27 09:41:27.199  INFO 27244 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 26.182 seconds (JVM running for 29.063)
+2023-06-27 09:50:24.626  INFO 30160 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 30160 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-06-27 09:50:24.632  INFO 30160 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-06-27 09:50:27.043  INFO 30160 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-06-27 09:50:27.608  INFO 30160 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 542ms. Found 38 JPA repository interfaces.
+2023-06-27 09:50:28.678  INFO 30160 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-06-27 09:50:28.692  INFO 30160 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-06-27 09:50:28.693  INFO 30160 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-06-27 09:50:28.829  INFO 30160 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-06-27 09:50:28.829  INFO 30160 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4062 ms
+2023-06-27 09:50:29.180  INFO 30160 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-06-27 09:50:29.240  INFO 30160 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-06-27 09:50:29.406  INFO 30160 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-06-27 09:50:29.522  INFO 30160 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-06-27 09:50:29.584  INFO 30160 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-06-27 09:50:29.611  INFO 30160 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-06-27 09:50:33.204  INFO 30160 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-06-27 09:50:33.228  INFO 30160 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 09:50:34.108  INFO 30160 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-06-27 09:50:34.110  INFO 30160 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-06-27 09:50:34.167  WARN 30160 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-06-27 09:50:35.663  INFO 30160 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-06-27 09:50:35.753  INFO 30160 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-06-27 09:50:35.754  INFO 30160 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-06-27 09:50:35.754  INFO 30160 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-06-27 09:50:35.785  INFO 30160 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-06-27 09:50:35.785  INFO 30160 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 117 ms
+2023-06-27 09:50:35.798  INFO 30160 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-06-27 09:50:35.816  INFO 30160 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-06-27 09:50:35.816  INFO 30160 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-06-27 09:50:35.831  INFO 30160 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 15 ms
+2023-06-27 09:50:36.062  INFO 30160 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-06-27 09:50:36.063  INFO 30160 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-06-27 09:50:37.727  INFO 30160 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-06-27 09:50:37.730  INFO 30160 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-06-27 09:50:37.732  INFO 30160 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-06-27 09:50:37.732  INFO 30160 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 13.724 seconds (JVM running for 15.338)
+2023-06-27 11:51:31.015  INFO 30160 --- [RMI TCP Connection(125)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-06-27 11:51:31.468  INFO 30160 --- [RMI TCP Connection(125)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-06-27 11:51:31.469  INFO 30160 --- [RMI TCP Connection(125)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 11:51:31.471  INFO 30160 --- [RMI TCP Connection(125)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-06-27 11:51:31.476  INFO 30160 --- [RMI TCP Connection(125)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
