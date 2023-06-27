@@ -1104,7 +1104,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 							utilisateurImport.setId(optUtlisateur.get().getId());
 							utilisateurImport.setVersion(optUtlisateur.get().getVersion());
 							utilisateurImport.setActive(true);
-						
+	
 						}
 					}
 					try {
