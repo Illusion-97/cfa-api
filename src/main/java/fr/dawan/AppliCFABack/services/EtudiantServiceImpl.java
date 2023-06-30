@@ -247,30 +247,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return res;
 	}
 
-//	@Override
-//	public List<EtudiantDto> getAllByPage(int page, int size, String search) {
-//		List<Etudiant> lst = etudiantRepository.findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
-//
-//		// conversion vers Dto
-//		List<EtudiantDto> lstDto = new ArrayList<EtudiantDto>();
-//		for (Etudiant e : lst) {
-//			EtudiantDto eDto = DtoTools.convert(e, EtudiantDto.class);
-//			
-//			List<PromotionDto> promotionsDto = new ArrayList<PromotionDto>();
-//			for(Promotion p : e.getPromotions()) {
-//				promotionsDto.add(DtoTools.convert(p, PromotionDto.class));
-//			}
-//			eDto.setPromotionsDto(promotionsDto);
-//			lstDto.add(eDto);
-//		}
-//		return lstDto;
-//	}
-//
-//	@Override
-//	public CountDto count(String search) {
-//		return new CountDto(etudiantRepository.countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCase(search, search, search));
-//	}
-
 	/**
 	 * Récupération des etudiants en fonction de l'id
 	 *

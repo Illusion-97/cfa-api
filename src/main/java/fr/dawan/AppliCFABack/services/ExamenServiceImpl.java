@@ -111,6 +111,14 @@ public class ExamenServiceImpl implements ExamenService {
 		}
 		return lstDto;
 	}
+	
+	 //methode opti à essayer  : 
+	  /*public List<ExamenDto> getAllExamen() {
+	    List<Examen> lstExamen = examenRepository.findAll();
+	    return lstExamen.stream()
+	        .map(examen -> mapper.examenToExamenDto(examen))
+	        .collect(Collectors.toList());
+	  }*/
 
 	//recuperation de la liste des examens avec pagination et recherche
 	/**
@@ -173,6 +181,13 @@ public class ExamenServiceImpl implements ExamenService {
 		return null;
 
 	}
+	/*methode opti : 
+	 *   public ExamenDto getById(long id) {
+    return examenRepository.findById(id)
+        .map(examen -> mapper.examenToExamenDto(examen))
+        .orElse(null);
+  	}
+	 */
 
 	/**
 	 * Sauvegarde ou mise à jour d'un examen
@@ -273,16 +288,6 @@ public class ExamenServiceImpl implements ExamenService {
 	 * 			- liste de satisfactions
 	 * 			- liste d'observations
 	 */
-//	@Override
-//	public List<EtudiantLivretEvaluationDto> getLivretEvaluation(long id) {
-//		List<EtudiantLivretEvaluationDto> result = new ArrayList<>();
-//		List<Examen> list = examenRepository.findallByEtudiantId(id);
-//
-//		for(Examen e : list) {
-//			result.add(mapperTools.examenToLivretEvaluationDto(e));
-//		}
-//		return result;
-//	}
 
 	@Override
 	public String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws ToPdf, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
