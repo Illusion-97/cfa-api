@@ -41,36 +41,35 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 
 	@Autowired
 	AdresseRepository adresseRepository;
-	
+
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	private static Logger logger = Logger.getGlobal();
-	
+
 	@Value("${base_url_dg2}")
-    private String baseUrl;
+	private String baseUrl;
 
 	/**
 	 * Récupération de la liste des centres de formation
 	 * 
 	 * @return lstDto	Liste des objets centre de formation
 	 */
-	
+
 	@Override
 	public List<CentreFormationDto> getAllCentreFormation() {
 		List<CentreFormation> lst = centreFormationRepository.findAll();
-
-		List<CentreFormationDto> lstDto = new ArrayList<>();
-		for (CentreFormation cf : lst) {
-			CentreFormationDto cDto = mapper.centreFormationToCentreFormationDto(cf);
-			cDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(cf.getEntreprise()));
-			cDto.setAdresseDto(mapper.adresseToAdresseDto(cf.getAdresse()));
-			lstDto.add(cDto);
-		}
-		return lstDto;
+		return lst.stream()
+				.map(cf -> {
+					CentreFormationDto cDto = mapper.centreFormationToCentreFormationDto(cf);
+					cDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(cf.getEntreprise()));
+					cDto.setAdresseDto(mapper.adresseToAdresseDto(cf.getAdresse()));
+					return cDto;
+				})
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -80,7 +79,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	 * @param size	éléments sur la page
 	 * @return LstDto Liste des objets centre de formation
 	 */
-	
+
 	@Override
 	public List<CentreFormationDto> getAllCentreFormation(int page, int size) {
 		List<CentreFormation> lst = centreFormationRepository.findAll(PageRequest.of(page, size)).get()
@@ -101,14 +100,14 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	 * Récupération des centres de formation en fonction de l'id
 	 * 
 	 */
-	
+
 	@Override
 	public CentreFormationDto getById(long id) {
 		Optional<CentreFormation> cf = centreFormationRepository.findById(id);
 		if (!cf.isPresent()) return null;
-		
+
 		CentreFormationDto cDto = mapper.centreFormationToCentreFormationDto(cf.get());
-		
+
 		return cDto;
 	}
 
@@ -116,7 +115,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	 * Sauvegarde ou mise à jour d'un centre de formation
 	 * 
 	 */
-	
+
 	@Override
 	public CentreFormationDto saveOrUpdate(CentreFormationDto cfDto) {
 		CentreFormation cf = DtoTools.convert(cfDto, CentreFormation.class);
@@ -131,7 +130,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	 * 
 	 * @param id	Id concernant un centre de formation
 	 */
-	
+
 	@Override
 	public void deleteById(long id) {
 		centreFormationRepository.deleteById(id);
@@ -143,10 +142,10 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	 * 
 	 * @param search recherche par nom
 	 */
-	
+
 	@Override
 	public CountDto count(String search) {
-		
+
 		return new CountDto(centreFormationRepository.countByNomContaining(search));
 	}
 
@@ -158,7 +157,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	 * @param search éléments centres de formation
 	 * @return LstDto Liste des objets centre de formation
 	 */
-	
+
 	@Override
 	public List<CentreFormationDto> getAllCentreFormations(int page, int size, String search) {
 		List<CentreFormation> cf = centreFormationRepository.findAllByNomContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -189,10 +188,10 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	public void fetchAllDG2CentreFormation(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<CentreFormationDG2Dto> cResJson;
-		
+
 		//url dg2 qui concerne la recupération des locations
 		URI url = new URI(baseUrl + "locations");
-		
+
 		//recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
@@ -212,7 +211,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 				Optional<CentreFormation> optCentre = centreFormationRepository.findByIdDg2(centreImport.getIdDg2());
 				//Vérification et ajout de l'adresse 
 				if ( cDG2.getAddress() != null && !cDG2.getAddress().trim().isEmpty()) {
-					
+
 					Adresse  adresse = new Adresse();
 					adresse.setLibelle(cDG2.getAddress());
 					adresse.setCodePostal(cDG2.getZipCode());
@@ -225,15 +224,15 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 								adresse.setVersion(optCentre.get().getAdresse().getVersion());
 								adresseRepository.saveAndFlush(adresse);
 							}
-							
+
 						}
 					}
 					else {
 						centreImport.setAdresse(adresse);
 					}
-					
+
 				}
-				
+
 				if (optCentre.isPresent()) {
 					if (optCentre.get().equals(centreImport))
 						continue;
