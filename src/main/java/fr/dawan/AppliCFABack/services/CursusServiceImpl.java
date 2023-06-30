@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -34,7 +33,6 @@ import fr.dawan.AppliCFABack.dto.FormationDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Formation;
-import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
@@ -54,29 +52,26 @@ public class CursusServiceImpl implements CursusService {
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	private static Logger logger = Logger.getGlobal();
-	
+
 	@Value("${base_url_dg2}")
-    private String baseUrl;
+	private String baseUrl;
 
 	/**
 	 * Récupération de la liste des cursus
 	 * 
 	 * @return lstDto	Liste des objets cursus
 	 */
-	
+
 	@Override
 	public List<CursusDto> getAll() {
-		List<Cursus> lst = cursusRepo.findAll();
-		List<CursusDto> lstDto = new ArrayList<>();
-		for (Cursus c : lst) {
-			lstDto.add(mapper.cursusToCursusDto(c));
-		}
-		return lstDto;
+		return cursusRepo.findAll().stream()
+				.map(mapper::cursusToCursusDto)
+				.collect(Collectors.toList());
 	}
 
 	public Page<PromotionDto> getByIdPromotionAndByPage(long idCursus, int page, int size){
@@ -84,13 +79,13 @@ public class CursusServiceImpl implements CursusService {
 		return promoRepo.getAllPageablePromotionByCursusId(idCursus, PageRequest.of(page, size))
 				.map(promo -> mapper.promotionToPromotionDto(promo));
 	}
-	
+
 	@Override
 	public CountDto countPromotion(long id) {
 		return new CountDto(
 				promoRepo.countPromotionByCursusId(id));
 	}
-	
+
 	/**
 	 * Va permettre de récupérer tous les cursus avec pagination
 	 * recherche par titre ou formation
@@ -100,7 +95,7 @@ public class CursusServiceImpl implements CursusService {
 	 * @param search éléménts du cursus
 	 * @return LstDto Liste des objets cursus
 	 */
-	
+
 	@Override
 	public List<CursusDto> getAllByPage(int page, int size, String search) {
 		List<Cursus> lst = cursusRepo
@@ -129,7 +124,7 @@ public class CursusServiceImpl implements CursusService {
 	 * 
 	 * @param search recherche par titre ou titre d'une formation
 	 */
-	
+
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(
@@ -140,7 +135,7 @@ public class CursusServiceImpl implements CursusService {
 	 * Sauvegarde ou mise à jour d'un cursus
 	 * 
 	 */
-	
+
 	@Override
 	public CursusDto saveOrUpdate(CursusDto cDto) {
 		Cursus c = DtoTools.convert(cDto, Cursus.class);
@@ -153,7 +148,7 @@ public class CursusServiceImpl implements CursusService {
 	 * 
 	 * @param id	Id concernant le cursus
 	 */
-	
+
 	@Override
 	public void deleteById(long id) {
 		cursusRepo.deleteById(id);
@@ -164,7 +159,7 @@ public class CursusServiceImpl implements CursusService {
 	 * Récupération des cursus en fonction de l'id
 	 * 
 	 */
-	
+
 	@Override
 	public CursusDto getById(long id) {
 		Optional<Cursus> c = cursusRepo.findById(id);
@@ -215,16 +210,16 @@ public class CursusServiceImpl implements CursusService {
 	 * @exception Exception retourne une exception,
 	 * si erreur dans la récupération des cursus
 	 */
-	
+
 	//import des cursus DG2
 	@Override
 	public void fetchDG2Cursus(String email, String password) throws  FetchDG2Exception, URISyntaxException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<CursusDG2Dto> fResJson = new ArrayList<>();
-		
+
 		//url dg2 qui concerne la recupération des cursus
 		URI url = new URI( baseUrl + "pro-titles");
-		
+
 		//recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
@@ -235,7 +230,7 @@ public class CursusServiceImpl implements CursusService {
 			ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
 			if (repWs.getStatusCode() == HttpStatus.OK) {
 				String json = repWs.getBody();
-				
+
 				try {
 					//recuperation des values en json et lecture
 					fResJson = objectMapper.readValue(json, new TypeReference<List<CursusDG2Dto>>() { 
@@ -263,7 +258,7 @@ public class CursusServiceImpl implements CursusService {
 						try {
 							cursusRepo.saveAndFlush(cursusImport);
 						} catch (Exception e) {
-			
+
 							logger.log(Level.SEVERE, "Failed save dg2", e);
 						}
 					}
@@ -276,6 +271,6 @@ public class CursusServiceImpl implements CursusService {
 
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
-		
+
 	}
 }

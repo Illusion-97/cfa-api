@@ -25,29 +25,29 @@ import java.util.Optional;
 @Service
 @Transactional
 public class BlocEvaluationServiceImpl implements BlocEvaluationService  {
-@Autowired
-private BlocEvaluationRepository blocEvaluationRepository;
-@Autowired
-private EvaluationFormationRepository evaluationFormationRepository;
+
+	@Autowired
+	private BlocEvaluationRepository blocEvaluationRepository;
+
+	@Autowired
+	private EvaluationFormationRepository evaluationFormationRepository;
+
 	@Override
 	public BlocEvaluationDto getById(long id) {
-		Optional<BlocEvaluation> blocEvaluation = blocEvaluationRepository.findById(id);
-		if (blocEvaluation.isPresent()) {
-			return DtoTools.convert(blocEvaluation.get(), BlocEvaluationDto.class);
-
-		}
-		return null;
+	    return blocEvaluationRepository.findById(id)
+	            .map(blocEvaluation -> DtoTools.convert(blocEvaluation, BlocEvaluationDto.class))
+	            .orElse(null);
 	}
 
 	@Override
 	public BlocEvaluationDto saveOrUpdate(BlocEvaluationDto tDto) throws SaveInvalidException {
-		
+
 		List<EvaluationFormation> evaluationFormations = new ArrayList<>();
 		for (Long id : tDto.getEvaluationsFormationsId()) {
-		EvaluationFormation evaF = 	 evaluationFormationRepository.getOne(id);
-		evaluationFormations.add(evaF);
+			EvaluationFormation evaF = 	 evaluationFormationRepository.getOne(id);
+			evaluationFormations.add(evaF);
 		}
-		
+
 		BlocEvaluation blocE = DtoTools.convert(tDto, BlocEvaluation.class);
 		blocE.setEvaluationFormations(evaluationFormations);
 		blocE = blocEvaluationRepository.saveAndFlush(blocE);

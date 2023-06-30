@@ -1,18 +1,21 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.entities.DevoirEtudiant;
 import fr.dawan.AppliCFABack.repositories.DevoirEtudiantRepository;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 /***
  * 
@@ -39,13 +42,11 @@ public class DevoirEtudiantServiceImpl implements DevoirEtudiantService {
 	 */
 	@Override
 	public DevoirEtudiantDto getById(long id) {
-
 		Optional<DevoirEtudiant> dE = devoirEtudiantRepository.findById(id);
-		if (dE.isPresent())
-			return DtoTools.convert(dE.get(), DevoirEtudiantDto.class);
-
-		return null;
+		return dE.map(devoirEtudiant -> DtoTools.convert(devoirEtudiant, DevoirEtudiantDto.class))
+				.orElseThrow(() -> new NoSuchElementException("DevoirEtudiant non trouvé avec l'ID : " + id));
 	}
+
 
 	/**
 	 * Sauvegarde ou mise à jour du DevoirEtudiant
@@ -97,15 +98,10 @@ public class DevoirEtudiantServiceImpl implements DevoirEtudiantService {
 	 */
 	@Override
 	public List<DevoirEtudiantDto> getAllByEtudiantId(long id) {
-
 		List<DevoirEtudiant> devoirsEtudiants = devoirEtudiantRepository.getAllByEtudiantId(id);
-		List<DevoirEtudiantDto> result = new ArrayList<>();
-
-		for (DevoirEtudiant devoirEtudiant : devoirsEtudiants) {
-			result.add(DtoTools.convert(devoirEtudiant, DevoirEtudiantDto.class));
-
-		}
-		return result;
+		return devoirsEtudiants.stream()
+				.map(devoirEtudiant -> DtoTools.convert(devoirEtudiant, DevoirEtudiantDto.class))
+				.collect(Collectors.toList());
 	}
 
 	/***
@@ -117,13 +113,9 @@ public class DevoirEtudiantServiceImpl implements DevoirEtudiantService {
 	@Override
 	public List<DevoirEtudiantDto> getAllByDevoirId(long id) {
 		List<DevoirEtudiant> devoirsEtudiants = devoirEtudiantRepository.getAllByDevoirId(id);
-		List<DevoirEtudiantDto> result = new ArrayList<>();
-
-		for (DevoirEtudiant devoirEtudiant : devoirsEtudiants) {
-			result.add(DtoTools.convert(devoirEtudiant, DevoirEtudiantDto.class));
-
-		}
-		return result;
+		return devoirsEtudiants.stream()
+				.map(devoirEtudiant -> DtoTools.convert(devoirEtudiant, DevoirEtudiantDto.class))
+				.collect(Collectors.toList());
 	}
 
 }
