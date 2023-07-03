@@ -299,13 +299,24 @@ public interface DtoMapper {
 	@Mapping(source = "street", target = "libelle")
     Adresse etudiantUtilisateurDG2DtoToAdresse(EtudiantUtilisateurDG2Dto eDG2);
 
-	@Mapping(source = ".", target = ".")
+	@Mapping(source = "id", target = "id")
+	@Mapping(source = "libelleAnnexe", target = "libelleAnnexe")
+	@Mapping(source = "pieceJointe", target = "pieceJointe")
+	//@Mapping(source = "dossierProfessionnel", target = "dossierProfessionnelId")
 	List<AnnexeDto> annexeToAnnexeDto(List<Annexe> annexes);
 	
-	@Mapping(source = ".", target = ".")
+	@Mapping(source = "id", target = "id")
+	@Mapping(source = "intitule", target = "intitule")
+	@Mapping(source = "organisme", target = "organisme")
+	@Mapping(source = "date", target = "date")
 	List<FacultatifDto> facultatifToFacultatifDto(List<Facultatif> facultatifs);
 
-	@Mapping(source = ".", target = ".")
+	@Mapping(source = "id", target = "id")
+	@Mapping(source = "tacheRealisee", target = "tacheRealisee")
+	@Mapping(source = "moyenUtilise", target = "moyenUtilise")
+	@Mapping(source = "collaborateur", target = "collaborateur")
+	@Mapping(source = "contexte", target = "contexte")
+	@Mapping(source = "information", target = "information")
 	List<ExperienceProfessionnelleDto> experienceProfessionnelleToExperienceProfessionnelleDto(
 			List<ExperienceProfessionnelle> experienceProfessionnelles);
     @Mapping(source = "intervention.id", target = "interventionId")

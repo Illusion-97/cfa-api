@@ -25,7 +25,7 @@ public interface DossierProfessionnelRepository extends JpaRepository<DossierPro
 	
 	long countByNom(String nom);
 
-	Page<DossierProfessionnel> findByNomContaining(String string, Pageable pageable);
+	Page<DossierProfessionnel> findByNomContaining(String string , Pageable pageable);
 
 
 

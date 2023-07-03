@@ -126,6 +126,9 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         if (dp.isPresent()) {
             DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp.get());
             dpDto.setCursusDto(mapper.cursusToCursusDto(dp.get().getCursus()));
+            dpDto.setExperienceProfessionnelleDtos(mapper.experienceProfessionnelleToExperienceProfessionnelleDto(dp.get().getExperienceProfessionnelles()));
+            dpDto.setAnnexeDtos(mapper.annexeToAnnexeDto(dp.get().getAnnexes()));
+            dpDto.setFacultatifDto(mapper.facultatifToFacultatifDto(dp.get().getFacultatifs()));
             return dpDto;
         }
         return null;
@@ -143,9 +146,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
     @Override
     public List<DossierProfessionnelDto> getAllByPage(int page, int size, String string) {
-        Pageable pageable = (Pageable) PageRequest.of(page, size);
-        Page<DossierProfessionnel> dossierPage = dossierProRepo.findByNomContaining(string, pageable);
-        List<DossierProfessionnel> lst = dossierPage.getContent();
+        List<DossierProfessionnel> lst = dossierProRepo.findByNomContaining(string, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
         // conversion vers Dto
         List<DossierProfessionnelDto> lstDto = new ArrayList<>();
@@ -157,6 +158,8 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         }
         return lstDto;
     }
+
+
     /**
      * Sauvegarde ou mise à jour d'un dossier pro
      */

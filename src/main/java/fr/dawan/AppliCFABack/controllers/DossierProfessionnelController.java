@@ -120,32 +120,23 @@ public class DossierProfessionnelController {
 		return dossierProService.getByIdEtudiant(id);
 	}
 
-	/*@GetMapping(value = "/{page}/{size}/{idEtudiant}", produces = "application/json")
-	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(
-	    @PathVariable("page") int page,
-	    @PathVariable("size") int size,
-	    @PathVariable(value = "search", required = false) Optional<String> search,
-	    @PathVariable("idEtudiant") long idEtudiant
-	) {
-	    if (search.isPresent()) {
-	        return dossierProService.getAllByPage(page, size, search.get(), idEtudiant);
-	    } else {
-	        return dossierProService.getAllByPage(page, size, "", idEtudiant);
-	    }
-	}*/
-
-
+	@GetMapping(value = "/{page}/{size}", produces = "application/json")
+	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
+			@PathVariable(value = "size") int size) {
+		return dossierProService.getAllByPage(page, size, "");
+	}
 
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
 	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size,
 			@PathVariable(value = "search", required = false) Optional<String> search) {
-		if (search.isPresent()) {
-	        return dossierProService.getAllByPage(page, size, search.get());
-	    } else {
-	        return dossierProService.getAllByPage(page, size, "");
-	    }
+		if (search.isPresent())
+			return dossierProService.getAllByPage(page, size, search.get());
+		else
+			return dossierProService.getAllByPage(page, size, "");
 	}
+
+
 
 	@PostMapping(value = "/save/{id}", consumes = "application/json", produces = "application/json")
 	public DossierProfessionnelDto saveOrUpdate(@PathVariable("id") long id, @RequestBody DossierProfessionnelDto dpDto) {
