@@ -1,9 +1,15 @@
 package fr.dawan.AppliCFABack.entities;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /***
  * 
@@ -21,9 +27,9 @@ public class Devoir extends BaseEntity implements Serializable {
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String consigne;
 
-	private LocalDateTime dateDebut;
+	private LocalDate dateDebut;
 
-	private LocalDateTime dateFin;
+	private LocalDate dateFin;
 
 	@ManyToOne
 	private Intervention intervention;
@@ -66,7 +72,7 @@ public class Devoir extends BaseEntity implements Serializable {
 	/**
 	 * @return le dateDebut
 	 */
-	public LocalDateTime getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
@@ -74,14 +80,14 @@ public class Devoir extends BaseEntity implements Serializable {
 	 * @param dateDebut le dateDebut à affecter
 	 
 	 */
-	public void setDateDebut(LocalDateTime dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
 	/**
 	 * @return le dateFin
 	 */
-	public LocalDateTime getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
@@ -89,7 +95,7 @@ public class Devoir extends BaseEntity implements Serializable {
 	 * @param dateFin le dateFin à affecter
 	 
 	 */
-	public void setDateFin(LocalDateTime dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 
