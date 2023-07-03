@@ -18,34 +18,34 @@ public class AnnexeServiceImpl extends GenericServiceImpl<Annexe, AnnexeDto> imp
 
 	@Autowired
 	AnnexeRepository annexeRepo;
-	
-	 @Value("src/main/resources/files/")
-	    private String storageFolder2;
-	
-	 @Autowired
+
+	@Value("src/main/resources/files/")
+	private String storageFolder2;
+
+	@Autowired
 	public AnnexeServiceImpl(AnnexeRepository repository) {
 		super(repository, AnnexeDto.class, Annexe.class);
 		this.annexeRepo = repository;
-		
+
 	}
 
 	@Override
 	public boolean deleteAnnexe(Long annexeId) {
-		
-		 Annexe annexe = annexeRepo.findById(annexeId).orElse(null);
-		    if (annexe == null) {
-		        return false; 
-		    }
-            
-		    String path = storageFolder2 + "DossierProfessionnel" + "/" ;
-		    if (path != null) {
-		        File file = new File(path);
-		        if (file.exists()) {
-		            file.delete();
-		        }
-		    }
-		    annexeRepo.delete(annexe);
-		    return true;
 
-}
+		Annexe annexe = annexeRepo.findById(annexeId).orElse(null);
+		if (annexe == null) {
+			return false; 
+		}
+
+		String path = storageFolder2 + "DossierProfessionnel" + "/" ;
+		if (path != null) {
+			File file = new File(path);
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		annexeRepo.delete(annexe);
+		return true;
+
+	}
 }

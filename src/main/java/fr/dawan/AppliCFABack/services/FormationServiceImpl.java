@@ -142,13 +142,10 @@ public class FormationServiceImpl implements FormationService {
 	 */
 
 	@Override
-	public FormationDto getById(long id) {
-		Optional<Formation> f = formationRepository.findById(id);
-		if (f.isPresent())
-			return DtoTools.convert(f.get(), FormationDto.class);
-
-		return null;
-	}
+    public FormationDto getById(long id) {
+        Optional<Formation> f = formationRepository.findById(id);
+        return f.map(formation -> DtoTools.convert(formation, FormationDto.class)).orElse(null);
+    }
 
 	/**
 	 * Sauvegarde ou mise à jour d'une formation

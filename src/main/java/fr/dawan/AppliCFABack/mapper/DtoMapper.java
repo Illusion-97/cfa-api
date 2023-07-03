@@ -135,6 +135,7 @@ public interface DtoMapper {
     GroupeEtudiantDto groupeEtudiantToGroupEtudiantDto(GroupeEtudiant groupeEtudiant);
 
     @Mapping(source = ".", target = ".")
+    @Mapping(source = "formation", target = "formationDto")
     InterventionDto interventionToInterventionDto(Intervention intervention);
 
     @Mapping(source = ".", target = ".")
@@ -150,8 +151,8 @@ public interface DtoMapper {
     @Mapping(source = "cursus", target = "cursusDto")
     @Mapping(source = "centreFormation", target = "centreFormationDto")
     @Mapping(source = "centreFormation.nom", target = "centreFormationAdresseVille")
-    //@Mapping(source = "etudiants", target = "etudiantsDto")
-    //@Mapping(source = "interventions", target = "interventionsDto")
+    @Mapping(source = "etudiants", target = "etudiantsDto")
+    @Mapping(source = "interventions", target = "interventionsDto")
     @Mapping(source = "examens", target = "examensDto")
     PromotionDto promotionToPromotionDto(Promotion promotion);
 
@@ -289,7 +290,7 @@ public interface DtoMapper {
 	@Mapping(source = "firstName", target = "prenom")
 	@Mapping(source = "lastName", target = "nom")
 	@Mapping(source = "email", target = "login")
-
+	@Mapping(source = "bornAt", target= "dateDeNaissance")
 	Utilisateur employeeDg2ToUtilisateur(EmployeeDG2Dto eDg2);
 	
 

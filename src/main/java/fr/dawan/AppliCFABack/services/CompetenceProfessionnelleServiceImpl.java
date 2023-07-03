@@ -1,21 +1,23 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ExamenDto;
 import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
-import fr.dawan.AppliCFABack.entities.Examen;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.ExperienceProfessionnelleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -39,21 +41,18 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 	@Override
 	public List<CompetenceProfessionnelleDto> getAllCompetenceProfessionnelle() {
 		List<CompetenceProfessionnelle> competenceProfessionnelles = competenceProfessionnelleRepository.findAll();
-		List<CompetenceProfessionnelleDto> competenceProfessionnellesDto = new ArrayList<>();
-		for (CompetenceProfessionnelle competenceProfessionnelle : competenceProfessionnelles) {
-			CompetenceProfessionnelleDto cptDto = DtoTools.convert(competenceProfessionnelle,
-					CompetenceProfessionnelleDto.class);
-			List<ExamenDto> examensDto = new ArrayList<>();
-			for (Examen ex : competenceProfessionnelle.getExamens()) {
-
-				examensDto.add(mapper.examenToExamenDto(ex));
-
-			}
-			cptDto.setExamensDto(examensDto);
-			competenceProfessionnellesDto.add(cptDto);
-		}
-		return competenceProfessionnellesDto;
+		return competenceProfessionnelles.stream()
+				.map(cp -> {
+					CompetenceProfessionnelleDto cpDto = mapper.competenceProfessionnelleToCompetenceProfessionnelleDto(cp);
+					List<ExamenDto> examensDto = cp.getExamens().stream()
+							.map(mapper::examenToExamenDto)
+							.collect(Collectors.toList());
+					cpDto.setExamensDto(examensDto);
+					return cpDto;
+				})
+				.collect(Collectors.toList());
 	}
+
 
 	/**
 	 * Récupération des competence pro en fonction de l'id
@@ -98,7 +97,7 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 	public void deleteById(long id) {
 		competenceProfessionnelleRepository.deleteById(id);
 	}
-	
+
 	/**
 	 * Récupération de toutes les absences en fonctions d'un EtudiantId
 	 */

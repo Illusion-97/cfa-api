@@ -1,5 +1,18 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
@@ -10,13 +23,6 @@ import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.DevoirRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.*;
-import java.util.stream.Collectors;
 /***
  * 
  * @author Feres BG Valentin C.
@@ -32,10 +38,10 @@ public class DevoirServiceImpl implements DevoirService {
 
 	@Autowired
 	private DevoirRepository devoirRepository;
-	
+
 	@Autowired
 	private InterventionServiceImpl interventionServiceImpl;
-	
+
 	@Autowired
 	private PromotionService promotionService;
 
@@ -47,16 +53,14 @@ public class DevoirServiceImpl implements DevoirService {
 	 * 
 	 * @return lstDto	Liste des objets devoir
 	 */
-	
+
 	@Override
 	public List<DevoirDto> getAllDevoir() {
 		List<Devoir> lst = devoirRepository.findAll();
 
-		List<DevoirDto> lstDto = new ArrayList<>();
-		for (Devoir d : lst) {
-			lstDto.add(mapper.devoirToDevoirDto(d));
-		}
-		return lstDto;
+		return lst.stream()
+				.map(d -> mapper.devoirToDevoirDto(d))
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -68,19 +72,14 @@ public class DevoirServiceImpl implements DevoirService {
 	 * @param search éléménts du devoir
 	 * @return LstDto Liste des objets devoirs
 	 */
-	
+
 	@Override
 	public List<DevoirDto> getAllByPage(int page, int size, String search) {
 		List<Devoir> lst = devoirRepository.findAllByConsigneContainingIgnoringCaseOrInterventionFormationTitreContainingIgnoringCase(search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
-		// conversion vers Dto
-		List<DevoirDto> lstDto = new ArrayList<>();
-		for (Devoir d : lst) {
-			DevoirDto dDto = DtoTools.convert(d, DevoirDto.class);
-		
-			lstDto.add(dDto);
-		}
-		return lstDto;
+		return lst.stream()
+				.map(d -> DtoTools.convert(d, DevoirDto.class))
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -98,14 +97,14 @@ public class DevoirServiceImpl implements DevoirService {
 	 * @param id Devoir
 	 * @return Devoir DTO
 	 */
-	
+
 	@Override
 	public DevoirDto getById(long id) {
 		Optional<Devoir> d = devoirRepository.findById(id);
 		if (d.isPresent()) {
 			return DtoTools.convert(d.get(),DevoirDto.class);
 		}
-			
+
 		return null;
 	}
 
@@ -114,18 +113,18 @@ public class DevoirServiceImpl implements DevoirService {
 	 * @param Devoir DTO
 	 * @return Devoir DTO
 	 */
-	
+
 	@Override
 	public DevoirDto saveOrUpdate(DevoirDto dDto) {
-		
+
 		Devoir devoir = DtoTools.convert(dDto, Devoir.class);
-		
+
 		if (dDto.getId() != 0) {
-			
+
 			return DtoTools.convert(devoirRepository.saveAndFlush(devoir), dDto.getClass());
-		
+
 		} else {
-			
+
 			Devoir devoirDb = devoirRepository.saveAndFlush(devoir);
 			//On créer des champs vides dans devoirs_etudiant
 			List<EtudiantDto> allEtuByIntervention = interventionServiceImpl.findAllEtudiantsByPromotionInterventionsId(devoirDb.getIntervention().getId());
@@ -137,7 +136,7 @@ public class DevoirServiceImpl implements DevoirService {
 				devoirEtudiant.setPieceJointe("");
 				devoirsEtudiantLst.add(devoirEtudiant);
 			}
-			
+
 			devoirDb.setDevoirsEtudiant(devoirsEtudiantLst);
 			return DtoTools.convert(devoirRepository.saveAndFlush(devoirDb), DevoirDto.class);
 		}
@@ -148,7 +147,7 @@ public class DevoirServiceImpl implements DevoirService {
 	 * 
 	 * @param Id concernant le devoir
 	 */
-	
+
 	@Override
 	public void delete(long id) {
 		devoirRepository.deleteById(id);
