@@ -133,7 +133,7 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     TuteurDto tuteurTotuteurDto(Tuteur tuteur);
 
-    @Mapping(source = ".", target = ".")
+    @Mapping(source = "etudiants", target = "etudiantsDto")
     GroupeEtudiantDto groupeEtudiantToGroupEtudiantDto(GroupeEtudiant groupeEtudiant);
 
     @Mapping(source = ".", target = ".")
@@ -146,8 +146,11 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     PassageExamenDto passageExamenToPassageExamenDto(PassageExamen passageExamen);
 
-    @Mapping(source = ".", target = ".")
+    @Mapping(source = "groupe.id", target = "groupeId")
     ProjetDto projetToProjetDto(Projet projet);
+
+    @Mapping(source = "groupeId", target = "groupe.id")
+    Projet projetDtoToProjet(ProjetDto pdto);
 
     @Mapping(source = ".", target = ".")
     @Mapping(source = "cursus", target = "cursusDto")

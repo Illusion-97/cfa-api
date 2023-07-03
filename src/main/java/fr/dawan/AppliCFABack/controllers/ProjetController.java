@@ -81,10 +81,10 @@ public class ProjetController {
        List<ProjetDto> lstProjetDtoEtudiant = new ArrayList<>();
        for (GroupeEtudiantDto groupeEtudiantDto : gpeDto) {
     	  for (ProjetDto projetDto : lstProjetDto) {
-    		  if (projetDto.getGroupeDto().getId()==groupeEtudiantDto.getId()) {
+    		  if (projetDto.getGroupeId()==groupeEtudiantDto.getId()) {
 				lstProjetDtoEtudiant.add(projetDto);
 			}
-			
+
 		}
 	}
        	return lstProjetDtoEtudiant;
