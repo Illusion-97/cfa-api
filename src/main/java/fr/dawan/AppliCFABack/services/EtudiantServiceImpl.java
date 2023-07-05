@@ -1164,5 +1164,22 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return DtoTools.convert(e.get(), EtudiantDossierProjetDto.class);
 
 	}
+	
+	@Override
+	public List<EtudiantDto> getEtudiantByPromotion(long id, int page, int size, String search) {
+		List<Etudiant> result = etudiantRepository.getEtudiantByPromotion(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
+		List<EtudiantDto> res = new ArrayList<>();
+		if (!result.isEmpty()) {
+			for (Etudiant p: result) {
+				EtudiantDto promotionDto = mapper.etudiantToEtudiantDto(p);
+				res.add(promotionDto);
+			}
+		}
+		return res;
+	}
 
+	@Override
+	public CountDto countEtudiantByPromotion(long id, String search) {
+		return new CountDto(etudiantRepository.countEtudiantByPromotion(id, search));
+	}
 }

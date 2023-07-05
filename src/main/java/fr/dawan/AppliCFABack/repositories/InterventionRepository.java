@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.LongFunction;
 
 @Repository
 public interface InterventionRepository extends JpaRepository<Intervention, Long> {
@@ -50,4 +51,10 @@ public interface InterventionRepository extends JpaRepository<Intervention, Long
 	
 	@Query("SELECT i FROM Intervention i JOIN i.formateur f WHERE f.id =:id")
 	List<Intervention> findAllByFormateurId(long id);
+	
+	@Query("SELECT i FROM Promotion p JOIN p.interventions i JOIN i.formation f WHERE p.id = :id AND f.titre LIKE %:search%")
+	Page<Intervention> findInterventionByPromotionId(long id, Pageable page, String search);
+	
+	@Query("SELECT COUNT(i) FROM Promotion p JOIN p.interventions i JOIN i.formation f WHERE p.id = :id AND f.titre LIKE %:search%")
+	long countInterventionByPromotionId(Long id, String search);
 }

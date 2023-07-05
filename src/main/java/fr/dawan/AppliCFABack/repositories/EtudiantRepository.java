@@ -1,6 +1,8 @@
 package fr.dawan.AppliCFABack.repositories;
 
 import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Promotion;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -41,5 +43,9 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 	@Query("FROM Etudiant e WHERE e.utilisateur.id = :id")
 	Etudiant findByUtilisateurId(@Param("id") long id);
 	
+	@Query("SELECT e FROM Promotion p JOIN p.etudiants e JOIN e.utilisateur u WHERE p.id = :id AND (u.nom LIKE %:search% OR u.prenom LIKE %:search%)") // OR u.prenom LIKE %:search% 
+	Page<Etudiant> getEtudiantByPromotion(long id, Pageable pageable, String search);
 	
+	@Query("SELECT COUNT(e) FROM Promotion p JOIN p.etudiants e JOIN e.utilisateur u WHERE p.id = :id AND (u.nom LIKE %:search% OR u.prenom LIKE %:search%)")
+	long countEtudiantByPromotion(long id, String search);
 }
