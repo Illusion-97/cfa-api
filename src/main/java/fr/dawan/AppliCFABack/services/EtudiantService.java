@@ -84,4 +84,7 @@ public interface EtudiantService {
 	
 	List<EtudiantDto> getEtudiantByIdTuteurBySearch(long id, int page, int size, String search);
 	
+	List<EtudiantDto> getEtudiantByPromotion(long id, int page, int size, String search);
+	
+	CountDto countEtudiantByPromotion(long id, String search);
 }
