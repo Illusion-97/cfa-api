@@ -79,6 +79,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         this.dossierProRepo = dossierProRepo;   
        
     }
+   
 
     @Value("${backend.url}")
     private String backendUrl;
@@ -253,7 +254,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     }
 
     @Override
-    public String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws PdfTools, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+    public String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws PdfTools,  IOException, TemplateException {
         Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
         Etudiant et = null;
 
@@ -357,9 +358,9 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
                 pdfActiviteDtos.get(3).setPdfCompetenceDtoSet(pdfCompetenceDtos4Sorted);
             }
 
-//            List<CompetenceProfessionnelle> cp = competenceProfessionnelleRepository.getCompetenceProfessionnellesByEtudiantDossier(etudiantId);
-//
-//            List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByEtudiantDossier(etudiantId, promotionId);
+            List<CompetenceProfessionnelle> cp = competenceProfessionnelleRepository.getCompetenceProfessionnellesByEtudiantDossier(etudiantId);
+
+            List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByEtudiantDossier(etudiantId, promotionId);
 
             Signature signature = signatureRepository.getSignatureByEtudiantId(etudiantId);
 
@@ -376,8 +377,8 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
             model.put("et", et);
             model.put("pdfActiviteDtos", pdfActiviteDtos);
             model.put("at", at);
-//            model.put("cp", cp);
-//            model.put("exp", exp);
+            model.put("cp", cp);
+             model.put("exp", exp);
             model.put("dateNow", dateNow);
             model.put("signature", signature);
 
@@ -394,6 +395,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         }
         return null;
     }
+
 
     @Override
     public GetDossierProDto getAllDossierProfessionnelByEtudiant(long id) {
@@ -429,20 +431,21 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 	
 
-	@Override
+    @Override
 	public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id, List<MultipartFile> file) 
 	{
-		String lib = "";
-		DossierProfessionnel dp = mapper.dossierProfessionnelDtoToDossierProfessionnel(dpDto);
+    	String lib = "";
+    	long competenceId = 0;
+        DossierProfessionnel dp = mapper.dossierProfessionnelDtoToDossierProfessionnel(dpDto);
         assert dp != null;
-        
-    
+
         List<ExperienceProfessionnelle> exps = dp.getExperienceProfessionnelles();
-        for(ExperienceProfessionnelle exp : exps)
-        {
+        for (ExperienceProfessionnelle exp : exps) {
+
             Optional<Etudiant> optEtudiant = etudiantRepository.findById(id);
-            exp.setDossierProfessionnel(dp);              
+            exp.setDossierProfessionnel(dp);
             optEtudiant.ifPresent(exp::setEtudiant);
+
         }
         
 
@@ -484,16 +487,12 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
         if(etudiant.isPresent()){
              dp.setEtudiant(etudiant.get());
-        }
-       
-       
+        }      
   
         //on insert ou met à jour le dossier en question
         dp = dossierProRepo.saveAndFlush(dp);
         
-
-        return DtoTools.convert(dp, DossierProEtudiantDto.class);		
-		
+        return DtoTools.convert(dp, DossierProEtudiantDto.class);				
 	}
 
 	@Override

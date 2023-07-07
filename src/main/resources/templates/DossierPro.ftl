@@ -182,10 +182,13 @@
 <#list pdfActiviteDtos as a>
 <div class="divIntitule">
     <h4>
-        <div class="spanSommaireTitle"><#if a??>${a.libelle}<#else>Intitulé de l'activité type 1</#if></div>
+        <div class="spanSommaireTitle"><#if a??>${a.libelle}<#else>Intitulé de l’activité-type n° 1</#if></div>
         <span class="spanPageBoldAt1">p. 5</span></h4>
 </div>
-<#list a.pdfCompetenceDtoSet as cp>
+ <span> Intitulé de l’exemple n° 1 <br/>
+ Intitulé de l’exemple n° 2 <br/>
+ Intitulé de l’exemple n° 3 
+ <#list a.pdfCompetenceDtoSet as cp></span>
 <div class="divExemple">
         <ul><#if cp.experienceProfessionnelleDtoList[0]??>
                 <li><i class="fa-solid fa-play fa-2xs"></i><#if cp.experienceProfessionnelleDtoList[0]??><span>${cp.libelle}</span><#else>Intitulé de l'exemple n° 1</#if><span class="spanPage">p. 5</span>
@@ -420,8 +423,8 @@
     suis l'auteur(e) des réalisations jointes. <br><br><br><br><br><br>
     Fait à ${et.utilisateur.adresse.ville}, le ${dateNow} <br><br>
     pour faire valoir ce que de droit. <br><br><br><br>
-    Signature : <#if signature??>
-             ${signature.pieceJointe}
+     <#if signature??>
+       Signature :<img src="${signature.pieceJointe}" alt="Signature">
                </#if>
 </p>
 <#-------------------------------------------Page 31---------------------------------------------->

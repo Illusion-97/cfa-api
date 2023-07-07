@@ -3,6 +3,8 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
+
 /**
  * 
  * @author Valentin C, Feres BG.
@@ -19,6 +21,8 @@ public class CompetenceProfessionnelleDto extends BaseEntityDto implements Seria
 	private List<ExamenDto> examensDto;
 	private long activiteTypeId;
     
+	
+
 	public CompetenceProfessionnelleDto() {
 		super();
 	}
@@ -29,19 +33,22 @@ public class CompetenceProfessionnelleDto extends BaseEntityDto implements Seria
 	 * @param examensDto
 	 * @param activiteTypeId
 	 */
-	public CompetenceProfessionnelleDto(long id, String libelle, byte numeroFiche, long activiteTypeId, long dossierProjetId) {
-		super();
-		this.id = id;
-		this.libelle = libelle;
-		this.numeroFiche = numeroFiche;
-		this.activiteTypeId = activiteTypeId;
-	}
+	
 
 	/**
 	 * @return the libelle
 	 */
 	public String getLibelle() {
 		return libelle;
+	}
+
+	public CompetenceProfessionnelleDto(String libelle, byte numeroFiche, List<ExamenDto> examensDto,
+			 long activiteTypeId) {
+		super();
+		this.libelle = libelle;
+		this.numeroFiche = numeroFiche;
+		this.examensDto = examensDto;
+		this.activiteTypeId = activiteTypeId;
 	}
 
 	/**

@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -191,13 +192,13 @@ public interface DtoMapper {
     @Mapping(source = "facultatifDto", target = "facultatifs")
     DossierProfessionnel dossierProfessionnelDtoToDossierProfessionnel(DossierProEtudiantDto dosierProEtudiant);
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source="nom", target="nom")
+
     @Mapping(source="cursus", target="cursusDto")
     @Mapping(source="experienceProfessionnelles", target="experienceProfessionnelleDtos")
     @Mapping(source="annexes", target="annexeDtos")
     @Mapping(source="facultatifs", target="facultatifDto")
     DossierProEtudiantDto dossierProfessionnelToDossierProEtudiantDto(DossierProfessionnel dossierPro);
+   
 /*
 *
 *   Partie Dossier Projet
@@ -272,11 +273,14 @@ public interface DtoMapper {
     CentreFormation centreFormationDG2DtoToCentreFormation(CentreFormationDG2Dto centreFormationDG2Dto);
 
 
-    @Mapping(source = ".", target = ".")
+   
+    @Mapping(source = "competenceProfessionnelle.id", target = "competenceProfessionnelleId")
     ExperienceProfessionnelleDto experienceProfessionnelleToExperienceProfessionnelleDto(
             ExperienceProfessionnelle experienceProfessionnelle);
-   
-
+    
+    @InheritInverseConfiguration
+    ExperienceProfessionnelle experienceProfessionnelleDtoToExperienceProfessionnelle(
+            ExperienceProfessionnelleDto experienceProfessionnelle);
 
 	@Mapping(source = "personId", target ="idDg2" )
 	@Mapping(source = "firstName", target = "prenom")
@@ -318,8 +322,14 @@ public interface DtoMapper {
 	@Mapping(source = "collaborateur", target = "collaborateur")
 	@Mapping(source = "contexte", target = "contexte")
 	@Mapping(source = "information", target = "information")
+	@Mapping(source = "competenceProfessionnelle.id", target = "competenceProfessionnelleId")
 	List<ExperienceProfessionnelleDto> experienceProfessionnelleToExperienceProfessionnelleDto(
 			List<ExperienceProfessionnelle> experienceProfessionnelles);
+	
+	@InheritInverseConfiguration
+	List<ExperienceProfessionnelle> experienceProfessionnelleDtoToExperienceProfessionnelle(
+			List<ExperienceProfessionnelleDto> experienceProfessionnelles);
+	
     @Mapping(source = "intervention.id", target = "interventionId")
     @Mapping(source = "competencesEvaluees", target = "competencesEvalueesId", qualifiedByName = "competenceProToId")
     EvaluationFormationDto evaluationToEvaluationDto(EvaluationFormation eval);

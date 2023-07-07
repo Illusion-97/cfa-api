@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.repositories;
 
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.Etudiant;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DossierProfessionnelRepository extends JpaRepository<DossierProfessionnel, Long> {
@@ -26,6 +28,8 @@ public interface DossierProfessionnelRepository extends JpaRepository<DossierPro
 	long countByNom(String nom);
 
 	Page<DossierProfessionnel> findByNomContaining(String string , Pageable pageable);
+
+	
 
 
 
