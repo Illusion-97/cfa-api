@@ -68,4 +68,6 @@ public interface PromotionService {
 
 	CountDto countByFormateur(long id, String search);
 
+	CountDto countByNomOrCentreFormationOrDate(String search);
+
 }

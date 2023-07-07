@@ -104,4 +104,7 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 
 	@Query("From Promotion p WHERE p.idDg2 = :idPromotionDg2")
     List<Promotion> findAllByIdPromotionDg2(long idPromotionDg2);
+	
+	@Query("SELECT COUNT(DISTINCT p.id) FROM Promotion p JOIN CentreFormation cf ON p.centreFormation = cf.id WHERE p.nom LIKE %:search% OR p.dateDebut LIKE %:search% OR cf.nom LIKE %:search%")
+	long countByNomOrCentreFormationOrDate(String search);
 }

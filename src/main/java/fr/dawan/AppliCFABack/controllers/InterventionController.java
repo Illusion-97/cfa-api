@@ -163,4 +163,27 @@ public class InterventionController {
 					.body("Error while fetching data from the webservice DG2");
 		}
 	}
+	
+	@GetMapping(value = {"/promotion/{id}/{page}/{size}/{search}", "/promotion/{id}/{page}/{size}"}, produces = "application/json")
+	public List<InterventionDto> findInterventionByPromotionId(
+			@PathVariable("id") long id,
+			@PathVariable("page") int page,
+			@PathVariable("size") int size,
+			@PathVariable(value = "search", required = false) Optional<String> search) {
+		if (search.isPresent()) {			
+			return interventionService.findInterventionByPromotionId(id, page, size, search.get());
+		}else {
+			return interventionService.findInterventionByPromotionId(id, page, size, "");
+		}
+	}
+	
+	@GetMapping(value = {"/countInterventionByPromotion/{id}/{search}", "/countInterventionByPromotion/{id}" }, produces = "application/json")
+	public CountDto countInterventionByPromotionId(@PathVariable("id") long id,
+			@PathVariable(value = "search", required = false) Optional<String> search) {
+		if (search.isPresent()) {			
+			return interventionService.countInterventionByPromotionId(id, search.get());
+		}else {
+			return interventionService.countInterventionByPromotionId(id, "");
+		}
+	}
 }

@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -16,8 +17,8 @@ import java.util.Set;
 public class DevoirDto extends BaseEntityDto implements Serializable {
 
 	private String consigne;
-	private LocalDateTime dateDebut;
-	private LocalDateTime dateFin;
+	private LocalDate dateDebut;
+	private LocalDate dateFin;
 	private long interventionId;
 	private Set<DevoirEtudiantDto> devoirsEtudiantDto;
 
@@ -39,7 +40,7 @@ public class DevoirDto extends BaseEntityDto implements Serializable {
 	/**
 	 * @return le dateDebut
 	 */
-	public LocalDateTime getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
@@ -47,14 +48,14 @@ public class DevoirDto extends BaseEntityDto implements Serializable {
 	 * @param dateDebut le dateDebut à affecter
 	 
 	 */
-	public void setDateDebut(LocalDateTime dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
 	/**
 	 * @return le dateFin
 	 */
-	public LocalDateTime getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
@@ -62,7 +63,7 @@ public class DevoirDto extends BaseEntityDto implements Serializable {
 	 * @param dateFin le dateFin à affecter
 	 
 	 */
-	public void setDateFin(LocalDateTime dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 

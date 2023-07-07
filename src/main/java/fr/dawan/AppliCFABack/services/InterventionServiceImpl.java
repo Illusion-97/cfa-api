@@ -599,4 +599,21 @@ public class InterventionServiceImpl implements InterventionService {
 
 	}
 
+	@Override
+	public List<InterventionDto> findInterventionByPromotionId(long id, int page, int size, String search) {
+		List<Intervention> result = interventionRepository.findInterventionByPromotionId(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
+		List<InterventionDto> res = new ArrayList<>();
+		if (!result.isEmpty()) {
+			for (Intervention i: result) {
+				InterventionDto interventionDto = mapper.interventionToInterventionDto(i);
+				res.add(interventionDto);
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public CountDto countInterventionByPromotionId(long id, String search) {
+		return new CountDto(interventionRepository.countInterventionByPromotionId(id, search));
+	}
 }
