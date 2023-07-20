@@ -10,24 +10,6 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
-import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
-
-import org.modelmapper.internal.util.Lists;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
-import fr.dawan.AppliCFABack.services.DossierProfessionnelService;
-import fr.dawan.AppliCFABack.services.EtudiantService;
-import fr.dawan.AppliCFABack.services.FilesService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -36,7 +18,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,29 +35,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
 import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.DossierProfessionnelService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FilesService;
 import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
 import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
-
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -120,20 +89,31 @@ public class DossierProfessionnelController {
 		return dossierProService.getByIdEtudiant(id);
 	}
 
-	@GetMapping(value = "/{page}/{size}", produces = "application/json")
-	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
-			@PathVariable(value = "size") int size) {
-		return dossierProService.getAllByPage(page, size, "");
-	}
+	/*@GetMapping(value = "/{page}/{size}/{idEtudiant}", produces = "application/json")
+	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(
+	    @PathVariable("page") int page,
+	    @PathVariable("size") int size,
+	    @PathVariable(value = "search", required = false) Optional<String> search,
+	    @PathVariable("idEtudiant") long idEtudiant
+	) {
+	    if (search.isPresent()) {
+	        return dossierProService.getAllByPage(page, size, search.get(), idEtudiant);
+	    } else {
+	        return dossierProService.getAllByPage(page, size, "", idEtudiant);
+	    }
+	}*/
+
+
 
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
 	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size,
 			@PathVariable(value = "search", required = false) Optional<String> search) {
-		if (search.isPresent())
-			return dossierProService.getAllByPage(page, size, search.get());
-		else
-			return dossierProService.getAllByPage(page, size, "");
+		if (search.isPresent()) {
+	        return dossierProService.getAllByPage(page, size, search.get());
+	    } else {
+	        return dossierProService.getAllByPage(page, size, "");
+	    }
 	}
 
 	@PostMapping(value = "/save/{id}", consumes = "application/json", produces = "application/json")
@@ -185,14 +165,15 @@ public class DossierProfessionnelController {
 
 	
 	@PostMapping(value = "/save/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
-	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id ,
-			@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
-		String path = storageFolder + "DossierProfessionnel" + "/";
-		 fileService.createDirectory(path);
-		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
-		DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
-		return dpE;
+	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
+	        @RequestParam("pieceJointe") List<MultipartFile> files) throws JsonMappingException, JsonProcessingException {
+	    String path = storageFolder + "DossierProfessionnel" + "/";
+	    fileService.createDirectory(path);
+	    DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
+	    DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, files);
+	    return dpE;
 	}
+
 
 	@GetMapping(value = "/etudiant",produces = "application/json")
 	public List<DossierProEtudiantDto> getAllDossierProfessionnel() {

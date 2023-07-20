@@ -1,7 +1,12 @@
 package fr.dawan.AppliCFABack.dto;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import fr.dawan.AppliCFABack.tools.LocalDateDeserializer;
 /**
  * 
  * @author  Feres BG.
@@ -34,6 +39,11 @@ public class EmployeeDG2Dto {
 	private String skill;
 	@JsonIgnore
 	private String slug;
+	
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	private LocalDate bornAt;
+	@JsonIgnore
+    private String birthPlace;
 	/**
 	 * @return le id
 	 */
@@ -170,5 +180,19 @@ public class EmployeeDG2Dto {
 	public void setPlanningGroups(String planningGroups) {
 		this.planningGroups = planningGroups;
 	}
+	 
+	public LocalDate getBornAt() {
+		return bornAt;
+	}
+	public void setBornAt(LocalDate bornAt) {
+		this.bornAt = bornAt;
+	}
+	public String getBirthPlace() {
+		return birthPlace;
+	}
+	public void setBirthPlace(String birthPlace) {
+		this.birthPlace = birthPlace;
+	}
+	
 	
 }

@@ -17,12 +17,17 @@ import freemarker.core.ParseException;
 import freemarker.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import javax.transaction.Transactional;
+
 import java.io.*;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -138,7 +143,9 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
     @Override
     public List<DossierProfessionnelDto> getAllByPage(int page, int size, String string) {
-        List<DossierProfessionnel> lst = dossierProRepo.findByNomContaining(string, PageRequest.of(page, size)).get().collect(Collectors.toList());
+        Pageable pageable = (Pageable) PageRequest.of(page, size);
+        Page<DossierProfessionnel> dossierPage = dossierProRepo.findByNomContaining(string, pageable);
+        List<DossierProfessionnel> lst = dossierPage.getContent();
 
         // conversion vers Dto
         List<DossierProfessionnelDto> lstDto = new ArrayList<>();
@@ -150,7 +157,6 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         }
         return lstDto;
     }
-
     /**
      * Sauvegarde ou mise à jour d'un dossier pro
      */
@@ -423,6 +429,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 	@Override
 	public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id, List<MultipartFile> file) 
 	{
+		String lib = "";
 		DossierProfessionnel dp = mapper.dossierProfessionnelDtoToDossierProfessionnel(dpDto);
         assert dp != null;
         
@@ -434,6 +441,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
             exp.setDossierProfessionnel(dp);              
             optEtudiant.ifPresent(exp::setEtudiant);
         }
+        
 
         //on récupère la liste des diplômes facultatifs d'un dossier professionnel et on les met à jour (en n'oubliant pas de set les clés étrangères de la table diplome_facultatif)
         List<Facultatif> facultatif = dp.getFacultatifs();
@@ -444,39 +452,30 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         //on récupère la liste des annexes d'un dossier professionnel et on les met à jour (en n'oubliant pas de set les clés étrangères de la table annexe)
         String path = storageFolder2 + "DossierProfessionnel" + "/";
         List<Annexe> annexes = dp.getAnnexes();
-        int i = 0;
-        for(MultipartFile fil : file) {
+
+        for (MultipartFile fil : file) {
             String pathFile = path + fil.getOriginalFilename();
             File newAnnexe = new File(pathFile);
-            Annexe annex = new Annexe();
-            annex.setLibelleAnnexe("libDossierPro");
-            annex.setPieceJointe(pathFile);
-           annexes.add(annex);
-            
-            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))){
-                try 
-                {
+            Annexe annexe = new Annexe();
+            annexe.setPieceJointe(newAnnexe); 
+            annexe.setLibelleAnnexe(lib);
+            annexes.add(annexe);
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))) {
+                try {
                     bos.write(fil.getBytes());
-                }
-                catch (IOException e) 
-                {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } 
-            catch (FileNotFoundException e1)
-            {
+            } catch (FileNotFoundException e1) {
                 e1.printStackTrace();
-            } 
-            catch (IOException e1) 
-            {
+            } catch (IOException e1) {
                 e1.printStackTrace();
             }
         }
-         
-        for(Annexe annexe : annexes) {
+
+        for (Annexe annexe : annexes) {
             annexe.setDossierProfessionnel(dp);
         }
-
         //on met à jour la clé étrangère etudiant de la table dossier_professionnel (dans le cas d'un save)
         EtudiantDossierDto eDto = etudiantService.getByEtudiantIdForDossierPro(id);
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
@@ -490,8 +489,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         dp = dossierProRepo.saveAndFlush(dp);
         
 
-        return DtoTools.convert(dp, DossierProEtudiantDto.class);
-		
+        return DtoTools.convert(dp, DossierProEtudiantDto.class);		
 		
 	}
 

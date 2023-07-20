@@ -54,7 +54,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 
 			atDto.setExamensDto(examensDto);
 			atDto.setCursusActiviteTypeId(activiteType.getCursusActiviteType().getId());
-			
+
 			activiteTypesDto.add(atDto);
 		}
 		return activiteTypesDto;
@@ -65,7 +65,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 	 */
 	@Override
 	public List<ActiviteTypeDto> getAllActiviteType(int page, int size, String string) {
-		
+
 		return null;
 	}
 
@@ -78,21 +78,20 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 	 */
 	@Override
 	public ActiviteTypeDto getById(long id) {
-		Optional<ActiviteType> act = activiteTypeRepo.findById(id);
-		if (act.isPresent()) {
-			ActiviteTypeDto atDto = mapper.activiteTypeToActiviteTypeDto(act.get());
-			List<Examen> examens = act.get().getExamens();
-			List<ExamenDto> examensDto = new ArrayList<>();
-			for (Examen examen : examens) {
-				examensDto.add(mapper.examenToExamenDto(examen));
-			}
-			atDto.setExamensDto(examensDto);
-			atDto.setCursusActiviteTypeId(act.get().getCursusActiviteType().getId());
-			return atDto;
-		}
-
-		return null;
+		return activiteTypeRepo.findById(id)
+				.map(activiteType -> {
+					ActiviteTypeDto atDto = mapper.activiteTypeToActiviteTypeDto(activiteType);
+					List<ExamenDto> examensDto = new ArrayList<>(activiteType.getExamens().size());
+					for (Examen examen : activiteType.getExamens()) {
+						examensDto.add(mapper.examenToExamenDto(examen));
+					}
+					atDto.setExamensDto(examensDto);
+					atDto.setCursusActiviteTypeId(activiteType.getCursusActiviteType().getId());
+					return atDto;
+				})
+				.orElse(null);
 	}
+
 
 	/**
 	 * Sauvegarde ou mise à jour d'une activité type
@@ -102,12 +101,10 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 	 */
 	@Override
 	public ActiviteTypeDto saveOrUpdate(ActiviteTypeDto atDto) {
-		ActiviteType activiteType = DtoTools.convert(atDto, ActiviteType.class);
-
-		activiteType = activiteTypeRepo.saveAndFlush(activiteType);
-
+		ActiviteType activiteType = activiteTypeRepo.saveAndFlush(DtoTools.convert(atDto, ActiviteType.class));
 		return mapper.activiteTypeToActiviteTypeDto(activiteType);
 	}
+
 
 	/**
 	 * Suppression d'une activité type
@@ -131,7 +128,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 
 		List<ActiviteType> activiteTypes = activiteTypeRepo.getActiviteTypesByPromotionId(id);
 		List<ActiviteTypeDto> activiteTypeDto = new ArrayList<>();
-		
+
 		for (ActiviteType activiteType : activiteTypes) {
 			ActiviteTypeDto atDto = mapper.activiteTypeToActiviteTypeDto(activiteType);
 			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<>();
@@ -147,28 +144,28 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 	@Override
 	public List<ActiviteTypeDto> getAllActiviteTypesByCursus(long id) {
 
-	    List<ActiviteType> activiteTypes = activiteTypeRepo.getActiviteTypesByCursus(id);
-	    List<ActiviteTypeDto> activiteTypeDto = new ArrayList<>();
-	    for (ActiviteType activiteType : activiteTypes) {
+		List<ActiviteType> activiteTypes = activiteTypeRepo.getActiviteTypesByCursus(id);
+		List<ActiviteTypeDto> activiteTypeDto = new ArrayList<>();
+		for (ActiviteType activiteType : activiteTypes) {
 
-	        ActiviteTypeDto atDto = mapper.activiteTypeToActiviteTypeDto(activiteType);
-	        atDto.setCursusActiviteTypeId(activiteType.getCursusActiviteType().getId());
-	        List<CompetenceProfessionnelleDto> cpDto = new ArrayList<>();
+			ActiviteTypeDto atDto = mapper.activiteTypeToActiviteTypeDto(activiteType);
+			atDto.setCursusActiviteTypeId(activiteType.getCursusActiviteType().getId());
+			List<CompetenceProfessionnelleDto> cpDto = new ArrayList<>();
 
-	        //on set pour renvoyé un ensemble set
-	        Set<CompetenceProfessionnelle> cps = activiteType.getCompetenceProfessionnelles();
-	        //on transform en list pour pouvoir trier
-	        List<CompetenceProfessionnelle> cpList = new ArrayList<>(cps); 
-	        //trie par id croissant
-	        cpList.sort(Comparator.comparing(CompetenceProfessionnelle::getId)); // sort the list
+			//on set pour renvoyé un ensemble set
+			Set<CompetenceProfessionnelle> cps = activiteType.getCompetenceProfessionnelles();
+			//on transform en list pour pouvoir trier
+			List<CompetenceProfessionnelle> cpList = new ArrayList<>(cps); 
+			//trie par id croissant
+			cpList.sort(Comparator.comparing(CompetenceProfessionnelle::getId)); // sort the list
 
-	        for (CompetenceProfessionnelle cp : cpList) {
-	            cpDto.add(mapper.competenceProfessionnelleToCompetenceProfessionnelleDto(cp));
-	        }
-	        atDto.setCompetenceProfessionnellesDto(cpDto);
-	        activiteTypeDto.add(atDto);
-	    }
-	    return activiteTypeDto;
+			for (CompetenceProfessionnelle cp : cpList) {
+				cpDto.add(mapper.competenceProfessionnelleToCompetenceProfessionnelleDto(cp));
+			}
+			atDto.setCompetenceProfessionnellesDto(cpDto);
+			activiteTypeDto.add(atDto);
+		}
+		return activiteTypeDto;
 	}
 
 }

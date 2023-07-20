@@ -32,7 +32,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	 * 
 	 * @return lstDto	Liste des objets entreprises
 	 */
-	
+
 	@Override
 	public List<EntrepriseDto> getAllEntreprise() {
 		List<Entreprise> lst = entrepriseRepository.findAll();
@@ -54,7 +54,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	 * @param size	éléments sur la page
 	 * @return LstDto Liste des objets entreprise
 	 */
-	
+
 	@Override
 	public List<EntrepriseDto> getAllEntreprise(int page, int size) {
 		List<Entreprise> lst = entrepriseRepository.findAll(PageRequest.of(page, size)).get()
@@ -69,7 +69,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 			System.out.println(e.getAdresseSiege().toString());
 			System.out.println("--------------------------------------");
 			eDto.setAdresseSiegeDto(mapper.adresseToAdresseDto(e.getAdresseSiege()));
-			
+
 			lstDto.add(eDto);
 		}
 		return lstDto;
@@ -80,7 +80,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	 * 
 	 * @param id	id de l'entreprise
 	 */
-	
+
 	@Override
 	public EntrepriseDto getById(long id) {
 		Optional<Entreprise> e = entrepriseRepository.findById(id);
@@ -89,7 +89,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 			eDto.setAdresseSiegeDto(mapper.adresseToAdresseDto(e.get().getAdresseSiege()));
 			return eDto;
 		}
-		
+
 		return null;
 	}
 
@@ -97,7 +97,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	 * Sauvegarde ou mise à jour d'une entreprise
 	 * 
 	 */
-	
+
 	@Override
 	public EntrepriseDto saveOrUpdate(EntrepriseDto eDto) {
 		Entreprise e = DtoTools.convert(eDto, Entreprise.class);
@@ -112,7 +112,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	 * 
 	 * @param id	Id concernant l'entreprise
 	 */
-	
+
 	@Override
 	public void deleteById(long id) {
 		entrepriseRepository.deleteById(id);
@@ -124,7 +124,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	 * 
 	 * @param search recherche par raison sociale 
 	 */
-	
+
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(entrepriseRepository.countByRaisonSocialeContaining(search));
@@ -139,7 +139,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 	 * @param search	éléments entreprises (raison sociale)
 	 * @return res Liste des objets entreprises
 	 */
-	
+
 	@Override
 	public List<EntrepriseDto> getAllEntreprises(int page, int size, String search) {
 		List<Entreprise> entreprises = entrepriseRepository.findAllByRaisonSocialeContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -151,6 +151,6 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		}
 		return lstDto;
 	}
-	
+
 
 }
