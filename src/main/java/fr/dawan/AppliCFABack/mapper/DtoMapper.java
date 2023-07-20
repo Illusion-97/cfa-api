@@ -43,6 +43,7 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CompetenceDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.entities.ActiviteType;
 import fr.dawan.AppliCFABack.entities.Adresse;
@@ -192,14 +193,21 @@ public interface DtoMapper {
     @Mapping(source = "facultatifDto", target = "facultatifs")
     DossierProfessionnel dossierProfessionnelDtoToDossierProfessionnel(DossierProEtudiantDto dosierProEtudiant);
 
-
+    @Mapping(source="id", target="id")
+    @Mapping(source="nom", target="nom")
     @Mapping(source="cursus", target="cursusDto")
     @Mapping(source="experienceProfessionnelles", target="experienceProfessionnelleDtos")
     @Mapping(source="annexes", target="annexeDtos")
     @Mapping(source="facultatifs", target="facultatifDto")
+    @Mapping(source="fileImport", target="fileImport")
     DossierProEtudiantDto dossierProfessionnelToDossierProEtudiantDto(DossierProfessionnel dossierPro);
    
-/*
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "libelle", target = "libelle")
+    @Mapping(source = "numeroFiche", target = "numeroFiche")
+    @Mapping(source = "experienceProfessionnelles", target = "experienceProfessionnelles")
+    CompetenceDossierProDto competenceProfessionnelToCompetenceDossierProDto(CompetenceProfessionnelle comp);
+/*  
 *
 *   Partie Dossier Projet
 *
@@ -245,10 +253,17 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     ActiviteTypeDto activiteTypeToActiviteTypeDto(ActiviteType activiteType);
 
-    @Mapping(source = ".", target = ".")
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "libelle", target = "libelle")
+    @Mapping(source = "numeroFiche", target = "numeroFiche")
+    @Mapping(source = "examens", target = "examensDto")
     @Mapping(source = "activiteType.id", target = "activiteTypeId")
     CompetenceProfessionnelleDto competenceProfessionnelleToCompetenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
-    @Mapping(source = ".", target = ".")
+    
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "libelle", target = "libelle")
+    @Mapping(source = "numeroFiche", target = "numeroFiche")
+    @Mapping(source = "examensDto", target = "examens")
     @Mapping(source = "activiteTypeId", target = "activiteType.id")
     CompetenceProfessionnelle competenceProfessionnelleDtoToCompetenceProfessionnelle(CompetenceProfessionnelleDto competenceProfessionnelleDto);
     //@Mapping(target = "cursusLst", ignore = true)

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
@@ -62,11 +63,13 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.services.AnnexeService;
 import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.DossierProfessionnelService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FilesService;
 import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
+import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
 import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
 
 import org.springframework.web.bind.annotation.*;
@@ -93,6 +96,9 @@ public class DossierProfessionnelController {
 
 	@Autowired
 	DossierProfessionnelService dossierProService;
+	
+	@Autowired
+	AnnexeService annexeService;
 	
 	@Autowired
 	EtudiantService etudiantService;
@@ -256,6 +262,17 @@ public class DossierProfessionnelController {
 		return ResponseEntity.ok().body(base64);
 	}
 	
+	@DeleteMapping("/annexes/{annexeId}")
+    public ResponseEntity<String> deleteAnnexe(@PathVariable Long annexeId) {
+        boolean isDeleted = annexeService.deleteAnnexe(annexeId);
+        
+        if (isDeleted) {
+            return new ResponseEntity<>("Annexe deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Annexe not found", HttpStatus.NOT_FOUND);
+        }
+    }
+	
 	
 	@PostMapping(value = "/upload/{etudiantId}/{cursusId}", consumes = "multipart/form-data", produces = "application/json")
 	public ResponseEntity<String> handleFileUpload(@PathVariable("etudiantId") long etudiantId, @PathVariable("cursusId") long cursusId, @RequestParam("fileImport") MultipartFile file, @RequestParam("nom") String nom ) throws IOException, EtudiantNotFoundException, CursusNotFoundException {
@@ -297,7 +314,10 @@ public class DossierProfessionnelController {
 	    }
 	}
 
-	
-	
+	@DeleteMapping(value = "/upload/{id}", produces = "text/plain")
+	public ResponseEntity<DossierProEtudiantDto> deletefile( @PathVariable("id") Long id, @RequestParam("fileImport")String file){
+		DossierProEtudiantDto dpDto = dossierProService.deleteFileImportById(id, file);
+		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
+	}
 
 }

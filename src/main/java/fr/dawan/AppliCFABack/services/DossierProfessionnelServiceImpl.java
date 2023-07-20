@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.*;
@@ -550,5 +551,36 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 		return outputPdf;
 	}
 
+	@Override
+	public DossierProEtudiantDto deleteFileImportById(long id, String fileImport) {
+	    String path = storageFolder2 + "DossierProfessionnel" + "/" + fileImport;
+	    File fileToDelete = new File(path);
+
+	    if (fileToDelete.exists()) {
+	        DossierProfessionnel dp = dossierProRepo.getByDossierbyId(id);
+
+	        
+	            fileToDelete.delete();
+	            
+	            String fileImp = dp.getFileImport();
+
+	            if (fileImp != null && fileImp.contains(fileImport)) {
+	                dp.setFileImport(null);
+	                
+	                // Mettre à jour l'objet dp dans la base de données
+	                dp = dossierProRepo.save(dp);
+	            }
+
+	            DossierProEtudiantDto dpDto = mapper.dossierProfessionnelToDossierProEtudiantDto(dp);
+	            return dpDto;
+	        }
+	    
+
+	    return null;
 	}
 
+	
+
+	
+
+}
