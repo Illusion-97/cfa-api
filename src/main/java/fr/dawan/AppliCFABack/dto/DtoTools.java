@@ -272,4 +272,16 @@ public class DtoTools {
     }
 
 
+    public static List<ExperienceProfessionnelle> convert(List<ExperienceProfessionnelleDto> dtos) {
+        List<ExperienceProfessionnelle> experienceProfessionnelles = new ArrayList<>();
+        for (ExperienceProfessionnelleDto dto : dtos) {
+            ExperienceProfessionnelle experienceProfessionnelle = new ExperienceProfessionnelle();
+            // Convertir les propriétés du DTO vers l'objet ExperienceProfessionnelle
+            // ...
+            experienceProfessionnelles.add(experienceProfessionnelle);
+        }
+        return experienceProfessionnelles;
+    }
+
+
 }

@@ -248,11 +248,11 @@ public class DossierProfessionnelController {
 	
 	
 	
-	@GetMapping(value = "/generer/{idDossierPro}", produces = "text/plain")
+	@GetMapping(value = "/generer/{idDossierPro}/{etudiantId}", produces = "application/pdf")
 	public ResponseEntity<String> genererDossierProfessionnel(
-			@PathVariable("idDossierPro") long idDossierPro) throws Exception {
+			@PathVariable("idDossierPro") long idDossierPro, @PathVariable("etudiantId") long etudiantId) throws Exception {
 
-		String outpoutPath = (dossierProService.genererDossierProfessionnel(idDossierPro));
+		String outpoutPath = (dossierProService.genererDossierProfessionnel(idDossierPro, etudiantId));
 		File f = new File(outpoutPath);
 		
 		Path path = Paths.get(f.getAbsolutePath());

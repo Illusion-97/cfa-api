@@ -182,13 +182,10 @@
 <#list pdfActiviteDtos as a>
 <div class="divIntitule">
     <h4>
-        <div class="spanSommaireTitle"><#if a??>${a.libelle}<#else>Intitulé de l’activité-type n° 1</#if></div>
+        <div class="spanSommaireTitle"><#if a??>${a.libelle}<#else>Intitulé de l'activité type 1</#if></div>
         <span class="spanPageBoldAt1">p. 5</span></h4>
 </div>
- <span> Intitulé de l’exemple n° 1 <br/>
- Intitulé de l’exemple n° 2 <br/>
- Intitulé de l’exemple n° 3 
- <#list a.pdfCompetenceDtoSet as cp></span>
+<#list a.pdfCompetenceDtoSet as cp>
 <div class="divExemple">
         <ul><#if cp.experienceProfessionnelleDtoList[0]??>
                 <li><i class="fa-solid fa-play fa-2xs"></i><#if cp.experienceProfessionnelleDtoList[0]??><span>${cp.libelle}</span><#else>Intitulé de l'exemple n° 1</#if><span class="spanPage">p. 5</span>
@@ -326,6 +323,7 @@
 
 
 <#--------------------------------------------Page 29----------------------------------------------->
+
 <div class="divTitlePage4">
     <div class="greyBarsAndH1">
         <div class="greyBarTop2"></div>
@@ -334,6 +332,7 @@
         <div class="pinkLine"></div>
     </div>
 </div>
+
 <div class="divTitrePro3">
     <div class="titlePink">
         <h2 class="h2TitrePro">Titres,diplômes, CQP, attestations de formation</h2>
@@ -349,19 +348,20 @@
         <th>Date</th>
     </tr>
     </thead>
+    <#list exp[0].dossierProfessionnel.facultatifs as f>
     <tbody>
     <tr>
-        <td></td>
+        <td><#if f??>${f.intitule}</#if></td>
+        <td><#if f??>${f.organisme}</td>
+        <td><#if f??>${f.date}</td>
+    </tr>
+    <tr>
+        <td></#if></td>
         <td></td>
         <td></td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
+        <td></#if></td>
         <td></td>
         <td></td>
     </tr>
@@ -401,7 +401,9 @@
         <td></td>
     </tr>
     </tbody>
+    </#list>
 </table>
+
 <#-----------------------------------------Page 30------------------------------------------------->
 <div class="divTitlePage4">
     <div class="greyBarsAndH1">
@@ -423,7 +425,7 @@
     suis l'auteur(e) des réalisations jointes. <br><br><br><br><br><br>
     Fait à ${et.utilisateur.adresse.ville}, le ${dateNow} <br><br>
     pour faire valoir ce que de droit. <br><br><br><br>
-     <#if signature??>
+    <#if signature??>
        Signature :<img src="${signature.pieceJointe}" alt="Signature">
                </#if>
 </p>
@@ -449,7 +451,7 @@
         <th>Intitulé</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody >
     <tr>
         <td></td>
     </tr>
@@ -499,12 +501,12 @@
     <div class="facultatif2">(Si le RC le prévoit)</div>
 </div>
 <div class="divAnnexesList">
-    <#--    <#list exp[0].dossierProfessionnel.annexes as a>-->
-    <#--        <div>-->
-    <#--            <dt>${a.libelle}</dt>-->
-    <#--            <dt>${a.pieceJointe}</dt>-->
-    <#--        </div>-->
-    <#--    </#list>-->
+    <#list exp[0].dossierProfessionnel.annexes as an>-->
+        <div>
+            <dt>${an.libelleAnnexe}</dt>
+               <dt><img src="src/main/resources/files/DossierProfessionnel/${an.pieceJointe}" alt="${an.pieceJointe}"></dt>
+        </div>
+        </#list>
 </div>
 </body>
 </html>

@@ -172,7 +172,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         d.setId(dpDto.getId());
         d.setNom(dpDto.getNom());
         d.setCursus(DtoTools.convert(dpDto.getCursusDto(), Cursus.class));
-        d.setExperienceProfessionnelles((List<ExperienceProfessionnelle>) DtoTools.convert(dpDto.getCursusDto(), ExperienceProfessionnelle.class));
+        d.setExperienceProfessionnelles((List<ExperienceProfessionnelle>) DtoTools.convert(dpDto.getExperienceProfessionnelleDtos(), ExperienceProfessionnelle.class));
         d.setEtudiant(DtoTools.convert(dpDto.getEtudiantDto(), Etudiant.class));
         d.setAnnexes((List<Annexe>) DtoTools.convert(dpDto.getAnnexeDtos(), Annexe.class));
         d.setFacultatifs((List<Facultatif>) DtoTools.convert(dpDto.getFacultatifDto(), Facultatif.class));
@@ -522,10 +522,13 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 	}
 
 	@Override
-	public String genererDossierProfessionnel(long idDossierPro) throws DossierProfessionnelException,
+	public String genererDossierProfessionnel(long idDossierPro, long etudiantId) throws DossierProfessionnelException,
 			TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
-		
-		
+		Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
+        Etudiant et = null;
+        if(etuOpt.isPresent()) {
+            et = etuOpt.get();
+        }
           Optional<DossierProfessionnel> dossierPro = dossierProRepo.findById(idDossierPro);
     	
     	if (!dossierPro.isPresent()) {
@@ -536,6 +539,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     	Map<String, Object> model = new HashMap<>();
     	model.put("backendUrl", backendUrl);
     	model.put("dossierPro", dossierproFile);
+    	model.put("et", et);
 		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
 		Template template = freemarkerConfig.getTemplate("DossierProfessionnel.ftl");
 
@@ -547,6 +551,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
 		}
+        
 
 		return outputPdf;
 	}

@@ -1,6 +1,9 @@
 package fr.dawan.AppliCFABack.entities;
 
 import javax.persistence.*;
+
+import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -85,6 +88,8 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 	public void setFileImport(String fileImport) {
 		this.fileImport = fileImport;
 	}
+
+	
 	
 	
 }
