@@ -250,8 +250,10 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     MaitreApprentissageDto maitreApprentissageToMaitreApprentissageDto(MaitreApprentissage maitreApprentissage);
 
-    @Mapping(source = ".", target = ".")
+    @Mapping(source = "competenceProfessionnelles", target = "competenceProfessionnellesDto")
     ActiviteTypeDto activiteTypeToActiviteTypeDto(ActiviteType activiteType);
+    
+    
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "libelle", target = "libelle")
@@ -260,11 +262,7 @@ public interface DtoMapper {
     @Mapping(source = "activiteType.id", target = "activiteTypeId")
     CompetenceProfessionnelleDto competenceProfessionnelleToCompetenceProfessionnelleDto(CompetenceProfessionnelle competenceProfessionnelle);
     
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "libelle", target = "libelle")
-    @Mapping(source = "numeroFiche", target = "numeroFiche")
-    @Mapping(source = "examensDto", target = "examens")
-    @Mapping(source = "activiteTypeId", target = "activiteType.id")
+    @InheritInverseConfiguration
     CompetenceProfessionnelle competenceProfessionnelleDtoToCompetenceProfessionnelle(CompetenceProfessionnelleDto competenceProfessionnelleDto);
     //@Mapping(target = "cursusLst", ignore = true)
     //@Mapping(source = "id", target = "idDg2")

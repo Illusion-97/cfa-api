@@ -55,7 +55,7 @@ public class ExperienceProfessionnelle extends BaseEntity implements Serializabl
 //    @OneToMany(mappedBy = "experienceProfessionnelle", cascade = CascadeType.ALL)
 //    private Set<CompetenceExperienceEtudiant> competenceExperienceEtudiants;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private CompetenceProfessionnelle competenceProfessionnelle;
 
     @ManyToOne Etudiant etudiant;

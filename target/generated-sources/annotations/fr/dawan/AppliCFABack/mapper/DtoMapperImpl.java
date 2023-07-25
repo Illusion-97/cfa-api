@@ -76,7 +76,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-07-21T14:38:21+0200",
+    date = "2023-07-25T10:21:49+0200",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -729,6 +729,7 @@ public class DtoMapperImpl implements DtoMapper {
 
         ActiviteTypeDto activiteTypeDto = new ActiviteTypeDto();
 
+        activiteTypeDto.setCompetenceProfessionnellesDto( competenceProfessionnelleSetToCompetenceProfessionnelleDtoList( activiteType.getCompetenceProfessionnelles() ) );
         activiteTypeDto.setId( activiteType.getId() );
         activiteTypeDto.setVersion( activiteType.getVersion() );
         activiteTypeDto.setLibelle( activiteType.getLibelle() );
@@ -837,11 +838,11 @@ public class DtoMapperImpl implements DtoMapper {
         experienceProfessionnelle1.setCompetenceProfessionnelle( experienceProfessionnelleDtoToCompetenceProfessionnelle( experienceProfessionnelle ) );
         experienceProfessionnelle1.setId( experienceProfessionnelle.getId() );
         experienceProfessionnelle1.setVersion( experienceProfessionnelle.getVersion() );
+        experienceProfessionnelle1.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
+        experienceProfessionnelle1.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
         experienceProfessionnelle1.setCollaborateur( experienceProfessionnelle.getCollaborateur() );
         experienceProfessionnelle1.setContexte( experienceProfessionnelle.getContexte() );
         experienceProfessionnelle1.setInformation( experienceProfessionnelle.getInformation() );
-        experienceProfessionnelle1.setMoyenUtilise( experienceProfessionnelle.getMoyenUtilise() );
-        experienceProfessionnelle1.setTacheRealisee( experienceProfessionnelle.getTacheRealisee() );
 
         return experienceProfessionnelle1;
     }
@@ -1224,9 +1225,9 @@ public class DtoMapperImpl implements DtoMapper {
 
         facultatif.setId( facultatifDto.getId() );
         facultatif.setVersion( facultatifDto.getVersion() );
-        facultatif.setDate( facultatifDto.getDate() );
-        facultatif.setIntitule( facultatifDto.getIntitule() );
         facultatif.setOrganisme( facultatifDto.getOrganisme() );
+        facultatif.setIntitule( facultatifDto.getIntitule() );
+        facultatif.setDate( facultatifDto.getDate() );
 
         return facultatif;
     }
@@ -1353,6 +1354,19 @@ public class DtoMapperImpl implements DtoMapper {
         projet.setNom( projetDossierProjetDto.getNom() );
 
         return projet;
+    }
+
+    protected List<CompetenceProfessionnelleDto> competenceProfessionnelleSetToCompetenceProfessionnelleDtoList(Set<CompetenceProfessionnelle> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        List<CompetenceProfessionnelleDto> list = new ArrayList<CompetenceProfessionnelleDto>( set.size() );
+        for ( CompetenceProfessionnelle competenceProfessionnelle : set ) {
+            list.add( competenceProfessionnelleToCompetenceProfessionnelleDto( competenceProfessionnelle ) );
+        }
+
+        return list;
     }
 
     protected List<ExamenDto> examenListToExamenDtoList(List<Examen> list) {

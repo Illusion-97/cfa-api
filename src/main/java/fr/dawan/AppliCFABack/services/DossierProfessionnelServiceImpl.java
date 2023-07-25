@@ -261,7 +261,9 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
         if(etuOpt.isPresent()) {
             et = etuOpt.get();
-
+          
+        	
+        	
             List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByPromotionIdAndOrderByNumeroFiche(etudiantId, promotionId);
 
             List<PdfActiviteDto> pdfActiviteDtos = new ArrayList<>();
@@ -436,7 +438,6 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 	public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id, List<MultipartFile> file) 
 	{
     	String lib = "";
-    	long competenceId = 0;
         DossierProfessionnel dp = mapper.dossierProfessionnelDtoToDossierProfessionnel(dpDto);
         assert dp != null;
 

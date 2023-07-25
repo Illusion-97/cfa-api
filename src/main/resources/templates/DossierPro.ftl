@@ -254,9 +254,16 @@
             </div>
         </div>
         <div class="exempleContent">
-            <div class="divExempleContent">
-                ${exp.tacheRealisee}
-            </div>
+            <#if exp.tacheRealisee??>
+    <div class="divExempleContent">
+        ${exp.tacheRealisee}
+    </div>
+<#else>
+    <div class="divExempleContent">
+        <!-- Handle the case when exp.tacheRealisee is null or missing -->
+        No data available for tacheRealisee.
+    </div>
+</#if>
         </div>
     </div>
 <#---------------------------------------------Page 6------------------------------------------------>
@@ -275,9 +282,16 @@
             </div>
         </div>
         <div class="exempleContent2">
-            <div class="divExempleContent">
-                ${exp.moyenUtilise}
-            </div>
+        <#if exp.tacheRealisee??>
+    <div class="divExempleContent">
+        ${exp.moyenUtilise}
+    </div>
+<#else>
+    <div class="divExempleContent">
+        pas de tacheRealisee.
+    </div>
+</#if>
+           
         </div>
     </div>
     <div class="divExempleDescription2">
@@ -287,9 +301,15 @@
             </div>
         </div>
         <div class="exempleContent2">
-            <div class="divExempleContent">
-                ${exp.collaborateur}
-            </div>
+             <#if exp.collaborateur??>
+    <div class="divExempleContent">
+        ${exp.moyenUtilise}
+    </div>
+<#else>
+    <div class="divExempleContent">
+        pas de moyenUtilise.
+    </div>
+</#if>
         </div>
     </div>
     <div class="divExempleDescription2">
@@ -299,9 +319,15 @@
             </div>
         </div>
         <div class="exempleContent2">
-            <div class="divExempleContent">
-                ${exp.contexte}
-            </div>
+            <#if exp.contexte??>
+    <div class="divExempleContent">
+        ${exp.moyenUtilise}
+    </div>
+<#else>
+    <div class="divExempleContent">
+        pas de contexte.
+    </div>
+</#if>
         </div>
     </div>
     <div class="divExempleDescription3">
@@ -311,9 +337,15 @@
             </div>
         </div>
         <div class="exempleContent2">
-            <div class="divExempleContent">
-                ${exp.information}
-            </div>
+             <#if exp.information??>
+    <div class="divExempleContent">
+        ${exp.moyenUtilise}
+    </div>
+<#else>
+    <div class="divExempleContent">
+       pas  d'information.
+    </div>
+</#if>
         </div>
     </div>
                     </#if>
@@ -352,16 +384,16 @@
     <tbody>
     <tr>
         <td><#if f??>${f.intitule}</#if></td>
-        <td><#if f??>${f.organisme}</td>
-        <td><#if f??>${f.date}</td>
+        <td><#if f??>${f.organisme}</#if></td>
+        <td><#if f??>${f.date}</#if></td>
     </tr>
     <tr>
-        <td></#if></td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>
     <tr>
-        <td></#if></td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>

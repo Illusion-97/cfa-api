@@ -42,7 +42,6 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 	List<DossierProEtudiantDto> getAllDossierProfessionnel();
 
     String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws PdfTools, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
-    
     String genererDossierProfessionnel(long idDossierPro, long etudiantId) throws DossierProfessionnelException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
 	GetDossierProDto getAllDossierProfessionnelByEtudiant(long id);
