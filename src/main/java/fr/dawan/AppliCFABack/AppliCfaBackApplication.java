@@ -70,8 +70,8 @@ public class AppliCfaBackApplication {
 			public void addResourceHandlers(ResourceHandlerRegistry registry) {
 				registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
 				registry.addResourceHandler("pictures/**").addResourceLocations("classpath:/pictures/");
-			}
+			};
 
-		};
-	}
+	};
+}
 }

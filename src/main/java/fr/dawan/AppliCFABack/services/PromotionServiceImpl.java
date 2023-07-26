@@ -519,5 +519,10 @@ public class PromotionServiceImpl implements PromotionService {
 	public CountDto countByFormateur(long id, String search) {
 		return new CountDto(promoRepo.countByFormateurId(id, search));
 	}
+	
+	@Override
+	public CountDto countByNomOrCentreFormationOrDate(String search) {
+		return new CountDto(promoRepo.countByNomOrCentreFormationOrDate(search));
+	}
 
 }

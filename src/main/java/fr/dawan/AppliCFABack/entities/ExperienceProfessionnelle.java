@@ -3,6 +3,8 @@ package fr.dawan.AppliCFABack.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
@@ -53,7 +55,7 @@ public class ExperienceProfessionnelle extends BaseEntity implements Serializabl
 //    @OneToMany(mappedBy = "experienceProfessionnelle", cascade = CascadeType.ALL)
 //    private Set<CompetenceExperienceEtudiant> competenceExperienceEtudiants;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private CompetenceProfessionnelle competenceProfessionnelle;
 
     @ManyToOne Etudiant etudiant;

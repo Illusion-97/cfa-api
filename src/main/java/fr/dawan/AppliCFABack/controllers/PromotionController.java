@@ -294,4 +294,11 @@ public class PromotionController {
 		
 			return  promoService.countByFormateur(id, "");
 	}
+	
+	@GetMapping(value = "/countByNomOrCentreFormationOrDate/{search}", produces = "application/json")
+	public CountDto countByNomOrCentreFormationOrDate(
+			@PathVariable("search") String search) {
+		
+		return  promoService.countByNomOrCentreFormationOrDate(search);
+}
 }

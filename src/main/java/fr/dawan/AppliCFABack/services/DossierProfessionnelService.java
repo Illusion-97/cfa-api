@@ -1,8 +1,11 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
 import fr.dawan.AppliCFABack.tools.PdfTools;
 import freemarker.core.ParseException;
@@ -33,16 +36,19 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 
 
 	DossierProEtudiantDto saveOrUpdateDossierProfessionnel (DossierProEtudiantDto dpDto, long id, List<MultipartFile> file);
+	
+	DossierProEtudiantDto deleteFileImportById(long id, String fileImport);
 
 	List<DossierProEtudiantDto> getAllDossierProfessionnel();
 
     String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws PdfTools, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
-    
-    String genererDossierProfessionnel(long idDossierPro) throws DossierProfessionnelException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
+    String genererDossierProfessionnel(long idDossierPro, long etudiantId) throws DossierProfessionnelException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
 	GetDossierProDto getAllDossierProfessionnelByEtudiant(long id);
-	
+		
+	}
 	//String FileUpload(long etudiantId, long cursusId, String nom, MultipartFile file);
 	
+	
+	
 
-}

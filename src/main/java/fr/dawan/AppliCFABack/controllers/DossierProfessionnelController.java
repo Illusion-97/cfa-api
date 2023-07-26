@@ -40,13 +40,13 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
+import fr.dawan.AppliCFABack.services.AnnexeService;
 import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.DossierProfessionnelService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FilesService;
 import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
 import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
-
 
 @RestController
 @RequestMapping("/dossierProfessionnel")
@@ -55,6 +55,9 @@ public class DossierProfessionnelController {
 
 	@Autowired
 	DossierProfessionnelService dossierProService;
+	
+	@Autowired
+	AnnexeService annexeService;
 	
 	@Autowired
 	EtudiantService etudiantService;
@@ -89,32 +92,23 @@ public class DossierProfessionnelController {
 		return dossierProService.getByIdEtudiant(id);
 	}
 
-	/*@GetMapping(value = "/{page}/{size}/{idEtudiant}", produces = "application/json")
-	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(
-	    @PathVariable("page") int page,
-	    @PathVariable("size") int size,
-	    @PathVariable(value = "search", required = false) Optional<String> search,
-	    @PathVariable("idEtudiant") long idEtudiant
-	) {
-	    if (search.isPresent()) {
-	        return dossierProService.getAllByPage(page, size, search.get(), idEtudiant);
-	    } else {
-	        return dossierProService.getAllByPage(page, size, "", idEtudiant);
-	    }
-	}*/
-
-
+	@GetMapping(value = "/{page}/{size}", produces = "application/json")
+	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
+			@PathVariable(value = "size") int size) {
+		return dossierProService.getAllByPage(page, size, "");
+	}
 
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
 	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size,
 			@PathVariable(value = "search", required = false) Optional<String> search) {
-		if (search.isPresent()) {
-	        return dossierProService.getAllByPage(page, size, search.get());
-	    } else {
-	        return dossierProService.getAllByPage(page, size, "");
-	    }
+		if (search.isPresent())
+			return dossierProService.getAllByPage(page, size, search.get());
+		else
+			return dossierProService.getAllByPage(page, size, "");
 	}
+
+
 
 	@PostMapping(value = "/save/{id}", consumes = "application/json", produces = "application/json")
 	public DossierProfessionnelDto saveOrUpdate(@PathVariable("id") long id, @RequestBody DossierProfessionnelDto dpDto) {
@@ -194,27 +188,30 @@ public class DossierProfessionnelController {
 		return dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
 	}
 
-	@GetMapping(value="/dossier-professionnel/{etudiantId}/{promotionId}", produces="application/octet-stream")
+	@GetMapping(value = "/dossier-professionnel/{etudiantId}/{promotionId}", produces = "application/pdf")
 	public ResponseEntity<Resource> generateDossierProByStudentAndPromo(@PathVariable("etudiantId") long etudiantId, @PathVariable("promotionId") long promotionId) throws Exception {
-		String outputpdfPath = dossierProService.generateDossierProByStudentAndPromo(etudiantId, promotionId);
+	    String outputpdfPath = dossierProService.generateDossierProByStudentAndPromo(etudiantId, promotionId);
 
-		File f = new File(outputpdfPath);
-		Path path = Paths.get(f.getAbsolutePath());
-		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + etudiantId + "-promo" + promotionId + ".pdf");
-		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-		headers.add("Pragma", "no-cache");
-		headers.add("Expires","0");
+	    File f = new File(outputpdfPath);
+	    Path path = Paths.get(f.getAbsolutePath());
+	    ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + etudiantId + "-promo" + promotionId + ".pdf");
+	    headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+	    headers.add("Pragma", "no-cache");
+	    headers.add("Expires", "0");
 
-		return ResponseEntity.ok().headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+	    return ResponseEntity.ok().headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
 	}
-	
-	@GetMapping(value = "/generer/{idDossierPro}", produces = "text/plain")
-	public ResponseEntity<String> genererDossierProfessionnel(
-			@PathVariable("idDossierPro") long idDossierPro) throws Exception {
 
-		String outpoutPath = (dossierProService.genererDossierProfessionnel(idDossierPro));
+	
+	
+	
+	@GetMapping(value = "/generer/{idDossierPro}/{etudiantId}", produces = "application/pdf")
+	public ResponseEntity<String> genererDossierProfessionnel(
+			@PathVariable("idDossierPro") long idDossierPro, @PathVariable("etudiantId") long etudiantId) throws Exception {
+
+		String outpoutPath = (dossierProService.genererDossierProfessionnel(idDossierPro, etudiantId));
 		File f = new File(outpoutPath);
 		
 		Path path = Paths.get(f.getAbsolutePath());
@@ -223,6 +220,17 @@ public class DossierProfessionnelController {
 
 		return ResponseEntity.ok().body(base64);
 	}
+	
+	@DeleteMapping("/annexes/{annexeId}")
+    public ResponseEntity<String> deleteAnnexe(@PathVariable Long annexeId) {
+        boolean isDeleted = annexeService.deleteAnnexe(annexeId);
+        
+        if (isDeleted) {
+            return new ResponseEntity<>("Annexe deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Annexe not found", HttpStatus.NOT_FOUND);
+        }
+    }
 	
 	
 	@PostMapping(value = "/upload/{etudiantId}/{cursusId}", consumes = "multipart/form-data", produces = "application/json")
@@ -265,7 +273,10 @@ public class DossierProfessionnelController {
 	    }
 	}
 
-	
-	
+	@DeleteMapping(value = "/upload/{id}", produces = "text/plain")
+	public ResponseEntity<DossierProEtudiantDto> deletefile( @PathVariable("id") Long id, @RequestParam("fileImport")String file){
+		DossierProEtudiantDto dpDto = dossierProService.deleteFileImportById(id, file);
+		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
+	}
 
 }

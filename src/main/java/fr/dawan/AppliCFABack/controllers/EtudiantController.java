@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Console;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -216,7 +217,28 @@ public class EtudiantController {
 		return etudiantService.getAccueilEtudiant(id);
 	}
 	
+	@GetMapping(value = {"/promotion/{id}/{page}/{size}/{search}", "/promotion/{id}/{page}/{size}"}, produces = "application/json")
+	public List<EtudiantDto> GetEtudiantByPromotion(
+			@PathVariable("id") long id,
+			@PathVariable("page") int page,
+			@PathVariable("size") int size,
+			@PathVariable(value = "search", required = false) Optional<String> search) {
+		if (search.isPresent()) {			
+			return etudiantService.getEtudiantByPromotion(id, page, size, search.get());
+		}else {
+			return etudiantService.getEtudiantByPromotion(id, page, size, "");
 
+		}
+	}
 
-
+	@GetMapping(value = {"/countEtudiantByPromotion/{id}/{search}", "/countEtudiantByPromotion/{id}" }, produces = "application/json")
+	public CountDto countEtudiantByPromotion(@PathVariable("id") long id,
+			@PathVariable(value = "search", required = false) Optional<String> search) {
+		if (search.isPresent()) {			
+			return etudiantService.countEtudiantByPromotion(id, search.get());
+		}else {
+			return etudiantService.countEtudiantByPromotion(id, "");
+			
+		}
+	}
 }

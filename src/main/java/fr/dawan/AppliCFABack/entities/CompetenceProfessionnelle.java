@@ -29,7 +29,7 @@ public class CompetenceProfessionnelle extends BaseEntity implements Serializabl
 	@ManyToOne
 	private ActiviteType activiteType;
 
-	@OneToMany(mappedBy = "competenceProfessionnelle", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "competenceProfessionnelle")
 	private List<ExperienceProfessionnelle> experienceProfessionnelles;
 	
 	@ManyToMany(mappedBy="competencesEvaluees")

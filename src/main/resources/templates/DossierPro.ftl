@@ -254,9 +254,16 @@
             </div>
         </div>
         <div class="exempleContent">
-            <div class="divExempleContent">
-                ${exp.tacheRealisee}
-            </div>
+            <#if exp.tacheRealisee??>
+    <div class="divExempleContent">
+        ${exp.tacheRealisee}
+    </div>
+<#else>
+    <div class="divExempleContent">
+        <!-- Handle the case when exp.tacheRealisee is null or missing -->
+        No data available for tacheRealisee.
+    </div>
+</#if>
         </div>
     </div>
 <#---------------------------------------------Page 6------------------------------------------------>
@@ -275,9 +282,16 @@
             </div>
         </div>
         <div class="exempleContent2">
-            <div class="divExempleContent">
-                ${exp.moyenUtilise}
-            </div>
+        <#if exp.tacheRealisee??>
+    <div class="divExempleContent">
+        ${exp.moyenUtilise}
+    </div>
+<#else>
+    <div class="divExempleContent">
+        pas de tacheRealisee.
+    </div>
+</#if>
+           
         </div>
     </div>
     <div class="divExempleDescription2">
@@ -287,9 +301,15 @@
             </div>
         </div>
         <div class="exempleContent2">
-            <div class="divExempleContent">
-                ${exp.collaborateur}
-            </div>
+             <#if exp.collaborateur??>
+    <div class="divExempleContent">
+        ${exp.moyenUtilise}
+    </div>
+<#else>
+    <div class="divExempleContent">
+        pas de moyenUtilise.
+    </div>
+</#if>
         </div>
     </div>
     <div class="divExempleDescription2">
@@ -299,9 +319,15 @@
             </div>
         </div>
         <div class="exempleContent2">
-            <div class="divExempleContent">
-                ${exp.contexte}
-            </div>
+            <#if exp.contexte??>
+    <div class="divExempleContent">
+        ${exp.moyenUtilise}
+    </div>
+<#else>
+    <div class="divExempleContent">
+        pas de contexte.
+    </div>
+</#if>
         </div>
     </div>
     <div class="divExempleDescription3">
@@ -311,9 +337,15 @@
             </div>
         </div>
         <div class="exempleContent2">
-            <div class="divExempleContent">
-                ${exp.information}
-            </div>
+             <#if exp.information??>
+    <div class="divExempleContent">
+        ${exp.moyenUtilise}
+    </div>
+<#else>
+    <div class="divExempleContent">
+       pas  d'information.
+    </div>
+</#if>
         </div>
     </div>
                     </#if>
@@ -323,6 +355,7 @@
 
 
 <#--------------------------------------------Page 29----------------------------------------------->
+
 <div class="divTitlePage4">
     <div class="greyBarsAndH1">
         <div class="greyBarTop2"></div>
@@ -331,6 +364,7 @@
         <div class="pinkLine"></div>
     </div>
 </div>
+
 <div class="divTitrePro3">
     <div class="titlePink">
         <h2 class="h2TitrePro">Titres,diplômes, CQP, attestations de formation</h2>
@@ -346,11 +380,12 @@
         <th>Date</th>
     </tr>
     </thead>
+    <#list exp[0].dossierProfessionnel.facultatifs as f>
     <tbody>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><#if f??>${f.intitule}</#if></td>
+        <td><#if f??>${f.organisme}</#if></td>
+        <td><#if f??>${f.date}</#if></td>
     </tr>
     <tr>
         <td></td>
@@ -398,7 +433,9 @@
         <td></td>
     </tr>
     </tbody>
+    </#list>
 </table>
+
 <#-----------------------------------------Page 30------------------------------------------------->
 <div class="divTitlePage4">
     <div class="greyBarsAndH1">
@@ -420,8 +457,8 @@
     suis l'auteur(e) des réalisations jointes. <br><br><br><br><br><br>
     Fait à ${et.utilisateur.adresse.ville}, le ${dateNow} <br><br>
     pour faire valoir ce que de droit. <br><br><br><br>
-    Signature : <#if signature??>
-             ${signature.pieceJointe}
+    <#if signature??>
+       Signature :<img src="${signature.pieceJointe}" alt="Signature">
                </#if>
 </p>
 <#-------------------------------------------Page 31---------------------------------------------->
@@ -446,7 +483,7 @@
         <th>Intitulé</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody >
     <tr>
         <td></td>
     </tr>
@@ -496,12 +533,12 @@
     <div class="facultatif2">(Si le RC le prévoit)</div>
 </div>
 <div class="divAnnexesList">
-    <#--    <#list exp[0].dossierProfessionnel.annexes as a>-->
-    <#--        <div>-->
-    <#--            <dt>${a.libelle}</dt>-->
-    <#--            <dt>${a.pieceJointe}</dt>-->
-    <#--        </div>-->
-    <#--    </#list>-->
+    <#list exp[0].dossierProfessionnel.annexes as an>-->
+        <div>
+            <dt>${an.libelleAnnexe}</dt>
+               <dt><img src="src/main/resources/files/DossierProfessionnel/${an.pieceJointe}" alt="${an.pieceJointe}"></dt>
+        </div>
+        </#list>
 </div>
 </body>
 </html>
