@@ -225,30 +225,31 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 			return dpDto;
 	}
 
-	public DossierProjetDto deleteFile(String file, long id) {
-		String cheminFichier = storageFolder + "/DossierProjet/" + file;
-		File fichier = new File(cheminFichier);
-		if (fichier.exists()) {
-			DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
-			fichier.delete();
+public DossierProjetDto deleteFile(String file, long id) {
+   String cheminFichier = storageFolder + "/DossierProjet/" + file;
+   File fichier = new File(cheminFichier);
+   DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
+   if (fichier.exists()) {
 
-			// Supprimer l'élément de fichier de la liste d'annexes du DossierProjet
-			String importDp = dp.getDossierImport();
-			List<String> annexes = dp.getAnnexeDossierProjets();
+      fichier.delete();
+      // Supprimer l'élément de fichier de la liste d'annexes du DossierProjet
+      String importDp = dp.getDossierImport();
+      List<String> annexes = dp.getAnnexeDossierProjets();
 
-			if(annexes.contains(file)) {
-				annexes.removeIf(annexe -> annexe.equals(file));
-				dp.setAnnexeDossierProjets(annexes);
-			}
-			if(importDp.contains(file)){
-				dp.setDossierImport(null);
-			}
+      if(annexes.contains(file)) {
+         annexes.removeIf(annexe -> annexe.equals(file));
+         //dp.setAnnexeDossierProjets(annexes);
+      }
+      if(importDp != null){
+         dp.setDossierImport(null);
+      }
 
-			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dossierProRepo.save(dp));
-			return dpDto;
-		}
-		return null;
-	}
+      DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dossierProRepo.save(dp));
+      return dpDto;
+   }
+   return null;
+}
+
 	public DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException {
 		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
 		List<String> getList = dp.getAnnexeDossierProjets();
