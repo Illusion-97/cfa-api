@@ -61,19 +61,30 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	 * @param search	éléments groupe (nom, nom etudiant, prenom etudiant)
 	 * @return lstDto Liste des objets groupes etudiants
 	 */
-
+	
 	@Override
 	public List<GroupeEtudiantDto> getAllByPage(int page, int size, String search) {
-		List<GroupeEtudiant> lst = groupeEtudiantRepository.findAllByNomContainingIgnoringCase(search, PageRequest.of
-				(page, size)).get().collect(Collectors.toList());
-		List<GroupeEtudiantDto> dpDto = new ArrayList<>();
-		if(!lst.isEmpty()){
-			for (GroupeEtudiant group : lst){
-				GroupeEtudiantDto gpDtos = mapper.groupeEtudiantToGroupEtudiantDto(group);
-				dpDto.add(gpDtos);
+		List<GroupeEtudiant> lst = groupeEtudiantRepository.findAllByNomContainingIgnoringCaseOrEtudiantsUtilisateurNomContainingIgnoringCaseOrEtudiantsUtilisateurPrenomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+
+		// conversion vers Dto
+		List<GroupeEtudiantDto> lstDto = new ArrayList<>();
+		for (GroupeEtudiant g : lst) {
+			GroupeEtudiantDto gDto = mapper.groupeEtudiantToGroupEtudiantDto(g);
+			List<EtudiantDto> etudiantsDto = new ArrayList<>();
+			for(Etudiant e : g.getEtudiants()) {
+				EtudiantDto eDto = mapper.etudiantToEtudiantDto(e);
+				List<PromotionDto> pDtos = new ArrayList<>();
+				for(Promotion p : e.getPromotions()) {
+					pDtos.add(mapper.promotionToPromotionDto(p));
+				}
+				eDto.setPromotionsDto(pDtos);
+				eDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(e.getUtilisateur()));
+				etudiantsDto.add(eDto);
 			}
+			gDto.setEtudiantsDto(etudiantsDto);
+			lstDto.add(gDto);
 		}
-		return dpDto;
+		return lstDto;
 	}
 
 	/**
@@ -84,7 +95,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	
 	@Override
 	public CountDto count(String search) {
-		return new CountDto(groupeEtudiantRepository.countByNomContainingIgnoringCase(search));
+		return new CountDto(groupeEtudiantRepository.countByNomContainingIgnoringCaseOrEtudiantsUtilisateurNomContainingIgnoringCaseOrEtudiantsUtilisateurPrenomContainingIgnoringCase(search, search, search));
 	}
 
 	/**
