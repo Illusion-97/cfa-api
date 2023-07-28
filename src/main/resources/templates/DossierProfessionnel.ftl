@@ -267,7 +267,7 @@
 </h3>
 <div class="divIntitule">
     <h4>
-        <div class="spanSommaireTitle">Intitulé de l’activité-type n° 1</#if></div>
+        <div class="spanSommaireTitle">Intitulé de l’activité-type n° 1</div>
         <span class="spanPageBoldAt1">p. 5</span></h4>
 </div>
  <span> Intitulé de l’exemple n° 1 <br/>

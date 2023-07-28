@@ -585,6 +585,26 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 	    return null;
 	}
 
+	@Override
+	public DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws IOException {
+		DossierProfessionnel dp = dossierProRepo.getByDossierbyId(dossierId);
+		String nomFile = dp.getFileImport();
+		String path = storageFolder2 + "DossierProfessionnel" + "/" + nomFile;
+		File fichier = new File(path);
+		if (fichier.exists()) {
+			fichier.delete();
+		}
+			String file = fileImport.getOriginalFilename();
+			String pathDossierProjet = storageFolder2 + "DossierProfessionnel" + "/" + file;
+			File newFile = new File(path);
+		    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
+		    bos.write(fileImport.getBytes());
+		    bos.close();
+			dp.setFileImport(file);
+			DossierProEtudiantDto dpDto = mapper.dossierProfessionnelToDossierProEtudiantDto(dp);
+			return dpDto;
+	}
+
 	
 
 	
