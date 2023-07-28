@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
 import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
 
@@ -71,6 +72,7 @@ import fr.dawan.AppliCFABack.services.FilesService;
 import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
 import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
 import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
+import io.micrometer.core.lang.Nullable;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -282,20 +284,16 @@ public class DossierProfessionnelController {
 	  
 	    try {    
 	    
-	        // Enregistrer le fichier sur le serveur
 	        byte[] bytes = file.getBytes();
 	        Path path = Paths.get(storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename());
 	        Files.write(path, bytes);
 
-	        // Enregistrer le fichier dans la base de données avec etudiantId
 	        EtudiantDto etudiant = new EtudiantDto();	      
 	        etudiant.setId(etudiantId);
 	        
 	        CursusDossierProDto cursus =  new CursusDossierProDto();
 	        cursus.setId(cursusId);
 	       
-
-	        // Enregistrer le fichier importé pour l'étudiant dans la base de données
 	        DossierProEtudiantDto dossier = new DossierProEtudiantDto();
 	        dossier.setNom(nom);
 	        dossier.setCursusDto(cursus);     
@@ -314,10 +312,17 @@ public class DossierProfessionnelController {
 	    }
 	}
 
-	@DeleteMapping(value = "/upload/{id}", produces = "text/plain")
+	@DeleteMapping(value = "/deleteFile/{id}", produces = "text/plain")
 	public ResponseEntity<DossierProEtudiantDto> deletefile( @PathVariable("id") Long id, @RequestParam("fileImport")String file){
 		DossierProEtudiantDto dpDto = dossierProService.deleteFileImportById(id, file);
 		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
 	}
-
+	
+	@PostMapping(value = "/uploadFile/{dossierId}", consumes = "multipart/form-data", produces = "application/json")
+	public ResponseEntity<DossierProEtudiantDto> saveFileImport(@Nullable @RequestParam("fileImport")MultipartFile fileImport,
+															 @PathVariable("dossierId") Long id) throws IOException {
+		DossierProEtudiantDto dpDto = dossierProService.saveFileImport(fileImport, id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
+	}
+	
 }
