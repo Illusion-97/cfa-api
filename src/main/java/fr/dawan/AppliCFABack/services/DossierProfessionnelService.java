@@ -15,6 +15,7 @@ import freemarker.template.TemplateNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -45,9 +46,11 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
     String genererDossierProfessionnel(long idDossierPro, long etudiantId) throws DossierProfessionnelException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
 	GetDossierProDto getAllDossierProfessionnelByEtudiant(long id);
+
+	DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws FileNotFoundException, IOException;
 		
 	}
-	//String FileUpload(long etudiantId, long cursusId, String nom, MultipartFile file);
+
 	
 	
 	
