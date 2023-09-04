@@ -44,10 +44,19 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	@Override
 	public List<GroupeEtudiantDto> getAllGroupeEtudiant() {
 		List<GroupeEtudiant> lst = groupeEtudiantRepository.findAll();
-		
+		List<EtudiantDto> lstEtuDto = new ArrayList<>();
 		List<GroupeEtudiantDto> lstDto = new ArrayList<>();
 		for (GroupeEtudiant g : lst) {
 			lstDto.add(mapper.groupeEtudiantToGroupEtudiantDto(g));
+			for(Etudiant e : g.getEtudiants()) {
+				EtudiantDto eDto = mapper.etudiantToEtudiantDto(e);
+				List<PromotionDto> pDtos = new ArrayList<>();
+				for(Promotion p : e.getPromotions()) {
+					pDtos.add(mapper.promotionToPromotionDto(p));
+				}
+				eDto.setPromotionsDto(pDtos);
+				lstEtuDto.add(eDto);
+			}
 		}
 		return lstDto;
 	}

@@ -136,6 +136,9 @@ public interface DtoMapper {
     @Mapping(source = "etudiants", target = "etudiantsDto")
     GroupeEtudiantDto groupeEtudiantToGroupEtudiantDto(GroupeEtudiant groupeEtudiant);
 
+    @Mapping(source = "etudiantsDto", target = "etudiants")
+    GroupeEtudiant groupeEtudiantDtoToGroupEtudiant(GroupeEtudiantDto groupeEtudiantDto);
+
     @Mapping(source = ".", target = ".")
     @Mapping(source = "formation", target = "formationDto")
     InterventionDto interventionToInterventionDto(Intervention intervention);

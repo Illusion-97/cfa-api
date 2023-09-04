@@ -76,8 +76,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-07-28T13:04:49+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.34.0.v20230523-1233, environment: Java 17.0.5 (Oracle Corporation)"
+    date = "2023-09-04T10:08:54+0200",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -308,11 +308,28 @@ public class DtoMapperImpl implements DtoMapper {
 
         GroupeEtudiantDto groupeEtudiantDto = new GroupeEtudiantDto();
 
+        groupeEtudiantDto.setEtudiantsDto( etudiantListToEtudiantDtoList( groupeEtudiant.getEtudiants() ) );
         groupeEtudiantDto.setId( groupeEtudiant.getId() );
         groupeEtudiantDto.setVersion( groupeEtudiant.getVersion() );
         groupeEtudiantDto.setNom( groupeEtudiant.getNom() );
 
         return groupeEtudiantDto;
+    }
+
+    @Override
+    public GroupeEtudiant groupeEtudiantDtoToGroupEtudiant(GroupeEtudiantDto groupeEtudiantDto) {
+        if ( groupeEtudiantDto == null ) {
+            return null;
+        }
+
+        GroupeEtudiant groupeEtudiant = new GroupeEtudiant();
+
+        groupeEtudiant.setEtudiants( etudiantDtoListToEtudiantList( groupeEtudiantDto.getEtudiantsDto() ) );
+        groupeEtudiant.setId( groupeEtudiantDto.getId() );
+        groupeEtudiant.setVersion( groupeEtudiantDto.getVersion() );
+        groupeEtudiant.setNom( groupeEtudiantDto.getNom() );
+
+        return groupeEtudiant;
     }
 
     @Override
@@ -374,12 +391,30 @@ public class DtoMapperImpl implements DtoMapper {
 
         ProjetDto projetDto = new ProjetDto();
 
+        projetDto.setGroupeId( projetGroupeId( projet ) );
         projetDto.setId( projet.getId() );
         projetDto.setVersion( projet.getVersion() );
         projetDto.setNom( projet.getNom() );
         projetDto.setDescription( projet.getDescription() );
 
         return projetDto;
+    }
+
+    @Override
+    public Projet projetDtoToProjet(ProjetDto pdto) {
+        if ( pdto == null ) {
+            return null;
+        }
+
+        Projet projet = new Projet();
+
+        projet.setGroupe( projetDtoToGroupeEtudiant( pdto ) );
+        projet.setId( pdto.getId() );
+        projet.setVersion( pdto.getVersion() );
+        projet.setNom( pdto.getNom() );
+        projet.setDescription( pdto.getDescription() );
+
+        return projet;
     }
 
     @Override
@@ -1020,6 +1055,69 @@ public class DtoMapperImpl implements DtoMapper {
         return set1;
     }
 
+    protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<EtudiantDto> list1 = new ArrayList<EtudiantDto>( list.size() );
+        for ( Etudiant etudiant : list ) {
+            list1.add( etudiantToEtudiantDto( etudiant ) );
+        }
+
+        return list1;
+    }
+
+    protected Etudiant etudiantDtoToEtudiant(EtudiantDto etudiantDto) {
+        if ( etudiantDto == null ) {
+            return null;
+        }
+
+        Etudiant etudiant = new Etudiant();
+
+        etudiant.setId( etudiantDto.getId() );
+        etudiant.setVersion( etudiantDto.getVersion() );
+
+        return etudiant;
+    }
+
+    protected List<Etudiant> etudiantDtoListToEtudiantList(List<EtudiantDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<Etudiant> list1 = new ArrayList<Etudiant>( list.size() );
+        for ( EtudiantDto etudiantDto : list ) {
+            list1.add( etudiantDtoToEtudiant( etudiantDto ) );
+        }
+
+        return list1;
+    }
+
+    private long projetGroupeId(Projet projet) {
+        if ( projet == null ) {
+            return 0L;
+        }
+        GroupeEtudiant groupe = projet.getGroupe();
+        if ( groupe == null ) {
+            return 0L;
+        }
+        long id = groupe.getId();
+        return id;
+    }
+
+    protected GroupeEtudiant projetDtoToGroupeEtudiant(ProjetDto projetDto) {
+        if ( projetDto == null ) {
+            return null;
+        }
+
+        GroupeEtudiant groupeEtudiant = new GroupeEtudiant();
+
+        groupeEtudiant.setId( projetDto.getGroupeId() );
+
+        return groupeEtudiant;
+    }
+
     private String promotionCentreFormationNom(Promotion promotion) {
         if ( promotion == null ) {
             return null;
@@ -1033,19 +1131,6 @@ public class DtoMapperImpl implements DtoMapper {
             return null;
         }
         return nom;
-    }
-
-    protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<EtudiantDto> list1 = new ArrayList<EtudiantDto>( list.size() );
-        for ( Etudiant etudiant : list ) {
-            list1.add( etudiantToEtudiantDto( etudiant ) );
-        }
-
-        return list1;
     }
 
     protected List<InterventionDto> interventionListToInterventionDtoList(List<Intervention> list) {
