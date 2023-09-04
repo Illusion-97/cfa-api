@@ -19,6 +19,7 @@
     <title>Dossier Professionnel</title>
 </head>
 <body>
+
 <#---------------------------------------------------PAGE 1--------------------------------------------------------->
 <div class="divTitlePage1">
     <img class=" frenchRepublic" src="${backendUrl}/pictures/frenchRepublic.jpg" alt="image république française">
@@ -531,6 +532,14 @@
     </div>
     <div class="pinkDiv1"></div>
     <div class="facultatif2">(Si le RC le prévoit)</div>
+</div>
+<div class="divAnnexesList">
+    <#list exp[0].dossierProfessionnel.annexes as an>-->
+        <div>
+            <dt>${an.libelleAnnexe}</dt>
+               <dt><img src="src/main/resources/files/DossierProfessionnel/${an.pieceJointe}" alt="${an.pieceJointe}"></dt>
+        </div>
+        </#list>
 </div>
 <div class="divAnnexesList">
     <#list exp[0].dossierProfessionnel.annexes as an>-->
