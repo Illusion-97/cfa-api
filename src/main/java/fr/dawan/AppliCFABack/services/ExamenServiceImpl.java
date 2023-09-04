@@ -235,6 +235,7 @@ public class ExamenServiceImpl implements ExamenService {
 			competenceProfessionnelles.add(competenceProfessionnelleRepository.getOne(idC));
 		}
 		
+		System.out.println(eDto);
 		Examen e = DtoTools.convert(eDto, Examen.class);
 		e.setActiviteType(activiteTypes);
 		e.setCompetencesProfessionnelles(competenceProfessionnelles);
