@@ -149,25 +149,4 @@ public class DossierProjetController {
 		DossierProjetDto dpDto = dossierProService.deleteFile(file, id);
 		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

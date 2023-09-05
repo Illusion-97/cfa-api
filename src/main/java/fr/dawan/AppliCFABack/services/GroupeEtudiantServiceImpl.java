@@ -178,11 +178,6 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 		List<EtudiantDto> result = new ArrayList<>();
 		for(Etudiant e : g.get().getEtudiants()) {
 			EtudiantDto eDto = mapper.etudiantToEtudiantDto(e);
-			List<PromotionDto> pDtos = new ArrayList<>();
-			for(Promotion p : e.getPromotions()) {
-				pDtos.add(mapper.promotionToPromotionDto(p));
-			}
-			eDto.setPromotionsDto(pDtos);
 			eDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(e.getUtilisateur()));
 			result.add(eDto);
 		}		
