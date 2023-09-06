@@ -76,7 +76,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-09-04T17:13:53+0200",
+    date = "2023-09-06T10:12:48+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -233,12 +233,10 @@ public class DtoMapperImpl implements DtoMapper {
 
         ExamenDto examenDto = new ExamenDto();
 
-        examenDto.setDescriptif( examen.getDescriptif() );
-        examenDto.setActiviteTypesDto( activiteTypeListToActiviteTypeDtoList( examen.getActiviteTypes() ) );
-        examenDto.setCompetencesProfessionnellesDto( competenceProfessionnelleSetToCompetenceProfessionnelleDtoSet( examen.getCompetencesProfessionnelles() ) );
         examenDto.setId( examen.getId() );
         examenDto.setVersion( examen.getVersion() );
         examenDto.setTitre( examen.getTitre() );
+        examenDto.setDescriptif( examen.getDescriptif() );
         examenDto.setDuree( examen.getDuree() );
         examenDto.setPieceJointe( examen.getPieceJointe() );
         examenDto.setDateExamen( examen.getDateExamen() );
@@ -1041,32 +1039,6 @@ public class DtoMapperImpl implements DtoMapper {
         evaluationFormation.setDateEvaluation( evalDto.getDateEvaluation() );
 
         return evaluationFormation;
-    }
-
-    protected List<ActiviteTypeDto> activiteTypeListToActiviteTypeDtoList(List<ActiviteType> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<ActiviteTypeDto> list1 = new ArrayList<ActiviteTypeDto>( list.size() );
-        for ( ActiviteType activiteType : list ) {
-            list1.add( activiteTypeToActiviteTypeDto( activiteType ) );
-        }
-
-        return list1;
-    }
-
-    protected Set<CompetenceProfessionnelleDto> competenceProfessionnelleSetToCompetenceProfessionnelleDtoSet(Set<CompetenceProfessionnelle> set) {
-        if ( set == null ) {
-            return null;
-        }
-
-        Set<CompetenceProfessionnelleDto> set1 = new HashSet<CompetenceProfessionnelleDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
-        for ( CompetenceProfessionnelle competenceProfessionnelle : set ) {
-            set1.add( competenceProfessionnelleToCompetenceProfessionnelleDto( competenceProfessionnelle ) );
-        }
-
-        return set1;
     }
 
     protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
