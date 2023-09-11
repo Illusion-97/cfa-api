@@ -42,7 +42,6 @@ public class ProjetServiceImpl implements ProjetService {
 		List<ProjetDto> lstDto = new ArrayList<>();
 		for (Projet p : lst) {
 			ProjetDto pDto = mapper.projetToProjetDto(p);
-			pDto.setGroupeDto(mapper.groupeEtudiantToGroupEtudiantDto(p.getGroupe()));
 			lstDto.add(pDto);
 		}
 		return lstDto;
@@ -66,7 +65,6 @@ public class ProjetServiceImpl implements ProjetService {
 		List<ProjetDto> lstDto = new ArrayList<>();
 		for (Projet p : lst) {
 			ProjetDto pDto = mapper.projetToProjetDto(p);
-			pDto.setGroupeDto(mapper.groupeEtudiantToGroupEtudiantDto(p.getGroupe()));
 			lstDto.add(pDto);
 		}
 		return lstDto;
@@ -95,7 +93,6 @@ public class ProjetServiceImpl implements ProjetService {
 		if (p.isPresent()) {
 
 			ProjetDto pDto = mapper.projetToProjetDto(p.get());
-			pDto.setGroupeDto(mapper.groupeEtudiantToGroupEtudiantDto(p.get().getGroupe()));
 			return pDto;
 		}
 
@@ -109,7 +106,7 @@ public class ProjetServiceImpl implements ProjetService {
 	
 	@Override
 	public ProjetDto saveOrUpdate(ProjetDto pDto) {
-		Projet p = DtoTools.convert(pDto, Projet.class);
+		Projet p = mapper.projetDtoToProjet(pDto);
 
 		p = projetRepository.saveAndFlush(p);
 		
@@ -144,7 +141,6 @@ public class ProjetServiceImpl implements ProjetService {
 		List<ProjetDto> result = new ArrayList<>();
 		for(Projet p : projets) {
 		ProjetDto pDto = mapper.projetToProjetDto(p);
-		pDto.setGroupeDto(mapper.groupeEtudiantToGroupEtudiantDto(p.getGroupe()));
 		result.add(pDto);
 		}
 		
