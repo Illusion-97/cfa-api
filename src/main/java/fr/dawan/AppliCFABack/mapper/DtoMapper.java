@@ -155,6 +155,7 @@ public interface DtoMapper {
     @Mapping(source = "groupeId", target = "groupe.id")
     Projet projetDtoToProjet(ProjetDto pdto);
 
+    List<ProjetDto> listProjettoListProjetDto(List<Projet> projet);
     @Mapping(source = ".", target = ".")
     @Mapping(source = "cursus", target = "cursusDto")
     @Mapping(source = "centreFormation", target = "centreFormationDto")

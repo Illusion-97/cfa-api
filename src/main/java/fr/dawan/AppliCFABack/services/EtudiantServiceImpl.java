@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,67 +35,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.dawan.AppliCFABack.dto.AbsenceDto;
-import fr.dawan.AppliCFABack.dto.AdresseDto;
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DevoirDto;
-import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
-import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
-import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.EtudiantUtilisateurDG2Dto;
-import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
-import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
-import fr.dawan.AppliCFABack.dto.NoteDto;
-import fr.dawan.AppliCFABack.dto.PositionnementDto;
-import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
-import fr.dawan.AppliCFABack.entities.Absence;
-import fr.dawan.AppliCFABack.entities.ActiviteType;
-import fr.dawan.AppliCFABack.entities.Adresse;
-import fr.dawan.AppliCFABack.entities.BlocEvaluation;
-import fr.dawan.AppliCFABack.entities.Devoir;
-import fr.dawan.AppliCFABack.entities.DevoirEtudiant;
-import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
-import fr.dawan.AppliCFABack.entities.DossierProjet;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
-import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.LivretEvaluation;
 import fr.dawan.AppliCFABack.entities.LivretEvaluation.EtatLivertEval;
-import fr.dawan.AppliCFABack.entities.Positionnement;
-import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-import fr.dawan.AppliCFABack.entities.UtilisateurRole;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
-import fr.dawan.AppliCFABack.repositories.AdresseRepository;
-import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
-import fr.dawan.AppliCFABack.repositories.DevoirEtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.DevoirRepository;
-import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
-import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
-import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.ExamenRepository;
-import fr.dawan.AppliCFABack.repositories.FormateurRepository;
-import fr.dawan.AppliCFABack.repositories.GroupeEtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.InterventionRepository;
-import fr.dawan.AppliCFABack.repositories.LivretEvaluationRepository;
-import fr.dawan.AppliCFABack.repositories.NoteRepository;
-import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
-import fr.dawan.AppliCFABack.repositories.PromotionRepository;
-import fr.dawan.AppliCFABack.repositories.TuteurRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.HashTools;
 
@@ -102,7 +52,8 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Autowired
 	EtudiantRepository etudiantRepository;
-
+	@Autowired
+	ProjetRepository projetRepository;
 	@Autowired
 	DossierProjetRepository dossierProRepo;
 	
@@ -502,7 +453,22 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 		return lstDto;
 	}
-
+	/**
+	 * Récupération des projets affectés à l'étudiant
+	 *
+	 * @param id id de l'etudiant
+	 */
+	@Override
+	public List<ProjetDto> getProjetByIdEtudiant(long id) {
+		List<Projet> lstProjets = new ArrayList<>();
+		List<GroupeEtudiantDto> lstGroupesEtuDto = getGroupesByIdEtudiant(id);
+		for (GroupeEtudiantDto gpe : lstGroupesEtuDto) {
+			GroupeEtudiant gp = mapper.groupeEtudiantDtoToGroupEtudiant(gpe);
+			List<Projet> projets = projetRepository.findAllByGroupeId(gp.getId());
+			lstProjets.addAll(projets);
+		}
+		return mapper.listProjettoListProjetDto(lstProjets);
+	}
 	/**
 	 * Récupération de l'adresse de l'étudiant
 	 *
@@ -531,11 +497,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 ////			nDto.setDevoirDto(mapper.DevoirToDevoirDto(n.getDevoir()));
 ////			nDto.setExamenDto(mapper.PassageExamenToPassageExamenDto(n.getExamen()));
 ////			nDto.getExamenDto().setExamenDto(mapper.ExamenToExamenDto(n.getExamen().getExamen()));
-//			
-//			
+//
+//
 //			res.add(nDto);
 //		}
-//		
+//
 
 		return null;
 	}

@@ -76,7 +76,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-09-04T10:08:54+0200",
+    date = "2023-09-04T17:13:53+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -415,6 +415,20 @@ public class DtoMapperImpl implements DtoMapper {
         projet.setDescription( pdto.getDescription() );
 
         return projet;
+    }
+
+    @Override
+    public List<ProjetDto> listProjettoListProjetDto(List<Projet> projet) {
+        if ( projet == null ) {
+            return null;
+        }
+
+        List<ProjetDto> list = new ArrayList<ProjetDto>( projet.size() );
+        for ( Projet projet1 : projet ) {
+            list.add( projetToProjetDto( projet1 ) );
+        }
+
+        return list;
     }
 
     @Override

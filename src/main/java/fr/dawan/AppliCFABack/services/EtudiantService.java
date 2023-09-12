@@ -38,6 +38,8 @@ public interface EtudiantService {
 	List<GroupeEtudiantDto> getGroupesByIdEtudiant(long id);
 
 
+	List<ProjetDto> getProjetByIdEtudiant(long id);
+
 	AdresseDto getAdresseByIdEtudiant(long id);
 
 	// ##################################################
