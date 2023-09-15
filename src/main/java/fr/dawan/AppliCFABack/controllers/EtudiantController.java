@@ -127,6 +127,10 @@ public class EtudiantController {
 		return etudiantService.getGroupesByIdEtudiant(id);
 	}
 
+	@GetMapping(value = "/{id}/projets", produces = "application/json")
+	public List<ProjetDto> getProjetByIdEtudiant(@PathVariable("id") long id){
+		return etudiantService.getProjetByIdEtudiant(id);
+	}
 	/*
 	 * On récupère l'adresse de l'étudiant à partir de son id en passant par
 	 * Personne

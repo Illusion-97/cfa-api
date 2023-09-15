@@ -22,14 +22,13 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 	private double duree;
 	private String pieceJointe;
 	private LocalDate dateExamen;
-	private List<ActiviteTypeDto> activiteTypesDto;
-	private Set<PromotionDto> promotionsDto;
-	private Set<CompetenceProfessionnelleDto> competencesProfessionnellesDto;
+	private List<ActiviteTypeDto> activiteTypes;
+	private Set<CompetenceProfessionnelleDto> competencesProfessionnelles;
+	private Set<PromotionDto> promotions;
+
 	private Set<NoteDto> notesDto;
 	private long intreventionId;
 	private List<Byte> blocksConcernee;
-	private PromotionDto promotionDto;
-
 
 	public ExamenDto() {
 		super();
@@ -123,14 +122,14 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 	 * @return the activiteTypesDto
 	 */
 	public List<ActiviteTypeDto> getActiviteTypesDto() {
-		return activiteTypesDto;
+		return activiteTypes;
 	}
 
 	/**
 	 * @param activiteTypesDto the activiteTypesDto to set
 	 */
-	public void setActiviteTypesDto(List<ActiviteTypeDto> activiteTypesDto) {
-		this.activiteTypesDto = activiteTypesDto;
+	public void setActiviteTypesDto(List<ActiviteTypeDto> activiteTypes) {
+		this.activiteTypes = activiteTypes;
 	}
 
 
@@ -138,29 +137,29 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 	 * @return le promotionsDto
 	 */
 	public Set<PromotionDto> getPromotionsDto() {
-		return promotionsDto;
+		return promotions;
 	}
 
 	/**
 	 * @param promotionsDto le promotionsDto à affecter
 	 
 	 */
-	public void setPromotionsDto(Set<PromotionDto> promotionsDto) {
-		this.promotionsDto = promotionsDto;
+	public void setPromotionsDto(Set<PromotionDto> promotions) {
+		this.promotions = promotions;
 	}
 
 	/**
 	 * @return the competencesProfessionnellesDto
 	 */
 	public Set<CompetenceProfessionnelleDto> getCompetencesProfessionnellesDto() {
-		return competencesProfessionnellesDto;
+		return competencesProfessionnelles;
 	}
 
 	/**
 	 * @param competencesProfessionnellesDto the competencesProfessionnellesDto to set
 	 */
-	public void setCompetencesProfessionnellesDto(Set<CompetenceProfessionnelleDto> competencesProfessionnellesDto) {
-		this.competencesProfessionnellesDto = competencesProfessionnellesDto;
+	public void setCompetencesProfessionnellesDto(Set<CompetenceProfessionnelleDto> competencesProfessionnelles) {
+		this.competencesProfessionnelles = competencesProfessionnelles;
 	}
 
 	/**
@@ -200,12 +199,5 @@ public class ExamenDto extends BaseEntityDto implements Serializable {
 		this.blocksConcernee = blocksConcernee;
 	}
 
-	public PromotionDto getPromotionDto() {
-		return promotionDto;
-	}
-
-	public void setPromotionDto(PromotionDto promotionDto) {
-		this.promotionDto = promotionDto;
-	}
 
 }

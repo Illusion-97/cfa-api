@@ -198,7 +198,6 @@ public class PromotionServiceImpl implements PromotionService {
 	
 	@Override
 	public List<PromotionDto> getAllPromotions(int page, int size, int choix, String search) {
-		//List<Promotion> promoSlug = promoRepo.findAllByNomContainingAllIgnoreCase(search, choix,PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<Promotion> promoVille = promoRepo.findAllByNomOrCentreFormationNomIgnoreCase(search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<>();
 		switch (choix){

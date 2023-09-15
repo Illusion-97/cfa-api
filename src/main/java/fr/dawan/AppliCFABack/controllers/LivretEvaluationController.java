@@ -25,7 +25,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("livretEvaluation")
+@RequestMapping("/livretEvaluation")
 public class LivretEvaluationController extends GenericController<LivretEvaluationDto> {
 
 	public LivretEvaluationController(GenericService<LivretEvaluationDto> service) {

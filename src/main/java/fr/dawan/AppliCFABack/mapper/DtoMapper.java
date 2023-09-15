@@ -118,9 +118,6 @@ public interface DtoMapper {
     EtudiantDto etudiantToEtudiantDto(Etudiant etudiant);
 
     @Mapping(source = ".", target = ".")
-    @Mapping(source = "descriptif", target = "descriptif")
-    @Mapping(source = "activiteTypes", target = "activiteTypesDto")
-    @Mapping(source = "competencesProfessionnelles", target = "competencesProfessionnellesDto")
     ExamenDto examenToExamenDto(Examen examen);
 
     @Mapping(source = ".", target = ".")
@@ -133,8 +130,11 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     TuteurDto tuteurTotuteurDto(Tuteur tuteur);
 
-    @Mapping(source = ".", target = ".")
+    @Mapping(source = "etudiants", target = "etudiantsDto")
     GroupeEtudiantDto groupeEtudiantToGroupEtudiantDto(GroupeEtudiant groupeEtudiant);
+
+    @Mapping(source = "etudiantsDto", target = "etudiants")
+    GroupeEtudiant groupeEtudiantDtoToGroupEtudiant(GroupeEtudiantDto groupeEtudiantDto);
 
     @Mapping(source = ".", target = ".")
     @Mapping(source = "formation", target = "formationDto")
@@ -146,9 +146,13 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     PassageExamenDto passageExamenToPassageExamenDto(PassageExamen passageExamen);
 
-    @Mapping(source = ".", target = ".")
+    @Mapping(source = "groupe.id", target = "groupeId")
     ProjetDto projetToProjetDto(Projet projet);
 
+    @Mapping(source = "groupeId", target = "groupe.id")
+    Projet projetDtoToProjet(ProjetDto pdto);
+
+    List<ProjetDto> listProjettoListProjetDto(List<Projet> projet);
     @Mapping(source = ".", target = ".")
     @Mapping(source = "cursus", target = "cursusDto")
     @Mapping(source = "centreFormation", target = "centreFormationDto")
@@ -252,8 +256,8 @@ public interface DtoMapper {
 
     @Mapping(source = "competenceProfessionnelles", target = "competenceProfessionnellesDto")
     ActiviteTypeDto activiteTypeToActiviteTypeDto(ActiviteType activiteType);
-    
-    
+
+
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "libelle", target = "libelle")

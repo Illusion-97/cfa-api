@@ -15,7 +15,7 @@ public class ProjetDto extends BaseEntityDto implements Serializable {
 
 	private String nom;
 	private String description;
-	private GroupeEtudiantDto groupeDto;
+	private long groupeId;
 
 	public ProjetDto() {
 		super();
@@ -49,18 +49,11 @@ public class ProjetDto extends BaseEntityDto implements Serializable {
 		this.description = description;
 	}
 
-	/**
-	 * @return the groupeDto
-	 */
-	public GroupeEtudiantDto getGroupeDto() {
-		return groupeDto;
+	public long getGroupeId() {
+		return groupeId;
 	}
 
-	/**
-	 * @param groupeDto the groupeDto to set
-	 */
-	public void setGroupeDto(GroupeEtudiantDto groupeDto) {
-		this.groupeDto = groupeDto;
+	public void setGroupeId(long groupeId) {
+		this.groupeId = groupeId;
 	}
-
 }
