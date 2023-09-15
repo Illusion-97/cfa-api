@@ -1290,8 +1290,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				//deleteById  de l'etudiant n'est pas a jour  
 				case "ETUDIANT":
 					try {						
-						//etudiantService.deleteById(utilisateur.getEtudiant().getId());
-						//utilisateur.setFormateur(null);
+						etudiantService.deleteById(utilisateur.getEtudiant().getId());
+						utilisateur.setEtudiant(null);
 					} catch (Exception e) {
 						System.out.println("l'utilisateur na pas d'étudiant");
 					}

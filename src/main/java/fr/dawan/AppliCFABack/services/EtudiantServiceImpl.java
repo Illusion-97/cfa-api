@@ -384,7 +384,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 //
 //		// Les liens sont tous supprimés : on peut supprimé l'étudiant
 //
-//		etudiantRepository.delete(etudiant);
+		etudiantRepository.deleteById(id);
 
 	}
 
