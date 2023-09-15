@@ -86,7 +86,7 @@
             <div class="divtitre">
                 <p>
                     <#if dossierProjet.infoDossierProjets[0]?has_content>
-					  ${dossierProjet.infoDossierProjets[0].information_projet}
+					  ${dossierProjet.infoDossierProjets[0]}
 						<#else>
 						  Informations non renseignées !
 					</#if>	
@@ -101,7 +101,7 @@
             <div class="divtitre">
                 <p>
                 	<#if dossierProjet.contenuDossierProjets[0]?has_content>
-					  ${dossierProjet.contenuDossierProjets[0].contenu_projet}
+					  ${dossierProjet.contenuDossierProjets[0]}
 						<#else>
 						  Informations non renseignées !
 					</#if>
@@ -118,7 +118,7 @@
             <div class="divtitre">
                 <p>
                 	<#if dossierProjet.resumeDossierProjets[0]?has_content>
-						${dossierProjet.resumeDossierProjets[0].resume_projet}
+						${dossierProjet.resumeDossierProjets[0]}
 						<#else>
 						  Informations non renseignées !
 					</#if>
@@ -135,7 +135,7 @@
                     <h3>Liste des Pièces jointes : </h3>
                     <ul>
                     	<#if dossierProjet.annexeDossierProjets[0]?has_content>
-                    		<li>${dossierProjet.annexeDossierProjets[0].pieceJointe}</li>
+                    		<li>${dossierProjet.annexeDossierProjets[0]}</li>
 							<#else>
 							  Informations non renseignées !
 						</#if>
