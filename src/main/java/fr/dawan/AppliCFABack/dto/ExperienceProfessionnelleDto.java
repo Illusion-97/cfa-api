@@ -15,6 +15,7 @@ public class ExperienceProfessionnelleDto implements Serializable {
     private long dossierProfessionnelId;
     private long competenceProfessionnelleId;
     private long etudiantId;
+    
 	public long getId() {
 		return id;
 	}

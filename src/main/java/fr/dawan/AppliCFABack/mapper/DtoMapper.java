@@ -118,9 +118,6 @@ public interface DtoMapper {
     EtudiantDto etudiantToEtudiantDto(Etudiant etudiant);
 
     @Mapping(source = ".", target = ".")
-    @Mapping(source = "descriptif", target = "descriptif")
-    @Mapping(source = "activiteTypes", target = "activiteTypesDto")
-    @Mapping(source = "competencesProfessionnelles", target = "competencesProfessionnellesDto")
     ExamenDto examenToExamenDto(Examen examen);
 
     @Mapping(source = ".", target = ".")
@@ -155,6 +152,7 @@ public interface DtoMapper {
     @Mapping(source = "groupeId", target = "groupe.id")
     Projet projetDtoToProjet(ProjetDto pdto);
 
+    List<ProjetDto> listProjettoListProjetDto(List<Projet> projet);
     @Mapping(source = ".", target = ".")
     @Mapping(source = "cursus", target = "cursusDto")
     @Mapping(source = "centreFormation", target = "centreFormationDto")
@@ -258,8 +256,8 @@ public interface DtoMapper {
 
     @Mapping(source = "competenceProfessionnelles", target = "competenceProfessionnellesDto")
     ActiviteTypeDto activiteTypeToActiviteTypeDto(ActiviteType activiteType);
-    
-    
+
+
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "libelle", target = "libelle")
