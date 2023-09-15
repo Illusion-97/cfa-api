@@ -4,6 +4,8 @@ package fr.dawan.AppliCFABack.services;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
+import fr.dawan.AppliCFABack.entities.Tuteur;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 
 import java.util.List;
 
@@ -32,5 +34,6 @@ public interface TuteurService extends GenericService<TuteurDto>{
 
 	//CountDto count(String string);
 	
+	Tuteur saveTuteur(Utilisateur utilisateur);
 
 }

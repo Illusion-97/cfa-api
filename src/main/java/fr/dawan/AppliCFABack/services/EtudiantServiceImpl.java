@@ -1182,4 +1182,12 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public CountDto countEtudiantByPromotion(long id, String search) {
 		return new CountDto(etudiantRepository.countEtudiantByPromotion(id, search));
 	}
+
+	@Override
+	public Etudiant savEtudiant(Utilisateur utilisateur) {
+		Etudiant etudiant = new Etudiant();
+		etudiant.setUtilisateur(utilisateur);
+		
+		return etudiantRepository.save(etudiant);
+	}
 }
