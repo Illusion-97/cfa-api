@@ -117,6 +117,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	EmailService emailService;
 	@Autowired
+	TuteurService tuteurService;
+	@Autowired
 	UtilisateurRoleService utilisateurRoleService;
 	@Autowired
 	EntrepriseRepository entrepriseRepository;
@@ -1260,12 +1262,70 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 	
 	public void modifierRolesUtilisateur(long utilisateurId, List<Long> nouveauRolesIds) throws NotFoundException {
-        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
-                .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
-
-        List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);
+        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
+        List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);        
+        
+        for (UtilisateurRole role : nouveauxRoles) {
+			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
+				switch (role.getIntitule()) {
+				case "ETUDIANT":
+					utilisateur.setEtudiant(etudiantService.savEtudiant(utilisateur));
+					break;
+				case "FORMATEUR":
+					utilisateur.setFormateur(formateurService.saFormateur(utilisateur));
+					break;
+				case "ADMIN":
+					System.out.println("créer le role " + role.getIntitule());
+			        System.out.println("sauvegarder les role créer dans l'utilisateur");
+					break;
+				case "TUTEUR":					
+					utilisateur.setTuteur(tuteurService.saveTuteur(utilisateur));
+					break;
+				default:
+					break;
+				}
+			}		
+		}
+        
         utilisateur.modifierRoles(nouveauxRoles);
-
+        for (UtilisateurRole role : utilisateurRoleRepository.findAll()) {
+			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
+				switch (role.getIntitule()) {
+				//probleme avec la suppression d'entité enfant parent et deleteById  de l'etudiant n'est pas a jour  
+				case "ETUDIANT":
+					try {						
+						//etudiantService.deleteById(utilisateur.getEtudiant().getId());
+					} catch (Exception e) {
+						System.out.println("l'utilisateur na pas d'étudiant");
+					}
+					break;
+				case "FORMATEUR":
+					try {						
+						//formateurService.deleteById(utilisateur.getFormateur().getId());
+					} catch (Exception e) {
+						System.out.println("l'utilisateur na pas de formateur");
+					}
+					break;
+				case "ADMIN":
+					try {						
+						System.out.println("supprimer le role " + role.getIntitule());				
+					} catch (Exception e) {
+						System.out.println("l'utilisateur na pas d'admin");
+					}
+					break;
+				case "TUTEUR":					
+					try {
+						//tuteurService.delete(utilisateur.getTuteur().getId());							
+					} catch (Exception e) {
+						System.out.println("l'utilisateur na pas de tuteur");
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+        
         utilisateurRepository.save(utilisateur);
     }
 

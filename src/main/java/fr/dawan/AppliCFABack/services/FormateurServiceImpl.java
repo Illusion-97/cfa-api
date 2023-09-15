@@ -22,6 +22,7 @@ import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
 import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
@@ -300,6 +301,14 @@ public class FormateurServiceImpl implements FormateurService {
 			journeeDto.addAll(journeePlanningService.getJourneePlanningFromIntervention(i));
 
 		return journeeDto;
+	}
+
+	@Override
+	public Formateur saFormateur(Utilisateur utilisateur) {
+		Formateur formateur = new Formateur();
+		formateur.setUtilisateur(utilisateur);
+		
+		return formateurRepository.save(formateur);
 	}
 
 }
