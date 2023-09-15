@@ -1286,8 +1286,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         utilisateur.modifierRoles(nouveauxRoles);
         for (UtilisateurRole role : utilisateurRoleRepository.findAll()) {
 			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
+				// A MODIFIER 
 				switch (role.getIntitule()) {
-				//deleteById  de l'etudiant n'est pas a jour  
 				case "ETUDIANT":
 					try {						
 						etudiantService.deleteById(utilisateur.getEtudiant().getId());
