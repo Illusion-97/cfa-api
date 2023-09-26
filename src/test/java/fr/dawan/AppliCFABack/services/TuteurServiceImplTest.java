@@ -1,8 +1,8 @@
 package fr.dawan.AppliCFABack.services;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.fail;
 
 class TuteurServiceImplTest {
 

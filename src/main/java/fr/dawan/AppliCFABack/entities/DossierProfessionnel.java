@@ -1,9 +1,6 @@
 package fr.dawan.AppliCFABack.entities;
 
 import javax.persistence.*;
-
-import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
-
 import java.io.Serializable;
 import java.util.List;
 

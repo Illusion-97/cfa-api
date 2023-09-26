@@ -1,8 +1,6 @@
 package fr.dawan.AppliCFABack.interceptors;
 
 import fr.dawan.AppliCFABack.dto.APIError;
-import fr.dawan.AppliCFABack.tools.SaveInvalidException;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
