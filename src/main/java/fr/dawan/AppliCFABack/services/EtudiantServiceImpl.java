@@ -1,5 +1,33 @@
 package fr.dawan.AppliCFABack.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
+import fr.dawan.AppliCFABack.entities.*;
+import fr.dawan.AppliCFABack.entities.LivretEvaluation.EtatLivertEval;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.*;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+import fr.dawan.AppliCFABack.tools.HashTools;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -10,41 +38,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import fr.dawan.AppliCFABack.dto.*;
-import fr.dawan.AppliCFABack.entities.*;
-import fr.dawan.AppliCFABack.repositories.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
-import fr.dawan.AppliCFABack.dto.customdtos.EtudiantInfoInterventionDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
-import fr.dawan.AppliCFABack.entities.LivretEvaluation.EtatLivertEval;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
-import fr.dawan.AppliCFABack.tools.HashTools;
 
 @Service
 @Transactional

@@ -9,13 +9,10 @@ import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 
 public interface PromotionService {

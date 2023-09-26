@@ -1,10 +1,8 @@
 package fr.dawan.AppliCFABack.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
 import java.io.Serializable;
 import java.util.List;
 
