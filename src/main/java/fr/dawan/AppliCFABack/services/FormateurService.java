@@ -4,6 +4,8 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.FormateurDto;
 import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 
 import java.util.List;
 
@@ -33,5 +35,6 @@ public interface FormateurService {
 	CountDto countInterventionById(long id, String search);
 
 	CountDto count(String search);
-
+	
+	Formateur saFormateur(Utilisateur utilisateur);
 }

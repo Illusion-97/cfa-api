@@ -65,8 +65,7 @@ public class AppliCfaBackApplication {
 			public void addInterceptors(InterceptorRegistry registry) {
 			  registry.addInterceptor(tokenInterceptor);
 			}*/
-			  //registry.addInterceptor(tokenInterceptor);
-
+			
 			@Override
 			public void addResourceHandlers(ResourceHandlerRegistry registry) {
 				registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");

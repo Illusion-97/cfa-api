@@ -6,6 +6,7 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Tuteur;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
@@ -200,6 +201,16 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 		}
 		
 	}
+
+	@Override
+	public Tuteur saveTuteur(Utilisateur utilisateur) {
+		Tuteur tuteur = new Tuteur();
+		tuteur.setUtilisateur(utilisateur);
+		
+		return tuteurRepository.save(tuteur);
+	}
+	
+	
 
 	
 

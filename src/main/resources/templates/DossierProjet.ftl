@@ -74,7 +74,7 @@
         
         
         <h1 class="projet">
-        	<#if dossierProjet.projets.nom?has_content>
+        	<#if dossierProjet.projets?has_content>
 			  <u> Projet : ${dossierProjet.projets.nom}</u>
 				<#else>
 				  Le Nom du Projet est vide !
@@ -85,8 +85,8 @@
         <h2 class="h2"><u>Informations Dossier Projets :</u></h2>                                                                 
             <div class="divtitre">
                 <p>
-                    <#if dossierProjet.infoDossierProjets[0].information_projet?has_content>
-					  ${dossierProjet.infoDossierProjets[0].information_projet}
+                    <#if dossierProjet.infoDossierProjets[0]?has_content>
+					  ${dossierProjet.infoDossierProjets[0]}
 						<#else>
 						  Informations non renseignées !
 					</#if>	
@@ -100,8 +100,8 @@
         <h2 class="h2"><u>Contenu Dossier Projets :</u></h2>
             <div class="divtitre">
                 <p>
-                	<#if dossierProjet.contenuDossierProjets[0].contenu_projet?has_content>
-					  ${dossierProjet.contenuDossierProjets[0].contenu_projet}
+                	<#if dossierProjet.contenuDossierProjets[0]?has_content>
+					  ${dossierProjet.contenuDossierProjets[0]}
 						<#else>
 						  Informations non renseignées !
 					</#if>
@@ -117,8 +117,8 @@
         <h2 class="h2"><u>Resumer Dossier Projets :</u></h2>                                                                   
             <div class="divtitre">
                 <p>
-                	<#if dossierProjet.resumeDossierProjets[0].resume_projet?has_content>
-						${dossierProjet.resumeDossierProjets[0].resume_projet}
+                	<#if dossierProjet.resumeDossierProjets[0]?has_content>
+						${dossierProjet.resumeDossierProjets[0]}
 						<#else>
 						  Informations non renseignées !
 					</#if>
@@ -134,8 +134,8 @@
                 <p>
                     <h3>Liste des Pièces jointes : </h3>
                     <ul>
-                    	<#if dossierProjet.annexeDossierProjets[0].pieceJointe?has_content>
-                    		<li>${dossierProjet.annexeDossierProjets[0].pieceJointe}</li>
+                    	<#if dossierProjet.annexeDossierProjets[0]?has_content>
+                    		<li>${dossierProjet.annexeDossierProjets[0]}</li>
 							<#else>
 							  Informations non renseignées !
 						</#if>

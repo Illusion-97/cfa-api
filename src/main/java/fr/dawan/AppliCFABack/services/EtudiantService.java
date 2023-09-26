@@ -6,6 +6,8 @@ import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.EtudiantDossierProjetDto;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 
 import java.net.URISyntaxException;
@@ -89,4 +91,6 @@ public interface EtudiantService {
 	List<EtudiantDto> getEtudiantByPromotion(long id, int page, int size, String search);
 	
 	CountDto countEtudiantByPromotion(long id, String search);
+	
+	Etudiant savEtudiant(Utilisateur utilisateur);
 }

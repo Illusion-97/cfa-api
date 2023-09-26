@@ -384,7 +384,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 //
 //		// Les liens sont tous supprimés : on peut supprimé l'étudiant
 //
-//		etudiantRepository.delete(etudiant);
+		etudiantRepository.deleteById(id);
 
 	}
 
@@ -1147,5 +1147,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Override
 	public CountDto countEtudiantByPromotion(long id, String search) {
 		return new CountDto(etudiantRepository.countEtudiantByPromotion(id, search));
+	}
+
+	@Override
+	public Etudiant savEtudiant(Utilisateur utilisateur) {
+		Etudiant etudiant = new Etudiant();
+		etudiant.setUtilisateur(utilisateur);
+		
+		return etudiantRepository.save(etudiant);
 	}
 }
