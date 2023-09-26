@@ -231,15 +231,15 @@ public class DossierProfessionnelController {
 		return dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
 	}
 
-	@GetMapping(value = "/dossier-professionnel/{etudiantId}/{promotionId}", produces = "application/pdf")
-	public ResponseEntity<Resource> generateDossierProByStudentAndPromo(@PathVariable("etudiantId") long etudiantId, @PathVariable("promotionId") long promotionId) throws Exception {
-	    String outputpdfPath = dossierProService.generateDossierProByStudentAndPromo(etudiantId, promotionId);
+	@GetMapping(value = "/dossier-professionnel/{etudiantId}/{cursusId}", produces = "application/pdf")
+	public ResponseEntity<Resource> generateDossierProByStudentAndPromo(@PathVariable("etudiantId") long etudiantId, @PathVariable("cursusId") long cursusId) throws Exception {
+	    String outputpdfPath = dossierProService.generateDossierProByStudentAndPromo(etudiantId, cursusId);
 
 	    File f = new File(outputpdfPath);
 	    Path path = Paths.get(f.getAbsolutePath());
 	    ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + etudiantId + "-promo" + promotionId + ".pdf");
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + etudiantId + "-promo" + cursusId + ".pdf");
 	    headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
 	    headers.add("Pragma", "no-cache");
 	    headers.add("Expires", "0");

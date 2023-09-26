@@ -255,16 +255,15 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     }
 
     @Override
-    public String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws PdfTools,  IOException, TemplateException {
+    public String generateDossierProByStudentAndPromo(long etudiantId, long cursusId) throws PdfTools,  IOException, TemplateException {
         Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
         Etudiant et = null;
 
         if(etuOpt.isPresent()) {
-            et = etuOpt.get();
-          
+            et = etuOpt.get();        
         	
         	
-            List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByPromotionIdAndOrderByNumeroFiche(etudiantId, promotionId);
+            List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByCursus(cursusId);
 
             List<PdfActiviteDto> pdfActiviteDtos = new ArrayList<>();
 
@@ -363,7 +362,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
             List<CompetenceProfessionnelle> cp = competenceProfessionnelleRepository.getCompetenceProfessionnellesByEtudiantDossier(etudiantId);
 
-            List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByEtudiantDossier(etudiantId, promotionId);
+            List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByCursusId(etudiantId, cursusId);
 
             Signature signature = signatureRepository.getSignatureByEtudiantId(etudiantId);
 
@@ -387,7 +386,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
             String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
-            String outputPdf = storageFolder + "/dossier-" + etudiantId + "-pro-" + promotionId + ".pdf";
+            String outputPdf = storageFolder + "/dossier-" + etudiantId + "-pro-" + cursusId + ".pdf";
 
             try {
 				PdfTools.generatePdfFromHtml(outputPdf, htmlContent);

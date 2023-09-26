@@ -114,7 +114,7 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     @Mapping(source = "tuteur", target = "tuteurDto")
     @Mapping(source = "utilisateur", target = "utilisateurDto")
-    @Mapping(source = "promotions", target = "promotionsDto")
+   // @Mapping(source = "promotions", target = "promotionsDto")
     EtudiantDto etudiantToEtudiantDto(Etudiant etudiant);
 
     @Mapping(source = ".", target = ".")
