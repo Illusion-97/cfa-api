@@ -1,16 +1,14 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.File;
-
-import javax.transaction.Transactional;
-
+import fr.dawan.AppliCFABack.dto.AnnexeDto;
+import fr.dawan.AppliCFABack.entities.Annexe;
+import fr.dawan.AppliCFABack.repositories.AnnexeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import fr.dawan.AppliCFABack.dto.AnnexeDto;
-import fr.dawan.AppliCFABack.entities.Annexe;
-import fr.dawan.AppliCFABack.repositories.AnnexeRepository;
+import javax.transaction.Transactional;
+import java.io.File;
 
 @Service
 @Transactional

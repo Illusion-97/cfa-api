@@ -1,14 +1,11 @@
 package fr.dawan.AppliCFABack.repositories;
 
-import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
-import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
 import fr.dawan.AppliCFABack.entities.ExperienceProfessionnelle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface ExperienceProfessionnelleRepository extends JpaRepository<ExperienceProfessionnelle, Long> {
@@ -20,7 +17,8 @@ public interface ExperienceProfessionnelleRepository extends JpaRepository<Exper
     List<ExperienceProfessionnelle> getExperienceByCompetenceId(long etudiantId, long competenceId);
 
 	
-
+    @Query("SELECT exp FROM ExperienceProfessionnelle exp WHERE exp.dossierProfessionnel.etudiant.id = :etudiantId AND exp.dossierProfessionnel.cursus.id = :cursusId")
+    List<ExperienceProfessionnelle> getExperienceByCursusId(long etudiantId, long cursusId);
 	
 	
 }

@@ -381,6 +381,7 @@
         <th>Date</th>
     </tr>
     </thead>
+    <#if exp[0]??>
     <#list exp[0].dossierProfessionnel.facultatifs as f>
     <tbody>
     <tr>
@@ -435,6 +436,7 @@
     </tr>
     </tbody>
     </#list>
+       </#if>
 </table>
 
 <#-----------------------------------------Page 30------------------------------------------------->
@@ -534,20 +536,14 @@
     <div class="facultatif2">(Si le RC le prévoit)</div>
 </div>
 <div class="divAnnexesList">
+<#if exp[0]??>
     <#list exp[0].dossierProfessionnel.annexes as an>-->
         <div>
             <dt>${an.libelleAnnexe}</dt>
                <dt><img src="src/main/resources/files/DossierProfessionnel/${an.pieceJointe}" alt="${an.pieceJointe}"></dt>
         </div>
         </#list>
-</div>
-<div class="divAnnexesList">
-    <#list exp[0].dossierProfessionnel.annexes as an>-->
-        <div>
-            <dt>${an.libelleAnnexe}</dt>
-               <dt><img src="src/main/resources/files/DossierProfessionnel/${an.pieceJointe}" alt="${an.pieceJointe}"></dt>
-        </div>
-        </#list>
+        </#if>
 </div>
 </body>
 </html>

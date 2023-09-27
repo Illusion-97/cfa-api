@@ -3,7 +3,6 @@ package fr.dawan.AppliCFABack.services;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.GroupeEtudiantDto;
-import fr.dawan.AppliCFABack.entities.GroupeEtudiant;
 
 import java.util.List;
 

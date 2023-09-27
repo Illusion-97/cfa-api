@@ -1,6 +1,5 @@
 package fr.dawan.AppliCFABack.repositories;
 
-import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

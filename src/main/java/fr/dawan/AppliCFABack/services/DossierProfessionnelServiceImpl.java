@@ -2,10 +2,11 @@ package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
-import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.ExperienceProfessionnelleDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.*;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.EtudiantDossierDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfActiviteDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.pdf.PdfCompetenceDto;
 import fr.dawan.AppliCFABack.entities.*;
@@ -18,17 +19,12 @@ import freemarker.core.ParseException;
 import freemarker.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import javax.transaction.Transactional;
-
 import java.io.*;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -255,16 +251,15 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     }
 
     @Override
-    public String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws PdfTools,  IOException, TemplateException {
+    public String generateDossierProByStudentAndPromo(long etudiantId, long cursusId) throws PdfTools,  IOException, TemplateException {
         Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
         Etudiant et = null;
 
         if(etuOpt.isPresent()) {
-            et = etuOpt.get();
-          
+            et = etuOpt.get();        
         	
         	
-            List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByPromotionIdAndOrderByNumeroFiche(etudiantId, promotionId);
+            List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByCursus(cursusId);
 
             List<PdfActiviteDto> pdfActiviteDtos = new ArrayList<>();
 
@@ -363,7 +358,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
             List<CompetenceProfessionnelle> cp = competenceProfessionnelleRepository.getCompetenceProfessionnellesByEtudiantDossier(etudiantId);
 
-            List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByEtudiantDossier(etudiantId, promotionId);
+            List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByCursusId(etudiantId, cursusId);
 
             Signature signature = signatureRepository.getSignatureByEtudiantId(etudiantId);
 
@@ -387,7 +382,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
             String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
-            String outputPdf = storageFolder + "/dossier-" + etudiantId + "-pro-" + promotionId + ".pdf";
+            String outputPdf = storageFolder + "/dossier-" + etudiantId + "-pro-" + cursusId + ".pdf";
 
             try {
 				PdfTools.generatePdfFromHtml(outputPdf, htmlContent);

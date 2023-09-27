@@ -6,8 +6,6 @@ import fr.dawan.AppliCFABack.services.FileService;
 import fr.dawan.AppliCFABack.services.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

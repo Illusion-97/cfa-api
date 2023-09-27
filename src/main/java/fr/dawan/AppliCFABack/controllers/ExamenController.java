@@ -96,12 +96,12 @@ public class ExamenController {
 		return examenService.findExamensByInterventionId(id);
 	}
 
-	@GetMapping(value = "/file/{idExamen}")
+	@GetMapping(value = "/file/{idExamen}", produces = "application/pdf")
 	public ResponseEntity<Resource> getFileExamen(@PathVariable("idExamen") long idExamen) {
 		ExamenDto exaDto = examenService.getById(idExamen);
 
 		try {
-			Resource file = fileSevice.download(exaDto.getPieceJointe(),"examens");
+			Resource file = fileSevice.download(exaDto.getPieceJointe(),"examens/");
 
 			Path path = file.getFile().toPath();
 
