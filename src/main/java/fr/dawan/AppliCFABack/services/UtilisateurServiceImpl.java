@@ -1,40 +1,107 @@
 package fr.dawan.AppliCFABack.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.univocity.parsers.common.record.Record;
-import com.univocity.parsers.csv.CsvParser;
-import com.univocity.parsers.csv.CsvParserSettings;
-import fr.dawan.AppliCFABack.dto.*;
-import fr.dawan.AppliCFABack.entities.*;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.repositories.*;
-import fr.dawan.AppliCFABack.tools.*;
-import javassist.NotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.naming.Context;
-import javax.naming.NamingEnumeration;
-import javax.naming.directory.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.naming.Context;
+import javax.naming.NamingEnumeration;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.univocity.parsers.common.record.Record;
+import com.univocity.parsers.csv.CsvParser;
+import com.univocity.parsers.csv.CsvParserSettings;
+
+import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CongeDto;
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EmployeeDG2Dto;
+import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.dto.LoginDto;
+import fr.dawan.AppliCFABack.dto.LoginResponseDto;
+import fr.dawan.AppliCFABack.dto.ResetResponse;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.entities.Adresse;
+import fr.dawan.AppliCFABack.entities.CEF;
+import fr.dawan.AppliCFABack.entities.CentreFormation;
+import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
+import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.entities.Entreprise;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.LivretEvaluation;
+import fr.dawan.AppliCFABack.entities.Positionnement;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Tuteur;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.repositories.AdresseRepository;
+import fr.dawan.AppliCFABack.repositories.CEFRepository;
+import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
+import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
+import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
+import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
+import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.LivretEvaluationRepository;
+import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
+import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.TuteurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
+import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+import fr.dawan.AppliCFABack.tools.FileException;
+import fr.dawan.AppliCFABack.tools.HashTools;
+import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import javassist.NotFoundException;
 
 @Service
 @Transactional
@@ -43,15 +110,35 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
 	@Autowired
+	PositionnementRepository positionnementRepository;
+	@Autowired
 	AdresseRepository adresseRepository;
 	@Autowired
 	CongeRepository congeRepository;
+	@Autowired
+	CompetenceProfessionnelleRepository competenceProfessionnelleRepository;
 	@Autowired
 	PromotionRepository promotionRespository;
 	@Autowired
 	EtudiantRepository etudiantRepository;
 	@Autowired
 	FormateurRepository formateurRepository;
+	@Autowired
+	CentreFormationRepository centreFormationRepository;
+	@Autowired
+	TuteurRepository tuteurRepository;
+	@Autowired
+	InterventionRepository interventionRepository;
+	@Autowired
+	UtilisateurRoleRepository utilisateurRoleRepository;
+	@Autowired
+	DossierProjetRepository dossierProjetRepository;
+	@Autowired
+	DossierProfessionnelRepository dossierProfessionnelRepository;
+	@Autowired
+	LivretEvaluationRepository livretEvaluationRepository ;
+	@Autowired
+	EntrepriseRepository entrepriseRepository;
 	@Autowired
 	CEFRepository cefRepository;
 	@Autowired
@@ -69,13 +156,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	UtilisateurRoleService utilisateurRoleService;
 	@Autowired
-	EntrepriseRepository entrepriseRepository;
-	@Autowired
-	CentreFormationRepository centreFormationRepository;
-	@Autowired
-	TuteurRepository tuteurRepository;
-	@Autowired
-	UtilisateurRoleRepository utilisateurRoleRepository;
+	DevoirEtudiantService devoirEtudiantService;
 
 	@Autowired
 	private DtoMapper mapper;
@@ -109,6 +190,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Value("${domain.jehann}")
     private String domainJehann;
+    
+    @PersistenceContext
+    private EntityManager entityManager;
 
 	public HttpServletRequest getRequest() {
 		return request;
@@ -1213,6 +1297,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
         List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);        
         
+        // ajout de rôle
         for (UtilisateurRole role : nouveauxRoles) {
 			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
 				switch (role.getIntitule()) {
@@ -1232,40 +1317,86 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
         
         utilisateur.modifierRoles(nouveauxRoles);
+        
+        // suppression de rôle
         for (UtilisateurRole role : utilisateurRoleRepository.findAll()) {
 			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
-				// A MODIFIER 
 				switch (role.getIntitule()) {
 				case "ETUDIANT":
-					try {						
-						etudiantService.deleteById(utilisateur.getEtudiant().getId());
+					try {
+						// TODO
+						long etudiantId = utilisateur.getEtudiant().getId();
+						List<Promotion> promotions = promotionRespository.getByEtudiantId(etudiantId);
+						if (!promotions.isEmpty()) {
+							promotions.forEach(promotion -> promotion.getEtudiants().remove(utilisateur.getEtudiant()));
+							promotionRespository.saveAll(promotions);							
+						}																
+						List<DossierProjet> dossierProjets = dossierProjetRepository.findByIdEtudiant(etudiantId);
+						if (!dossierProjets.isEmpty()) {							
+							for (DossierProjet dossierProjet : dossierProjets) {
+								List<CompetenceProfessionnelle> competenceProfessionnelles = competenceProfessionnelleRepository.findAllByDossierProjets(dossierProjet.getId());
+								if (!competenceProfessionnelles.isEmpty()) {							
+									competenceProfessionnelleRepository.deleteInBatch(competenceProfessionnelles);
+								}
+								
+								dossierProjetRepository.deleteById(dossierProjet.getId());							
+							}
+						}
+						List<DevoirEtudiantDto> devoirsEtudiant = devoirEtudiantService.getAllByEtudiantId(etudiantId);
+						devoirsEtudiant.forEach(devoirEtudiant -> devoirEtudiantService.delete(devoirEtudiant.getId()));				
+						
+						DossierProfessionnel dossierProfessionnel = dossierProfessionnelRepository.findByEtudiantId(etudiantId);
+						if (dossierProfessionnel != null) {							
+							dossierProfessionnelRepository.delete(dossierProfessionnel);
+						}
+						List<LivretEvaluation> livretEvaluations = livretEvaluationRepository.findLivretEvaluationByEtudiantId(etudiantId);
+						if (!livretEvaluations.isEmpty()) {																					
+							livretEvaluationRepository.deleteInBatch(livretEvaluations);					
+							
+						}
+						Positionnement positionnement = positionnementRepository.getByIdEtudiant(etudiantId);
+						if (positionnement != null) {
+							positionnementRepository.deleteById(positionnement.getId());						
+						}
+						etudiantService.deleteById(etudiantId);		
 						utilisateur.setEtudiant(null);
 					} catch (Exception e) {
 						System.out.println("l'utilisateur na pas d'étudiant");
 					}
 					break;
+					
 				case "FORMATEUR":
-					try {						
-						formateurService.deleteById(utilisateur.getFormateur().getId());
-						utilisateur.setFormateur(null);
+					try {									
+						Long formateurId = utilisateur.getFormateur().getId();
+						List<Intervention> interventions = interventionRepository.findAllByFormateurId(formateurId);
+						if (!interventions.isEmpty()) {
+								interventionRepository.deleteInBatch(interventions);
+						}
+						formateurService.deleteById(formateurId);
 					} catch (Exception e) {
 						System.out.println("l'utilisateur na pas de formateur");
 					}
 					break;
+					
 				case "TUTEUR":					
 					try {
-						tuteurService.delete(utilisateur.getTuteur().getId());				
+						long tuteurId = utilisateur.getTuteur().getId();
+						List<Etudiant> etudiants = etudiantRepository.findAllByTuteurId(tuteurId);
+						if (!etudiants.isEmpty()) {
+							etudiants.forEach(etudiant -> etudiant.setTuteur(null));
+						}
+						tuteurService.delete(tuteurId);				
 						utilisateur.setTuteur(null);
 					} catch (Exception e) {
 						System.out.println("l'utilisateur na pas de tuteur");
 					}
 					break;
+					
 				default:
 					break;
 				}
 			}
-		}
-        
+		}        
         utilisateurRepository.save(utilisateur);
     }
 
