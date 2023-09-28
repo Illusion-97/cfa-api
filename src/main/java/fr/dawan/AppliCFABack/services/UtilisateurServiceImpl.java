@@ -48,30 +48,31 @@ import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 
 import fr.dawan.AppliCFABack.dto.AdresseDto;
+import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
 import fr.dawan.AppliCFABack.dto.CongeDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
 import fr.dawan.AppliCFABack.dto.EmployeeDG2Dto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
 import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
+import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.LoginDto;
 import fr.dawan.AppliCFABack.dto.LoginResponseDto;
+import fr.dawan.AppliCFABack.dto.PositionnementDto;
 import fr.dawan.AppliCFABack.dto.ResetResponse;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CEF;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
-import fr.dawan.AppliCFABack.entities.CompetenceProfessionnelle;
 import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.DossierProfessionnel;
-import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Entreprise;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Intervention;
-import fr.dawan.AppliCFABack.entities.LivretEvaluation;
-import fr.dawan.AppliCFABack.entities.Positionnement;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
@@ -80,17 +81,11 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CEFRepository;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
-import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
-import fr.dawan.AppliCFABack.repositories.DossierProfessionnelRepository;
-import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.FormateurRepository;
-import fr.dawan.AppliCFABack.repositories.InterventionRepository;
-import fr.dawan.AppliCFABack.repositories.LivretEvaluationRepository;
 import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
-import fr.dawan.AppliCFABack.repositories.PositionnementRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.TuteurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
@@ -108,15 +103,11 @@ import javassist.NotFoundException;
 public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired
-	UtilisateurRepository utilisateurRepository;
-	@Autowired
-	PositionnementRepository positionnementRepository;
+	UtilisateurRepository utilisateurRepository;	
 	@Autowired
 	AdresseRepository adresseRepository;
 	@Autowired
 	CongeRepository congeRepository;
-	@Autowired
-	CompetenceProfessionnelleRepository competenceProfessionnelleRepository;
 	@Autowired
 	PromotionRepository promotionRespository;
 	@Autowired
@@ -128,15 +119,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	TuteurRepository tuteurRepository;
 	@Autowired
-	InterventionRepository interventionRepository;
-	@Autowired
 	UtilisateurRoleRepository utilisateurRoleRepository;
-	@Autowired
-	DossierProjetRepository dossierProjetRepository;
-	@Autowired
-	DossierProfessionnelRepository dossierProfessionnelRepository;
-	@Autowired
-	LivretEvaluationRepository livretEvaluationRepository ;
 	@Autowired
 	EntrepriseRepository entrepriseRepository;
 	@Autowired
@@ -144,11 +127,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	MaitreApprentissageRepository maitreApprentissageRepository;
 	@Autowired
+	DossierProjetService DossierProjetService;
+	@Autowired
+	CompetenceProfessionnelleService competenceProfessionnelleService;
+	@Autowired
 	EtudiantService etudiantService;
 	@Autowired
 	FilesService filesService;
 	@Autowired
 	FormateurService formateurService;
+	@Autowired
+	LivretEvaluationService livretEvaluationService;
 	@Autowired
 	EmailService emailService;
 	@Autowired
@@ -157,6 +146,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	UtilisateurRoleService utilisateurRoleService;
 	@Autowired
 	DevoirEtudiantService devoirEtudiantService;
+	@Autowired
+	InterventionService interventionService;
+	@Autowired
+	PositionnementService positionnementService;
+	@Autowired
+	DossierProfessionnelService dosiDossierProfessionnelService;
 
 	@Autowired
 	private DtoMapper mapper;
@@ -1295,7 +1290,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	public void modifierRolesUtilisateur(long utilisateurId, List<Long> nouveauRolesIds) throws NotFoundException {
         Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
-        List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);        
+        List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);
+
         
         // ajout de rôle
         for (UtilisateurRole role : nouveauxRoles) {
@@ -1315,49 +1311,53 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				}
 			}		
 		}
-        
         utilisateur.modifierRoles(nouveauxRoles);
         
         // suppression de rôle
-        for (UtilisateurRole role : utilisateurRoleRepository.findAll()) {
+        for (UtilisateurRoleDto role : utilisateurRoleService.getAllUtilisateurRole()) {
 			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
 				switch (role.getIntitule()) {
 				case "ETUDIANT":
-					try {
-						// TODO
+					try {						
 						long etudiantId = utilisateur.getEtudiant().getId();
+						//suppression de l'etudiant dans la promotion
 						List<Promotion> promotions = promotionRespository.getByEtudiantId(etudiantId);
 						if (!promotions.isEmpty()) {
 							promotions.forEach(promotion -> promotion.getEtudiants().remove(utilisateur.getEtudiant()));
 							promotionRespository.saveAll(promotions);							
-						}																
-						List<DossierProjet> dossierProjets = dossierProjetRepository.findByIdEtudiant(etudiantId);
+						}							
+						//suppression du dossierProjet
+						List<DossierProjetDto> dossierProjets = DossierProjetService.getByIdEtudiant(etudiantId);
 						if (!dossierProjets.isEmpty()) {							
-							for (DossierProjet dossierProjet : dossierProjets) {
-								List<CompetenceProfessionnelle> competenceProfessionnelles = competenceProfessionnelleRepository.findAllByDossierProjets(dossierProjet.getId());
-								if (!competenceProfessionnelles.isEmpty()) {							
-									competenceProfessionnelleRepository.deleteInBatch(competenceProfessionnelles);
-								}
-								
-								dossierProjetRepository.deleteById(dossierProjet.getId());							
+							for (DossierProjetDto dossierProjet : dossierProjets) {
+								List<CompetenceProfessionnelleDto> competenceProfessionnellesDtos = competenceProfessionnelleService.getAllByDossierProjets(dossierProjet.getId());
+								if (!competenceProfessionnellesDtos.isEmpty()) {
+									competenceProfessionnellesDtos.forEach(cp -> competenceProfessionnelleService.deleteById(cp.getId()));									
+								}								
+								DossierProjetService.deleteById(dossierProjet.getId());							
 							}
 						}
+						// suppression des devoirs de l'étudiant
 						List<DevoirEtudiantDto> devoirsEtudiant = devoirEtudiantService.getAllByEtudiantId(etudiantId);
-						devoirsEtudiant.forEach(devoirEtudiant -> devoirEtudiantService.delete(devoirEtudiant.getId()));				
-						
-						DossierProfessionnel dossierProfessionnel = dossierProfessionnelRepository.findByEtudiantId(etudiantId);
-						if (dossierProfessionnel != null) {							
-							dossierProfessionnelRepository.delete(dossierProfessionnel);
+						if (!devoirsEtudiant.isEmpty()) {							
+							devoirsEtudiant.forEach(devoirEtudiant -> devoirEtudiantService.delete(devoirEtudiant.getId()));				
 						}
-						List<LivretEvaluation> livretEvaluations = livretEvaluationRepository.findLivretEvaluationByEtudiantId(etudiantId);
-						if (!livretEvaluations.isEmpty()) {																					
-							livretEvaluationRepository.deleteInBatch(livretEvaluations);					
-							
+						//suppression des dossierProfessionnel de l'étudiant
+						List<DossierProfessionnelDto> dosiDossierProfessionnelDtos = dosiDossierProfessionnelService.getByIdEtudiant(etudiantId);
+						if (!dosiDossierProfessionnelDtos.isEmpty()) {
+							dosiDossierProfessionnelDtos.forEach(dp -> dosiDossierProfessionnelService.delete(dp.getId()));							
 						}
-						Positionnement positionnement = positionnementRepository.getByIdEtudiant(etudiantId);
+						//suppression des livretEvaluation de l'étudiant
+						List<LivretEvaluationDto> livretEvaluations = livretEvaluationService.getByEtudiantId(etudiantId);
+						if (!livretEvaluations.isEmpty()) {
+							livretEvaluations.forEach(le -> livretEvaluationService.delete(le.getId()));							
+						}
+						//suppression des positionnement de l'étudiant
+						PositionnementDto positionnement = positionnementService.getByIdEtudiant(etudiantId);
 						if (positionnement != null) {
-							positionnementRepository.deleteById(positionnement.getId());						
+							positionnementService.delete(positionnement.getId());						
 						}
+						
 						etudiantService.deleteById(etudiantId);		
 						utilisateur.setEtudiant(null);
 					} catch (Exception e) {
@@ -1367,10 +1367,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					
 				case "FORMATEUR":
 					try {									
-						Long formateurId = utilisateur.getFormateur().getId();
-						List<Intervention> interventions = interventionRepository.findAllByFormateurId(formateurId);
+						long formateurId = utilisateur.getFormateur().getId();
+						//suppression des intervention liée au formateur
+						List<InterventionDto> interventions = interventionService.findAllByFormateurId(formateurId);
 						if (!interventions.isEmpty()) {
-								interventionRepository.deleteInBatch(interventions);
+							interventionService.deleteLstIntervention(interventions);
 						}
 						formateurService.deleteById(formateurId);
 					} catch (Exception e) {
@@ -1381,11 +1382,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				case "TUTEUR":					
 					try {
 						long tuteurId = utilisateur.getTuteur().getId();
-						List<Etudiant> etudiants = etudiantRepository.findAllByTuteurId(tuteurId);
+						//suppression du tuteur dans l'étudiant
+						List<EtudiantDto> etudiants = etudiantService.findAllByTuteurId(tuteurId);
 						if (!etudiants.isEmpty()) {
-							etudiants.forEach(etudiant -> etudiant.setTuteur(null));
+							etudiants.forEach(etudiant -> {
+								etudiant.setTuteurDto(null);
+								etudiantService.saveOrUpdate(etudiant);
+							});
 						}
-						tuteurService.delete(tuteurId);				
+						tuteurService.delete(tuteurId);
 						utilisateur.setTuteur(null);
 					} catch (Exception e) {
 						System.out.println("l'utilisateur na pas de tuteur");
@@ -1396,7 +1401,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					break;
 				}
 			}
-		}        
+		}       
+        
         utilisateurRepository.save(utilisateur);
     }
 
