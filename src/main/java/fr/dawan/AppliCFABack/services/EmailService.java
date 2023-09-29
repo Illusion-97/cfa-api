@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 
 import javax.mail.MessagingException;
@@ -13,4 +14,6 @@ public interface EmailService {
 	void newPassword(String email, String password);
 
 	void sendMailForResetPassword(UtilisateurDto uDto) throws EmailResetPasswordException, MessagingException;
+
+	void sendMailUser1ToUser2(String from, String to, String header, String msg);
 }
