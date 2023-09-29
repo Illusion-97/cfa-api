@@ -116,6 +116,16 @@ public class PositionnementServiceImpl implements PositionnementService {
 		return result;
 	}
 
-
-
+	/***
+	 * Récupération des Positionnement en fonction de l'id de l'étudiant
+	 * 
+	 * @param id Etudiant
+	 * @return Positionnement Dto 
+	 */
+	@Override
+	public PositionnementDto getByIdEtudiant(long etudiantId) {
+		Positionnement p = positionnementRepository.getByIdEtudiant(etudiantId);
+		
+		return DtoTools.convert(p, PositionnementDto.class);
+	}
 }

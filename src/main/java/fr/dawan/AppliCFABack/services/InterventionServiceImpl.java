@@ -9,6 +9,8 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.*;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+import javassist.expr.NewArray;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -615,5 +617,28 @@ public class InterventionServiceImpl implements InterventionService {
 	@Override
 	public CountDto countInterventionByPromotionId(long id, String search) {
 		return new CountDto(interventionRepository.countInterventionByPromotionId(id, search));
+	}
+	
+	@Override
+	public List<InterventionDto> findAllByFormateurId(long formateurId) {
+		List<InterventionDto> interventionDtos = new ArrayList<>();
+		List<Intervention> lst = interventionRepository.findAllByFormateurId(formateurId);
+		lst.forEach(i -> {
+			InterventionDto interventionDto = mapper.interventionToInterventionDto(i);
+			interventionDto.setHeuresDisponsees();
+			interventionDtos.add(interventionDto);
+		});
+		
+		return interventionDtos;
+	}
+	
+	@Override
+	public void deleteLstIntervention(List<InterventionDto> interventionDtos) {
+		List<Intervention> interventions = new ArrayList<>();
+		interventionDtos.forEach(interventionDto -> {
+			Intervention intervention = DtoTools.convert(interventionDto, Intervention.class);
+			interventions.add(intervention);
+		});
+		interventionRepository.deleteInBatch(interventions);
 	}
 }
