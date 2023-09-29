@@ -1321,6 +1321,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					try {						
 						long etudiantId = utilisateur.getEtudiant().getId();
 						//suppression de l'etudiant dans la promotion
+						//TODO Modifier promotionRespository par promotionService
 						List<Promotion> promotions = promotionRespository.getByEtudiantId(etudiantId);
 						if (!promotions.isEmpty()) {
 							promotions.forEach(promotion -> promotion.getEtudiants().remove(utilisateur.getEtudiant()));
