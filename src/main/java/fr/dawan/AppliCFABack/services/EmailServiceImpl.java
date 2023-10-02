@@ -3,23 +3,21 @@ package fr.dawan.AppliCFABack.services;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.interceptors.TokenSaver;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
-import fr.dawan.AppliCFABack.repositories.FormateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -40,8 +38,6 @@ public class EmailServiceImpl implements EmailService {
 
 	@Autowired
 	CongeRepository congeRepository;
-	@Autowired
-	FormateurRepository formateurRepository;
 	@Autowired
 	UtilisateurRepository userRepository;
 	@Autowired
@@ -161,4 +157,23 @@ public class EmailServiceImpl implements EmailService {
 		}
 	}
 
+	@Override
+	public void sendMailSmtpUser(long idTo, String header, String msg){
+		Optional<Utilisateur> user = userRepository.findById(idTo);
+		if (user.isPresent()){
+			try {
+				MimeMessage message = emailSender.createMimeMessage();
+				message.setRecipients(Message.RecipientType.TO, user.get().getLogin());
+				message.setSubject(header);
+				message.setText(msg);
+
+				emailSender.send(message);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			ResponseEntity.status(HttpStatus.NOT_FOUND);
+		}
+
+	}
 }

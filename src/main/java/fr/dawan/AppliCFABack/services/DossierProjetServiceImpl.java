@@ -2,11 +2,12 @@ package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.ProjetRepository;
+import fr.dawan.AppliCFABack.repositories.TuteurRepository;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import fr.dawan.AppliCFABack.tools.ToPdf;
 import freemarker.core.ParseException;
@@ -42,18 +43,10 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 	@Autowired
 	DossierProjetRepository dossierProRepo;
-
 	@Autowired
-	EtudiantRepository etudiantRepository;
-
+	EtudiantRepository studentRepository;
 	@Autowired
-	EtudiantService etudiantService;
-
-	@Autowired
-	CompetenceProfessionnelleRepository cpRepo;
-
-	@Autowired
-	private ProjetRepository projetRepository;
+	TuteurRepository tuteurRepository;
 
 	@Value("${app.storagefolder}")
 	private String storageFolder;
@@ -63,7 +56,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 	@Autowired
 	private Configuration freemarkerConfig;
-
+	@Autowired
+	private EmailService emailService;
 	private static Logger logger = Logger.getGlobal();
 
 	@Autowired
@@ -201,12 +195,29 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 	@Override
 	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) {
-		return mapper.dossierProjetToDossierProjetDto(dossierProRepo.saveAndFlush(mapper.dossierProjetDtoToDossierProjet(dpDto)));
+		DossierProjet dp = mapper.dossierProjetDtoToDossierProjet(dpDto);
+
+		Optional<Etudiant> student = studentRepository.findById(dp.getEtudiant().getId());
+
+		String studentFullName = student.get().getUtilisateur().getFullName();
+		String header = "Votre étudiant " + studentFullName + " à ajouté des modification à son Dossier Projet";
+		String message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été modifié";
+
+		// On vérifie si l'étudiant possède un tuteur
+		if (student.get().getTuteur().getId() != 0){
+			Optional<Tuteur> tuteurStudent = tuteurRepository.findById(student.get().getTuteur().getId());
+			//Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
+			emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, message);
+		}
+
+
+		return mapper.dossierProjetToDossierProjetDto(dossierProRepo.saveAndFlush(dp));
 	}
 	public DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException {
 		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
 		String nom_import = dp.getDossierImport();
 		String cheminFichier = storageFolder + "/DossierProjet/" + nom_import;
+		//Penser a rajouter un sous dossier par étudiant (voir file Servie sur le controller de DossierProjet)
 		File fichier = new File(cheminFichier);
 		if (fichier.exists()) {
 			fichier.delete();
@@ -219,30 +230,30 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 			return dpDto;
 	}
 
-public DossierProjetDto deleteFile(String file, long id) {
-   String cheminFichier = storageFolder + "/DossierProjet/" + file;
-   File fichier = new File(cheminFichier);
-   DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
-   if (fichier.exists()) {
+	public DossierProjetDto deleteFile(String file, long id) {
+	   String cheminFichier = storageFolder + "/DossierProjet/" + file;
+	   File fichier = new File(cheminFichier);
+	   DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
+	   if (fichier.exists()) {
 
-      fichier.delete();
-      // Supprimer l'élément de fichier de la liste d'annexes du DossierProjet
-      String importDp = dp.getDossierImport();
-      List<String> annexes = dp.getAnnexeDossierProjets();
+	      fichier.delete();
+	      // Supprimer l'élément de fichier de la liste d'annexes du DossierProjet
+	      String importDp = dp.getDossierImport();
+	      List<String> annexes = dp.getAnnexeDossierProjets();
 
-      if(annexes.contains(file)) {
-         annexes.removeIf(annexe -> annexe.equals(file));
-         //dp.setAnnexeDossierProjets(annexes);
-      }
-      if(importDp != null){
-         dp.setDossierImport(null);
-      }
+	      if(annexes.contains(file)) {
+	         annexes.removeIf(annexe -> annexe.equals(file));
+	         //dp.setAnnexeDossierProjets(annexes);
+	      }
+	      if(importDp != null){
+	         dp.setDossierImport(null);
+	      }
 
-      DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dossierProRepo.save(dp));
-      return dpDto;
-   }
-   return null;
-}
+	      DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dossierProRepo.save(dp));
+	      return dpDto;
+	   }
+	   return null;
+	}
 
 	public DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException {
 		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);

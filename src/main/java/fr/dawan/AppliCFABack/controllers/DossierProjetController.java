@@ -1,9 +1,9 @@
 package fr.dawan.AppliCFABack.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.services.DossierProjetService;
+import fr.dawan.AppliCFABack.services.EmailService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FilesService;
 import io.micrometer.core.lang.Nullable;
@@ -35,7 +35,7 @@ public class DossierProjetController {
 	@Autowired
 	FilesService fileService;
 	@Autowired
-	private ObjectMapper objectMapper;
+	private EmailService emailService;
 	
 	@Value("${app.storagefolder}")
 	private String storageFolder;
