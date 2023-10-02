@@ -44,6 +44,10 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     EtudiantService etudiantService;
 
     @Autowired
+    EmailService emailService;
+    @Autowired
+    TuteurRepository tuteurRepository;
+    @Autowired
     private DtoMapper mapper;
 
     @Autowired
@@ -172,7 +176,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         d.setEtudiant(DtoTools.convert(dpDto.getEtudiantDto(), Etudiant.class));
         d.setAnnexes((List<Annexe>) DtoTools.convert(dpDto.getAnnexeDtos(), Annexe.class));
         d.setFacultatifs((List<Facultatif>) DtoTools.convert(dpDto.getFacultatifDto(), Facultatif.class));
-       
+
         dossierProRepo.saveAndFlush(d);
         return mapper.dossierProfessionnelToDossierProfessionnelDto(d);
     }
@@ -437,9 +441,11 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         assert dp != null;
 
         List<ExperienceProfessionnelle> exps = dp.getExperienceProfessionnelles();
+
+        Optional<Etudiant> optEtudiant = etudiantRepository.findById(id);
+
         for (ExperienceProfessionnelle exp : exps) {
 
-            Optional<Etudiant> optEtudiant = etudiantRepository.findById(id);
             exp.setDossierProfessionnel(dp);
             optEtudiant.ifPresent(exp::setEtudiant);
 
@@ -484,8 +490,20 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
         if(etudiant.isPresent()){
              dp.setEtudiant(etudiant.get());
-        }      
-  
+        }
+        //***** Envoie du mail au tuteur pour notifier de la modification
+        String studentFullName = optEtudiant.get().getUtilisateur().getFullName();
+        String header = "Votre étudiant " + studentFullName + " à ajouté des modification à son Dossier Professionnelle";
+        String message = "Le Dossier " + dp.getNom() + " a été modifié";
+
+            // On vérifie si l'étudiant possède un tuteur
+        if (optEtudiant.get().getTuteur().getId() != 0){
+            Optional<Tuteur> tuteurStudent = tuteurRepository.findById(optEtudiant.get().getTuteur().getId());
+                //Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
+            emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, message, Optional.of(""));
+        }
+        //*****
+
         //on insert ou met à jour le dossier en question
         dp = dossierProRepo.saveAndFlush(dp);
         

@@ -6,6 +6,8 @@ import fr.dawan.AppliCFABack.services.DossierProjetService;
 import fr.dawan.AppliCFABack.services.EmailService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FilesService;
+import fr.dawan.AppliCFABack.tools.DossierProjetException;
+import freemarker.template.TemplateException;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -102,14 +104,14 @@ public class DossierProjetController {
 
 	@PutMapping(value = "/update", produces = "application/json")
 	public ResponseEntity<DossierProjetDto> updateDossierProjet(
-			@RequestBody DossierProjetDto dpDto){
+			@RequestBody DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		DossierProjetDto dpEtuDto = dossierProService.saveOrUpdate(dpDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpEtuDto);
 	}
 
 	@PostMapping(value = "/save", produces = "application/json")
     public ResponseEntity<DossierProjetDto> saveDossierProjet(
-    		@RequestBody DossierProjetDto dpDto){
+    		@RequestBody DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		DossierProjetDto dpEtuDto = dossierProService.saveOrUpdate(dpDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpEtuDto);
     }

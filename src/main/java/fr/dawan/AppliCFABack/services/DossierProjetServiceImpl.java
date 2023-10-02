@@ -194,7 +194,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 */
 
 	@Override
-	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) {
+	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		DossierProjet dp = mapper.dossierProjetDtoToDossierProjet(dpDto);
 
 		Optional<Etudiant> student = studentRepository.findById(dp.getEtudiant().getId());
@@ -206,8 +206,10 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		// On vérifie si l'étudiant possède un tuteur
 		if (student.get().getTuteur().getId() != 0){
 			Optional<Tuteur> tuteurStudent = tuteurRepository.findById(student.get().getTuteur().getId());
+			String pathFile = genererDossierProjet(dp.getId());
 			//Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
-			emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, message);
+			emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, message,
+					Optional.of(pathFile));
 		}
 
 

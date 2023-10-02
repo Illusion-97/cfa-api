@@ -4,10 +4,9 @@ import fr.dawan.AppliCFABack.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/mail")
@@ -26,8 +25,14 @@ public class EmailController {
 
     @PostMapping(value = "/notification")
     public ResponseEntity<String> sendEmailSmtp(@RequestParam long id, @RequestParam String header,
-                                                       @RequestParam String msg){
-        emailService.sendMailSmtpUser(id, header, msg);
+                                                       @RequestParam String msg,
+                                                @PathVariable(value = "path", required = false)Optional<String> path){
+        if(path.isPresent()){
+            emailService.sendMailSmtpUser(id, header, msg, path);
+
+        }else {
+            emailService.sendMailSmtpUser(id, header, msg, Optional.of(""));
+        }
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
