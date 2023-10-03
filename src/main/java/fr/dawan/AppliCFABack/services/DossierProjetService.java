@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
@@ -32,5 +33,7 @@ public interface DossierProjetService {
 	DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException;
 	DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException;
 	DossierProjetDto deleteFile(String file, long id);
+
+	void emailTuteur(DossierProjetDto dpDto) throws IOException, TemplateException, DossierProjetException;
 
 	}

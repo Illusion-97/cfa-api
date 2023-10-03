@@ -44,6 +44,7 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 	GetDossierProDto getAllDossierProfessionnelByEtudiant(long id);
 
 	DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws FileNotFoundException, IOException;
+	void emailTuteurDossierProfessionnelle(DossierProEtudiantDto dp, long id) throws TemplateException, DossierProfessionnelException, IOException ;
 		
 	}
 

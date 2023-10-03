@@ -26,12 +26,13 @@ public class EmailController {
     @PostMapping(value = "/notification")
     public ResponseEntity<String> sendEmailSmtp(@RequestParam long id, @RequestParam String header,
                                                        @RequestParam String msg,
-                                                @PathVariable(value = "path", required = false)Optional<String> path){
+                                                @PathVariable(value = "path", required = false)Optional<String> path,
+                                                @PathVariable(value = "fileName", required = false)Optional<String> fileName){
         if(path.isPresent()){
-            emailService.sendMailSmtpUser(id, header, msg, path);
+            emailService.sendMailSmtpUser(id, header, msg, path, fileName);
 
         }else {
-            emailService.sendMailSmtpUser(id, header, msg, Optional.of(""));
+            emailService.sendMailSmtpUser(id, header, msg, Optional.of(""), Optional.of(""));
         }
         return ResponseEntity.status(HttpStatus.OK).build();
 

@@ -491,24 +491,39 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         if(etudiant.isPresent()){
              dp.setEtudiant(etudiant.get());
         }
-        //***** Envoie du mail au tuteur pour notifier de la modification
-        String studentFullName = optEtudiant.get().getUtilisateur().getFullName();
-        String header = "Votre étudiant " + studentFullName + " à ajouté des modification à son Dossier Professionnelle";
-        String message = "Le Dossier " + dp.getNom() + " a été modifié";
-
-            // On vérifie si l'étudiant possède un tuteur
-        if (optEtudiant.get().getTuteur().getId() != 0){
-            Optional<Tuteur> tuteurStudent = tuteurRepository.findById(optEtudiant.get().getTuteur().getId());
-                //Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
-            emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, message, Optional.of(""));
-        }
-        //*****
-
         //on insert ou met à jour le dossier en question
         dp = dossierProRepo.saveAndFlush(dp);
         
         return DtoTools.convert(dp, DossierProEtudiantDto.class);				
 	}
+
+    public void emailTuteurDossierProfessionnelle(DossierProEtudiantDto dp, long id)
+            throws TemplateException, DossierProfessionnelException, IOException {
+        Optional<Etudiant> student = etudiantRepository.findById(id);
+
+        String header = "Votre étudiant " + student.get().getUtilisateur().getFullName() + " a crée son Dossier Projet";
+        String message = "Le Dossier " + dp.getNom() + " de l'étudiant " + student.get().getUtilisateur().getFullName()
+                + " a été crée";
+        Optional<String> path = Optional.of("");
+        Optional<String> fileName = Optional.of("");
+        // On vérifie si l'étudiant possède un tuteur
+        if (student.get().getTuteur().getId() != 0){
+            Optional<Tuteur> tuteurStudent = tuteurRepository.findById(student.get().getTuteur().getId());
+            //On génère le fichier seulement lors d'un update
+            if (dp.getVersion() > 0) {
+                genererDossierProfessionnel(dp.getId(), student.get().getId());
+                header = "Votre étudiant " + student.get().getUtilisateur().getFullName() +
+                        " a ajouté des modification à son Dossier Professionnelle";
+                message = "Le Dossier " + dp.getNom() + " de l'étudiant " + student.get().getUtilisateur().getFullName()
+                        + " a été modifié <br></br> Voir pièce jointe.";
+                path = Optional.of(storageFolder2 + "DossierProfessionnel/dossier-professionnel.pdf");
+                fileName = Optional.of("DossierProfessionnel_"+dp.getNom()+"_"+
+                        student.get().getUtilisateur().getFullName()+"_v"+dp.getVersion());
+            }
+            //Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
+            emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, message,path, fileName);
+        }
+    }
 
 	@Override
 	public CountDto count(String search) {

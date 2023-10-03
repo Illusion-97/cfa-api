@@ -161,7 +161,7 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
-	public void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path) {
+	public void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path, Optional<String> fileName) {
 		Optional<Utilisateur> user = userRepository.findById(idTo);
 		if (user.isPresent()) {
 			try {
@@ -170,17 +170,13 @@ public class EmailServiceImpl implements EmailService {
 				helper.setTo(user.get().getLogin());
 				helper.setSubject(header);
 
-				// Créez le lien de téléchargement s'il existe
-				/*String downloadLink = path.map(p -> "<a href=\"" + p + "\">Voir le Dossier</a>")
-						.orElse(""); // Utilise une chaîne vide si path est vide
-				*/
-				String content = msg ;//+ "<br /><br />" + downloadLink;
+				String content = msg ;
 
-				// Ajoutez le fichier PDF en pièce jointe
-				String pdfFilePath = String.valueOf(path); // Utilisez le chemin du fichier PDF s'il est présent
+				// Partie pour ajouter un pdf si un "path" est renseigné
+				String pdfFilePath = path.get(); // Utilisez le chemin du fichier PDF s'il est présent
 				if (!pdfFilePath.isEmpty()) {
 					FileSystemResource pdfFile = new FileSystemResource(pdfFilePath);
-					helper.addAttachment("DossierProjet.pdf", pdfFile);
+					helper.addAttachment(String.valueOf(fileName), pdfFile);
 				}
 
 				helper.setText(content, true);

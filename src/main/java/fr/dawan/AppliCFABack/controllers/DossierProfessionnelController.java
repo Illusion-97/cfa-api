@@ -10,7 +10,9 @@ import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudi
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
 import fr.dawan.AppliCFABack.services.*;
 import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
+import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
 import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
+import freemarker.template.TemplateException;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -146,11 +148,12 @@ public class DossierProfessionnelController {
 	
 	@PostMapping(value = "/save/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
 	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
-	        @RequestParam("pieceJointe") List<MultipartFile> files) throws JsonMappingException, JsonProcessingException {
+	        @RequestParam("pieceJointe") List<MultipartFile> files) throws IOException, TemplateException, DossierProfessionnelException {
 	    String path = storageFolder + "DossierProfessionnel" + "/";
 	    fileService.createDirectory(path);
 	    DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
 	    DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, files);
+		dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
 	    return dpE;
 	}
 
@@ -167,10 +170,11 @@ public class DossierProfessionnelController {
 
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
 	public DossierProEtudiantDto updateDossierProfessionnel(@PathVariable("id") long id, @RequestParam("dossierProfessionnel") String dpDto,
-			@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
+			@RequestParam("pieceJointe") List<MultipartFile> file) throws IOException, TemplateException, DossierProfessionnelException {
 		 String path = storageFolder + "DossierProfessionnel" + "/";
 		 fileService.createDirectory(path);
 		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
+		dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
 		return dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
 	}
 
