@@ -203,23 +203,29 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 		String header = "Votre étudiant " + student.get().getUtilisateur().getFullName() + " a crée son Dossier Projet";
 		String message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été crée";
-		Optional<String> path = Optional.of("");
+
+		Optional<String> path = Optional.ofNullable("");
 		Optional<String> fileName = Optional.of("");
+
 		// On vérifie si l'étudiant possède un tuteur
 		if (student.get().getTuteur().getId() != 0){
 			Optional<Tuteur> tuteurStudent = tuteurRepository.findById(student.get().getTuteur().getId());
 			//On génère le fichier seulement lors d'un update
+
+			//A voir dès la validation mais régler le problème du fichier qui se télecharge en .bin et non en pdf
+			//Voir les anciens commit, une version stable a déja été push sur "notification_sender"
 			if (dp.getVersion() > 0) {
-				genererDossierProjet(dp.getId());
 				header = "Votre étudiant " + student.get().getUtilisateur().getFullName() +
-						" a ajouté des modification à son Dossier Projet";
-				message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été modifié";
-				path = Optional.of(storageFolder + "dossierProjet/dossierProjet.pdf");
-				fileName = Optional.of("DossierProjet_"+dp.getNom()+"_"
-						+student.get().getUtilisateur().getFullName()+"_v"+dp.getVersion());
+						" à ajouté des modification à son Dossier Projet";
+				//message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été modifié";
+				//genererDossierProjet(dp.getId()) génère le chemin du fichier télecharger (voir s'il ne faut pas modifier le chemin du fichier pour ca)
+				//path = Optional.of(genererDossierProjet(dp.getId()));
+				//fileName = Optional.of(dp.getNom());
 			}
+
+			String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.get().getId()+"\">Voir le dossier </a>";
 			//Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
-			emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, message,path, fileName);
+			emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, body,path, fileName);
 		}
 	}
 
@@ -305,7 +311,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 			logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
 		}
 
-		return outputPdf;
+		return outputPdf; // Retournez le chemin du fichier PDF généré
 	}
 
 }

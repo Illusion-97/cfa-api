@@ -501,9 +501,9 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
             throws TemplateException, DossierProfessionnelException, IOException {
         Optional<Etudiant> student = etudiantRepository.findById(id);
 
-        String header = "Votre étudiant " + student.get().getUtilisateur().getFullName() + " a crée son Dossier Projet";
+        String header = "Votre étudiant " + student.get().getUtilisateur().getFullName() + " à crée son Dossier Projet";
         String message = "Le Dossier " + dp.getNom() + " de l'étudiant " + student.get().getUtilisateur().getFullName()
-                + " a été crée";
+                + " à été crée";
         Optional<String> path = Optional.of("");
         Optional<String> fileName = Optional.of("");
         // On vérifie si l'étudiant possède un tuteur
@@ -511,17 +511,17 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
             Optional<Tuteur> tuteurStudent = tuteurRepository.findById(student.get().getTuteur().getId());
             //On génère le fichier seulement lors d'un update
             if (dp.getVersion() > 0) {
-                genererDossierProfessionnel(dp.getId(), student.get().getId());
+
                 header = "Votre étudiant " + student.get().getUtilisateur().getFullName() +
                         " a ajouté des modification à son Dossier Professionnelle";
-                message = "Le Dossier " + dp.getNom() + " de l'étudiant " + student.get().getUtilisateur().getFullName()
-                        + " a été modifié <br></br> Voir pièce jointe.";
-                path = Optional.of(storageFolder2 + "DossierProfessionnel/dossier-professionnel.pdf");
-                fileName = Optional.of("DossierProfessionnel_"+dp.getNom()+"_"+
-                        student.get().getUtilisateur().getFullName()+"_v"+dp.getVersion());
+                //message = "Le Dossier " + dp.getNom() + " de l'étudiant " + student.get().getUtilisateur().getFullName()+ " a été modifié <br></br> Voir pièce jointe.";
+                //path = Optional.of(genererDossierProfessionnel(dp.getId(), student.get().getId()));
+                //fileName = Optional.of("DossierProfessionnel_"+dp.getNom()+"_"+student.get().getUtilisateur().getFullName()+"_v"+dp.getVersion());
             }
+            String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : " +
+                    "<a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.get().getId()+"\">Voir le dossier </a>";
             //Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
-            emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, message,path, fileName);
+            emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, body,path, fileName);
         }
     }
 

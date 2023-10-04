@@ -7,13 +7,16 @@ import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
+import javassist.NotFoundException;
 
 import java.io.IOException;
 import java.util.List;
 
 public interface LivretEvaluationService extends GenericService<LivretEvaluationDto>{
 
-	//une liste car si étudiant fait plusieurs formations
+    void notificationMail(LivretEvaluationDto note) throws NotFoundException;
+
+    //une liste car si étudiant fait plusieurs formations
 	List<LivretEvaluationDto> getByEtudiantId(long id);
 	
 	LivretEvaluationDto getByIdEtudiantAndIdCurcus(long idEtudiant, long idCursus);

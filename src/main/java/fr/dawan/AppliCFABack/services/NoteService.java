@@ -4,6 +4,7 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
+import javassist.NotFoundException;
 
 import java.util.List;
 import java.util.Map;
@@ -41,4 +42,5 @@ public interface NoteService {
 
 	List<NoteDto> getAllByInterventionIdAndExamenId(long idIntervention, long idExamen, String search);
 
+	void notificationMail(NoteDtoToSave note) throws NotFoundException;
 }

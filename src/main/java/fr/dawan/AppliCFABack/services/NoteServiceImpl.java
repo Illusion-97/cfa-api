@@ -11,11 +11,13 @@ import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.ExamenRepository;
 import fr.dawan.AppliCFABack.repositories.NoteRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import javassist.NotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -41,7 +43,10 @@ public class NoteServiceImpl implements NoteService {
 	PromotionRepository promotionRepository;
 	@Autowired
 	ExamenRepository examenRepository;
-
+	@Autowired
+	EtudiantRepository etudiantRepository;
+	@Autowired
+	EmailService emailService;
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
@@ -110,7 +115,25 @@ public class NoteServiceImpl implements NoteService {
 		n = noteRepository.saveAndFlush(n);
 		return DtoTools.convert(n, NoteDtoToSave.class);
 	}
+	@Override
+	public void notificationMail(NoteDtoToSave note) throws NotFoundException{
+		Optional<Etudiant> etudiant = etudiantRepository.findById(note.getEtudiantNoteId());
+		Optional<Examen> exam = examenRepository.findById(note.getExamenId());
+		if (!etudiant.isPresent() || !exam.isPresent()){
+			throw new NotFoundException("Not Found");
+		}
 
+		String header = "Nouvelle note sur votre espace Etudiant";
+		if (note.getVersion() != 0){
+			header = "Votre note sur l'examen " + exam.get().getTitre() + " a été modifie";
+		}
+		//lien à changer en prod
+		String link = "<a href=\"http://localhost:8080/#/etudiant/controle\">voir mes notes</a>";
+
+		String message = "Pour aller voir votre note veuillez cliquer sur ce lien : " + link;
+		emailService.sendMailSmtpUser(etudiant.get().getUtilisateur().getId(),
+				header, message,Optional.of(""),Optional.of(""));
+	}
 	/***
 	 * Compte le nombre total des Notes
 	 *

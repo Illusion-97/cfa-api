@@ -11,6 +11,7 @@ import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import fr.dawan.AppliCFABack.tools.ToPdf;
 import freemarker.core.ParseException;
 import freemarker.template.*;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	@Autowired
 	private LivretEvaluationRepository livretEvaluationRepository;
 	@Autowired
-	private ValidationRepository validationRepository;
+	private EmailService emailService;
 
 	@Value("${app.storagefolder}")
 	private String storageFolder;
@@ -108,7 +109,24 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 //		}
 
 	}
+	@Override
+	public void notificationMail(LivretEvaluationDto livret) throws NotFoundException {
+		Optional<Etudiant> etudiant = etudiantRepository.findById(livret.getEtudiantId());
+		if (!etudiant.isPresent() ){
+			throw new NotFoundException("Not Found");
+		}
 
+		String header = "Votre livret d'évaluation a été validé par le formateur";
+		if (livret.getVersion() != 0){
+			header = "Votre livret d'évaluation a été modifié par votre formateur";
+		}
+		//lien à changer en prod
+		String link = "<a href=\"http://localhost:8080/#/etudiant/livret\">voir mon livret</a>";
+
+		String message = "Pour aller voir votre livret veuillez cliquer sur ce lien : " + link;
+		emailService.sendMailSmtpUser(etudiant.get().getUtilisateur().getId(),
+				header, message,Optional.of(""),Optional.of(""));
+	}
 	@Override
 	public CountDto count(String search) {
 		long nb = livretEvaluationRepository.count();

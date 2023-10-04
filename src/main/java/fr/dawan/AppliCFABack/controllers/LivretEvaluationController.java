@@ -4,11 +4,12 @@ import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
 import fr.dawan.AppliCFABack.services.GenericService;
 import fr.dawan.AppliCFABack.services.LivretEvaluationService;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import javassist.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -27,11 +28,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/livretEvaluation")
 public class LivretEvaluationController extends GenericController<LivretEvaluationDto> {
-
+	@Autowired LivretEvaluationService livretEvaluationService;
 	public LivretEvaluationController(GenericService<LivretEvaluationDto> service) {
 		super(service);
 	}
 
+	@Override
+	@PostMapping(consumes = "application/json", produces = "application/json")
+	public ResponseEntity<LivretEvaluationDto> save(@RequestBody LivretEvaluationDto livret) throws NotFoundException, SaveInvalidException {
+		//On save le livret avant l'envoi de mail
+		LivretEvaluationDto livetValidation = service.saveOrUpdate(livret);
+		livretEvaluationService.notificationMail(livret);
+		return ResponseEntity.status(HttpStatus.CREATED).body(livetValidation);
+	}
 	@GetMapping(value = "/etudiant/{id}", produces = "application/json")
 	public List<LivretEvaluationDto> getAllByEtudiantId(@PathVariable("id") long id) {
 		return ((LivretEvaluationService) service).getByEtudiantId(id);
