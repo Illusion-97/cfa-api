@@ -23,14 +23,11 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 
 	List<DossierProfessionnelDto> getAllByPage(int page, int size, String string);
 
-	DossierProfessionnelDto saveOrUpdate(DossierProfessionnelDto dpDto);
-
 	void deleteById(long id);
 	
 	List<DossierProfessionnelDto> getByIdEtudiant(long id);
 
 	DossierProfessionnelDto getByName(String nom);
-
 
 	DossierProEtudiantDto saveOrUpdateDossierProfessionnel (DossierProEtudiantDto dpDto, long id, List<MultipartFile> file);
 	
@@ -38,16 +35,13 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 
 	List<DossierProEtudiantDto> getAllDossierProfessionnel();
 
-    String generateDossierProByStudentAndPromo(long etudiantId, long promotionId) throws PdfTools, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
-    String genererDossierProfessionnel(long idDossierPro, long etudiantId) throws DossierProfessionnelException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
-
 	GetDossierProDto getAllDossierProfessionnelByEtudiant(long id);
 
 	DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws FileNotFoundException, IOException;
+
+	String generateDossierProPdf(long dossierId) throws PdfTools, IOException, TemplateException;
 		
 	}
 
 	
 	
-	
-
