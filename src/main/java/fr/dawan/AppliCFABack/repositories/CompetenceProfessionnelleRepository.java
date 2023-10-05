@@ -22,7 +22,8 @@ public interface CompetenceProfessionnelleRepository extends JpaRepository<Compe
     @Query("SELECT cp FROM CompetenceProfessionnelle cp WHERE cp.id = :id")
     CompetenceProfessionnelle findByIdCustom(Long id);
     
-
+    @Query("SELECT cp FROM CompetenceProfessionnelle cp JOIN cp.dossierProjets dp WHERE dp.id = :id")
+    List<CompetenceProfessionnelle> findAllByDossierProjets(long id);
 	
 
 

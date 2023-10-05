@@ -38,4 +38,8 @@ public interface InterventionService {
 	List<InterventionDto> findInterventionByPromotionId(long id, int page, int size, String search);
 	
 	CountDto countInterventionByPromotionId(long id, String search);
+
+	List<InterventionDto> findAllByFormateurId(long formateurId);
+
+	void deleteLstIntervention(List<InterventionDto> interventionDtos);
 }

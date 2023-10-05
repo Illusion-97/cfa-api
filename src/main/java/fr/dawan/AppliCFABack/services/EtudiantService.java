@@ -93,4 +93,6 @@ public interface EtudiantService {
 	CountDto countEtudiantByPromotion(long id, String search);
 	
 	Etudiant savEtudiant(Utilisateur utilisateur);
+
+	List<EtudiantDto> findAllByTuteurId(long tuteurId);
 }

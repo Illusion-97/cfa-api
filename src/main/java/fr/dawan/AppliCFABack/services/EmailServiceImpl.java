@@ -3,23 +3,30 @@ package fr.dawan.AppliCFABack.services;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.interceptors.TokenSaver;
 import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,7 +40,10 @@ public class EmailServiceImpl implements EmailService {
 
 	@Autowired
 	CongeRepository congeRepository;
-
+	@Autowired
+	FormateurRepository formateurRepository;
+	@Autowired
+	UtilisateurRepository userRepository;
 	@Autowired
 	private JavaMailSender emailSender;
 
@@ -133,6 +143,22 @@ public class EmailServiceImpl implements EmailService {
 
 		emailSender.send(msg);
 
+	}
+
+	@Override
+	public void sendMailUser1ToUser2(String from, String to, String header, String msg){
+
+		try {
+			MimeMessage message = emailSender.createMimeMessage();
+			message.setFrom(from);
+			message.setRecipients(Message.RecipientType.TO, to);
+			message.setSubject(header);
+			message.setText(msg);
+
+			emailSender.send(message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
