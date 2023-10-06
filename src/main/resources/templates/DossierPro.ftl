@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+ <style>
+footer {
+  text-align: right;
+  padding: 5px;
+  color: #A9A9A9;
+}
+.page-footer {
+text-align: left;
+  padding: 5px;
+  color: #A9A9A9;
+}
+.centrage {text-align: center;
+margin-right:20%;}
+  </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +33,7 @@
     <title>Dossier Professionnel</title>
 </head>
 <body>
-
+<#assign currentPage = 0>
 <#---------------------------------------------------PAGE 1--------------------------------------------------------->
 <div class="divTitlePage1">
     <img class=" frenchRepublic" src="${backendUrl}/pictures/frenchRepublic.jpg" alt="image république française">
@@ -29,8 +43,6 @@
         <div class="greyBarBottom"></div>
         <div class="pinkLine"></div>
     </div>
-</div>
-
 <div class="identityDiv">
     <ul class="identityUl">
         <li>
@@ -61,6 +73,9 @@
         <h2 class="h2TitrePro">Titre professionnel visé</h2>
     </div>
     <div class="pinkDiv1"></div>
+    <div class="centrage">
+    <h3 class="spanData">${dp.cursus.titre}</h3>
+    </div>
     <div class="pinkDiv2"></div>
 </div>
 
@@ -68,15 +83,23 @@
     <h3>MODALITE D'ACCES :</h3>
     <ul>
         <li>
-            <input type="checkbox">
-            <label for="">Validation des Acquis de l'Expérience (VAE)</label>
+            <input type="checkbox" id="pf" name="pf" checked>
+            <label for="pf">Parcours de formation</label>
         </li>
         <li>
-            <input type="checkbox" checked>
-            <label for="">Parcours de formation</label>
+            <input type="checkbox" id="vae">
+            <label for="vae">Validation des Acquis de l'Expérience (VAE)</label>
         </li>
     </ul>
-</fieldset>
+</fieldset>	
+<#assign currentPage = currentPage + 1>
+<div class="page-footer">
+               { Page ${currentPage}}
+            </div>
+            <footer>
+        <small>DOSSIER PROFESSIONNEL-Version du 11/09/2017</small>
+        </footer>
+        </div>
 <#---------------------------------------------------------PAGE 2-------------------------------------------------->
 <div class="divTitlePage2">
     <div class="greyBarsAndH1">
@@ -86,6 +109,7 @@
         <div class="pinkLine"></div>
     </div>
 </div>
+<#assign currentPage = currentPage + 1>
 
 <div class="divTitrePro2">
     <div class="titlePink">
@@ -163,6 +187,12 @@
 </div>
 <h3 class="h3Url"><img class="triangleRose" src="${backendUrl}/pictures/triangle-rose.png" alt="triangle rose">
     http://travail-emploi.gouv.fr/titres-professionnels</h3>
+    <div class="page-footer">
+               { Page ${currentPage}}
+            </div>
+            <footer>
+        <small>DOSSIER PROFESSIONNEL-Version du 11/09/2017</small>
+        </footer>
 <#---------------------------------------------Page3-------------------------------------->
 <div class="divTitlePage3">
     <div class="greyBarsAndH1">
@@ -172,6 +202,7 @@
         <div class="pinkLine"></div>
     </div>
 </div>
+
 <div class="divSommaire">
     <h2>
         Sommaire
@@ -184,17 +215,18 @@
 <div class="divIntitule">
     <h4>
         <div class="spanSommaireTitle"><#if a??>${a.libelle}<#else>Intitulé de l'activité type 1</#if></div>
-        <span class="spanPageBoldAt1">p. 5</span></h4>
+        <span class="spanPageBoldAt1">p. ${currentPage}</span></h4>
 </div>
 <#list a.pdfCompetenceDtoSet as cp>
 <div class="divExemple">
         <ul><#if cp.experienceProfessionnelleDtoList[0]??>
-                <li><i class="fa-solid fa-play fa-2xs"></i><#if cp.experienceProfessionnelleDtoList[0]??><span>${cp.libelle}</span><#else>Intitulé de l'exemple n° 1</#if><span class="spanPage">p. 5</span>
+                <li><i class="fa-solid fa-play fa-2xs"></i><#if cp.experienceProfessionnelleDtoList[0]??><span>${cp.libelle}</span><#else>Intitulé de l'exemple n° 1</#if><span class="spanPage">p. ${currentPage}</span>
             </li>
             </#if>
         </ul>
 </div>
 </#list>
+<#assign currentPage = currentPage + 1>
 </#list>
 <#if pdfActiviteDtos?size = 3>
 <div class="divAnnexes3">
@@ -218,6 +250,12 @@
                     class="spanPageBold2">p. 32</span></span>
     </h4>
 </div>
+<div class="page-footer">
+               { Page ${currentPage}}
+            </div>
+            <footer>
+        <small>DOSSIER PROFESSIONNEL-Version du 11/09/2017</small>
+        </footer>
 <#-------------------------------------------------------Page4--------------------------------->
 <div class="divTitlePage3">
     <div class="greyBarsAndH1">
@@ -227,12 +265,27 @@
         <div class="pinkLine"></div>
     </div>
 </div>
+<#assign currentPage = currentPage + 1>
 <h1 class="titleExemples">EXEMPLES DE PRATIQUE PROFESSIONNELLE</h1>
+<div class="page-footer">
+               { Page ${currentPage}}
+            </div>
+            <footer>
+        <small>DOSSIER PROFESSIONNEL-Version du 11/09/2017</small>
+        </footer>
 <#------------------------------------------------------Page5--------------------------------------->
+<#assign currentActiviteType = 0>
+<#assign currentActivite = "">
+<#assign currentExemple = 0>
 <#list pdfActiviteDtos as a>
     <#list a.pdfCompetenceDtoSet as cp>
             <#list cp.experienceProfessionnelleDtoList as exp>
                     <#if exp[0]??>
+                     <#if currentActivite != a.libelle>
+                    <#if currentActivite != "">
+                        </div> <!-- on ferme la div de l'activité précédente -->
+                    </#if>
+                    <#assign currentActivite = a.libelle>
     <div class="divTitlePage4">
         <div class="greyBarsAndH1">
             <div class="greyBarTop2"></div>
@@ -241,10 +294,13 @@
             <div class="pinkLine"></div>
         </div>
     </div>
+    <#assign currentPage = currentPage + 1>
+    <#assign currentExemple = 0>
+     </#if>
     <div class="divActiviteExemple">
-        <h2 class="h2Activite">Activité-type</h2>
+        <h2 class="h2Activite">Activité-type ${currentActiviteType + 1} </h2>
         <span class="spanActivitetitle">${a.libelle}</span>
-        <span class="spanExempleNumero">Exemple <span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span>${cp.libelle}</span>
+        <span class="spanExempleNumero">Exemple n°${currentExemple + 1}<span class="iconExemple"><i class="icon fa-solid fa-play fa-2xs"></i></span>${cp.libelle}</span>
         <div class="pinkDiv3"></div>
         <div class="pinkDiv4"></div>
     </div>
@@ -267,6 +323,12 @@
 </#if>
         </div>
     </div>
+   <div class="page-footer">
+               { Page ${currentPage}}
+            </div>
+            <footer>
+        <small>DOSSIER PROFESSIONNEL-Version du 11/09/2017</small>
+        </footer>
 <#---------------------------------------------Page 6------------------------------------------------>
     <div class="divTitlePage5">
         <div class="greyBarsAndH1">
@@ -276,6 +338,7 @@
             <div class="pinkLine"></div>
         </div>
     </div>
+    <#assign currentPage = currentPage + 1>
     <div class="divExempleDescription2">
         <div>
             <div class="exempleDescription2">
@@ -283,13 +346,13 @@
             </div>
         </div>
         <div class="exempleContent2">
-        <#if exp.tacheRealisee??>
+        <#if exp.moyenUtilise??>
     <div class="divExempleContent">
         ${exp.moyenUtilise}
     </div>
 <#else>
     <div class="divExempleContent">
-        pas de tacheRealisee.
+        pas de moyenUtilise.
     </div>
 </#if>
            
@@ -304,11 +367,11 @@
         <div class="exempleContent2">
              <#if exp.collaborateur??>
     <div class="divExempleContent">
-        ${exp.moyenUtilise}
+        ${exp.collaborateur}
     </div>
 <#else>
     <div class="divExempleContent">
-        pas de moyenUtilise.
+        pas de collaborateur.
     </div>
 </#if>
         </div>
@@ -322,7 +385,7 @@
         <div class="exempleContent2">
             <#if exp.contexte??>
     <div class="divExempleContent">
-        ${exp.moyenUtilise}
+        ${exp.contexte}
     </div>
 <#else>
     <div class="divExempleContent">
@@ -340,21 +403,28 @@
         <div class="exempleContent2">
              <#if exp.information??>
     <div class="divExempleContent">
-        ${exp.moyenUtilise}
+        ${exp.information}
     </div>
 <#else>
     <div class="divExempleContent">
        pas  d'information.
     </div>
+    
 </#if>
         </div>
     </div>
+     <#assign currentExemple = currentExemple + 1>
                     </#if>
             </#list>
     </#list>
+     <#assign currentActiviteType = currentActiviteType + 1> 
 </#list>
-
-
+<div class="page-footer">
+               { Page ${currentPage}}
+            </div>
+            <footer>
+        <small>DOSSIER PROFESSIONNEL-Version du 11/09/2017</small>
+        </footer>
 <#--------------------------------------------Page 29----------------------------------------------->
 
 <div class="divTitlePage4">
@@ -365,6 +435,7 @@
         <div class="pinkLine"></div>
     </div>
 </div>
+<#assign currentPage = currentPage + 1>
 
 <div class="divTitrePro3">
     <div class="titlePink">
@@ -438,7 +509,12 @@
     </#list>
        </#if>
 </table>
-
+<div class="page-footer">
+               { Page ${currentPage}}
+            </div>
+            <footer>
+        <small>DOSSIER PROFESSIONNEL-Version du 11/09/2017</small>
+        </footer>
 <#-----------------------------------------Page 30------------------------------------------------->
 <div class="divTitlePage4">
     <div class="greyBarsAndH1">
@@ -448,6 +524,7 @@
         <div class="pinkLine"></div>
     </div>
 </div>
+<#assign currentPage = currentPage + 1>
 <div class="divTitrePro2">
     <div class="titlePink">
         <h2 class="h2TitrePro">Déclaration sur l'honneur</h2>
@@ -464,6 +541,9 @@
        Signature :<img src="${signature.pieceJointe}" alt="Signature">
                </#if>
 </p>
+<div class="page-footer">
+            Page ${currentPage}
+        </div>
 <#-------------------------------------------Page 31---------------------------------------------->
 <div class="divTitlePage4">
     <div class="greyBarsAndH1">
@@ -473,6 +553,7 @@
         <div class="pinkLine"></div>
     </div>
 </div>
+<#assign currentPage = currentPage + 1>
 <div class="divTitrePro2">
     <div class="titlePink">
         <h2 class="h2TitrePro">Documents illustrant la pratique professionnelle</h2>
@@ -486,9 +567,11 @@
         <th>Intitulé</th>
     </tr>
     </thead>
+    <#if exp[0]??>
+    <#list exp[0].dossierProfessionnel.annexes as an>
     <tbody >
     <tr>
-        <td></td>
+        <td>${an.libelleAnnexe}</td>
     </tr>
     <tr>
         <td></td>
@@ -518,7 +601,15 @@
         <td></td>
     </tr>
     </tbody>
+    </#list>
+       </#if>
 </table>
+<div class="page-footer">
+               { Page ${currentPage}}
+            </div>
+            <footer>
+        <small>DOSSIER PROFESSIONNEL-Version du 11/09/2017</small>
+        </footer>
 <#----------------------------------------Page 32---------------------------------------------->
 <div class="divTitlePage4">
     <div class="greyBarsAndH1">
@@ -528,6 +619,7 @@
         <div class="pinkLine"></div>
     </div>
 </div>
+<#assign currentPage = currentPage + 1>
 <div class="divTitrePro2">
     <div class="titlePink">
         <h2 class="h2TitrePro2">ANNEXES</h2>
@@ -537,13 +629,20 @@
 </div>
 <div class="divAnnexesList">
 <#if exp[0]??>
-    <#list exp[0].dossierProfessionnel.annexes as an>-->
+    <#list exp[0].dossierProfessionnel.annexes as an>
         <div>
-            <dt>${an.libelleAnnexe}</dt>
-               <dt><img src="src/main/resources/files/DossierProfessionnel/${an.pieceJointe}" alt="${an.pieceJointe}"></dt>
+               <dt>${an.pieceJointe}</dt>
         </div>
         </#list>
         </#if>
 </div>
+<div class="page-footer">
+    Page ${currentPage}
+</div>
+<footer>
+        <small>DOSSIER PROFESSIONNEL-Version du 11/09/2017</small>
+        </footer>
+
+        
 </body>
 </html>
