@@ -23,6 +23,13 @@ public interface PositionnementRepository  extends JpaRepository<Positionnement,
 	List<Positionnement> getAllByPromotionId(long idPromotion);
 	/**
 	 * 
+	 * @param id de l'étudiant recherchée 
+	 * @return le positionnement de l'étudiant recherchée
+	 */
+	@Query("SELECT p FROM Positionnement p JOIN p.etudiant e WHERE e.id = :id")
+	Positionnement getByIdEtudiant(long id);
+	/**
+	 * 
 	 * @param id de l'intervention recherchée
 	 * @return tous les positionnements d'une interventions donnée
 	 */

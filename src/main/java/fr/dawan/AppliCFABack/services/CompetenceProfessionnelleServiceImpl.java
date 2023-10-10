@@ -108,5 +108,15 @@ public class CompetenceProfessionnelleServiceImpl implements CompetenceProfessio
 		}
 		return result;
 	}
+	
+	@Override
+	public List<CompetenceProfessionnelleDto> getAllByDossierProjets(long dossierProjetId){
+		List<CompetenceProfessionnelle> competenceProfessionnelles = competenceProfessionnelleRepository.findAllByDossierProjets(dossierProjetId);
+		List<CompetenceProfessionnelleDto> result = new ArrayList<>();
+		for (CompetenceProfessionnelle cp : competenceProfessionnelles) {
+			result.add(DtoTools.convert(cp, CompetenceProfessionnelleDto.class));
+		}
+		return result;
+	}
 
 }

@@ -18,5 +18,7 @@ public interface CompetenceProfessionnelleService {
 	 * Récupération de toutes les absences en fonctions d'un EtudiantId
 	 */
 	List<CompetenceProfessionnelleDto> getAllByActiviteTypeId(long id);
+
+	List<CompetenceProfessionnelleDto> getAllByDossierProjets(long dossierProjetId);
 	
 }

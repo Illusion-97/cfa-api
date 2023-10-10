@@ -30,7 +30,6 @@ public interface DossierProfessionnelRepository extends JpaRepository<DossierPro
 	@Query("SELECT d FROM DossierProfessionnel d WHERE d.id = :id")
 	DossierProfessionnel getByDossierbyId(@Param("id")long id);
 
-
-
-
+	@Query("SELECT d FROM DossierProfessionnel d JOIN d.etudiant e WHERE e.id = :id")
+	DossierProfessionnel findByEtudiantId(long id);
 }
