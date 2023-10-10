@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.*;
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -524,17 +525,34 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		Utilisateur user = mapper.utilisateurDtoToUtilisateur(uDto);
 		UtilisateurRole tuteurRole = utilisateurRoleRepository.findByIntituleContaining("TUTEUR");
-		Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).get();
-		Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).get();
-		CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId()).get();
+		//Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).get();
+		if (user.getEntreprise() != null) {
+	        Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).orElse(null);
+	        user.setEntreprise(optEntreprise);
+	    }
+		// Gestion de l'adresse
+	    if (user.getAdresse() != null) {
+	        Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).orElse(null);
+	        user.setAdresse(adresse);
+	    }
 
+	    // Gestion du centre de formation
+	    if (user.getCentreFormation() != null) {
+	        CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId()).orElse(null);
+	        user.setCentreFormation(centreFormation);
+	    }
+//		Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).get();
+//		CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId()).get();
+	    
 		List<UtilisateurRole> utilisateurRoles = new ArrayList<>();
 		utilisateurRoles.add(tuteurRole);
 		user.setRoles(utilisateurRoles);
-		user.setEntreprise(optEntreprise);
-		user.setAdresse(adresse);
-		user.setCentreFormation(centreFormation);
-		user.setActive(true);
+		//user.setEntreprise(optEntreprise);
+		//user.setAdresse(adresse);
+		//user.setCentreFormation(centreFormation);
+		
+		user.setActive(false);//par defaut a false comme il y l'inscription du tuteur sera a modifier avec l'interface admin 
+
 		user.setExternalAccount(true);		
 		
 		user = utilisateurRepository.save(user);
@@ -543,6 +561,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		tuteur.setUtilisateur(user);
 		tuteur = tuteurRepository.save(tuteur);
 		
+		if (uDto.getEtudiantDto() != null) {
+			Long idEtudiant = uDto.getEtudiantDto().getId();
+			Optional<Etudiant> etuOpt = etudiantRepository.findById(idEtudiant);
+			if (etuOpt.isPresent()) {
+				Etudiant etudiant = etuOpt.get();
+				etudiant.setTuteur(tuteur);
+				etudiantRepository.save(etudiant);
+			} else {
+				throw new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + idEtudiant);
+			} 
+		}
 		user.setTuteur(tuteur);
 		user = utilisateurRepository.saveAndFlush(user);
 		

@@ -1,8 +1,5 @@
 package fr.dawan.AppliCFABack;
 
-import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,8 +8,13 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 
 
 
@@ -59,11 +61,11 @@ public class AppliCfaBackApplication {
 			}
 
 			// Intercepteurs
-			/*@Override
+			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
-			  registry.addInterceptor(tokenInterceptor);
-			}*/
-			
+			  //registry.addInterceptor(tokenInterceptor);
+			}
+
 			@Override
 			public void addResourceHandlers(ResourceHandlerRegistry registry) {
 				registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
