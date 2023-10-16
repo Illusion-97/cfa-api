@@ -112,19 +112,6 @@ public class DossierProfessionnelController {
 
 
 
-	@PostMapping(value = "/save/{id}", consumes = "application/json", produces = "application/json")
-	public DossierProfessionnelDto saveOrUpdate(@PathVariable("id") long id, @RequestBody DossierProfessionnelDto dpDto) {
-		DossierProfessionnelDto dpDto1 = dossierProService.getByName(dpDto.getNom());
-		/*if (dpDto1 != null) {
-			return null;
-		}*/
-		DossierProfessionnelDto dp = dossierProService.saveOrUpdate(dpDto);
-		EtudiantDto eDto = etudiantService.getById(id);
-		eDto.getDossierProfessionnel().add(dp);
-		etudiantService.saveOrUpdate(eDto);
-		return dp;
-	}
-
 	@DeleteMapping(value = "/{idEtudiant}/delete/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable("idEtudiant") long idEtudiant,
 			@PathVariable(value = "id") long id) {
@@ -144,21 +131,6 @@ public class DossierProfessionnelController {
 		}
 
 	}
-	
-	@PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
-	public DossierProfessionnelDto update(@RequestBody DossierProfessionnelDto dpDto, @PathVariable("id") long id) {
-		DossierProfessionnelDto dpDto1 = dossierProService.getByName(dpDto.getNom());
-		if (dpDto1 != null) {
-			return null;
-		}
-		DossierProfessionnelDto dp = dossierProService.saveOrUpdate(dpDto);
-		EtudiantDto eDto = etudiantService.getById(id);
-		eDto.getDossierProfessionnel().add(dp);
-		etudiantService.saveOrUpdate(eDto);
-		return dp;
-	}
-
-
 	
 	@PostMapping(value = "/save/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
 	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
@@ -189,16 +161,16 @@ public class DossierProfessionnelController {
 		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
 		return dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
 	}
-
-	@GetMapping(value = "/dossier-professionnel/{etudiantId}/{cursusId}", produces = "application/pdf")
-	public ResponseEntity<Resource> generateDossierProByStudentAndPromo(@PathVariable("etudiantId") long etudiantId, @PathVariable("cursusId") long cursusId) throws Exception {
-	    String outputpdfPath = dossierProService.generateDossierProByStudentAndPromo(etudiantId, cursusId);
+	
+	@GetMapping(value = "/dossier-professionnel/{dossierId}", produces = "application/pdf")
+	public ResponseEntity<Resource> generateDossierProPdf(@PathVariable long dossierId) throws Exception {
+	    String outputpdfPath = dossierProService.generateDossierProPdf(dossierId);
 
 	    File f = new File(outputpdfPath);
 	    Path path = Paths.get(f.getAbsolutePath());
 	    ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + etudiantId + "-promo" + cursusId + ".pdf");
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + dossierId + "dp" + ".pdf");
 	    headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
 	    headers.add("Pragma", "no-cache");
 	    headers.add("Expires", "0");
@@ -206,22 +178,6 @@ public class DossierProfessionnelController {
 	    return ResponseEntity.ok().headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
 	}
 
-	
-	
-	
-	@GetMapping(value = "/generer/{idDossierPro}/{etudiantId}", produces = "application/pdf")
-	public ResponseEntity<String> genererDossierProfessionnel(
-			@PathVariable("idDossierPro") long idDossierPro, @PathVariable("etudiantId") long etudiantId) throws Exception {
-
-		String outpoutPath = (dossierProService.genererDossierProfessionnel(idDossierPro, etudiantId));
-		File f = new File(outpoutPath);
-		
-		Path path = Paths.get(f.getAbsolutePath());
-		byte[] bytes =  Files.readAllBytes(path);
-		String base64 = Base64.getEncoder().encodeToString(bytes);
-
-		return ResponseEntity.ok().body(base64);
-	}
 	
 	@DeleteMapping("/annexes/{annexeId}")
     public ResponseEntity<String> deleteAnnexe(@PathVariable Long annexeId) {
@@ -272,7 +228,7 @@ public class DossierProfessionnelController {
 	}
 
 	@DeleteMapping(value = "/deleteFile/{id}", produces = "text/plain")
-	public ResponseEntity<DossierProEtudiantDto> deletefile( @PathVariable("id") Long id, @RequestParam("fileImport")String file){
+	public ResponseEntity<DossierProEtudiantDto> deletefile( @PathVariable("id") Long id, @RequestParam("fileImport") String file){
 		DossierProEtudiantDto dpDto = dossierProService.deleteFileImportById(id, file);
 		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
 	}

@@ -48,10 +48,10 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@ManyToOne
 	private CentreFormation centreFormation;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "utilisateur")
+	@OneToOne(mappedBy = "utilisateur")
 	private Etudiant etudiant;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "utilisateur")
+	@OneToOne(mappedBy = "utilisateur")
 	private Formateur formateur;
 	@OneToOne
 	private CEF cef;

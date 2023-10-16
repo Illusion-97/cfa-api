@@ -3,12 +3,15 @@ package fr.dawan.AppliCFABack.controllers;
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.services.EmailService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.rmi.CORBA.Util;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -21,7 +24,8 @@ public class EtudiantController {
 
 	@Autowired
 	EtudiantService etudiantService;
-	
+	@Autowired
+	EmailService emailService;
 	private static Logger logger = Logger.getGlobal();
 
 	// ##################################################
@@ -243,5 +247,13 @@ public class EtudiantController {
 			return etudiantService.countEtudiantByPromotion(id, "");
 			
 		}
+	}
+
+	@PostMapping(value = "/mail")
+	public ResponseEntity<String> sendEmailToFormateur(@RequestParam String from,@RequestParam String to , @RequestParam String header,
+													   @RequestParam String msg){
+			emailService.sendMailUser1ToUser2(from, to, header, msg);
+			return ResponseEntity.status(HttpStatus.OK).build();
+
 	}
 }
