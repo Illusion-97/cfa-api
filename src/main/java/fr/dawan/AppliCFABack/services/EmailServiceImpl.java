@@ -5,12 +5,11 @@ import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.interceptors.TokenSaver;
-import fr.dawan.AppliCFABack.repositories.CongeRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.repositories.*;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
+import fr.dawan.AppliCFABack.tools.TimerCache;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +23,14 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional
@@ -47,8 +50,16 @@ public class EmailServiceImpl implements EmailService {
 	private JavaMailSender emailSender;
 
 	@Autowired
+	private BlocEvaluationRepository blocEvaluationRepository;
+	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	private FormateurRepository formateurRepository;
+	@Autowired
+	private InterventionRepository interventionRepository;
 
+	@Autowired
+	private TimerCache timerCache;
 	/**
 	 * Envoi de mail au referent pour la demande de congé
 	 * 
@@ -163,14 +174,14 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path, Optional<String> fileName) {
 		Optional<Utilisateur> user = userRepository.findById(idTo);
+
 		if (user.isPresent()) {
 			try {
 				MimeMessage message = emailSender.createMimeMessage();
 				MimeMessageHelper helper = new MimeMessageHelper(message, true);
-				helper.setTo(user.get().getLogin());
+				helper.setTo("ajiyar@dawan.fr");
 				helper.setSubject(header);
-
-				String content = msg ;
+				helper.setText(msg, true);
 
 				// Partie pour ajouter un pdf si un "path" est renseigné
 				String pdfFilePath = path.get(); // Utilisez le chemin du fichier PDF s'il est présent
@@ -179,13 +190,40 @@ public class EmailServiceImpl implements EmailService {
 					helper.addAttachment(String.valueOf(fileName), pdfFile);
 				}
 
-				helper.setText(content, true);
 				emailSender.send(message);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
+		}
+	}
+	private void cacheTimer(long idUser){
+		LocalDate timer = LocalDate.now();
+
+	}
+	/**
+	 * Envoi de automatique pour prévenir le formateur de remplir le livret d'évaluation des étudiants lui étant affilié
+	 * avant 3
+	 *
+	 * @param c objet Conge
+	 * @return SimpleMailMessage a être envoyé
+	 */
+	@Override
+	public void scheduleMailSender(long idUser) {
+		boolean isInCache = timerCache.startTimerForUserConnected(idUser, 5);
+		if (isInCache){
+			if (userRepository.isLivretFormateurReferentEmpty(idUser)){
+				Optional<LocalDate> dateFinPromotion = userRepository.findDatePromotionOfFormateurByUtilisateurId(idUser);
+				Period dateDiff = Period.between(LocalDate.now(), dateFinPromotion.get());
+				if (dateDiff.getYears() < 2 && dateDiff.getMonths() <= 3) {
+					ScheduledExecutorService threadUsesForSchedule = Executors.newScheduledThreadPool(1);
+					String message = "Pensez à remplir l'évaluation : " + idUser;
+					threadUsesForSchedule.schedule(() -> {
+						sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of(""));
+					},1, TimeUnit.SECONDS);
+				}
+			}
 		}
 	}
 }

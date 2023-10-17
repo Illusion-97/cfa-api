@@ -4,7 +4,6 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
-import fr.dawan.AppliCFABack.services.EmailService;
 import fr.dawan.AppliCFABack.services.NoteService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

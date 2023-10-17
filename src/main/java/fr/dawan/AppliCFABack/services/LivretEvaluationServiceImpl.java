@@ -11,7 +11,6 @@ import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import fr.dawan.AppliCFABack.tools.ToPdf;
 import freemarker.core.ParseException;
 import freemarker.template.*;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +49,8 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	@Autowired
 	private SignatureService signatureService;
 	@Autowired
+	private UtilisateurRepository utilisateurRepository;
+	@Autowired
 	private EtudiantRepository etudiantRepository;
 	@Autowired
 	private ActiviteTypeRepository activiteTypeRepository;
@@ -57,9 +59,6 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	private CursusRepository cursusRepository;
 	@Autowired
 	private LivretEvaluationRepository livertEvaluationRepository;
-	@Autowired
-	private EvaluationFormationRepository evaluationFormationRepository;
-
 	@Autowired
 	private BlocEvaluationRepository blocEvaluationRepository;
 
@@ -70,6 +69,8 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 
 	@Autowired
 	private DtoTools mapper;
+	@Autowired
+	private FormateurRepository formateurRepository;
 
 	@Override
 
@@ -93,40 +94,18 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	}
 	@Override
 	public LivretEvaluationDto saveOrUpdate(LivretEvaluationDto tDto) throws SaveInvalidException {
-		LivretEvaluation livretEval = DtoTools.convert(tDto, LivretEvaluation.class);
-//		if (tDto.getId() == 0) {
-			// créer un object Validation et l'entrer dans table Validation
-//			Validation validation = new Validation();
-//			validation.setSignature(null);
-//			validation.setEtat(Etat.NONTRAITE);
-//			validation.setVersion(0);
-//			validation = validationRepository.saveAndFlush(validation);
-			LivretEvaluation livretEvalDb = livretEvaluationRepository.saveAndFlush(livretEval);
-			return DtoTools.convert(livretEvalDb, LivretEvaluationDto.class);
-//		} else {
-//			LivretEvaluation livretEvalDb = livretEvaluationRepository.saveAndFlush(livretEval);
-//			return DtoTools.convert(livretEvalDb, LivretEvaluationDto.class);
-//		}
+			 LivretEvaluation livret = DtoTools.convert(tDto, LivretEvaluation.class);
+			 Optional<Long> idUser = utilisateurRepository.findidUtilisateurByLivretEvaluation(tDto.getId());
+			 mailNotification(tDto.getId(), idUser.get());
+			 livretEvaluationRepository.saveAndFlush(livret);
+			 return DtoTools.convert(livret, LivretEvaluationDto.class);
 
 	}
-	@Override
-	public void notificationMail(LivretEvaluationDto livret) throws NotFoundException {
-		Optional<Etudiant> etudiant = etudiantRepository.findById(livret.getEtudiantId());
-		if (!etudiant.isPresent() ){
-			throw new NotFoundException("Not Found");
-		}
+	/*
+	* Méthode pour le calcul de la date limite de formation a compté du jour d'appel de la méthode
+	*/
 
-		String header = "Votre livret d'évaluation a été validé par le formateur";
-		if (livret.getVersion() != 0){
-			header = "Votre livret d'évaluation a été modifié par votre formateur";
-		}
-		//lien à changer en prod
-		String link = "<a href=\"http://localhost:8080/#/etudiant/livret\">voir mon livret</a>";
 
-		String message = "Pour aller voir votre livret veuillez cliquer sur ce lien : " + link;
-		emailService.sendMailSmtpUser(etudiant.get().getUtilisateur().getId(),
-				header, message,Optional.of(""),Optional.of(""));
-	}
 	@Override
 	public CountDto count(String search) {
 		long nb = livretEvaluationRepository.count();
@@ -247,6 +226,19 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 			}
 		}
 		return evaluationDtos;
+	}
+
+	/*
+	* Vérifier la liste de livret d'évaluation associé au bloc_evaluation qui est associé au formateur
+	* pour valider si toutes les évaluation des livret et envoyer un mail de validation du tableau
+	*/
+	@Override
+	public void mailNotification(long idLivret,long idUtilisateur) {
+		Optional<String> titreCursus = livretEvaluationRepository.findCursusTitredByLivretEvaluation(idLivret);
+		String message = "Validation de l'évaluation du Cursus : "+titreCursus+ " le : " + LocalDate.now();
+		emailService.sendMailSmtpUser(idUtilisateur,"Confirmation de l'évaluation du Livret",
+				message, Optional.of(""), Optional.of(""));
+
 	}
 
 

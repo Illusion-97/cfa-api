@@ -17,5 +17,7 @@ public interface EmailService {
 
 	void sendMailUser1ToUser2(String from, String to, String header, String msg);
 
-	void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path, Optional<String> fileName);
+	void sendMailSmtpUser(long idUtilisateur, String header, String msg, Optional<String> path, Optional<String> fileName);
+
+	void scheduleMailSender(long user);
 }

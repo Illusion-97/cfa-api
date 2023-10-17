@@ -38,7 +38,7 @@ public class LivretEvaluationController extends GenericController<LivretEvaluati
 	public ResponseEntity<LivretEvaluationDto> save(@RequestBody LivretEvaluationDto livret) throws NotFoundException, SaveInvalidException {
 		//On save le livret avant l'envoi de mail
 		LivretEvaluationDto livetValidation = service.saveOrUpdate(livret);
-		livretEvaluationService.notificationMail(livret);
+		//livretEvaluationService.mailNotification(livret.getId(),);
 		return ResponseEntity.status(HttpStatus.CREATED).body(livetValidation);
 	}
 	@GetMapping(value = "/etudiant/{id}", produces = "application/json")
@@ -49,30 +49,6 @@ public class LivretEvaluationController extends GenericController<LivretEvaluati
 	public LivretEvaluationDto findByIdEtudiantAndCursus(@PathVariable("idEtudiant") long idEtudiant,@PathVariable("idCursus") long idCursus) {
 		return ((LivretEvaluationService) service).getByIdEtudiantAndIdCurcus(idEtudiant,idCursus);
 	}
-//	@GetMapping(value = "/generer/{idEtudiant}/{idCursus}", produces = "application/octet-stream")
-//	public ResponseEntity<Resource> getLivretEval(@PathVariable("idEtudiant") long idEtudiant,
-//			@PathVariable("idCursus") long idCursus) throws Exception {
-//
-//		
-//		String outpoutPath = ((LivretEvaluationService) service).getLivretEvaluation(idEtudiant, idCursus);
-//		File f = new File(outpoutPath);
-//
-//		Path path = Paths.get(f.getAbsolutePath());
-//		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-//
-//		// Pour afficher un boite de téléchargement dans une réponse web au lieu de
-//		// changer de page, nous devons
-//		// spécifier un header : Content-Disposition, attachment;filename=app.log
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=app.log");
-//		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-//		headers.add("Pragma", "no-cache");
-//		headers.add("Expires", "0");
-//		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=app.log");
-//
-//		return ResponseEntity.ok().headers(headers).contentLength(f.length())
-//				.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
-//	}
 	
 	/**
 	 * 	Génère  le livret d'évaluation 

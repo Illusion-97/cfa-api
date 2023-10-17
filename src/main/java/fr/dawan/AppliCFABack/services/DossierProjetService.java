@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;

@@ -197,16 +197,21 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		return mapper.dossierProjetToDossierProjetDto(dossierProRepo.saveAndFlush(mapper.dossierProjetDtoToDossierProjet(dpDto)));
 	}
-
+	/**
+	 * Envoi un EMail au tuteur de l'étudiant pour l'informer de la modification du DossierProjet
+	 *
+	 * @param DossierProjetDto dp
+	 * @return
+	 */
 	public void emailTuteur(DossierProjetDto dp) throws IOException, TemplateException, DossierProjetException {
 		Optional<Etudiant> student = studentRepository.findById(dp.getEtudiant().getId());
 
 		String header = "Votre étudiant " + student.get().getUtilisateur().getFullName() + " a crée son Dossier Projet";
 		String message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été crée";
 
-		Optional<String> path = Optional.ofNullable("");
+		Optional<String> path = Optional.of("");
 		Optional<String> fileName = Optional.of("");
-
+		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.get().getId()+"\">Voir le dossier </a>";
 		// On vérifie si l'étudiant possède un tuteur
 		if (student.get().getTuteur().getId() != 0){
 			Optional<Tuteur> tuteurStudent = tuteurRepository.findById(student.get().getTuteur().getId());
@@ -215,25 +220,30 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 			//A voir dès la validation mais régler le problème du fichier qui se télecharge en .bin et non en pdf
 			//Voir les anciens commit, une version stable a déja été push sur "notification_sender"
 			if (dp.getVersion() > 0) {
-				header = "Votre étudiant " + student.get().getUtilisateur().getFullName() +
-						" à ajouté des modification à son Dossier Projet";
+				header = "Votre étudiant " + student.get().getUtilisateur().getFullName() + " à ajouté des modification à son Dossier Projet";
 				//message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été modifié";
 				//genererDossierProjet(dp.getId()) génère le chemin du fichier télecharger (voir s'il ne faut pas modifier le chemin du fichier pour ca)
 				//path = Optional.of(genererDossierProjet(dp.getId()));
 				//fileName = Optional.of(dp.getNom());
 			}
 
-			String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.get().getId()+"\">Voir le dossier </a>";
 			//Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
 			emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, body,path, fileName);
 		}
 	}
-
+	/**
+	 * Va permettre d'importer un Dossier Projet
+	 *
+	 * @param DossierProjet
+	 * @param id id du Dossier Projet
+	 * @param files file
+	 * @return dpDto Dto du Dossier Projet
+	 */
 	public DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException {
 		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
 		String nom_import = dp.getDossierImport();
 		String cheminFichier = storageFolder + "/DossierProjet/" + nom_import;
-		//Penser a rajouter un sous dossier par étudiant (voir file Servie sur le controller de DossierProjet)
+		//Penser à rajouter un sous dossier par étudiant (voir file Servie sur le controller de DossierProjet)
 		File fichier = new File(cheminFichier);
 		if (fichier.exists()) {
 			fichier.delete();
@@ -245,7 +255,13 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
 			return dpDto;
 	}
-
+	/**
+	 * Delete le file
+	 *
+	 * @param id id de l'étudiant
+	 * @param String nom du fichier
+	 * @return dpDto Dto du Dossier Projet
+	 */
 	public DossierProjetDto deleteFile(String file, long id) {
 	   String cheminFichier = storageFolder + "/DossierProjet/" + file;
 	   File fichier = new File(cheminFichier);

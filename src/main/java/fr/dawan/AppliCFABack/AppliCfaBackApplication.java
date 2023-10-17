@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack;
 import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.tools.TimerCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,6 +29,8 @@ public class AppliCfaBackApplication {
 	@Autowired
 	private TokenInterceptor tokenInterceptor;
 
+	@Bean
+	public TimerCache userTimerCache(){return new TimerCache();};
 	@Bean
 	public RestTemplate restTemplate() {
 		SimpleClientHttpRequestFactory clientHttpRequestFactory  = new SimpleClientHttpRequestFactory();

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -35,6 +36,19 @@ public class EmailController {
             emailService.sendMailSmtpUser(id, header, msg, Optional.of(""), Optional.of(""));
         }
         return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
+    @PostMapping(value = "/schedule")
+    public ResponseEntity<String> mailScheduler(@RequestBody Map<String, Object> request){
+
+        if ((boolean) request.get("isFormateur")){
+            Integer integerIdUser = (Integer) request.get("userId");
+            long idUser = (long) integerIdUser;
+            emailService.scheduleMailSender(idUser);
+            return ResponseEntity.ok("E-mail planifié avec succès.");
+        }
+        return (ResponseEntity<String>) ResponseEntity.badRequest();
 
     }
 }
