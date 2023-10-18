@@ -13,7 +13,8 @@ import java.util.List;
 
 public interface LivretEvaluationService extends GenericService<LivretEvaluationDto>{
 
-	//une liste car si étudiant fait plusieurs formations
+
+    //une liste car si étudiant fait plusieurs formations
 	List<LivretEvaluationDto> getByEtudiantId(long id);
 	
 	LivretEvaluationDto getByIdEtudiantAndIdCurcus(long idEtudiant, long idCursus);
@@ -22,4 +23,6 @@ public interface LivretEvaluationService extends GenericService<LivretEvaluation
 			MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
 	List<EtudiantLivretEvaluationDto> getLivretEtudiant(long id);
+
+	void mailNotification(long idLivret,long idUtilisateur);
 }

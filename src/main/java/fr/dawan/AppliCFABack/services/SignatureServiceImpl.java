@@ -9,9 +9,11 @@ import fr.dawan.AppliCFABack.repositories.SignatureRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.util.Optional;
 /***
  * 
@@ -30,7 +32,8 @@ public class SignatureServiceImpl implements SignatureService{
 	private SignatureRepository signatureRepository;
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
-	
+	@Value("${app.storagefolder}")
+	private String storageFolder;
 	/**
 	 * Récupération de la signature en fonction de son id
 	 * 
@@ -58,6 +61,8 @@ public class SignatureServiceImpl implements SignatureService{
 	public SignatureDto saveOrUpdate(SignatureDto tDto) throws SaveInvalidException {
 		Utilisateur uti =  utilisateurRepository.getOne(tDto.getUtilisateurId());
 		Signature s = DtoTools.convert(tDto, Signature.class);
+		String path = storageFolder + "/signature" + tDto.getPieceJointe();
+		File fichierSignature = new File(path);
 		uti.setSignature(s);
 		s = signatureRepository.saveAndFlush(s);
 		return DtoTools.convert(s, SignatureDto.class);

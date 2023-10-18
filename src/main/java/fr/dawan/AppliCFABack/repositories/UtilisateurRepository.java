@@ -1,6 +1,5 @@
 package fr.dawan.AppliCFABack.repositories;
 
-import fr.dawan.AppliCFABack.entities.Formateur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +37,18 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	Optional<Utilisateur> findByIdDg2(long idDg2);
 
 	Optional<Utilisateur> findDistinctByIdDg2(long personId);
-	
-	Optional<Utilisateur> findByFormateur(Formateur formateur);
+	@Query("SELECT u.id FROM LivretEvaluation l JOIN BlocEvaluation b ON b.livretEvaluation.id = l.id " +
+			"JOIN Formateur f ON b.formateurEvaluateur.id = f.id JOIN Utilisateur u ON u.id = f.id WHERE l.id = :idLivret")
+	Optional<Long> findidUtilisateurByLivretEvaluation(long idLivret);
 
+	@Query("SELECT DISTINCT p.dateFin FROM Promotion p JOIN Utilisateur u ON p.referentPedagogique.id = u.id WHERE u.id = :idUser")
+	Optional<LocalDate> findDatePromotionOfFormateurByUtilisateurId(long idUser);
+
+	@Query("SELECT CASE WHEN l.etat = 'ENATTENTEDEVALIDATION' THEN TRUE ELSE FALSE END " +
+			"FROM Cursus c " +
+			"JOIN LivretEvaluation l ON l.titreProfessionnel.id = c.id " +
+			"JOIN Promotion p ON c.id = p.cursus.id " +
+			"JOIN Utilisateur u ON p.referentPedagogique.id = u.id " +
+			"WHERE u.id = :idUser")
+	boolean isLivretFormateurReferentEmpty(long idUser);
 }
