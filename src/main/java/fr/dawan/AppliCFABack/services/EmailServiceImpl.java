@@ -179,7 +179,7 @@ public class EmailServiceImpl implements EmailService {
 			try {
 				MimeMessage message = emailSender.createMimeMessage();
 				MimeMessageHelper helper = new MimeMessageHelper(message, true);
-				helper.setTo("ajiyar@dawan.fr");
+				helper.setTo(user.get().getLogin());
 				helper.setSubject(header);
 				helper.setText(msg, true);
 
