@@ -2,11 +2,12 @@ package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.repositories.CompetenceProfessionnelleRepository;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.ProjetRepository;
+import fr.dawan.AppliCFABack.repositories.TuteurRepository;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import fr.dawan.AppliCFABack.tools.ToPdf;
 import freemarker.core.ParseException;
@@ -42,18 +43,10 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 	@Autowired
 	DossierProjetRepository dossierProRepo;
-
 	@Autowired
-	EtudiantRepository etudiantRepository;
-
+	EtudiantRepository studentRepository;
 	@Autowired
-	EtudiantService etudiantService;
-
-	@Autowired
-	CompetenceProfessionnelleRepository cpRepo;
-
-	@Autowired
-	private ProjetRepository projetRepository;
+	TuteurRepository tuteurRepository;
 
 	@Value("${app.storagefolder}")
 	private String storageFolder;
@@ -63,7 +56,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 	@Autowired
 	private Configuration freemarkerConfig;
-
+	@Autowired
+	private EmailService emailService;
 	private static Logger logger = Logger.getGlobal();
 
 	@Autowired
@@ -200,13 +194,56 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 */
 
 	@Override
-	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) {
+	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		return mapper.dossierProjetToDossierProjetDto(dossierProRepo.saveAndFlush(mapper.dossierProjetDtoToDossierProjet(dpDto)));
 	}
+	/**
+	 * Envoi un EMail au tuteur de l'étudiant pour l'informer de la modification du DossierProjet
+	 *
+	 * @param DossierProjetDto dp
+	 * @return
+	 */
+	public void emailTuteur(DossierProjetDto dp) throws IOException, TemplateException, DossierProjetException {
+		Optional<Etudiant> student = studentRepository.findById(dp.getEtudiant().getId());
+
+		String header = "Votre étudiant " + student.get().getUtilisateur().getFullName() + " a crée son Dossier Projet";
+		String message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été crée";
+
+		Optional<String> path = Optional.of("");
+		Optional<String> fileName = Optional.of("");
+		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.get().getId()+"\">Voir le dossier </a>";
+		// On vérifie si l'étudiant possède un tuteur
+		if (student.get().getTuteur().getId() != 0){
+			Optional<Tuteur> tuteurStudent = tuteurRepository.findById(student.get().getTuteur().getId());
+			//On génère le fichier seulement lors d'un update
+
+			//A voir dès la validation mais régler le problème du fichier qui se télecharge en .bin et non en pdf
+			//Voir les anciens commit, une version stable a déja été push sur "notification_sender"
+			if (dp.getVersion() > 0) {
+				header = "Votre étudiant " + student.get().getUtilisateur().getFullName() + " à ajouté des modification à son Dossier Projet";
+				//message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été modifié";
+				//genererDossierProjet(dp.getId()) génère le chemin du fichier télecharger (voir s'il ne faut pas modifier le chemin du fichier pour ca)
+				//path = Optional.of(genererDossierProjet(dp.getId()));
+				//fileName = Optional.of(dp.getNom());
+			}
+
+			//Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
+			emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, body,path, fileName);
+		}
+	}
+	/**
+	 * Va permettre d'importer un Dossier Projet
+	 *
+	 * @param DossierProjet
+	 * @param id id du Dossier Projet
+	 * @param files file
+	 * @return dpDto Dto du Dossier Projet
+	 */
 	public DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException {
 		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
 		String nom_import = dp.getDossierImport();
 		String cheminFichier = storageFolder + "/DossierProjet/" + nom_import;
+		//Penser à rajouter un sous dossier par étudiant (voir file Servie sur le controller de DossierProjet)
 		File fichier = new File(cheminFichier);
 		if (fichier.exists()) {
 			fichier.delete();
@@ -218,31 +255,37 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
 			return dpDto;
 	}
+	/**
+	 * Delete le file
+	 *
+	 * @param id id de l'étudiant
+	 * @param String nom du fichier
+	 * @return dpDto Dto du Dossier Projet
+	 */
+	public DossierProjetDto deleteFile(String file, long id) {
+	   String cheminFichier = storageFolder + "/DossierProjet/" + file;
+	   File fichier = new File(cheminFichier);
+	   DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
+	   if (fichier.exists()) {
 
-public DossierProjetDto deleteFile(String file, long id) {
-   String cheminFichier = storageFolder + "/DossierProjet/" + file;
-   File fichier = new File(cheminFichier);
-   DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
-   if (fichier.exists()) {
+	      fichier.delete();
+	      // Supprimer l'élément de fichier de la liste d'annexes du DossierProjet
+	      String importDp = dp.getDossierImport();
+	      List<String> annexes = dp.getAnnexeDossierProjets();
 
-      fichier.delete();
-      // Supprimer l'élément de fichier de la liste d'annexes du DossierProjet
-      String importDp = dp.getDossierImport();
-      List<String> annexes = dp.getAnnexeDossierProjets();
+	      if(annexes.contains(file)) {
+	         annexes.removeIf(annexe -> annexe.equals(file));
+	         //dp.setAnnexeDossierProjets(annexes);
+	      }
+	      if(importDp != null){
+	         dp.setDossierImport(null);
+	      }
 
-      if(annexes.contains(file)) {
-         annexes.removeIf(annexe -> annexe.equals(file));
-         //dp.setAnnexeDossierProjets(annexes);
-      }
-      if(importDp != null){
-         dp.setDossierImport(null);
-      }
-
-      DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dossierProRepo.save(dp));
-      return dpDto;
-   }
-   return null;
-}
+	      DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dossierProRepo.save(dp));
+	      return dpDto;
+	   }
+	   return null;
+	}
 
 	public DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException {
 		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
@@ -284,7 +327,7 @@ public DossierProjetDto deleteFile(String file, long id) {
 			logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
 		}
 
-		return outputPdf;
+		return outputPdf; // Retournez le chemin du fichier PDF généré
 	}
 
 }

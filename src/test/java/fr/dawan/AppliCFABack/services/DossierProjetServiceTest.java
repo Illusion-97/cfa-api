@@ -5,6 +5,8 @@ import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
+import fr.dawan.AppliCFABack.tools.DossierProjetException;
+import freemarker.template.TemplateException;
 import org.junit.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.ArgumentMatchers;
@@ -14,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +56,7 @@ class DossierProjetControllerTests {
 
 
     @Test
-    void givenDto_whenSave_thenAddToList_AndReturnUpdatedDto() {
+    void givenDto_whenSave_thenAddToList_AndReturnUpdatedDto() throws DossierProjetException, TemplateException, IOException {
 
         List<DossierProjet> entities = new ArrayList<>();
         DossierProjetDto dto = new DossierProjetDto();

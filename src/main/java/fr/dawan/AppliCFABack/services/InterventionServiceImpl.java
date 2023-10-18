@@ -9,8 +9,6 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.*;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
-import javassist.expr.NewArray;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

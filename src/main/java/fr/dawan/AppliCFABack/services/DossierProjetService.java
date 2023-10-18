@@ -28,9 +28,11 @@ public interface DossierProjetService {
 	String genererDossierProjet(long idDossierProjet) throws DossierProjetException, TemplateNotFoundException,
 		MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
-	DossierProjetDto saveOrUpdate(DossierProjetDto dpDto);
+	DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException;
 	DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException;
 	DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException;
 	DossierProjetDto deleteFile(String file, long id);
+
+	void emailTuteur(DossierProjetDto dpDto) throws IOException, TemplateException, DossierProjetException;
 
 	}

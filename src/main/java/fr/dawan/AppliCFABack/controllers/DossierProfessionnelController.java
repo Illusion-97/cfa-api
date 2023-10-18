@@ -1,5 +1,28 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
+import fr.dawan.AppliCFABack.services.*;
+import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
+import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
+import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
+import freemarker.template.TemplateException;
+import io.micrometer.core.lang.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,45 +32,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudiantDto;
-import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
-import fr.dawan.AppliCFABack.services.AnnexeService;
-import fr.dawan.AppliCFABack.services.CursusService;
-import fr.dawan.AppliCFABack.services.DossierProfessionnelService;
-import fr.dawan.AppliCFABack.services.EtudiantService;
-import fr.dawan.AppliCFABack.services.FilesService;
-import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
-import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
-import io.micrometer.core.lang.Nullable;
 
 
 @RestController
@@ -112,6 +96,19 @@ public class DossierProfessionnelController {
 
 
 
+	@PostMapping(value = "/save/{id}", consumes = "application/json", produces = "application/json")
+	public DossierProfessionnelDto saveOrUpdate(@PathVariable("id") long id, @RequestBody DossierProfessionnelDto dpDto) {
+		DossierProfessionnelDto dpDto1 = dossierProService.getByName(dpDto.getNom());
+		/*if (dpDto1 != null) {
+			return null;
+		}*/
+		DossierProfessionnelDto dp = dossierProService.saveOrUpdate(dpDto);
+		EtudiantDto eDto = etudiantService.getById(id);
+		eDto.getDossierProfessionnel().add(dp);
+		etudiantService.saveOrUpdate(eDto);
+		return dp;
+	}
+
 	@DeleteMapping(value = "/{idEtudiant}/delete/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable("idEtudiant") long idEtudiant,
 			@PathVariable(value = "id") long id) {
@@ -132,13 +129,29 @@ public class DossierProfessionnelController {
 
 	}
 	
+	@PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
+	public DossierProfessionnelDto update(@RequestBody DossierProfessionnelDto dpDto, @PathVariable("id") long id) {
+		DossierProfessionnelDto dpDto1 = dossierProService.getByName(dpDto.getNom());
+		if (dpDto1 != null) {
+			return null;
+		}
+		DossierProfessionnelDto dp = dossierProService.saveOrUpdate(dpDto);
+		EtudiantDto eDto = etudiantService.getById(id);
+		eDto.getDossierProfessionnel().add(dp);
+		etudiantService.saveOrUpdate(eDto);
+		return dp;
+	}
+
+
+	
 	@PostMapping(value = "/save/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
 	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
-	        @RequestParam("pieceJointe") List<MultipartFile> files) throws JsonMappingException, JsonProcessingException {
+	        @RequestParam("pieceJointe") List<MultipartFile> files) throws IOException, TemplateException, DossierProfessionnelException {
 	    String path = storageFolder + "DossierProfessionnel" + "/";
 	    fileService.createDirectory(path);
 	    DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
 	    DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, files);
+		dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
 	    return dpE;
 	}
 
@@ -155,22 +168,23 @@ public class DossierProfessionnelController {
 
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
 	public DossierProEtudiantDto updateDossierProfessionnel(@PathVariable("id") long id, @RequestParam("dossierProfessionnel") String dpDto,
-			@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
+			@RequestParam("pieceJointe") List<MultipartFile> file) throws IOException, TemplateException, DossierProfessionnelException {
 		 String path = storageFolder + "DossierProfessionnel" + "/";
 		 fileService.createDirectory(path);
 		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
+		dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
 		return dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
 	}
-	
-	@GetMapping(value = "/dossier-professionnel/{dossierId}", produces = "application/pdf")
-	public ResponseEntity<Resource> generateDossierProPdf(@PathVariable long dossierId) throws Exception {
-	    String outputpdfPath = dossierProService.generateDossierProPdf(dossierId);
+
+	@GetMapping(value = "/dossier-professionnel/{etudiantId}/{cursusId}", produces = "application/pdf")
+	public ResponseEntity<Resource> generateDossierProByStudentAndPromo(@PathVariable("etudiantId") long etudiantId, @PathVariable("cursusId") long cursusId) throws Exception {
+	    String outputpdfPath = dossierProService.generateDossierProByStudentAndPromo(etudiantId, cursusId);
 
 	    File f = new File(outputpdfPath);
 	    Path path = Paths.get(f.getAbsolutePath());
 	    ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + dossierId + "dp" + ".pdf");
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + etudiantId + "-promo" + cursusId + ".pdf");
 	    headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
 	    headers.add("Pragma", "no-cache");
 	    headers.add("Expires", "0");
@@ -178,6 +192,22 @@ public class DossierProfessionnelController {
 	    return ResponseEntity.ok().headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
 	}
 
+	
+	
+	
+	@GetMapping(value = "/generer/{idDossierPro}/{etudiantId}", produces = "application/pdf")
+	public ResponseEntity<String> genererDossierProfessionnel(
+			@PathVariable("idDossierPro") long idDossierPro, @PathVariable("etudiantId") long etudiantId) throws Exception {
+
+		String outpoutPath = (dossierProService.genererDossierProfessionnel(idDossierPro, etudiantId));
+		File f = new File(outpoutPath);
+		
+		Path path = Paths.get(f.getAbsolutePath());
+		byte[] bytes =  Files.readAllBytes(path);
+		String base64 = Base64.getEncoder().encodeToString(bytes);
+
+		return ResponseEntity.ok().body(base64);
+	}
 	
 	@DeleteMapping("/annexes/{annexeId}")
     public ResponseEntity<String> deleteAnnexe(@PathVariable Long annexeId) {
@@ -228,7 +258,7 @@ public class DossierProfessionnelController {
 	}
 
 	@DeleteMapping(value = "/deleteFile/{id}", produces = "text/plain")
-	public ResponseEntity<DossierProEtudiantDto> deletefile( @PathVariable("id") Long id, @RequestParam("fileImport") String file){
+	public ResponseEntity<DossierProEtudiantDto> deletefile( @PathVariable("id") Long id, @RequestParam("fileImport")String file){
 		DossierProEtudiantDto dpDto = dossierProService.deleteFileImportById(id, file);
 		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
 	}

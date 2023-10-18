@@ -16,6 +16,5 @@ public interface BlocEvaluationRepository extends JpaRepository<BlocEvaluation,L
 
 	@Query("SELECT b FROM BlocEvaluation b JOIN  b.evaluationsFormations e ON e.id = :id ")
 	List<BlocEvaluation> finAllByEvaluationsFormationsId(long id);
-	
 
 }
