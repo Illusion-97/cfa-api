@@ -50,9 +50,6 @@ public class DossierProfessionnelController {
 	
 	@Autowired
 	CursusService cursusService;
-
-	@Value("${app.storagefolder}")
-	private String storageFolder;
 	
 	@Autowired
 	FilesService fileService;
@@ -60,8 +57,8 @@ public class DossierProfessionnelController {
 	@Autowired
 	private ObjectMapper objMap;
 
-	 @Value("src/main/resources/files/")
-	    private String storageFolder2;
+	@Value("${app.storagefolder2}")
+	private String storageFolder2;
 
 	@GetMapping(produces = "application/json")
 	public List<DossierProfessionnelDto> getAll() {
@@ -119,7 +116,7 @@ public class DossierProfessionnelController {
 	@PostMapping(value = "/save/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
 	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
 	        @RequestParam("pieceJointe") List<MultipartFile> files) throws JsonMappingException, JsonProcessingException {
-	    String path = storageFolder + "DossierProfessionnel" + "/";
+	    String path = storageFolder2 + "DossierProfessionnel" + "/";
 	    fileService.createDirectory(path);
 	    DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
 	    DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, files);
@@ -140,7 +137,7 @@ public class DossierProfessionnelController {
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
 	public DossierProEtudiantDto updateDossierProfessionnel(@PathVariable("id") long id, @RequestParam("dossierProfessionnel") String dpDto,
 			@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
-		 String path = storageFolder + "DossierProfessionnel" + "/";
+		 String path = storageFolder2 + "DossierProfessionnel" + "/";
 		 fileService.createDirectory(path);
 		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
 		return dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
@@ -211,8 +208,8 @@ public class DossierProfessionnelController {
 	    }
 	}
 
-	@DeleteMapping(value = "/deleteFile/{id}", produces = "text/plain")
-	public ResponseEntity<DossierProEtudiantDto> deletefile( @PathVariable("id") Long id, @RequestParam("fileImport") String file){
+	@DeleteMapping(value = "/deleteFile/{id}", produces = "application/json")
+	public ResponseEntity<DossierProEtudiantDto> deletefile( @PathVariable("id") Long id, @RequestParam("fileImport") String file) throws Exception{
 		DossierProEtudiantDto dpDto = dossierProService.deleteFileImportById(id, file);
 		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
 	}

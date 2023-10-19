@@ -48,7 +48,8 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
     @Autowired
     private ExperienceProfessionnelleRepository experienceProfessionnelleRepository;
-
+    @Autowired
+    private ExperienceProfessionnelleService expService;
     @Autowired
     private CompetenceProfessionnelleRepository competenceProfessionnelleRepository;
 
@@ -84,7 +85,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     @Value("src/main/resources/files/bulletinsEvaluations")
     private String storageFolder;
     
-    @Value("src/main/resources/files/")
+    @Value("${app.storagefolder2}")
     private String storageFolder2;
     
     private static Logger logger = Logger.getGlobal();
@@ -189,7 +190,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         List<Annexe> annexes = dp.getAnnexes();
 
         for (MultipartFile file : files) {
-            String pathFile = storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename();
+            String pathFile = storageFolder2 + "DossierProfessionnel" + "/" + file.getName();
             File newAnnexe = new File(pathFile);
             Annexe annexe = new Annexe();
             annexe.setPieceJointe(newAnnexe);
@@ -320,7 +321,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 
 	@Override
-	public DossierProEtudiantDto deleteFileImportById(long id, String fileImport) {
+	public DossierProEtudiantDto deleteFileImportById(long id, String fileImport) throws Exception {
 	    String path = storageFolder2 + "DossierProfessionnel" + "/" + fileImport;
 	    File fileToDelete = new File(path);
 
@@ -334,16 +335,14 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 	        if (fileImp != null && fileImp.contains(fileImport)) {
 	            dp.setFileImport(null);
 
-	            try {
+	           
 	                // Mettre à jour  dp dans la bd
 	                dp = dossierProRepo.save(dp);
 
 	                DossierProEtudiantDto dpDto = mapper.dossierProfessionnelToDossierProEtudiantDto(dp);
 	                return dpDto;
-	            } catch (Exception e) {
-	                e.printStackTrace(); 
-	                return null;
-	            }
+	          
+	          
 	        }
 	    }
 
@@ -377,7 +376,9 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 		    if (dp.isPresent()) {
 		        DossierProfessionnel dossier = dp.get();
-
+		        
+		        List<Annexe> annexe = dossier.getAnnexes();
+		        
 		        List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByCursus(dossier.getCursus().getId());
 
 		        List<PdfActiviteDto> pdfActiviteDtos = new ArrayList<>();
@@ -425,6 +426,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 		        long etudiantId = dossier.getEtudiant().getId();
 		        Signature signature = signatureRepository.getSignatureByEtudiantId(etudiantId);
+		        
 
 		        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 		        ZonedDateTime now = ZonedDateTime.now();
@@ -444,6 +446,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 		        model.put("pdfActiviteDtos", pdfActiviteDtos);
 		        model.put("signature", signature);
 		        model.put("dateNow", dateNow);
+		        model.put("annexe", annexe);
 
 		        String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 

@@ -38,6 +38,8 @@ public class AppliCfaBackApplication {
 
 	@Bean
 	public DtoMapper dtoMapper() {
+		DtoMapper dtM = new DtoMapperImpl();
+		
 		return new DtoMapperImpl();
 	}
 	

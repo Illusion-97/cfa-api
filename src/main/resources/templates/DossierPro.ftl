@@ -202,7 +202,7 @@ margin-right:20%;}
         <div class="pinkLine"></div>
     </div>
 </div>
-
+<#assign currentPage = currentPage + 1>
 <div class="divSommaire">
     <h2>
         Sommaire
@@ -317,8 +317,7 @@ margin-right:20%;}
     </div>
 <#else>
     <div class="divExempleContent">
-        <!-- Handle the case when exp.tacheRealisee is null or missing -->
-        No data available for tacheRealisee.
+       pad de tacheRealisee.
     </div>
 </#if>
         </div>
@@ -460,51 +459,6 @@ margin-right:20%;}
         <td><#if f??>${f.organisme}</#if></td>
         <td><#if f??>${f.date}</#if></td>
     </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
     </tbody>
     </#list>
        </#if>
@@ -573,33 +527,6 @@ margin-right:20%;}
     <tr>
         <td>${an.libelleAnnexe}</td>
     </tr>
-    <tr>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
     </tbody>
     </#list>
        </#if>
@@ -631,7 +558,7 @@ margin-right:20%;}
 <#if exp[0]??>
     <#list exp[0].dossierProfessionnel.annexes as an>
         <div>
-               <dt>${an.pieceJointe}</dt>
+            <img src="${an.pieceJointe}" alt="Annexe">
         </div>
         </#list>
         </#if>

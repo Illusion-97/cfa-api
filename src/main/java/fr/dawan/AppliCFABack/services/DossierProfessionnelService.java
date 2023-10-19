@@ -31,7 +31,7 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 
 	DossierProEtudiantDto saveOrUpdateDossierProfessionnel (DossierProEtudiantDto dpDto, long id, List<MultipartFile> file);
 	
-	DossierProEtudiantDto deleteFileImportById(long id, String fileImport);
+	DossierProEtudiantDto deleteFileImportById(long id, String fileImport) throws Exception;
 
 	List<DossierProEtudiantDto> getAllDossierProfessionnel();
 
