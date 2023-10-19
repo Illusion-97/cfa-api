@@ -12,11 +12,12 @@ public class DossierProjet extends BaseEntity {
 	private String nom;
 
 	@ManyToOne
+	@Column(nullable = false)
 	private Projet projet;
 	
 	@ManyToOne
     private Etudiant etudiant;
-	@Column(nullable = true, name = "import", length = 100)
+	@Column(name = "import", length = 100)
 	private String dossierImport;
 	@ElementCollection
     private List<String> annexeDossierProjets;
