@@ -596,6 +596,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
 		
+		String message  = "Nouvelle inscription tuteur externe veuillez modifier ses informations personnels et activer son compte, Tuteur : " + user.getFullName();
+		emailService.sendMailSmtpUser(
+				user.getId(), "Nouvelle demande d'inscription Tuteur externe", 
+				message, Optional.of(""), Optional.of(""));
+		
 		return userDto;
 	}
 
