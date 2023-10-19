@@ -31,7 +31,7 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 
 	DossierProEtudiantDto saveOrUpdateDossierProfessionnel (DossierProEtudiantDto dpDto, long id, List<MultipartFile> file);
 	
-	DossierProEtudiantDto deleteFileImportById(long id, String fileImport) throws Exception;
+	DossierProEtudiantDto deleteFileImportById(long id, String fileImport);
 
 	List<DossierProEtudiantDto> getAllDossierProfessionnel();
 
@@ -40,8 +40,15 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 	DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws FileNotFoundException, IOException;
 
 	String generateDossierProPdf(long dossierId) throws PdfTools, IOException, TemplateException;
+	
+	void emailTuteurDossierProfessionnelle(DossierProEtudiantDto dp, long id) throws TemplateException, DossierProfessionnelException, IOException ;
+	
+
 		
 	}
 
+
 	
 	
+	
+

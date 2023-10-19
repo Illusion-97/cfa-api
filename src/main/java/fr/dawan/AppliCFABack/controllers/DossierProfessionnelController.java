@@ -1,7 +1,5 @@
 package fr.dawan.AppliCFABack.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
@@ -10,7 +8,10 @@ import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudi
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
 import fr.dawan.AppliCFABack.services.*;
 import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
+import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
 import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import freemarker.template.TemplateException;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -112,13 +113,15 @@ public class DossierProfessionnelController {
 		}
 
 	}
+
 	
 	@PostMapping(value = "/save/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
 	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
-	        @RequestParam("pieceJointe") List<MultipartFile> files) throws JsonMappingException, JsonProcessingException {
+	        @RequestParam("pieceJointe") List<MultipartFile> files) throws TemplateException, DossierProfessionnelException, IOException  {
 	    String path = storageFolder2 + "DossierProfessionnel" + "/";
 	    fileService.createDirectory(path);
 	    DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
+	    dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
 	    DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, files);
 	    return dpE;
 	}
@@ -136,10 +139,11 @@ public class DossierProfessionnelController {
 
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
 	public DossierProEtudiantDto updateDossierProfessionnel(@PathVariable("id") long id, @RequestParam("dossierProfessionnel") String dpDto,
-			@RequestParam("pieceJointe") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
+			@RequestParam("pieceJointe") List<MultipartFile> file) throws TemplateException, DossierProfessionnelException, IOException {
 		 String path = storageFolder2 + "DossierProfessionnel" + "/";
 		 fileService.createDirectory(path);
 		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
+		 dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
 		return dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
 	}
 	
@@ -208,8 +212,8 @@ public class DossierProfessionnelController {
 	    }
 	}
 
-	@DeleteMapping(value = "/deleteFile/{id}", produces = "application/json")
-	public ResponseEntity<DossierProEtudiantDto> deletefile( @PathVariable("id") Long id, @RequestParam("fileImport") String file) throws Exception{
+	@DeleteMapping(value = "/deleteFile/{id}", produces = "text/plain")
+	public ResponseEntity<DossierProEtudiantDto> deletefile( @PathVariable("id") Long id, @RequestParam("fileImport") String file){
 		DossierProEtudiantDto dpDto = dossierProService.deleteFileImportById(id, file);
 		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
 	}

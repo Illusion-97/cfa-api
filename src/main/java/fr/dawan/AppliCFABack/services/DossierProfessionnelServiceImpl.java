@@ -44,6 +44,10 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     EtudiantService etudiantService;
 
     @Autowired
+    EmailService emailService;
+    @Autowired
+    TuteurRepository tuteurRepository;
+    @Autowired
     private DtoMapper mapper;
 
     @Autowired
@@ -190,7 +194,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         List<Annexe> annexes = dp.getAnnexes();
 
         for (MultipartFile file : files) {
-            String pathFile = storageFolder2 + "DossierProfessionnel" + "/" + file.getName();
+            String pathFile = storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename();
             File newAnnexe = new File(pathFile);
             Annexe annexe = new Annexe();
             annexe.setPieceJointe(newAnnexe);
@@ -212,6 +216,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         return DtoTools.convert(dp, DossierProEtudiantDto.class);
     }
 
+
     /**
      * Suppression d'un dossier pro
      *
@@ -230,6 +235,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
      * @param id Id concernant l'etudiant
      * @return dossier pro de l'etudiant concerné
      */
+
 
     @Override
     public List<DossierProfessionnelDto> getByIdEtudiant(long id) {
@@ -321,7 +327,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 
 	@Override
-	public DossierProEtudiantDto deleteFileImportById(long id, String fileImport) throws Exception {
+	public DossierProEtudiantDto deleteFileImportById(long id, String fileImport) {
 	    String path = storageFolder2 + "DossierProfessionnel" + "/" + fileImport;
 	    File fileToDelete = new File(path);
 
@@ -335,14 +341,16 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 	        if (fileImp != null && fileImp.contains(fileImport)) {
 	            dp.setFileImport(null);
 
-	           
+	            try {
 	                // Mettre à jour  dp dans la bd
 	                dp = dossierProRepo.save(dp);
 
 	                DossierProEtudiantDto dpDto = mapper.dossierProfessionnelToDossierProEtudiantDto(dp);
 	                return dpDto;
-	          
-	          
+	            } catch (Exception e) {
+	                e.printStackTrace(); 
+	                return null;
+	            }
 	        }
 	    }
 
@@ -376,9 +384,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 		    if (dp.isPresent()) {
 		        DossierProfessionnel dossier = dp.get();
-		        
-		        List<Annexe> annexe = dossier.getAnnexes();
-		        
+
 		        List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByCursus(dossier.getCursus().getId());
 
 		        List<PdfActiviteDto> pdfActiviteDtos = new ArrayList<>();
@@ -426,7 +432,6 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 		        long etudiantId = dossier.getEtudiant().getId();
 		        Signature signature = signatureRepository.getSignatureByEtudiantId(etudiantId);
-		        
 
 		        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 		        ZonedDateTime now = ZonedDateTime.now();
@@ -446,7 +451,6 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 		        model.put("pdfActiviteDtos", pdfActiviteDtos);
 		        model.put("signature", signature);
 		        model.put("dateNow", dateNow);
-		        model.put("annexe", annexe);
 
 		        String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
@@ -461,6 +465,35 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 	        }
 	        return null;
 	    } 
+
+
+    public void emailTuteurDossierProfessionnelle(DossierProEtudiantDto dp, long id)
+            throws TemplateException, DossierProfessionnelException, IOException {
+        Optional<Etudiant> student = etudiantRepository.findById(id);
+
+        String header = "Votre étudiant " + student.get().getUtilisateur().getFullName() + " à crée son Dossier Projet";
+        String message = "Le Dossier " + dp.getNom() + " de l'étudiant " + student.get().getUtilisateur().getFullName()
+                + " à été crée";
+        Optional<String> path = Optional.of("");
+        Optional<String> fileName = Optional.of("");
+        // On vérifie si l'étudiant possède un tuteur
+        if (student.get().getTuteur().getId() != 0){
+            Optional<Tuteur> tuteurStudent = tuteurRepository.findById(student.get().getTuteur().getId());
+            //On génère le fichier seulement lors d'un update
+            if (dp.getVersion() > 0) {
+
+                header = "Votre étudiant " + student.get().getUtilisateur().getFullName() +
+                        " a ajouté des modification à son Dossier Professionnelle";
+                //message = "Le Dossier " + dp.getNom() + " de l'étudiant " + student.get().getUtilisateur().getFullName()+ " a été modifié <br></br> Voir pièce jointe.";
+                //path = Optional.of(genererDossierProfessionnel(dp.getId(), student.get().getId()));
+                //fileName = Optional.of("DossierProfessionnel_"+dp.getNom()+"_"+student.get().getUtilisateur().getFullName()+"_v"+dp.getVersion());
+            }
+            String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : " +
+                    "<a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.get().getId()+"\">Voir le dossier </a>";
+            //Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
+            emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, body,path, fileName);
+        }
+    }
 	
 
 	

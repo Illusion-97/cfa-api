@@ -34,4 +34,9 @@ public interface LivretEvaluationRepository extends JpaRepository<LivretEvaluati
 
 	@Query("SELECT l.observation FROM LivretEvaluation l WHERE l.etudiant.id = :id")
     List<String> findObservationsByEtudiantId(long id);
+
+	//On espère retourner le Titre du cursus lié au livret
+	@Query("SELECT c.titre FROM LivretEvaluation l JOIN Cursus c WHERE l.id = :idLivret AND c.id = l.titreProfessionnel.id")
+	Optional<String> findCursusTitredByLivretEvaluation(long idLivret);
+
 }

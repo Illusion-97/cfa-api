@@ -5,6 +5,7 @@ import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.NoteDtoToSave;
 import fr.dawan.AppliCFABack.dto.customdtos.NoteControleContinuDto;
 import fr.dawan.AppliCFABack.services.NoteService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ public class NoteController {
 
 	@Autowired
 	NoteService noteService;
-
 	// ##################################################
 	// # GET #
 	// ##################################################
@@ -73,7 +73,8 @@ public class NoteController {
 	// ##################################################
 
 	@PostMapping(consumes = "application/json", produces = "application/json")
-	public NoteDtoToSave save(@RequestBody NoteDtoToSave nDto) {
+	public NoteDtoToSave save(@RequestBody NoteDtoToSave nDto) throws NotFoundException {
+		noteService.notificationMail(nDto);
 		return noteService.saveOrUpdate(nDto);
 	}
 
@@ -97,7 +98,8 @@ public class NoteController {
 	// ##################################################
 
 	@PutMapping(consumes = "application/json", produces = "application/json")
-	public NoteDtoToSave update(@RequestBody NoteDtoToSave nDto) {
+	public NoteDtoToSave update(@RequestBody NoteDtoToSave nDto) throws NotFoundException {
+		noteService.notificationMail(nDto);
 		return noteService.saveOrUpdate(nDto);
 	}
 
