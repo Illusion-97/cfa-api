@@ -69,7 +69,10 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		APIError myError = new APIError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
 		//On peut remplacer l'objet myError par une Map<String,Object>
+		ex.printStackTrace();
 		return handleExceptionInternal(ex, myError, headers, HttpStatus.INTERNAL_SERVER_ERROR, request);
 	}
+	
+	
 }
 
