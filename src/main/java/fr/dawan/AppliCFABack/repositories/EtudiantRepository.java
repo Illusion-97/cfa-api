@@ -48,4 +48,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 	
 	@Query("SELECT COUNT(e) FROM Promotion p JOIN p.etudiants e JOIN e.utilisateur u WHERE p.id = :id AND (u.nom LIKE %:search% OR u.prenom LIKE %:search%)")
 	long countEtudiantByPromotion(long id, String search);
+	
+	@Query("SELECT e FROM Promotion p JOIN p.etudiants e JOIN e.utilisateur u WHERE p.id = :id")
+	List<Etudiant> getEtudiantByPromotionId(long id);
 }
