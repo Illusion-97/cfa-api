@@ -42,16 +42,17 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	 * @return toutes les promotions dont le nom contient le champs de recherche,
 	 *         paginé
 	 */
-	@Query("SELECT p FROM Promotion p WHERE (:search IS NULL OR p.centreFormation.nom LIKE %:search% OR p.nom LIKE %:search%) ORDER BY p.nbParticipants DESC, p.dateFin DESC")
-	Page<Promotion> findAllByNomOrCentreFormationNomIgnoreCase(
-			@Param("search") String search,
-			Pageable pageable);
+	@Query(value = "SELECT * FROM promotion p JOIN centre_formation c ON (p.centre_formation_id = c.id) " +
+			"WHERE (?1 IS NULL OR LOWER(c.nom) LIKE LOWER(concat('%',?1,'%')) OR REPLACE(p.nom, '-', ' ') LIKE LOWER(concat('%',?1,'%')) OR p.type LIKE LOWER(concat('%',?1,'%'))) " +
+			"ORDER BY CASE ?2 " +
+			"WHEN 'sort_datefin' THEN p.date_fin " +
+			"WHEN 'sort_datedebut' THEN p.date_debut " +
+			"WHEN 'sort_participants' THEN CAST(p.nb_participants AS SIGNED) " +
+			"ELSE p.date_fin " +
+			"END DESC", nativeQuery = true)
+	List<Promotion> findAllByNomOrCentreFormationNomIgnoreCase(String search, String choix);
 
 
-
-	Page<Promotion> findAllByOrderByNbParticipantsDesc(Pageable pageable);
-	Page<Promotion> findAllByOrderByDateFinDesc(Pageable pageable);
-	Page<Promotion> findAllByOrderByDateDebutDesc(Pageable pageable);
 	/**
 	 * 
 	 * @param id de l'intervention recherchée

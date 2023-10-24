@@ -42,26 +42,31 @@ public class PromotionController {
 
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable("page") int page, @PathVariable(value = "size") int size) {
-		return promoService.getAllPromotions(page, size, 0, "");
+		return promoService.getAllPromotions(page, size, Optional.of(""), "");
 	}
 
- 	@GetMapping(value = "/{page}/{size}/sort/{choix}/{search}", produces = "application/json")
+	@GetMapping(value = "/{page}/{size}/{choix}", produces = "application/json")
+	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable(value="page") int page,
+														 @PathVariable(value = "size") int size,
+														 @PathVariable(value="choix", required = false) Optional<String> choix) {
+
+		return promoService.getAllPromotions(page, size, choix, "");
+
+	}
+
+ 	@GetMapping(value = "/{page}/{size}/{choix}/{search}", produces = "application/json")
  	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable(value="page") int page,
- 			@PathVariable(value = "size") int size,@PathVariable(value="choix") int choix, @PathVariable(value = "search", required = false) Optional<String> search) {
+ 															@PathVariable(value = "size") int size,
+														  @PathVariable(value="choix", required = false) Optional<String> choix,
+														  @PathVariable(value = "search", required = false) Optional<String> search) {
  		if(search.isPresent())
  			return promoService.getAllPromotions(page, size, choix, search.get());
  		else
  			return promoService.getAllPromotions(page, size, choix, "");
  	}
 
-	@GetMapping(value = "/{page}/{size}/sort/{choix}", produces = "application/json")
-	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable(value="page") int page,
-														 @PathVariable(value = "size") int size,@PathVariable(value="choix") int choix) {
 
-			return promoService.getAllPromotions(page, size, choix, "");
 
-	}
-	
 	@GetMapping(value = "/{id}",produces = "application/json")
 	public PromotionDto getById(@PathVariable("id") long id) {
 		return promoService.getById(id);
