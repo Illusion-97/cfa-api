@@ -596,8 +596,100 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
 		
+		//Envoie de la notif aux admins
+		String message  = "Nouvelle inscription d'un tuteur externe veuillez modifier ses informations personnelles et activer son compte, Tuteur : " + user.getFullName();
+		emailService.sendMailSmtpUser(
+				user.getId(), "Nouvelle demande d'inscription Tuteur externe - mail automatique", 
+				message, Optional.of(""), Optional.of(""));
+		
 		return userDto;
 	}
+
+	
+	@Override
+	public UtilisateurDto updateTuteur(UtilisateurDto uDto) throws SaveInvalidException {
+	    if (uDto.getId() == 0) {
+	        throw new IllegalArgumentException("L'ID de l'utilisateur est nécessaire pour la mise à jour.");
+	    }
+
+	    Utilisateur user = utilisateurRepository.findById(uDto.getId())
+	            .orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé avec l'ID : " + uDto.getId()));
+
+	    //vérifie si email a changé et s'il est déjà utilisé par un autre utilisateur
+	    if (!user.getLogin().equals(uDto.getLogin()) && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
+	        throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse e-mail : " + uDto.getLogin());
+	    }
+
+	    try {
+	        //si le mot de passe a été modifié on hash le nouveau mot de passe
+	        if (!user.getPassword().equals(uDto.getPassword())) {
+	            uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+	        }
+	    } catch (Exception e) {
+	        logger.error("hashPwd failed", e);
+	    }
+
+	    //mettre à jour les champs de l'utilisateur avec les valeurs de uDto
+	    user.setLogin(uDto.getLogin());
+	    user.setNom(uDto.getNom());
+	    user.setPrenom(uDto.getPrenom());
+	    user.setCivilite(uDto.getCivilite());
+	    user.setDateDeNaissance(uDto.getDateDeNaissance());
+	    user.setTelephone(uDto.getTelephone());
+
+	    if (uDto.getEntrepriseDto() != null) {
+	        Entreprise entreprise = entrepriseRepository.findById(uDto.getEntrepriseDto().getId())
+	                .orElse(null);
+	        user.setEntreprise(entreprise);
+	    }
+	    
+	    if (uDto.getAdresseDto() != null) {
+	        Adresse adresse = adresseRepository.findById(uDto.getAdresseDto().getId())
+	                .orElse(null);
+	        user.setAdresse(adresse);
+	    }
+
+	    if (uDto.getCentreFormationId() != 0) {
+	        Long newCentreFormationId = uDto.getCentreFormationId();
+	        CentreFormation newCentreFormation = centreFormationRepository.findById(newCentreFormationId)
+	                .orElse(null);
+	        user.setCentreFormation(newCentreFormation);
+	    }
+
+
+	    user = utilisateurRepository.save(user);
+
+	    Tuteur tuteur = user.getTuteur(); 
+
+
+	    if (uDto.getEtudiantDto() != null) {
+	        Long idEtudiant = uDto.getEtudiantDto().getId();
+	        Optional<Etudiant> etuOpt = etudiantRepository.findById(idEtudiant);
+	        if (etuOpt.isPresent()) {
+	            Etudiant etudiant = etuOpt.get();
+	            etudiant.setTuteur(tuteur);
+	            etudiantRepository.save(etudiant);
+	        } else {
+	            throw new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + idEtudiant);
+	        }
+	    }
+	   
+
+	 if (uDto.isActive()) {
+	     user.setActive(true);
+	 } else {
+	     user.setActive(false); 
+	 } 
+	 
+	    user.setExternalAccount(true);
+
+	    user = utilisateurRepository.save(user);
+
+	    UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
+
+	    return userDto;
+	}
+
 
 	/**
 	 * Suppression d'un utilisateur
