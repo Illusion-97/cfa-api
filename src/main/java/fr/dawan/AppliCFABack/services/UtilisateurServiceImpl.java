@@ -672,8 +672,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	        } else {
 	            throw new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + idEtudiant);
 	        }
-	    }
-	   
+	    }	   
 
 	 if (uDto.isActive()) {
 	     user.setActive(true);
