@@ -1069,7 +1069,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<EmployeeDG2Dto> cResJson;
 		
-		//url dg2 qui concerne la recupération des locations
+		//url dg2 qui concerne la recupération des employees
 		URI url = new URI(baseUrl + "employees");
 		
 		//recupérartion des headers / email / password dg2

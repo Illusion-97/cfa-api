@@ -76,8 +76,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-19T16:31:42+0200",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
+    date = "2023-10-26T10:08:02+0200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -928,6 +928,7 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateur.setNom( eDg2.getLastName() );
         utilisateur.setLogin( eDg2.getEmail() );
         utilisateur.setDateDeNaissance( eDg2.getBornAt() );
+        utilisateur.setCivilite( eDg2.getHonorific() );
         utilisateur.setId( eDg2.getId() );
 
         return utilisateur;
