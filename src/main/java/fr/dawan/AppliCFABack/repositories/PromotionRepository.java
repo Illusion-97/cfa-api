@@ -52,7 +52,15 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 			"END DESC", nativeQuery = true)
 	List<Promotion> findAllByNomOrCentreFormationNomIgnoreCase(String search, String choix);
 
-
+	@Query(value = "SELECT * FROM promotion p " +
+			"JOIN utilisateur u ON(p.referent_pedagogique_id = u.id) JOIN centre_formation cf ON(p.centre_formation_id = cf.id) " +
+			"JOIN formateur f ON(u.id = f.utilisateur_id) " +
+			"WHERE f.utilisateur_id = ?1 AND (?2 IS NULL " +
+			"OR LOWER(cf.nom) LIKE concat('%', LOWER(?2), '%') " +
+			"OR REPLACE(LOWER(p.nom), '-', ' ') LIKE concat('%', LOWER(?2), '%') " +
+			"OR REPLACE(LOWER(p.nom), '-', '') LIKE concat('%', LOWER(?2), '%') " +
+			"OR LOWER(p.nom) LIKE concat('%', LOWER(?2), '%'))", nativeQuery = true)
+	Page<Promotion> findAllByFormateurId( long id, String search, Pageable pageable);
 	/**
 	 * 
 	 * @param id de l'intervention recherchée
@@ -62,8 +70,7 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 
 	List<Promotion> findAllByReferentPedagogiqueId(long id);
 	
-	@Query("SELECT DISTINCT p FROM Promotion p JOIN p.interventions i JOIN p.centreFormation cf WHERE i.formateur.id = :id AND cf.nom LIKE %:search%")
-	Page<Promotion> findAllByFormateurId(@Param("id") long id, Pageable pageable, String search);
+
 
 	@Query("SELECT COUNT(DISTINCT p.id) FROM Promotion p JOIN p.interventions i JOIN p.centreFormation cf WHERE i.formateur.id = :id AND cf.nom LIKE %:search%")
 	long countByFormateurId(@Param("id") long id, String search);

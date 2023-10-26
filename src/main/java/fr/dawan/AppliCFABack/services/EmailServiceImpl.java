@@ -31,6 +31,7 @@ import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -209,19 +210,38 @@ public class EmailServiceImpl implements EmailService {
 	 * @param c objet Conge
 	 * @return SimpleMailMessage a être envoyé
 	 */
+	private boolean dateComparator3Month(LocalDate date1){
+		Period dateDiff = Period.between(LocalDate.now(), date1);
+
+	}
 	@Override
 	public void scheduleMailSender(long idUser) {
 		boolean isInCache = timerCache.startTimerForUserConnected(idUser, 5);
-		if (isInCache){
-			if (userRepository.isLivretFormateurReferentEmpty(idUser)){
-				Optional<LocalDate> dateFinPromotion = userRepository.findDatePromotionOfFormateurByUtilisateurId(idUser);
-				Period dateDiff = Period.between(LocalDate.now(), dateFinPromotion.get());
-				if (dateDiff.getYears() < 2 && dateDiff.getMonths() <= 3) {
+		if (!isInCache){return;}
+
+		if (userRepository.isLivretFormateurReferentEmpty(idUser)){
+			List<Optional<LocalDate>> dateFinPromotion = userRepository.findDatePromotionOfFormateurByUtilisateurId(idUser);
+			if (!dateFinPromotion.isEmpty()){
+
+				List<LocalDate> listDeDates = dateFinPromotion.stream()
+						.filter(Optional::isPresent)
+						.map(Optional::get)
+						.collect(Collectors.toList());
+				//On vérifie si une date est inferior à 3 mois
+				boolean dateWithin3Months = false;
+
+				for (LocalDate date : listDeDates){
+					Period dateDiff = Period.between(LocalDate.now(), date);
+					if (dateDiff.getYears() > 2 && dateDiff.getMonths() > 3){
+						dateWithin3Months = true;
+						break;
+					}
+				}
+				if (dateWithin3Months) {
 					ScheduledExecutorService threadUsesForSchedule = Executors.newScheduledThreadPool(1);
 					String message = "Pensez à remplir l'évaluation : " + idUser;
 					threadUsesForSchedule.schedule(() -> {
-						sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of(""));
-					},1, TimeUnit.SECONDS);
+						sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of(""));},1, TimeUnit.SECONDS);
 				}
 			}
 		}

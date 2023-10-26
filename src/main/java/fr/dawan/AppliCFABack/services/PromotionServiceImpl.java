@@ -483,7 +483,7 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Override
 	public List<PromotionDto> getPromotionByIdFormateur(long id, int page, int size, String search ) {
-		List<Promotion> result = promoRepo.findAllByFormateurId(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
+		List<Promotion> result = promoRepo.findAllByFormateurId(id, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<>();
 		if (!result.isEmpty()) {
 			for (Promotion p: result) {

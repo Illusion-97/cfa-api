@@ -42,9 +42,9 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	Optional<Long> findidUtilisateurByLivretEvaluation(long idLivret);
 
 	@Query("SELECT DISTINCT p.dateFin FROM Promotion p JOIN Utilisateur u ON p.referentPedagogique.id = u.id WHERE u.id = :idUser")
-	Optional<LocalDate> findDatePromotionOfFormateurByUtilisateurId(long idUser);
+	List<Optional<LocalDate>> findDatePromotionOfFormateurByUtilisateurId(long idUser);
 
-	@Query("SELECT CASE WHEN l.etat = 'ENATTENTEDEVALIDATION' THEN TRUE ELSE FALSE END " +
+	@Query("SELECT MAX(CASE WHEN l.etat = 'ENATTENTEDEVALIDATION' THEN TRUE ELSE FALSE END) " +
 			"FROM Cursus c " +
 			"JOIN LivretEvaluation l ON l.titreProfessionnel.id = c.id " +
 			"JOIN Promotion p ON c.id = p.cursus.id " +

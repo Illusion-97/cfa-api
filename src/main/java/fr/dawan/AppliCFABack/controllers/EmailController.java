@@ -40,15 +40,15 @@ public class EmailController {
     }
 
     @PostMapping(value = "/schedule")
-    public ResponseEntity<String> mailScheduler(@RequestBody Map<String, Object> request){
+    public ResponseEntity.BodyBuilder mailScheduler(@RequestBody Map<String, Object> request){
 
         if ((boolean) request.get("isFormateur")){
             Integer integerIdUser = (Integer) request.get("userId");
             long idUser = (long) integerIdUser;
             emailService.scheduleMailSender(idUser);
-            return ResponseEntity.ok("E-mail planifié avec succès.");
+            return ResponseEntity.status(200);
         }
-        return (ResponseEntity<String>) ResponseEntity.badRequest();
+        return ResponseEntity.status(404);
 
     }
 }

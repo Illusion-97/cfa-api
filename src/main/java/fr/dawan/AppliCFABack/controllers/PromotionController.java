@@ -180,27 +180,6 @@ public class PromotionController {
 					.body("Error while fetching data from the webservice DG2");
 		}
 	}
-//	@GetMapping(value = "/grillePositionnement/{idPromotion}",  produces = "application/octet-stream")
-//	public ResponseEntity<Resource> getGrillePositionnement(@PathVariable("idPromotion") long idPromotion) throws Exception {
-//		
-//		String outpoutPath = promoService.getGrillePositionnement(idPromotion);
-//		File f = new File(outpoutPath);
-//		
-//		Path path = Paths.get(f.getAbsolutePath());
-//		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-//		
-//		//Pour afficher un boite de téléchargement dans une réponse web au lieu de changer de page, nous devons
-//		//spécifier un header : Content-Disposition, attachment;filename=app.log
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=grille.pdf");
-//		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-//		headers.add("Pragma", "no-cache");
-//		headers.add("Expires", "0");
-//		
-//		return ResponseEntity.ok()
-//				.headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
-//	}
-	
 	@GetMapping(value = "/grillePositionnement/{idPromotion}",  produces = "plain/text")
 	public ResponseEntity<String> getGrillePositionnement(@PathVariable("idPromotion") long idPromotion) throws Exception {
 		
