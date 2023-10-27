@@ -292,4 +292,10 @@ public interface DtoMapper {
     @Mapping(source = "interventionId", target = "intervention.id")
     @Mapping(source = "competencesEvalueesId", target = "competencesEvaluees", qualifiedByName = "idToCompetencePro")
     EvaluationFormation evaluationDtoToEvaluation(EvaluationFormationDto evalDto);
+    
+    @Mapping(source = ".", target = ".")
+    SoutenanceDto soutenanceToSoutenanceDto (Soutenance soutenance);
+    
+    @Mapping(source = ".", target = ".")
+    Soutenance soutenanceDtoToSoutenance (SoutenanceDto soutenanceDto);
 }
