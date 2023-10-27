@@ -584,7 +584,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Override
 	public List<InterventionDto> findInterventionByPromotionId(long id, int page, int size, String search) {
-		List<Intervention> result = interventionRepository.findInterventionByPromotionId(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
+		List<Intervention> result = interventionRepository.findInterventionByPromotionId(id,search,  PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<InterventionDto> res = new ArrayList<>();
 		if (!result.isEmpty()) {
 			for (Intervention i: result) {

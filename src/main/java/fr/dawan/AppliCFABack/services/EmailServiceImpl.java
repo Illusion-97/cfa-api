@@ -51,13 +51,7 @@ public class EmailServiceImpl implements EmailService {
 	private JavaMailSender emailSender;
 
 	@Autowired
-	private BlocEvaluationRepository blocEvaluationRepository;
-	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	@Autowired
-	private FormateurRepository formateurRepository;
-	@Autowired
-	private InterventionRepository interventionRepository;
 
 	@Autowired
 	private TimerCache timerCache;
@@ -199,10 +193,6 @@ public class EmailServiceImpl implements EmailService {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
 		}
 	}
-	private void cacheTimer(long idUser){
-		LocalDate timer = LocalDate.now();
-
-	}
 	/**
 	 * Envoi de automatique pour prévenir le formateur de remplir le livret d'évaluation des étudiants lui étant affilié
 	 * avant 3
@@ -210,10 +200,6 @@ public class EmailServiceImpl implements EmailService {
 	 * @param c objet Conge
 	 * @return SimpleMailMessage a être envoyé
 	 */
-	private boolean dateComparator3Month(LocalDate date1){
-		Period dateDiff = Period.between(LocalDate.now(), date1);
-
-	}
 	@Override
 	public void scheduleMailSender(long idUser) {
 		boolean isInCache = timerCache.startTimerForUserConnected(idUser, 5);
@@ -232,7 +218,7 @@ public class EmailServiceImpl implements EmailService {
 
 				for (LocalDate date : listDeDates){
 					Period dateDiff = Period.between(LocalDate.now(), date);
-					if (dateDiff.getYears() > 2 && dateDiff.getMonths() > 3){
+					if (dateDiff.getYears() <= 2 && dateDiff.getMonths() <= 3){
 						dateWithin3Months = true;
 						break;
 					}
@@ -240,8 +226,7 @@ public class EmailServiceImpl implements EmailService {
 				if (dateWithin3Months) {
 					ScheduledExecutorService threadUsesForSchedule = Executors.newScheduledThreadPool(1);
 					String message = "Pensez à remplir l'évaluation : " + idUser;
-					threadUsesForSchedule.schedule(() -> {
-						sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of(""));},1, TimeUnit.SECONDS);
+					threadUsesForSchedule.schedule(() -> sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of("")),1, TimeUnit.SECONDS);
 				}
 			}
 		}

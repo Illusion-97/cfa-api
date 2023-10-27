@@ -55,7 +55,7 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 	@Query(value = "SELECT * FROM promotion p " +
 			"JOIN utilisateur u ON(p.referent_pedagogique_id = u.id) JOIN centre_formation cf ON(p.centre_formation_id = cf.id) " +
 			"JOIN formateur f ON(u.id = f.utilisateur_id) " +
-			"WHERE f.utilisateur_id = ?1 AND (?2 IS NULL " +
+			"WHERE f.id = ?1 AND (?2 IS NULL " +
 			"OR LOWER(cf.nom) LIKE concat('%', LOWER(?2), '%') " +
 			"OR REPLACE(LOWER(p.nom), '-', ' ') LIKE concat('%', LOWER(?2), '%') " +
 			"OR REPLACE(LOWER(p.nom), '-', '') LIKE concat('%', LOWER(?2), '%') " +
