@@ -52,7 +52,8 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
     @Autowired
     private ExperienceProfessionnelleRepository experienceProfessionnelleRepository;
-
+    @Autowired
+    private ExperienceProfessionnelleService expService;
     @Autowired
     private CompetenceProfessionnelleRepository competenceProfessionnelleRepository;
 
@@ -88,7 +89,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     @Value("src/main/resources/files/bulletinsEvaluations")
     private String storageFolder;
     
-    @Value("src/main/resources/files/")
+    @Value("${app.storagefolder2}")
     private String storageFolder2;
     
     private static Logger logger = Logger.getGlobal();
@@ -165,21 +166,56 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     /**
      * Sauvegarde ou mise à jour d'un dossier pro
      */
-    @SuppressWarnings("unchecked")
-	@Override
-    public DossierProfessionnelDto saveOrUpdate(DossierProfessionnelDto dpDto) {
-        DossierProfessionnel d = DtoTools.convert(dpDto, DossierProfessionnel.class);
-        d.setId(dpDto.getId());
-        d.setNom(dpDto.getNom());
-        d.setCursus(DtoTools.convert(dpDto.getCursusDto(), Cursus.class));
-        d.setExperienceProfessionnelles((List<ExperienceProfessionnelle>) DtoTools.convert(dpDto.getExperienceProfessionnelleDtos(), ExperienceProfessionnelle.class));
-        d.setEtudiant(DtoTools.convert(dpDto.getEtudiantDto(), Etudiant.class));
-        d.setAnnexes((List<Annexe>) DtoTools.convert(dpDto.getAnnexeDtos(), Annexe.class));
-        d.setFacultatifs((List<Facultatif>) DtoTools.convert(dpDto.getFacultatifDto(), Facultatif.class));
+    @Override
+    public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id, List<MultipartFile> files) {
+        DossierProfessionnel dp = mapper.dossierProfessionnelDtoToDossierProfessionnel(dpDto);
+        
+        // Récupération de l'étudiant 
+        Optional<Etudiant> etudiantOptional = etudiantRepository.findById(id);
+        if (etudiantOptional.isPresent()) {
+            Etudiant etudiant = etudiantOptional.get();
+            dp.setEtudiant(etudiant);
+        }
 
-        dossierProRepo.saveAndFlush(d);
-        return mapper.dossierProfessionnelToDossierProfessionnelDto(d);
+        // Mettre à jour les expériences professionnelles
+        List<ExperienceProfessionnelle> exps = dp.getExperienceProfessionnelles();
+        for (ExperienceProfessionnelle exp : exps) {
+            exp.setDossierProfessionnel(dp);
+        }
+
+        // Mettre à jour les diplômes facultatifs
+        List<Facultatif> facultatifs = dp.getFacultatifs();
+        for (Facultatif f : facultatifs) {
+            f.setDossierProfessionnel(dp);
+        }
+
+        // Mettre à jour les annexes
+        String path = storageFolder2 + "DossierProfessionnel" + "/";
+        List<Annexe> annexes = dp.getAnnexes();
+
+        for (MultipartFile file : files) {
+            String pathFile = storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename();
+            File newAnnexe = new File(pathFile);
+            Annexe annexe = new Annexe();
+            annexe.setPieceJointe(newAnnexe);
+            annexe.setLibelleAnnexe("");
+            annexes.add(annexe);
+
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))) {
+                bos.write(file.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        for (Annexe annexe : annexes) {
+            annexe.setDossierProfessionnel(dp);
+        }
+
+        dp = dossierProRepo.saveAndFlush(dp);
+
+        return DtoTools.convert(dp, DossierProEtudiantDto.class);
     }
+
 
     /**
      * Suppression d'un dossier pro
@@ -191,7 +227,6 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     public void deleteById(long id) {
 
         dossierProRepo.deleteById(id);
-
     }
 
     /**
@@ -200,6 +235,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
      * @param id Id concernant l'etudiant
      * @return dossier pro de l'etudiant concerné
      */
+
 
     @Override
     public List<DossierProfessionnelDto> getByIdEtudiant(long id) {
@@ -254,248 +290,182 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         return lstDossierProfessionnelDto;
     }
 
-    @Override
-    public String generateDossierProByStudentAndPromo(long etudiantId, long cursusId) throws PdfTools,  IOException, TemplateException {
-        Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
-        Etudiant et = null;
-
-        if(etuOpt.isPresent()) {
-            et = etuOpt.get();        
-        	
-        	
-            List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByCursus(cursusId);
-
-            List<PdfActiviteDto> pdfActiviteDtos = new ArrayList<>();
-
-            //insérer la liste d'activités type dans l'objet freemarker
-            for(ActiviteType a : at) {
-                PdfActiviteDto pdfActiviteDto = DtoTools.convert(a, PdfActiviteDto.class);
-                pdfActiviteDtos.add(pdfActiviteDto);
-            }
-
-            Set<PdfCompetenceDto> pdfCompetenceDtos1 = new HashSet<>();
-            Set<PdfCompetenceDto> pdfCompetenceDtos2 = new HashSet<>();
-            Set<PdfCompetenceDto> pdfCompetenceDtos3 = new HashSet<>();
-            Set<PdfCompetenceDto> pdfCompetenceDtos4 = new HashSet<>();
-
-            //ACTIVITE 1
-            if(pdfActiviteDtos.size() > 0) {
-                long activiteId1 = pdfActiviteDtos.get(0).getId();
-                List<CompetenceProfessionnelle> cp = competenceProfessionnelleRepository.getCompetencesByActivite(activiteId1);
-                for(CompetenceProfessionnelle c : cp) {
-                    List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByCompetenceId(etudiantId,c.getId());
-                    List<ExperienceProfessionnelleDto> experienceProfessionnelleDtoList = new ArrayList<>();
-                    for(ExperienceProfessionnelle e : exp) {
-                        ExperienceProfessionnelleDto eDto = DtoTools.convert(e, ExperienceProfessionnelleDto.class);
-                        experienceProfessionnelleDtoList.add(eDto);
-                    }
-                    PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
-                    assert pdfCompetenceDto != null;
-                    pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
-                    pdfCompetenceDtos1.add(pdfCompetenceDto);
-                }
-                Set<PdfCompetenceDto> pdfCompetenceDtos1Sorted = pdfCompetenceDtos1.stream().sorted(Comparator.comparingInt(PdfCompetenceDto::getNumeroFiche)).collect(Collectors.toCollection(LinkedHashSet::new));
-                pdfActiviteDtos.get(0).setPdfCompetenceDtoSet(pdfCompetenceDtos1Sorted);
-            }
-
-
-            //ACTIVITE 2
-            if(pdfActiviteDtos.size() > 1) {
-                long activiteId2 = pdfActiviteDtos.get(1).getId();
-                List<CompetenceProfessionnelle> cp2 = competenceProfessionnelleRepository.getCompetencesByActivite(activiteId2);
-                for(CompetenceProfessionnelle c : cp2) {
-                    List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByCompetenceId(etudiantId,c.getId());
-                    List<ExperienceProfessionnelleDto> experienceProfessionnelleDtoList = new ArrayList<>();
-                    for(ExperienceProfessionnelle e : exp) {
-                        ExperienceProfessionnelleDto eDto = DtoTools.convert(e, ExperienceProfessionnelleDto.class);
-                        experienceProfessionnelleDtoList.add(eDto);
-                    }
-                    PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
-                    assert pdfCompetenceDto != null;
-                    pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
-                    pdfCompetenceDtos2.add(pdfCompetenceDto);
-                }
-                Set<PdfCompetenceDto> pdfCompetenceDtos2Sorted = pdfCompetenceDtos2.stream().sorted(Comparator.comparingInt(PdfCompetenceDto::getNumeroFiche)).collect(Collectors.toCollection(LinkedHashSet::new));
-                pdfActiviteDtos.get(1).setPdfCompetenceDtoSet(pdfCompetenceDtos2Sorted);
-            }
-
-
-            //ACTIVITE 3
-            if(pdfActiviteDtos.size() > 2) {
-                long activiteId3 = pdfActiviteDtos.get(2).getId();
-                List<CompetenceProfessionnelle> cp3 = competenceProfessionnelleRepository.getCompetencesByActivite(activiteId3);
-                for(CompetenceProfessionnelle c : cp3) {
-                    List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByCompetenceId(etudiantId,c.getId());
-                    List<ExperienceProfessionnelleDto> experienceProfessionnelleDtoList = new ArrayList<>();
-                    for(ExperienceProfessionnelle e : exp) {
-                        ExperienceProfessionnelleDto eDto = DtoTools.convert(e, ExperienceProfessionnelleDto.class);
-                        experienceProfessionnelleDtoList.add(eDto);
-                    }
-                    PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
-                    assert pdfCompetenceDto != null;
-                    pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
-                    pdfCompetenceDtos3.add(pdfCompetenceDto);
-                }
-                Set<PdfCompetenceDto> pdfCompetenceDtos3Sorted = pdfCompetenceDtos3.stream().sorted(Comparator.comparingInt(PdfCompetenceDto::getNumeroFiche)).collect(Collectors.toCollection(LinkedHashSet::new));
-                pdfActiviteDtos.get(2).setPdfCompetenceDtoSet(pdfCompetenceDtos3Sorted);
-            }
-
-            //ACTIVITE 4
-            if(pdfActiviteDtos.size() > 3) {
-                long activiteId4 = pdfActiviteDtos.get(3).getId();
-                List<CompetenceProfessionnelle> cp4 = competenceProfessionnelleRepository.getCompetencesByActivite(activiteId4);
-                for(CompetenceProfessionnelle c : cp4) {
-                    List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByCompetenceId(etudiantId,c.getId());
-                    List<ExperienceProfessionnelleDto> experienceProfessionnelleDtoList = new ArrayList<>();
-                    for(ExperienceProfessionnelle e : exp) {
-                        ExperienceProfessionnelleDto eDto = DtoTools.convert(e, ExperienceProfessionnelleDto.class);
-                        experienceProfessionnelleDtoList.add(eDto);
-                    }
-                    PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(c, PdfCompetenceDto.class);
-                    assert pdfCompetenceDto != null;
-                    pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
-                    pdfCompetenceDtos4.add(pdfCompetenceDto);
-                }
-                Set<PdfCompetenceDto> pdfCompetenceDtos4Sorted = pdfCompetenceDtos4.stream().sorted(Comparator.comparingInt(PdfCompetenceDto::getNumeroFiche)).collect(Collectors.toCollection(LinkedHashSet::new));
-                pdfActiviteDtos.get(3).setPdfCompetenceDtoSet(pdfCompetenceDtos4Sorted);
-            }
-
-            List<CompetenceProfessionnelle> cp = competenceProfessionnelleRepository.getCompetenceProfessionnellesByEtudiantDossier(etudiantId);
-
-            List<ExperienceProfessionnelle> exp = experienceProfessionnelleRepository.getExperienceByCursusId(etudiantId, cursusId);
-
-            Signature signature = signatureRepository.getSignatureByEtudiantId(etudiantId);
-
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-            ZonedDateTime now = ZonedDateTime.now();
-            String dateNow = dtf.format(now);
-
-            freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
-
-            Template template = freemarkerConfig.getTemplate("DossierPro.ftl");
-
-            Map<String, Object> model = new HashMap<>();
-            model.put("backendUrl", backendUrl);
-            model.put("et", et);
-            model.put("pdfActiviteDtos", pdfActiviteDtos);
-            model.put("at", at);
-            model.put("cp", cp);
-             model.put("exp", exp);
-            model.put("dateNow", dateNow);
-            model.put("signature", signature);
-
-            String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-
-            String outputPdf = storageFolder + "/dossier-" + etudiantId + "-pro-" + cursusId + ".pdf";
-
-            try {
-				PdfTools.generatePdfFromHtml(outputPdf, htmlContent);
-			} catch (Exception e) {
-				logger.log(Level.SEVERE,"convertHtmlToPdf failed", e);
-			}
-            return outputPdf;
-        }
-        return null;
-    }
-
 
     @Override
     public GetDossierProDto getAllDossierProfessionnelByEtudiant(long id) {
 
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
         GetDossierProDto eDto = DtoTools.convert(etudiant, GetDossierProDto.class);
-
-       /* List<DossierProfessionnel> dossierProfessionnel = dossierProRepo.findDossierProByEtudiantIdAndCursusId(id);
-        for(DossierProfessionnel dp : dossierProfessionnel) {
-            DossierProEtudiantDto dpDto = DtoTools.convert(dp, DossierProEtudiantDto.class);
-            assert eDto != null;
-            for(GetPromotionDossierProDto pDto : eDto.getPromotions()) {
-                assert dpDto != null;
-                if(pDto.getCursus().getId() == dpDto.getCursusDto().getId()){
-                    pDto.getCursus().setDossierProfessionnel(dpDto);
-                    pDto.getCursus().getDossierProfessionnel().setCursusDto(dpDto.getCursusDto());
-                    pDto.getCursus().getDossierProfessionnel().getCursusDto().getActiviteTypes().stream().map(ac -> {
-                        Set<CompetenceDossierProDto> cp = ac.getCompetenceProfessionnelles();
-                        for(CompetenceDossierProDto c : cp) {
-                            for(ExperienceProfessionnelleDto exp : dpDto.getExperienceProfessionnelleDtos()) {
-                                if(exp.getCompetenceProfessionnelleId() == c.getId()) {
-                                    c.setExperienceProfessionnelles(dpDto.getExperienceProfessionnelleDtos());
-                                }
-                            }
-                        }
-                        return pDto;
-                    }).collect(Collectors.toList());
-                }
-            }
-        }*/
         return eDto;
     }
+    
 
-	
-
-    @Override
-	public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id, List<MultipartFile> file) 
-	{
-    	String lib = "";
-        DossierProfessionnel dp = mapper.dossierProfessionnelDtoToDossierProfessionnel(dpDto);
-        assert dp != null;
-
-        List<ExperienceProfessionnelle> exps = dp.getExperienceProfessionnelles();
-
-        Optional<Etudiant> optEtudiant = etudiantRepository.findById(id);
-
-        for (ExperienceProfessionnelle exp : exps) {
-
-            exp.setDossierProfessionnel(dp);
-            optEtudiant.ifPresent(exp::setEtudiant);
-
-        }
-        
-
-        //on récupère la liste des diplômes facultatifs d'un dossier professionnel et on les met à jour (en n'oubliant pas de set les clés étrangères de la table diplome_facultatif)
-        List<Facultatif> facultatif = dp.getFacultatifs();
-        for(Facultatif f : facultatif) {
-            f.setDossierProfessionnel(dp);
-        }
-
-        //on récupère la liste des annexes d'un dossier professionnel et on les met à jour (en n'oubliant pas de set les clés étrangères de la table annexe)
-        String path = storageFolder2 + "DossierProfessionnel" + "/";
-        List<Annexe> annexes = dp.getAnnexes();
-
-        for (MultipartFile fil : file) {
-            String pathFile = path + fil.getOriginalFilename();
-            File newAnnexe = new File(pathFile);
-            Annexe annexe = new Annexe();
-            annexe.setPieceJointe(newAnnexe); 
-            annexe.setLibelleAnnexe(lib);
-            annexes.add(annexe);
-            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))) {
-                try {
-                    bos.write(fil.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } catch (FileNotFoundException e1) {
-                e1.printStackTrace();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-
-        for (Annexe annexe : annexes) {
-            annexe.setDossierProfessionnel(dp);
-        }
-        //on met à jour la clé étrangère etudiant de la table dossier_professionnel (dans le cas d'un save)
-        EtudiantDossierDto eDto = etudiantService.getByEtudiantIdForDossierPro(id);
-        Optional<Etudiant> etudiant = etudiantRepository.findById(id);
-        if(etudiant.isPresent()){
-             dp.setEtudiant(etudiant.get());
-        }
-        //on insert ou met à jour le dossier en question
-        dp = dossierProRepo.saveAndFlush(dp);
-        
-        return DtoTools.convert(dp, DossierProEtudiantDto.class);				
+	@Override
+	public CountDto count(String search) {
+		long nb = dossierProRepo.countByNom(search);
+		CountDto result =  new CountDto();
+		result.setNb(nb);
+		return result;
 	}
+
+	@Override
+	public void delete(long id) {
+		Optional<DossierProfessionnel> opt = dossierProRepo.findById(id);
+		if(opt.isPresent())
+		{
+			DossierProfessionnel d = opt.get();
+			d.setEtudiant(null);
+            d.setExperienceProfessionnelles(null);
+            d.setCursus(null);
+            d.setAnnexes(null);
+            d.setFacultatifs(null);
+			dossierProRepo.delete(d);
+			
+		}
+		
+	}
+
+
+	@Override
+	public DossierProEtudiantDto deleteFileImportById(long id, String fileImport) {
+	    String path = storageFolder2 + "DossierProfessionnel" + "/" + fileImport;
+	    File fileToDelete = new File(path);
+
+	    if (fileToDelete.exists()) {
+	        DossierProfessionnel dp = dossierProRepo.getByDossierbyId(id);
+
+	        fileToDelete.delete();
+
+	        String fileImp = dp.getFileImport();
+
+	        if (fileImp != null && fileImp.contains(fileImport)) {
+	            dp.setFileImport(null);
+
+	            try {
+	                // Mettre à jour  dp dans la bd
+	                dp = dossierProRepo.save(dp);
+
+	                DossierProEtudiantDto dpDto = mapper.dossierProfessionnelToDossierProEtudiantDto(dp);
+	                return dpDto;
+	            } catch (Exception e) {
+	                e.printStackTrace(); 
+	                return null;
+	            }
+	        }
+	    }
+
+	    return null;
+	}
+
+
+	@Override
+	public DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws IOException {
+		DossierProfessionnel dp = dossierProRepo.getByDossierbyId(dossierId);
+		String nomFile = dp.getFileImport();
+		String path = storageFolder2 + "DossierProfessionnel" + "/" + nomFile;
+		File fichier = new File(path);
+		if (fichier.exists()) {
+			fichier.delete();
+		}
+			String file = fileImport.getOriginalFilename();
+			String pathDossierProjet = storageFolder2 + "DossierProfessionnel" + "/" + file;
+			File newFile = new File(path);
+		    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
+		    bos.write(fileImport.getBytes());
+		    bos.close();
+			dp.setFileImport(file);
+			DossierProEtudiantDto dpDto = mapper.dossierProfessionnelToDossierProEtudiantDto(dp);
+			return dpDto;
+	}
+
+	  @Override
+		public String generateDossierProPdf(long dossierId) throws PdfTools, IOException, TemplateException {
+		    Optional<DossierProfessionnel> dp = dossierProRepo.findById(dossierId);
+
+		    if (dp.isPresent()) {
+		        DossierProfessionnel dossier = dp.get();
+
+		        List<ActiviteType> at = activiteTypeRepository.getActiviteTypesByCursus(dossier.getCursus().getId());
+
+		        List<PdfActiviteDto> pdfActiviteDtos = new ArrayList<>();
+
+		        Set<CompetenceProfessionnelle> cp = at.stream().map(ActiviteType::getCompetenceProfessionnelles).reduce(new HashSet<>(),
+		        		(l1,l2) -> {l1.addAll(l2);
+		        		return l1;
+		        		}
+		        		);
+		        
+		        List<ExperienceProfessionnelle> exp = dossier.getExperienceProfessionnelles();
+
+		        
+		        for (ActiviteType activite : at) {
+		            PdfActiviteDto pdfActiviteDto = DtoTools.convert(activite, PdfActiviteDto.class);
+
+		            Set<PdfCompetenceDto> pdfCompetenceDtos = new HashSet<>();
+
+		            for (CompetenceProfessionnelle competence : cp) {
+		                PdfCompetenceDto pdfCompetenceDto = DtoTools.convert(competence, PdfCompetenceDto.class);
+
+		                List<ExperienceProfessionnelleDto> experienceProfessionnelleDtoList = new ArrayList<>();
+
+		                for (ExperienceProfessionnelle experience : exp) {
+		                    if (experience.getCompetenceProfessionnelle().getId() == competence.getId() && 
+		                        experience.getCompetenceProfessionnelle().getActiviteType().getId() == activite.getId()) {
+		                        ExperienceProfessionnelleDto eDto = DtoTools.convert(experience, ExperienceProfessionnelleDto.class);
+		                        experienceProfessionnelleDtoList.add(eDto);
+		                    }
+		                }
+
+		                if (!experienceProfessionnelleDtoList.isEmpty()) {
+		                    pdfCompetenceDto.setExperienceProfessionnelleDtoList(experienceProfessionnelleDtoList);
+		                    pdfCompetenceDtos.add(pdfCompetenceDto);
+		                }
+		            }
+
+		            if (!pdfCompetenceDtos.isEmpty()) {
+		                pdfActiviteDto.setPdfCompetenceDtoSet(pdfCompetenceDtos);
+		                pdfActiviteDtos.add(pdfActiviteDto);
+		            }
+		        }
+
+		 
+
+		        long etudiantId = dossier.getEtudiant().getId();
+		        Signature signature = signatureRepository.getSignatureByEtudiantId(etudiantId);
+
+		        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+		        ZonedDateTime now = ZonedDateTime.now();
+		        String dateNow = dtf.format(now);
+
+		        freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+
+		        Template template = freemarkerConfig.getTemplate("DossierPro.ftl");
+
+		        Map<String, Object> model = new HashMap<>();
+		        model.put("backendUrl", backendUrl);
+		        model.put("et", dossier.getEtudiant());
+		        model.put("at", at);
+		        model.put("dp", dossier);
+		        model.put("cp", cp);
+		        model.put("exp", exp);
+		        model.put("pdfActiviteDtos", pdfActiviteDtos);
+		        model.put("signature", signature);
+		        model.put("dateNow", dateNow);
+
+		        String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+
+		        String outputPdf = storageFolder + "/dossier-" + dossierId + "-pro.pdf";
+
+		        try {
+					PdfTools.generatePdfFromHtml(outputPdf, htmlContent);
+				} catch (Exception e) {
+					logger.log(Level.SEVERE,"convertHtmlToPdf failed", e);
+				}
+	            return outputPdf;
+	        }
+	        return null;
+	    } 
+
 
     public void emailTuteurDossierProfessionnelle(DossierProEtudiantDto dp, long id)
             throws TemplateException, DossierProfessionnelException, IOException {
@@ -524,115 +494,6 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
             emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, body,path, fileName);
         }
     }
-
-	@Override
-	public CountDto count(String search) {
-		long nb = dossierProRepo.countByNom(search);
-		CountDto result =  new CountDto();
-		result.setNb(nb);
-		return result;
-	}
-
-	@Override
-	public void delete(long id) {
-		Optional<DossierProfessionnel> opt = dossierProRepo.findById(id);
-		if(opt.isPresent())
-		{
-			DossierProfessionnel d = opt.get();
-			d.setEtudiant(null);
-            d.setExperienceProfessionnelles(null);
-            d.setCursus(null);
-            d.setAnnexes(null);
-            d.setFacultatifs(null);
-			dossierProRepo.delete(d);
-			
-		}
-		
-	}
-
-	@Override
-	public String genererDossierProfessionnel(long idDossierPro, long etudiantId) throws DossierProfessionnelException,
-			TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
-		Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
-        Etudiant et = null;
-        if(etuOpt.isPresent()) {
-            et = etuOpt.get();
-        }
-          Optional<DossierProfessionnel> dossierPro = dossierProRepo.findById(idDossierPro);
-    	
-    	if (!dossierPro.isPresent()) {
-    		throw new DossierProfessionnelException("le DossierProfessionnel et non trouvable");
-		}
-		DossierProEtudiantDto dossierproFile = mapper.dossierProfessionnelToDossierProEtudiantDto(dossierPro.get());
-    	
-    	Map<String, Object> model = new HashMap<>();
-    	model.put("backendUrl", backendUrl);
-    	model.put("dossierPro", dossierproFile);
-    	model.put("et", et);
-		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
-		Template template = freemarkerConfig.getTemplate("DossierProfessionnel.ftl");
-
-		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-		
-		String outputPdf = storageFolder2 + "/DossierProfessionnel" + "/dossier-professionnel" + idDossierPro + ".pdf";
-		try {
-			ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
-		}
-        
-
-		return outputPdf;
-	}
-
-	@Override
-	public DossierProEtudiantDto deleteFileImportById(long id, String fileImport) {
-	    String path = storageFolder2 + "DossierProfessionnel" + "/" + fileImport;
-	    File fileToDelete = new File(path);
-
-	    if (fileToDelete.exists()) {
-	        DossierProfessionnel dp = dossierProRepo.getByDossierbyId(id);
-
-	        
-	            fileToDelete.delete();
-	            
-	            String fileImp = dp.getFileImport();
-
-	            if (fileImp != null && fileImp.contains(fileImport)) {
-	                dp.setFileImport(null);
-	                
-	                // Mettre à jour l'objet dp dans la base de données
-	                dp = dossierProRepo.save(dp);
-	            }
-
-	            DossierProEtudiantDto dpDto = mapper.dossierProfessionnelToDossierProEtudiantDto(dp);
-	            return dpDto;
-	        }
-	    
-
-	    return null;
-	}
-
-	@Override
-	public DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws IOException {
-		DossierProfessionnel dp = dossierProRepo.getByDossierbyId(dossierId);
-		String nomFile = dp.getFileImport();
-		String path = storageFolder2 + "DossierProfessionnel" + "/" + nomFile;
-		File fichier = new File(path);
-		if (fichier.exists()) {
-			fichier.delete();
-		}
-			String file = fileImport.getOriginalFilename();
-			String pathDossierProjet = storageFolder2 + "DossierProfessionnel" + "/" + file;
-			File newFile = new File(path);
-		    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
-		    bos.write(fileImport.getBytes());
-		    bos.close();
-			dp.setFileImport(file);
-			DossierProEtudiantDto dpDto = mapper.dossierProfessionnelToDossierProEtudiantDto(dp);
-			return dpDto;
-	}
-
 	
 
 	
