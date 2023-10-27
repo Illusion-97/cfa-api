@@ -42,26 +42,31 @@ public class PromotionController {
 
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable("page") int page, @PathVariable(value = "size") int size) {
-		return promoService.getAllPromotions(page, size, 0, "");
+		return promoService.getAllPromotions(page, size, Optional.of(""), "");
 	}
 
- 	@GetMapping(value = "/{page}/{size}/sort/{choix}/{search}", produces = "application/json")
+	@GetMapping(value = "/{page}/{size}/{choix}", produces = "application/json")
+	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable(value="page") int page,
+														 @PathVariable(value = "size") int size,
+														 @PathVariable(value="choix", required = false) Optional<String> choix) {
+
+		return promoService.getAllPromotions(page, size, choix, "");
+
+	}
+
+ 	@GetMapping(value = "/{page}/{size}/{choix}/{search}", produces = "application/json")
  	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable(value="page") int page,
- 			@PathVariable(value = "size") int size,@PathVariable(value="choix") int choix, @PathVariable(value = "search", required = false) Optional<String> search) {
+ 															@PathVariable(value = "size") int size,
+														  @PathVariable(value="choix", required = false) Optional<String> choix,
+														  @PathVariable(value = "search", required = false) Optional<String> search) {
  		if(search.isPresent())
  			return promoService.getAllPromotions(page, size, choix, search.get());
  		else
  			return promoService.getAllPromotions(page, size, choix, "");
  	}
 
-	@GetMapping(value = "/{page}/{size}/sort/{choix}", produces = "application/json")
-	public @ResponseBody List<PromotionDto> getAllByPage(@PathVariable(value="page") int page,
-														 @PathVariable(value = "size") int size,@PathVariable(value="choix") int choix) {
 
-			return promoService.getAllPromotions(page, size, choix, "");
 
-	}
-	
 	@GetMapping(value = "/{id}",produces = "application/json")
 	public PromotionDto getById(@PathVariable("id") long id) {
 		return promoService.getById(id);
@@ -175,27 +180,6 @@ public class PromotionController {
 					.body("Error while fetching data from the webservice DG2");
 		}
 	}
-//	@GetMapping(value = "/grillePositionnement/{idPromotion}",  produces = "application/octet-stream")
-//	public ResponseEntity<Resource> getGrillePositionnement(@PathVariable("idPromotion") long idPromotion) throws Exception {
-//		
-//		String outpoutPath = promoService.getGrillePositionnement(idPromotion);
-//		File f = new File(outpoutPath);
-//		
-//		Path path = Paths.get(f.getAbsolutePath());
-//		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-//		
-//		//Pour afficher un boite de téléchargement dans une réponse web au lieu de changer de page, nous devons
-//		//spécifier un header : Content-Disposition, attachment;filename=app.log
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=grille.pdf");
-//		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-//		headers.add("Pragma", "no-cache");
-//		headers.add("Expires", "0");
-//		
-//		return ResponseEntity.ok()
-//				.headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
-//	}
-	
 	@GetMapping(value = "/grillePositionnement/{idPromotion}",  produces = "plain/text")
 	public ResponseEntity<String> getGrillePositionnement(@PathVariable("idPromotion") long idPromotion) throws Exception {
 		

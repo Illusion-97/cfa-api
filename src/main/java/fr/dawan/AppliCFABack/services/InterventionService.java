@@ -13,7 +13,7 @@ public interface InterventionService {
 
 	List<InterventionDto> getAllIntervention(int page, int size);
 
-	List<InterventionDto> getAllByPage(int page, int size, String string);
+	List<InterventionDto> getAllByPage(int page, int size,String sort, String string);
 
 	InterventionDto getById(long id);
 

@@ -31,6 +31,7 @@ import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -50,13 +51,7 @@ public class EmailServiceImpl implements EmailService {
 	private JavaMailSender emailSender;
 
 	@Autowired
-	private BlocEvaluationRepository blocEvaluationRepository;
-	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	@Autowired
-	private FormateurRepository formateurRepository;
-	@Autowired
-	private InterventionRepository interventionRepository;
 
 	@Autowired
 	private TimerCache timerCache;
@@ -198,10 +193,6 @@ public class EmailServiceImpl implements EmailService {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
 		}
 	}
-	private void cacheTimer(long idUser){
-		LocalDate timer = LocalDate.now();
-
-	}
 	/**
 	 * Envoi de automatique pour prévenir le formateur de remplir le livret d'évaluation des étudiants lui étant affilié
 	 * avant 3
@@ -212,16 +203,30 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public void scheduleMailSender(long idUser) {
 		boolean isInCache = timerCache.startTimerForUserConnected(idUser, 5);
-		if (isInCache){
-			if (userRepository.isLivretFormateurReferentEmpty(idUser)){
-				Optional<LocalDate> dateFinPromotion = userRepository.findDatePromotionOfFormateurByUtilisateurId(idUser);
-				Period dateDiff = Period.between(LocalDate.now(), dateFinPromotion.get());
-				if (dateDiff.getYears() < 2 && dateDiff.getMonths() <= 3) {
+		if (!isInCache){return;}
+
+		if (userRepository.isLivretFormateurReferentEmpty(idUser)){
+			List<Optional<LocalDate>> dateFinPromotion = userRepository.findDatePromotionOfFormateurByUtilisateurId(idUser);
+			if (!dateFinPromotion.isEmpty()){
+
+				List<LocalDate> listDeDates = dateFinPromotion.stream()
+						.filter(Optional::isPresent)
+						.map(Optional::get)
+						.collect(Collectors.toList());
+				//On vérifie si une date est inferior à 3 mois
+				boolean dateWithin3Months = false;
+
+				for (LocalDate date : listDeDates){
+					Period dateDiff = Period.between(LocalDate.now(), date);
+					if (dateDiff.getYears() <= 2 && dateDiff.getMonths() <= 3){
+						dateWithin3Months = true;
+						break;
+					}
+				}
+				if (dateWithin3Months) {
 					ScheduledExecutorService threadUsesForSchedule = Executors.newScheduledThreadPool(1);
 					String message = "Pensez à remplir l'évaluation : " + idUser;
-					threadUsesForSchedule.schedule(() -> {
-						sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of(""));
-					},1, TimeUnit.SECONDS);
+					threadUsesForSchedule.schedule(() -> sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of("")),1, TimeUnit.SECONDS);
 				}
 			}
 		}

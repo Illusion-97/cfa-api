@@ -58,9 +58,8 @@ public class ProjetServiceImpl implements ProjetService {
 	
 	@Override
 	public List<ProjetDto> getAllByPage(int page, int size, String search) {
-		List<Projet> lst = projetRepository.findAllByNomContainingIgnoringCaseOrDescriptionContainingIgnoringCaseOrGroupeNomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Projet> lst = projetRepository.findAllByNomOrGroupeProjet(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
-		// conversion vers Dto
 		List<ProjetDto> lstDto = new ArrayList<>();
 		for (Projet p : lst) {
 			ProjetDto pDto = mapper.projetToProjetDto(p);

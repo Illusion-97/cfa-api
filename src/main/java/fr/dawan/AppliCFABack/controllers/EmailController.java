@@ -40,15 +40,17 @@ public class EmailController {
     }
 
     @PostMapping(value = "/schedule")
-    public ResponseEntity<String> mailScheduler(@RequestBody Map<String, Object> request){
-
-        if ((boolean) request.get("isFormateur")){
-            Integer integerIdUser = (Integer) request.get("userId");
-            long idUser = (long) integerIdUser;
-            emailService.scheduleMailSender(idUser);
-            return ResponseEntity.ok("E-mail planifié avec succès.");
+    public ResponseEntity.BodyBuilder mailScheduler(@RequestBody Map<String, Object> request){
+        try {
+            if ((boolean) request.get("isFormateur")) {
+                Integer integerIdUser = (Integer) request.get("userId");
+                long idUser = (long) integerIdUser;
+                emailService.scheduleMailSender(idUser);
+                return ResponseEntity.status(200);
+            }
+        } catch (Exception e) {
+            return (ResponseEntity.BodyBuilder) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur s'est produite : " + e.getMessage());
         }
-        return (ResponseEntity<String>) ResponseEntity.badRequest();
 
-    }
+        return (ResponseEntity.BodyBuilder) ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Requête incorrecte");    }
 }

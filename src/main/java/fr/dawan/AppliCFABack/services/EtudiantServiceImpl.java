@@ -27,6 +27,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.Query;
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -499,29 +501,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return null;
 	}
 
-	// recuperation des notes par id etudiants
-	public List<NoteDto> getNotesByIdEtudiant(long id) {
-//		List<Note> lst = noteRepository.getNotesByIdEtudiant(id);
-//		List<NoteDto> res = new ArrayList<NoteDto>();
-//
-//		for (Note n : lst)
-//			res.add(mapper.NoteToNoteDto(n));
-
-		return null;
-	}
-
-	// recuperation des absences par id etudiants + pagination
-//	@Override
-//	public List<AbsenceDto> getAbsencesByIdEtudiant(long id, int page, int size) {
-//		List<Absence> lst = absenceRepository.getAbsencesByIdEtudiant(id, PageRequest.of(page, size)).get()
-//				.collect(Collectors.toList());
-//		List<AbsenceDto> res = new ArrayList<AbsenceDto>();
-//
-//		for (Absence n : lst)
-//			res.add(mapper.AbsenceToAbsenceDto(n));
-//
-//		return res;
-//	}
 
 	// ##################################################
 	// # 3eme Niveau #
@@ -589,21 +568,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 			result.addAll(journeePlanningService.getJourneePlanningFromIntervention(i));
 		return result;
 	}
-
-	// recuperation du formateur referent par id etudiants
-
-//	@Override
-//	public UtilisateurDto getFormateurReferentByIdEtudiant(long id) {
-//		Contrat contrat = contratRepository.findByEtudiantId(id);
-//		return mapper.UtilisateurToUtilisateurDto(contrat.getMaitreApprentissage().getUtilisateur());
-//	}
-
-//	@Override
-//	public UtilisateurDto getManagerByIdEtudiant(long id) {
-//		return mapper.UtilisateurToUtilisateurDto(getEtudiantById(id).getManager());
-//	}
-
-	// recuperation des devoirs par id etudiants + pagination
 
 	/**
 	 * Va permettre de récupérer tous les devoirs avec pagination
@@ -711,10 +675,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 			UtilisateurDto pDto = mapper.utilisateurToUtilisateurDto(e.getUtilisateur());
 			AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
 
-//			EntrepriseDto entDto =mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
-//			UtilisateurDto refDto = mapper.UtilisateurToUtilisateurDto(e.getFormateurReferent());
-//			UtilisateurDto managDto = mapper.UtilisateurToUtilisateurDto(e.getManager());
-
 			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
 			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<>();
 			for (GroupeEtudiant grp : lstGrpEtu) {
@@ -729,33 +689,13 @@ public class EtudiantServiceImpl implements EtudiantService {
 				if (promotion != null)
 					lstPromoDto.add(mapper.promotionToPromotionDto(promotion));
 			}
-//			List<DossierProjet> lstDossierProjet = e.getDossierProjet();
-//			List<DossierProjetDto> lstDossierProjetDto = new ArrayList<>();
-//			for (DossierProjet dp : lstDossierProjet) {
-//				DossierProjetDto dpdto = mapper.dossierProjetToDossierProjetDto(dp);
-//				dpdto.setProjet(mapper.projetToProjetDto(dp.getProjet()));
-//				lstDossierProjetDto.add(dpdto);
-
-//			}
-			/*List<DossierProfessionnel> lstDossierProfessionnel = e.getDossierProfessionnel();
-			List<DossierProfessionnelDto> lstDossierProfessionnelDto = new ArrayList<>();
-			for (DossierProfessionnel dp : lstDossierProfessionnel) {
-				DossierProfessionnelDto dpDto = mapper.dossierProfessionnelToDossierProfessionnelDto(dp);
-				dpDto.setCursusDto(mapper.cursusToCursusDto(dp.getCursus()));
-				lstDossierProfessionnelDto.add(dpDto);
-			}*/
 
 			etuDto.setUtilisateurDto(pDto);
 			etuDto.getUtilisateurDto().setAdresseDto(addrDto);
 			etuDto.setGroupesDto(lstGrpEtuDto);
 
-//			etuDto.getUtilisateurDto().setEntrepriseDto(entDto);
 			etuDto.setPromotionsDto(lstPromoDto);
-//			etuDto.setFormateurReferentDto(refDto);
-//			etuDto.setManagerDto(managDto);
 
-			//etuDto.setDossierProfessionnel(lstDossierProfessionnelDto);
-//			etuDto.setDossierProjet(lstDossierProjetDto);
 			res.add(etuDto);
 		}
 
@@ -1126,7 +1066,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	
 	@Override
 	public List<EtudiantDto> getEtudiantByPromotion(long id, int page, int size, String search) {
-		List<Etudiant> result = etudiantRepository.getEtudiantByPromotion(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
+		List<Etudiant> result = etudiantRepository.getEtudiantByPromotion(id, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<EtudiantDto> res = new ArrayList<>();
 		if (!result.isEmpty()) {
 			for (Etudiant p: result) {

@@ -13,6 +13,7 @@ import freemarker.template.TemplateNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface PromotionService {
@@ -31,7 +32,7 @@ public interface PromotionService {
 	
 	CountDto countByCentreFormationId(long id, String search);
 
-	List<PromotionDto> getAllPromotions( int page, int size,int choix, String string);
+	List<PromotionDto> getAllPromotions(int page, int size, Optional<String> choix, String string);
 
 	List<EtudiantDto> getEtudiantsById(long id);
 
