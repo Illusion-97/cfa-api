@@ -129,7 +129,13 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(duree, idDg2, slug, titre);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((duree == null) ? 0 : duree.hashCode());
+		result = prime * result + (int) (idDg2 ^ (idDg2 >>> 32));
+		result = prime * result + ((slug == null) ? 0 : slug.hashCode());
+		result = prime * result + ((titre == null) ? 0 : titre.hashCode());
+		return result;
 	}
 
 	/**
@@ -207,7 +213,24 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 		if (getClass() != obj.getClass())
 			return false;
 		Cursus other = (Cursus) obj;
-		return Objects.equals(duree, other.duree) && idDg2 == other.idDg2 && Objects.equals(slug, other.slug)
-				&& Objects.equals(titre, other.titre);
+		if (duree == null) {
+			if (other.duree != null)
+				return false;
+		} else if (!duree.equals(other.duree))
+			return false;
+		if (idDg2 != other.idDg2)
+			return false;
+		if (slug == null) {
+			if (other.slug != null)
+				return false;
+		} else if (!slug.equals(other.slug))
+			return false;
+		if (titre == null) {
+			if (other.titre != null)
+				return false;
+		} else if (!titre.equals(other.titre))
+			return false;
+		return true;
 	}
+	
 }
