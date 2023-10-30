@@ -12,7 +12,6 @@ public class DossierProjet extends BaseEntity {
 	private String nom;
 
 	@ManyToOne
-	@Column(nullable = false)
 	private Projet projet;
 	
 	@ManyToOne
