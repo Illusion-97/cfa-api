@@ -33,6 +33,22 @@ public class SoutenanceDto extends BaseEntityDto implements Serializable {
 		this.etudiant = etudiant;
 	}
 
+	public String getJour() {
+		return jour;
+	}
+
+	public void setJour(String jour) {
+		this.jour = jour;
+	}
+
+	public String getHeure() {
+		return heure;
+	}
+
+	public void setHeure(String heure) {
+		this.heure = heure;
+	}
+
 	public int getMinAccueil() {
 		return minAccueil;
 	}
@@ -72,21 +88,7 @@ public class SoutenanceDto extends BaseEntityDto implements Serializable {
 	public void setMinDeliberation(int minDeliberation) {
 		this.minDeliberation = minDeliberation;
 	}
-
-	public String getJour() {
-		return jour;
-	}
-
-	public void setJour(String jour) {
-		this.jour = jour;
-	}
-
-	public String getHeure() {
-		return heure;
-	}
-
-	public void setHeure(String heure) {
-		this.heure = heure;
-	}
+	
+	
 	
 }

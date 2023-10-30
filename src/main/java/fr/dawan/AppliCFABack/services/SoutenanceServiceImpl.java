@@ -101,6 +101,25 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		}
 		return lstSoutenanceDtos;
 	}
+
+	@Override
+	public SoutenanceDto save(SoutenanceDto soutenanceDto) {
+		Soutenance soutenance2 = new Soutenance();
+		soutenance2.getHeure();
+		Soutenance soutenance = mapper.soutenanceDtoToSoutenance(soutenanceDto);
+		try {
+			if (soutenance.getEtudiant().getId() > 0) {
+				Etudiant etudiant = etudiantRepository.getOne(soutenance.getEtudiant().getId());
+				soutenance.setEtudiant(etudiant);
+			}
+		} catch (Exception ex) {
+			logger.warn("Error save etudiant", ex);
+		}
+		
+		soutenanceRepository.saveAndFlush(soutenance);
+			
+		return mapper.soutenanceToSoutenanceDto(soutenance);
+	}
 	
 	
 }

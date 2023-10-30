@@ -26,13 +26,12 @@ public class SoutenanceController {
 	
 	@GetMapping(produces = "application/json", value = "/{id}")
 	public SoutenanceDto getById(@PathVariable("id") long id) {
-		
 		return soutenanceService.getById(id);		
 	}
 	
 	@PostMapping(consumes = "application/json", produces = "application/json")
-	public SoutenanceDto save(@RequestBody SoutenanceDto soutenanceDto) throws SaveInvalidException {
-		return soutenanceService.saveOrUpdate(soutenanceDto);
+	public SoutenanceDto save(@RequestBody SoutenanceDto soutenanceDto) {
+		return soutenanceService.save(soutenanceDto);
 	}
 	
 	@PutMapping(consumes = "application/json", produces = "application/json")

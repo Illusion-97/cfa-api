@@ -37,70 +37,85 @@ public class Soutenance extends BaseEntity implements Serializable {
 		super();
 	}
 
+
 	public Etudiant getEtudiant() {
 		return etudiant;
 	}
+
 
 	public void setEtudiant(Etudiant etudiant) {
 		this.etudiant = etudiant;
 	}
 
+
 	public String getJour() {
 		return jour;
 	}
+
 
 	public void setJour(String jour) {
 		this.jour = jour;
 	}
 
+
 	public String getHeure() {
 		return heure;
 	}
+
 
 	public void setHeure(String heure) {
 		this.heure = heure;
 	}
 
+
 	public int getMinAccueil() {
 		return minAccueil;
 	}
+
 
 	public void setMinAccueil(int minAccueil) {
 		this.minAccueil = minAccueil;
 	}
 
+
 	public int getMinEntretien() {
 		return minEntretien;
 	}
+
 
 	public void setMinEntretien(int minEntretien) {
 		this.minEntretien = minEntretien;
 	}
 
+
 	public int getMinQuestion() {
 		return minQuestion;
 	}
+
 
 	public void setMinQuestion(int minQuestion) {
 		this.minQuestion = minQuestion;
 	}
 
+
 	public int getMinEntretienFinal() {
 		return minEntretienFinal;
 	}
+
 
 	public void setMinEntretienFinal(int minEntretienFinal) {
 		this.minEntretienFinal = minEntretienFinal;
 	}
 
+
 	public int getMinDeliberation() {
 		return minDeliberation;
 	}
 
+
 	public void setMinDeliberation(int minDeliberation) {
 		this.minDeliberation = minDeliberation;
 	}
-	
-	
+
 	
 }
