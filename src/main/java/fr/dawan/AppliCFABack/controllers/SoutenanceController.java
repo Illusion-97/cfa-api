@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +16,6 @@ import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.SoutenanceDto;
 import fr.dawan.AppliCFABack.services.SoutenanceService;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/soutenance")
@@ -30,8 +30,8 @@ public class SoutenanceController {
 	}
 	
 	@PostMapping(consumes = "application/json", produces = "application/json")
-	public SoutenanceDto save(@RequestBody SoutenanceDto soutenanceDto) {
-		return soutenanceService.save(soutenanceDto);
+	public SoutenanceDto save(@RequestBody SoutenanceDto soutenanceDto) throws SaveInvalidException {
+		return soutenanceService.saveOrUpdate(soutenanceDto);
 	}
 	
 	@PutMapping(consumes = "application/json", produces = "application/json")

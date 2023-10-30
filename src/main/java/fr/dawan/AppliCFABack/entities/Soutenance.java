@@ -17,20 +17,20 @@ public class Soutenance extends BaseEntity implements Serializable {
 	
 	private String heure;
 	
-	@Column(nullable = true)
-	private int minAccueil;
+	//@Column(nullable = true)
+	private String minAccueil;
 	
-	@Column(nullable = true)
-	private int minEntretien;
+	//@Column(nullable = true)
+	private String minEntretien;
 	
-	@Column(nullable = true)
-	private int minQuestion;
+	//@Column(nullable = true)
+	private String minQuestion;
 	
-	@Column(nullable = true)
-	private int minEntretienFinal;
+	//@Column(nullable = true)
+	private String minEntretienFinal;
 	
-	@Column(nullable = true)
-	private int minDeliberation;
+	//@Column(nullable = true)
+	private String minDeliberation;
 	 
 
 	public Soutenance() {
@@ -68,54 +68,53 @@ public class Soutenance extends BaseEntity implements Serializable {
 	}
 
 
-	public int getMinAccueil() {
+	public String getMinAccueil() {
 		return minAccueil;
 	}
 
 
-	public void setMinAccueil(int minAccueil) {
+	public void setMinAccueil(String minAccueil) {
 		this.minAccueil = minAccueil;
 	}
 
 
-	public int getMinEntretien() {
+	public String getMinEntretien() {
 		return minEntretien;
 	}
 
 
-	public void setMinEntretien(int minEntretien) {
+	public void setMinEntretien(String minEntretien) {
 		this.minEntretien = minEntretien;
 	}
 
 
-	public int getMinQuestion() {
+	public String getMinQuestion() {
 		return minQuestion;
 	}
 
 
-	public void setMinQuestion(int minQuestion) {
+	public void setMinQuestion(String minQuestion) {
 		this.minQuestion = minQuestion;
 	}
 
 
-	public int getMinEntretienFinal() {
+	public String getMinEntretienFinal() {
 		return minEntretienFinal;
 	}
 
 
-	public void setMinEntretienFinal(int minEntretienFinal) {
+	public void setMinEntretienFinal(String minEntretienFinal) {
 		this.minEntretienFinal = minEntretienFinal;
 	}
 
 
-	public int getMinDeliberation() {
+	public String getMinDeliberation() {
 		return minDeliberation;
 	}
 
 
-	public void setMinDeliberation(int minDeliberation) {
+	public void setMinDeliberation(String minDeliberation) {
 		this.minDeliberation = minDeliberation;
 	}
 
-	
 }

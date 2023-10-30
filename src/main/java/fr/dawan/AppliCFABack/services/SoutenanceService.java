@@ -10,5 +10,4 @@ public interface SoutenanceService extends GenericService<SoutenanceDto> {
 	
 	List<SoutenanceDto> getPageByPromotionId(long id, int page, int size);
 	
-	SoutenanceDto save(SoutenanceDto soutenanceDto);
 }

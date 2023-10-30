@@ -15,11 +15,9 @@ import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.SoutenanceDto;
-import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.SoutenanceRepository;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
@@ -31,7 +29,10 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 	SoutenanceRepository soutenanceRepository;
 	
 	@Autowired
-	EtudiantRepository etudiantRepository;
+	EtudiantService etudiantService;
+
+	@Autowired
+	EmailService emailService;
 	
 	private static Logger logger = LoggerFactory.getLogger(EtudiantServiceImpl.class);
 	
@@ -49,17 +50,15 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 
 	@Override
 	public SoutenanceDto saveOrUpdate(SoutenanceDto tDto) throws SaveInvalidException {
+		tDto.setEtudiant(etudiantService.getById(tDto.getEtudiant().getId()));
 		Soutenance soutenance = mapper.soutenanceDtoToSoutenance(tDto);
+		emailService.sendMailSmtpUser(230, "totoHeader", "toto", Optional.of(""), Optional.of(""));
 		try {
-			if (soutenance.getEtudiant().getId() > 0) {
-				Etudiant etudiant = etudiantRepository.getOne(soutenance.getEtudiant().getId());
-				soutenance.setEtudiant(etudiant);
-			}
+			soutenanceRepository.saveAndFlush(soutenance);
+			
 		} catch (Exception ex) {
 			logger.warn("Error save etudiant", ex);
 		}
-		
-		soutenanceRepository.saveAndFlush(soutenance);
 			
 		return mapper.soutenanceToSoutenanceDto(soutenance);
 		
@@ -101,25 +100,7 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		}
 		return lstSoutenanceDtos;
 	}
-
-	@Override
-	public SoutenanceDto save(SoutenanceDto soutenanceDto) {
-		Soutenance soutenance2 = new Soutenance();
-		soutenance2.getHeure();
-		Soutenance soutenance = mapper.soutenanceDtoToSoutenance(soutenanceDto);
-		try {
-			if (soutenance.getEtudiant().getId() > 0) {
-				Etudiant etudiant = etudiantRepository.getOne(soutenance.getEtudiant().getId());
-				soutenance.setEtudiant(etudiant);
-			}
-		} catch (Exception ex) {
-			logger.warn("Error save etudiant", ex);
-		}
-		
-		soutenanceRepository.saveAndFlush(soutenance);
-			
-		return mapper.soutenanceToSoutenanceDto(soutenance);
-	}
+	
 	
 	
 }

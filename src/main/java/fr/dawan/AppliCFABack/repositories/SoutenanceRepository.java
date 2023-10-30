@@ -12,7 +12,7 @@ import fr.dawan.AppliCFABack.entities.Soutenance;
 
 @Repository
 public interface SoutenanceRepository extends JpaRepository<Soutenance, Long> {
-	//SELECT s.* FROM soutenance s JOIN etudiant e ON(s.etudiant_id = e.id) JOIN  promotion_etudiants p ON(e.id = p.etudiants_id) WHERE p.promotions_id = 323;
+	
 	@Query(value = "SELECT s FROM Soutenance s JOIN s.etudiant e JOIN e.promotions p JOIN e.utilisateur u WHERE p.id = :id")
 	List<Soutenance> getByPromotionId(long id);
 	
