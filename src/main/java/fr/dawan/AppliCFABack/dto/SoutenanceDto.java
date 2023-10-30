@@ -1,10 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Promotion;
 
 @SuppressWarnings("serial")
 public class SoutenanceDto extends BaseEntityDto implements Serializable {
@@ -13,7 +9,7 @@ public class SoutenanceDto extends BaseEntityDto implements Serializable {
 	
 	private String jour;
 	
-	private String date;
+	private String heure;
 	
 	private int minAccueil;
 	
@@ -85,14 +81,12 @@ public class SoutenanceDto extends BaseEntityDto implements Serializable {
 		this.jour = jour;
 	}
 
-	public String getDate() {
-		return date;
+	public String getHeure() {
+		return heure;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setHeure(String heure) {
+		this.heure = heure;
 	}
-	
-	
 	
 }
