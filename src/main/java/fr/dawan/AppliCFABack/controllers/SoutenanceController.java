@@ -29,6 +29,11 @@ public class SoutenanceController {
 		return soutenanceService.getById(id);		
 	}
 	
+	@GetMapping(produces = "application/json", value = "")
+	public List<SoutenanceDto> getAll() {
+		return soutenanceService.getAll();
+	}
+	
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public SoutenanceDto save(@RequestBody SoutenanceDto soutenanceDto) throws SaveInvalidException {
 		return soutenanceService.saveOrUpdate(soutenanceDto);
@@ -44,7 +49,7 @@ public class SoutenanceController {
 		soutenanceService.delete(id);
 	}
 	
-	@GetMapping(produces = "application/json", value = "/count/{id}")
+	@GetMapping(produces = "application/json", value = "/count/promotion/{id}")
 	public CountDto countByIdPromotion(@PathVariable("id") long id) {
 		return soutenanceService.count(String.valueOf(id));
 	}

@@ -47,6 +47,23 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		}
 		return null;
 	}
+	
+	@Override
+	public List<SoutenanceDto> getAll() {
+		List<Soutenance> soutenances = soutenanceRepository.findAll();
+		if (!soutenances.isEmpty()) {
+			List<SoutenanceDto> soutenanceDtos = new ArrayList<>();
+			
+			for (Soutenance soutenance : soutenances) {
+				SoutenanceDto soutenanceDto = new SoutenanceDto();
+				soutenanceDto = mapper.soutenanceToSoutenanceDto(soutenance);
+				soutenanceDtos.add(soutenanceDto);
+			}
+			return soutenanceDtos;
+		}
+		return null;
+
+	}
 
 	@Override
 	public SoutenanceDto saveOrUpdate(SoutenanceDto tDto) throws SaveInvalidException {
@@ -62,8 +79,7 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 			
 		} catch (Exception ex) {
 			logger.warn("Error save etudiant", ex);
-		}
-			
+		}			
 		return mapper.soutenanceToSoutenanceDto(soutenance);
 		
 	}
@@ -103,8 +119,6 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 			}
 		}
 		return lstSoutenanceDtos;
-	}
-	
-	
+	}	
 	
 }
