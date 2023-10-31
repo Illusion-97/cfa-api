@@ -9,6 +9,8 @@ import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -16,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
@@ -37,6 +41,9 @@ import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 import fr.dawan.AppliCFABack.tools.TimerCache;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 
 @Service
 @Transactional
@@ -52,13 +59,20 @@ public class EmailServiceImpl implements EmailService {
 	CongeRepository congeRepository;
 	@Autowired
 	UtilisateurRepository userRepository;
+	
 	@Autowired
 	private JavaMailSender emailSender;
-
+	@Value("${backend.url}")
+	private String backendUrl;
 	@Autowired
-	private BlocEvaluationRepository blocEvaluationRepository;
+	private Configuration freemarkerConfig;
+	@Value("${app.storagefolder}")
+	private String storageFolder;
+	private static Logger logger = Logger.getGlobal();
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	private BlocEvaluationRepository blocEvaluationRepository;
 	@Autowired
 	private FormateurRepository formateurRepository;
 	@Autowired
@@ -204,6 +218,49 @@ public class EmailServiceImpl implements EmailService {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@Override
+	public <T> void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path, Optional<String> fileName, T TDto) {
+		Optional<Utilisateur> user = userRepository.findById(idTo);
+
+		if (user.isPresent()) {
+			try {
+				MimeMessage message = emailSender.createMimeMessage();
+				MimeMessageHelper helper = new MimeMessageHelper(message, true);
+				helper.setTo(user.get().getLogin());
+				helper.setSubject(header);
+				helper.setText(msg, true);
+
+				// Partie pour ajouter un pdf si un "path" est renseigné
+				String pdfFilePath = path.get(); // Utilisez le chemin du fichier PDF s'il est présent
+				if (!pdfFilePath.isEmpty()) {
+					
+					Map<String, Object> model = new HashMap<>();
+					model.put("backendUrl", backendUrl);
+					model.put("dto", TDto);
+					freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+				//SoutenanceDto ... enlever Dto...
+					Template template = freemarkerConfig.getTemplate(TDto.getClass().getName() + ".ftl");
+
+					String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+					String outputPdf = storageFolder + "Convocation_Examen.pdf";
+					try {
+						ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+					} catch (Exception e) {
+						logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
+					}
+				}
+
+				emailSender.send(message);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			ResponseEntity.status(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
 	private void cacheTimer(long idUser){
 		LocalDate timer = LocalDate.now();
 
