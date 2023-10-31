@@ -218,7 +218,7 @@ public class EmailServiceImpl implements EmailService {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+	/*
 	@Override
 	public <T> void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path, Optional<String> fileName, T TDto) {
 		Optional<Utilisateur> user = userRepository.findById(idTo);
@@ -259,7 +259,7 @@ public class EmailServiceImpl implements EmailService {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+	*/
 	
 	private void cacheTimer(long idUser){
 		LocalDate timer = LocalDate.now();

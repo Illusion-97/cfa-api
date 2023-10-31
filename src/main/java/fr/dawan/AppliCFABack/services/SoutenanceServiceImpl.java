@@ -67,13 +67,16 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 
 	@Override
 	public SoutenanceDto saveOrUpdate(SoutenanceDto tDto) throws SaveInvalidException {
-		tDto.setEtudiant(etudiantService.getById(tDto.getEtudiant().getId()));
-		emailService.sendMailSmtpUser(tDto.getEtudiant().getUtilisateurDto().getId(), 
-				"Convocation examen", "Vous êtes convoquez pour l'éxamen ...", 
-				Optional.of("/cfa-portal-api/src/main/resources/templates/convocationExamen.ftl"), 
-				Optional.of("Convocation examen"), tDto);
+		Soutenance soutenance = new Soutenance();
+		if (tDto.getEtudiant().getId() > 0) {			
+			tDto.setEtudiant(etudiantService.getById(tDto.getEtudiant().getId()));
+			soutenance = mapper.soutenanceDtoToSoutenance(tDto);
+		}
+		//emailService.sendMailSmtpUser(tDto.getEtudiant().getUtilisateurDto().getId(), 
+			//	"Convocation examen", "Vous êtes convoquez pour l'éxamen ...", 
+				//Optional.of("/cfa-portal-api/src/main/resources/templates/convocationExamen.ftl"), 
+				//Optional.of("Convocation examen"), tDto);
 		
-		Soutenance soutenance = mapper.soutenanceDtoToSoutenance(tDto);
 		try {
 			soutenanceRepository.saveAndFlush(soutenance);
 			

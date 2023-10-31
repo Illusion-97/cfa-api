@@ -21,6 +21,5 @@ public interface EmailService {
 
 	void scheduleMailSender(long user);
 
-	<T> void sendMailSmtpUser(long idUtilisateur, String header, String msg, Optional<String> path, Optional<String> fileName,
-			T TDto);
+	//<T> void sendMailSmtpUser(long idUtilisateur, String header, String msg, Optional<String> path, Optional<String> fileName,T TDto);
 }
