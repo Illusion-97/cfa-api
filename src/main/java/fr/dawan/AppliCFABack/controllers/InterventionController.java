@@ -54,7 +54,7 @@ public class InterventionController {
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
 			@PathVariable(value = "size") int size) {
-		return interventionService.getAllByPage(page, size, "","");
+		return interventionService.getAllByPage(page, size, "");
 	}
 	
 	/**
@@ -69,23 +69,9 @@ public class InterventionController {
 			@PathVariable(value = "size") int size,
 			@PathVariable(value = "search", required = false) Optional<String> search) {
 		if (search.isPresent())
-			return interventionService.getAllByPage(page, size,"", search.get());
+			return interventionService.getAllByPage(page, size, search.get());
 		else
-			return interventionService.getAllByPage(page, size,"", "");
-	}
-
-	/**
-	 *
-	 * @param page
-	 * @param size
-	 * @param search
-	 * @return liste des interventiosn avec pagination + search
-	 */
-	@GetMapping(value = "/sort/{page}/{size}/", produces = "application/json")
-	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
-															@PathVariable(value = "size") int size,
-															@RequestParam(value = "sort", required = false) String sort) {
-			return interventionService.getAllByPage(page, size,sort, "");
+			return interventionService.getAllByPage(page, size, "");
 	}
 
 	@GetMapping(value = "/count", produces = "application/json")

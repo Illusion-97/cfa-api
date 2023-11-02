@@ -45,9 +45,6 @@ import fr.dawan.AppliCFABack.tools.ToPdf;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-import java.util.stream.Collectors;
-
-
 @Service
 @Transactional
 public class EmailServiceImpl implements EmailService {
@@ -81,12 +78,11 @@ public class EmailServiceImpl implements EmailService {
 	@Autowired
 	private InterventionRepository interventionRepository;
 
-
 	@Autowired
 	private TimerCache timerCache;
 	/**
 	 * Envoi de mail au referent pour la demande de congé
-	 *
+	 * 
 	 * @param c objet Conge
 	 * @return SimpleMailMessage a être envoyé
 	 */
@@ -222,7 +218,6 @@ public class EmailServiceImpl implements EmailService {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
 		}
 	}
-
 	/* TODO
 	@Override
 	public <T> void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path, Optional<String> fileName, T TDto) {
@@ -270,7 +265,6 @@ public class EmailServiceImpl implements EmailService {
 		LocalDate timer = LocalDate.now();
 
 	}
-
 	/**
 	 * Envoi de automatique pour prévenir le formateur de remplir le livret d'évaluation des étudiants lui étant affilié
 	 * avant 3
@@ -281,30 +275,16 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public void scheduleMailSender(long idUser) {
 		boolean isInCache = timerCache.startTimerForUserConnected(idUser, 5);
-		if (!isInCache){return;}
-
-		if (userRepository.isLivretFormateurReferentEmpty(idUser)){
-			List<Optional<LocalDate>> dateFinPromotion = userRepository.findDatePromotionOfFormateurByUtilisateurId(idUser);
-			if (!dateFinPromotion.isEmpty()){
-
-				List<LocalDate> listDeDates = dateFinPromotion.stream()
-						.filter(Optional::isPresent)
-						.map(Optional::get)
-						.collect(Collectors.toList());
-				//On vérifie si une date est inferior à 3 mois
-				boolean dateWithin3Months = false;
-
-				for (LocalDate date : listDeDates){
-					Period dateDiff = Period.between(LocalDate.now(), date);
-					if (dateDiff.getYears() <= 2 && dateDiff.getMonths() <= 3){
-						dateWithin3Months = true;
-						break;
-					}
-				}
-				if (dateWithin3Months) {
+		if (isInCache){
+			if (userRepository.isLivretFormateurReferentEmpty(idUser)){
+				Optional<LocalDate> dateFinPromotion = userRepository.findDatePromotionOfFormateurByUtilisateurId(idUser);
+				Period dateDiff = Period.between(LocalDate.now(), dateFinPromotion.get());
+				if (dateDiff.getYears() < 2 && dateDiff.getMonths() <= 3) {
 					ScheduledExecutorService threadUsesForSchedule = Executors.newScheduledThreadPool(1);
 					String message = "Pensez à remplir l'évaluation : " + idUser;
-					threadUsesForSchedule.schedule(() -> sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of("")),1, TimeUnit.SECONDS);
+					threadUsesForSchedule.schedule(() -> {
+						sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of(""));
+					},1, TimeUnit.SECONDS);
 				}
 			}
 		}

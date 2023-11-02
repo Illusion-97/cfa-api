@@ -21,8 +21,6 @@ public class EmployeeDG2Dto {
 	
 	private String personId;
 	
-	private String honorific;
-	
 	private String firstName;
 	
 	private String lastName;
@@ -63,12 +61,6 @@ public class EmployeeDG2Dto {
 	 */
 	public String getPersonId() {
 		return personId;
-	}
-	public String getHonorific() {
-		return honorific;
-	}
-	public void setHonorific(String honorific) {
-		this.honorific = honorific;
 	}
 	/**
 	 * @param personId le personId à affecter

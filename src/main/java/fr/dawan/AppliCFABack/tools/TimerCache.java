@@ -19,7 +19,6 @@ public class TimerCache {
         if (cacheUserTimer.containsKey(idUser)){
             return false;
         }
-
         LocalDateTime currentTime = LocalDateTime.now();
         LocalDateTime expirationTime = currentTime.plusHours(timerDuration);
 
