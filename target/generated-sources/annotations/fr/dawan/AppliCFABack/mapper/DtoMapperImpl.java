@@ -78,8 +78,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-02T14:33:09+0100",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.5 (Oracle Corporation)"
+    date = "2023-11-02T11:08:35+0100",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.34.0.v20230523-1233, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -392,7 +392,6 @@ public class DtoMapperImpl implements DtoMapper {
         ProjetDto projetDto = new ProjetDto();
 
         projetDto.setGroupeId( projetGroupeId( projet ) );
-        projetDto.setGroupeNom( projetGroupeNom( projet ) );
         projetDto.setId( projet.getId() );
         projetDto.setVersion( projet.getVersion() );
         projetDto.setNom( projet.getNom() );
@@ -931,7 +930,6 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateur.setNom( eDg2.getLastName() );
         utilisateur.setLogin( eDg2.getEmail() );
         utilisateur.setDateDeNaissance( eDg2.getBornAt() );
-        utilisateur.setCivilite( eDg2.getHonorific() );
         utilisateur.setId( eDg2.getId() );
 
         return utilisateur;
@@ -1140,21 +1138,6 @@ public class DtoMapperImpl implements DtoMapper {
         return id;
     }
 
-    private String projetGroupeNom(Projet projet) {
-        if ( projet == null ) {
-            return null;
-        }
-        GroupeEtudiant groupe = projet.getGroupe();
-        if ( groupe == null ) {
-            return null;
-        }
-        String nom = groupe.getNom();
-        if ( nom == null ) {
-            return null;
-        }
-        return nom;
-    }
-
     protected GroupeEtudiant projetDtoToGroupeEtudiant(ProjetDto projetDto) {
         if ( projetDto == null ) {
             return null;
@@ -1163,7 +1146,6 @@ public class DtoMapperImpl implements DtoMapper {
         GroupeEtudiant groupeEtudiant = new GroupeEtudiant();
 
         groupeEtudiant.setId( projetDto.getGroupeId() );
-        groupeEtudiant.setNom( projetDto.getGroupeNom() );
 
         return groupeEtudiant;
     }

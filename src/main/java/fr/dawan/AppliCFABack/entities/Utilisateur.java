@@ -28,7 +28,6 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@Column(nullable = true, length = 255)
 	private String civilite;
 
-	@Column(nullable = true)
 	private LocalDate dateDeNaissance;
 
 	@Column(nullable = true, length = 255)
@@ -329,11 +328,6 @@ public class Utilisateur extends BaseEntity implements Serializable {
 			if (other.civilite != null)
 				return false;
 		} else if (!civilite.equals(other.civilite))
-			return false;
-		if (dateDeNaissance == null) {
-			if (other.dateDeNaissance != null)
-				return false;
-		} else if (!dateDeNaissance.equals(other.dateDeNaissance))
 			return false;
 		return true;
 	}

@@ -17,10 +17,7 @@ import freemarker.core.ParseException;
 import freemarker.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
@@ -168,29 +165,20 @@ public class PromotionServiceImpl implements PromotionService {
 	 */
 	
 	@Override
-	public List<PromotionDto> getAllPromotions(int page, int size, Optional<String> choixOpt, String search) {
-		List<Promotion> promoVille = promoRepo.findAllByNomOrCentreFormationNomIgnoreCase(search,choixOpt.get());
-		String choix = choixOpt.get();
+	public List<PromotionDto> getAllPromotions(int page, int size, int choix, String search) {
+		List<Promotion> promoVille = promoRepo.findAllByNomOrCentreFormationNomIgnoreCase(search,PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<>();
 		switch (choix){
-			case "sort_participants": promoVille.sort(Comparator.comparing(Promotion::getNbParticipants).reversed());
-				break;
-			case "sort_datefin": promoVille.sort(Comparator.comparing(Promotion::getDateFin).reversed());
-				break;
-			case "sort_datedebut": promoVille.sort(Comparator.comparing(Promotion::getDateDebut));
-				break;
+			case 1: promoVille.sort(Comparator.comparing(Promotion::getNbParticipants).reversed());
+			break;
+			case 2: promoVille.sort(Comparator.comparing(Promotion::getDateFin).reversed());
+			break;
+			case 3: promoVille.sort(Comparator.comparing(Promotion::getDateDebut));
+			break;
 		}
 
-		int start = page * size;
-		int end = Math.min(start + size, promoVille.size());
-		List<Promotion> promotionsOnPage = promoVille.subList(start, end);
-
-		Page<Promotion> pageResult = new PageImpl<>(promotionsOnPage, PageRequest.of(page, size), promoVille.size());
-		/*
-
-		*/
 		if (!promoVille.isEmpty()){
-			for (Promotion p : pageResult) {
+			for (Promotion p : promoVille) {
 				PromotionDto promotionDto = mapper.promotionToPromotionDto(p);
 				res.add(promotionDto);
 			}
@@ -483,7 +471,7 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Override
 	public List<PromotionDto> getPromotionByIdFormateur(long id, int page, int size, String search ) {
-		List<Promotion> result = promoRepo.findAllByFormateurId(id, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Promotion> result = promoRepo.findAllByFormateurId(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
 		List<PromotionDto> res = new ArrayList<>();
 		if (!result.isEmpty()) {
 			for (Promotion p: result) {

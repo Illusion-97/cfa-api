@@ -149,11 +149,9 @@ public interface DtoMapper {
     PassageExamenDto passageExamenToPassageExamenDto(PassageExamen passageExamen);
 
     @Mapping(source = "groupe.id", target = "groupeId")
-    @Mapping(source = "groupe.nom", target = "groupeNom")
     ProjetDto projetToProjetDto(Projet projet);
 
     @Mapping(source = "groupeId", target = "groupe.id")
-    @Mapping(source = "groupeNom", target = "groupe.nom")
     Projet projetDtoToProjet(ProjetDto pdto);
 
     List<ProjetDto> listProjettoListProjetDto(List<Projet> projet);
@@ -316,7 +314,6 @@ public interface DtoMapper {
 	@Mapping(source = "lastName", target = "nom")
 	@Mapping(source = "email", target = "login")
 	@Mapping(source = "bornAt", target= "dateDeNaissance")
-	@Mapping(source = "honorific", target= "civilite")
 	Utilisateur employeeDg2ToUtilisateur(EmployeeDG2Dto eDg2);
 	
 

@@ -137,15 +137,6 @@ public class UtilisateurController {
 			throw new SaveInvalidException(e.getMessage());
         }
     }
-    
-    @PutMapping(value = "/tuteur", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> updateTuteur(@RequestBody UtilisateurDto uDto) throws SaveInvalidException {
-        try {
-            return ResponseEntity.ok(utilisateurService.updateTuteur(uDto));
-        } catch (Exception e) {
-			throw new SaveInvalidException(e.getMessage());
-        }
-    }
 
     /**
      * 
