@@ -87,10 +87,7 @@ public class CursusServiceImpl implements CursusService {
 
 	@Override
 	public List<CursusDto> getAllByPage(int page, int size, String search) {
-		List<Cursus> lst = cursusRepo
-				.findDistinctByTitreContainingIgnoringCaseOrFormationsTitreContainingIgnoringCase(search, search,
-						PageRequest.of(page, size))
-				.get().collect(Collectors.toList());
+		List<Cursus> lst = cursusRepo.findAllByTitre(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
 
 		// conversion vers Dto
 		List<CursusDto> lstDto = new ArrayList<>();
@@ -234,7 +231,6 @@ public class CursusServiceImpl implements CursusService {
 						if (optCursus.get().equals(cursusImport))
 							continue;
 						else if (!optCursus.get().equals(cursusImport)) {
-							cursusImport.setTitre(optCursus.get().getTitre());
 							cursusImport.setVersion(optCursus.get().getVersion());
 							cursusImport.setId(optCursus.get().getId());
 						}

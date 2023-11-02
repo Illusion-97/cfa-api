@@ -10,7 +10,6 @@ import fr.dawan.AppliCFABack.services.*;
 import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
 import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
 import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
-import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import freemarker.template.TemplateException;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;

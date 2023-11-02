@@ -69,5 +69,7 @@ public interface UtilisateurService {
 
 	void modifierRolesUtilisateur(long utilisateurId, List<Long> nouveauRolesIds) throws NotFoundException;
 
+	UtilisateurDto updateTuteur(UtilisateurDto uDto) throws SaveInvalidException;
+
 
 }
