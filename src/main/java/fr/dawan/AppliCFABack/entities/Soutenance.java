@@ -11,25 +11,15 @@ import javax.persistence.OneToOne;
 public class Soutenance extends BaseEntity implements Serializable {
 		
 	@OneToOne
+	//@Column(nullable = true)
 	private Etudiant etudiant;
-	
 	private String jour;
-	
 	private String heure;
-	
-	//@Column(nullable = true)
 	private String minAccueil;
-	
-	//@Column(nullable = true)
 	private String minEntretien;
-	
-	//@Column(nullable = true)
 	private String minQuestion;
-	
-	//@Column(nullable = true)
 	private String minEntretienFinal;
 	
-	//@Column(nullable = true)
 	private String minDeliberation;
 	 
 

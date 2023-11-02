@@ -1,17 +1,22 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.SoutenanceDto;
@@ -19,7 +24,15 @@ import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.SoutenanceRepository;
+import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.core.ParseException;
+import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 @Service
 @Transactional
@@ -27,15 +40,17 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 
 	@Autowired
 	SoutenanceRepository soutenanceRepository;
-	
 	@Autowired
 	EtudiantService etudiantService;
-
 	@Autowired
 	EmailService emailService;
-	
-	private static Logger logger = LoggerFactory.getLogger(EtudiantServiceImpl.class);
-	
+	private static Logger logger =Logger.getGlobal();
+	@Value("${app.storagefolder}")
+	private String storageFolder;
+	@Value("${backend.url}")
+	private String backendUrl;
+	@Autowired
+	private Configuration freemarkerConfig;
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
@@ -43,8 +58,10 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 	public SoutenanceDto getById(long id) {
 		Optional<Soutenance> soutenance = soutenanceRepository.findById(id);
 		if (soutenance.isPresent()) {
+			
 			return mapper.soutenanceToSoutenanceDto(soutenance.get());
 		}
+		
 		return null;
 	}
 	
@@ -53,16 +70,16 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		List<Soutenance> soutenances = soutenanceRepository.findAll();
 		if (!soutenances.isEmpty()) {
 			List<SoutenanceDto> soutenanceDtos = new ArrayList<>();
-			
 			for (Soutenance soutenance : soutenances) {
 				SoutenanceDto soutenanceDto = new SoutenanceDto();
 				soutenanceDto = mapper.soutenanceToSoutenanceDto(soutenance);
 				soutenanceDtos.add(soutenanceDto);
 			}
+			
 			return soutenanceDtos;
 		}
+		
 		return null;
-
 	}
 
 	@Override
@@ -76,15 +93,13 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 			//	"Convocation examen", "Vous êtes convoquez pour l'éxamen ...", 
 				//Optional.of("/cfa-portal-api/src/main/resources/templates/convocationExamen.ftl"), 
 				//Optional.of("Convocation examen"), tDto);
-		
 		try {
 			soutenanceRepository.saveAndFlush(soutenance);
-			
 		} catch (Exception ex) {
-			logger.warn("Error save etudiant", ex);
-		}			
-		return mapper.soutenanceToSoutenanceDto(soutenance);
+			logger.log(Level.WARNING, "Error save etudiant", ex);
+		}		
 		
+		return mapper.soutenanceToSoutenanceDto(soutenance);
 	}
 
 	@Override
@@ -112,6 +127,7 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		return soutenanceDtos;
 	}
 	
+	@Override
 	public List<SoutenanceDto> getPageByPromotionId(long id, int page, int size) {
 		List<Soutenance> lstSoutenances = soutenanceRepository.getPageByPromotionId(id, PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<SoutenanceDto> lstSoutenanceDtos = new ArrayList<>();
@@ -122,6 +138,28 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 			}
 		}
 		return lstSoutenanceDtos;
+	}
+
+	@Override
+	public String genererLstSoutenance(String promotion, long idPromotion) throws TemplateNotFoundException,
+	MalformedTemplateNameException, ParseException, IOException, TemplateException, DossierProjetException {
+		List<SoutenanceDto> soutenanceDto = getByPromotionId(idPromotion);
+		Map<String, Object> model = new HashMap<>();
+		model.put("backendUrl", backendUrl);
+		model.put("soutenaceDto", soutenanceDto);
+		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+		// TODO
+		Template template = freemarkerConfig.getTemplate("LstSoutenance.ftl");
+
+		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+		String outputPdf = storageFolder + "List_soutenance_"+ promotion +".pdf";
+		try {
+			ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
+		}
+
+		return outputPdf;
 	}	
 	
 }

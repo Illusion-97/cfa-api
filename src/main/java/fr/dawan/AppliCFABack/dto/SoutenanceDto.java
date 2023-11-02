@@ -5,20 +5,14 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class SoutenanceDto extends BaseEntityDto implements Serializable {
 	
+	// TODO Recuperation promotion formateur centre depuis etudiantDto 
 	private EtudiantDto etudiant;
-	
 	private String jour;
-	
 	private String heure;
-	
 	private String minAccueil;
-	
 	private String minEntretien;
-	
 	private String minQuestion;
-	
 	private String minEntretienFinal;
-	
 	private String minDeliberation;
 	
 	public SoutenanceDto() {
