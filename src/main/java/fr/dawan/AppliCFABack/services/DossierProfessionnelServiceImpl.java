@@ -198,7 +198,6 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
             annexe.setPieceJointe(file.getOriginalFilename()); 
             annexe.setLibelleAnnexe("");
             annexes.add(annexe);
-
             annexe = annexeRepository.save(annexe);
 
             try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(pathFile))) {

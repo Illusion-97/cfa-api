@@ -30,6 +30,7 @@ import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.SoutenanceDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
@@ -65,6 +66,7 @@ import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
@@ -76,7 +78,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-03T09:15:55+0100",
+    date = "2023-11-03T09:39:19+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -1039,6 +1041,50 @@ public class DtoMapperImpl implements DtoMapper {
         evaluationFormation.setDateEvaluation( evalDto.getDateEvaluation() );
 
         return evaluationFormation;
+    }
+
+    @Override
+    public SoutenanceDto soutenanceToSoutenanceDto(Soutenance soutenance) {
+        if ( soutenance == null ) {
+            return null;
+        }
+
+        SoutenanceDto soutenanceDto = new SoutenanceDto();
+
+        soutenanceDto.setId( soutenance.getId() );
+        soutenanceDto.setVersion( soutenance.getVersion() );
+        soutenanceDto.setEtudiant( etudiantToEtudiantDto( soutenance.getEtudiant() ) );
+        soutenanceDto.setJour( soutenance.getJour() );
+        soutenanceDto.setHeure( soutenance.getHeure() );
+        soutenanceDto.setMinAccueil( soutenance.getMinAccueil() );
+        soutenanceDto.setMinEntretien( soutenance.getMinEntretien() );
+        soutenanceDto.setMinQuestion( soutenance.getMinQuestion() );
+        soutenanceDto.setMinEntretienFinal( soutenance.getMinEntretienFinal() );
+        soutenanceDto.setMinDeliberation( soutenance.getMinDeliberation() );
+
+        return soutenanceDto;
+    }
+
+    @Override
+    public Soutenance soutenanceDtoToSoutenance(SoutenanceDto soutenanceDto) {
+        if ( soutenanceDto == null ) {
+            return null;
+        }
+
+        Soutenance soutenance = new Soutenance();
+
+        soutenance.setId( soutenanceDto.getId() );
+        soutenance.setVersion( soutenanceDto.getVersion() );
+        soutenance.setEtudiant( etudiantDtoToEtudiant( soutenanceDto.getEtudiant() ) );
+        soutenance.setJour( soutenanceDto.getJour() );
+        soutenance.setHeure( soutenanceDto.getHeure() );
+        soutenance.setMinAccueil( soutenanceDto.getMinAccueil() );
+        soutenance.setMinEntretien( soutenanceDto.getMinEntretien() );
+        soutenance.setMinQuestion( soutenanceDto.getMinQuestion() );
+        soutenance.setMinEntretienFinal( soutenanceDto.getMinEntretienFinal() );
+        soutenance.setMinDeliberation( soutenanceDto.getMinDeliberation() );
+
+        return soutenance;
     }
 
     protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {

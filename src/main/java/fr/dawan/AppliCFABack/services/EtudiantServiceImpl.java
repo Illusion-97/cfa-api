@@ -28,6 +28,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -1159,5 +1162,20 @@ public class EtudiantServiceImpl implements EtudiantService {
 			etudiantDtos.add(etudiantDto);
 		});
 		return etudiantDtos;
+	}
+
+	@Override
+	public List<EtudiantDto> getEtudiantByPromotionId(long id) {
+		List<Etudiant> resultEtudiants = etudiantRepository.getEtudiantByPromotionId(id);
+		List<EtudiantDto> res = new ArrayList<>();
+		if (!resultEtudiants.isEmpty()) {
+			for (Etudiant etudiant : resultEtudiants) {
+				EtudiantDto etudiantDto = mapper.etudiantToEtudiantDto(etudiant);
+				res.add(etudiantDto);
+			}
+			return res;
+		}else {
+			return null;
+		}
 	}
 }
