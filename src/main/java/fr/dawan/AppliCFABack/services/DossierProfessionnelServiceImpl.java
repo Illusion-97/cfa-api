@@ -89,7 +89,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     @Value("src/main/resources/files/bulletinsEvaluations")
     private String storageFolder;
     
-    @Value("${app.storagefolder2}")
+    @Value("${app.storagefolder}")
     private String storageFolder2;
     
     private static Logger logger = Logger.getGlobal();
@@ -189,19 +189,18 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
             f.setDossierProfessionnel(dp);
         }
 
-        // Mettre à jour les annexes
         String path = storageFolder2 + "DossierProfessionnel" + "/";
         List<Annexe> annexes = dp.getAnnexes();
 
         for (MultipartFile file : files) {
             String pathFile = storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename();
-            File newAnnexe = new File(pathFile);
             Annexe annexe = new Annexe();
-            annexe.setPieceJointe(newAnnexe);
+            annexe.setPieceJointe(file.getOriginalFilename()); 
             annexe.setLibelleAnnexe("");
             annexes.add(annexe);
+            annexe = annexeRepository.save(annexe);
 
-            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))) {
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(pathFile))) {
                 bos.write(file.getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -443,6 +442,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 		        Map<String, Object> model = new HashMap<>();
 		        model.put("backendUrl", backendUrl);
+		        model.put("annexePJ", storageFolder2);
 		        model.put("et", dossier.getEtudiant());
 		        model.put("at", at);
 		        model.put("dp", dossier);
