@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantSoutenanceDto;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -362,4 +363,8 @@ public interface DtoMapper {
     SoutenanceDto soutenanceToSoutenanceDto(Soutenance soutenance);
 
     Soutenance soutenanceDtoToSoutenance(SoutenanceDto soutenanceDto);
+
+    @Mapping(source = "utilisateur", target = "utilisateurDto")
+    @Mapping(source = "promotions", target = "promotionsDto")
+    EtudiantSoutenanceDto etudiantToEtudiantSoutenanceDto(Etudiant etudiant);
 }
