@@ -1,12 +1,13 @@
 package fr.dawan.AppliCFABack.dto;
 
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantSoutenanceDto;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class SoutenanceDto extends BaseEntityDto implements Serializable {
 	
 	// TODO Recuperation promotion formateur centre depuis etudiantDto 
-	private EtudiantDto etudiant;
+	private EtudiantSoutenanceDto etudiant;
 	private String jour;
 	private String heure;
 	private String minAccueil;
@@ -19,11 +20,11 @@ public class SoutenanceDto extends BaseEntityDto implements Serializable {
 		super();
 	}
 
-	public EtudiantDto getEtudiant() {
+	public EtudiantSoutenanceDto getEtudiant() {
 		return etudiant;
 	}
 
-	public void setEtudiant(EtudiantDto etudiant) {
+	public void setEtudiant(EtudiantSoutenanceDto etudiant) {
 		this.etudiant = etudiant;
 	}
 
