@@ -481,6 +481,8 @@ public class InterventionServiceImpl implements InterventionService {
 						if (interventionImported.equals(intervInDb.get())) {
 							continue;
 						}
+						intervInDb.get().setDateDebut(interventionImported.getDateDebut());
+						intervInDb.get().setDateFin(interventionImported.getDateFin());
 						Optional<Promotion> promotion = promoRepository.findByIdDg2(idPrmotionDg2);
 						if (promotion.isPresent() && interventionImported.getPromotions()!=null) {
 
