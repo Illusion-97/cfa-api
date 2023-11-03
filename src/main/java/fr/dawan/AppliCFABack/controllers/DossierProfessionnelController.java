@@ -10,6 +10,7 @@ import fr.dawan.AppliCFABack.services.*;
 import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
 import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
 import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import freemarker.template.TemplateException;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class DossierProfessionnelController {
 
 	@Autowired
 	FilesService fileService;
-	
+
 	@Autowired
 	private FacultatifService facultatifService;
 
@@ -180,23 +181,11 @@ public class DossierProfessionnelController {
 
 	@PostMapping(value = "/upload/{etudiantId}/{cursusId}", consumes = "multipart/form-data", produces = "application/json")
 	public ResponseEntity<String> handleFileUpload(@PathVariable("etudiantId") long etudiantId, @PathVariable("cursusId") long cursusId, @RequestParam("fileImport") MultipartFile file, @RequestParam("nom") String nom ) throws IOException, EtudiantNotFoundException, CursusNotFoundException {
-<<<<<<< HEAD
 		String message = "";
 		List<MultipartFile> files = new ArrayList<>();
 		files.add(file);
-=======
-	    String message = "";
-	    List<MultipartFile> files = new ArrayList<>();
-	    files.add(file);
-	  
-	    try {    
-	        byte[] bytes = file.getBytes();
-	        Path path = Paths.get(storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename());
-	        Files.write(path, bytes);
->>>>>>> 25459cc57810495f198ca01cf2d3fdc5cee7bf54
 
 		try {
-
 			byte[] bytes = file.getBytes();
 			Path path = Paths.get(storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename());
 			Files.write(path, bytes);
@@ -237,19 +226,15 @@ public class DossierProfessionnelController {
 		DossierProEtudiantDto dpDto = dossierProService.saveFileImport(fileImport, id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
 	}
-<<<<<<< HEAD
 
-=======
-	
 	@DeleteMapping("/facultatif/{facultatifId}")
-    public ResponseEntity<String> deleteFacultatif(@PathVariable long facultatifId) {
-        try {
-            facultatifService.deleteById(facultatifId);
-            return new ResponseEntity<>("Facultatif supprimé avec succès.", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Erreur lors de la suppression du facultatif : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-	
->>>>>>> 25459cc57810495f198ca01cf2d3fdc5cee7bf54
+	public ResponseEntity<String> deleteFacultatif(@PathVariable long facultatifId) {
+		try {
+			facultatifService.deleteById(facultatifId);
+			return new ResponseEntity<>("Facultatif supprimé avec succès.", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Erreur lors de la suppression du facultatif : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }
