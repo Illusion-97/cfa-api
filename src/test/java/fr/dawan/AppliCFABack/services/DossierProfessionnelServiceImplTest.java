@@ -60,8 +60,7 @@ class DossierProfessionnelServiceImplTest {
     void givenDto_whenSave_thenAddToList_AndReturnUpdatedDto() throws FileNotFoundException, IOException {
         List<DossierProfessionnel> dossierEntities = new ArrayList<>();
         DossierProEtudiantDto dossierDto = new DossierProEtudiantDto(0L, "dossier1", null, null, null, null, null, 0);
-        DossierProfessionnel dossierEntity = new DossierProfessionnel("dossier1", null, null, null, null, null, null);
- ;
+        DossierProfessionnel dossierEntity = new DossierProfessionnel("dossier1", null, null, null, null, null, null);;
 
         Mockito.when(mapper.dossierProfessionnelDtoToDossierProfessionnel(dossierDto)).thenReturn(dossierEntity);
         Mockito.when(repository.saveAndFlush(dossierEntity)).thenAnswer(invocationOnMock -> {

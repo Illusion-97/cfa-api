@@ -78,7 +78,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-03T09:39:19+0100",
+    date = "2023-11-03T14:51:00+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
