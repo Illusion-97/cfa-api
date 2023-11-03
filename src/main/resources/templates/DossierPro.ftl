@@ -556,11 +556,11 @@ margin-right:20%;}
 </div>
 <div class="divAnnexesList">
 <#if exp[0]??>
-    <#list exp[0].dossierProfessionnel.annexes as an>
+   <#list exp[0].dossierProfessionnel.annexes as an>
         <div>
-            <img src="${an.pieceJointe}" alt="Annexe">
+            <img src="${an.pieceJointe}" >${an.pieceJointe}
         </div>
-        </#list>
+    </#list>
         </#if>
 </div>
 <div class="page-footer">

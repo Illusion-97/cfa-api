@@ -54,11 +54,14 @@ public class DossierProfessionnelController {
 	
 	@Autowired
 	FilesService fileService;
+	
+	@Autowired
+	private FacultatifService facultatifService;
 
 	@Autowired
 	private ObjectMapper objMap;
 
-	@Value("${app.storagefolder2}")
+	@Value("${app.storagefolder}")
 	private String storageFolder2;
 
 	@GetMapping(produces = "application/json")
@@ -183,7 +186,6 @@ public class DossierProfessionnelController {
 	    files.add(file);
 	  
 	    try {    
-	    
 	        byte[] bytes = file.getBytes();
 	        Path path = Paths.get(storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename());
 	        Files.write(path, bytes);
@@ -224,5 +226,15 @@ public class DossierProfessionnelController {
 		DossierProEtudiantDto dpDto = dossierProService.saveFileImport(fileImport, id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
 	}
+	
+	@DeleteMapping("/facultatif/{facultatifId}")
+    public ResponseEntity<String> deleteFacultatif(@PathVariable long facultatifId) {
+        try {
+            facultatifService.deleteById(facultatifId);
+            return new ResponseEntity<>("Facultatif supprimé avec succès.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Erreur lors de la suppression du facultatif : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 	
 }
