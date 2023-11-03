@@ -59,7 +59,7 @@ public class EmailServiceImpl implements EmailService {
 	CongeRepository congeRepository;
 	@Autowired
 	UtilisateurRepository userRepository;
-	
+
 	@Autowired
 	private JavaMailSender emailSender;
 	@Value("${backend.url}")
@@ -82,7 +82,7 @@ public class EmailServiceImpl implements EmailService {
 	private TimerCache timerCache;
 	/**
 	 * Envoi de mail au referent pour la demande de congé
-	 * 
+	 *
 	 * @param c objet Conge
 	 * @return SimpleMailMessage a être envoyé
 	 */
@@ -146,9 +146,9 @@ public class EmailServiceImpl implements EmailService {
 
 	/**
 	 * Envoie de mail avec lien pour modifier le mot de passe
-	 * 
+	 *
 	 * @param uDto Objet Utilisateur
-	 * @throws MessagingException 
+	 * @throws MessagingException
 	 * @exception Exception Returns une exception si le message n'est pas valide
 	 */
 
@@ -167,8 +167,8 @@ public class EmailServiceImpl implements EmailService {
 		msg.addRecipients(Message.RecipientType.TO, uDto.getLogin());
 		msg.setSubject("Réinitialisation du mot de passe du CFA Dawan");
 		msg.setText("Bonjour " + uDto.getNom()
-				+ ". <br /><br />Ce message vous a été envoyé car vous avez oublié votre mot de passe sur l'application"
-				+ " CFA Dawan. <br />Pour réinitialiser votre mot de passe, veuillez cliquer sur ce lien : " + body,
+						+ ". <br /><br />Ce message vous a été envoyé car vous avez oublié votre mot de passe sur l'application"
+						+ " CFA Dawan. <br />Pour réinitialiser votre mot de passe, veuillez cliquer sur ce lien : " + body,
 				"UTF-8", "html");
 
 		emailSender.send(msg);
@@ -260,7 +260,7 @@ public class EmailServiceImpl implements EmailService {
 		}
 	}
 	*/
-	
+
 	private void cacheTimer(long idUser){
 		LocalDate timer = LocalDate.now();
 

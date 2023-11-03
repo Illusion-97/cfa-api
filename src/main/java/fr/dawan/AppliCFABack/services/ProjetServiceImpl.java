@@ -22,7 +22,7 @@ public class ProjetServiceImpl implements ProjetService {
 
 	@Autowired
 	private ProjetRepository projetRepository;
-	
+
 	@Autowired
 	FilesService filesService;
 
@@ -31,7 +31,7 @@ public class ProjetServiceImpl implements ProjetService {
 
 	/**
 	 * Récupération de la liste des projets
-	 * 
+	 *
 	 * @return lstDto	Liste des objets projets
 	 */
 	@Override
@@ -49,13 +49,13 @@ public class ProjetServiceImpl implements ProjetService {
 	/**
 	 * Va permettre de récupérer tous les projets avec pagination
 	 * et recherche
-	 * 
+	 *
 	 * @param page	numero de la page
 	 * @param size	éléments sur la page
 	 * @param search	éléments projets (nom, description, nom groupe) 
 	 * @return lstDto Liste des objets projet
 	 */
-	
+
 	@Override
 	public List<ProjetDto> getAllByPage(int page, int size, String search) {
 		List<Projet> lst = projetRepository.findAllByNomContainingIgnoringCaseOrDescriptionContainingIgnoringCaseOrGroupeNomContainingIgnoringCase(search,search, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -71,10 +71,10 @@ public class ProjetServiceImpl implements ProjetService {
 
 	/**
 	 * Recherche d'un projet / nb
-	 * 
+	 *
 	 * @param search recherche par nom, description, nom groupe
 	 */
-	
+
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(projetRepository.countByNomContainingIgnoringCaseOrDescriptionContainingIgnoringCaseOrGroupeNomContainingIgnoringCase(search, search, search));
@@ -82,10 +82,10 @@ public class ProjetServiceImpl implements ProjetService {
 
 	/**
 	 * Récupération des projets en fonction de l'id
-	 * 
+	 *
 	 * @param id	id du projet
 	 */
-	
+
 	@Override
 	public ProjetDto getById(long id) {
 		Optional<Projet> p = projetRepository.findById(id);
@@ -100,15 +100,15 @@ public class ProjetServiceImpl implements ProjetService {
 
 	/**
 	 * Sauvegarde ou mise à jour d'un projet
-	 * 
+	 *
 	 */
-	
+
 	@Override
 	public ProjetDto saveOrUpdate(ProjetDto pDto) {
 		Projet p = mapper.projetDtoToProjet(pDto);
 
 		p = projetRepository.saveAndFlush(p);
-		
+
 		filesService.createDirectory("projets/" + p.getId());
 
 		return mapper.projetToProjetDto(p);
@@ -116,10 +116,10 @@ public class ProjetServiceImpl implements ProjetService {
 
 	/**
 	 * Suppression d'un projet
-	 * 
+	 *
 	 * @param id	Id concernant un projet
 	 */
-	
+
 	@Override
 	public void deleteById(long id) {
 		projetRepository.deleteById(id);
@@ -128,22 +128,22 @@ public class ProjetServiceImpl implements ProjetService {
 
 	/**
 	 * Récupération des projets en fonction de l'id du groupe
-	 * 
+	 *
 	 * @param id	id du groupe
 	 * @return result	Liste de projet du groupe
 	 */
-	
+
 	@Override
 	public List<ProjetDto> getByGroupeId(long id) {
-		List<Projet> projets = projetRepository.findAllByGroupeId(id);	
-		
+		List<Projet> projets = projetRepository.findAllByGroupeId(id);
+
 		List<ProjetDto> result = new ArrayList<>();
 		for(Projet p : projets) {
-		ProjetDto pDto = mapper.projetToProjetDto(p);
-		result.add(pDto);
+			ProjetDto pDto = mapper.projetToProjetDto(p);
+			result.add(pDto);
 		}
-		
+
 		return result;
-	}	
+	}
 
 }
