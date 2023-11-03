@@ -1,38 +1,30 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.SoutenanceDto;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Soutenance;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.SoutenanceRepository;
+import fr.dawan.AppliCFABack.tools.DossierProjetException;
+import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.core.ParseException;
+import freemarker.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.SoutenanceDto;
-import fr.dawan.AppliCFABack.entities.Soutenance;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.SoutenanceRepository;
-import fr.dawan.AppliCFABack.tools.DossierProjetException;
-import fr.dawan.AppliCFABack.tools.SaveInvalidException;
-import fr.dawan.AppliCFABack.tools.ToPdf;
-import freemarker.core.ParseException;
-import freemarker.template.Configuration;
-import freemarker.template.MalformedTemplateNameException;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
+import javax.transaction.Transactional;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -41,7 +33,7 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 	@Autowired
 	SoutenanceRepository soutenanceRepository;
 	@Autowired
-	EtudiantService etudiantService;
+	EtudiantRepository etudiantRepository;
 	@Autowired
 	EmailService emailService;
 	private static Logger logger =Logger.getGlobal();
@@ -85,13 +77,14 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 	@Override
 	public SoutenanceDto saveOrUpdate(SoutenanceDto tDto) throws SaveInvalidException {
 		Soutenance soutenance = new Soutenance();
-		if (tDto.getEtudiant().getId() > 0) {			
-			tDto.setEtudiant(etudiantService.getById(tDto.getEtudiant().getId()));
+		if (tDto.getEtudiant().getId() > 0) {
+			Etudiant etudiant = etudiantRepository.getOne(tDto.getEtudiant().getId());
+			tDto.setEtudiant(mapper.etudiantToEtudiantSoutenanceDto(etudiant));
 			soutenance = mapper.soutenanceDtoToSoutenance(tDto);
 		}
-		//emailService.sendMailSmtpUser(tDto.getEtudiant().getUtilisateurDto().getId(), 
-			//	"Convocation examen", "Vous êtes convoquez pour l'éxamen ...", 
-				//Optional.of("/cfa-portal-api/src/main/resources/templates/convocationExamen.ftl"), 
+		//emailService.sendMailSmtpUser(tDto.getEtudiant().getUtilisateurDto().getId(),
+			//	"Convocation examen", "Vous êtes convoquez pour l'éxamen ...",
+				//Optional.of("/cfa-portal-api/src/main/resources/templates/convocationExamen.ftl"),
 				//Optional.of("Convocation examen"), tDto);
 		try {
 			soutenanceRepository.saveAndFlush(soutenance);

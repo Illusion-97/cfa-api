@@ -16,7 +16,7 @@ import java.util.Optional;
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> {
 	@Query("FROM Utilisateur u WHERE u.nom=:user OR u.prenom=:user")
 	Utilisateur findByName(@Param("user") String name);
-	
+
 	@Query("FROM Utilisateur u WHERE u.login=:email")
 	Utilisateur findByEmail(String email);
 
@@ -24,7 +24,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 
 	//@Query("FROM Utilisateur u JOIN u.roles JOIN u.adresse a WHERE u.prenom LIKE %:prenom% OR u.nom LIKE %:nom% OR u.login LIKE %:login% OR a.libelle LIKE %:adresseLibelle%")
 	Page<Utilisateur> findAllByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseLibelleContainingIgnoringCase(String prenom, String nom,
-			String login, String adresseLibelle, Pageable pageable );
+																																						  String login, String adresseLibelle, Pageable pageable );
 
 	long countByPrenomContainingIgnoringCaseOrNomContainingIgnoringCaseOrLoginContainingIgnoringCaseOrAdresseLibelleContainingIgnoringCase(String prenom, String nom, String login, String search);
 
@@ -33,7 +33,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 
 	long countByRolesIntituleIgnoringCaseAndPrenomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndNomContainingIgnoringCaseOrRolesIntituleIgnoringCaseAndLoginContainingIgnoringCase(
 			String role1, String prenom, String role2, String nom, String role3, String login);
-	
+
 	Optional<Utilisateur> findByIdDg2(long idDg2);
 
 	Optional<Utilisateur> findDistinctByIdDg2(long personId);
