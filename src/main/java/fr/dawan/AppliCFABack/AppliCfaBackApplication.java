@@ -23,7 +23,7 @@ public class AppliCfaBackApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppliCfaBackApplication.class, args);
-		
+
 	}
 
 	@Autowired
@@ -34,18 +34,18 @@ public class AppliCfaBackApplication {
 	@Bean
 	public RestTemplate restTemplate() {
 		SimpleClientHttpRequestFactory clientHttpRequestFactory  = new SimpleClientHttpRequestFactory();
-        clientHttpRequestFactory.setConnectTimeout(20_000);
-        clientHttpRequestFactory.setReadTimeout(0);
-        return new RestTemplate(clientHttpRequestFactory);
+		clientHttpRequestFactory.setConnectTimeout(20_000);
+		clientHttpRequestFactory.setReadTimeout(0);
+		return new RestTemplate(clientHttpRequestFactory);
 	}
 
 	@Bean
 	public DtoMapper dtoMapper() {
 		DtoMapper dtM = new DtoMapperImpl();
-		
+
 		return new DtoMapperImpl();
 	}
-	
+
 	@Bean
 	public WebMvcConfigurer myMvcConfigurer() {
 
@@ -54,6 +54,7 @@ public class AppliCfaBackApplication {
 			// CORS ORIGIN
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/mail/schedule").allowedOrigins("*").allowedMethods("POST");
 				registry.addMapping("/swagger-ui/index.html").allowedMethods("POST", "PUT").allowedOrigins("*");
 				registry.addMapping("/**").allowedOrigins("*")
 						.allowedMethods("*", "GET", "POST", "PUT", "DELETE", "OPTIONS").allowedHeaders("*")
@@ -68,13 +69,13 @@ public class AppliCfaBackApplication {
 			public void addInterceptors(InterceptorRegistry registry) {
 			  registry.addInterceptor(tokenInterceptor);
 			}*/
-			
+
 			@Override
 			public void addResourceHandlers(ResourceHandlerRegistry registry) {
 				registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
 				registry.addResourceHandler("pictures/**").addResourceLocations("classpath:/pictures/");
 			};
 
-	};
-}
+		};
+	}
 }

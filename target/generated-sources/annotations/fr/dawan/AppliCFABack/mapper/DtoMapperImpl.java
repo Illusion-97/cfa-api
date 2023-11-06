@@ -30,9 +30,11 @@ import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.SoutenanceDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantSoutenanceDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.ActiviteTypeDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CompetenceDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
@@ -65,6 +67,7 @@ import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
@@ -76,7 +79,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-19T16:31:42+0200",
+    date = "2023-11-03T17:30:08+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -390,6 +393,7 @@ public class DtoMapperImpl implements DtoMapper {
         ProjetDto projetDto = new ProjetDto();
 
         projetDto.setGroupeId( projetGroupeId( projet ) );
+        projetDto.setGroupeNom( projetGroupeNom( projet ) );
         projetDto.setId( projet.getId() );
         projetDto.setVersion( projet.getVersion() );
         projetDto.setNom( projet.getNom() );
@@ -928,6 +932,7 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateur.setNom( eDg2.getLastName() );
         utilisateur.setLogin( eDg2.getEmail() );
         utilisateur.setDateDeNaissance( eDg2.getBornAt() );
+        utilisateur.setCivilite( eDg2.getHonorific() );
         utilisateur.setId( eDg2.getId() );
 
         return utilisateur;
@@ -1041,6 +1046,66 @@ public class DtoMapperImpl implements DtoMapper {
         return evaluationFormation;
     }
 
+    @Override
+    public SoutenanceDto soutenanceToSoutenanceDto(Soutenance soutenance) {
+        if ( soutenance == null ) {
+            return null;
+        }
+
+        SoutenanceDto soutenanceDto = new SoutenanceDto();
+
+        soutenanceDto.setId( soutenance.getId() );
+        soutenanceDto.setVersion( soutenance.getVersion() );
+        soutenanceDto.setEtudiant( etudiantToEtudiantSoutenanceDto( soutenance.getEtudiant() ) );
+        soutenanceDto.setJour( soutenance.getJour() );
+        soutenanceDto.setHeure( soutenance.getHeure() );
+        soutenanceDto.setMinAccueil( soutenance.getMinAccueil() );
+        soutenanceDto.setMinEntretien( soutenance.getMinEntretien() );
+        soutenanceDto.setMinQuestion( soutenance.getMinQuestion() );
+        soutenanceDto.setMinEntretienFinal( soutenance.getMinEntretienFinal() );
+        soutenanceDto.setMinDeliberation( soutenance.getMinDeliberation() );
+
+        return soutenanceDto;
+    }
+
+    @Override
+    public Soutenance soutenanceDtoToSoutenance(SoutenanceDto soutenanceDto) {
+        if ( soutenanceDto == null ) {
+            return null;
+        }
+
+        Soutenance soutenance = new Soutenance();
+
+        soutenance.setId( soutenanceDto.getId() );
+        soutenance.setVersion( soutenanceDto.getVersion() );
+        soutenance.setEtudiant( etudiantSoutenanceDtoToEtudiant( soutenanceDto.getEtudiant() ) );
+        soutenance.setJour( soutenanceDto.getJour() );
+        soutenance.setHeure( soutenanceDto.getHeure() );
+        soutenance.setMinAccueil( soutenanceDto.getMinAccueil() );
+        soutenance.setMinEntretien( soutenanceDto.getMinEntretien() );
+        soutenance.setMinQuestion( soutenanceDto.getMinQuestion() );
+        soutenance.setMinEntretienFinal( soutenanceDto.getMinEntretienFinal() );
+        soutenance.setMinDeliberation( soutenanceDto.getMinDeliberation() );
+
+        return soutenance;
+    }
+
+    @Override
+    public EtudiantSoutenanceDto etudiantToEtudiantSoutenanceDto(Etudiant etudiant) {
+        if ( etudiant == null ) {
+            return null;
+        }
+
+        EtudiantSoutenanceDto etudiantSoutenanceDto = new EtudiantSoutenanceDto();
+
+        etudiantSoutenanceDto.setUtilisateurDto( utilisateurToUtilisateurDto( etudiant.getUtilisateur() ) );
+        etudiantSoutenanceDto.setPromotionsDto( promotionListToPromotionDtoList( etudiant.getPromotions() ) );
+        etudiantSoutenanceDto.setId( etudiant.getId() );
+        etudiantSoutenanceDto.setVersion( etudiant.getVersion() );
+
+        return etudiantSoutenanceDto;
+    }
+
     protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
         if ( list == null ) {
             return null;
@@ -1092,6 +1157,21 @@ public class DtoMapperImpl implements DtoMapper {
         return id;
     }
 
+    private String projetGroupeNom(Projet projet) {
+        if ( projet == null ) {
+            return null;
+        }
+        GroupeEtudiant groupe = projet.getGroupe();
+        if ( groupe == null ) {
+            return null;
+        }
+        String nom = groupe.getNom();
+        if ( nom == null ) {
+            return null;
+        }
+        return nom;
+    }
+
     protected GroupeEtudiant projetDtoToGroupeEtudiant(ProjetDto projetDto) {
         if ( projetDto == null ) {
             return null;
@@ -1100,6 +1180,7 @@ public class DtoMapperImpl implements DtoMapper {
         GroupeEtudiant groupeEtudiant = new GroupeEtudiant();
 
         groupeEtudiant.setId( projetDto.getGroupeId() );
+        groupeEtudiant.setNom( projetDto.getGroupeNom() );
 
         return groupeEtudiant;
     }
@@ -1554,5 +1635,18 @@ public class DtoMapperImpl implements DtoMapper {
         intervention.setId( evaluationFormationDto.getInterventionId() );
 
         return intervention;
+    }
+
+    protected Etudiant etudiantSoutenanceDtoToEtudiant(EtudiantSoutenanceDto etudiantSoutenanceDto) {
+        if ( etudiantSoutenanceDto == null ) {
+            return null;
+        }
+
+        Etudiant etudiant = new Etudiant();
+
+        etudiant.setId( etudiantSoutenanceDto.getId() );
+        etudiant.setVersion( etudiantSoutenanceDto.getVersion() );
+
+        return etudiant;
     }
 }

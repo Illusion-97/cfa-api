@@ -3,7 +3,7 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 
 /**
- * 
+ *
  *
  * @see fr.dawan.appliCFABack.dto
  * @since 1.0
@@ -16,6 +16,16 @@ public class ProjetDto extends BaseEntityDto implements Serializable {
 	private String nom;
 	private String description;
 	private long groupeId;
+
+	public String getGroupeNom() {
+		return groupeNom;
+	}
+
+	public void setGroupeNom(String groupeNom) {
+		this.groupeNom = groupeNom;
+	}
+
+	private String groupeNom;
 
 	public ProjetDto() {
 		super();

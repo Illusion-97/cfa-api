@@ -52,7 +52,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Récupération de la liste des cursus
-	 * 
+	 *
 	 * @return lstDto	Liste des objets cursus
 	 */
 
@@ -78,7 +78,7 @@ public class CursusServiceImpl implements CursusService {
 	/**
 	 * Va permettre de récupérer tous les cursus avec pagination
 	 * recherche par titre ou formation
-	 * 
+	 *
 	 * @param page	numero de la page
 	 * @param size	éléments sur la page
 	 * @param search éléménts du cursus
@@ -110,7 +110,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Recherche d'un cursus
-	 * 
+	 *
 	 * @param search recherche par titre ou titre d'une formation
 	 */
 
@@ -122,7 +122,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Sauvegarde ou mise à jour d'un cursus
-	 * 
+	 *
 	 */
 
 	@Override
@@ -134,7 +134,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Suppression d'un cursus
-	 * 
+	 *
 	 * @param id	Id concernant le cursus
 	 */
 
@@ -146,7 +146,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Récupération des cursus en fonction de l'id
-	 * 
+	 *
 	 */
 
 	@Override
@@ -168,7 +168,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Récupération des cursus en fonction de l'id de la promotion
-	 * 
+	 *
 	 * @param id	id de la promotion
 	 * @return cDto	objet cursus
 	 */
@@ -180,7 +180,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Récupération des promo en fonction de l'id du cursus
-	 * 
+	 *
 	 * @param id Id du cursus
 	 */
 	//recuperation des promo par id cursus
@@ -191,11 +191,11 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Va récupérer tous les cursus de DG2
-	 * 
+	 *
 	 * @param email Email l'utilisateur dg2
 	 * @param password   Mot de passe de l'utlisateur dg2
-	 * @throws URISyntaxException 
-	 * 
+	 * @throws URISyntaxException
+	 *
 	 * @exception Exception retourne une exception,
 	 * si erreur dans la récupération des cursus
 	 */
@@ -222,7 +222,7 @@ public class CursusServiceImpl implements CursusService {
 
 				try {
 					//recuperation des values en json et lecture
-					fResJson = objectMapper.readValue(json, new TypeReference<List<CursusDG2Dto>>() { 
+					fResJson = objectMapper.readValue(json, new TypeReference<List<CursusDG2Dto>>() {
 					});
 				} catch (Exception e) {
 					logger.log(Level.WARNING, "failed json", e);

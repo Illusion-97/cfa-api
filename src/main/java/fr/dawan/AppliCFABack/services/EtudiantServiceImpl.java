@@ -28,6 +28,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -49,10 +52,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 	ProjetRepository projetRepository;
 	@Autowired
 	DossierProjetRepository dossierProRepo;
-	
-	@Autowired 
+
+	@Autowired
 	DossierProfessionnelRepository dossierRepo;
-	
+
 	@Autowired
 	TuteurRepository tuteurRepository;
 
@@ -110,10 +113,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 	private AdresseRepository adresseRepository;
 	@Autowired
 	private LivretEvaluationRepository livretEvaluationRepository;
-	
+
 	@Value("${base_url_dg2}")
-    private String baseUrl;
-	
+	private String baseUrl;
+
 	// ##################################################
 	// # CRUD #
 	// ##################################################
@@ -893,7 +896,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 							utilisateur.setAdresse(adresseDg2);
 						}
 					}
-					
+
 					//modif du rôle
 					List<UtilisateurRole> roles = utilisateur.getRoles() == null ? new ArrayList<>()
 							: utilisateur.getRoles();
@@ -1123,7 +1126,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return DtoTools.convert(e.get(), EtudiantDossierProjetDto.class);
 
 	}
-	
+
 	@Override
 	public List<EtudiantDto> getEtudiantByPromotion(long id, int page, int size, String search) {
 		List<Etudiant> result = etudiantRepository.getEtudiantByPromotion(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
@@ -1146,10 +1149,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public Etudiant savEtudiant(Utilisateur utilisateur) {
 		Etudiant etudiant = new Etudiant();
 		etudiant.setUtilisateur(utilisateur);
-		
+
 		return etudiantRepository.save(etudiant);
 	}
-	
+
 	@Override
 	public List<EtudiantDto> findAllByTuteurId(long tuteurId) {
 		List<Etudiant> etudiants = etudiantRepository.findAllByTuteurId(tuteurId);
@@ -1159,5 +1162,20 @@ public class EtudiantServiceImpl implements EtudiantService {
 			etudiantDtos.add(etudiantDto);
 		});
 		return etudiantDtos;
+	}
+
+	@Override
+	public List<EtudiantDto> getEtudiantByPromotionId(long id) {
+		List<Etudiant> resultEtudiants = etudiantRepository.getEtudiantByPromotionId(id);
+		List<EtudiantDto> res = new ArrayList<>();
+		if (!resultEtudiants.isEmpty()) {
+			for (Etudiant etudiant : resultEtudiants) {
+				EtudiantDto etudiantDto = mapper.etudiantToEtudiantDto(etudiant);
+				res.add(etudiantDto);
+			}
+			return res;
+		}else {
+			return null;
+		}
 	}
 }

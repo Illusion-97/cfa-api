@@ -1,14 +1,14 @@
 package fr.dawan.AppliCFABack.services;
 
-import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.entities.DossierProjet;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
-import fr.dawan.AppliCFABack.tools.DossierProjetException;
-import freemarker.template.TemplateException;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +16,20 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
+import fr.dawan.AppliCFABack.tools.DossierProjetException;
+import freemarker.template.TemplateException;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 @SpringBootTest
-@AutoConfigureMockMvc
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class DossierProjetControllerTests {
+@ExtendWith(MockitoExtension.class)
+class DossierProjetServiceImplTest {
 
-    @Autowired
+	@Autowired
     DossierProjetService service;
 
     @MockBean

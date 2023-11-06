@@ -14,7 +14,7 @@ public class Annexe extends BaseEntity implements Serializable {
 	private String libelleAnnexe;
 
     @Column(nullable = true)
-    private File pieceJointe;
+    private String pieceJointe;
 
     @ManyToOne
     private DossierProfessionnel dossierProfessionnel;
@@ -26,14 +26,13 @@ public class Annexe extends BaseEntity implements Serializable {
 	public void setLibelleAnnexe(String libelleAnnexe) {
 		this.libelleAnnexe = libelleAnnexe;
 	}
+	
 
-
-
-	public File getPieceJointe() {
+	public String getPieceJointe() {
 		return pieceJointe;
 	}
 
-	public void setPieceJointe(File pieceJointe) {
+	public void setPieceJointe(String pieceJointe) {
 		this.pieceJointe = pieceJointe;
 	}
 

@@ -18,7 +18,25 @@ public class DossierProEtudiantDto implements Serializable {
     private List<FacultatifDto> facultatifDto;
     private String fileImport;
     
-    public String getFileImport() {
+   
+	public DossierProEtudiantDto(long id, String nom, CursusDossierProDto cursusDto,
+			List<ExperienceProfessionnelleDto> experienceProfessionnelleDtos, List<AnnexeDto> annexeDtos,
+			List<FacultatifDto> facultatifDto, String fileImport, int version) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.cursusDto = cursusDto;
+		this.experienceProfessionnelleDtos = experienceProfessionnelleDtos;
+		this.annexeDtos = annexeDtos;
+		this.facultatifDto = facultatifDto;
+		this.fileImport = fileImport;
+		this.version = version;
+	}
+
+	public DossierProEtudiantDto() {
+	}
+
+	public String getFileImport() {
 		return fileImport;
 	}
 

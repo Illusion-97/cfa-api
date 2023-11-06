@@ -13,16 +13,16 @@ public class DossierProjet extends BaseEntity {
 
 	@ManyToOne
 	private Projet projet;
-	
+
 	@ManyToOne
-    private Etudiant etudiant;
-	@Column(nullable = true, name = "import", length = 100)
+	private Etudiant etudiant;
+	@Column(name = "import", length = 100)
 	private String dossierImport;
 	@ElementCollection
-    private List<String> annexeDossierProjets;
-	
+	private List<String> annexeDossierProjets;
+
 	@ElementCollection
-    private List<String> infoDossierProjets;
+	private List<String> infoDossierProjets;
 
 	@ElementCollection
 	private List<String> contenuDossierProjets;
@@ -57,17 +57,17 @@ public class DossierProjet extends BaseEntity {
 		this.projet = projet;
 	}
 
-    public Etudiant getEtudiant() {
-        return etudiant;
-    }
+	public Etudiant getEtudiant() {
+		return etudiant;
+	}
 
-    public void setEtudiant(Etudiant etudiant) {
-        this.etudiant = etudiant;
-    }
+	public void setEtudiant(Etudiant etudiant) {
+		this.etudiant = etudiant;
+	}
 
-    public List<String> getAnnexeDossierProjets() {
-        return annexeDossierProjets;
-    }
+	public List<String> getAnnexeDossierProjets() {
+		return annexeDossierProjets;
+	}
 
 	public void setAnnexeDossierProjets(List<String> annexeDossierProjets) {
 		this.annexeDossierProjets = annexeDossierProjets;
