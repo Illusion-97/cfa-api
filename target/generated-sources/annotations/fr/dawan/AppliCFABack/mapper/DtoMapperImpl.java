@@ -35,6 +35,7 @@ import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantSoutenanceDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionSoutenanceDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.ActiviteTypeDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CompetenceDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
@@ -79,8 +80,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-03T17:55:28+0100",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.34.0.v20230523-1233, environment: Java 18.0.1.1 (Oracle Corporation)"
+    date = "2023-11-08T12:28:08+0100",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -1099,7 +1100,7 @@ public class DtoMapperImpl implements DtoMapper {
         EtudiantSoutenanceDto etudiantSoutenanceDto = new EtudiantSoutenanceDto();
 
         etudiantSoutenanceDto.setUtilisateurDto( utilisateurToUtilisateurDto( etudiant.getUtilisateur() ) );
-        etudiantSoutenanceDto.setPromotionsDto( promotionListToPromotionDtoList( etudiant.getPromotions() ) );
+        etudiantSoutenanceDto.setPromotionsDto( promotionListToPromotionSoutenanceDtoList( etudiant.getPromotions() ) );
         etudiantSoutenanceDto.setId( etudiant.getId() );
         etudiantSoutenanceDto.setVersion( etudiant.getVersion() );
 
@@ -1648,5 +1649,34 @@ public class DtoMapperImpl implements DtoMapper {
         etudiant.setVersion( etudiantSoutenanceDto.getVersion() );
 
         return etudiant;
+    }
+
+    protected PromotionSoutenanceDto promotionToPromotionSoutenanceDto(Promotion promotion) {
+        if ( promotion == null ) {
+            return null;
+        }
+
+        PromotionSoutenanceDto promotionSoutenanceDto = new PromotionSoutenanceDto();
+
+        promotionSoutenanceDto.setType( promotion.getType() );
+        promotionSoutenanceDto.setNbParticipants( promotion.getNbParticipants() );
+        promotionSoutenanceDto.setNom( promotion.getNom() );
+        promotionSoutenanceDto.setDateDebut( promotion.getDateDebut() );
+        promotionSoutenanceDto.setDateFin( promotion.getDateFin() );
+
+        return promotionSoutenanceDto;
+    }
+
+    protected List<PromotionSoutenanceDto> promotionListToPromotionSoutenanceDtoList(List<Promotion> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<PromotionSoutenanceDto> list1 = new ArrayList<PromotionSoutenanceDto>( list.size() );
+        for ( Promotion promotion : list ) {
+            list1.add( promotionToPromotionSoutenanceDto( promotion ) );
+        }
+
+        return list1;
     }
 }

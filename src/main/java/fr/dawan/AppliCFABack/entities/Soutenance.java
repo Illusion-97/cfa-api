@@ -19,7 +19,6 @@ public class Soutenance extends BaseEntity implements Serializable {
 	private String minEntretien;
 	private String minQuestion;
 	private String minEntretienFinal;
-	
 	private String minDeliberation;
 	 
 

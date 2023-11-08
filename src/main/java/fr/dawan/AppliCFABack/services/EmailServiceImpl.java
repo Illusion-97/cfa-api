@@ -1,5 +1,33 @@
 package fr.dawan.AppliCFABack.services;
 
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.interceptors.TokenSaver;
+import fr.dawan.AppliCFABack.repositories.*;
+import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
+import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
+import fr.dawan.AppliCFABack.tools.TimerCache;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.HashMap;
@@ -11,39 +39,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-
-import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-import fr.dawan.AppliCFABack.interceptors.TokenSaver;
-import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
-import fr.dawan.AppliCFABack.repositories.CongeRepository;
-import fr.dawan.AppliCFABack.repositories.FormateurRepository;
-import fr.dawan.AppliCFABack.repositories.InterventionRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
-import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
-import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
-import fr.dawan.AppliCFABack.tools.TimerCache;
-import fr.dawan.AppliCFABack.tools.ToPdf;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
 
 @Service
 @Transactional
@@ -192,6 +187,42 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
+	public <T> void sendMailUser1ToUser2(String from, String to, String header, String msg,
+									 String nameFile, T tDto){
+
+		try {
+			MimeMessage message = emailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+			helper.setFrom(from);
+			helper.setTo(to);
+			helper.setSubject(header);
+			helper.setText(msg);
+
+			Map<String, Object> model = new HashMap<>();
+			model.put("backendUrl", backendUrl);
+			model.put("tDto", tDto);
+			freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+			Template template = freemarkerConfig.getTemplate(nameFile + ".ftl");
+
+			String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+			String outputPdf = storageFolder + "pdfEmail/"+ nameFile +".pdf";
+			try {
+				ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
+			}
+			Resource pdfResource = new FileSystemResource(outputPdf); // Exemple avec FileSystemResource
+
+			helper.addAttachment(outputPdf, pdfResource);
+
+			emailSender.send(message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path, Optional<String> fileName) {
 		Optional<Utilisateur> user = userRepository.findById(idTo);
 
@@ -218,48 +249,6 @@ public class EmailServiceImpl implements EmailService {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
 		}
 	}
-	/* TODO
-	@Override
-	public <T> void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path, Optional<String> fileName, T TDto) {
-		Optional<Utilisateur> user = userRepository.findById(idTo);
-
-		if (user.isPresent()) {
-			try {
-				MimeMessage message = emailSender.createMimeMessage();
-				MimeMessageHelper helper = new MimeMessageHelper(message, true);
-				helper.setTo(user.get().getLogin());
-				helper.setSubject(header);
-				helper.setText(msg, true);
-
-				// Partie pour ajouter un pdf si un "path" est renseigné
-				String pdfFilePath = path.get(); // Utilisez le chemin du fichier PDF s'il est présent
-				if (!pdfFilePath.isEmpty()) {
-					
-					Map<String, Object> model = new HashMap<>();
-					model.put("backendUrl", backendUrl);
-					model.put("dto", TDto);
-					freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
-				//SoutenanceDto ... enlever Dto...
-					Template template = freemarkerConfig.getTemplate(TDto.getClass().getName() + ".ftl");
-
-					String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-					String outputPdf = storageFolder + "Convocation_Examen.pdf";
-					try {
-						ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
-					} catch (Exception e) {
-						logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
-					}
-				}
-
-				emailSender.send(message);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			ResponseEntity.status(HttpStatus.NOT_FOUND);
-		}
-	}
-	*/
 
 	private void cacheTimer(long idUser){
 		LocalDate timer = LocalDate.now();
