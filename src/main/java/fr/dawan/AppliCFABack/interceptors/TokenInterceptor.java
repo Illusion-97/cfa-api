@@ -27,6 +27,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 					&& !request.getRequestURI().equals("/")
 					&& !request.getRequestURI().equals("/error")
 					&& !request.getRequestURI().equals("/forgot")
+					&& !request.getRequestURI().equals("/utilisateurs/tuteur")
 					&& !request.getRequestURI().equals("/reset-password")) {
 				String headerAuth = request.getHeader("Authorization");
 				logger.info(">>>>>> inside Token Interceptor...");

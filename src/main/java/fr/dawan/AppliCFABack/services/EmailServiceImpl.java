@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.mail.Message;
@@ -26,7 +25,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
@@ -41,9 +39,7 @@ import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 import fr.dawan.AppliCFABack.tools.TimerCache;
-import fr.dawan.AppliCFABack.tools.ToPdf;
 import freemarker.template.Configuration;
-import freemarker.template.Template;
 
 @Service
 @Transactional
@@ -160,7 +156,7 @@ public class EmailServiceImpl implements EmailService {
 		String token = jwtTokenUtil.doGenerateToken(claims, uDto.getLogin());
 		TokenSaver.getTokensbyemail().put(uDto.getLogin(), token);
 
-		String resetLink = "http://localhost:8081//#/reset-password?token=" + token;
+		String resetLink = "http://localhost:8081/#/reset-password?token=" + token;
 		String body = "<HTML><body> <a href=\"" + resetLink + "\">Réinitialiser mon mot de passe</a></body></HTML>";
 
 		MimeMessage msg = emailSender.createMimeMessage();
