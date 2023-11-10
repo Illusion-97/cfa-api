@@ -1,11 +1,9 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.SoutenanceDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionSoutenanceDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Promotion;
 import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
@@ -24,7 +22,6 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +47,7 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 	@Autowired
 	private Configuration freemarkerConfig;
 	@Autowired
-	private DtoMapper mapper = new DtoMapperImpl();
+	private DtoMapper mapper;
 
 	@Override
 	public SoutenanceDto getById(long id) {
@@ -92,9 +89,9 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 
 		// Méthode envoie de mail
 		PromotionSoutenanceDto promotionSoutenance = new PromotionSoutenanceDto();
+		Date date = new Date();
+		int annee = date.getYear() + 1900;
 		for (PromotionSoutenanceDto promotion: tDto.getEtudiant().getPromotionsDto()) {
-			Date date = new Date();
-			int annee = date.getYear() + 1900;
 
 			if (promotion.getDateDebut().getYear() == annee) {
 				promotionSoutenance = promotion;
@@ -105,13 +102,13 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		emailService.sendMailUser1ToUser2(mail, tDto.getEtudiant().getUtilisateurDto().getLogin(),
 				"Convocation " + promotionSoutenance.getNom()
 				, messageMail,
-				"convocationExamen", soutenance );
+				"convocationExamen", tDto );
 
 		//Sauvegarde de la soutenance
 		try {
 			soutenanceRepository.saveAndFlush(soutenance);
 		} catch (Exception ex) {
-			logger.log(Level.WARNING, "Error save etudiant", ex);
+			logger.log(Level.WARNING, "Error save soutenance", ex);
 		}		
 		
 		return mapper.soutenanceToSoutenanceDto(soutenance);

@@ -212,9 +212,8 @@ public class EmailServiceImpl implements EmailService {
 			} catch (Exception e) {
 				logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
 			}
-			Resource pdfResource = new FileSystemResource(outputPdf); // Exemple avec FileSystemResource
-
-			helper.addAttachment(outputPdf, pdfResource);
+			Resource pdfResource = new FileSystemResource(outputPdf);
+			helper.addAttachment(header, pdfResource);
 
 			emailSender.send(message);
 		} catch (Exception e) {
