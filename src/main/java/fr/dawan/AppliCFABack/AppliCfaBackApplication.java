@@ -12,6 +12,7 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -23,7 +24,7 @@ public class AppliCfaBackApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppliCfaBackApplication.class, args);
-		
+
 	}
 
 	@Autowired
@@ -34,18 +35,18 @@ public class AppliCfaBackApplication {
 	@Bean
 	public RestTemplate restTemplate() {
 		SimpleClientHttpRequestFactory clientHttpRequestFactory  = new SimpleClientHttpRequestFactory();
-        clientHttpRequestFactory.setConnectTimeout(20_000);
-        clientHttpRequestFactory.setReadTimeout(0);
-        return new RestTemplate(clientHttpRequestFactory);
+		clientHttpRequestFactory.setConnectTimeout(20_000);
+		clientHttpRequestFactory.setReadTimeout(0);
+		return new RestTemplate(clientHttpRequestFactory);
 	}
 
 	@Bean
 	public DtoMapper dtoMapper() {
 		DtoMapper dtM = new DtoMapperImpl();
-		
+
 		return new DtoMapperImpl();
 	}
-	
+
 	@Bean
 	public WebMvcConfigurer myMvcConfigurer() {
 
@@ -65,17 +66,17 @@ public class AppliCfaBackApplication {
 			}
 
 			// Intercepteurs
-			/*@Override
+			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
 			  registry.addInterceptor(tokenInterceptor);
-			}*/
-			
+			}
+
 			@Override
 			public void addResourceHandlers(ResourceHandlerRegistry registry) {
 				registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
 				registry.addResourceHandler("pictures/**").addResourceLocations("classpath:/pictures/");
 			};
 
-	};
-}
+		};
+	}
 }
