@@ -226,7 +226,8 @@ public class EmailServiceImpl implements EmailService {
 				if (dateWithin3Months) {
 					ScheduledExecutorService threadUsesForSchedule = Executors.newScheduledThreadPool(1);
 					String message = "Pensez à remplir l'évaluation : " + idUser;
-					threadUsesForSchedule.schedule(() -> sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of("")),1, TimeUnit.SECONDS);
+					threadUsesForSchedule.schedule(() -> sendMailSmtpUser(idUser, "Titre automatique", message,
+							Optional.of(""), Optional.of("")),1, TimeUnit.SECONDS);
 				}
 			}
 		}

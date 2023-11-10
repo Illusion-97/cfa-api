@@ -14,6 +14,11 @@
 	<version>1.0</version>
 	<name>cfa</name>
 	<description>Demo project for Spring Boot</description>
+	<profiles>
+		<profile>
+			<id>test</id>
+		</profile>
+	</profiles>
 	<properties>
 		<java.version>1.8</java.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>

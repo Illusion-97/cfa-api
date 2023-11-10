@@ -114,7 +114,7 @@ public class DossierProjetController {
     public ResponseEntity<DossierProjetDto> saveDossierProjet(
     		@RequestBody DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		DossierProjetDto dpEtuDto = dossierProService.saveOrUpdate(dpDto);
-		dossierProService.emailTuteur(dpEtuDto);
+		//dossierProService.emailTuteur(dpEtuDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpEtuDto);
     }
 

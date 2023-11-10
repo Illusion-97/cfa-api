@@ -76,7 +76,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-17T16:45:47+0200",
+    date = "2023-10-27T14:19:53+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -390,6 +390,7 @@ public class DtoMapperImpl implements DtoMapper {
         ProjetDto projetDto = new ProjetDto();
 
         projetDto.setGroupeId( projetGroupeId( projet ) );
+        projetDto.setGroupeNom( projetGroupeNom( projet ) );
         projetDto.setId( projet.getId() );
         projetDto.setVersion( projet.getVersion() );
         projetDto.setNom( projet.getNom() );
@@ -1092,6 +1093,21 @@ public class DtoMapperImpl implements DtoMapper {
         return id;
     }
 
+    private String projetGroupeNom(Projet projet) {
+        if ( projet == null ) {
+            return null;
+        }
+        GroupeEtudiant groupe = projet.getGroupe();
+        if ( groupe == null ) {
+            return null;
+        }
+        String nom = groupe.getNom();
+        if ( nom == null ) {
+            return null;
+        }
+        return nom;
+    }
+
     protected GroupeEtudiant projetDtoToGroupeEtudiant(ProjetDto projetDto) {
         if ( projetDto == null ) {
             return null;
@@ -1100,6 +1116,7 @@ public class DtoMapperImpl implements DtoMapper {
         GroupeEtudiant groupeEtudiant = new GroupeEtudiant();
 
         groupeEtudiant.setId( projetDto.getGroupeId() );
+        groupeEtudiant.setNom( projetDto.getGroupeNom() );
 
         return groupeEtudiant;
     }

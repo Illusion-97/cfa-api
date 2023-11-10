@@ -25,8 +25,7 @@ public interface DossierProjetService {
 
 	List<DossierProjetDto> getByIdEtudiant(long id);
 
-	String genererDossierProjet(long idDossierProjet) throws DossierProjetException, TemplateNotFoundException,
-		MalformedTemplateNameException, ParseException, IOException, TemplateException;
+	String genererDossierProjet(long idDossierProjet) throws DossierProjetException, IOException, TemplateException;
 
 	DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException;
 	DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException;

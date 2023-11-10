@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.dawan.AppliCFABack.controllers.DossierProjetController;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
+import fr.dawan.AppliCFABack.dto.ProjetDto;
+import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -24,6 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
@@ -40,17 +47,15 @@ class DossierProjetControllerTests {
 	private ObjectMapper objectMapper;
 
 	private long idDossierProjet;
+	private List<Long> listLongInit = new ArrayList<>();
 	
 	@BeforeAll
 	void init() {
 		assertThat(dossierProjetController).isNotNull();
-//		initDataBase();
 	}
 	
 	@AfterAll
 	void clean(){
-//		testDelete();
-//		deleteDatabase();
 	}
 	@Test
 	void testFindAll() {
@@ -68,7 +73,7 @@ class DossierProjetControllerTests {
 		try {
 			mockMvc.perform(get("/dossierProjet/" + idDossierProjet).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
-					.andExpect(jsonPath("$.nom", is("nom DossierProjet 1")));
+					.andExpect(jsonPath("$.id", is(idDossierProjet)));
 
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -79,16 +84,21 @@ class DossierProjetControllerTests {
 	void testSave() {
 		try {
 			DossierProjetDto dpToInsert = new DossierProjetDto();
+
+			// Champs nécessaires a la création d'un Dossier Projet
 			dpToInsert.setNom("nom DossierProjet save");
-			
+			ProjetDossierProjetDto projetTest = ProjetDossierProjetDto.create(1,"testProjet",0);
+			dpToInsert.setProjet(projetTest);
+			dpToInsert.setCompetenceProfessionnelleIds(listLongInit);
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+
 			String jsonReq = objectMapper.writeValueAsString(dpToInsert);
 
-			String jsonReponse = mockMvc.perform(post("/dossierProjet")
+			String jsonReponse = mockMvc.perform(post("/dossierProjet/save")
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON)
-					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+					.content(jsonReq)).andExpect(status().isCreated()).andReturn().getResponse().getContentAsString();
 
 			DossierProjetDto dpDto = objectMapper.readValue(jsonReponse, DossierProjetDto.class);
 			assertTrue(dpDto.getId() != 0);
