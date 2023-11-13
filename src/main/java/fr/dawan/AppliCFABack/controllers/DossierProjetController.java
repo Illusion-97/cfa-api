@@ -106,7 +106,6 @@ public class DossierProjetController {
 	public ResponseEntity<DossierProjetDto> updateDossierProjet(
 			@RequestBody DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		DossierProjetDto dpEtuDto = dossierProService.saveOrUpdate(dpDto);
-		dossierProService.emailTuteur(dpEtuDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpEtuDto);
 	}
 
@@ -114,16 +113,12 @@ public class DossierProjetController {
     public ResponseEntity<DossierProjetDto> saveDossierProjet(
     		@RequestBody DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		DossierProjetDto dpEtuDto = dossierProService.saveOrUpdate(dpDto);
-		//dossierProService.emailTuteur(dpEtuDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpEtuDto);
     }
 
 	@PostMapping(value = "/save-import/{dpid}", consumes = "multipart/form-data", produces = "application/json")
 	public ResponseEntity<DossierProjetDto> saveImport(@Nullable @RequestParam("import")MultipartFile file,
 															 @PathVariable("dpid") Long id) throws IOException {
-		//Chemin a changer selon les directives
-		//String path = storageFolder + "DossierProjet" + "/" ;
-		//fileService.createDirectory(path);
 		DossierProjetDto dpDto = dossierProService.importDossierProjet(file, id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
 	}
@@ -131,9 +126,6 @@ public class DossierProjetController {
 	@PostMapping(value = "/save-annexe/{dpid}", consumes = "multipart/form-data", produces = "application/json")
 	public ResponseEntity<DossierProjetDto> saveAnnexe(@RequestParam("pieceJointe") List<MultipartFile> files,
 															 @PathVariable("dpid") Long id) throws IOException {
-		//Chemin a changer selon les directives
-		//String path = storageFolder + "DossierProjet" + "/" ;
-		//fileService.createDirectory(path);
 		DossierProjetDto dpDto =  dossierProService.saveAnnexesDossierProjet(files, id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
 	}
@@ -141,13 +133,10 @@ public class DossierProjetController {
 	@PutMapping(value = "/update-annexe/{dpid}", consumes = "multipart/form-data", produces = "application/json")
 	public ResponseEntity<DossierProjetDto> updateAnnexe(@RequestParam("pieceJointe") List<MultipartFile> files,
 													   @PathVariable("dpid") Long id) throws IOException {
-		//Chemin a changer selon les directives
-		//String path = storageFolder + "DossierProjet" + "/" ;
-		//fileService.createDirectory(path);
+
 		DossierProjetDto dpDto =  dossierProService.saveAnnexesDossierProjet(files, id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
 	}
-	//DossierProjetEtudiantDto created = dossierProService.saveOrUpdateDossierProjet(dpEtuDto, id, files, file);
 	@DeleteMapping(value = "/{id}", produces = "text/plain")
 	public ResponseEntity<DossierProjetDto> deletefile(@RequestParam("file")String file, @PathVariable("id") Long id){
 		DossierProjetDto dpDto = dossierProService.deleteFile(file, id);
