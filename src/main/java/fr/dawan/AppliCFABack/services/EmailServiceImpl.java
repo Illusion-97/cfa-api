@@ -206,6 +206,7 @@ public class EmailServiceImpl implements EmailService {
 			Template template = freemarkerConfig.getTemplate(nameFile + ".ftl");
 
 			String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+			// TODO modifier le fichier ftl
 			String outputPdf = storageFolder + "pdfEmail/"+ nameFile +".pdf";
 			try {
 				ToPdf.convertHtmlToPdf(htmlContent, outputPdf);

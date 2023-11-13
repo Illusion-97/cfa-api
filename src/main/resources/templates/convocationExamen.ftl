@@ -8,6 +8,7 @@
     <style>
         .divGlobal
             {
+                /* TODO */
                 display: inline-block;
                 margin: 0 25% 0 5%;
             }

@@ -8,7 +8,9 @@
 <style>
     .divGlobal
         {
-            /* margin: 3px; */
+            /* margin: 3px;
+            TODO
+            */
         }
     table
         {

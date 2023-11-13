@@ -160,6 +160,7 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		model.put("backendUrl", backendUrl);
 		model.put("soutenanceDto", soutenanceDto);
 		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+		// TODO modifier le fichier ftl
 		Template template = freemarkerConfig.getTemplate("LstSoutenance.ftl");
 
 		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
