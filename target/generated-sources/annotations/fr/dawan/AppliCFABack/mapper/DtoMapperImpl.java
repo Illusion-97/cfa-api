@@ -33,6 +33,11 @@ import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
+<<<<<<< HEAD
+=======
+import fr.dawan.AppliCFABack.dto.customdtos.EtudiantSoutenanceDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionSoutenanceDto;
+>>>>>>> MailSoutenance
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.ActiviteTypeDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CompetenceDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
@@ -76,8 +81,13 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
+<<<<<<< HEAD
     date = "2023-11-10T16:21:39+0100",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_362 (Amazon.com Inc.)"
+=======
+    date = "2023-11-08T12:28:08+0100",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.5 (Oracle Corporation)"
+>>>>>>> MailSoutenance
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -1042,6 +1052,69 @@ public class DtoMapperImpl implements DtoMapper {
         return evaluationFormation;
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    public SoutenanceDto soutenanceToSoutenanceDto(Soutenance soutenance) {
+        if ( soutenance == null ) {
+            return null;
+        }
+
+        SoutenanceDto soutenanceDto = new SoutenanceDto();
+
+        soutenanceDto.setId( soutenance.getId() );
+        soutenanceDto.setVersion( soutenance.getVersion() );
+        soutenanceDto.setEtudiant( etudiantToEtudiantSoutenanceDto( soutenance.getEtudiant() ) );
+        soutenanceDto.setJour( soutenance.getJour() );
+        soutenanceDto.setHeure( soutenance.getHeure() );
+        soutenanceDto.setMinAccueil( soutenance.getMinAccueil() );
+        soutenanceDto.setMinEntretien( soutenance.getMinEntretien() );
+        soutenanceDto.setMinQuestion( soutenance.getMinQuestion() );
+        soutenanceDto.setMinEntretienFinal( soutenance.getMinEntretienFinal() );
+        soutenanceDto.setMinDeliberation( soutenance.getMinDeliberation() );
+
+        return soutenanceDto;
+    }
+
+    @Override
+    public Soutenance soutenanceDtoToSoutenance(SoutenanceDto soutenanceDto) {
+        if ( soutenanceDto == null ) {
+            return null;
+        }
+
+        Soutenance soutenance = new Soutenance();
+
+        soutenance.setId( soutenanceDto.getId() );
+        soutenance.setVersion( soutenanceDto.getVersion() );
+        soutenance.setEtudiant( etudiantSoutenanceDtoToEtudiant( soutenanceDto.getEtudiant() ) );
+        soutenance.setJour( soutenanceDto.getJour() );
+        soutenance.setHeure( soutenanceDto.getHeure() );
+        soutenance.setMinAccueil( soutenanceDto.getMinAccueil() );
+        soutenance.setMinEntretien( soutenanceDto.getMinEntretien() );
+        soutenance.setMinQuestion( soutenanceDto.getMinQuestion() );
+        soutenance.setMinEntretienFinal( soutenanceDto.getMinEntretienFinal() );
+        soutenance.setMinDeliberation( soutenanceDto.getMinDeliberation() );
+
+        return soutenance;
+    }
+
+    @Override
+    public EtudiantSoutenanceDto etudiantToEtudiantSoutenanceDto(Etudiant etudiant) {
+        if ( etudiant == null ) {
+            return null;
+        }
+
+        EtudiantSoutenanceDto etudiantSoutenanceDto = new EtudiantSoutenanceDto();
+
+        etudiantSoutenanceDto.setUtilisateurDto( utilisateurToUtilisateurDto( etudiant.getUtilisateur() ) );
+        etudiantSoutenanceDto.setPromotionsDto( promotionListToPromotionSoutenanceDtoList( etudiant.getPromotions() ) );
+        etudiantSoutenanceDto.setId( etudiant.getId() );
+        etudiantSoutenanceDto.setVersion( etudiant.getVersion() );
+
+        return etudiantSoutenanceDto;
+    }
+
+>>>>>>> MailSoutenance
     protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
         if ( list == null ) {
             return null;
@@ -1572,4 +1645,49 @@ public class DtoMapperImpl implements DtoMapper {
 
         return intervention;
     }
+<<<<<<< HEAD
+=======
+
+    protected Etudiant etudiantSoutenanceDtoToEtudiant(EtudiantSoutenanceDto etudiantSoutenanceDto) {
+        if ( etudiantSoutenanceDto == null ) {
+            return null;
+        }
+
+        Etudiant etudiant = new Etudiant();
+
+        etudiant.setId( etudiantSoutenanceDto.getId() );
+        etudiant.setVersion( etudiantSoutenanceDto.getVersion() );
+
+        return etudiant;
+    }
+
+    protected PromotionSoutenanceDto promotionToPromotionSoutenanceDto(Promotion promotion) {
+        if ( promotion == null ) {
+            return null;
+        }
+
+        PromotionSoutenanceDto promotionSoutenanceDto = new PromotionSoutenanceDto();
+
+        promotionSoutenanceDto.setType( promotion.getType() );
+        promotionSoutenanceDto.setNbParticipants( promotion.getNbParticipants() );
+        promotionSoutenanceDto.setNom( promotion.getNom() );
+        promotionSoutenanceDto.setDateDebut( promotion.getDateDebut() );
+        promotionSoutenanceDto.setDateFin( promotion.getDateFin() );
+
+        return promotionSoutenanceDto;
+    }
+
+    protected List<PromotionSoutenanceDto> promotionListToPromotionSoutenanceDtoList(List<Promotion> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<PromotionSoutenanceDto> list1 = new ArrayList<PromotionSoutenanceDto>( list.size() );
+        for ( Promotion promotion : list ) {
+            list1.add( promotionToPromotionSoutenanceDto( promotion ) );
+        }
+
+        return list1;
+    }
+>>>>>>> MailSoutenance
 }

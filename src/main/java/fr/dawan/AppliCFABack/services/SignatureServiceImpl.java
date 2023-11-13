@@ -61,8 +61,8 @@ public class SignatureServiceImpl implements SignatureService{
 	public SignatureDto saveOrUpdate(SignatureDto tDto) throws SaveInvalidException {
 		Utilisateur uti =  utilisateurRepository.getOne(tDto.getUtilisateurId());
 		Signature s = DtoTools.convert(tDto, Signature.class);
-		String path = storageFolder + "/signature" + tDto.getPieceJointe();
-		File fichierSignature = new File(path);
+		// String path = storageFolder + "/signature" + tDto.getPieceJointe();
+		// File fichierSignature = new File(path);
 		uti.setSignature(s);
 		s = signatureRepository.saveAndFlush(s);
 		return DtoTools.convert(s, SignatureDto.class);

@@ -9,14 +9,20 @@ import fr.dawan.AppliCFABack.repositories.*;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 import fr.dawan.AppliCFABack.tools.TimerCache;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -31,7 +37,8 @@ import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 @Transactional
@@ -47,17 +54,30 @@ public class EmailServiceImpl implements EmailService {
 	CongeRepository congeRepository;
 	@Autowired
 	UtilisateurRepository userRepository;
-	@Autowired
-	private JavaMailSender emailSender;
 
 	@Autowired
+	private JavaMailSender emailSender;
+	@Value("${backend.url}")
+	private String backendUrl;
+	@Autowired
+	private Configuration freemarkerConfig;
+	@Value("${app.storagefolder}")
+	private String storageFolder;
+	private static Logger logger = Logger.getGlobal();
+	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	private BlocEvaluationRepository blocEvaluationRepository;
+	@Autowired
+	private FormateurRepository formateurRepository;
+	@Autowired
+	private InterventionRepository interventionRepository;
 
 	@Autowired
 	private TimerCache timerCache;
 	/**
 	 * Envoi de mail au referent pour la demande de congé
-	 * 
+	 *
 	 * @param c objet Conge
 	 * @return SimpleMailMessage a être envoyé
 	 */
@@ -121,9 +141,9 @@ public class EmailServiceImpl implements EmailService {
 
 	/**
 	 * Envoie de mail avec lien pour modifier le mot de passe
-	 * 
+	 *
 	 * @param uDto Objet Utilisateur
-	 * @throws MessagingException 
+	 * @throws MessagingException
 	 * @exception Exception Returns une exception si le message n'est pas valide
 	 */
 
@@ -142,8 +162,8 @@ public class EmailServiceImpl implements EmailService {
 		msg.addRecipients(Message.RecipientType.TO, uDto.getLogin());
 		msg.setSubject("Réinitialisation du mot de passe du CFA Dawan");
 		msg.setText("Bonjour " + uDto.getNom()
-				+ ". <br /><br />Ce message vous a été envoyé car vous avez oublié votre mot de passe sur l'application"
-				+ " CFA Dawan. <br />Pour réinitialiser votre mot de passe, veuillez cliquer sur ce lien : " + body,
+						+ ". <br /><br />Ce message vous a été envoyé car vous avez oublié votre mot de passe sur l'application"
+						+ " CFA Dawan. <br />Pour réinitialiser votre mot de passe, veuillez cliquer sur ce lien : " + body,
 				"UTF-8", "html");
 
 		emailSender.send(msg);
@@ -159,6 +179,42 @@ public class EmailServiceImpl implements EmailService {
 			message.setRecipients(Message.RecipientType.TO, to);
 			message.setSubject(header);
 			message.setText(msg);
+
+			emailSender.send(message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public <T> void sendMailUser1ToUser2(String from, String to, String header, String msg,
+										 String nameFile, T tDto){
+
+		try {
+			MimeMessage message = emailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+			helper.setFrom(from);
+			helper.setTo(to);
+			helper.setSubject(header);
+			helper.setText(msg);
+
+			Map<String, Object> model = new HashMap<>();
+			model.put("backendUrl", backendUrl);
+			model.put("tDto", tDto);
+			freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+			Template template = freemarkerConfig.getTemplate(nameFile + ".ftl");
+
+			String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+			// TODO modifier le fichier ftl
+			String outputPdf = storageFolder + "pdfEmail/"+ nameFile +".pdf";
+			try {
+				ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "convertHtmlToPdf failed", e);
+			}
+			Resource pdfResource = new FileSystemResource(outputPdf);
+			helper.addAttachment(header, pdfResource);
 
 			emailSender.send(message);
 		} catch (Exception e) {
@@ -193,43 +249,34 @@ public class EmailServiceImpl implements EmailService {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
 		}
 	}
+
+	private void cacheTimer(long idUser){
+		LocalDate timer = LocalDate.now();
+
+	}
 	/**
 	 * Envoi de automatique pour prévenir le formateur de remplir le livret d'évaluation des étudiants lui étant affilié
 	 * avant 3
 	 *
 	 * @param c objet Conge
 	 * @return SimpleMailMessage a être envoyé
-	 */
+
 	@Override
 	public void scheduleMailSender(long idUser) {
 		boolean isInCache = timerCache.startTimerForUserConnected(idUser, 5);
-		if (!isInCache){return;}
-
-		if (userRepository.isLivretFormateurReferentEmpty(idUser)){
-			List<Optional<LocalDate>> dateFinPromotion = userRepository.findDatePromotionOfFormateurByUtilisateurId(idUser);
-			if (!dateFinPromotion.isEmpty()){
-
-				List<LocalDate> listDeDates = dateFinPromotion.stream()
-						.filter(Optional::isPresent)
-						.map(Optional::get)
-						.collect(Collectors.toList());
-				//On vérifie si une date est inferior à 3 mois
-				boolean dateWithin3Months = false;
-
-				for (LocalDate date : listDeDates){
-					Period dateDiff = Period.between(LocalDate.now(), date);
-					if (dateDiff.getYears() <= 2 && dateDiff.getMonths() <= 3){
-						dateWithin3Months = true;
-						break;
-					}
-				}
-				if (dateWithin3Months) {
+		if (isInCache){
+			if (userRepository.isLivretFormateurReferentEmpty(idUser)){
+				List<Optional<LocalDate>> dateFinPromotion = userRepository.findDatePromotionOfFormateurByUtilisateurId(idUser);
+				Period dateDiff = Period.between(LocalDate.now(), dateFinPromotion.get());
+				if (dateDiff.getYears() < 2 && dateDiff.getMonths() <= 3) {
 					ScheduledExecutorService threadUsesForSchedule = Executors.newScheduledThreadPool(1);
 					String message = "Pensez à remplir l'évaluation : " + idUser;
-					threadUsesForSchedule.schedule(() -> sendMailSmtpUser(idUser, "Titre automatique", message,
-							Optional.of(""), Optional.of("")),1, TimeUnit.SECONDS);
+					threadUsesForSchedule.schedule(() -> {
+						sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of(""));
+					},1, TimeUnit.SECONDS);
 				}
 			}
 		}
 	}
+	*/
 }

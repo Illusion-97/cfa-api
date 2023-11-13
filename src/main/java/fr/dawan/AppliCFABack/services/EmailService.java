@@ -17,7 +17,10 @@ public interface EmailService {
 
 	void sendMailUser1ToUser2(String from, String to, String header, String msg);
 
+	<T> void sendMailUser1ToUser2(String from, String to, String header, String msg,
+							  String fileName, T tDto);
+
 	void sendMailSmtpUser(long idUtilisateur, String header, String msg, Optional<String> path, Optional<String> fileName);
 
-	void scheduleMailSender(long user);
+	// void scheduleMailSender(long user);
 }
