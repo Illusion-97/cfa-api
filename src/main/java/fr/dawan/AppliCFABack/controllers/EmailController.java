@@ -45,7 +45,7 @@ public class EmailController {
             if ((boolean) request.get("isFormateur")) {
                 Integer integerIdUser = (Integer) request.get("userId");
                 long idUser = (long) integerIdUser;
-                emailService.scheduleMailSender(idUser);
+                //emailService.scheduleMailSender(idUser);
                 return ResponseEntity.status(200);
             }
         } catch (Exception e) {

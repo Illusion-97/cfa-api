@@ -30,14 +30,12 @@ import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.SoutenanceDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
-<<<<<<< HEAD
-=======
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantSoutenanceDto;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionSoutenanceDto;
->>>>>>> MailSoutenance
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.ActiviteTypeDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CompetenceDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
@@ -70,6 +68,7 @@ import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
@@ -81,13 +80,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-<<<<<<< HEAD
-    date = "2023-11-10T16:21:39+0100",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_362 (Amazon.com Inc.)"
-=======
-    date = "2023-11-08T12:28:08+0100",
+    date = "2023-11-13T10:54:37+0100",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.5 (Oracle Corporation)"
->>>>>>> MailSoutenance
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -1052,8 +1046,6 @@ public class DtoMapperImpl implements DtoMapper {
         return evaluationFormation;
     }
 
-<<<<<<< HEAD
-=======
     @Override
     public SoutenanceDto soutenanceToSoutenanceDto(Soutenance soutenance) {
         if ( soutenance == null ) {
@@ -1114,7 +1106,6 @@ public class DtoMapperImpl implements DtoMapper {
         return etudiantSoutenanceDto;
     }
 
->>>>>>> MailSoutenance
     protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
         if ( list == null ) {
             return null;
@@ -1645,8 +1636,6 @@ public class DtoMapperImpl implements DtoMapper {
 
         return intervention;
     }
-<<<<<<< HEAD
-=======
 
     protected Etudiant etudiantSoutenanceDtoToEtudiant(EtudiantSoutenanceDto etudiantSoutenanceDto) {
         if ( etudiantSoutenanceDto == null ) {
@@ -1689,5 +1678,4 @@ public class DtoMapperImpl implements DtoMapper {
 
         return list1;
     }
->>>>>>> MailSoutenance
 }
