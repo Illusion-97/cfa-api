@@ -558,11 +558,8 @@ margin-right:20%;}
 <#if exp[0]??>
     <#list exp[0].dossierProfessionnel.annexes as an>
         <div>
-<<<<<<< HEAD
+
            <img class="annexe" src="${backendUrl}/files/DossierProfessionnel/${an.pieceJointe}" alt="annexe files" width="600">
-=======
-            <img src="${an.pieceJointe}" alt="Annexe">
->>>>>>> 46fc925dc5c008c72b4ae7357d45eb3d4c3f385d
         </div>
         </#list>
         </#if>

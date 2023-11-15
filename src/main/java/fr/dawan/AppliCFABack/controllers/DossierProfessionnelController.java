@@ -118,14 +118,14 @@ public class DossierProfessionnelController {
 
 	
 	@PostMapping(value = "/save/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
-	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
+	public ResponseEntity<DossierProEtudiantDto> saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
 	        @RequestParam("pieceJointe") List<MultipartFile> files) throws TemplateException, DossierProfessionnelException, IOException  {
 	    String path = storageFolder2 + "DossierProfessionnel" + "/";
 	    fileService.createDirectory(path);
 	    DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
-	    dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
 	    DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, files);
-	    return dpE;
+	    dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
+	    return ResponseEntity.status(HttpStatus.CREATED).body(dpE);
 	}
 
 
@@ -140,14 +140,16 @@ public class DossierProfessionnelController {
 	}
 
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
-	public DossierProEtudiantDto updateDossierProfessionnel(@PathVariable("id") long id, @RequestParam("dossierProfessionnel") String dpDto,
+	public ResponseEntity<DossierProEtudiantDto> updateDossierProfessionnel(@PathVariable("id") long id, @RequestParam("dossierProfessionnel") String dpDto,
 			@RequestParam("pieceJointe") List<MultipartFile> file) throws TemplateException, DossierProfessionnelException, IOException {
 		 String path = storageFolder2 + "DossierProfessionnel" + "/";
 		 fileService.createDirectory(path);
 		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
-		 dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
-		return dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
+		 DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
+		    dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
+		    return ResponseEntity.status(HttpStatus.CREATED).body(dpE);
 	}
+
 	
 	@GetMapping(value = "/dossier-professionnel/{dossierId}", produces = "application/pdf")
 	public ResponseEntity<Resource> generateDossierProPdf(@PathVariable long dossierId) throws Exception {
