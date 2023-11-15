@@ -206,8 +206,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		DossierProjet dp = mapper.dossierProjetDtoToDossierProjet(dpDto);
 		dossierProRepo.saveAndFlush(dp);
-		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dpDto.getEtudiant().getId()) + dpDto.getEtudiant().getId() + "_" + dp.getNom() +"/";
-		directory(nomDossierEtudiant);
+		directory(dpDto);
 		emailTuteur(dpDto);
 		return mapper.dossierProjetToDossierProjetDto(dp);
 	}
@@ -219,17 +218,23 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 */
 	private void emailTuteur(DossierProjetDto dp) throws IOException, TemplateException, DossierProjetException {
 		Optional<Etudiant> studentOpt = studentRepository.findById(dp.getEtudiant().getId());
+		Etudiant student = studentOpt.get();
+		// Recherche du tuteur de l'étudiant
+		Optional<Tuteur> tuteurStudentOpt = tuteurRepository.findById(student.getTuteur().getId());
 
 		if (!studentOpt.isPresent()) {
 			// Gérer le cas où l'étudiant n'est pas trouvé
 			return;
 		}
 
-		Etudiant student = studentOpt.get();
+		if (!tuteurStudentOpt.isPresent()) {
+			// Gérer le cas où le tuteur n'est pas trouvé
+			return;
+		}
 
 		// Vérifier si l'étudiant a un tuteur
 		if (student.getTuteur() == null || student.getTuteur().getId() == 0) {
-			// L'étudiant n'a pas de tuteur, donc on sort de la méthode
+			// Gérer le cas où l'étudiant n'as pas de tuteur n'est pas trouvé
 			return;
 		}
 
@@ -238,14 +243,6 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		String message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été crée";
 
 		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.getId()+"\">Voir le dossier </a>";
-
-		// Recherche du tuteur de l'étudiant
-		Optional<Tuteur> tuteurStudentOpt = tuteurRepository.findById(student.getTuteur().getId());
-
-		if (!tuteurStudentOpt.isPresent()) {
-			// Gérer le cas où le tuteur n'est pas trouvé
-			return;
-		}
 
 		Tuteur tuteurStudent = tuteurStudentOpt.get();
 
@@ -284,10 +281,15 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
 			return dpDto;
 	}
-	private void directory(String path){
-		Path isPathPresent = Paths.get(storageFolder + "/DossierProjet/" + path);
+	private void directory(DossierProjetDto dpDto){
+		if (dpDto.getEtudiant() == null){
+			return;
+		}
+		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dpDto.getEtudiant().getId()) + dpDto.getEtudiant().getId() + "_" + dpDto.getNom() +"/";
+
+		Path isPathPresent = Paths.get(storageFolder + "/DossierProjet/" + nomDossierEtudiant);
 		if (!Files.isDirectory(isPathPresent)){
-			filesService.createDirectory("/DossierProjet/" + path);
+			filesService.createDirectory("/DossierProjet/" + nomDossierEtudiant);
 		}
 	}
 	/**
