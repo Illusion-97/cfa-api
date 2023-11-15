@@ -51,4 +51,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 			"JOIN Utilisateur u ON p.referentPedagogique.id = u.id " +
 			"WHERE u.id = :idUser")
 	boolean isLivretFormateurReferentEmpty(long idUser);
+
+	@Query("SELECT CONCAT(u.nom,'_',u.prenom) FROM Utilisateur u JOIN Etudiant e ON(e.utilisateur.id = u.id) WHERE e.id = :id")
+	String findByIdEtudiant(long id);
 }
