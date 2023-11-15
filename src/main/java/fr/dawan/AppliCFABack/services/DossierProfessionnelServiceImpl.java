@@ -85,9 +85,6 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
     @Value("${backend.url}")
     private String backendUrl;
-
-    @Value("src/main/resources/files/bulletinsEvaluations")
-    private String storageFolder;
     
     @Value("${app.storagefolder2}")
     private String storageFolder2;
@@ -189,19 +186,18 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
             f.setDossierProfessionnel(dp);
         }
 
-        // Mettre à jour les annexes
         String path = storageFolder2 + "DossierProfessionnel" + "/";
         List<Annexe> annexes = dp.getAnnexes();
 
         for (MultipartFile file : files) {
             String pathFile = storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename();
-            File newAnnexe = new File(pathFile);
             Annexe annexe = new Annexe();
-            annexe.setPieceJointe(newAnnexe);
+            annexe.setPieceJointe(file.getOriginalFilename()); 
             annexe.setLibelleAnnexe("");
             annexes.add(annexe);
+            annexe = annexeRepository.save(annexe);
 
-            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))) {
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(pathFile))) {
                 bos.write(file.getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -454,7 +450,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 		        String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
-		        String outputPdf = storageFolder + "/dossier-" + dossierId + "-pro.pdf";
+		        String outputPdf = storageFolder2 + "DossierProfessionnel" + "/" + dossier.getEtudiant().getUtilisateur().getFullName() + "_DP.pdf";
 
 		        try {
 					PdfTools.generatePdfFromHtml(outputPdf, htmlContent);

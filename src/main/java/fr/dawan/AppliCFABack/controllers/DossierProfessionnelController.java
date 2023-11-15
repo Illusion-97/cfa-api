@@ -46,6 +46,9 @@ public class DossierProfessionnelController {
 	AnnexeService annexeService;
 	
 	@Autowired
+	FacultatifService facultatifService;
+	
+	@Autowired
 	EtudiantService etudiantService;
 	
 	@Autowired
@@ -57,7 +60,7 @@ public class DossierProfessionnelController {
 	@Autowired
 	private ObjectMapper objMap;
 
-	@Value("${app.storagefolder2}")
+	@Value("${app.storagefolder}")
 	private String storageFolder2;
 
 	@GetMapping(produces = "application/json")
@@ -115,14 +118,14 @@ public class DossierProfessionnelController {
 
 	
 	@PostMapping(value = "/save/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
-	public DossierProEtudiantDto saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
+	public ResponseEntity<DossierProEtudiantDto> saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
 	        @RequestParam("pieceJointe") List<MultipartFile> files) throws TemplateException, DossierProfessionnelException, IOException  {
 	    String path = storageFolder2 + "DossierProfessionnel" + "/";
 	    fileService.createDirectory(path);
 	    DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
-	    dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
 	    DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, files);
-	    return dpE;
+	    dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
+	    return ResponseEntity.status(HttpStatus.CREATED).body(dpE);
 	}
 
 
@@ -137,14 +140,16 @@ public class DossierProfessionnelController {
 	}
 
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
-	public DossierProEtudiantDto updateDossierProfessionnel(@PathVariable("id") long id, @RequestParam("dossierProfessionnel") String dpDto,
+	public ResponseEntity<DossierProEtudiantDto> updateDossierProfessionnel(@PathVariable("id") long id, @RequestParam("dossierProfessionnel") String dpDto,
 			@RequestParam("pieceJointe") List<MultipartFile> file) throws TemplateException, DossierProfessionnelException, IOException {
 		 String path = storageFolder2 + "DossierProfessionnel" + "/";
 		 fileService.createDirectory(path);
 		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
-		 dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
-		return dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
+		 DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
+		    dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
+		    return ResponseEntity.status(HttpStatus.CREATED).body(dpE);
 	}
+
 	
 	@GetMapping(value = "/dossier-professionnel/{dossierId}", produces = "application/pdf")
 	public ResponseEntity<Resource> generateDossierProPdf(@PathVariable long dossierId) throws Exception {
@@ -222,6 +227,16 @@ public class DossierProfessionnelController {
 															 @PathVariable("dossierId") Long id) throws IOException {
 		DossierProEtudiantDto dpDto = dossierProService.saveFileImport(fileImport, id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
+	}
+	
+	@DeleteMapping("/facultatif/{facultatifId}")
+	public ResponseEntity<String> deleteFacultatif(@PathVariable long facultatifId) {
+		try {
+			facultatifService.deleteById(facultatifId);
+			return new ResponseEntity<>("Facultatif supprimé avec succès.", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Erreur lors de la suppression du facultatif : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 }
