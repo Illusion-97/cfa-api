@@ -230,6 +230,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 					else {
 						centreImport.setAdresse(adresse);
 					}
+
 				}
 
 				if (optCentre.isPresent()) {
@@ -237,7 +238,6 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 						continue;
 					else if (!optCentre.get().equals(centreImport)) {
 						if (centreImport != null) {
-							centreImport.setAdresse(optCentre.get().getAdresse());
 							centreImport.setId(optCentre.get().getId());
 							centreImport.setVersion(optCentre.get().getVersion());
 						}

@@ -32,9 +32,9 @@ public class InterventionController {
 	public List<InterventionDto> getAll() {
 		return interventionService.getAllIntervention();
 	}
-
+	
 	/**
-	 *
+	 * 
 	 * @param id
 	 * @return ResponseEntity
 	 */
@@ -46,15 +46,32 @@ public class InterventionController {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param page
 	 * @param size
 	 * @return liste des interventions avec pagination
 	 */
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
-															@PathVariable(value = "size") int size) {
-		return interventionService.getAllByPage(page, size, "");
+			@PathVariable(value = "size") int size) {
+		return interventionService.getAllByPage(page, size, "","");
+	}
+	
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @param search
+	 * @return liste des interventiosn avec pagination + search
+	 */
+	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
+	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
+			@PathVariable(value = "size") int size,
+			@PathVariable(value = "search", required = false) Optional<String> search) {
+		if (search.isPresent())
+			return interventionService.getAllByPage(page, size,"", search.get());
+		else
+			return interventionService.getAllByPage(page, size,"", "");
 	}
 
 	/**
@@ -64,14 +81,11 @@ public class InterventionController {
 	 * @param search
 	 * @return liste des interventiosn avec pagination + search
 	 */
-	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
+	@GetMapping(value = "/sort/{page}/{size}/", produces = "application/json")
 	public @ResponseBody List<InterventionDto> getAllByPage(@PathVariable("page") int page,
 															@PathVariable(value = "size") int size,
-															@PathVariable(value = "search", required = false) Optional<String> search) {
-		if (search.isPresent())
-			return interventionService.getAllByPage(page, size, search.get());
-		else
-			return interventionService.getAllByPage(page, size, "");
+															@RequestParam(value = "sort", required = false) String sort) {
+			return interventionService.getAllByPage(page, size,sort, "");
 	}
 
 	@GetMapping(value = "/count", produces = "application/json")
@@ -86,7 +100,7 @@ public class InterventionController {
 		else
 			return interventionService.count("");
 	}
-
+	
 	@GetMapping(value = "/{id}/etudiants-promotion", produces = "application/json")
 	public List<EtudiantDto> findAllByPromotionInterventionsId(@PathVariable("id") long id) {
 		return interventionService.findAllEtudiantsByPromotionInterventionsId(id);
@@ -133,13 +147,13 @@ public class InterventionController {
 	public InterventionDto update(@RequestBody InterventionDto iDto) {
 		return interventionService.saveOrUpdate(iDto);
 	}
-
+	
 	@GetMapping(value = "/{id}/supports", produces = "application/json")
 	public String[] findAllSupportByInterventionId(@PathVariable("id") long id) {
 		String path = "interventions/" + id;
 		return filesService.getAllNamesByDirectory(path);
 	}
-
+	
 	// ##################################################
 	// # FETCH Dawan webservice #
 	// ##################################################
@@ -147,11 +161,11 @@ public class InterventionController {
 	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers, @PathVariable(value = "idPromotion" ,required = false) Optional<Long> idPromotion ){
 		String userDG2 = headers.get("x-auth-token");
 		String[] splitUser = userDG2.split(":");
-
+		
 		try {
 			int nb = 0;
 			if (idPromotion.isPresent()) {
-				nb = interventionService.fetchDGInterventions(splitUser[0], splitUser[1],idPromotion.get());
+				 nb = interventionService.fetchDGInterventions(splitUser[0], splitUser[1],idPromotion.get());
 			}
 			else {
 				nb = interventionService.fetchDGInterventions(splitUser[0], splitUser[1]);
@@ -163,24 +177,24 @@ public class InterventionController {
 					.body("Error while fetching data from the webservice DG2");
 		}
 	}
-
+	
 	@GetMapping(value = {"/promotion/{id}/{page}/{size}/{search}", "/promotion/{id}/{page}/{size}"}, produces = "application/json")
 	public List<InterventionDto> findInterventionByPromotionId(
 			@PathVariable("id") long id,
 			@PathVariable("page") int page,
 			@PathVariable("size") int size,
 			@PathVariable(value = "search", required = false) Optional<String> search) {
-		if (search.isPresent()) {
+		if (search.isPresent()) {			
 			return interventionService.findInterventionByPromotionId(id, page, size, search.get());
 		}else {
 			return interventionService.findInterventionByPromotionId(id, page, size, "");
 		}
 	}
-
+	
 	@GetMapping(value = {"/countInterventionByPromotion/{id}/{search}", "/countInterventionByPromotion/{id}" }, produces = "application/json")
 	public CountDto countInterventionByPromotionId(@PathVariable("id") long id,
-												   @PathVariable(value = "search", required = false) Optional<String> search) {
-		if (search.isPresent()) {
+			@PathVariable(value = "search", required = false) Optional<String> search) {
+		if (search.isPresent()) {			
 			return interventionService.countInterventionByPromotionId(id, search.get());
 		}else {
 			return interventionService.countInterventionByPromotionId(id, "");

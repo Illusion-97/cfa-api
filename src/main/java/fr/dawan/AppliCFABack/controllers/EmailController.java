@@ -26,7 +26,7 @@ public class EmailController {
 
     @PostMapping(value = "/notification")
     public ResponseEntity<String> sendEmailSmtp(@RequestParam long id, @RequestParam String header,
-                                                @RequestParam String msg,
+                                                       @RequestParam String msg,
                                                 @PathVariable(value = "path", required = false)Optional<String> path,
                                                 @PathVariable(value = "fileName", required = false)Optional<String> fileName){
         if(path.isPresent()){
@@ -39,14 +39,13 @@ public class EmailController {
 
     }
 
-    //TODO  class org.springframework.http.ResponseEntity cannot be cast to class org.springframework.http.ResponseEntity$BodyBuilder
     @PostMapping(value = "/schedule")
     public ResponseEntity.BodyBuilder mailScheduler(@RequestBody Map<String, Object> request){
         try {
             if ((boolean) request.get("isFormateur")) {
                 Integer integerIdUser = (Integer) request.get("userId");
                 long idUser = (long) integerIdUser;
-                emailService.scheduleMailSender(idUser);
+                //emailService.scheduleMailSender(idUser);
                 return ResponseEntity.status(200);
             }
         } catch (Exception e) {

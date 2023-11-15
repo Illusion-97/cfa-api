@@ -14,9 +14,9 @@ import java.util.Optional;
 
 @Repository
 public interface TuteurRepository extends JpaRepository<Tuteur , Long>{
-
+	
 	long countByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(String prenom, String nom);
-
+	
 	//long countTuteursTitreContainingAllIgnoreCase( String search);
 
 	// liste des Tuteurs + recherche par mot clé
@@ -25,18 +25,23 @@ public interface TuteurRepository extends JpaRepository<Tuteur , Long>{
 	Optional<Tuteur> findByUtilisateurId(long id);
 
 	//Page<Etudiant> findAllByEtudiantsId(long id, PageRequest p);
-
+	
 	@Query("SELECT e FROM Etudiant e JOIN e.tuteur tuteur WHERE tuteur.id=:id ")
 	List<Etudiant> findAllByTuteurId(@Param("id")long id );
-
-	@Query("SELECT e FROM Etudiant e JOIN e.tuteur t WHERE t.id=:id ")
+	
+	@Query("SELECT e FROM Etudiant e JOIN e.tuteur t WHERE t.id=:id ")	
 	Page<Etudiant> findAllByTuteurId(@Param("id")long id, Pageable p);
 
-	@Query("SELECT e FROM Etudiant e JOIN e.tuteur t WHERE t.id=:id AND e.utilisateur.nom LIKE :search OR e.utilisateur.prenom  LIKE :search ")
+	@Query("SELECT e FROM Etudiant e JOIN e.tuteur t WHERE t.id=:id AND :search IS NULL " +
+			"OR LOWER(e.utilisateur.nom) LIKE CONCAT('%',LOWER(:search),'%') " +
+			"OR LOWER(e.utilisateur.prenom) LIKE CONCAT('%',LOWER(:search),'%') " +
+			"OR LOWER(e.utilisateur.login) LIKE CONCAT('%',LOWER(:search),'%') " +
+			"OR LOWER(e.utilisateur.login) LIKE CONCAT('%', SUBSTRING_INDEX(LOWER(:search), '@', 1), '%') " +
+			"OR LOWER(e.utilisateur.login) LIKE CONCAT('%', SUBSTRING_INDEX(LOWER(:search), '@', -1), '%')")
 	Page<Etudiant> findEtudiantBySearch(@Param("id")long id, Pageable p, String search);
-
+	
 	long countByIdAndEtudiantsUtilisateurNomContainingAllIgnoringCase(long id, String search);
-
+	
 	long countById(long id);
 
 }

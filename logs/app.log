@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2023-11-15 09:15:13.650  INFO 28360 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7710-2VGQK72 with PID 28360 (C:\cfa-portal-api\cfa-portal-api\target\classes started by Admin Stagiaire in C:\cfa-portal-api\cfa-portal-api)
 2023-11-15 09:15:13.654  INFO 28360 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
 2023-11-15 09:15:14.949  INFO 28360 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
@@ -616,3 +617,40 @@ java.lang.NullPointerException: null
 2023-11-15 09:34:35.256  INFO 18256 --- [RMI TCP Connection(13)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-11-15 09:34:35.259  INFO 18256 --- [RMI TCP Connection(13)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-11-15 09:34:35.262  INFO 18256 --- [RMI TCP Connection(13)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+=======
+2023-11-13 10:54:44.547  INFO 45540 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-13 10:54:44.886  INFO 45540 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 328ms. Found 39 JPA repository interfaces.
+2023-11-13 10:54:45.618  INFO 45540 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2023-11-13 10:54:45.630  INFO 45540 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-13 10:54:45.630  INFO 45540 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-13 10:54:45.798  INFO 45540 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-13 10:54:45.799  INFO 45540 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2484 ms
+2023-11-13 10:54:46.189  INFO 45540 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-13 10:54:46.253  INFO 45540 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-13 10:54:46.419  INFO 45540 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-13 10:54:46.527  INFO 45540 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-13 10:54:46.578  INFO 45540 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-13 10:54:46.599  INFO 45540 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-13 10:54:48.590  INFO 45540 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-13 10:54:48.597  INFO 45540 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-13 10:54:49.271  INFO 45540 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-13 10:54:49.272  INFO 45540 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-13 10:54:49.318  WARN 45540 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-13 10:54:50.506  INFO 45540 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2023-11-13 10:54:50.581  INFO 45540 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-13 10:54:50.582  INFO 45540 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-13 10:54:50.582  INFO 45540 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-13 10:54:50.616  INFO 45540 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-13 10:54:50.616  INFO 45540 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 107 ms
+2023-11-13 10:54:50.627  INFO 45540 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-13 10:54:50.976  INFO 45540 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-13 10:54:50.978  INFO 45540 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-13 10:54:52.444  INFO 45540 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-13 10:54:52.447  INFO 45540 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-13 10:54:52.447  INFO 45540 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-13 10:54:52.463  INFO 45540 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 9.516 seconds (JVM running for 10.235)
+2023-11-13 10:55:45.364  INFO 45540 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-13 10:55:45.365  INFO 45540 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-13 10:55:45.366  INFO 45540 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-13 10:55:45.369  INFO 45540 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+>>>>>>> 46fc925dc5c008c72b4ae7357d45eb3d4c3f385d

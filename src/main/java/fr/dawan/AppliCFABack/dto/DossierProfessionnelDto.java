@@ -32,19 +32,9 @@ public class DossierProfessionnelDto extends BaseEntityDto implements Serializab
 		super();
 	}
 
-	public DossierProfessionnelDto(String nom, CursusDto cursusDto,
-			List<ExperienceProfessionnelleDto> experienceProfessionnelleDtos, EtudiantDto etudiantDto,
-			List<AnnexeDto> annexeDtos, List<FacultatifDto> facultatifDto, String fileImport) {
-		super();
+	public DossierProfessionnelDto(String nom) {
 		this.nom = nom;
-		this.cursusDto = cursusDto;
-		this.experienceProfessionnelleDtos = experienceProfessionnelleDtos;
-		this.etudiantDto = etudiantDto;
-		this.annexeDtos = annexeDtos;
-		this.facultatifDto = facultatifDto;
-		this.fileImport = fileImport;
 	}
-
 
 	/**
 	 * @return the nom

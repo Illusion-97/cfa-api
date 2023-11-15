@@ -20,7 +20,7 @@ public class Etudiant extends BaseEntity implements Serializable {
 	private List<GroupeEtudiant> groupes;
 
 	@OneToMany(mappedBy = "etudiantNote", cascade = CascadeType.REMOVE)
-	private Set<Note> notes;
+	private Set<Note> notes;	
 
 	@ManyToOne
 	private Tuteur tuteur;
@@ -68,7 +68,7 @@ public class Etudiant extends BaseEntity implements Serializable {
 	public void setNotes(Set<Note> notes) {
 		this.notes = notes;
 	}
-
+	
 
 	public Tuteur getTuteur() {
 		return tuteur;

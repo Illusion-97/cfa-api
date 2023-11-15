@@ -86,7 +86,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     @Value("${backend.url}")
     private String backendUrl;
     
-    @Value("${app.storagefolder}")
+    @Value("${app.storagefolder2}")
     private String storageFolder2;
     
     private static Logger logger = Logger.getGlobal();
@@ -186,18 +186,19 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
             f.setDossierProfessionnel(dp);
         }
 
+        // Mettre à jour les annexes
         String path = storageFolder2 + "DossierProfessionnel" + "/";
         List<Annexe> annexes = dp.getAnnexes();
 
         for (MultipartFile file : files) {
             String pathFile = storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename();
+            File newAnnexe = new File(pathFile);
             Annexe annexe = new Annexe();
-            annexe.setPieceJointe(file.getOriginalFilename()); 
+            annexe.setPieceJointe(newAnnexe);
             annexe.setLibelleAnnexe("");
             annexes.add(annexe);
-            annexe = annexeRepository.save(annexe);
 
-            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(pathFile))) {
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newAnnexe))) {
                 bos.write(file.getBytes());
             } catch (IOException e) {
                 e.printStackTrace();

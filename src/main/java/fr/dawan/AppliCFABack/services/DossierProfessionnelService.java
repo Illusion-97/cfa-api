@@ -43,6 +43,7 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 	
 	void emailTuteurDossierProfessionnelle(DossierProEtudiantDto dp, long id) throws TemplateException, DossierProfessionnelException, IOException ;
 	
+
 		
 	}
 

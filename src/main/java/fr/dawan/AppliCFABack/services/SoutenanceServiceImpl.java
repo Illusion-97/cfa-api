@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.SoutenanceDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionSoutenanceDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
@@ -39,24 +40,26 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 	private static Logger logger =Logger.getGlobal();
 	@Value("${app.storagefolder}")
 	private String storageFolder;
+	@Value("${spring.mail.username}")
+	private String mail;
 	@Value("${backend.url}")
 	private String backendUrl;
 	@Autowired
 	private Configuration freemarkerConfig;
 	@Autowired
-	private DtoMapper mapper = new DtoMapperImpl();
+	private DtoMapper mapper;
 
 	@Override
 	public SoutenanceDto getById(long id) {
 		Optional<Soutenance> soutenance = soutenanceRepository.findById(id);
 		if (soutenance.isPresent()) {
-			
+
 			return mapper.soutenanceToSoutenanceDto(soutenance.get());
 		}
-		
+
 		return null;
 	}
-	
+
 	@Override
 	public List<SoutenanceDto> getAll() {
 		List<Soutenance> soutenances = soutenanceRepository.findAll();
@@ -67,31 +70,47 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 				soutenanceDto = mapper.soutenanceToSoutenanceDto(soutenance);
 				soutenanceDtos.add(soutenanceDto);
 			}
-			
+
 			return soutenanceDtos;
 		}
-		
+
 		return null;
 	}
 
 	@Override
 	public SoutenanceDto saveOrUpdate(SoutenanceDto tDto) throws SaveInvalidException {
 		Soutenance soutenance = new Soutenance();
+		// Récupération Etudiant
 		if (tDto.getEtudiant().getId() > 0) {
 			Etudiant etudiant = etudiantRepository.getOne(tDto.getEtudiant().getId());
 			tDto.setEtudiant(mapper.etudiantToEtudiantSoutenanceDto(etudiant));
 			soutenance = mapper.soutenanceDtoToSoutenance(tDto);
 		}
-		//emailService.sendMailSmtpUser(tDto.getEtudiant().getUtilisateurDto().getId(),
-			//	"Convocation examen", "Vous êtes convoquez pour l'éxamen ...",
-				//Optional.of("/cfa-portal-api/src/main/resources/templates/convocationExamen.ftl"),
-				//Optional.of("Convocation examen"), tDto);
+
+		// Méthode envoie de mail
+		PromotionSoutenanceDto promotionSoutenance = new PromotionSoutenanceDto();
+		Date date = new Date();
+		int annee = date.getYear() + 1900;
+		for (PromotionSoutenanceDto promotion: tDto.getEtudiant().getPromotionsDto()) {
+
+			if (promotion.getDateDebut().getYear() == annee) {
+				promotionSoutenance = promotion;
+			}
+		}
+		String messageMail = "Vous étes convoquer pour l'éxamen "+ promotionSoutenance.getNom() + " le " + soutenance.getJour() +
+				".\nVous trouverez ci-joint la convocation.";
+		emailService.sendMailUser1ToUser2(mail, tDto.getEtudiant().getUtilisateurDto().getLogin(),
+				"Convocation " + promotionSoutenance.getNom()
+				, messageMail,
+				"convocationExamen", tDto );
+
+		//Sauvegarde de la soutenance
 		try {
 			soutenanceRepository.saveAndFlush(soutenance);
 		} catch (Exception ex) {
-			logger.log(Level.WARNING, "Error save etudiant", ex);
-		}		
-		
+			logger.log(Level.WARNING, "Error save soutenance", ex);
+		}
+
 		return mapper.soutenanceToSoutenanceDto(soutenance);
 	}
 
@@ -100,7 +119,7 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		long nb = soutenanceRepository.countByPromotionId(Long.parseLong(search));
 		CountDto result =  new CountDto();
 		result.setNb(nb);
-				
+
 		return result;
 	}
 
@@ -116,10 +135,10 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		for (Soutenance soutenance : soutenances) {
 			soutenanceDtos.add(mapper.soutenanceToSoutenanceDto(soutenance));
 		}
-		
+
 		return soutenanceDtos;
 	}
-	
+
 	@Override
 	public List<SoutenanceDto> getPageByPromotionId(long id, int page, int size) {
 		List<Soutenance> lstSoutenances = soutenanceRepository.getPageByPromotionId(id, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -135,17 +154,17 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 
 	@Override
 	public String genererLstSoutenance(String promotion, long idPromotion) throws TemplateNotFoundException,
-	MalformedTemplateNameException, ParseException, IOException, TemplateException, DossierProjetException {
+			MalformedTemplateNameException, ParseException, IOException, TemplateException, DossierProjetException {
 		List<SoutenanceDto> soutenanceDto = getByPromotionId(idPromotion);
 		Map<String, Object> model = new HashMap<>();
 		model.put("backendUrl", backendUrl);
-		model.put("soutenaceDto", soutenanceDto);
+		model.put("soutenanceDto", soutenanceDto);
 		freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
-		// TODO
+		// TODO modifier le fichier ftl
 		Template template = freemarkerConfig.getTemplate("LstSoutenance.ftl");
 
 		String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-		String outputPdf = storageFolder + "List_soutenance_"+ promotion +".pdf";
+		String outputPdf = storageFolder + "/soutenance/List_soutenance_"+ promotion +".pdf";
 		try {
 			ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
 		} catch (Exception e) {
@@ -153,6 +172,6 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		}
 
 		return outputPdf;
-	}	
-	
+	}
+
 }

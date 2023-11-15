@@ -9,7 +9,8 @@ import javax.persistence.OneToOne;
 @SuppressWarnings("serial")
 @Entity
 public class Soutenance extends BaseEntity implements Serializable {
-		
+
+	// TODO Modif String par dateTime + ajouter lst<champsSupp>
 	@OneToOne
 	//@Column(nullable = true)
 	private Etudiant etudiant;
@@ -19,9 +20,8 @@ public class Soutenance extends BaseEntity implements Serializable {
 	private String minEntretien;
 	private String minQuestion;
 	private String minEntretienFinal;
-	
 	private String minDeliberation;
-	 
+
 
 	public Soutenance() {
 		super();

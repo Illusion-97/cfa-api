@@ -7,7 +7,7 @@ import fr.dawan.AppliCFABack.tools.LocalDateDeserializer;
 
 import java.time.LocalDate;
 /**
- *
+ * 
  * @author  Feres BG.
  * @see fr.dawan.appliCFABack.dto
  * @since 1.0
@@ -18,33 +18,31 @@ public class EmployeeDG2Dto {
 
 	@JsonIgnore
 	private long id;
-
+	
 	private String personId;
-
-	private String honorific;
-
+	
 	private String firstName;
-
+	
 	private String lastName;
-
+	
 	private long  locationId;
-
+	
 	private String email;
 	@JsonIgnore
 	private String job;
 	@JsonIgnore
-	private String planningGroups;
+	private String planningGroups; 
 	@JsonIgnore
 	private String name;
 	@JsonIgnore
 	private String skill;
 	@JsonIgnore
 	private String slug;
-
+	
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate bornAt;
 	@JsonIgnore
-	private String birthPlace;
+    private String birthPlace;
 	/**
 	 * @return le id
 	 */
@@ -53,7 +51,7 @@ public class EmployeeDG2Dto {
 	}
 	/**
 	 * @param id le id à affecter
-
+	 
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -64,15 +62,9 @@ public class EmployeeDG2Dto {
 	public String getPersonId() {
 		return personId;
 	}
-	public String getHonorific() {
-		return honorific;
-	}
-	public void setHonorific(String honorific) {
-		this.honorific = honorific;
-	}
 	/**
 	 * @param personId le personId à affecter
-
+	 
 	 */
 	public void setPersonId(String personId) {
 		this.personId = personId;
@@ -85,7 +77,7 @@ public class EmployeeDG2Dto {
 	}
 	/**
 	 * @param firstName le firstName à affecter
-
+	 
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -98,7 +90,7 @@ public class EmployeeDG2Dto {
 	}
 	/**
 	 * @param lastName le lastName à affecter
-
+	 
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -111,7 +103,7 @@ public class EmployeeDG2Dto {
 	}
 	/**
 	 * @param locationId le locationId à affecter
-
+	 
 	 */
 	public void setLocationId(long locationId) {
 		this.locationId = locationId;
@@ -124,7 +116,7 @@ public class EmployeeDG2Dto {
 	}
 	/**
 	 * @param email le email à affecter
-
+	 
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -137,7 +129,7 @@ public class EmployeeDG2Dto {
 	}
 	/**
 	 * @param job le job à affecter
-
+	 
 	 */
 	public void setJob(String job) {
 		this.job = job;
@@ -150,7 +142,7 @@ public class EmployeeDG2Dto {
 	}
 	/**
 	 * @param name le name à affecter
-
+	 
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -163,7 +155,7 @@ public class EmployeeDG2Dto {
 	}
 	/**
 	 * @param skill le skill à affecter
-
+	 
 	 */
 	public void setSkill(String skill) {
 		this.skill = skill;
@@ -176,7 +168,7 @@ public class EmployeeDG2Dto {
 	}
 	/**
 	 * @param slug le slug à affecter
-
+	 
 	 */
 	public void setSlug(String slug) {
 		this.slug = slug;
@@ -187,7 +179,7 @@ public class EmployeeDG2Dto {
 	public void setPlanningGroups(String planningGroups) {
 		this.planningGroups = planningGroups;
 	}
-
+	 
 	public LocalDate getBornAt() {
 		return bornAt;
 	}
@@ -200,6 +192,6 @@ public class EmployeeDG2Dto {
 	public void setBirthPlace(String birthPlace) {
 		this.birthPlace = birthPlace;
 	}
-
-
+	
+	
 }

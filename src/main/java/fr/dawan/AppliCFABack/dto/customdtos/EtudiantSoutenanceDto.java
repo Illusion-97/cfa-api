@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.dto.customdtos;
 
 import fr.dawan.AppliCFABack.dto.BaseEntityDto;
-import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 
 import java.io.Serializable;
@@ -12,16 +11,16 @@ public class EtudiantSoutenanceDto extends BaseEntityDto implements Serializable
 
 
     private UtilisateurDto utilisateurDto;
-    private List<PromotionDto> promotionsDto;
+    private List<PromotionSoutenanceDto> promotionsDto;
 
     public EtudiantSoutenanceDto() {
     }
 
-    public List<PromotionDto> getPromotionsDto() {
+    public List<PromotionSoutenanceDto> getPromotionsDto() {
         return promotionsDto;
     }
 
-    public void setPromotionsDto(List<PromotionDto> promotionsDto) {
+    public void setPromotionsDto(List<PromotionSoutenanceDto> promotionsDto) {
         this.promotionsDto = promotionsDto;
     }
 

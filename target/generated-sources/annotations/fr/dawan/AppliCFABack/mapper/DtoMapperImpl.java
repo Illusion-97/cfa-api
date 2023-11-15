@@ -35,6 +35,7 @@ import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantSoutenanceDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionSoutenanceDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.ActiviteTypeDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CompetenceDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
@@ -79,7 +80,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-07T14:00:54+0100",
+    date = "2023-11-15T09:49:51+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -932,7 +933,6 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateur.setNom( eDg2.getLastName() );
         utilisateur.setLogin( eDg2.getEmail() );
         utilisateur.setDateDeNaissance( eDg2.getBornAt() );
-        utilisateur.setCivilite( eDg2.getHonorific() );
         utilisateur.setId( eDg2.getId() );
 
         return utilisateur;
@@ -1099,7 +1099,7 @@ public class DtoMapperImpl implements DtoMapper {
         EtudiantSoutenanceDto etudiantSoutenanceDto = new EtudiantSoutenanceDto();
 
         etudiantSoutenanceDto.setUtilisateurDto( utilisateurToUtilisateurDto( etudiant.getUtilisateur() ) );
-        etudiantSoutenanceDto.setPromotionsDto( promotionListToPromotionDtoList( etudiant.getPromotions() ) );
+        etudiantSoutenanceDto.setPromotionsDto( promotionListToPromotionSoutenanceDtoList( etudiant.getPromotions() ) );
         etudiantSoutenanceDto.setId( etudiant.getId() );
         etudiantSoutenanceDto.setVersion( etudiant.getVersion() );
 
@@ -1648,5 +1648,34 @@ public class DtoMapperImpl implements DtoMapper {
         etudiant.setVersion( etudiantSoutenanceDto.getVersion() );
 
         return etudiant;
+    }
+
+    protected PromotionSoutenanceDto promotionToPromotionSoutenanceDto(Promotion promotion) {
+        if ( promotion == null ) {
+            return null;
+        }
+
+        PromotionSoutenanceDto promotionSoutenanceDto = new PromotionSoutenanceDto();
+
+        promotionSoutenanceDto.setType( promotion.getType() );
+        promotionSoutenanceDto.setNbParticipants( promotion.getNbParticipants() );
+        promotionSoutenanceDto.setNom( promotion.getNom() );
+        promotionSoutenanceDto.setDateDebut( promotion.getDateDebut() );
+        promotionSoutenanceDto.setDateFin( promotion.getDateFin() );
+
+        return promotionSoutenanceDto;
+    }
+
+    protected List<PromotionSoutenanceDto> promotionListToPromotionSoutenanceDtoList(List<Promotion> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<PromotionSoutenanceDto> list1 = new ArrayList<PromotionSoutenanceDto>( list.size() );
+        for ( Promotion promotion : list ) {
+            list1.add( promotionToPromotionSoutenanceDto( promotion ) );
+        }
+
+        return list1;
     }
 }

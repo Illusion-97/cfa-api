@@ -19,7 +19,7 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 	private LocalDate dateDebut; // 01/01/2021
 
 	private LocalDate dateFin; // 31/12/2021
-
+	
 	private long idDg2;
 
 	private long nbParticipants;
@@ -160,7 +160,7 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 
 	/**
 	 * @param idDG2 le idDG2 à affecter
-
+	 
 	 */
 	public void setIdDg2(long idDG2) {
 		this.idDg2 = idDG2;
@@ -201,10 +201,8 @@ public class Promotion extends BaseEntity implements Serializable { // CDA2021
 		return
 //				centreFormation.getIdDg2() == other.centreFormation.getIdDg2() &&
 				cursus.getIdDg2() == other.cursus.getIdDg2()
-						&& Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
-						&& Objects.equals(nom, other.nom)
-						&& Objects.equals(nbParticipants, other.nbParticipants)
-						&& Objects.equals(type, other.type);
+				&& Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
+				&& Objects.equals(nom, other.nom);
 	}
 
 	@Override

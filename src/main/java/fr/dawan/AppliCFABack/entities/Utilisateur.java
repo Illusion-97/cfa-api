@@ -9,8 +9,8 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Utilisateur extends BaseEntity implements Serializable {
-
-	@Column(nullable = false)
+	
+	@Column(nullable = false) 
 	private long idDg2;
 
 	@Column(nullable = false, length = 255)
@@ -28,7 +28,6 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@Column(nullable = true, length = 255)
 	private String civilite;
 
-	@Column(nullable = true)
 	private LocalDate dateDeNaissance;
 
 	@Column(nullable = true, length = 255)
@@ -45,21 +44,21 @@ public class Utilisateur extends BaseEntity implements Serializable {
 
 	@ManyToOne
 	private Entreprise entreprise;
-
+	
 	@ManyToOne
 	private CentreFormation centreFormation;
 
 	@OneToOne(mappedBy = "utilisateur")
 	private Etudiant etudiant;
-
+	
 	@OneToOne(mappedBy = "utilisateur")
 	private Formateur formateur;
 	@OneToOne
 	private CEF cef;
-
+	
 	@OneToOne
 	private Tuteur tuteur;
-
+	
 
 
 	@OneToOne
@@ -69,10 +68,10 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	 * External account = managed account by LDAP
 	 */
 	private boolean externalAccount;
-
+	
 	private boolean active;
-
-
+	
+	
 	public boolean isActive() {
 		return active;
 	}
@@ -84,7 +83,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	public Utilisateur() {
 		super();
 	}
-
+	
 	public boolean isExternalAccount() {
 		return externalAccount;
 	}
@@ -92,8 +91,8 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	public void setExternalAccount(boolean externalAccount) {
 		this.externalAccount = externalAccount;
 	}
-
-
+	
+	
 
 	public String getLogin() {
 		return login;
@@ -147,7 +146,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 		return sb.toString();
 	}
 
-
+	
 	public void setRoles(List<UtilisateurRole> roles) {
 		this.roles = roles;
 	}
@@ -210,7 +209,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 
 	/**
 	 * @param entreprise le entreprise à affecter
-
+	 
 	 */
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
@@ -232,7 +231,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 
 	/**
 	 * @param idDg2 le idDg2 à affecter
-
+	 
 	 */
 	public void setIdDg2(long idDg2) {
 		this.idDg2 = idDg2;
@@ -247,12 +246,12 @@ public class Utilisateur extends BaseEntity implements Serializable {
 
 	/**
 	 * @param centreFormation le centreFormation à affecter
-
+	 
 	 */
 	public void setCentreFormation(CentreFormation centreFormation) {
 		this.centreFormation = centreFormation;
 	}
-
+	
 	public Tuteur getTuteur() {
 		return tuteur;
 	}
@@ -260,7 +259,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	public void setTuteur(Tuteur tuteur) {
 		this.tuteur = tuteur;
 	}
-
+	
 	/**
 	 * @return le signature
 	 */
@@ -270,24 +269,24 @@ public class Utilisateur extends BaseEntity implements Serializable {
 
 	/**
 	 * @param signature le signature à affecter
-
+	 
 	 */
 	public void setSignature(Signature signature) {
 		this.signature = signature;
 	}
-
+	
 	public String getFullName() {
-
+		
 		return getNom() + " " + getPrenom();
 	}
-
+	
 	public void modifierRoles(List<UtilisateurRole> nouveauxRoles) {
-		this.roles.clear();
-		this.roles.addAll(nouveauxRoles);
-		for (UtilisateurRole role : nouveauxRoles) {
-			role.getUtilisateurs().add(this);
-		}
-	}
+        this.roles.clear();
+        this.roles.addAll(nouveauxRoles);
+        for (UtilisateurRole role : nouveauxRoles) {
+            role.getUtilisateurs().add(this);
+        }
+    }
 
 	@Override
 	public boolean equals(Object obj) {
@@ -330,11 +329,6 @@ public class Utilisateur extends BaseEntity implements Serializable {
 				return false;
 		} else if (!civilite.equals(other.civilite))
 			return false;
-		if (dateDeNaissance == null) {
-			if (other.dateDeNaissance != null)
-				return false;
-		} else if (!dateDeNaissance.equals(other.dateDeNaissance))
-			return false;
 		return true;
 	}
 
@@ -344,10 +338,10 @@ public class Utilisateur extends BaseEntity implements Serializable {
 				+ ", nom=" + nom + ", civilite=" + civilite + ", dateDeNaissance=" + dateDeNaissance + ", telephone="
 				+ telephone + ", telephoneFixe=" + telephoneFixe + ", adresse=" + adresse + ", roles=" + roles
 				+ ", entreprise=" + entreprise + ", centreFormation=" + centreFormation + ", etudiant=" + etudiant
-				+ ", formateur=" + formateur + ", cef=" + cef
+				+ ", formateur=" + formateur + ", cef=" + cef 
 				+ "version=" + this.getVersion()+ "]";
 	}
 
-
-
+	
+	
 }

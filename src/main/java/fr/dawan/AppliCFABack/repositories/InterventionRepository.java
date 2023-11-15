@@ -20,7 +20,7 @@ public interface InterventionRepository extends JpaRepository<Intervention, Long
 			String formationTitre, String promotionNom, Pageable p);
 
 	long countDistinctByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(String formationTitre,
-																								  String promotionNom);
+			String promotionNom);
 
 	/** ++++++++++++++ INTERVENTION PROMOTION ++++++++++++++ **/
 	@Query("SELECT i FROM Intervention i JOIN i.promotions promotion WHERE promotion.id=:id ")
@@ -40,20 +40,32 @@ public interface InterventionRepository extends JpaRepository<Intervention, Long
 	List<Intervention> findAllByFormationId(long id);
 
 	Optional<Intervention> findByIdDg2(long id);
-
+	
 	@Query("SELECT i FROM Intervention i LEFT JOIN FETCH i.formateur f WHERE f.id =:id And i.dateDebut =:dateDebut And i.dateFin =:dateFin")
 	Optional<Intervention> findInterventionBydateFormationAndFormateur(LocalDate dateDebut, LocalDate dateFin, long id);
 
 	/** ++++++++++++++ INTERVENTION FORMATEUR ++++++++++++++ **/
 	@Query("SELECT i FROM Intervention i JOIN i.formateur f WHERE f.id =:id")
 	Page<Intervention> findAllByFormateurId(long id, Pageable p);
-
+	
 	@Query("SELECT i FROM Intervention i JOIN i.formateur f WHERE f.id =:id")
 	List<Intervention> findAllByFormateurId(long id);
 
-	@Query("SELECT i FROM Promotion p JOIN p.interventions i JOIN i.formation f WHERE p.id = :id AND f.titre LIKE %:search%")
-	Page<Intervention> findInterventionByPromotionId(long id, Pageable page, String search);
-
+	@Query(value = "SELECT * FROM intervention i JOIN intervention_promotions ip " +
+			"JOIN promotion p ON(i.id = ip.promotions_id AND p.id = ip.promotions_id) " +
+			"JOIN formation f ON(i.formation_id = f.id) " +
+			"WHERE p.id = :id AND (:search IS NULL " +
+			"OR LOWER(f.slug) LIKE CONCAT('%', LOWER(:search), '%') " +
+			"OR LOWER(f.titre) LIKE CONCAT('%', LOWER(:search), '%') " +
+			"OR REPLACE(f.slug,'-',' ') LIKE CONCAT('%', LOWER(:search), '%') " +
+			"OR REPLACE(f.slug,'',' ') LIKE CONCAT('%', LOWER(:search), '%') " +
+			"OR REPLACE(f.slug,'-','') LIKE CONCAT('%', LOWER(:search), '%') " +
+			"OR REPLACE(f.titre,'-',' ') LIKE CONCAT('%', LOWER(:search), '%')" +
+			"OR REPLACE(f.titre,'',' ') LIKE CONCAT('%', LOWER(:search), '%')" +
+			"OR REPLACE(f.titre,'-','') LIKE CONCAT('%', LOWER(:search), '%'))",
+			nativeQuery = true)
+	Page<Intervention> findInterventionByPromotionId(@Param("id") long id, @Param("search") String search, Pageable page);
+	
 	@Query("SELECT COUNT(i) FROM Promotion p JOIN p.interventions i JOIN i.formation f WHERE p.id = :id AND f.titre LIKE %:search%")
 	long countInterventionByPromotionId(Long id, String search);
 }

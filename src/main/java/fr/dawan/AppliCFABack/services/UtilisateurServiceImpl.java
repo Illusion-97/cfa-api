@@ -1,110 +1,50 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.security.SecureRandom;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.naming.Context;
-import javax.naming.NamingEnumeration;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
-import javax.naming.directory.SearchControls;
-import javax.naming.directory.SearchResult;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.univocity.parsers.common.record.Record;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
-
-import fr.dawan.AppliCFABack.dto.AdresseDto;
-import fr.dawan.AppliCFABack.dto.CompetenceProfessionnelleDto;
-import fr.dawan.AppliCFABack.dto.CongeDto;
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
-import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
-import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.EmployeeDG2Dto;
-import fr.dawan.AppliCFABack.dto.EtudiantDto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
-import fr.dawan.AppliCFABack.dto.JourneePlanningDto;
-import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
-import fr.dawan.AppliCFABack.dto.LoginDto;
-import fr.dawan.AppliCFABack.dto.LoginResponseDto;
-import fr.dawan.AppliCFABack.dto.PositionnementDto;
-import fr.dawan.AppliCFABack.dto.ResetResponse;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
-import fr.dawan.AppliCFABack.entities.Adresse;
-import fr.dawan.AppliCFABack.entities.CEF;
-import fr.dawan.AppliCFABack.entities.CentreFormation;
-import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.Entreprise;
-import fr.dawan.AppliCFABack.entities.Etudiant;
-import fr.dawan.AppliCFABack.entities.Formateur;
-import fr.dawan.AppliCFABack.entities.Promotion;
-import fr.dawan.AppliCFABack.entities.Tuteur;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.dto.*;
+import fr.dawan.AppliCFABack.entities.*;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.repositories.AdresseRepository;
-import fr.dawan.AppliCFABack.repositories.CEFRepository;
-import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
-import fr.dawan.AppliCFABack.repositories.CongeRepository;
-import fr.dawan.AppliCFABack.repositories.EntrepriseRepository;
-import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
-import fr.dawan.AppliCFABack.repositories.FormateurRepository;
-import fr.dawan.AppliCFABack.repositories.MaitreApprentissageRepository;
-import fr.dawan.AppliCFABack.repositories.PromotionRepository;
-import fr.dawan.AppliCFABack.repositories.TuteurRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
-import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
-import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
-import fr.dawan.AppliCFABack.tools.FileException;
-import fr.dawan.AppliCFABack.tools.HashTools;
-import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
-import fr.dawan.AppliCFABack.tools.SaveInvalidException;
+import fr.dawan.AppliCFABack.repositories.*;
+import fr.dawan.AppliCFABack.tools.*;
 import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.naming.Context;
+import javax.naming.NamingEnumeration;
+import javax.naming.directory.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired
-	UtilisateurRepository utilisateurRepository;
+	UtilisateurRepository utilisateurRepository;	
 	@Autowired
 	AdresseRepository adresseRepository;
 	@Autowired
@@ -177,18 +117,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Value("${app.ldap.technical.pwd}")
 	private String ldapTechnicalAccPwd;
-
+	
 	@Value("${base_url_dg2}")
-	private String baseUrl;
-
+    private String baseUrl;
+	
 	@Value("${domain.dawan}")
-	private String domainDawan;
+    private String domainDawan;
 
-	@Value("${domain.jehann}")
-	private String domainJehann;
-
-	@PersistenceContext
-	private EntityManager entityManager;
+    @Value("${domain.jehann}")
+    private String domainJehann;
+    
+    @PersistenceContext
+    private EntityManager entityManager;
 
 	public HttpServletRequest getRequest() {
 		return request;
@@ -234,7 +174,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération de la liste des utilisateurs
-	 *
+	 * 
 	 * @return res Liste des objets utilisateurs
 	 */
 	@Override
@@ -258,7 +198,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Va permettre de récupérer tous les utilisateurs avec pagination et recherche
-	 *
+	 * 
 	 * @param page   numero de la page
 	 * @param size   éléments sur la page
 	 * @param search éléments utilisateurs (nom,prenom,login,adresse)
@@ -291,7 +231,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Recherche d'un utilisateur / nb
-	 *
+	 * 
 	 * @param search recherche par prenom / nom / login / adresse
 	 */
 
@@ -304,7 +244,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateurs en fonction de l'id
-	 *
+	 * 
 	 * @param id id de l'utilisateur
 	 * @return uDto objet utilsateur
 	 */
@@ -344,7 +284,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateurs en fonction de l'email
-	 *
+	 * 
 	 * @param email email utilisateur
 	 * @return utilisateurDto objet utilisateur
 	 */
@@ -379,7 +319,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateurs en fonction du nom
-	 *
+	 * 
 	 * @param name nom de l'utilisateur
 	 */
 
@@ -393,11 +333,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Sauvegarde ou mise à jour d'un utilisateur
-	 *
+	 * 
 	 * @param uDto objet utilisateur
 	 * @return result objet utilisateur (nouveau ou modifier)
 	 * @throws SaveInvalidException
-	 *
+	 * 
 	 */
 
 	@Override
@@ -571,15 +511,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		result.setTuteurDto(mapper.tuteurTotuteurDto(user.getTuteur()));
 
 		return result;
-	}
-
+	}	
+	
 	@Override
 	public UtilisateurDto insertTuteur(UtilisateurDto uDto) throws SaveInvalidException {
-
+		
 		if (uDto.getId() == 0 && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
 			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin());
 		}
-
+		
 		try {
 			// Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
 			if (uDto.getId() == 0) {
@@ -601,45 +541,45 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		} catch (Exception e) {
 			logger.error("hashPwd failed", e);
 		}
-
+		
 		Utilisateur user = mapper.utilisateurDtoToUtilisateur(uDto);
 		UtilisateurRole tuteurRole = utilisateurRoleRepository.findByIntituleContaining("TUTEUR");
 		//Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).get();
 		if (user.getEntreprise() != null) {
-			Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).orElse(null);
-			user.setEntreprise(optEntreprise);
-		}
+	        Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).orElse(null);
+	        user.setEntreprise(optEntreprise);
+	    }
 		// Gestion de l'adresse
-		if (user.getAdresse() != null) {
-			Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).orElse(null);
-			user.setAdresse(adresse);
-		}
+	    if (user.getAdresse() != null) {
+	        Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).orElse(null);
+	        user.setAdresse(adresse);
+	    }
 
-		// Gestion du centre de formation
-		if (user.getCentreFormation() != null) {
-			CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId()).orElse(null);
-			user.setCentreFormation(centreFormation);
-		}
+	    // Gestion du centre de formation
+	    if (user.getCentreFormation() != null) {
+	        CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId()).orElse(null);
+	        user.setCentreFormation(centreFormation);
+	    }
 //		Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).get();
 //		CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId()).get();
-
+	    
 		List<UtilisateurRole> utilisateurRoles = new ArrayList<>();
 		utilisateurRoles.add(tuteurRole);
 		user.setRoles(utilisateurRoles);
 		//user.setEntreprise(optEntreprise);
 		//user.setAdresse(adresse);
 		//user.setCentreFormation(centreFormation);
-
+		
 		user.setActive(false);//par defaut a false comme il y l'inscription du tuteur sera a modifier avec l'interface admin 
 
-		user.setExternalAccount(true);
-
+		user.setExternalAccount(true);		
+		
 		user = utilisateurRepository.save(user);
-
+		
 		Tuteur tuteur = new Tuteur();
 		tuteur.setUtilisateur(user);
 		tuteur = tuteurRepository.save(tuteur);
-
+		
 		if (uDto.getEtudiantDto() != null) {
 			Long idEtudiant = uDto.getEtudiantDto().getId();
 			Optional<Etudiant> etuOpt = etudiantRepository.findById(idEtudiant);
@@ -649,25 +589,110 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				etudiantRepository.save(etudiant);
 			} else {
 				throw new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + idEtudiant);
-			}
+			} 
 		}
 		user.setTuteur(tuteur);
 		user = utilisateurRepository.saveAndFlush(user);
-
+		
 		UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
-
+		
 		//Envoie de la notif aux admins
 		String message  = "Nouvelle inscription d'un tuteur externe veuillez modifier ses informations personnelles et activer son compte, Tuteur : " + user.getFullName();
 		emailService.sendMailSmtpUser(
-				user.getId(), "Nouvelle demande d'inscription Tuteur externe - mail automatique",
+				user.getId(), "Nouvelle demande d'inscription Tuteur externe - mail automatique", 
 				message, Optional.of(""), Optional.of(""));
-
+		
 		return userDto;
 	}
 
+	
+	@Override
+	public UtilisateurDto updateTuteur(UtilisateurDto uDto) throws SaveInvalidException {
+	    if (uDto.getId() == 0) {
+	        throw new IllegalArgumentException("L'ID de l'utilisateur est nécessaire pour la mise à jour.");
+	    }
+
+	    Utilisateur user = utilisateurRepository.findById(uDto.getId())
+	            .orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé avec l'ID : " + uDto.getId()));
+
+	    //vérifie si email a changé et s'il est déjà utilisé par un autre utilisateur
+	    if (!user.getLogin().equals(uDto.getLogin()) && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
+	        throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse e-mail : " + uDto.getLogin());
+	    }
+
+	    try {
+	        //si le mot de passe a été modifié on hash le nouveau mot de passe
+	        if (!user.getPassword().equals(uDto.getPassword())) {
+	            uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+	        }
+	    } catch (Exception e) {
+	        logger.error("hashPwd failed", e);
+	    }
+
+	    //mettre à jour les champs de l'utilisateur avec les valeurs de uDto
+	    user.setLogin(uDto.getLogin());
+	    user.setNom(uDto.getNom());
+	    user.setPrenom(uDto.getPrenom());
+	    user.setCivilite(uDto.getCivilite());
+	    user.setDateDeNaissance(uDto.getDateDeNaissance());
+	    user.setTelephone(uDto.getTelephone());
+
+	    if (uDto.getEntrepriseDto() != null) {
+	        Entreprise entreprise = entrepriseRepository.findById(uDto.getEntrepriseDto().getId())
+	                .orElse(null);
+	        user.setEntreprise(entreprise);
+	    }
+	    
+	    if (uDto.getAdresseDto() != null) {
+	        Adresse adresse = adresseRepository.findById(uDto.getAdresseDto().getId())
+	                .orElse(null);
+	        user.setAdresse(adresse);
+	    }
+
+	    if (uDto.getCentreFormationId() != 0) {
+	        Long newCentreFormationId = uDto.getCentreFormationId();
+	        CentreFormation newCentreFormation = centreFormationRepository.findById(newCentreFormationId)
+	                .orElse(null);
+	        user.setCentreFormation(newCentreFormation);
+	    }
+
+
+	    user = utilisateurRepository.save(user);
+
+	    Tuteur tuteur = user.getTuteur(); 
+
+
+	    if (uDto.getEtudiantDto() != null) {
+	        Long idEtudiant = uDto.getEtudiantDto().getId();
+	        Optional<Etudiant> etuOpt = etudiantRepository.findById(idEtudiant);
+	        if (etuOpt.isPresent()) {
+	            Etudiant etudiant = etuOpt.get();
+	            etudiant.setTuteur(tuteur);
+	            etudiantRepository.save(etudiant);
+	        } else {
+	            throw new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + idEtudiant);
+	        }
+	    }	   
+
+	 if (uDto.isActive()) {
+	     user.setActive(true);
+	 } else {
+	     user.setActive(false); 
+	 } 
+	 
+	    user.setExternalAccount(true);
+
+	    user = utilisateurRepository.save(user);
+
+	    UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
+
+	    return userDto;
+	}
+
+
 	/**
 	 * Suppression d'un utilisateur
-	 *
+	 * 
 	 * @param id Id concernant un utilisateur
 	 */
 
@@ -714,7 +739,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	// recuperation des user par adresse id
 	/**
 	 * Récupération des utilisateurs par adresse en fonction de la ville
-	 *
+	 * 
 	 * @param ville adresse etudiant
 	 * @return res Liste utilisateur
 	 */
@@ -741,7 +766,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Planning de l'utilisateur
-	 *
+	 * 
 	 * @param id id de l'utilisateur
 	 * @return result Liste journee planning de l'utilisateur
 	 */
@@ -755,13 +780,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		for (UtilisateurRole role : userOpt.get().getRoles()) {
 			switch (role.getIntitule()) {
-				case "ETUDIANT":
-					result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(userOpt.get().getEtudiant().getId()));
-					break;
-				case "FORMATEUR":
-					result.addAll(
-							formateurService.getAllJourneePlanningByIdFormateur(userOpt.get().getFormateur().getId()));
-					break;
+			case "ETUDIANT":
+				result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(userOpt.get().getEtudiant().getId()));
+				break;
+			case "FORMATEUR":
+				result.addAll(
+						formateurService.getAllJourneePlanningByIdFormateur(userOpt.get().getFormateur().getId()));
+				break;
 			}
 		}
 
@@ -770,7 +795,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Congé de l'utilisateur
-	 *
+	 * 
 	 * @param id id de l'utilisateur
 	 * @return result liste des objets conge de l'utilisateur
 	 */
@@ -790,7 +815,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération de l'adresse en fonction de l'id de l'utilisateur
-	 *
+	 * 
 	 * @param id id de l'utilisateur
 	 * @return l'adresse utilisateur
 	 */
@@ -860,7 +885,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateur pa role
-	 *
+	 * 
 	 * @param idRole objet utilisateur role
 	 * @return resfinal liste des utilisateurs en fonction du role
 	 */
@@ -908,7 +933,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Va permettre de récupérer tous utilisateurs par role avec pagination et
 	 * recherche
-	 *
+	 * 
 	 * @param page   numero de la page
 	 * @param size   éléments sur la page
 	 * @param search éléments role utilisateur (prenom, nom, login)
@@ -937,7 +962,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Recherche par role / nombre
-	 *
+	 * 
 	 * @param role   objet role utilisateur
 	 * @param search recherche par nom / prenom / login
 	 */
@@ -951,7 +976,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Utilisateur referent ou non
-	 *
+	 * 
 	 * @param id id referent
 	 */
 
@@ -964,9 +989,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * File upload
-	 *
+	 * 
 	 * @throws FileException IOException
-	 *
+	 * 
 	 */
 
 	@Override
@@ -989,7 +1014,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				if (fileSplited[1].equals("csv")) { // si l'extension du fichier == csv
 					CsvParserSettings settings = new CsvParserSettings();
 					settings.setHeaderExtractionEnabled(true); // definit si oui ou non on extrait les en-tetes lors du
-					// parsing
+																// parsing
 					settings.detectFormatAutomatically(); // detecte automatiquement le separateur
 
 					CsvParser parser = new CsvParser(settings);
@@ -1038,7 +1063,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération de l'utilisateur en fonction de l'id
-	 *
+	 * 
 	 * @param id id de l'utilisateur
 	 */
 	private Utilisateur getUtilisateurById(long id) {
@@ -1053,7 +1078,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Génération du mot de passe
-	 *
+	 * 
 	 * @return generatedString mot de passe généré
 	 */
 	// generation pwd
@@ -1077,9 +1102,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Reset du mot de passe
-	 *
+	 * 
 	 * @throws EmailResetPasswordException
-	 *
+	 * 
 	 */
 	// reset pwd
 	@Override
@@ -1120,7 +1145,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Enregistre en base de données le employees récupéré de DG2
-	 *
+	 * 
 	 * @param email , password
 	 * @return void
 	 */
@@ -1128,10 +1153,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public void fetchAllDG2Employees(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<EmployeeDG2Dto> cResJson;
-
+		
 		//url dg2 qui concerne la recupération des locations
 		URI url = new URI(baseUrl + "employees");
-
+		
 		//recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
@@ -1157,9 +1182,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 					logger.error("SaveAndFlush failed","Centre de formation Introuvable");
 					throw new FetchDG2Exception("Centre de formation Introuvable");
 				}
-
+				
 				if (optUtlisateur.isPresent()) {
-
+					
 					if (optUtlisateur.get().equals(utilisateurImport) && optUtlisateur.get().getCentreFormation().getId() == centreFormationOpt.get().getId()) {
 						continue;}
 					else  {
@@ -1168,29 +1193,29 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 							utilisateurImport.setId(optUtlisateur.get().getId());
 							utilisateurImport.setVersion(optUtlisateur.get().getVersion());
 							utilisateurImport.setActive(true);
-
+	
 						}
 					}
 					try {
-						utilisateurRepository.saveAndFlush(utilisateurImport);
+					utilisateurRepository.saveAndFlush(utilisateurImport);
 
 					} catch (Exception e) {
 						logger.error("SaveAndFlush failed", e);
 
 					}
 				} else {
-
+					
 					try {
-
+						
 						utilisateurImport.setPassword(null);
 						utilisateurImport.setActive(true);
-						utilisateurRepository.saveAndFlush(utilisateurImport);
+					    utilisateurRepository.saveAndFlush(utilisateurImport);
 
 
 					} catch (Exception e) {
 						logger.error("SaveAndFlush failed", e);
 
-
+					
 					}
 				}
 			}
@@ -1198,11 +1223,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 	}
-
+	
 	@Override
 	public LoginResponseDto checkLogin(LoginDto loginDto) throws Exception {
 
-		if (loginDto.getLogin().contains(domainDawan)
+		if (loginDto.getLogin().contains(domainDawan) 
 				|| loginDto.getLogin().contains(domainJehann)) {
 
 			// login via LDAP
@@ -1294,7 +1319,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				throw new Exception("Error : invalid credentials !");
 			}
 		} else { // login via Db
-			// ================================================================================
+					// ================================================================================
 			Utilisateur u = utilisateurRepository.findByEmail(loginDto.getLogin());
 			if (u != null && u.getPassword().equals(HashTools.hashSHA512(loginDto.getPassword())) && u.isActive()) {
 				return createTokenFromUser(u);
@@ -1322,124 +1347,124 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return result;
 	}
-
+	
 	public void modifierRolesUtilisateur(long utilisateurId, List<Long> nouveauRolesIds) throws NotFoundException {
-		Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
-		List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);
+        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
+        List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);
 
-
-		// ajout de rôle
-		for (UtilisateurRole role : nouveauxRoles) {
+        
+        // ajout de rôle
+        for (UtilisateurRole role : nouveauxRoles) {
 			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
 				switch (role.getIntitule()) {
-					case "ETUDIANT":
-						utilisateur.setEtudiant(etudiantService.savEtudiant(utilisateur));
-						break;
-					case "FORMATEUR":
-						utilisateur.setFormateur(formateurService.saFormateur(utilisateur));
-						break;
-					case "TUTEUR":
-						utilisateur.setTuteur(tuteurService.saveTuteur(utilisateur));
-						break;
-					default:
-						break;
+				case "ETUDIANT":
+					utilisateur.setEtudiant(etudiantService.savEtudiant(utilisateur));
+					break;
+				case "FORMATEUR":
+					utilisateur.setFormateur(formateurService.saFormateur(utilisateur));
+					break;
+				case "TUTEUR":					
+					utilisateur.setTuteur(tuteurService.saveTuteur(utilisateur));
+					break;
+				default:
+					break;
 				}
-			}
+			}		
 		}
-		utilisateur.modifierRoles(nouveauxRoles);
-
-		// suppression de rôle
-		for (UtilisateurRoleDto role : utilisateurRoleService.getAllUtilisateurRole()) {
+        utilisateur.modifierRoles(nouveauxRoles);
+        
+        // suppression de rôle
+        for (UtilisateurRoleDto role : utilisateurRoleService.getAllUtilisateurRole()) {
 			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
 				switch (role.getIntitule()) {
-					case "ETUDIANT":
-						try {
-							long etudiantId = utilisateur.getEtudiant().getId();
-							//suppression de l'etudiant dans la promotion
-							//TODO Modifier promotionRespository par promotionService
-							List<Promotion> promotions = promotionRespository.getByEtudiantId(etudiantId);
-							if (!promotions.isEmpty()) {
-								promotions.forEach(promotion -> promotion.getEtudiants().remove(utilisateur.getEtudiant()));
-								promotionRespository.saveAll(promotions);
+				case "ETUDIANT":
+					try {						
+						long etudiantId = utilisateur.getEtudiant().getId();
+						//suppression de l'etudiant dans la promotion
+						//TODO Modifier promotionRespository par promotionService
+						List<Promotion> promotions = promotionRespository.getByEtudiantId(etudiantId);
+						if (!promotions.isEmpty()) {
+							promotions.forEach(promotion -> promotion.getEtudiants().remove(utilisateur.getEtudiant()));
+							promotionRespository.saveAll(promotions);							
+						}							
+						//suppression du dossierProjet
+						List<DossierProjetDto> dossierProjets = DossierProjetService.getByIdEtudiant(etudiantId);
+						if (!dossierProjets.isEmpty()) {							
+							for (DossierProjetDto dossierProjet : dossierProjets) {
+								List<CompetenceProfessionnelleDto> competenceProfessionnellesDtos = competenceProfessionnelleService.getAllByDossierProjets(dossierProjet.getId());
+								if (!competenceProfessionnellesDtos.isEmpty()) {
+									competenceProfessionnellesDtos.forEach(cp -> competenceProfessionnelleService.deleteById(cp.getId()));									
+								}								
+								DossierProjetService.deleteById(dossierProjet.getId());							
 							}
-							//suppression du dossierProjet
-							List<DossierProjetDto> dossierProjets = DossierProjetService.getByIdEtudiant(etudiantId);
-							if (!dossierProjets.isEmpty()) {
-								for (DossierProjetDto dossierProjet : dossierProjets) {
-									List<CompetenceProfessionnelleDto> competenceProfessionnellesDtos = competenceProfessionnelleService.getAllByDossierProjets(dossierProjet.getId());
-									if (!competenceProfessionnellesDtos.isEmpty()) {
-										competenceProfessionnellesDtos.forEach(cp -> competenceProfessionnelleService.deleteById(cp.getId()));
-									}
-									DossierProjetService.deleteById(dossierProjet.getId());
-								}
-							}
-							// suppression des devoirs de l'étudiant
-							List<DevoirEtudiantDto> devoirsEtudiant = devoirEtudiantService.getAllByEtudiantId(etudiantId);
-							if (!devoirsEtudiant.isEmpty()) {
-								devoirsEtudiant.forEach(devoirEtudiant -> devoirEtudiantService.delete(devoirEtudiant.getId()));
-							}
-							//suppression des dossierProfessionnel de l'étudiant
-							List<DossierProfessionnelDto> dosiDossierProfessionnelDtos = dosiDossierProfessionnelService.getByIdEtudiant(etudiantId);
-							if (!dosiDossierProfessionnelDtos.isEmpty()) {
-								dosiDossierProfessionnelDtos.forEach(dp -> dosiDossierProfessionnelService.delete(dp.getId()));
-							}
-							//suppression des livretEvaluation de l'étudiant
-							List<LivretEvaluationDto> livretEvaluations = livretEvaluationService.getByEtudiantId(etudiantId);
-							if (!livretEvaluations.isEmpty()) {
-								livretEvaluations.forEach(le -> livretEvaluationService.delete(le.getId()));
-							}
-							//suppression des positionnement de l'étudiant
-							PositionnementDto positionnement = positionnementService.getByIdEtudiant(etudiantId);
-							if (positionnement != null) {
-								positionnementService.delete(positionnement.getId());
-							}
-
-							etudiantService.deleteById(etudiantId);
-							utilisateur.setEtudiant(null);
-						} catch (Exception e) {
-							System.out.println("l'utilisateur na pas d'étudiant");
 						}
-						break;
-
-					case "FORMATEUR":
-						try {
-							long formateurId = utilisateur.getFormateur().getId();
-							//suppression des intervention liée au formateur
-							List<InterventionDto> interventions = interventionService.findAllByFormateurId(formateurId);
-							if (!interventions.isEmpty()) {
-								interventionService.deleteLstIntervention(interventions);
-							}
-							formateurService.deleteById(formateurId);
-						} catch (Exception e) {
-							System.out.println("l'utilisateur na pas de formateur");
+						// suppression des devoirs de l'étudiant
+						List<DevoirEtudiantDto> devoirsEtudiant = devoirEtudiantService.getAllByEtudiantId(etudiantId);
+						if (!devoirsEtudiant.isEmpty()) {							
+							devoirsEtudiant.forEach(devoirEtudiant -> devoirEtudiantService.delete(devoirEtudiant.getId()));				
 						}
-						break;
-
-					case "TUTEUR":
-						try {
-							long tuteurId = utilisateur.getTuteur().getId();
-							//suppression du tuteur dans l'étudiant
-							List<EtudiantDto> etudiants = etudiantService.findAllByTuteurId(tuteurId);
-							if (!etudiants.isEmpty()) {
-								etudiants.forEach(etudiant -> {
-									etudiant.setTuteurDto(null);
-									etudiantService.saveOrUpdate(etudiant);
-								});
-							}
-							tuteurService.delete(tuteurId);
-							utilisateur.setTuteur(null);
-						} catch (Exception e) {
-							System.out.println("l'utilisateur na pas de tuteur");
+						//suppression des dossierProfessionnel de l'étudiant
+						List<DossierProfessionnelDto> dosiDossierProfessionnelDtos = dosiDossierProfessionnelService.getByIdEtudiant(etudiantId);
+						if (!dosiDossierProfessionnelDtos.isEmpty()) {
+							dosiDossierProfessionnelDtos.forEach(dp -> dosiDossierProfessionnelService.delete(dp.getId()));							
 						}
-						break;
-
-					default:
-						break;
+						//suppression des livretEvaluation de l'étudiant
+						List<LivretEvaluationDto> livretEvaluations = livretEvaluationService.getByEtudiantId(etudiantId);
+						if (!livretEvaluations.isEmpty()) {
+							livretEvaluations.forEach(le -> livretEvaluationService.delete(le.getId()));							
+						}
+						//suppression des positionnement de l'étudiant
+						PositionnementDto positionnement = positionnementService.getByIdEtudiant(etudiantId);
+						if (positionnement != null) {
+							positionnementService.delete(positionnement.getId());						
+						}
+						
+						etudiantService.deleteById(etudiantId);		
+						utilisateur.setEtudiant(null);
+					} catch (Exception e) {
+						System.out.println("l'utilisateur na pas d'étudiant");
+					}
+					break;
+					
+				case "FORMATEUR":
+					try {									
+						long formateurId = utilisateur.getFormateur().getId();
+						//suppression des intervention liée au formateur
+						List<InterventionDto> interventions = interventionService.findAllByFormateurId(formateurId);
+						if (!interventions.isEmpty()) {
+							interventionService.deleteLstIntervention(interventions);
+						}
+						formateurService.deleteById(formateurId);
+					} catch (Exception e) {
+						System.out.println("l'utilisateur na pas de formateur");
+					}
+					break;
+					
+				case "TUTEUR":					
+					try {
+						long tuteurId = utilisateur.getTuteur().getId();
+						//suppression du tuteur dans l'étudiant
+						List<EtudiantDto> etudiants = etudiantService.findAllByTuteurId(tuteurId);
+						if (!etudiants.isEmpty()) {
+							etudiants.forEach(etudiant -> {
+								etudiant.setTuteurDto(null);
+								etudiantService.saveOrUpdate(etudiant);
+							});
+						}
+						tuteurService.delete(tuteurId);
+						utilisateur.setTuteur(null);
+					} catch (Exception e) {
+						System.out.println("l'utilisateur na pas de tuteur");
+					}
+					break;
+					
+				default:
+					break;
 				}
 			}
-		}
-
-		utilisateurRepository.save(utilisateur);
-	}
+		}       
+        
+        utilisateurRepository.save(utilisateur);
+    }
 
 }

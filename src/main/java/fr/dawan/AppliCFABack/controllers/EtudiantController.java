@@ -254,9 +254,4 @@ public class EtudiantController {
 			return ResponseEntity.status(HttpStatus.OK).build();
 
 	}
-	
-	@GetMapping(value = "/promotion/{id}", produces = "application/json")
-	public List<EtudiantDto> getEtudiantByPromotionId(@PathVariable("id") long id) {
-		return etudiantService.getEtudiantByPromotionId(id);
-	}
 }
