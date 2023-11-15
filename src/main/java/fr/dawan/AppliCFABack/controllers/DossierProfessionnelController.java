@@ -61,7 +61,7 @@ public class DossierProfessionnelController {
 	@Autowired
 	private ObjectMapper objMap;
 
-	@Value("src/main/resources/pictures")
+	@Value("${app.storagefolder}")
 	private String storageFolder2;
 
 	@GetMapping(produces = "application/json")
