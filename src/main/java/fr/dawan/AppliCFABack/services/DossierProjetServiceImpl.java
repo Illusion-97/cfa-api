@@ -298,9 +298,12 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 * @return dpDto Dto du Dossier Projet
 	 */
 	public DossierProjetDto deleteFile(String file, long id) {
-	   String cheminFichier = storageFolder + "/DossierProjet/" + file;
-	   File fichier = new File(cheminFichier);
+
 	   DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
+		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dp.getEtudiant().getId())
+				+ dp.getEtudiant().getId() + "_" + dp.getNom() +"/";
+	   String cheminFichier = storageFolder + "/DossierProjet/" + nomDossierEtudiant + file;
+	   File fichier = new File(cheminFichier);
 	   if (fichier.exists()) {
 
 	      fichier.delete();
