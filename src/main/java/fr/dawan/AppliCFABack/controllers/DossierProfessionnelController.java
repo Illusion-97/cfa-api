@@ -46,6 +46,9 @@ public class DossierProfessionnelController {
 	AnnexeService annexeService;
 	
 	@Autowired
+	FacultatifService facultatifService;
+	
+	@Autowired
 	EtudiantService etudiantService;
 	
 	@Autowired
@@ -222,6 +225,16 @@ public class DossierProfessionnelController {
 															 @PathVariable("dossierId") Long id) throws IOException {
 		DossierProEtudiantDto dpDto = dossierProService.saveFileImport(fileImport, id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
+	}
+	
+	@DeleteMapping("/facultatif/{facultatifId}")
+	public ResponseEntity<String> deleteFacultatif(@PathVariable long facultatifId) {
+		try {
+			facultatifService.deleteById(facultatifId);
+			return new ResponseEntity<>("Facultatif supprimé avec succès.", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Erreur lors de la suppression du facultatif : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 }
