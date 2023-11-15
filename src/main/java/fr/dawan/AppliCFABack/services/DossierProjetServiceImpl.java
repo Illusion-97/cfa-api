@@ -206,7 +206,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		DossierProjet dp = mapper.dossierProjetDtoToDossierProjet(dpDto);
 		dossierProRepo.saveAndFlush(dp);
-		String nomDossierEtudiant = dpDto.getFullName() + dpDto.getEtudiant().getId() + "_" + dp.getNom() +"/";
+		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dpDto.getEtudiant().getId()) + dpDto.getEtudiant().getId() + "_" + dp.getNom() +"/";
 		directory(nomDossierEtudiant);
 		emailTuteur(dpDto);
 		return mapper.dossierProjetToDossierProjetDto(dp);
@@ -218,24 +218,43 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 * @return
 	 */
 	private void emailTuteur(DossierProjetDto dp) throws IOException, TemplateException, DossierProjetException {
-		Optional<Etudiant> student = studentRepository.findById(dp.getEtudiant().getId());
+		Optional<Etudiant> studentOpt = studentRepository.findById(dp.getEtudiant().getId());
 
-		String header = "Votre étudiant " + student.get().getUtilisateur().getFullName() + " a crée son Dossier Projet";
+		if (!studentOpt.isPresent()) {
+			// Gérer le cas où l'étudiant n'est pas trouvé
+			return;
+		}
+
+		Etudiant student = studentOpt.get();
+
+		// Vérifier si l'étudiant a un tuteur
+		if (student.getTuteur() == null || student.getTuteur().getId() == 0) {
+			// L'étudiant n'a pas de tuteur, donc on sort de la méthode
+			return;
+		}
+
+		// Reste du code si l'étudiant a un tuteur
+		String header = "Votre étudiant " + student.getUtilisateur().getFullName() + " a crée son Dossier Projet";
 		String message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été crée";
 
-		Optional<String> path = Optional.of("");
-		Optional<String> fileName = Optional.of("");
-		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.get().getId()+"\">Voir le dossier </a>";
-		// On vérifie si l'étudiant possède un tuteur
-		if (student.get().getTuteur().getId() != 0 ){
-			Optional<Tuteur> tuteurStudent = tuteurRepository.findById(student.get().getTuteur().getId());
-			if (dp.getVersion() > 0) {
-				header = "Votre étudiant " + student.get().getUtilisateur().getFullName() + " à ajouté des modification à son Dossier Projet";
-			}
+		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.getId()+"\">Voir le dossier </a>";
 
-			//Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
-			emailService.sendMailSmtpUser(tuteurStudent.get().getUtilisateur().getId(), header, body,path, fileName);
+		// Recherche du tuteur de l'étudiant
+		Optional<Tuteur> tuteurStudentOpt = tuteurRepository.findById(student.getTuteur().getId());
+
+		if (!tuteurStudentOpt.isPresent()) {
+			// Gérer le cas où le tuteur n'est pas trouvé
+			return;
 		}
+
+		Tuteur tuteurStudent = tuteurStudentOpt.get();
+
+		if (dp.getVersion() > 0) {
+			header = "Votre étudiant " + student.getUtilisateur().getFullName() + " à ajouté des modification à son Dossier Projet";
+		}
+
+		//Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
+		emailService.sendMailSmtpUser(tuteurStudent.getUtilisateur().getId(), header, body, Optional.of(""), Optional.of(""));
 	}
 	/**
 	 * Va permettre d'importer un Dossier Projet
