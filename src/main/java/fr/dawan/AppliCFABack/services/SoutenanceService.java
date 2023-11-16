@@ -11,13 +11,13 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 
 public interface SoutenanceService extends GenericService<SoutenanceDto> {
-	
-	List<SoutenanceDto> getByPromotionId(long id);
-	
-	List<SoutenanceDto> getPageByPromotionId(long id, int page, int size);
 
-	List<SoutenanceDto> getAll();
+    List<SoutenanceDto> getByPromotionId(long id);
 
-	String genererLstSoutenance(String promotion, long idPromotion) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException, DossierProjetException;
-	
+    List<SoutenanceDto> getPageByPromotionId(long id, int page, int size);
+
+    List<SoutenanceDto> getAll();
+
+    String genererLstSoutenance(String promotion, long idPromotion) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException, DossierProjetException;
+
 }

@@ -19,6 +19,7 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 
 	private long id;
 	private String nom;
+	private String fullName;
 	private String dossierImport;
 	private EtudiantDossierProjetDto etudiant;
 	private ProjetDossierProjetDto projet;
@@ -153,5 +154,13 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 
 	public void setCompetenceProfessionnelleIds(List<Long> competenceProfessionnelleIds) {
 		this.competenceProfessionnelleIds = competenceProfessionnelleIds;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 }

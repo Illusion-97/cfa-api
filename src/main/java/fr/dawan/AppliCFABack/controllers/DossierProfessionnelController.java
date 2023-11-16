@@ -10,7 +10,6 @@ import fr.dawan.AppliCFABack.services.*;
 import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
 import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
 import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
-import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import freemarker.template.TemplateException;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,26 +41,26 @@ public class DossierProfessionnelController {
 
 	@Autowired
 	DossierProfessionnelService dossierProService;
-
+	
 	@Autowired
 	AnnexeService annexeService;
-
+	
+	@Autowired
+	FacultatifService facultatifService;
+	
 	@Autowired
 	EtudiantService etudiantService;
-
+	
 	@Autowired
 	CursusService cursusService;
-
+	
 	@Autowired
 	FilesService fileService;
 
 	@Autowired
-	private FacultatifService facultatifService;
-
-	@Autowired
 	private ObjectMapper objMap;
 
-	@Value("src/main/resources/pictures")
+	@Value("${app.storagefolder}")
 	private String storageFolder2;
 
 	@GetMapping(produces = "application/json")
@@ -81,14 +80,14 @@ public class DossierProfessionnelController {
 
 	@GetMapping(value = "/{page}/{size}", produces = "application/json")
 	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
-																	@PathVariable(value = "size") int size) {
+			@PathVariable(value = "size") int size) {
 		return dossierProService.getAllByPage(page, size, "");
 	}
 
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
 	public @ResponseBody List<DossierProfessionnelDto> getAllByPage(@PathVariable("page") int page,
-																	@PathVariable(value = "size") int size,
-																	@PathVariable(value = "search", required = false) Optional<String> search) {
+			@PathVariable(value = "size") int size,
+			@PathVariable(value = "search", required = false) Optional<String> search) {
 		if (search.isPresent())
 			return dossierProService.getAllByPage(page, size, search.get());
 		else
@@ -99,7 +98,7 @@ public class DossierProfessionnelController {
 
 	@DeleteMapping(value = "/{idEtudiant}/delete/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable("idEtudiant") long idEtudiant,
-										@PathVariable(value = "id") long id) {
+			@PathVariable(value = "id") long id) {
 		try {
 			EtudiantDto eDto = etudiantService.getById(idEtudiant);
 			for (int i = 0; i < eDto.getDossierProfessionnel().size(); i++) {
@@ -117,7 +116,7 @@ public class DossierProfessionnelController {
 
 	}
 
-
+	
 	@PostMapping(value = "/save/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
 	public ResponseEntity<DossierProEtudiantDto> saveDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
 	        @RequestParam("pieceJointe") List<MultipartFile> files) throws TemplateException, DossierProfessionnelException, IOException  {
@@ -151,68 +150,70 @@ public class DossierProfessionnelController {
 		    return ResponseEntity.status(HttpStatus.CREATED).body(dpE);
 	}
 
+	
 	@GetMapping(value = "/dossier-professionnel/{dossierId}", produces = "application/pdf")
 	public ResponseEntity<Resource> generateDossierProPdf(@PathVariable long dossierId) throws Exception {
-		String outputpdfPath = dossierProService.generateDossierProPdf(dossierId);
+	    String outputpdfPath = dossierProService.generateDossierProPdf(dossierId);
 
-		File f = new File(outputpdfPath);
-		Path path = Paths.get(f.getAbsolutePath());
-		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + dossierId + "dp" + ".pdf");
-		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-		headers.add("Pragma", "no-cache");
-		headers.add("Expires", "0");
+	    File f = new File(outputpdfPath);
+	    Path path = Paths.get(f.getAbsolutePath());
+	    ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + dossierId + "dp" + ".pdf");
+	    headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+	    headers.add("Pragma", "no-cache");
+	    headers.add("Expires", "0");
 
-		return ResponseEntity.ok().headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
+	    return ResponseEntity.ok().headers(headers).contentLength(f.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
 	}
 
-
+	
 	@DeleteMapping("/annexes/{annexeId}")
-	public ResponseEntity<String> deleteAnnexe(@PathVariable Long annexeId) {
-		boolean isDeleted = annexeService.deleteAnnexe(annexeId);
-
-		if (isDeleted) {
-			return new ResponseEntity<>("Annexe deleted successfully", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>("Annexe not found", HttpStatus.NOT_FOUND);
-		}
-	}
-
-
+    public ResponseEntity<String> deleteAnnexe(@PathVariable Long annexeId) {
+        boolean isDeleted = annexeService.deleteAnnexe(annexeId);
+        
+        if (isDeleted) {
+            return new ResponseEntity<>("Annexe deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Annexe not found", HttpStatus.NOT_FOUND);
+        }
+    }
+	
+	
 	@PostMapping(value = "/upload/{etudiantId}/{cursusId}", consumes = "multipart/form-data", produces = "application/json")
 	public ResponseEntity<String> handleFileUpload(@PathVariable("etudiantId") long etudiantId, @PathVariable("cursusId") long cursusId, @RequestParam("fileImport") MultipartFile file, @RequestParam("nom") String nom ) throws IOException, EtudiantNotFoundException, CursusNotFoundException {
-		String message = "";
-		List<MultipartFile> files = new ArrayList<>();
-		files.add(file);
+	    String message = "";
+	    List<MultipartFile> files = new ArrayList<>();
+	    files.add(file);
+	  
+	    try {    
+	    
+	        byte[] bytes = file.getBytes();
+	        Path path = Paths.get(storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename());
+	        Files.write(path, bytes);
 
-		try {
-			byte[] bytes = file.getBytes();
-			Path path = Paths.get(storageFolder2 + "DossierProfessionnel" + "/" + file.getOriginalFilename());
-			Files.write(path, bytes);
+	        EtudiantDto etudiant = new EtudiantDto();	      
+	        etudiant.setId(etudiantId);
+	        
+	        CursusDossierProDto cursus =  new CursusDossierProDto();
+	        cursus.setId(cursusId);
+	       
+	        DossierProEtudiantDto dossier = new DossierProEtudiantDto();
+	        dossier.setNom(nom);
+	        dossier.setCursusDto(cursus);     
+	        dossier.setExperienceProfessionnelleDtos(new ArrayList<>());
+	        dossier.setAnnexeDtos(new ArrayList<>());
+	        dossier.setFacultatifDto(new ArrayList<>());
+	        dossier.setFileImport(file.getOriginalFilename());
+	        
+	        dossierProService.saveOrUpdateDossierProfessionnel(dossier, etudiantId, files);
 
-			EtudiantDto etudiant = new EtudiantDto();
-			etudiant.setId(etudiantId);
-
-			CursusDossierProDto cursus =  new CursusDossierProDto();
-			cursus.setId(cursusId);
-
-			DossierProEtudiantDto dossier = new DossierProEtudiantDto();
-			dossier.setNom(nom);
-			dossier.setCursusDto(cursus);
-			dossier.setExperienceProfessionnelleDtos(new ArrayList<>());
-			dossier.setAnnexeDtos(new ArrayList<>());
-			dossier.setFacultatifDto(new ArrayList<>());
-			dossier.setFileImport(file.getOriginalFilename());
-
-			dossierProService.saveOrUpdateDossierProfessionnel(dossier, etudiantId, files);
-
-			message = "Le fichier " + file.getOriginalFilename() + " a été téléchargé avec succès   !";
-			return ResponseEntity.status(HttpStatus.OK).body(message);
-		} catch (IOException e) {
-			message = "Impossible de télécharger le fichier " + file.getOriginalFilename() + " !";
-			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
-		}
+	        message = "Le fichier " + file.getOriginalFilename() + " a été téléchargé avec succès   !";
+	        return ResponseEntity.status(HttpStatus.OK).body(message);
+	    } catch (IOException e) {
+	        message = "Impossible de télécharger le fichier " + file.getOriginalFilename() + " !";
+	        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+	    }
 	}
 
 	@DeleteMapping(value = "/deleteFile/{id}", produces = "text/plain")
@@ -220,14 +221,14 @@ public class DossierProfessionnelController {
 		DossierProEtudiantDto dpDto = dossierProService.deleteFileImportById(id, file);
 		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
 	}
-
+	
 	@PostMapping(value = "/uploadFile/{dossierId}", consumes = "multipart/form-data", produces = "application/json")
 	public ResponseEntity<DossierProEtudiantDto> saveFileImport(@Nullable @RequestParam("fileImport")MultipartFile fileImport,
-																@PathVariable("dossierId") Long id) throws IOException {
+															 @PathVariable("dossierId") Long id) throws IOException {
 		DossierProEtudiantDto dpDto = dossierProService.saveFileImport(fileImport, id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
 	}
-
+	
 	@DeleteMapping("/facultatif/{facultatifId}")
 	public ResponseEntity<String> deleteFacultatif(@PathVariable long facultatifId) {
 		try {
@@ -237,5 +238,5 @@ public class DossierProfessionnelController {
 			return new ResponseEntity<>("Erreur lors de la suppression du facultatif : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
+	
 }

@@ -234,7 +234,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération de la liste des utilisateurs
-	 *
+	 * 
 	 * @return res Liste des objets utilisateurs
 	 */
 	@Override
@@ -258,7 +258,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Va permettre de récupérer tous les utilisateurs avec pagination et recherche
-	 *
+	 * 
 	 * @param page   numero de la page
 	 * @param size   éléments sur la page
 	 * @param search éléments utilisateurs (nom,prenom,login,adresse)
@@ -291,7 +291,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Recherche d'un utilisateur / nb
-	 *
+	 * 
 	 * @param search recherche par prenom / nom / login / adresse
 	 */
 
@@ -304,7 +304,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateurs en fonction de l'id
-	 *
+	 * 
 	 * @param id id de l'utilisateur
 	 * @return uDto objet utilsateur
 	 */
@@ -344,7 +344,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateurs en fonction de l'email
-	 *
+	 * 
 	 * @param email email utilisateur
 	 * @return utilisateurDto objet utilisateur
 	 */
@@ -379,7 +379,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateurs en fonction du nom
-	 *
+	 * 
 	 * @param name nom de l'utilisateur
 	 */
 
@@ -393,11 +393,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Sauvegarde ou mise à jour d'un utilisateur
-	 *
+	 * 
 	 * @param uDto objet utilisateur
 	 * @return result objet utilisateur (nouveau ou modifier)
 	 * @throws SaveInvalidException
-	 *
+	 * 
 	 */
 
 	@Override
@@ -604,7 +604,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		Utilisateur user = mapper.utilisateurDtoToUtilisateur(uDto);
 		UtilisateurRole tuteurRole = utilisateurRoleRepository.findByIntituleContaining("TUTEUR");
-		//Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).get();
+		// Entreprise optEntreprise =
+		// entrepriseRepository.findById(user.getEntreprise().getId()).get();
 		if (user.getEntreprise() != null) {
 			Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).orElse(null);
 			user.setEntreprise(optEntreprise);
@@ -617,7 +618,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		// Gestion du centre de formation
 		if (user.getCentreFormation() != null) {
-			CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId()).orElse(null);
+			CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId())
+					.orElse(null);
 			user.setCentreFormation(centreFormation);
 		}
 //		Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).get();
@@ -626,11 +628,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		List<UtilisateurRole> utilisateurRoles = new ArrayList<>();
 		utilisateurRoles.add(tuteurRole);
 		user.setRoles(utilisateurRoles);
-		//user.setEntreprise(optEntreprise);
-		//user.setAdresse(adresse);
-		//user.setCentreFormation(centreFormation);
+		// user.setEntreprise(optEntreprise);
+		// user.setAdresse(adresse);
+		// user.setCentreFormation(centreFormation);
 
-		user.setActive(false);//par defaut a false comme il y l'inscription du tuteur sera a modifier avec l'interface admin 
+		user.setActive(false);// par defaut a false comme il y l'inscription du tuteur sera a modifier avec
+								// l'interface admin
 
 		user.setExternalAccount(true);
 
@@ -656,20 +659,101 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
 
-		//Envoie de la notif aux admins
-		String message  = "Nouvelle inscription d'un tuteur externe veuillez modifier ses informations personnelles et activer son compte, Tuteur : " + user.getFullName() + " , email : " + user.getLogin();
-//		emailService.sendMailSmtpUser(
-//				user.getId(), "Nouvelle demande d'inscription Tuteur externe - mail automatique",
-//				message, Optional.of(""), Optional.of(""));
-		
-		emailService.sendMailUser1ToUser2("cfadawan@gmail.com", "cfadawan@gmail.com", "Nouvelle demande d'inscription Tuteur externe - mail automatique", message);
+		// Envoie de la notif aux admins
+		String message = "Nouvelle inscription d'un tuteur externe veuillez modifier ses informations personnelles et activer son compte, Tuteur : "
+				+ user.getFullName() + " , email : " + user.getLogin();
+//				emailService.sendMailSmtpUser(
+//						user.getId(), "Nouvelle demande d'inscription Tuteur externe - mail automatique",
+//						message, Optional.of(""), Optional.of(""));
+
+		emailService.sendMailUser1ToUser2("cfadawan@gmail.com", "cfadawan@gmail.com",
+				"Nouvelle demande d'inscription Tuteur externe - mail automatique", message);
+
+		return userDto;
+
+	}
+
+	@Override
+	public UtilisateurDto updateTuteur(UtilisateurDto uDto) throws SaveInvalidException {
+		if (uDto.getId() == 0) {
+			throw new IllegalArgumentException("L'ID de l'utilisateur est nécessaire pour la mise à jour.");
+		}
+
+		Utilisateur user = utilisateurRepository.findById(uDto.getId())
+				.orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé avec l'ID : " + uDto.getId()));
+
+		// vérifie si email a changé et s'il est déjà utilisé par un autre utilisateur
+		if (!user.getLogin().equals(uDto.getLogin()) && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
+			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse e-mail : " + uDto.getLogin());
+		}
+
+		try {
+			// si le mot de passe a été modifié on hash le nouveau mot de passe
+			if (!user.getPassword().equals(uDto.getPassword())) {
+				uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+			}
+		} catch (Exception e) {
+			logger.error("hashPwd failed", e);
+		}
+
+		// mettre à jour les champs de l'utilisateur avec les valeurs de uDto
+		user.setLogin(uDto.getLogin());
+		user.setNom(uDto.getNom());
+		user.setPrenom(uDto.getPrenom());
+		user.setCivilite(uDto.getCivilite());
+		user.setDateDeNaissance(uDto.getDateDeNaissance());
+		user.setTelephone(uDto.getTelephone());
+
+		if (uDto.getEntrepriseDto() != null) {
+			Entreprise entreprise = entrepriseRepository.findById(uDto.getEntrepriseDto().getId()).orElse(null);
+			user.setEntreprise(entreprise);
+		}
+
+		if (uDto.getAdresseDto() != null) {
+			Adresse adresse = adresseRepository.findById(uDto.getAdresseDto().getId()).orElse(null);
+			user.setAdresse(adresse);
+		}
+
+		if (uDto.getCentreFormationId() != 0) {
+			Long newCentreFormationId = uDto.getCentreFormationId();
+			CentreFormation newCentreFormation = centreFormationRepository.findById(newCentreFormationId).orElse(null);
+			user.setCentreFormation(newCentreFormation);
+		}
+
+		user = utilisateurRepository.save(user);
+
+		Tuteur tuteur = user.getTuteur();
+
+		if (uDto.getEtudiantDto() != null) {
+			Long idEtudiant = uDto.getEtudiantDto().getId();
+			Optional<Etudiant> etuOpt = etudiantRepository.findById(idEtudiant);
+			if (etuOpt.isPresent()) {
+				Etudiant etudiant = etuOpt.get();
+				etudiant.setTuteur(tuteur);
+				etudiantRepository.save(etudiant);
+			} else {
+				throw new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + idEtudiant);
+			}
+		}
+
+		if (uDto.isActive()) {
+			user.setActive(true);
+		} else {
+			user.setActive(false);
+		}
+
+		user.setExternalAccount(true);
+
+		user = utilisateurRepository.save(user);
+
+		UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
 
 		return userDto;
 	}
 
 	/**
 	 * Suppression d'un utilisateur
-	 *
+	 * 
 	 * @param id Id concernant un utilisateur
 	 */
 
@@ -716,7 +800,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	// recuperation des user par adresse id
 	/**
 	 * Récupération des utilisateurs par adresse en fonction de la ville
-	 *
+	 * 
 	 * @param ville adresse etudiant
 	 * @return res Liste utilisateur
 	 */
@@ -743,7 +827,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Planning de l'utilisateur
-	 *
+	 * 
 	 * @param id id de l'utilisateur
 	 * @return result Liste journee planning de l'utilisateur
 	 */
@@ -757,13 +841,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		for (UtilisateurRole role : userOpt.get().getRoles()) {
 			switch (role.getIntitule()) {
-				case "ETUDIANT":
-					result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(userOpt.get().getEtudiant().getId()));
-					break;
-				case "FORMATEUR":
-					result.addAll(
-							formateurService.getAllJourneePlanningByIdFormateur(userOpt.get().getFormateur().getId()));
-					break;
+			case "ETUDIANT":
+				result.addAll(etudiantService.getAllJourneePlanningByIdEtudiant(userOpt.get().getEtudiant().getId()));
+				break;
+			case "FORMATEUR":
+				result.addAll(
+						formateurService.getAllJourneePlanningByIdFormateur(userOpt.get().getFormateur().getId()));
+				break;
 			}
 		}
 
@@ -772,7 +856,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Congé de l'utilisateur
-	 *
+	 * 
 	 * @param id id de l'utilisateur
 	 * @return result liste des objets conge de l'utilisateur
 	 */
@@ -792,7 +876,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération de l'adresse en fonction de l'id de l'utilisateur
-	 *
+	 * 
 	 * @param id id de l'utilisateur
 	 * @return l'adresse utilisateur
 	 */
@@ -862,7 +946,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateur pa role
-	 *
+	 * 
 	 * @param idRole objet utilisateur role
 	 * @return resfinal liste des utilisateurs en fonction du role
 	 */
@@ -910,7 +994,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Va permettre de récupérer tous utilisateurs par role avec pagination et
 	 * recherche
-	 *
+	 * 
 	 * @param page   numero de la page
 	 * @param size   éléments sur la page
 	 * @param search éléments role utilisateur (prenom, nom, login)
@@ -939,7 +1023,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Recherche par role / nombre
-	 *
+	 * 
 	 * @param role   objet role utilisateur
 	 * @param search recherche par nom / prenom / login
 	 */
@@ -953,7 +1037,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Utilisateur referent ou non
-	 *
+	 * 
 	 * @param id id referent
 	 */
 
@@ -966,9 +1050,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * File upload
-	 *
+	 * 
 	 * @throws FileException IOException
-	 *
+	 * 
 	 */
 
 	@Override
@@ -991,7 +1075,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				if (fileSplited[1].equals("csv")) { // si l'extension du fichier == csv
 					CsvParserSettings settings = new CsvParserSettings();
 					settings.setHeaderExtractionEnabled(true); // definit si oui ou non on extrait les en-tetes lors du
-					// parsing
+																// parsing
 					settings.detectFormatAutomatically(); // detecte automatiquement le separateur
 
 					CsvParser parser = new CsvParser(settings);
@@ -1040,7 +1124,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération de l'utilisateur en fonction de l'id
-	 *
+	 * 
 	 * @param id id de l'utilisateur
 	 */
 	private Utilisateur getUtilisateurById(long id) {
@@ -1055,7 +1139,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Génération du mot de passe
-	 *
+	 * 
 	 * @return generatedString mot de passe généré
 	 */
 	// generation pwd
@@ -1079,9 +1163,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Reset du mot de passe
-	 *
+	 * 
 	 * @throws EmailResetPasswordException
-	 *
+	 * 
 	 */
 	// reset pwd
 	@Override
@@ -1122,19 +1206,20 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Enregistre en base de données le employees récupéré de DG2
-	 *
+	 * 
 	 * @param email , password
 	 * @return void
 	 */
 	@Override
-	public void fetchAllDG2Employees(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
+	public void fetchAllDG2Employees(String email, String password)
+			throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<EmployeeDG2Dto> cResJson;
 
-		//url dg2 qui concerne la recupération des locations
+		// url dg2 qui concerne la recupération des locations
 		URI url = new URI(baseUrl + "employees");
 
-		//recupérartion des headers / email / password dg2
+		// recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
 
@@ -1144,27 +1229,28 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		if (repWs.getStatusCode() == HttpStatus.OK) {
 			String json = repWs.getBody();
-			//recuperation des values en json et lecture
+			// recuperation des values en json et lecture
 			cResJson = objectMapper.readValue(json, new TypeReference<List<EmployeeDG2Dto>>() {
 			});
-			//boucle pour récupérer toute la liste
+			// boucle pour récupérer toute la liste
 			for (EmployeeDG2Dto eDG2 : cResJson) {
 				Utilisateur utilisateurImport = mapper.employeeDg2ToUtilisateur(eDG2);
-				Optional<CentreFormation> centreFormationOpt = centreFormationRepository.findByIdDg2(eDG2.getLocationId());
+				Optional<CentreFormation> centreFormationOpt = centreFormationRepository
+						.findByIdDg2(eDG2.getLocationId());
 				Optional<Utilisateur> optUtlisateur = utilisateurRepository.findByIdDg2(utilisateurImport.getIdDg2());
 				if (centreFormationOpt.isPresent()) {
 					utilisateurImport.setCentreFormation(centreFormationOpt.get());
-				}
-				else {
-					logger.error("SaveAndFlush failed","Centre de formation Introuvable");
+				} else {
+					logger.error("SaveAndFlush failed", "Centre de formation Introuvable");
 					throw new FetchDG2Exception("Centre de formation Introuvable");
 				}
 
 				if (optUtlisateur.isPresent()) {
 
-					if (optUtlisateur.get().equals(utilisateurImport) && optUtlisateur.get().getCentreFormation().getId() == centreFormationOpt.get().getId()) {
-						continue;}
-					else  {
+					if (optUtlisateur.get().equals(utilisateurImport)
+							&& optUtlisateur.get().getCentreFormation().getId() == centreFormationOpt.get().getId()) {
+						continue;
+					} else {
 						if (utilisateurImport != null) {
 							utilisateurImport.setPassword(optUtlisateur.get().getPassword());
 							utilisateurImport.setId(optUtlisateur.get().getId());
@@ -1188,10 +1274,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						utilisateurImport.setActive(true);
 						utilisateurRepository.saveAndFlush(utilisateurImport);
 
-
 					} catch (Exception e) {
 						logger.error("SaveAndFlush failed", e);
-
 
 					}
 				}
@@ -1204,8 +1288,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public LoginResponseDto checkLogin(LoginDto loginDto) throws Exception {
 
-		if (loginDto.getLogin().contains(domainDawan)
-				|| loginDto.getLogin().contains(domainJehann)) {
+		if (loginDto.getLogin().contains(domainDawan) || loginDto.getLogin().contains(domainJehann)) {
 
 			// login via LDAP
 			try {
@@ -1296,7 +1379,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				throw new Exception("Error : invalid credentials !");
 			}
 		} else { // login via Db
-			// ================================================================================
+					// ================================================================================
 			Utilisateur u = utilisateurRepository.findByEmail(loginDto.getLogin());
 			if (u != null && u.getPassword().equals(HashTools.hashSHA512(loginDto.getPassword())) && u.isActive()) {
 				return createTokenFromUser(u);
@@ -1326,25 +1409,25 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	public void modifierRolesUtilisateur(long utilisateurId, List<Long> nouveauRolesIds) throws NotFoundException {
-		Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
+		Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
+				.orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
 		List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);
-
 
 		// ajout de rôle
 		for (UtilisateurRole role : nouveauxRoles) {
 			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
 				switch (role.getIntitule()) {
-					case "ETUDIANT":
-						utilisateur.setEtudiant(etudiantService.savEtudiant(utilisateur));
-						break;
-					case "FORMATEUR":
-						utilisateur.setFormateur(formateurService.saFormateur(utilisateur));
-						break;
-					case "TUTEUR":
-						utilisateur.setTuteur(tuteurService.saveTuteur(utilisateur));
-						break;
-					default:
-						break;
+				case "ETUDIANT":
+					utilisateur.setEtudiant(etudiantService.savEtudiant(utilisateur));
+					break;
+				case "FORMATEUR":
+					utilisateur.setFormateur(formateurService.saFormateur(utilisateur));
+					break;
+				case "TUTEUR":
+					utilisateur.setTuteur(tuteurService.saveTuteur(utilisateur));
+					break;
+				default:
+					break;
 				}
 			}
 		}
@@ -1354,89 +1437,95 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		for (UtilisateurRoleDto role : utilisateurRoleService.getAllUtilisateurRole()) {
 			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
 				switch (role.getIntitule()) {
-					case "ETUDIANT":
-						try {
-							long etudiantId = utilisateur.getEtudiant().getId();
-							//suppression de l'etudiant dans la promotion
-							//TODO Modifier promotionRespository par promotionService
-							List<Promotion> promotions = promotionRespository.getByEtudiantId(etudiantId);
-							if (!promotions.isEmpty()) {
-								promotions.forEach(promotion -> promotion.getEtudiants().remove(utilisateur.getEtudiant()));
-								promotionRespository.saveAll(promotions);
-							}
-							//suppression du dossierProjet
-							List<DossierProjetDto> dossierProjets = DossierProjetService.getByIdEtudiant(etudiantId);
-							if (!dossierProjets.isEmpty()) {
-								for (DossierProjetDto dossierProjet : dossierProjets) {
-									List<CompetenceProfessionnelleDto> competenceProfessionnellesDtos = competenceProfessionnelleService.getAllByDossierProjets(dossierProjet.getId());
-									if (!competenceProfessionnellesDtos.isEmpty()) {
-										competenceProfessionnellesDtos.forEach(cp -> competenceProfessionnelleService.deleteById(cp.getId()));
-									}
-									DossierProjetService.deleteById(dossierProjet.getId());
+				case "ETUDIANT":
+					try {
+						long etudiantId = utilisateur.getEtudiant().getId();
+						// suppression de l'etudiant dans la promotion
+						// TODO Modifier promotionRespository par promotionService
+						List<Promotion> promotions = promotionRespository.getByEtudiantId(etudiantId);
+						if (!promotions.isEmpty()) {
+							promotions.forEach(promotion -> promotion.getEtudiants().remove(utilisateur.getEtudiant()));
+							promotionRespository.saveAll(promotions);
+						}
+						// suppression du dossierProjet
+						List<DossierProjetDto> dossierProjets = DossierProjetService.getByIdEtudiant(etudiantId);
+						if (!dossierProjets.isEmpty()) {
+							for (DossierProjetDto dossierProjet : dossierProjets) {
+								List<CompetenceProfessionnelleDto> competenceProfessionnellesDtos = competenceProfessionnelleService
+										.getAllByDossierProjets(dossierProjet.getId());
+								if (!competenceProfessionnellesDtos.isEmpty()) {
+									competenceProfessionnellesDtos
+											.forEach(cp -> competenceProfessionnelleService.deleteById(cp.getId()));
 								}
+								DossierProjetService.deleteById(dossierProjet.getId());
 							}
-							// suppression des devoirs de l'étudiant
-							List<DevoirEtudiantDto> devoirsEtudiant = devoirEtudiantService.getAllByEtudiantId(etudiantId);
-							if (!devoirsEtudiant.isEmpty()) {
-								devoirsEtudiant.forEach(devoirEtudiant -> devoirEtudiantService.delete(devoirEtudiant.getId()));
-							}
-							//suppression des dossierProfessionnel de l'étudiant
-							List<DossierProfessionnelDto> dosiDossierProfessionnelDtos = dosiDossierProfessionnelService.getByIdEtudiant(etudiantId);
-							if (!dosiDossierProfessionnelDtos.isEmpty()) {
-								dosiDossierProfessionnelDtos.forEach(dp -> dosiDossierProfessionnelService.delete(dp.getId()));
-							}
-							//suppression des livretEvaluation de l'étudiant
-							List<LivretEvaluationDto> livretEvaluations = livretEvaluationService.getByEtudiantId(etudiantId);
-							if (!livretEvaluations.isEmpty()) {
-								livretEvaluations.forEach(le -> livretEvaluationService.delete(le.getId()));
-							}
-							//suppression des positionnement de l'étudiant
-							PositionnementDto positionnement = positionnementService.getByIdEtudiant(etudiantId);
-							if (positionnement != null) {
-								positionnementService.delete(positionnement.getId());
-							}
-
-							etudiantService.deleteById(etudiantId);
-							utilisateur.setEtudiant(null);
-						} catch (Exception e) {
-							System.out.println("l'utilisateur na pas d'étudiant");
 						}
-						break;
-
-					case "FORMATEUR":
-						try {
-							long formateurId = utilisateur.getFormateur().getId();
-							//suppression des intervention liée au formateur
-							List<InterventionDto> interventions = interventionService.findAllByFormateurId(formateurId);
-							if (!interventions.isEmpty()) {
-								interventionService.deleteLstIntervention(interventions);
-							}
-							formateurService.deleteById(formateurId);
-						} catch (Exception e) {
-							System.out.println("l'utilisateur na pas de formateur");
+						// suppression des devoirs de l'étudiant
+						List<DevoirEtudiantDto> devoirsEtudiant = devoirEtudiantService.getAllByEtudiantId(etudiantId);
+						if (!devoirsEtudiant.isEmpty()) {
+							devoirsEtudiant
+									.forEach(devoirEtudiant -> devoirEtudiantService.delete(devoirEtudiant.getId()));
 						}
-						break;
-
-					case "TUTEUR":
-						try {
-							long tuteurId = utilisateur.getTuteur().getId();
-							//suppression du tuteur dans l'étudiant
-							List<EtudiantDto> etudiants = etudiantService.findAllByTuteurId(tuteurId);
-							if (!etudiants.isEmpty()) {
-								etudiants.forEach(etudiant -> {
-									etudiant.setTuteurDto(null);
-									etudiantService.saveOrUpdate(etudiant);
-								});
-							}
-							tuteurService.delete(tuteurId);
-							utilisateur.setTuteur(null);
-						} catch (Exception e) {
-							System.out.println("l'utilisateur na pas de tuteur");
+						// suppression des dossierProfessionnel de l'étudiant
+						List<DossierProfessionnelDto> dosiDossierProfessionnelDtos = dosiDossierProfessionnelService
+								.getByIdEtudiant(etudiantId);
+						if (!dosiDossierProfessionnelDtos.isEmpty()) {
+							dosiDossierProfessionnelDtos
+									.forEach(dp -> dosiDossierProfessionnelService.delete(dp.getId()));
 						}
-						break;
+						// suppression des livretEvaluation de l'étudiant
+						List<LivretEvaluationDto> livretEvaluations = livretEvaluationService
+								.getByEtudiantId(etudiantId);
+						if (!livretEvaluations.isEmpty()) {
+							livretEvaluations.forEach(le -> livretEvaluationService.delete(le.getId()));
+						}
+						// suppression des positionnement de l'étudiant
+						PositionnementDto positionnement = positionnementService.getByIdEtudiant(etudiantId);
+						if (positionnement != null) {
+							positionnementService.delete(positionnement.getId());
+						}
 
-					default:
-						break;
+						etudiantService.deleteById(etudiantId);
+						utilisateur.setEtudiant(null);
+					} catch (Exception e) {
+						System.out.println("l'utilisateur na pas d'étudiant");
+					}
+					break;
+
+				case "FORMATEUR":
+					try {
+						long formateurId = utilisateur.getFormateur().getId();
+						// suppression des intervention liée au formateur
+						List<InterventionDto> interventions = interventionService.findAllByFormateurId(formateurId);
+						if (!interventions.isEmpty()) {
+							interventionService.deleteLstIntervention(interventions);
+						}
+						formateurService.deleteById(formateurId);
+					} catch (Exception e) {
+						System.out.println("l'utilisateur na pas de formateur");
+					}
+					break;
+
+				case "TUTEUR":
+					try {
+						long tuteurId = utilisateur.getTuteur().getId();
+						// suppression du tuteur dans l'étudiant
+						List<EtudiantDto> etudiants = etudiantService.findAllByTuteurId(tuteurId);
+						if (!etudiants.isEmpty()) {
+							etudiants.forEach(etudiant -> {
+								etudiant.setTuteurDto(null);
+								etudiantService.saveOrUpdate(etudiant);
+							});
+						}
+						tuteurService.delete(tuteurId);
+						utilisateur.setTuteur(null);
+					} catch (Exception e) {
+						System.out.println("l'utilisateur na pas de tuteur");
+					}
+					break;
+
+				default:
+					break;
 				}
 			}
 		}

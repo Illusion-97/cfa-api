@@ -33,7 +33,7 @@ public interface UtilisateurService {
 	UtilisateurDto getName(String name);
 
 	UtilisateurDto insertUpdate(UtilisateurDto uDto) throws SaveInvalidException;
-
+	
 	UtilisateurDto insertTuteur(UtilisateurDto uDto) throws SaveInvalidException;
 
 	void deleteById(long id);
@@ -64,10 +64,12 @@ public interface UtilisateurService {
 
 	void fetchAllDG2Employees(String email, String password)
 			throws FetchDG2Exception, URISyntaxException, JsonProcessingException;
-
+	
 	LoginResponseDto checkLogin(LoginDto loginDto) throws Exception;
 
 	void modifierRolesUtilisateur(long utilisateurId, List<Long> nouveauRolesIds) throws NotFoundException;
+
+	UtilisateurDto updateTuteur(UtilisateurDto uDto) throws SaveInvalidException;
 
 
 }

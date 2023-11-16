@@ -22,9 +22,6 @@ public abstract class BaseEntityDto {
 	@Version
 	protected int version;
 	
-	
-	
-
 	/**
 	 * @return the id
 	 */

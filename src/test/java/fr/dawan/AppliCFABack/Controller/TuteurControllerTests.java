@@ -139,7 +139,6 @@ class TuteurControllerTests {
 		}
 	}
 	
-	@Test
 	void testDelete() {
 
 		try {

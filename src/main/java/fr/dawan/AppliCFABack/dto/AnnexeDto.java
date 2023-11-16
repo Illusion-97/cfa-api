@@ -22,7 +22,6 @@ public class AnnexeDto extends BaseEntityDto implements Serializable {
 	}
 
    
-
 	public String getPieceJointe() {
 		return pieceJointe;
 	}

@@ -3,7 +3,7 @@ package fr.dawan.AppliCFABack.dto;
 import java.io.Serializable;
 
 /**
- *
+ * 
  *
  * @see fr.dawan.appliCFABack.dto
  * @since 1.0

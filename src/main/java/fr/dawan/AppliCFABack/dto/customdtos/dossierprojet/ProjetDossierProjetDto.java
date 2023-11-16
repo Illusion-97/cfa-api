@@ -1,5 +1,7 @@
 package fr.dawan.AppliCFABack.dto.customdtos.dossierprojet;
 
+import fr.dawan.AppliCFABack.dto.ProjetDto;
+
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
@@ -8,7 +10,14 @@ public class ProjetDossierProjetDto implements Serializable {
     private long id;
     private String nom;
     private int version;
-    
+
+    public static ProjetDossierProjetDto create(long id,String nom, int version){
+        ProjetDossierProjetDto projetDto = new ProjetDossierProjetDto();
+        projetDto.setId(id);
+        projetDto.setNom(nom);
+        projetDto.setVersion(version);
+        return projetDto;
+    }
     public ProjetDossierProjetDto() {
         super();
     }

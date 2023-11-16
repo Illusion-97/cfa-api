@@ -35,6 +35,7 @@ import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurRoleDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantSoutenanceDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionSoutenanceDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.ActiviteTypeDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CompetenceDossierProDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
@@ -79,7 +80,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-06T14:20:27+0100",
+    date = "2023-11-16T14:47:25+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -932,7 +933,6 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateur.setNom( eDg2.getLastName() );
         utilisateur.setLogin( eDg2.getEmail() );
         utilisateur.setDateDeNaissance( eDg2.getBornAt() );
-        utilisateur.setCivilite( eDg2.getHonorific() );
         utilisateur.setId( eDg2.getId() );
 
         return utilisateur;
@@ -1079,13 +1079,13 @@ public class DtoMapperImpl implements DtoMapper {
         soutenance.setId( soutenanceDto.getId() );
         soutenance.setVersion( soutenanceDto.getVersion() );
         soutenance.setEtudiant( etudiantSoutenanceDtoToEtudiant( soutenanceDto.getEtudiant() ) );
-        soutenance.setJour( soutenanceDto.getJour() );
         soutenance.setHeure( soutenanceDto.getHeure() );
+        soutenance.setJour( soutenanceDto.getJour() );
         soutenance.setMinAccueil( soutenanceDto.getMinAccueil() );
-        soutenance.setMinEntretien( soutenanceDto.getMinEntretien() );
-        soutenance.setMinQuestion( soutenanceDto.getMinQuestion() );
-        soutenance.setMinEntretienFinal( soutenanceDto.getMinEntretienFinal() );
         soutenance.setMinDeliberation( soutenanceDto.getMinDeliberation() );
+        soutenance.setMinEntretien( soutenanceDto.getMinEntretien() );
+        soutenance.setMinEntretienFinal( soutenanceDto.getMinEntretienFinal() );
+        soutenance.setMinQuestion( soutenanceDto.getMinQuestion() );
 
         return soutenance;
     }
@@ -1099,7 +1099,7 @@ public class DtoMapperImpl implements DtoMapper {
         EtudiantSoutenanceDto etudiantSoutenanceDto = new EtudiantSoutenanceDto();
 
         etudiantSoutenanceDto.setUtilisateurDto( utilisateurToUtilisateurDto( etudiant.getUtilisateur() ) );
-        etudiantSoutenanceDto.setPromotionsDto( promotionListToPromotionDtoList( etudiant.getPromotions() ) );
+        etudiantSoutenanceDto.setPromotionsDto( promotionListToPromotionSoutenanceDtoList( etudiant.getPromotions() ) );
         etudiantSoutenanceDto.setId( etudiant.getId() );
         etudiantSoutenanceDto.setVersion( etudiant.getVersion() );
 
@@ -1334,8 +1334,8 @@ public class DtoMapperImpl implements DtoMapper {
 
         cursus.setId( cursusDossierProDto.getId() );
         cursus.setVersion( cursusDossierProDto.getVersion() );
-        cursus.setTitre( cursusDossierProDto.getTitre() );
         cursus.setActiviteTypes( activiteTypeDossierProDtoSetToActiviteTypeSet( cursusDossierProDto.getActiviteTypes() ) );
+        cursus.setTitre( cursusDossierProDto.getTitre() );
 
         return cursus;
     }
@@ -1648,5 +1648,34 @@ public class DtoMapperImpl implements DtoMapper {
         etudiant.setVersion( etudiantSoutenanceDto.getVersion() );
 
         return etudiant;
+    }
+
+    protected PromotionSoutenanceDto promotionToPromotionSoutenanceDto(Promotion promotion) {
+        if ( promotion == null ) {
+            return null;
+        }
+
+        PromotionSoutenanceDto promotionSoutenanceDto = new PromotionSoutenanceDto();
+
+        promotionSoutenanceDto.setDateDebut( promotion.getDateDebut() );
+        promotionSoutenanceDto.setDateFin( promotion.getDateFin() );
+        promotionSoutenanceDto.setNbParticipants( promotion.getNbParticipants() );
+        promotionSoutenanceDto.setNom( promotion.getNom() );
+        promotionSoutenanceDto.setType( promotion.getType() );
+
+        return promotionSoutenanceDto;
+    }
+
+    protected List<PromotionSoutenanceDto> promotionListToPromotionSoutenanceDtoList(List<Promotion> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<PromotionSoutenanceDto> list1 = new ArrayList<PromotionSoutenanceDto>( list.size() );
+        for ( Promotion promotion : list ) {
+            list1.add( promotionToPromotionSoutenanceDto( promotion ) );
+        }
+
+        return list1;
     }
 }

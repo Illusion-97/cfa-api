@@ -20,12 +20,12 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 	//	@Temporal(value = TemporalType.DATE)
 	private LocalDate dateDebut; // 12/03
 
-	//	@Temporal(value = TemporalType.DATE)
+//	@Temporal(value = TemporalType.DATE)
 	private LocalDate dateFin; // 18/03
 
 	@Column(nullable = true) // id dans dg2
 	private long idDg2;
-
+	
 	@ManyToOne
 	private Formation formation; // Java init
 
@@ -37,7 +37,7 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 
 //	@ManyToMany(cascade = CascadeType.MERGE)
 //	private List<Formateur> formateurs;
-
+	
 	@ManyToOne
 	private Formateur formateur;
 
@@ -52,7 +52,7 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 	}
 
 	public Intervention(LocalDate dateDebut, LocalDate dateFin, Formation formation, Intervention interventionMere,
-						List<Promotion> promotions) {
+			List<Promotion> promotions) {
 		super();
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
@@ -136,12 +136,12 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 
 	/**
 	 * @param idDg2 le idDg2 à affecter
-
+	 
 	 */
 	public void setIdDg2(long idDg2) {
 		this.idDg2 = idDg2;
 	}
-
+	
 	public Formateur getFormateur() {
 		return formateur;
 	}
@@ -158,32 +158,18 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 			}
 		}
 		return promotionsId;
-	}
-//	@Override
-//	public int hashCode() {
-//		final int prime = 31;
-//		int result = 1;
-//		result = prime * result + ((dateDebut == null) ? 0 : dateFin.hashCode());
-//		result = prime * result + ((dateFin== null) ? 0 : dateFin.hashCode());
-//		result = prime * result + ((promotions == null) ? 0 : promotions.hashCode());
-////		result = prime * result + ((formateurs== null) ? 0 : formateurs.hashCode());
-//		result = prime * result + (int) (idDg2 ^ (idDg2 >>> 32));
-//		return result;}
-
+}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dateDebut == null) ? 0 : dateDebut.hashCode());
-		result = prime * result + ((dateFin == null) ? 0 : dateFin.hashCode());
-		result = prime * result + ((formation == null) ? 0 : formation.hashCode());
-		result = prime * result + (int) (idDg2 ^ (idDg2 >>> 32));
-		result = prime * result + ((interventionMere == null) ? 0 : interventionMere.hashCode());
-		result = prime * result + ((noteInfoPersonnel == null) ? 0 : noteInfoPersonnel.hashCode());
+		result = prime * result + ((dateDebut == null) ? 0 : dateFin.hashCode());
+		result = prime * result + ((dateFin== null) ? 0 : dateFin.hashCode());
 		result = prime * result + ((promotions == null) ? 0 : promotions.hashCode());
-		result = prime * result + ((supportsCours == null) ? 0 : supportsCours.hashCode());
-		return result;
-	}
+//		result = prime * result + ((formateurs== null) ? 0 : formateurs.hashCode());
+		result = prime * result + (int) (idDg2 ^ (idDg2 >>> 32));
+		return result;}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -204,75 +190,23 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 				return false;
 		} else if (!dateFin.equals(other.dateFin))
 			return false;
-		if (formation == null) {
-			if (other.formation != null)
-				return false;
-		} else if (!formation.equals(other.formation))
-			return false;
 		if (idDg2 != other.idDg2)
-			return false;
-		if (interventionMere == null) {
-			if (other.interventionMere != null)
-				return false;
-		} else if (!interventionMere.equals(other.interventionMere))
-			return false;
-		if (noteInfoPersonnel == null) {
-			if (other.noteInfoPersonnel != null)
-				return false;
-		} else if (!noteInfoPersonnel.equals(other.noteInfoPersonnel))
 			return false;
 		if (promotions == null) {
 			if (other.promotions != null)
 				return false;
-		} else if(!promotions.stream().map(p ->p.getId()).collect(Collectors.toList()).equals(other.promotions.stream().map(p ->p.getId())
+		} else if (!promotions.stream().map(p ->p.getId()).collect(Collectors.toList()).equals(other.promotions.stream().map(p ->p.getId())
 				.collect(Collectors.toList())))
 			return false;
-		if (supportsCours == null) {
-			if (other.supportsCours != null)
-				return false;
-		} else if (!supportsCours.equals(other.supportsCours))
-			return false;
-		return true;
-	}
-
-
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		Intervention other = (Intervention) obj;
-//		if (dateDebut == null) {
-//			if (other.dateDebut != null)
+//		if (formateurs == null) {
+//			if (other.formateurs != null)
 //				return false;
-//		} else if (!dateDebut.equals(other.dateDebut))
-//			return false;
-//		if (dateFin == null) {
-//			if (other.dateFin != null)
-//				return false;
-//		} else if (!dateFin.equals(other.dateFin))
-//			return false;
-//		if (idDg2 != other.idDg2)
-//			return false;
-//		if (promotions == null) {
-//			if (other.promotions != null)
-//				return false;
-//		} else if (!promotions.stream().map(p ->p.getId()).collect(Collectors.toList()).equals(other.promotions.stream().map(p ->p.getId())
+//		} else if (!formateurs.stream().map(f ->f.getId()).collect(Collectors.toList()).equals(other.formateurs.stream().map(f ->f.getId())
 //				.collect(Collectors.toList())))
 //			return false;
-////		if (formateurs == null) {
-////			if (other.formateurs != null)
-////				return false;
-////		} else if (!formateurs.stream().map(f ->f.getId()).collect(Collectors.toList()).equals(other.formateurs.stream().map(f ->f.getId())
-////				.collect(Collectors.toList())))
-////			return false;
-//
-//		return true;
-	//}
-
+		
+		return true;
+	}
 
 
 }

@@ -17,10 +17,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/utilisateurs")
 public class UtilisateurController {
-
+	
     @Autowired
     private UtilisateurService utilisateurService;
-
+    
 
     @DeleteMapping(value = "/{id}", produces = "text/plain")
     public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
@@ -55,9 +55,9 @@ public class UtilisateurController {
         else
             return utilisateurService.count(search.get());
     }
-
+    
     /**
-     *
+     * 
      * @param id
      * @return recuperation des user pat id
      */
@@ -67,7 +67,7 @@ public class UtilisateurController {
     }
 
     /**
-     *
+     * 
      * @return
      */
     @GetMapping(produces = {"application/json", "application/xml"}, value = "/with-object")
@@ -76,16 +76,16 @@ public class UtilisateurController {
     }
 
     /**
-     *
+     * 
      * @return recuperation de tous les users
      */
     @GetMapping(produces = {"application/json", "application/xml"})
     public List<UtilisateurDto> getAll() {
         return utilisateurService.getAll();
     }
-
+    
     /**
-     *
+     * 
      * @param login
      * @return recherche par email
      */
@@ -95,7 +95,7 @@ public class UtilisateurController {
     }
 
     /**
-     *
+     * 
      * @param id
      * @return
      */
@@ -105,7 +105,7 @@ public class UtilisateurController {
     }
 
     /**
-     *
+     * 
      * @param name
      * @return ResponseEntity
      */
@@ -116,7 +116,7 @@ public class UtilisateurController {
     }
 
     /**
-     *
+     * 
      * @param uDto
      * @return ResponseEntity
      */
@@ -128,18 +128,27 @@ public class UtilisateurController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-
+    
     @PostMapping(value = "/tuteur", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> insertTuteur(@RequestBody UtilisateurDto uDto) throws SaveInvalidException {
         try {
             return ResponseEntity.ok(utilisateurService.insertTuteur(uDto));
         } catch (Exception e) {
-            throw new SaveInvalidException(e.getMessage());
+			throw new SaveInvalidException(e.getMessage());
+        }
+    }
+    
+    @PutMapping(value = "/tuteur", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<?> updateTuteur(@RequestBody UtilisateurDto uDto) throws SaveInvalidException {
+        try {
+            return ResponseEntity.ok(utilisateurService.updateTuteur(uDto));
+        } catch (Exception e) {
+			throw new SaveInvalidException(e.getMessage());
         }
     }
 
     /**
-     *
+     * 
      * @param uDto
      * @return mise à jour des user
      * @throws Exception
@@ -150,7 +159,7 @@ public class UtilisateurController {
     }
 
     /**
-     *
+     * 
      * @param ville
      * @return recjerche par adresse(ville)
      */
@@ -204,20 +213,20 @@ public class UtilisateurController {
         }
     }
     @GetMapping(value = "/dg2", produces = "application/json")
-    public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers) {
-        String userDG2 = headers.get("x-auth-token");
-        String[] splitUserDG2String = userDG2.split(":");
+	public ResponseEntity<String> fetchAllDG2(@RequestHeader Map<String, String> headers) {
+			String userDG2 = headers.get("x-auth-token");
+			String[] splitUserDG2String = userDG2.split(":");
 
-        try {
-            utilisateurService.fetchAllDG2Employees(splitUserDG2String[0], splitUserDG2String[1]);
-            return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error while fetching data from the webservice DG2");
-        }
-    }
-
+			try {
+				utilisateurService.fetchAllDG2Employees(splitUserDG2String[0], splitUserDG2String[1]);
+				return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.body("Error while fetching data from the webservice DG2");
+			}
+		}
+    
     @PutMapping("/{utilisateurId}/roles")
     public ResponseEntity<String> modifierRolesUtilisateur(@PathVariable long utilisateurId,
                                                            @RequestBody List<Long> nouveauRolesIds) throws NotFoundException {

@@ -3,7 +3,6 @@ package fr.dawan.AppliCFABack.services;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import fr.dawan.AppliCFABack.dto.FacultatifDto;
@@ -29,6 +28,5 @@ public class FacultatifServiceImpl extends GenericServiceImpl<Facultatif, Facult
 		facultRepo.deleteById(facultatifId);
 		
 	}
-
 	
 }

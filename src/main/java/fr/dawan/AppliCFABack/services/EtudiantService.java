@@ -95,6 +95,4 @@ public interface EtudiantService {
 	Etudiant savEtudiant(Utilisateur utilisateur);
 
 	List<EtudiantDto> findAllByTuteurId(long tuteurId);
-
-	List<EtudiantDto> getEtudiantByPromotionId(long id);
 }

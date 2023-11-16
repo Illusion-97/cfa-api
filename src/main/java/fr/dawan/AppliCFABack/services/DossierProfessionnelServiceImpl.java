@@ -85,11 +85,8 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
     @Value("${backend.url}")
     private String backendUrl;
-
-    @Value("src/main/resources/files/bulletinsEvaluations")
-    private String storageFolder;
     
-    @Value("${app.storagefolder}")
+    @Value("${app.storagefolder2}")
     private String storageFolder2;
     
     private static Logger logger = Logger.getGlobal();
@@ -442,7 +439,6 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 		        Map<String, Object> model = new HashMap<>();
 		        model.put("backendUrl", backendUrl);
-		        model.put("annexePJ", storageFolder2);
 		        model.put("et", dossier.getEtudiant());
 		        model.put("at", at);
 		        model.put("dp", dossier);
@@ -454,7 +450,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 		        String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
-		        String outputPdf = storageFolder + "/dossier-" + dossierId + "-pro.pdf";
+		        String outputPdf = storageFolder2 + "DossierProfessionnel" + "/" + dossier.getEtudiant().getUtilisateur().getFullName() + "_DP.pdf";
 
 		        try {
 					PdfTools.generatePdfFromHtml(outputPdf, htmlContent);

@@ -61,13 +61,13 @@ public class InterventionServiceImpl implements InterventionService {
 	private RestTemplate restTemplate;
 
 	private static Logger logger = LoggerFactory.getLogger(InterventionServiceImpl.class);
-
+	
 	@Value("${base_url_dg2}")
-	private String baseUrl;
+    private String baseUrl;
 
 	/**
 	 * Récupération de toutes les interventions
-	 *
+	 * 
 	 * @return lstDto Liste des objets interevention
 	 */
 
@@ -87,7 +87,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	/**
 	 * Va permettre de récupérer toutes les interventions
-	 *
+	 * 
 	 * @param page numero de la page
 	 * @param size éléments sur la page
 	 * @return LstDto Liste des objets interventions
@@ -111,7 +111,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	/**
 	 * Va permettre de récupérer toutes les interventions avec pagination
-	 *
+	 * 
 	 * @param page   numero de page
 	 * @param size   nombre d'éléments
 	 * @param search éléménts de l'intervention
@@ -119,63 +119,46 @@ public class InterventionServiceImpl implements InterventionService {
 	 */
 
 	@Override
-	public List<InterventionDto> getAllByPage(int page, int size, String search) {
+	public List<InterventionDto> getAllByPage(int page, int size, String sort, String search) {
 		List<Intervention> lstIn = interventionRepository
 				.findAllDistinctByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search,
 						search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
-
+		switch (sort){
+			case "datefin": lstIn.sort(Comparator.comparing(Intervention::getDateFin).reversed());
+				break;
+			case "datedebut": lstIn.sort(Comparator.comparing(Intervention::getDateDebut));
+				break;
+		}
 		List<InterventionDto> lstDto = new ArrayList<>();
 
 		for (Intervention intervention : lstIn) {
-			/**
-			 * on recup une intervention de type Intervention que l'on convertis en
-			 * InterventionDto
-			 **/
+
 			InterventionDto interventionDto = mapper.interventionToInterventionDto(intervention);
-			/**
-			 * on recup une formation de type Formation que l'on convertis en FormationDto
-			 **/
+
 			FormationDto formationDto = mapper.formationToFormationDto(intervention.getFormation());
-			// Les convertion en Dto faite => on ajoute la formationDto à l'interventionDto
 			interventionDto.setFormationDto(formationDto);
-
-			// Intervention inter = intervention.getInterventionMere();
-			//
-			// InterventionDto interventionMereDto = DtoTools.convert(inter,
-			// InterventionDto.class);
-			// interventionDto.setInterventionMereDto(interventionMereDto);
-
-			// On affiche une liste de promotions de type List<Promotion>
 			List<Promotion> lstPromo = intervention.getPromotions();
 			List<PromotionDto> lstPromoDto = new ArrayList<>();
 			for (Promotion promotion : lstPromo) {
-				/** On convertis List<Promotion> en List<PromotionDto> **/
 				if (promotion != null)
 					lstPromoDto.add(mapper.promotionToPromotionDto(promotion));
 			}
 
 			FormateurDto lstFormDto = new FormateurDto();
-//			for (Formateur formateur : intervention.getFormateurs()) {
-//				if (formateur != null)
-//					lstFormDto.add(DtoTools.convert(formateur, FormateurDto.class));
-//			}TODO
 
-			// On ajoute la liste des formateurs a l'intervention
 			interventionDto.setFormateurDto(lstFormDto);
 
-			// On ajoute la liste de promotions a l'intervention
 			interventionDto.setPromotionsDto(lstPromoDto);
-			// On ajoute l'intervention a la liste d'intervention
-			lstDto.add(interventionDto);
 
+			lstDto.add(interventionDto);
 		}
 		return lstDto;
 	}
 
 	/**
 	 * Va permettre de récupérer l'intervention en fonction de son id
-	 *
+	 * 
 	 * @param Id Id concernant l'intervention
 	 * @return interventionDto l'objet intervention
 	 */
@@ -211,7 +194,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	/**
 	 * Sauvegarde ou mise à jour d'une intervention
-	 *
+	 * 
 	 */
 
 //	@Override
@@ -235,58 +218,58 @@ public class InterventionServiceImpl implements InterventionService {
 //
 //		return mapper.interventionToInterventionDto(i);
 //	}
-
-
+	
+	
 	@Override
 	public InterventionDto saveOrUpdate(InterventionDto iDto) {
 		Intervention intervention;
 		if (iDto.getId() != 0L) {
-			intervention = interventionRepository.getOne(iDto.getId());
-			DtoTools.convert(iDto, Intervention.class);
-		} else {
-			intervention = DtoTools.convert(iDto, Intervention.class);
-		}
+            intervention = interventionRepository.getOne(iDto.getId());
+            DtoTools.convert(iDto, Intervention.class);
+        } else {
+            intervention = DtoTools.convert(iDto, Intervention.class);
+        }
 
 
-		// Charger les entités liées avant de les assigner à l'intervention
-		Formateur formateur = intervention.getFormateur();
-		if (formateur != null) {
-			intervention.setFormateur(formateurRepository.getOne(formateur.getId()));
-		}
+        // Charger les entités liées avant de les assigner à l'intervention
+        Formateur formateur = intervention.getFormateur();
+        if (formateur != null) {
+            intervention.setFormateur(formateurRepository.getOne(formateur.getId()));
+        }
 
-		List<Promotion> promotions = intervention.getPromotions();
-		if (promotions != null) {
-			Intervention savedIntervention = interventionRepository.save(intervention);
-			Set<Promotion> existingPromotions = new HashSet<>(savedIntervention.getPromotions());
-			Set<Promotion> newPromotions = new HashSet<>();
-			for (Promotion promotion : promotions) {
-				if (existingPromotions.contains(promotion)) {
-					existingPromotions.remove(promotion);
-				} else {
-					newPromotions.add(promoRepository.getOne(promotion.getId()));
-				}
-			}
-			savedIntervention.getPromotions().addAll(newPromotions);
-			savedIntervention.getPromotions().removeAll(existingPromotions);
-			intervention = interventionRepository.save(savedIntervention);
-		} else {
-			intervention = interventionRepository.saveAndFlush(intervention);
-		}
+        List<Promotion> promotions = intervention.getPromotions();
+        if (promotions != null) {
+            Intervention savedIntervention = interventionRepository.save(intervention);
+            Set<Promotion> existingPromotions = new HashSet<>(savedIntervention.getPromotions());
+            Set<Promotion> newPromotions = new HashSet<>();
+            for (Promotion promotion : promotions) {
+                if (existingPromotions.contains(promotion)) {
+                    existingPromotions.remove(promotion);
+                } else {
+                    newPromotions.add(promoRepository.getOne(promotion.getId()));
+                }
+            }
+            savedIntervention.getPromotions().addAll(newPromotions);
+            savedIntervention.getPromotions().removeAll(existingPromotions);
+            intervention = interventionRepository.save(savedIntervention);
+        } else {
+            intervention = interventionRepository.saveAndFlush(intervention);
+        }
+        
+        // Mettre à jour la noteInfoPersonnel si elle est présente dans l'objet DTO
+        if (iDto.getNoteInfoPersonnel() != null) {
+            intervention.setNoteInfoPersonnel(iDto.getNoteInfoPersonnel());
+            interventionRepository.save(intervention);
+        }
+        
+        filesService.createDirectory("interventions/" + intervention.getId());
 
-		// Mettre à jour la noteInfoPersonnel si elle est présente dans l'objet DTO
-		if (iDto.getNoteInfoPersonnel() != null) {
-			intervention.setNoteInfoPersonnel(iDto.getNoteInfoPersonnel());
-			interventionRepository.save(intervention);
-		}
-
-		filesService.createDirectory("interventions/" + intervention.getId());
-
-		return mapper.interventionToInterventionDto(intervention);
+        return mapper.interventionToInterventionDto(intervention);
 	}
 
 	/**
 	 * Suppression d'une intervention
-	 *
+	 * 
 	 * @param Id Id concernant l'intervention
 	 */
 
@@ -311,7 +294,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	/**
 	 * Recherche d'une intervention
-	 *
+	 * 
 	 * @param search recherche par titre formation ou promo
 	 */
 
@@ -325,7 +308,7 @@ public class InterventionServiceImpl implements InterventionService {
 	/**
 	 * Va permettre de récupérer la liste des etudiants de la promotion en fonction
 	 * de l'id de l'intervention
-	 *
+	 * 
 	 * @param Id Id concernant l'intervention
 	 * @return List Liste des etudiants concerné
 	 */
@@ -347,7 +330,7 @@ public class InterventionServiceImpl implements InterventionService {
 	/**
 	 * Va permettre de récupérer les promotions en fonction de l'id de
 	 * l'intervention
-	 *
+	 * 
 	 * @param Id Id concernant l'intervention
 	 * @return List Liste des promotions concerné
 	 */
@@ -365,7 +348,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	/**
 	 * Va permettre de recupérer le formateur en fonction de l'intervention
-	 *
+	 * 
 	 * @param Id Id concernant l'intervention
 	 * @return List Liste des formateurs concerné
 	 */
@@ -384,7 +367,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	/**
 	 * Va permettre l'import des intervention de Dg2
-	 *
+	 * 
 	 * @param Id       Id concernant la session
 	 * @param email    Email l'utilsateur dg2
 	 * @param password Mot de passe de l'utlisateur dg2
@@ -422,7 +405,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	/**
 	 * Va permettre l'import des intervention de Dg2
-	 *
+	 * 
 	 * @author Feres BG
 	 * @param Id       Id concernant la promotion
 	 * @param email    Email l'utilsateur dg2
@@ -481,16 +464,14 @@ public class InterventionServiceImpl implements InterventionService {
 						if (interventionImported.equals(intervInDb.get())) {
 							continue;
 						}
-						intervInDb.get().setDateDebut(interventionImported.getDateDebut());
-						intervInDb.get().setDateFin(interventionImported.getDateFin());
 						Optional<Promotion> promotion = promoRepository.findByIdDg2(idPrmotionDg2);
 						if (promotion.isPresent() && interventionImported.getPromotions()!=null) {
-
-							if( !interventionImported.getPromotions().contains(promotion.get())) {
-								// Ajout de la promotion à la liste des promotions de l'intervention importée
-								interventionImported.getPromotions().add(promotion.get());
-							}
-						} else {
+								
+								if( !interventionImported.getPromotions().contains(promotion.get())) {
+							// Ajout de la promotion à la liste des promotions de l'intervention importée
+							interventionImported.getPromotions().add(promotion.get());
+								}
+								} else {
 							logger.warn("Promotion not found with idDg2 : " + idPrmotionDg2);
 							continue;
 						}
@@ -568,17 +549,17 @@ public class InterventionServiceImpl implements InterventionService {
 
 			}
 			Formateur formateur = new Formateur();
-
+			
 			UtilisateurRole formateurRole = utilisateurRoleRepository.findByIntituleContaining("FORMATEUR");
-
+			
 			List<Utilisateur> utilisateurs = new ArrayList<>();
-
+			
 			utilisateurs.add(userInDb.get());
-
+			
 			if (formateurRole.getUtilisateurs() != null) {
 				utilisateurs.addAll(formateurRole.getUtilisateurs());
 			}
-
+			
 			formateurRole.setUtilisateurs(utilisateurs);
 			if (userInDb.get().getRoles() != null) {
 				if (!userInDb.get().getRoles().contains(formateurRole)) {
@@ -603,7 +584,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Override
 	public List<InterventionDto> findInterventionByPromotionId(long id, int page, int size, String search) {
-		List<Intervention> result = interventionRepository.findInterventionByPromotionId(id, PageRequest.of(page, size), search).get().collect(Collectors.toList());
+		List<Intervention> result = interventionRepository.findInterventionByPromotionId(id,search,  PageRequest.of(page, size)).get().collect(Collectors.toList());
 		List<InterventionDto> res = new ArrayList<>();
 		if (!result.isEmpty()) {
 			for (Intervention i: result) {
@@ -618,7 +599,7 @@ public class InterventionServiceImpl implements InterventionService {
 	public CountDto countInterventionByPromotionId(long id, String search) {
 		return new CountDto(interventionRepository.countInterventionByPromotionId(id, search));
 	}
-
+	
 	@Override
 	public List<InterventionDto> findAllByFormateurId(long formateurId) {
 		List<InterventionDto> interventionDtos = new ArrayList<>();
@@ -628,10 +609,10 @@ public class InterventionServiceImpl implements InterventionService {
 			interventionDto.setHeuresDisponsees();
 			interventionDtos.add(interventionDto);
 		});
-
+		
 		return interventionDtos;
 	}
-
+	
 	@Override
 	public void deleteLstIntervention(List<InterventionDto> interventionDtos) {
 		List<Intervention> interventions = new ArrayList<>();
