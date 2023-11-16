@@ -162,7 +162,6 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	@Override
 	public void deleteById(long id) {
 		dossierProRepo.deleteById(id);
-
 	}
 
 	/**
@@ -210,6 +209,18 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		emailTuteur(dpDto);
 		return mapper.dossierProjetToDossierProjetDto(dp);
 	}
+	private void directory(DossierProjetDto dpDto){
+		if (dpDto.getEtudiant() == null){
+			return;
+		}
+		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dpDto.getEtudiant().getId()) + dpDto.getEtudiant().getId() + "_" + dpDto.getNom() +"/";
+
+		Path isPathPresent = Paths.get(storageFolder + "/DossierProjet/" + nomDossierEtudiant);
+		if (!Files.isDirectory(isPathPresent)){
+			filesService.createDirectory("/DossierProjet/" + nomDossierEtudiant);
+		}
+	}
+
 	/**
 	 * Envoi un EMail au tuteur de l'étudiant pour l'informer de la modification du DossierProjet
 	 *
@@ -217,6 +228,9 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 * @return
 	 */
 	private void emailTuteur(DossierProjetDto dp) throws IOException, TemplateException, DossierProjetException {
+		if (dp.getEtudiant() == null){
+			return;
+		}
 		Optional<Etudiant> studentOpt = studentRepository.findById(dp.getEtudiant().getId());
 		Etudiant student = studentOpt.get();
 		// Recherche du tuteur de l'étudiant
@@ -263,10 +277,16 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 */
 	public DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException {
 		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
-
+		String nomDossierEtudiant;
 		String nom_import = dp.getDossierImport();
-		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dp.getEtudiant().getId())
+
+		if (dp.getEtudiant() == null){
+			nomDossierEtudiant = dp.getNom()+"_";
+		}else{
+		nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dp.getEtudiant().getId())
 				+ dp.getEtudiant().getId() + "_" + dp.getNom() +"/";
+		}
+
 		String pathDp = storageFolder + "/DossierProjet/" + nomDossierEtudiant;
 		String cheminFichier = pathDp + nom_import;
 
@@ -281,17 +301,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
 			return dpDto;
 	}
-	private void directory(DossierProjetDto dpDto){
-		if (dpDto.getEtudiant() == null){
-			return;
-		}
-		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dpDto.getEtudiant().getId()) + dpDto.getEtudiant().getId() + "_" + dpDto.getNom() +"/";
 
-		Path isPathPresent = Paths.get(storageFolder + "/DossierProjet/" + nomDossierEtudiant);
-		if (!Files.isDirectory(isPathPresent)){
-			filesService.createDirectory("/DossierProjet/" + nomDossierEtudiant);
-		}
-	}
 	/**
 	 * Delete le file
 	 *

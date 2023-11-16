@@ -8,6 +8,7 @@ import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Projet;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.services.DossierProjetService;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
@@ -15,9 +16,11 @@ import freemarker.template.TemplateException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,6 +28,7 @@ import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,22 +56,24 @@ class DossierProjetControllerTests {
 	@Autowired
 	private DossierProjetRepository dossierProjetRepository;
 	@Autowired
-	private DossierProjetService dossierProjetService;
+	private DtoMapper mapper;
 	@Autowired
 	private ObjectMapper objectMapper;
+	@Value("${app.storagefolder}")
+	private String storageFolder;
 	private DossierProjet dpTest;
+	private DossierProjetDto dpDtoTest;
 	@BeforeAll
 	void init() throws DossierProjetException, TemplateException, IOException {
 		assertThat(dossierProjetController).isNotNull();
 		dpTest = new DossierProjet();
-		dpTest.setNom("Dossier de Test");
-		//dpTest.setProjet(new Projet("TEST","TEST",1));
+		dpTest.setNom("DossierProjetTest");
+		dpTest.setDossierImport("testImport.txt");
+		dpTest.setCompetenceProfessionnelles(new ArrayList<>());
 		dossierProjetRepository.save(dpTest);
+		dpDtoTest = mapper.dossierProjetToDossierProjetDto(dpTest);
 	}
-	
-	@AfterAll
-	void clean(){
-	}
+
 	@AfterEach
 	void cleanup(){
 		dossierProjetRepository.deleteAll();
@@ -100,15 +106,9 @@ class DossierProjetControllerTests {
 	@DirtiesContext
 	void testSave() {
 		try {
-			DossierProjetDto dpToInsert = new DossierProjetDto();
-
-			// Champs nécessaires a la création d'un Dossier Projet
-			dpToInsert.setNom("nom DossierProjet save");
-			//dpToInsert.setProjet(ProjetDossierProjetDto.create(1,"testProjet",0));
-			dpToInsert.setCompetenceProfessionnelleIds(new ArrayList<>());
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 
-			String jsonReq = objectMapper.writeValueAsString(dpToInsert);
+			String jsonReq = objectMapper.writeValueAsString(dpDtoTest);
 
 			String jsonReponse = mockMvc.perform(MockMvcRequestBuilders
 					.post("/dossierProjet/save")
@@ -122,6 +122,33 @@ class DossierProjetControllerTests {
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
+	}
+	@Test
+	@Transactional
+	@DirtiesContext
+	void testSaveImport() throws Exception {
+		MockMultipartFile file = new MockMultipartFile(
+				"import",
+				dpDtoTest.getDossierImport(),
+				"text/plain",
+				"test".getBytes());
+
+		mockMvc.perform(MockMvcRequestBuilders
+				.multipart("/dossierProjet/save-import/"+ dpDtoTest.getId())
+				.file(file)
+				.param("id", String.valueOf(dpDtoTest.getId()))
+				.contentType(MediaType.MULTIPART_FORM_DATA))
+				.andExpect(status().isCreated())
+				.andReturn();
+		File ereasedfile = new File(storageFolder+"/DossierProjet/"+
+				dpDtoTest.getNom() + "_" + dpDtoTest.getDossierImport());
+		ereasedfile.delete();
+	}
+	@Test
+	@Transactional
+	@DirtiesContext
+	void testSaveAnnexe(){
+
 	}
 //	@Test
 //	void testUpdate() {
@@ -148,8 +175,7 @@ class DossierProjetControllerTests {
 //	}
 	
 	@Test
-	void testDelete() {
-
+	void testDeleteFile() {
 		try {
 			String rep = mockMvc.perform(delete("/dossierProjet/"+ dpTest.getId())
 					.accept(MediaType.TEXT_PLAIN))
