@@ -162,7 +162,6 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	@Override
 	public void deleteById(long id) {
 		dossierProRepo.deleteById(id);
-
 	}
 
 	/**
@@ -206,11 +205,22 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		DossierProjet dp = mapper.dossierProjetDtoToDossierProjet(dpDto);
 		dossierProRepo.saveAndFlush(dp);
-		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dpDto.getEtudiant().getId()) + dpDto.getEtudiant().getId() + "_" + dp.getNom() +"/";
-		directory(nomDossierEtudiant);
+		directory(dpDto);
 		emailTuteur(dpDto);
 		return mapper.dossierProjetToDossierProjetDto(dp);
 	}
+	private void directory(DossierProjetDto dpDto){
+		if (dpDto.getEtudiant() == null){
+			return;
+		}
+		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dpDto.getEtudiant().getId()) + dpDto.getEtudiant().getId() + "_" + dpDto.getNom() +"/";
+
+		Path isPathPresent = Paths.get(storageFolder + "/DossierProjet/" + nomDossierEtudiant);
+		if (!Files.isDirectory(isPathPresent)){
+			filesService.createDirectory("/DossierProjet/" + nomDossierEtudiant);
+		}
+	}
+
 	/**
 	 * Envoi un EMail au tuteur de l'étudiant pour l'informer de la modification du DossierProjet
 	 *
@@ -218,20 +228,26 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 * @return
 	 */
 	private void emailTuteur(DossierProjetDto dp) throws IOException, TemplateException, DossierProjetException {
+		if (dp.getEtudiant() == null){
+			return;
+		}
+		Tuteur tuteurStudent = null;
 		Optional<Etudiant> studentOpt = studentRepository.findById(dp.getEtudiant().getId());
+		Etudiant student = studentOpt.get();
+		// Vérifier si l'étudiant a un tuteur
+		if (student.getTuteur() == null || student.getTuteur().getId() == 0) {
+			// Gérer le cas où l'étudiant n'as pas de tuteur n'est pas trouvé
+			return;
+		}
+		// Recherche du tuteur de l'étudiant
+		tuteurStudent = tuteurRepository.findById(student.getTuteur().getId()).get();
 
 		if (!studentOpt.isPresent()) {
 			// Gérer le cas où l'étudiant n'est pas trouvé
 			return;
 		}
 
-		Etudiant student = studentOpt.get();
 
-		// Vérifier si l'étudiant a un tuteur
-		if (student.getTuteur() == null || student.getTuteur().getId() == 0) {
-			// L'étudiant n'a pas de tuteur, donc on sort de la méthode
-			return;
-		}
 
 		// Reste du code si l'étudiant a un tuteur
 		String header = "Votre étudiant " + student.getUtilisateur().getFullName() + " a crée son Dossier Projet";
@@ -239,15 +255,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.getId()+"\">Voir le dossier </a>";
 
-		// Recherche du tuteur de l'étudiant
-		Optional<Tuteur> tuteurStudentOpt = tuteurRepository.findById(student.getTuteur().getId());
-
-		if (!tuteurStudentOpt.isPresent()) {
-			// Gérer le cas où le tuteur n'est pas trouvé
-			return;
-		}
-
-		Tuteur tuteurStudent = tuteurStudentOpt.get();
+		
 
 		if (dp.getVersion() > 0) {
 			header = "Votre étudiant " + student.getUtilisateur().getFullName() + " à ajouté des modification à son Dossier Projet";
@@ -266,10 +274,16 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 */
 	public DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException {
 		DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
-
+		String nomDossierEtudiant;
 		String nom_import = dp.getDossierImport();
-		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dp.getEtudiant().getId())
+
+		if (dp.getEtudiant() == null){
+			nomDossierEtudiant = dp.getNom()+"_";
+		}else{
+		nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dp.getEtudiant().getId())
 				+ dp.getEtudiant().getId() + "_" + dp.getNom() +"/";
+		}
+
 		String pathDp = storageFolder + "/DossierProjet/" + nomDossierEtudiant;
 		String cheminFichier = pathDp + nom_import;
 
@@ -284,12 +298,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 			DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dp);
 			return dpDto;
 	}
-	private void directory(String path){
-		Path isPathPresent = Paths.get(storageFolder + "/DossierProjet/" + path);
-		if (!Files.isDirectory(isPathPresent)){
-			filesService.createDirectory("/DossierProjet/" + path);
-		}
-	}
+
 	/**
 	 * Delete le file
 	 *
