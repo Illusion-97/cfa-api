@@ -8,6 +8,7 @@ import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Projet;
+import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.services.DossierProjetService;
@@ -15,6 +16,7 @@ import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import freemarker.template.TemplateException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -48,7 +50,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestInstance(Lifecycle.PER_CLASS)
 class DossierProjetControllerTests {
 
-
+	TokenInterceptor tokenInterceptorMock = Mockito.mock(TokenInterceptor.class);
 	@Autowired
 	private MockMvc mockMvc;
 	@Autowired
@@ -64,7 +66,8 @@ class DossierProjetControllerTests {
 	private DossierProjet dpTest;
 	private DossierProjetDto dpDtoTest;
 	@BeforeAll
-	void init() throws DossierProjetException, TemplateException, IOException {
+	void init() throws Exception {
+		Mockito.when(tokenInterceptorMock.preHandle(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(true);
 		assertThat(dossierProjetController).isNotNull();
 		dpTest = new DossierProjet();
 		dpTest.setNom("DossierProjetTest");

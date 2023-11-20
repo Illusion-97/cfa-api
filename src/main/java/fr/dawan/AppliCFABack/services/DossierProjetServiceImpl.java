@@ -231,26 +231,23 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		if (dp.getEtudiant() == null){
 			return;
 		}
+		Tuteur tuteurStudent = null;
 		Optional<Etudiant> studentOpt = studentRepository.findById(dp.getEtudiant().getId());
 		Etudiant student = studentOpt.get();
+		// Vérifier si l'étudiant a un tuteur
+		if (student.getTuteur() == null || student.getTuteur().getId() == 0) {
+			// Gérer le cas où l'étudiant n'as pas de tuteur n'est pas trouvé
+			return;
+		}
 		// Recherche du tuteur de l'étudiant
-		Optional<Tuteur> tuteurStudentOpt = tuteurRepository.findById(student.getTuteur().getId());
+		tuteurStudent = tuteurRepository.findById(student.getTuteur().getId()).get();
 
 		if (!studentOpt.isPresent()) {
 			// Gérer le cas où l'étudiant n'est pas trouvé
 			return;
 		}
 
-		if (!tuteurStudentOpt.isPresent()) {
-			// Gérer le cas où le tuteur n'est pas trouvé
-			return;
-		}
 
-		// Vérifier si l'étudiant a un tuteur
-		if (student.getTuteur() == null || student.getTuteur().getId() == 0) {
-			// Gérer le cas où l'étudiant n'as pas de tuteur n'est pas trouvé
-			return;
-		}
 
 		// Reste du code si l'étudiant a un tuteur
 		String header = "Votre étudiant " + student.getUtilisateur().getFullName() + " a crée son Dossier Projet";
@@ -258,7 +255,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 
 		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.getId()+"\">Voir le dossier </a>";
 
-		Tuteur tuteurStudent = tuteurStudentOpt.get();
+		
 
 		if (dp.getVersion() > 0) {
 			header = "Votre étudiant " + student.getUtilisateur().getFullName() + " à ajouté des modification à son Dossier Projet";
