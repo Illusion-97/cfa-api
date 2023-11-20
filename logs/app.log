@@ -4239,3 +4239,43 @@ java.lang.NullPointerException: null
 2023-11-16 14:57:00.146  INFO 9104 --- [RMI TCP Connection(6)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-11-16 14:57:00.148  INFO 9104 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-11-16 14:57:00.151  INFO 9104 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-20 10:53:56.260  INFO 1784 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7710-2VGQK72 with PID 1784 (C:\back\cfa-portal-api\target\classes started by Admin Stagiaire in C:\back\cfa-portal-api)
+2023-11-20 10:53:56.262  INFO 1784 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-20 10:53:58.026  INFO 1784 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-20 10:53:58.358  INFO 1784 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 323ms. Found 40 JPA repository interfaces.
+2023-11-20 10:53:59.154  INFO 1784 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2023-11-20 10:53:59.165  INFO 1784 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-20 10:53:59.166  INFO 1784 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-20 10:53:59.327  INFO 1784 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-20 10:53:59.328  INFO 1784 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3017 ms
+2023-11-20 10:53:59.711  INFO 1784 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-20 10:53:59.773  INFO 1784 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-20 10:53:59.921  INFO 1784 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-20 10:54:00.024  INFO 1784 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-20 10:54:00.101  INFO 1784 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-20 10:54:00.117  INFO 1784 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-20 10:54:01.993  INFO 1784 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-20 10:54:01.998  INFO 1784 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-20 10:54:02.669  INFO 1784 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-20 10:54:02.670  INFO 1784 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-20 10:54:02.727  WARN 1784 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-20 10:54:03.881  INFO 1784 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2023-11-20 10:54:03.961  INFO 1784 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-20 10:54:03.962  INFO 1784 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-20 10:54:03.962  INFO 1784 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-20 10:54:03.995  INFO 1784 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-20 10:54:03.995  INFO 1784 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 110 ms
+2023-11-20 10:54:04.005  INFO 1784 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-20 10:54:04.345  INFO 1784 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-20 10:54:04.346  INFO 1784 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-20 10:54:05.576  INFO 1784 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-20 10:54:05.579  INFO 1784 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-20 10:54:05.579  INFO 1784 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-20 10:54:05.588  INFO 1784 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 9.655 seconds (JVM running for 10.401)
+2023-11-20 10:54:26.033  INFO 1784 --- [http-nio-8085-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-20 10:54:26.033  INFO 1784 --- [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-20 10:54:26.039  INFO 1784 --- [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2023-11-20 11:05:21.058  INFO 1784 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-20 11:05:21.058  INFO 1784 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-20 11:05:21.064  INFO 1784 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-20 11:05:21.068  INFO 1784 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
