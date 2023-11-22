@@ -4740,3 +4740,277 @@ Caused by: java.lang.Error: Unresolved compilation problems:
 2023-11-22 12:15:47.177  INFO 33640 --- [RMI TCP Connection(10)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-11-22 12:15:47.179  INFO 33640 --- [RMI TCP Connection(10)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-11-22 12:15:47.182  INFO 33640 --- [RMI TCP Connection(10)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 12:18:17.139  INFO 28200 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 28200 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-11-22 12:18:17.142  INFO 28200 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-22 12:18:18.146  INFO 28200 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-22 12:18:18.360  INFO 28200 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 208ms. Found 40 JPA repository interfaces.
+2023-11-22 12:18:18.985  INFO 28200 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 12:18:18.993  INFO 28200 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 12:18:18.993  INFO 28200 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 12:18:19.113  INFO 28200 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 12:18:19.114  INFO 28200 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1926 ms
+2023-11-22 12:18:19.410  INFO 28200 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 12:18:19.455  INFO 28200 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-22 12:18:19.568  INFO 28200 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-22 12:18:19.651  INFO 28200 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 12:18:19.707  INFO 28200 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 12:18:19.728  INFO 28200 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-22 12:18:21.535  INFO 28200 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 12:18:21.542  INFO 28200 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 12:18:21.798  WARN 28200 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'absenceController': Unsatisfied dependency expressed through field 'etudiantService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'etudiantServiceImpl' defined in file [C:\CODE BACK\cfa-portal-api\target\classes\fr\dawan\AppliCFABack\services\EtudiantServiceImpl.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [fr.dawan.AppliCFABack.services.EtudiantServiceImpl]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	The import fr.dawan.AppliCFABack.mapper.DtoMapperImpl cannot be resolved
+	DtoMapperImpl cannot be resolved to a type
+
+2023-11-22 12:18:21.798  INFO 28200 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 12:18:21.801  INFO 28200 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 12:18:21.803  INFO 28200 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 12:18:21.805  INFO 28200 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-11-22 12:18:21.816  INFO 28200 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-11-22 12:18:21.820 ERROR 28200 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'absenceController': Unsatisfied dependency expressed through field 'etudiantService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'etudiantServiceImpl' defined in file [C:\CODE BACK\cfa-portal-api\target\classes\fr\dawan\AppliCFABack\services\EtudiantServiceImpl.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [fr.dawan.AppliCFABack.services.EtudiantServiceImpl]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	The import fr.dawan.AppliCFABack.mapper.DtoMapperImpl cannot be resolved
+	DtoMapperImpl cannot be resolved to a type
+
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:643)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:130)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1422)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:893)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:879)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:551)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at fr.dawan.AppliCFABack.AppliCfaBackApplication.main(AppliCfaBackApplication.java:26)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'etudiantServiceImpl' defined in file [C:\CODE BACK\cfa-portal-api\target\classes\fr\dawan\AppliCFABack\services\EtudiantServiceImpl.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [fr.dawan.AppliCFABack.services.EtudiantServiceImpl]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	The import fr.dawan.AppliCFABack.mapper.DtoMapperImpl cannot be resolved
+	DtoMapperImpl cannot be resolved to a type
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1320)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1214)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1304)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1224)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:640)
+	... 20 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [fr.dawan.AppliCFABack.services.EtudiantServiceImpl]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	The import fr.dawan.AppliCFABack.mapper.DtoMapperImpl cannot be resolved
+	DtoMapperImpl cannot be resolved to a type
+
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:217)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1312)
+	... 31 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problems: 
+	The import fr.dawan.AppliCFABack.mapper.DtoMapperImpl cannot be resolved
+	DtoMapperImpl cannot be resolved to a type
+
+	at fr.dawan.AppliCFABack.services.EtudiantServiceImpl.<init>(EtudiantServiceImpl.java:16)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:204)
+	... 33 common frames omitted
+
+2023-11-22 12:20:49.985  INFO 30204 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 30204 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-11-22 12:20:49.988  INFO 30204 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-22 12:20:50.934  INFO 30204 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-22 12:20:51.145  INFO 30204 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 202ms. Found 40 JPA repository interfaces.
+2023-11-22 12:20:51.785  INFO 30204 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 12:20:51.794  INFO 30204 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 12:20:51.794  INFO 30204 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 12:20:51.934  INFO 30204 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 12:20:51.934  INFO 30204 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1901 ms
+2023-11-22 12:20:52.217  INFO 30204 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 12:20:52.277  INFO 30204 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-22 12:20:52.398  INFO 30204 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-22 12:20:52.494  INFO 30204 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 12:20:52.544  INFO 30204 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 12:20:52.562  INFO 30204 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-22 12:20:54.383  INFO 30204 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 12:20:54.390  INFO 30204 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 12:20:54.960  INFO 30204 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-22 12:20:54.960  INFO 30204 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-22 12:20:55.006  WARN 30204 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-22 12:20:56.038  INFO 30204 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-22 12:20:56.106  INFO 30204 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-22 12:20:56.107  INFO 30204 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 12:20:56.107  INFO 30204 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 12:20:56.131  INFO 30204 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-22 12:20:56.131  INFO 30204 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 90 ms
+2023-11-22 12:20:56.140  INFO 30204 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-22 12:20:56.316  INFO 30204 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-22 12:20:56.317  INFO 30204 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 12:20:57.428  INFO 30204 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 12:20:57.429  INFO 30204 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 12:20:57.429  INFO 30204 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 12:20:57.437  INFO 30204 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 7.721 seconds (JVM running for 8.575)
+2023-11-22 12:20:58.411  INFO 30204 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-22 12:20:58.411  INFO 30204 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-22 12:20:58.417  INFO 30204 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2023-11-22 12:21:43.142  INFO 30204 --- [RMI TCP Connection(5)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-11-22 12:21:43.592  INFO 30204 --- [RMI TCP Connection(5)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-22 12:21:43.593  INFO 30204 --- [RMI TCP Connection(5)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 12:21:43.595  INFO 30204 --- [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 12:21:43.598  INFO 30204 --- [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 12:21:47.644  INFO 26964 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 26964 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-11-22 12:21:47.646  INFO 26964 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-22 12:21:48.576  INFO 26964 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-22 12:21:48.770  INFO 26964 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 187ms. Found 40 JPA repository interfaces.
+2023-11-22 12:21:49.316  INFO 26964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 12:21:49.324  INFO 26964 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 12:21:49.324  INFO 26964 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 12:21:49.416  INFO 26964 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 12:21:49.417  INFO 26964 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1738 ms
+2023-11-22 12:21:49.683  INFO 26964 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 12:21:49.726  INFO 26964 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-22 12:21:49.868  INFO 26964 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-22 12:21:49.976  INFO 26964 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 12:21:50.029  INFO 26964 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 12:21:50.050  INFO 26964 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-22 12:21:51.854  INFO 26964 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 12:21:51.862  INFO 26964 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 12:21:52.406  INFO 26964 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-22 12:21:52.407  INFO 26964 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-22 12:21:52.583  WARN 26964 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-22 12:21:53.371  INFO 26964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-22 12:21:53.427  INFO 26964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-22 12:21:53.428  INFO 26964 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 12:21:53.428  INFO 26964 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 12:21:53.453  INFO 26964 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-22 12:21:53.453  INFO 26964 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 79 ms
+2023-11-22 12:21:53.462  INFO 26964 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-22 12:21:53.646  INFO 26964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-22 12:21:53.647  INFO 26964 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 12:21:54.820  INFO 26964 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 12:21:54.822  INFO 26964 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 12:21:54.822  INFO 26964 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 12:21:54.823  INFO 26964 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 7.44 seconds (JVM running for 8.261)
+2023-11-22 12:21:54.825  INFO 26964 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-22 12:21:54.825  INFO 26964 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-22 12:21:54.830  INFO 26964 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2023-11-22 12:22:53.970  INFO 26964 --- [http-nio-8080-exec-4] global                                   : 5Liste non vide
+2023-11-22 12:23:02.056  INFO 26964 --- [http-nio-8080-exec-4] global                                   : 26Liste non vide
+2023-11-22 12:23:02.307  INFO 26964 --- [http-nio-8080-exec-4] global                                   : 27Liste non vide
+2023-11-22 12:25:40.834  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 2Liste non vide
+2023-11-22 12:25:41.922  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 3Liste non vide
+2023-11-22 12:25:43.050  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 4Liste non vide
+2023-11-22 12:25:43.270  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 5Liste non vide
+2023-11-22 12:25:43.860  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 6Liste non vide
+2023-11-22 12:25:44.601  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 7Liste non vide
+2023-11-22 12:25:45.190  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 8Liste non vide
+2023-11-22 12:25:45.989  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 9Liste non vide
+2023-11-22 12:25:46.657  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 10Liste non vide
+2023-11-22 12:25:47.676  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 11Liste non vide
+2023-11-22 12:25:48.967  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 12Liste non vide
+2023-11-22 12:25:49.955  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 13Liste non vide
+2023-11-22 12:25:50.701  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 14Liste non vide
+2023-11-22 12:25:51.699  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 15Liste non vide
+2023-11-22 12:25:52.504  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 16Liste non vide
+2023-11-22 12:25:53.538  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 17Liste non vide
+2023-11-22 12:25:54.331  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 18Liste non vide
+2023-11-22 12:25:55.538  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 19Liste non vide
+2023-11-22 12:25:56.685  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 20Liste non vide
+2023-11-22 12:25:57.002  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 21Liste non vide
+2023-11-22 12:25:59.230  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 22Liste non vide
+2023-11-22 12:26:00.189  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 23Liste non vide
+2023-11-22 12:26:03.854  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 24Liste non vide
+2023-11-22 12:26:04.780  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 25Liste non vide
+2023-11-22 12:26:04.991  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 26Liste non vide
+2023-11-22 12:26:05.196  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 27Liste non vide
+2023-11-22 12:26:07.130  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 28Liste non vide
+2023-11-22 12:26:08.228  INFO 26964 --- [http-nio-8080-exec-6] global                                   : 29Liste non vide
+2023-11-22 12:28:11.038  INFO 26964 --- [RMI TCP Connection(12)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-11-22 12:28:11.508  INFO 26964 --- [RMI TCP Connection(12)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-22 12:28:11.508  INFO 26964 --- [RMI TCP Connection(12)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 12:28:11.511  INFO 26964 --- [RMI TCP Connection(12)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 12:28:11.515  INFO 26964 --- [RMI TCP Connection(12)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 12:28:15.573  INFO 24600 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 24600 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-11-22 12:28:15.575  INFO 24600 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-22 12:28:16.477  INFO 24600 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-22 12:28:16.677  INFO 24600 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 193ms. Found 40 JPA repository interfaces.
+2023-11-22 12:28:17.212  INFO 24600 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 12:28:17.220  INFO 24600 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 12:28:17.221  INFO 24600 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 12:28:17.314  INFO 24600 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 12:28:17.314  INFO 24600 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1703 ms
+2023-11-22 12:28:17.610  INFO 24600 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 12:28:17.652  INFO 24600 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-22 12:28:17.764  INFO 24600 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-22 12:28:17.851  INFO 24600 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 12:28:17.896  INFO 24600 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 12:28:17.912  INFO 24600 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-22 12:28:19.630  INFO 24600 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 12:28:19.638  INFO 24600 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 12:28:20.186  INFO 24600 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-22 12:28:20.187  INFO 24600 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-22 12:28:20.384  WARN 24600 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-22 12:28:21.218  INFO 24600 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-22 12:28:21.290  INFO 24600 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-22 12:28:21.291  INFO 24600 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 12:28:21.291  INFO 24600 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 12:28:21.319  INFO 24600 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-22 12:28:21.319  INFO 24600 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 98 ms
+2023-11-22 12:28:21.332  INFO 24600 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-22 12:28:21.523  INFO 24600 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-22 12:28:21.524  INFO 24600 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 12:28:22.688  INFO 24600 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 12:28:22.688  INFO 24600 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-22 12:28:22.689  INFO 24600 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-22 12:28:22.690  INFO 24600 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 12:28:22.690  INFO 24600 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 12:28:22.690  INFO 24600 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 7.363 seconds (JVM running for 8.186)
+2023-11-22 12:28:22.694  INFO 24600 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2023-11-22 12:29:09.684  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 2Liste non vide
+2023-11-22 12:29:10.757  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 3Liste non vide
+2023-11-22 12:29:11.903  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 4Liste non vide
+2023-11-22 12:29:12.168  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 5Liste non vide
+2023-11-22 12:29:12.773  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 6Liste non vide
+2023-11-22 12:29:13.527  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 7Liste non vide
+2023-11-22 12:29:14.156  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 8Liste non vide
+2023-11-22 12:29:15.323  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 9Liste non vide
+2023-11-22 12:29:16.023  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 10Liste non vide
+2023-11-22 12:29:16.849  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 11Liste non vide
+2023-11-22 12:29:18.096  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 12Liste non vide
+2023-11-22 12:29:19.021  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 13Liste non vide
+2023-11-22 12:29:19.779  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 14Liste non vide
+2023-11-22 12:29:20.727  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 15Liste non vide
+2023-11-22 12:29:21.522  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 16Liste non vide
+2023-11-22 12:29:22.652  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 17Liste non vide
+2023-11-22 12:29:23.463  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 18Liste non vide
+2023-11-22 12:29:24.763  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 19Liste non vide
+2023-11-22 12:29:25.934  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 20Liste non vide
+2023-11-22 12:29:26.264  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 21Liste non vide
+2023-11-22 12:29:28.714  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 22Liste non vide
+2023-11-22 12:29:29.779  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 23Liste non vide
+2023-11-22 12:29:33.820  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 24Liste non vide
+2023-11-22 12:29:34.932  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 25Liste non vide
+2023-11-22 12:29:35.145  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 26Liste non vide
+2023-11-22 12:29:35.353  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 27Liste non vide
+2023-11-22 12:29:37.234  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 28Liste non vide
+2023-11-22 12:29:38.306  INFO 24600 --- [http-nio-8080-exec-1] global                                   : 29Liste non vide
+2023-11-22 12:30:01.447  INFO 24600 --- [RMI TCP Connection(6)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-11-22 12:30:01.875  INFO 24600 --- [RMI TCP Connection(6)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-22 12:30:01.876  INFO 24600 --- [RMI TCP Connection(6)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 12:30:01.878  INFO 24600 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 12:30:01.881  INFO 24600 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

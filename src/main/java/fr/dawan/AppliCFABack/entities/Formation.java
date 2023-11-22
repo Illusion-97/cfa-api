@@ -196,8 +196,8 @@ public class Formation extends BaseEntity implements Serializable {
 		result = prime * result + ((titre == null) ? 0 : titre.hashCode());
 		return result;
 	}
-	
 
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
