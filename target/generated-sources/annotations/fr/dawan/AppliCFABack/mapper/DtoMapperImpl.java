@@ -80,7 +80,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-22T10:45:21+0100",
+    date = "2023-11-22T11:48:16+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -1058,13 +1058,13 @@ public class DtoMapperImpl implements DtoMapper {
         soutenanceDto.setId( soutenance.getId() );
         soutenanceDto.setVersion( soutenance.getVersion() );
         soutenanceDto.setEtudiant( etudiantToEtudiantSoutenanceDto( soutenance.getEtudiant() ) );
-        soutenanceDto.setHeure( soutenance.getHeure() );
         soutenanceDto.setJour( soutenance.getJour() );
+        soutenanceDto.setHeure( soutenance.getHeure() );
         soutenanceDto.setMinAccueil( soutenance.getMinAccueil() );
-        soutenanceDto.setMinDeliberation( soutenance.getMinDeliberation() );
         soutenanceDto.setMinEntretien( soutenance.getMinEntretien() );
-        soutenanceDto.setMinEntretienFinal( soutenance.getMinEntretienFinal() );
         soutenanceDto.setMinQuestion( soutenance.getMinQuestion() );
+        soutenanceDto.setMinEntretienFinal( soutenance.getMinEntretienFinal() );
+        soutenanceDto.setMinDeliberation( soutenance.getMinDeliberation() );
 
         return soutenanceDto;
     }

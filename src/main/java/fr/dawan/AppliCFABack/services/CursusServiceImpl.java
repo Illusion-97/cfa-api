@@ -231,7 +231,7 @@ public class CursusServiceImpl implements CursusService {
 						if (optCursus.get().equals(cursusImport))
 							continue;
 						else if (!optCursus.get().equals(cursusImport)) {
-							cursusImport.setTitre(optCursus.get().getTitre());
+							//cursusImport.setTitre(optCursus.get().getTitre());
 							cursusImport.setVersion(optCursus.get().getVersion());
 							cursusImport.setId(optCursus.get().getId());
 						}
