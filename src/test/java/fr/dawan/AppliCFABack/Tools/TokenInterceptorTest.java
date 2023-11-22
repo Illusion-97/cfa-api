@@ -70,7 +70,7 @@ public class TokenInterceptorTest {
         assertTrue(result);
     }
     @Test
-    public void testPreHandleWithInvalidTokenClaims() throws Exception {
+    public void testPreHandleWithInvalidTokenFormation() {
         HttpServletResponse response = new MockHttpServletResponse();
         Object handler = new Object();
 
