@@ -1,29 +1,65 @@
 package fr.dawan.AppliCFABack.services;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.dawan.AppliCFABack.dto.*;
-import fr.dawan.AppliCFABack.entities.*;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.*;
-import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.transaction.Transactional;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-import java.util.stream.Collectors;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.DtoTools;
+import fr.dawan.AppliCFABack.dto.EtudiantDto;
+import fr.dawan.AppliCFABack.dto.FormateurDto;
+import fr.dawan.AppliCFABack.dto.FormationDto;
+import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.PromotionOrInterventionDG2Dto;
+import fr.dawan.AppliCFABack.entities.Devoir;
+import fr.dawan.AppliCFABack.entities.Etudiant;
+import fr.dawan.AppliCFABack.entities.Formateur;
+import fr.dawan.AppliCFABack.entities.Formation;
+import fr.dawan.AppliCFABack.entities.Intervention;
+import fr.dawan.AppliCFABack.entities.PassageExamen;
+import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import fr.dawan.AppliCFABack.mapper.DtoMapper;
+import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
+import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
+import fr.dawan.AppliCFABack.repositories.DevoirRepository;
+import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
+import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.FormationRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.PassageExamenRepository;
+import fr.dawan.AppliCFABack.repositories.PromotionRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
+import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 
 @Service
 @Transactional
@@ -61,9 +97,9 @@ public class InterventionServiceImpl implements InterventionService {
 	private RestTemplate restTemplate;
 
 	private static Logger logger = LoggerFactory.getLogger(InterventionServiceImpl.class);
-	
+
 	@Value("${base_url_dg2}")
-    private String baseUrl;
+	private String baseUrl;
 
 	/**
 	 * Récupération de toutes les interventions
@@ -124,11 +160,13 @@ public class InterventionServiceImpl implements InterventionService {
 				.findAllDistinctByFormationTitreContainingIgnoringCaseOrPromotionsNomContainingIgnoringCase(search,
 						search, PageRequest.of(page, size))
 				.get().collect(Collectors.toList());
-		switch (sort){
-			case "datefin": lstIn.sort(Comparator.comparing(Intervention::getDateFin).reversed());
-				break;
-			case "datedebut": lstIn.sort(Comparator.comparing(Intervention::getDateDebut));
-				break;
+		switch (sort) {
+		case "datefin":
+			lstIn.sort(Comparator.comparing(Intervention::getDateFin).reversed());
+			break;
+		case "datedebut":
+			lstIn.sort(Comparator.comparing(Intervention::getDateDebut));
+			break;
 		}
 		List<InterventionDto> lstDto = new ArrayList<>();
 
@@ -218,53 +256,51 @@ public class InterventionServiceImpl implements InterventionService {
 //
 //		return mapper.interventionToInterventionDto(i);
 //	}
-	
-	
+
 	@Override
 	public InterventionDto saveOrUpdate(InterventionDto iDto) {
 		Intervention intervention;
 		if (iDto.getId() != 0L) {
-            intervention = interventionRepository.getOne(iDto.getId());
-            DtoTools.convert(iDto, Intervention.class);
-        } else {
-            intervention = DtoTools.convert(iDto, Intervention.class);
-        }
+			intervention = interventionRepository.getOne(iDto.getId());
+			DtoTools.convert(iDto, Intervention.class);
+		} else {
+			intervention = DtoTools.convert(iDto, Intervention.class);
+		}
 
+		// Charger les entités liées avant de les assigner à l'intervention
+		Formateur formateur = intervention.getFormateur();
+		if (formateur != null) {
+			intervention.setFormateur(formateurRepository.getOne(formateur.getId()));
+		}
 
-        // Charger les entités liées avant de les assigner à l'intervention
-        Formateur formateur = intervention.getFormateur();
-        if (formateur != null) {
-            intervention.setFormateur(formateurRepository.getOne(formateur.getId()));
-        }
+		List<Promotion> promotions = intervention.getPromotions();
+		if (promotions != null) {
+			Intervention savedIntervention = interventionRepository.save(intervention);
+			Set<Promotion> existingPromotions = new HashSet<>(savedIntervention.getPromotions());
+			Set<Promotion> newPromotions = new HashSet<>();
+			for (Promotion promotion : promotions) {
+				if (existingPromotions.contains(promotion)) {
+					existingPromotions.remove(promotion);
+				} else {
+					newPromotions.add(promoRepository.getOne(promotion.getId()));
+				}
+			}
+			savedIntervention.getPromotions().addAll(newPromotions);
+			savedIntervention.getPromotions().removeAll(existingPromotions);
+			intervention = interventionRepository.save(savedIntervention);
+		} else {
+			intervention = interventionRepository.saveAndFlush(intervention);
+		}
 
-        List<Promotion> promotions = intervention.getPromotions();
-        if (promotions != null) {
-            Intervention savedIntervention = interventionRepository.save(intervention);
-            Set<Promotion> existingPromotions = new HashSet<>(savedIntervention.getPromotions());
-            Set<Promotion> newPromotions = new HashSet<>();
-            for (Promotion promotion : promotions) {
-                if (existingPromotions.contains(promotion)) {
-                    existingPromotions.remove(promotion);
-                } else {
-                    newPromotions.add(promoRepository.getOne(promotion.getId()));
-                }
-            }
-            savedIntervention.getPromotions().addAll(newPromotions);
-            savedIntervention.getPromotions().removeAll(existingPromotions);
-            intervention = interventionRepository.save(savedIntervention);
-        } else {
-            intervention = interventionRepository.saveAndFlush(intervention);
-        }
-        
-        // Mettre à jour la noteInfoPersonnel si elle est présente dans l'objet DTO
-        if (iDto.getNoteInfoPersonnel() != null) {
-            intervention.setNoteInfoPersonnel(iDto.getNoteInfoPersonnel());
-            interventionRepository.save(intervention);
-        }
-        
-        filesService.createDirectory("interventions/" + intervention.getId());
+		// Mettre à jour la noteInfoPersonnel si elle est présente dans l'objet DTO
+		if (iDto.getNoteInfoPersonnel() != null) {
+			intervention.setNoteInfoPersonnel(iDto.getNoteInfoPersonnel());
+			interventionRepository.save(intervention);
+		}
 
-        return mapper.interventionToInterventionDto(intervention);
+		filesService.createDirectory("interventions/" + intervention.getId());
+
+		return mapper.interventionToInterventionDto(intervention);
 	}
 
 	/**
@@ -405,7 +441,7 @@ public class InterventionServiceImpl implements InterventionService {
 
 	/**
 	 * Va permettre l'import des intervention de Dg2
-	 * 
+	 *
 	 * @author Feres BG
 	 * @param Id       Id concernant la promotion
 	 * @param email    Email l'utilsateur dg2
@@ -464,14 +500,16 @@ public class InterventionServiceImpl implements InterventionService {
 						if (interventionImported.equals(intervInDb.get())) {
 							continue;
 						}
+						intervInDb.get().setDateDebut(interventionImported.getDateDebut());
+						intervInDb.get().setDateFin(interventionImported.getDateFin());
 						Optional<Promotion> promotion = promoRepository.findByIdDg2(idPrmotionDg2);
-						if (promotion.isPresent() && interventionImported.getPromotions()!=null) {
-								
-								if( !interventionImported.getPromotions().contains(promotion.get())) {
-							// Ajout de la promotion à la liste des promotions de l'intervention importée
-							interventionImported.getPromotions().add(promotion.get());
-								}
-								} else {
+						if (promotion.isPresent() && interventionImported.getPromotions() != null) {
+
+							if (!interventionImported.getPromotions().contains(promotion.get())) {
+								// Ajout de la promotion à la liste des promotions de l'intervention importée
+								interventionImported.getPromotions().add(promotion.get());
+							}
+						} else {
 							logger.warn("Promotion not found with idDg2 : " + idPrmotionDg2);
 							continue;
 						}
@@ -549,17 +587,17 @@ public class InterventionServiceImpl implements InterventionService {
 
 			}
 			Formateur formateur = new Formateur();
-			
+
 			UtilisateurRole formateurRole = utilisateurRoleRepository.findByIntituleContaining("FORMATEUR");
-			
+
 			List<Utilisateur> utilisateurs = new ArrayList<>();
-			
+
 			utilisateurs.add(userInDb.get());
-			
+
 			if (formateurRole.getUtilisateurs() != null) {
 				utilisateurs.addAll(formateurRole.getUtilisateurs());
 			}
-			
+
 			formateurRole.setUtilisateurs(utilisateurs);
 			if (userInDb.get().getRoles() != null) {
 				if (!userInDb.get().getRoles().contains(formateurRole)) {
@@ -584,10 +622,12 @@ public class InterventionServiceImpl implements InterventionService {
 
 	@Override
 	public List<InterventionDto> findInterventionByPromotionId(long id, int page, int size, String search) {
-		List<Intervention> result = interventionRepository.findInterventionByPromotionId(id,search,  PageRequest.of(page, size)).get().collect(Collectors.toList());
+		List<Intervention> result = interventionRepository
+				.findInterventionByPromotionId(id, search, PageRequest.of(page, size)).get()
+				.collect(Collectors.toList());
 		List<InterventionDto> res = new ArrayList<>();
 		if (!result.isEmpty()) {
-			for (Intervention i: result) {
+			for (Intervention i : result) {
 				InterventionDto interventionDto = mapper.interventionToInterventionDto(i);
 				res.add(interventionDto);
 			}
@@ -599,7 +639,7 @@ public class InterventionServiceImpl implements InterventionService {
 	public CountDto countInterventionByPromotionId(long id, String search) {
 		return new CountDto(interventionRepository.countInterventionByPromotionId(id, search));
 	}
-	
+
 	@Override
 	public List<InterventionDto> findAllByFormateurId(long formateurId) {
 		List<InterventionDto> interventionDtos = new ArrayList<>();
@@ -609,10 +649,10 @@ public class InterventionServiceImpl implements InterventionService {
 			interventionDto.setHeuresDisponsees();
 			interventionDtos.add(interventionDto);
 		});
-		
+
 		return interventionDtos;
 	}
-	
+
 	@Override
 	public void deleteLstIntervention(List<InterventionDto> interventionDtos) {
 		List<Intervention> interventions = new ArrayList<>();

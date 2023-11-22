@@ -254,7 +254,7 @@ public interface DtoMapper {
     @Mapping(source = "lastName", target = "nom")
     @Mapping(source = "email", target = "login")
     @Mapping(source = "bornAt", target= "dateDeNaissance")
-    //@Mapping(source = "honorific", target= "civilite")
+    @Mapping(source = "honorific", target= "civilite")
     Utilisateur employeeDg2ToUtilisateur(EmployeeDG2Dto eDg2);
 
 
