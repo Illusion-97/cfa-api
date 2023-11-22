@@ -125,51 +125,6 @@ public class EtudiantServiceImpl implements EtudiantService {
 	 *
 	 * @return res Liste des objets etudiants
 	 */
-	/*@Override
-	public List<EtudiantDto> getAll() {
-		List<Etudiant> lst = etudiantRepository.findAll();
-		List<EtudiantDto> res = new ArrayList<>();
-
-		for (Etudiant e : lst) {
-			EtudiantDto etuDto = mapper.etudiantToEtudiantDto(e);
-			UtilisateurDto utilisateur = mapper.utilisateurToUtilisateurDto(e.getUtilisateur());
-
-			etuDto.setUtilisateurDto(utilisateur);
-
-			AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
-
-			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
-			List<GroupeEtudiantDto> lstGrpEtuDto = new ArrayList<>();
-			for (GroupeEtudiant grp : lstGrpEtu) {
-				if (grp != null)
-					lstGrpEtuDto.add(mapper.groupeEtudiantToGroupEtudiantDto(grp));
-			}
-
-			List<Promotion> lstPromo = e.getPromotions();
-			List<PromotionDto> lstPromoDto = new ArrayList<>();
-			for (Promotion promotion : lstPromo) {
-				if (promotion != null)
-					lstPromoDto.add(mapper.promotionToPromotionDto(promotion));
-			}
-
-
-			List<UtilisateurRoleDto> uRDto = new ArrayList<>();
-			for (UtilisateurRole r : e.getUtilisateur().getRoles()) {
-				uRDto.add(mapper.utilisateurRoleToUtilisateurRoleDto(r));
-			}
-
-			etuDto.getUtilisateurDto().setRolesDto(uRDto);
-
-			etuDto.getUtilisateurDto().setAdresseDto(addrDto);
-			etuDto.setGroupesDto(lstGrpEtuDto);
-			etuDto.setPromotionsDto(lstPromoDto);
-
-			res.add(etuDto);
-		}
-
-		return res;
-	}*/
-
 	@Override
 	public List<EtudiantDto> getAll(){
 		List<Etudiant> lst = etudiantRepository.findAll();
