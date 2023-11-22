@@ -219,7 +219,7 @@ public class CursusServiceImpl implements CursusService {
 
 				try {
 					//recuperation des values en json et lecture
-					fResJson = objectMapper.readValue(json, new TypeReference<List<CursusDG2Dto>>() { 
+					fResJson = objectMapper.readValue(json, new TypeReference<List<CursusDG2Dto>>() {
 					});
 				} catch (Exception e) {
 					logger.log(Level.WARNING, "failed json", e);
@@ -259,4 +259,5 @@ public class CursusServiceImpl implements CursusService {
 		}
 
 	}
+
 }

@@ -4279,3 +4279,290 @@ java.lang.NullPointerException: null
 2023-11-20 11:05:21.058  INFO 1784 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-11-20 11:05:21.064  INFO 1784 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-11-20 11:05:21.068  INFO 1784 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 10:19:58.554  INFO 32940 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 32940 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-11-22 10:19:58.556  INFO 32940 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-22 10:19:59.724  INFO 32940 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-22 10:20:00.023  INFO 32940 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 292ms. Found 40 JPA repository interfaces.
+2023-11-22 10:20:00.639  INFO 32940 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 10:20:00.649  INFO 32940 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 10:20:00.650  INFO 32940 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 10:20:00.762  INFO 32940 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 10:20:00.763  INFO 32940 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2158 ms
+2023-11-22 10:20:01.044  INFO 32940 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 10:20:01.103  INFO 32940 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-22 10:20:01.258  INFO 32940 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-22 10:20:01.355  INFO 32940 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 10:20:01.410  INFO 32940 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 10:20:01.432  INFO 32940 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-22 10:20:03.447  INFO 32940 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 10:20:03.455  INFO 32940 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 10:20:04.003  INFO 32940 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-22 10:20:04.004  INFO 32940 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-22 10:20:04.053  WARN 32940 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-22 10:20:05.197  INFO 32940 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-22 10:20:05.280  INFO 32940 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-22 10:20:05.282  INFO 32940 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 10:20:05.282  INFO 32940 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 10:20:05.310  INFO 32940 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-22 10:20:05.310  INFO 32940 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 110 ms
+2023-11-22 10:20:05.318  INFO 32940 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-22 10:20:05.518  INFO 32940 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-22 10:20:05.519  INFO 32940 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 10:20:06.868  INFO 32940 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 10:20:06.869  INFO 32940 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 10:20:06.870  INFO 32940 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 10:20:06.870  INFO 32940 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 8.6 seconds (JVM running for 9.592)
+2023-11-22 10:20:06.873  INFO 32940 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-22 10:20:06.873  INFO 32940 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-22 10:20:06.880  INFO 32940 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2023-11-22 10:23:10.282  INFO 32940 --- [RMI TCP Connection(7)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-11-22 10:23:11.006  INFO 32940 --- [RMI TCP Connection(7)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-22 10:23:11.007  INFO 32940 --- [RMI TCP Connection(7)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 10:23:11.012  INFO 32940 --- [RMI TCP Connection(7)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 10:23:11.017  INFO 32940 --- [RMI TCP Connection(7)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 10:23:15.666  INFO 3364 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 3364 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-11-22 10:23:15.670  INFO 3364 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-22 10:23:16.928  INFO 3364 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-22 10:23:17.201  INFO 3364 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 263ms. Found 40 JPA repository interfaces.
+2023-11-22 10:23:17.877  INFO 3364 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 10:23:17.887  INFO 3364 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 10:23:17.887  INFO 3364 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 10:23:18.033  INFO 3364 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 10:23:18.034  INFO 3364 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2309 ms
+2023-11-22 10:23:18.366  INFO 3364 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 10:23:18.417  INFO 3364 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-22 10:23:18.553  INFO 3364 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-22 10:23:18.681  INFO 3364 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 10:23:18.750  INFO 3364 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 10:23:18.770  INFO 3364 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-22 10:23:20.805  INFO 3364 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 10:23:20.815  INFO 3364 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 10:23:21.497  INFO 3364 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-22 10:23:21.497  INFO 3364 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-22 10:23:21.583  WARN 3364 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-22 10:23:22.776  INFO 3364 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-22 10:23:22.859  INFO 3364 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-22 10:23:22.860  INFO 3364 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 10:23:22.860  INFO 3364 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 10:23:22.888  INFO 3364 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-22 10:23:22.888  INFO 3364 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 110 ms
+2023-11-22 10:23:22.897  INFO 3364 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-22 10:23:23.141  INFO 3364 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-22 10:23:23.142  INFO 3364 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 10:23:24.492  INFO 3364 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 10:23:24.493  INFO 3364 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 10:23:24.494  INFO 3364 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 10:23:24.503  INFO 3364 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 9.143 seconds (JVM running for 10.129)
+2023-11-22 10:23:25.453  INFO 3364 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-22 10:23:25.453  INFO 3364 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-22 10:23:25.460  INFO 3364 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2023-11-22 10:44:30.697  INFO 3364 --- [RMI TCP Connection(27)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-11-22 10:44:31.160  INFO 3364 --- [RMI TCP Connection(27)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-22 10:44:31.161  INFO 3364 --- [RMI TCP Connection(27)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 10:44:31.163  INFO 3364 --- [RMI TCP Connection(27)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 10:44:31.167  INFO 3364 --- [RMI TCP Connection(27)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 10:44:35.401  INFO 16148 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 16148 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-11-22 10:44:35.405  INFO 16148 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-22 10:44:36.640  INFO 16148 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-22 10:44:36.926  INFO 16148 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 278ms. Found 40 JPA repository interfaces.
+2023-11-22 10:44:37.659  INFO 16148 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 10:44:37.669  INFO 16148 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 10:44:37.669  INFO 16148 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 10:44:37.787  INFO 16148 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 10:44:37.787  INFO 16148 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2328 ms
+2023-11-22 10:44:38.160  INFO 16148 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 10:44:38.212  INFO 16148 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-22 10:44:38.356  INFO 16148 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-22 10:44:38.478  INFO 16148 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 10:44:38.546  INFO 16148 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 10:44:38.566  INFO 16148 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-22 10:44:40.680  INFO 16148 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 10:44:40.690  INFO 16148 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 10:44:41.391  INFO 16148 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-22 10:44:41.392  INFO 16148 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-22 10:44:41.456  WARN 16148 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-22 10:44:42.595  INFO 16148 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-22 10:44:42.664  INFO 16148 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-22 10:44:42.665  INFO 16148 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 10:44:42.666  INFO 16148 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 10:44:42.715  INFO 16148 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-22 10:44:42.715  INFO 16148 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 116 ms
+2023-11-22 10:44:42.725  INFO 16148 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-22 10:44:42.942  INFO 16148 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-22 10:44:42.943  INFO 16148 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 10:44:44.379  INFO 16148 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 10:44:44.381  INFO 16148 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 10:44:44.382  INFO 16148 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 10:44:44.382  INFO 16148 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 9.281 seconds (JVM running for 10.189)
+2023-11-22 10:44:44.384  INFO 16148 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-22 10:44:44.384  INFO 16148 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-22 10:44:44.395  INFO 16148 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 11 ms
+2023-11-22 10:45:34.843  INFO 16148 --- [RMI TCP Connection(6)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-11-22 10:45:35.328  INFO 16148 --- [RMI TCP Connection(6)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-22 10:45:35.329  INFO 16148 --- [RMI TCP Connection(6)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 10:45:35.332  INFO 16148 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 10:45:35.337  INFO 16148 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 10:45:39.554  INFO 32876 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 32876 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-11-22 10:45:39.558  INFO 32876 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-22 10:45:40.708  INFO 32876 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-22 10:45:40.981  INFO 32876 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 266ms. Found 40 JPA repository interfaces.
+2023-11-22 10:45:41.638  INFO 32876 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 10:45:41.647  INFO 32876 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 10:45:41.647  INFO 32876 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 10:45:41.756  INFO 32876 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 10:45:41.756  INFO 32876 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2147 ms
+2023-11-22 10:45:42.085  INFO 32876 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 10:45:42.135  INFO 32876 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-22 10:45:42.267  INFO 32876 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-22 10:45:42.373  INFO 32876 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 10:45:42.429  INFO 32876 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 10:45:42.452  INFO 32876 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-22 10:45:44.479  INFO 32876 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 10:45:44.486  INFO 32876 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 10:45:45.121  INFO 32876 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-22 10:45:45.122  INFO 32876 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-22 10:45:45.224  WARN 32876 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-22 10:45:46.356  INFO 32876 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-22 10:45:46.447  INFO 32876 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-22 10:45:46.448  INFO 32876 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 10:45:46.449  INFO 32876 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 10:45:46.481  INFO 32876 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-22 10:45:46.482  INFO 32876 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 120 ms
+2023-11-22 10:45:46.498  INFO 32876 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-22 10:45:46.755  INFO 32876 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-22 10:45:46.757  INFO 32876 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 10:45:48.505  INFO 32876 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 10:45:48.506  INFO 32876 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 10:45:48.507  INFO 32876 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 10:45:48.514  INFO 32876 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 9.255 seconds (JVM running for 10.191)
+2023-11-22 10:45:48.948  INFO 32876 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-22 10:45:48.948  INFO 32876 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-22 10:45:48.955  INFO 32876 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+2023-11-22 11:37:12.481  INFO 32876 --- [RMI TCP Connection(57)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-11-22 11:37:12.925  INFO 32876 --- [RMI TCP Connection(57)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-22 11:37:12.926  INFO 32876 --- [RMI TCP Connection(57)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 11:37:12.929  INFO 32876 --- [RMI TCP Connection(57)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 11:37:12.935  INFO 32876 --- [RMI TCP Connection(57)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 11:37:17.126  INFO 30260 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 30260 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-11-22 11:37:17.128  INFO 30260 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-22 11:37:18.083  INFO 30260 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-22 11:37:18.295  INFO 30260 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 205ms. Found 40 JPA repository interfaces.
+2023-11-22 11:37:18.897  INFO 30260 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 11:37:18.905  INFO 30260 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 11:37:18.906  INFO 30260 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 11:37:19.007  INFO 30260 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 11:37:19.007  INFO 30260 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1835 ms
+2023-11-22 11:37:19.276  INFO 30260 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 11:37:19.326  INFO 30260 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-22 11:37:19.451  INFO 30260 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-22 11:37:19.550  INFO 30260 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 11:37:19.602  INFO 30260 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 11:37:19.621  INFO 30260 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-22 11:37:21.446  INFO 30260 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 11:37:21.454  INFO 30260 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 11:37:22.058  INFO 30260 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-22 11:37:22.059  INFO 30260 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-22 11:37:22.250  WARN 30260 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-22 11:37:23.049  INFO 30260 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-22 11:37:23.108  INFO 30260 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-22 11:37:23.109  INFO 30260 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 11:37:23.109  INFO 30260 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 11:37:23.135  INFO 30260 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-22 11:37:23.135  INFO 30260 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 83 ms
+2023-11-22 11:37:23.143  INFO 30260 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-22 11:37:23.334  INFO 30260 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-22 11:37:23.335  INFO 30260 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 11:37:24.479  INFO 30260 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 11:37:24.480  INFO 30260 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 11:37:24.480  INFO 30260 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 11:37:24.488  INFO 30260 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 7.624 seconds (JVM running for 8.521)
+2023-11-22 11:37:24.546  INFO 30260 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-22 11:37:24.547  INFO 30260 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-22 11:37:24.552  INFO 30260 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2023-11-22 11:39:28.021  INFO 30260 --- [RMI TCP Connection(5)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-11-22 11:39:28.452  INFO 30260 --- [RMI TCP Connection(5)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-22 11:39:28.453  INFO 30260 --- [RMI TCP Connection(5)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 11:39:28.454  INFO 30260 --- [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 11:39:28.457  INFO 30260 --- [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 11:39:33.095  INFO 28936 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 28936 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-11-22 11:39:33.098  INFO 28936 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-22 11:39:34.034  INFO 28936 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-22 11:39:34.247  INFO 28936 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 206ms. Found 40 JPA repository interfaces.
+2023-11-22 11:39:34.817  INFO 28936 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 11:39:34.825  INFO 28936 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 11:39:34.825  INFO 28936 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 11:39:34.928  INFO 28936 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 11:39:34.929  INFO 28936 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1796 ms
+2023-11-22 11:39:35.259  INFO 28936 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 11:39:35.314  INFO 28936 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-22 11:39:35.432  INFO 28936 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-22 11:39:35.516  INFO 28936 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 11:39:35.561  INFO 28936 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 11:39:35.577  INFO 28936 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-22 11:39:37.340  INFO 28936 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 11:39:37.346  INFO 28936 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 11:39:37.854  INFO 28936 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-22 11:39:37.855  INFO 28936 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-22 11:39:38.033  WARN 28936 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-22 11:39:38.800  INFO 28936 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-22 11:39:38.855  INFO 28936 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-22 11:39:38.856  INFO 28936 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 11:39:38.856  INFO 28936 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 11:39:38.883  INFO 28936 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-22 11:39:38.883  INFO 28936 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 80 ms
+2023-11-22 11:39:38.893  INFO 28936 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-22 11:39:39.075  INFO 28936 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-22 11:39:39.076  INFO 28936 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 11:39:40.162  INFO 28936 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 11:39:40.164  INFO 28936 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 11:39:40.164  INFO 28936 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 11:39:40.171  INFO 28936 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 7.336 seconds (JVM running for 8.205)
+2023-11-22 11:39:40.853  INFO 28936 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-22 11:39:40.853  INFO 28936 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-22 11:39:40.859  INFO 28936 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2023-11-22 11:42:33.588  INFO 28936 --- [RMI TCP Connection(6)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-11-22 11:42:34.020  INFO 28936 --- [RMI TCP Connection(6)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-22 11:42:34.021  INFO 28936 --- [RMI TCP Connection(6)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 11:42:34.023  INFO 28936 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 11:42:34.028  INFO 28936 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 11:42:38.103  INFO 24720 --- [main] f.d.A.AppliCfaBackApplication            : Starting AppliCfaBackApplication on P7730-69C6 with PID 24720 (C:\CODE BACK\cfa-portal-api\target\classes started by Admin-Stagiaire in C:\CODE BACK\cfa-portal-api)
+2023-11-22 11:42:38.106  INFO 24720 --- [main] f.d.A.AppliCfaBackApplication            : No active profile set, falling back to default profiles: default
+2023-11-22 11:42:39.052  INFO 24720 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-11-22 11:42:39.255  INFO 24720 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 196ms. Found 40 JPA repository interfaces.
+2023-11-22 11:42:39.835  INFO 24720 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 11:42:39.843  INFO 24720 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 11:42:39.843  INFO 24720 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 11:42:39.951  INFO 24720 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 11:42:39.951  INFO 24720 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1810 ms
+2023-11-22 11:42:40.222  INFO 24720 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 11:42:40.264  INFO 24720 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.17.Final
+2023-11-22 11:42:40.381  INFO 24720 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2023-11-22 11:42:40.471  INFO 24720 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 11:42:40.520  INFO 24720 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 11:42:40.538  INFO 24720 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+2023-11-22 11:42:42.329  INFO 24720 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 11:42:42.336  INFO 24720 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 11:42:42.904  INFO 24720 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2023-11-22 11:42:42.905  INFO 24720 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'myTaskExecutor'
+2023-11-22 11:42:42.951  WARN 24720 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-22 11:42:43.877  INFO 24720 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-22 11:42:43.935  INFO 24720 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2023-11-22 11:42:43.936  INFO 24720 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 11:42:43.936  INFO 24720 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2023-11-22 11:42:43.960  INFO 24720 --- [main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-22 11:42:43.960  INFO 24720 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 80 ms
+2023-11-22 11:42:43.971  INFO 24720 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2023-11-22 11:42:44.169  INFO 24720 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2023-11-22 11:42:44.171  INFO 24720 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 11:42:45.539  INFO 24720 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 11:42:45.541  INFO 24720 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-11-22 11:42:45.541  INFO 24720 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-11-22 11:42:45.542  INFO 24720 --- [main] f.d.A.AppliCfaBackApplication            : Started AppliCfaBackApplication in 7.691 seconds (JVM running for 8.508)
+2023-11-22 11:42:45.543  INFO 24720 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-22 11:42:45.544  INFO 24720 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-22 11:42:45.551  INFO 24720 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+2023-11-22 11:43:31.988  INFO 24720 --- [RMI TCP Connection(7)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-11-22 11:43:32.401  INFO 24720 --- [RMI TCP Connection(7)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'myTaskExecutor'
+2023-11-22 11:43:32.402  INFO 24720 --- [RMI TCP Connection(7)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 11:43:32.404  INFO 24720 --- [RMI TCP Connection(7)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 11:43:32.408  INFO 24720 --- [RMI TCP Connection(7)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
