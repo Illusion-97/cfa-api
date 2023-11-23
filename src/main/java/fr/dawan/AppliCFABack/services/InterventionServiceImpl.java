@@ -411,6 +411,7 @@ public class InterventionServiceImpl implements InterventionService {
 	 * @throws Exception
 	 */
 
+	@Async("myTaskExecutor")
 	@Override
 	public int fetchDGInterventions(String email, String password) throws Exception {
 		List<Promotion> promoLst = new ArrayList<>();
@@ -424,6 +425,7 @@ public class InterventionServiceImpl implements InterventionService {
 		return result;
 	}
 
+	@Async("myTaskExecutor")
 	@Override
 	public int fetchDGInterventions(String email, String password, long idPrmotionDg2) throws Exception {
 		List<Intervention> interventions = new ArrayList<>();
