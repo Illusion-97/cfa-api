@@ -246,21 +246,15 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 			// Gérer le cas où l'étudiant n'est pas trouvé
 			return;
 		}
-
-
-
 		// Reste du code si l'étudiant a un tuteur
 		String header = "Votre étudiant " + student.getUtilisateur().getFullName() + " a crée son Dossier Projet";
 		String message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été crée";
 
 		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.getId()+"\">Voir le dossier </a>";
 
-		
-
 		if (dp.getVersion() > 0) {
 			header = "Votre étudiant " + student.getUtilisateur().getFullName() + " à ajouté des modification à son Dossier Projet";
 		}
-
 		//Mail Automatique pour informer le tuteur lors de la modification du DossierProjet
 		emailService.sendMailSmtpUser(tuteurStudent.getUtilisateur().getId(), header, body, Optional.of(""), Optional.of(""));
 	}

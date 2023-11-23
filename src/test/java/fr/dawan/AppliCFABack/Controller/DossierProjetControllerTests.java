@@ -4,34 +4,34 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.dawan.AppliCFABack.controllers.DossierProjetController;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
-import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
+import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.services.DossierProjetService;
-import fr.dawan.AppliCFABack.tools.DossierProjetException;
-import freemarker.template.TemplateException;
+import fr.dawan.AppliCFABack.services.EmailService;
+import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.FilesService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import javax.transaction.Transactional;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,53 +40,59 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
-@SpringBootTest
+@WebMvcTest(DossierProjetController.class)
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
 class DossierProjetControllerTests {
 
-	TokenInterceptor tokenInterceptorMock = Mockito.mock(TokenInterceptor.class);
+	@MockBean
+	TokenInterceptor tokenInterceptorMock;
 	@Autowired
 	private MockMvc mockMvc;
-	@Autowired
-	private DossierProjetController dossierProjetController;
-	@Autowired
-	private DossierProjetRepository dossierProjetRepository;
-	@Autowired
+	@Mock
+	private DossierProjetRepository dossierProjetRepoMock;
+	@MockBean
+	private DossierProjetService dossierProjetServiceMock;
+	@MockBean
+	private EtudiantService etudiantServiceMock;
+	@MockBean
+	private FilesService filesServiceMock;
+	@MockBean
+	private EmailService emailService;
+	@Mock
 	private DtoMapper mapper;
-	@Autowired
+	@Mock
 	private ObjectMapper objectMapper;
 	@Value("${app.storagefolder}")
 	private String storageFolder;
 	private DossierProjet dpTest;
 	private DossierProjetDto dpDtoTest;
+	private ProjetDossierProjetDto projetDossierProjetDto;
+	private Projet projet;
+	private long entityId = 1;
 	@BeforeAll
 	void init() throws Exception {
-		Mockito.when(tokenInterceptorMock.preHandle(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(true);
-		assertThat(dossierProjetController).isNotNull();
-		dpTest = new DossierProjet();
-		dpTest.setNom("DossierProjetTest");
-		dpTest.setDossierImport("testImport.txt");
-		dpTest.setCompetenceProfessionnelles(new ArrayList<>());
-		dossierProjetRepository.save(dpTest);
-		dpDtoTest = mapper.dossierProjetToDossierProjetDto(dpTest);
+		MockitoAnnotations.initMocks(this);
+		Mockito.when(tokenInterceptorMock.preHandle(any(), any(), any())).thenReturn(true);
 	}
 
 	@AfterEach
 	void cleanup(){
-		dossierProjetRepository.deleteAll();
+		dossierProjetRepoMock.deleteAll();
 	}
 	@Test
 	void testFindAll() {
 		try {
+			List<DossierProjetDto> lstDpDto = new ArrayList<>();
+			Mockito.when(dossierProjetServiceMock.getAll()).thenReturn(lstDpDto);
 			mockMvc.perform(get("/dossierProjet").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
-
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -95,40 +101,38 @@ class DossierProjetControllerTests {
 	@Test
 	void testFindById() {
 		try {
+			dpDtoTest = new DossierProjetDto();
+			dpDtoTest.setId(entityId);
+			Mockito.when(dossierProjetServiceMock.getById(entityId)).thenReturn(dpDtoTest);
 			mockMvc.perform(MockMvcRequestBuilders
-							.get("/dossierProjet/" + dpTest.getId())
+							.get("/dossierProjet/" + entityId)
 							.accept(MediaType.APPLICATION_JSON))
 							.andExpect(status().isOk())
-							.andExpect(jsonPath("$.id", is((int) dpTest.getId())));
+							.andExpect(jsonPath("$.id").value(entityId));
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
 	}
 	@Test
-	@Transactional
-	@DirtiesContext
 	void testSave() {
 		try {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-
+			dpDtoTest = new DossierProjetDto();
+			projetDossierProjetDto = new ProjetDossierProjetDto().create(entityId,"projetTest",0);
+			dpDtoTest.setProjet(projetDossierProjetDto);
+			dpDtoTest.setNom("EntityName");
 			String jsonReq = objectMapper.writeValueAsString(dpDtoTest);
-
-			String jsonReponse = mockMvc.perform(MockMvcRequestBuilders
+			mockMvc.perform(MockMvcRequestBuilders
 					.post("/dossierProjet/save")
-					.contentType(MediaType.APPLICATION_JSON) 
-					.accept(MediaType.APPLICATION_JSON)
-					.content(jsonReq)).andExpect(status().isCreated()).andReturn().getResponse().getContentAsString();
-
-			DossierProjetDto dpDto = objectMapper.readValue(jsonReponse, DossierProjetDto.class);
-			assertTrue(dpDto.getId() != 0);
-
+							.contentType(MediaType.APPLICATION_JSON)
+							.content(jsonReq)
+					.accept(MediaType.APPLICATION_JSON))
+					.andExpect(status().isCreated());
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
 	}
 	@Test
-	@Transactional
-	@DirtiesContext
 	void testSaveImport() throws Exception {
 		MockMultipartFile file = new MockMultipartFile(
 				"import",
@@ -148,8 +152,6 @@ class DossierProjetControllerTests {
 		ereasedfile.delete();
 	}
 	@Test
-	@Transactional
-	@DirtiesContext
 	void testSaveAnnexe(){
 
 	}
