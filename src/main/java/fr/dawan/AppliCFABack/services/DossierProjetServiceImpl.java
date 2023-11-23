@@ -300,7 +300,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 * @param String nom du fichier
 	 * @return dpDto Dto du Dossier Projet
 	 */
-	public DossierProjetDto deleteFile(String file, long id) {
+	public void deleteFile(String file, long id) {
 
 	   DossierProjet dp = dossierProRepo.getByDossierProjetId(id);
 		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dp.getEtudiant().getId())
@@ -320,11 +320,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	      if(importDp != null){
 	         dp.setDossierImport(null);
 	      }
-
-	      DossierProjetDto dpDto = mapper.dossierProjetToDossierProjetDto(dossierProRepo.save(dp));
-	      return dpDto;
 	   }
-	   return null;
 	}
 
 	public DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException {

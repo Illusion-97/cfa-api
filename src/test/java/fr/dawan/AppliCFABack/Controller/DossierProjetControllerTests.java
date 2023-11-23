@@ -6,7 +6,6 @@ import fr.dawan.AppliCFABack.controllers.DossierProjetController;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
-import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
@@ -30,15 +29,13 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -66,20 +63,30 @@ class DossierProjetControllerTests {
 	@MockBean
 	private EmailService emailService;
 	@Mock
-	private DtoMapper mapper;
-	@Mock
 	private ObjectMapper objectMapper;
 	@Value("${app.storagefolder}")
 	private String storageFolder;
-	private DossierProjet dpTest;
+	private String fileName = "importTest.txt";
+	private MockMultipartFile mockMultipartFile;
+	private List<MultipartFile> mockMultipartFileList;
 	private DossierProjetDto dpDtoTest;
 	private ProjetDossierProjetDto projetDossierProjetDto;
-	private Projet projet;
 	private long entityId = 1;
-	@BeforeAll
+	@BeforeEach
 	void init() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		Mockito.when(tokenInterceptorMock.preHandle(any(), any(), any())).thenReturn(true);
+		objectMapper = new ObjectMapper();
+		dpDtoTest = new DossierProjetDto();
+		dpDtoTest.setId(entityId);
+		dpDtoTest.setDossierImport(fileName);
+		projetDossierProjetDto = new ProjetDossierProjetDto().create(entityId,"projetTest",0);
+		dpDtoTest.setProjet(projetDossierProjetDto);
+		dpDtoTest.setNom("EntityName");
+		mockMultipartFileList = new ArrayList<>();
+		mockMultipartFile = new MockMultipartFile("import", fileName, "text/plain", "test".getBytes());
+		mockMultipartFileList.add(mockMultipartFile);
+
 	}
 
 	@AfterEach
@@ -101,8 +108,6 @@ class DossierProjetControllerTests {
 	@Test
 	void testFindById() {
 		try {
-			dpDtoTest = new DossierProjetDto();
-			dpDtoTest.setId(entityId);
 			Mockito.when(dossierProjetServiceMock.getById(entityId)).thenReturn(dpDtoTest);
 			mockMvc.perform(MockMvcRequestBuilders
 							.get("/dossierProjet/" + entityId)
@@ -117,10 +122,6 @@ class DossierProjetControllerTests {
 	void testSave() {
 		try {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-			dpDtoTest = new DossierProjetDto();
-			projetDossierProjetDto = new ProjetDossierProjetDto().create(entityId,"projetTest",0);
-			dpDtoTest.setProjet(projetDossierProjetDto);
-			dpDtoTest.setNom("EntityName");
 			String jsonReq = objectMapper.writeValueAsString(dpDtoTest);
 			mockMvc.perform(MockMvcRequestBuilders
 					.post("/dossierProjet/save")
@@ -133,62 +134,83 @@ class DossierProjetControllerTests {
 		}
 	}
 	@Test
-	void testSaveImport() throws Exception {
-		MockMultipartFile file = new MockMultipartFile(
-				"import",
-				dpDtoTest.getDossierImport(),
-				"text/plain",
-				"test".getBytes());
-
-		mockMvc.perform(MockMvcRequestBuilders
-				.multipart("/dossierProjet/save-import/"+ dpDtoTest.getId())
-				.file(file)
-				.param("id", String.valueOf(dpDtoTest.getId()))
-				.contentType(MediaType.MULTIPART_FORM_DATA))
-				.andExpect(status().isCreated())
-				.andReturn();
-		File ereasedfile = new File(storageFolder+"/DossierProjet/"+
-				dpDtoTest.getNom() + "_" + dpDtoTest.getDossierImport());
-		ereasedfile.delete();
-	}
-	@Test
-	void testSaveAnnexe(){
-
-	}
-//	@Test
-//	void testUpdate() {
-//
-//		try {
-//			DossierProjetEtudiantDto dpDto = dossierProjetController.getById(idDossierProjet+1);
-//			dpDto.setNom("nom DossierProjet update");
-//
-//			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-//			String jsonReq = objectMapper.writeValueAsString(dpDto);
-//
-//			String jsonReponse = mockMvc.perform(put("/dossierProjet") 
-//					.contentType(MediaType.APPLICATION_JSON) 
-//					.accept(MediaType.APPLICATION_JSON) 
-//					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-//
-//			DossierProjetDto res = objectMapper.readValue(jsonReponse, DossierProjetDto.class);
-//			assertEquals(res.getId(), dpDto.getId());
-//			assertEquals(res.getNom(), dpDto.getNom());
-//		} catch (Exception e) {
-//			fail(e.getMessage());
-//		}
-//
-//	}
-	
-	@Test
-	void testDeleteFile() {
+	void testUpdate(){
 		try {
-			String rep = mockMvc.perform(delete("/dossierProjet/"+ dpTest.getId())
-					.accept(MediaType.TEXT_PLAIN))
-					.andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
-			assertEquals("suppression effectuée", rep);
-
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			String jsonReq = objectMapper.writeValueAsString(dpDtoTest);
+			mockMvc.perform(MockMvcRequestBuilders
+							.put("/dossierProjet/update")
+							.contentType(MediaType.APPLICATION_JSON)
+							.content(jsonReq)
+							.accept(MediaType.APPLICATION_JSON))
+					.andExpect(status().isOk());
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
 	}
+	@Test
+	void testSaveImport() throws Exception {
+		Mockito.when(dossierProjetServiceMock.importDossierProjet(mockMultipartFile,entityId)).thenReturn(dpDtoTest);
+		mockMvc.perform(MockMvcRequestBuilders
+				.multipart("/dossierProjet/save-import/"+ entityId)
+				.file(mockMultipartFile)
+				.param("id", String.valueOf(entityId))
+				.contentType(MediaType.MULTIPART_FORM_DATA))
+				.andExpect(status().isCreated())
+				.andReturn();
+	}
+	@Test
+	void testSaveAnnexe(){
+		try {
+			Mockito.when(dossierProjetServiceMock.saveAnnexesDossierProjet(mockMultipartFileList,entityId)).thenReturn(dpDtoTest);
+			mockMvc.perform(MockMvcRequestBuilders
+							.multipart("/dossierProjet/save-annexe/"+ entityId)
+							.file(mockMultipartFile)
+							.param("id", String.valueOf(entityId))
+							.contentType(MediaType.MULTIPART_FORM_DATA))
+					.andExpect(status().isCreated())
+					.andReturn();
+		}catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+	@Test
+	void testUpdateAnnece(){
+		try {
+			Mockito.when(dossierProjetServiceMock.saveAnnexesDossierProjet(mockMultipartFileList,entityId)).thenReturn(dpDtoTest);
+			mockMvc.perform(MockMvcRequestBuilders
+							.put("/dossierProjet/update-annexe/"+ entityId)
+							.param("pieceJointe","meow")
+							.param("id", String.valueOf(entityId))
+							.contentType(MediaType.MULTIPART_FORM_DATA))
+					.andExpect(status().isOk())
+					.andReturn();
+		}catch (Exception e) {
+			fail(e.getMessage());
+		}
+
+	}
+	@Test
+	void testDeleteFile() {
+		try {
+			Mockito.doNothing().when(dossierProjetServiceMock).deleteFile(fileName, entityId);
+			mockMvc.perform(delete("/dossierProjet/"+ entityId)
+							.param("file",fileName))
+					.andExpect(status().isNoContent());
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+	/*@Test
+	void testGenerate(){
+		try {
+			String outputPdf = storageFolder;
+			Mockito.when(dossierProjetServiceMock.genererDossierProjet(entityId)).thenReturn(outputPdf);
+			mockMvc.perform(MockMvcRequestBuilders
+							.get("/dossierProjet/generer/"+ entityId))
+					.andExpect(status().isOk());
+		}catch(Exception e){
+			fail(e.getMessage());
+		}
+	}*/
 }
