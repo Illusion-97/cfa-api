@@ -30,7 +30,7 @@ public interface DossierProjetService {
 	DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException;
 	DossierProjetDto importDossierProjet(MultipartFile files, Long id) throws IOException;
 	DossierProjetDto saveAnnexesDossierProjet(List<MultipartFile> files, Long id) throws IOException;
-	DossierProjetDto deleteFile(String file, long id);
+	void deleteFile(String file, long id);
 
 	//void emailTuteur(DossierProjetDto dpDto) throws IOException, TemplateException, DossierProjetException;
 
