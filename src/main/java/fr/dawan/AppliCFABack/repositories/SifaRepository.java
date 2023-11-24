@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SifaRepository extends JpaRepository<Sifa, Long> {
-    String getByName(String name);
+//    String getByName(String name);
 }
