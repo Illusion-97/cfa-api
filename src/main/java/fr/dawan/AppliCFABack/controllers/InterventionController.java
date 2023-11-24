@@ -163,14 +163,14 @@ public class InterventionController {
 		String[] splitUser = userDG2.split(":");
 		
 		try {
-			int nb = 0;
+			//int nb = 0;
 			if (idPromotion.isPresent()) {
-				 nb = interventionService.fetchDGInterventions(splitUser[0], splitUser[1],idPromotion.get());
+				interventionService.fetchDGInterventions(splitUser[0], splitUser[1],idPromotion.get());
 			}
 			else {
-				nb = interventionService.fetchDGInterventions(splitUser[0], splitUser[1]);
+				interventionService.fetchDGInterventions(splitUser[0], splitUser[1]);
 			}
-			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Interventions updated :" + nb);
+			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Interventions updated");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
