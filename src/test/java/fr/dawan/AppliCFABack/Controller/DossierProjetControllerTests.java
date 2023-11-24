@@ -5,22 +5,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.dawan.AppliCFABack.controllers.DossierProjetController;
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprojet.ProjetDossierProjetDto;
-import fr.dawan.AppliCFABack.entities.DossierProjet;
-import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.services.DossierProjetService;
 import fr.dawan.AppliCFABack.services.EmailService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FilesService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -31,14 +30,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -64,8 +62,6 @@ class DossierProjetControllerTests {
 	private EmailService emailService;
 	@Mock
 	private ObjectMapper objectMapper;
-	@Value("${app.storagefolder}")
-	private String storageFolder;
 	private String fileName = "importTest.txt";
 	private MockMultipartFile mockMultipartFile;
 	private List<MultipartFile> mockMultipartFileList;
@@ -97,7 +93,6 @@ class DossierProjetControllerTests {
 	void testFindAll() {
 		try {
 			List<DossierProjetDto> lstDpDto = new ArrayList<>();
-			Mockito.when(dossierProjetServiceMock.getAll()).thenReturn(lstDpDto);
 			mockMvc.perform(get("/dossierProjet").accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 		} catch (Exception e) {
@@ -150,7 +145,6 @@ class DossierProjetControllerTests {
 	}
 	@Test
 	void testSaveImport() throws Exception {
-		Mockito.when(dossierProjetServiceMock.importDossierProjet(mockMultipartFile,entityId)).thenReturn(dpDtoTest);
 		mockMvc.perform(MockMvcRequestBuilders
 				.multipart("/dossierProjet/save-import/"+ entityId)
 				.file(mockMultipartFile)
@@ -162,7 +156,6 @@ class DossierProjetControllerTests {
 	@Test
 	void testSaveAnnexe(){
 		try {
-			Mockito.when(dossierProjetServiceMock.saveAnnexesDossierProjet(mockMultipartFileList,entityId)).thenReturn(dpDtoTest);
 			mockMvc.perform(MockMvcRequestBuilders
 							.multipart("/dossierProjet/save-annexe/"+ entityId)
 							.file(mockMultipartFile)
@@ -177,7 +170,6 @@ class DossierProjetControllerTests {
 	@Test
 	void testUpdateAnnece(){
 		try {
-			Mockito.when(dossierProjetServiceMock.saveAnnexesDossierProjet(mockMultipartFileList,entityId)).thenReturn(dpDtoTest);
 			mockMvc.perform(MockMvcRequestBuilders
 							.put("/dossierProjet/update-annexe/"+ entityId)
 							.param("pieceJointe","meow")
@@ -193,7 +185,6 @@ class DossierProjetControllerTests {
 	@Test
 	void testDeleteFile() {
 		try {
-			Mockito.doNothing().when(dossierProjetServiceMock).deleteFile(fileName, entityId);
 			mockMvc.perform(delete("/dossierProjet/"+ entityId)
 							.param("file",fileName))
 					.andExpect(status().isNoContent());

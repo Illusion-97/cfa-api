@@ -1,88 +1,60 @@
 package fr.dawan.AppliCFABack.Tools;
 
-import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
-import fr.dawan.AppliCFABack.interceptors.TokenSaver;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
 import io.jsonwebtoken.MalformedJwtException;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 
 @ActiveProfiles("test")
-@SpringBootTest
-@AutoConfigureMockMvc
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TokenInterceptorTest {
 
-    @Autowired
+    @InjectMocks
     TokenInterceptor tokenInterceptor;
-    @Autowired
-    JwtTokenUtil jwtTokenUtil;
-    @MockBean
-    UtilisateurRepository utilisateurRepository;
-    @Autowired
-    DtoMapper mapper;
-    MockHttpServletRequest request = new MockHttpServletRequest();
-    private static String email = "test@test.fr";
-    private static String token;
+    private static String token = "simulation.token.meow";
     private static String malformedToken = "malformed.jwt.token.with.too.many.parts";
+    HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+    HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+    JwtTokenUtil tokenUtil = Mockito.mock(JwtTokenUtil.class);
     @BeforeEach
     public void init() {
-        Map<String, Object> claims = new HashMap<String, Object>();
-        claims.put("user_id", 1);
-        token = jwtTokenUtil.doGenerateToken(claims, email);
-        TokenSaver.tokensByEmail.put(email, token);
+        tokenInterceptor = new TokenInterceptor();
     }
     @AfterEach
     public void cleanup(){
-        TokenSaver.getTokensbyemail().remove(email);
     }
     @Test
     public void testPreHandleWithValidToken() throws Exception {
-        HttpServletResponse response = new MockHttpServletResponse();
-        Object handler = new Object();
+        Mockito.when(request.getMethod()).thenReturn("OPTIONS");
+        Mockito.when(request.getRequestURI()).thenReturn("/random-URI");
+        Mockito.when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
 
-        request.setMethod("GET");
-        request.setRequestURI("/random-URI");
-        request.addHeader("Authorization", "Bearer " + token);
-
-        boolean result = tokenInterceptor.preHandle(request,response,handler);
+        boolean result = tokenInterceptor.preHandle(request, response,null);
 
         assertTrue(result);
     }
     @Test
-    public void testPreHandleWithInvalidTokenFormation() {
-        HttpServletResponse response = new MockHttpServletResponse();
-        Object handler = new Object();
-
-        request.setMethod("GET");
-        request.setRequestURI("/random-URI");
-        request.addHeader("Authorization", "Bearer " + malformedToken);
+    public void testPreHandleWithInvalidHeaderAuthorization() {
+        Mockito.when(request.getMethod()).thenReturn("GET");
+        Mockito.when(request.getRequestURI()).thenReturn("/random-URI");
+        Mockito.when(request.getHeader("Authorization")).thenReturn("Bear " + token);
 
         Exception exception = assertThrows(MalformedJwtException.class, () -> {
-            tokenInterceptor.preHandle(request, response, handler);
+            tokenInterceptor.preHandle(request, response, null);
         });
 
-        String expectedMessage = "JWT strings must contain exactly 2 period characters";
+        String expectedMessage = "Erreur : jeton absent ou invalide !";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));

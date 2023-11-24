@@ -1,18 +1,17 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import javax.transaction.Transactional;
-
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.interceptors.TokenSaver;
+import fr.dawan.AppliCFABack.repositories.*;
+import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
+import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
+import fr.dawan.AppliCFABack.tools.TimerCache;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -25,22 +24,17 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-import fr.dawan.AppliCFABack.interceptors.TokenSaver;
-import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
-import fr.dawan.AppliCFABack.repositories.CongeRepository;
-import fr.dawan.AppliCFABack.repositories.FormateurRepository;
-import fr.dawan.AppliCFABack.repositories.InterventionRepository;
-import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
-import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
-import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
-import fr.dawan.AppliCFABack.tools.TimerCache;
-import fr.dawan.AppliCFABack.tools.ToPdf;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 @Transactional

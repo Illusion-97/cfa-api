@@ -1,36 +1,9 @@
 package fr.dawan.AppliCFABack.services;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.dto.FormationDG2Dto;
-import fr.dawan.AppliCFABack.dto.FormationDto;
-import fr.dawan.AppliCFABack.dto.InterventionDto;
+import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Formation;
 import fr.dawan.AppliCFABack.entities.Intervention;
@@ -40,6 +13,22 @@ import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.FormationRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import javax.transaction.Transactional;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional

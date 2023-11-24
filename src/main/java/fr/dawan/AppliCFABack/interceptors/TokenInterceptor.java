@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.interceptors;
 
 import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -21,8 +22,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
-		if (!request.getMethod().equals("OPTIONS"))
+		if (!request.getMethod().equals("OPTIONS")) {
 			if (!request.getRequestURI().equals("/authenticate")
 					&& !request.getRequestURI().equals("/")
 					&& !request.getRequestURI().equals("/error")
@@ -33,24 +33,28 @@ public class TokenInterceptor implements HandlerInterceptor {
 				logger.info(">>>>>> inside Token Interceptor...");
 				logger.info("URI =" + request.getRequestURI());
 				logger.info("Header (authorization) :" + request.getHeader("Authorization"));
-				if (headerAuth == null || headerAuth.trim().equals("") || headerAuth.length() < 7) {
-					throw new TokenException("Erreur : jeton absent ou invalide !");
+
+				if (headerAuth == null || headerAuth.trim().isEmpty() || !headerAuth.startsWith("Bearer ")) {
+					throw new MalformedJwtException("Erreur : jeton absent ou invalide !");
 				}
 
 				String token = headerAuth.substring(7);
-				// validation le token et extraire les infos
-				if (jwtTokenUtil.isTokenExpired(token))
-					throw new TokenException("Erreur : jeton expiré !");
+				try {
+					// validation du token
+					jwtTokenUtil.isTokenExpired(token);
+					String email = jwtTokenUtil.getUsernameFromToken(token);
+					if (!TokenSaver.tokensByEmail.containsKey(email) || !TokenSaver.tokensByEmail.get(email).equals(token)) {
+						throw new MalformedJwtException("Erreur : jeton non reconnu !");
+					}
 
-				String email = jwtTokenUtil.getUsernameFromToken(token);
-				if (!TokenSaver.tokensByEmail.containsKey(email) || !TokenSaver.tokensByEmail.get(email).equals(token))
-					throw new TokenException("Erreur : jeton non reconnu !");
+					// TODO: Autres extractions du jeton ou autres traitements
 
-				// TODO autres extractions du jeton ou autres traitements
-
+				} catch (MalformedJwtException e) {
+					throw new MalformedJwtException("Erreur : jeton malformé !");
+				}
 			}
+		}
 		return true;
 	}
-
 }
 

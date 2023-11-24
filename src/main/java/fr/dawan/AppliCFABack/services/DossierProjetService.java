@@ -2,10 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
-import freemarker.core.ParseException;
-import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

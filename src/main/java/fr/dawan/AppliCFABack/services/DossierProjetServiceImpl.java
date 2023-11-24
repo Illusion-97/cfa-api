@@ -4,7 +4,6 @@ import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Tuteur;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.DossierProjetRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;

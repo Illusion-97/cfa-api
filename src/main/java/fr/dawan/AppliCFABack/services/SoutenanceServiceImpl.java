@@ -6,7 +6,6 @@ import fr.dawan.AppliCFABack.dto.customdtos.PromotionSoutenanceDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.SoutenanceRepository;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
