@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 
 @ActiveProfiles("test")
 public class TokenInterceptorTest {
