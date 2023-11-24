@@ -31,7 +31,7 @@ public interface InterventionService {
 
 	List<Intervention> getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
 			throws FetchDG2Exception, URISyntaxException, Exception;
-	int fetchDGInterventions(String email, String password) throws FetchDG2Exception, URISyntaxException, Exception;
+	void fetchDGInterventions(String email, String password) throws FetchDG2Exception, URISyntaxException, Exception;
 
 	int fetchDGInterventions(String email, String password, long idPrmotionDg2) throws FetchDG2Exception, URISyntaxException, Exception;
 	

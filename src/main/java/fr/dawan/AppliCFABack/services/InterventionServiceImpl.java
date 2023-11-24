@@ -375,19 +375,21 @@ public class InterventionServiceImpl implements InterventionService {
 	 * @throws Exception
 	 */
 
+	@Async("myTaskExecutor")
 	@Override
-	public int fetchDGInterventions(String email, String password) throws Exception {
+	public void fetchDGInterventions(String email, String password) throws Exception {
 		List<Promotion> promoLst = new ArrayList<>();
 		promoLst = promoRepository.findAll();
-		int result = 0;
+		//int result = 0;
 		for (Promotion p : promoLst) {
-			result += fetchDGInterventions(email, password, p.getIdDg2());
+			 fetchDGInterventions(email, password, p.getIdDg2());
 
 		}
 
-		return result;
+		//return result;
 	}
 
+	@Async("myTaskExecutor")
 	@Override
 	public int fetchDGInterventions(String email, String password, long idPrmotionDg2) throws Exception {
 		List<Intervention> interventions = new ArrayList<>();
