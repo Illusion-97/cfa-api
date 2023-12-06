@@ -29,6 +29,17 @@ public abstract class BaseEntityDto {
 		return id;
 	}
 
+	public BaseEntityDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public BaseEntityDto(long id, int version) {
+		super();
+		this.id = id;
+		this.version = version;
+	}
+
 	/**
 	 * @param id the id to set
 	 */

@@ -512,7 +512,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return result;
 	}	
-	
+	;
+	/**
+	 * Sauvegarde d'un Tuteur
+	 * 
+	 * @param uDto objet utilisateur
+	 * @return result objet utilisateur (nouveau)
+	 * @throws SaveInvalidException
+	 * 
+	 */
 	@Override
 	public UtilisateurDto insertTuteur(UtilisateurDto uDto) throws SaveInvalidException {
 		
@@ -605,6 +613,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return userDto;
 	}
 
+	/**
+	 *  Mise à jour d'un Tuteur
+	 * 
+	 * @param uDto objet utilisateur
+	 * @return result objet utilisateur (modifier)
+	 * @throws SaveInvalidException
+	 * 
+	 */
 	
 	@Override
 	public UtilisateurDto updateTuteur(UtilisateurDto uDto) throws SaveInvalidException {

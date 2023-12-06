@@ -107,7 +107,7 @@ class DevoirControllerTest {
 	void testUpdate() {
 
 		try {
-			DevoirDto eDto = devoirController.findById(idDevoir +1);
+			DevoirDto eDto = devoirController.getById(idDevoir +1);
 			eDto.setConsigne("enonce update");
 			eDto.setDateDebut(LocalDate.now());
 			eDto.setDateFin(LocalDate.now());

@@ -31,7 +31,7 @@ public abstract class GenericController<TDto extends BaseEntityDto> {
 	 * @return getById service
 	 */
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public TDto findById(@PathVariable("id") long id) {
+	public TDto getById(@PathVariable("id") long id) {
 		return service.getById(id);
 	}
 

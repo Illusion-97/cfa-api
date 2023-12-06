@@ -14,6 +14,12 @@ public class TuteurDto extends BaseEntityDto implements Serializable{
 	}
 
 
+	public TuteurDto(UtilisateurDto utilisateurDto) {
+		super();
+		this.utilisateurDto = utilisateurDto;
+	}
+
+
 	public UtilisateurDto getUtilisateurDto() {
 		return utilisateurDto;
 	}

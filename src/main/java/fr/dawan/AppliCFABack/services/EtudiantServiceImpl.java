@@ -136,7 +136,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 			etuDto.setUtilisateurDto(utilisateur);
 
-			AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
+			if (e != null && e.getUtilisateur() != null && e.getUtilisateur().getAdresse() != null) {
+			    AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
+			
 //			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
 
 			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
@@ -189,7 +191,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 			res.add(etuDto);
 		}
-
+		}
 		return res;
 	}
 

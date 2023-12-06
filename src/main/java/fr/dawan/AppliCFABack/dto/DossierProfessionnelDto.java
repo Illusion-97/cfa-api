@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.dto;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 
@@ -27,14 +28,30 @@ public class DossierProfessionnelDto extends BaseEntityDto implements Serializab
 	private List<FacultatifDto> facultatifDto;
 	
 	private String fileImport;
+		
+
+
+	public DossierProfessionnelDto(long id,String nom, int version, CursusDto cursusDto,
+			List<ExperienceProfessionnelleDto> experienceProfessionnelleDtos, EtudiantDto etudiantDto,
+			List<AnnexeDto> annexeDtos, List<FacultatifDto> facultatifDto, String fileImport) {
+		super();
+		this.id = id;
+		this.version = version;
+		this.nom = nom;
+		this.cursusDto = cursusDto;
+		this.experienceProfessionnelleDtos = experienceProfessionnelleDtos;
+		this.etudiantDto = etudiantDto;
+		this.annexeDtos = annexeDtos;
+		this.facultatifDto = facultatifDto;
+		this.fileImport = fileImport;
+	}
 
 	public DossierProfessionnelDto() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public DossierProfessionnelDto(String nom) {
-		this.nom = nom;
-	}
+	
 
 	/**
 	 * @return the nom
@@ -104,5 +121,18 @@ public class DossierProfessionnelDto extends BaseEntityDto implements Serializab
 		this.fileImport = fileImport;
 	}
 	
-	
+	@Override
+	public boolean equals(Object o) {
+	    if (this == o) return true;
+	    if (o == null || getClass() != o.getClass()) return false;
+	    DossierProfessionnelDto that = (DossierProfessionnelDto) o;
+	    return Objects.equals(id, that.id) &&
+	           Objects.equals(nom, that.nom) &&
+	           Objects.equals(version, that.version);
+	}
+
+	@Override
+	public int hashCode() {
+	    return Objects.hash(id, nom, version);
+	}
 }

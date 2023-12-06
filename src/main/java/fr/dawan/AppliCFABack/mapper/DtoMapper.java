@@ -60,7 +60,6 @@ public interface DtoMapper {
     @Mapping(source = ".", target = ".")
     ExamenDto examenToExamenDto(Examen examen);
 
-    @Mapping(source = ".", target = ".")
     @Mapping(source = "utilisateur", target = "utilisateurDto")
     FormateurDto formateurToFormateurDto(Formateur formateur);
 
@@ -68,6 +67,7 @@ public interface DtoMapper {
     FormationDto formationToFormationDto(Formation formation);
 
     @Mapping(source = ".", target = ".")
+    @Mapping(source = "utilisateur", target = "utilisateurDto")
     TuteurDto tuteurTotuteurDto(Tuteur tuteur);
 
     @Mapping(source = "etudiants", target = "etudiantsDto")

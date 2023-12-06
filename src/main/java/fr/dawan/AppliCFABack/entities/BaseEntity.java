@@ -20,6 +20,17 @@ public abstract class BaseEntity implements Serializable {
 	@Version
 	protected int version;
 
+	public BaseEntity() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public BaseEntity(long id, int version) {
+		super();
+		this.id = id;
+		this.version = version;
+	}
+
 	/**
 	 * @return l'id
 	 */

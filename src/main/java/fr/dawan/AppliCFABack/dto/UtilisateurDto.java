@@ -292,4 +292,36 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 				+ etudiantDto + ", formateurDto=" + formateurDto + ", cefDto=" + cefDto + '}';
 	}
 
+	public UtilisateurDto(String login, String password, String prenom, String nom, String civilite,
+			LocalDate dateDeNaissance, String telephone, String telephoneFixe, AdresseDto adresseDto,
+			Entreprise entrepriseDto, List<UtilisateurRoleDto> rolesDto, EtudiantDto etudiantDto,
+			FormateurDto formateurDto, TuteurDto tuteurDto, CEFDto cefDto, long idDg2, long centreFormationId,
+			boolean externalAccount, boolean active) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.prenom = prenom;
+		this.nom = nom;
+		this.civilite = civilite;
+		this.dateDeNaissance = dateDeNaissance;
+		this.telephone = telephone;
+		this.telephoneFixe = telephoneFixe;
+		this.adresseDto = adresseDto;
+		this.entrepriseDto = entrepriseDto;
+		this.rolesDto = rolesDto;
+		this.etudiantDto = etudiantDto;
+		this.formateurDto = formateurDto;
+		this.tuteurDto = tuteurDto;
+		this.cefDto = cefDto;
+		this.idDg2 = idDg2;
+		this.centreFormationId = centreFormationId;
+		this.externalAccount = externalAccount;
+		this.active = active;
+	}
+
+	public UtilisateurDto(long id, int version) {
+		super(id, version);
+		// TODO Auto-generated constructor stub
+	}
+
 }

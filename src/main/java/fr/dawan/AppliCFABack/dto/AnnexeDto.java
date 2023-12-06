@@ -21,7 +21,7 @@ public class AnnexeDto extends BaseEntityDto implements Serializable {
 		this.libelleAnnexe = libelleAnnexe;
 	}
 
-   
+
 	public String getPieceJointe() {
 		return pieceJointe;
 	}

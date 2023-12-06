@@ -86,7 +86,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     @Value("${backend.url}")
     private String backendUrl;
     
-    @Value("${app.storagefolder2}")
+    @Value("src/main/resources/pictures/")
     private String storageFolder2;
     
     private static Logger logger = Logger.getGlobal();
@@ -176,16 +176,21 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
         // Mettre à jour les expériences professionnelles
         List<ExperienceProfessionnelle> exps = dp.getExperienceProfessionnelles();
-        for (ExperienceProfessionnelle exp : exps) {
-            exp.setDossierProfessionnel(dp);
+        if (exps != null && !exps.isEmpty()) {
+            for (ExperienceProfessionnelle exp : exps) {
+                exp.setDossierProfessionnel(dp);
+            }
         }
 
         // Mettre à jour les diplômes facultatifs
         List<Facultatif> facultatifs = dp.getFacultatifs();
-        for (Facultatif f : facultatifs) {
-            f.setDossierProfessionnel(dp);
+        if (facultatifs != null && !facultatifs.isEmpty()) {
+            for (Facultatif f : facultatifs) {
+                f.setDossierProfessionnel(dp);
+            }
         }
 
+        // Mettre à jour les annexes
         String path = storageFolder2 + "DossierProfessionnel" + "/";
         List<Annexe> annexes = dp.getAnnexes();
 
@@ -211,6 +216,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
         return DtoTools.convert(dp, DossierProEtudiantDto.class);
     }
+
 
 
     /**
@@ -450,7 +456,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
 		        String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
-		        String outputPdf = storageFolder2 + "DossierProfessionnel" + "/" + dossier.getEtudiant().getUtilisateur().getFullName() + "_DP.pdf";
+		        String outputPdf = storageFolder2 + "DossierProfessionnel" + "/" + dossier.getNom() + "_DP.pdf";
 
 		        try {
 					PdfTools.generatePdfFromHtml(outputPdf, htmlContent);

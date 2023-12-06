@@ -40,8 +40,7 @@ public class DevoirController extends GenericController<DevoirDto> {
 	}
 
 
-	@Override
-	@PutMapping(consumes="application/json", produces="application/json")
+	@Override	@PutMapping(consumes="application/json", produces="application/json")
 	public DevoirDto update(@RequestBody DevoirDto dDto) throws Exception {
 		return service.saveOrUpdate(dDto);
 	}

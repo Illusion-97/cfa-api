@@ -37,7 +37,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/dossierProfessionnel")
 @CrossOrigin(origins = "*")
-public class DossierProfessionnelController {
+public class DossierProfessionnelController extends GenericController<DossierProfessionnelDto>{
+
+	protected DossierProfessionnelController(DossierProfessionnelService service) {
+		super(service);
+	}
 
 	@Autowired
 	DossierProfessionnelService dossierProService;
@@ -60,18 +64,14 @@ public class DossierProfessionnelController {
 	@Autowired
 	private ObjectMapper objMap;
 
-	@Value("${app.storagefolder}")
+	@Value("src/main/resources/pictures/")
 	private String storageFolder2;
 
 	@GetMapping(produces = "application/json")
 	public List<DossierProfessionnelDto> getAll() {
 		return dossierProService.getAll();
 	}
-
-	@GetMapping(value = "/{id}", produces = "application/json")
-	public DossierProfessionnelDto getById(@PathVariable("id") long id) {
-		return dossierProService.getById(id);
-	}
+	
 
 	@GetMapping(value = "/etudiant/{id}", produces = "application/json")
 	public List<DossierProfessionnelDto> getByIdEtudiant(@PathVariable("id") long id) {
@@ -92,28 +92,6 @@ public class DossierProfessionnelController {
 			return dossierProService.getAllByPage(page, size, search.get());
 		else
 			return dossierProService.getAllByPage(page, size, "");
-	}
-
-
-
-	@DeleteMapping(value = "/{idEtudiant}/delete/{id}", produces = "text/plain")
-	public ResponseEntity<?> deleteById(@PathVariable("idEtudiant") long idEtudiant,
-			@PathVariable(value = "id") long id) {
-		try {
-			EtudiantDto eDto = etudiantService.getById(idEtudiant);
-			for (int i = 0; i < eDto.getDossierProfessionnel().size(); i++) {
-				if (eDto.getDossierProfessionnel().get(i).getId() == id) {
-					eDto.getDossierProfessionnel().remove(i);
-
-				}
-			}
-			etudiantService.saveOrUpdate(eDto);
-			dossierProService.deleteById(id);
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body("suppression effectuée");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("suppression non réalisée");
-		}
-
 	}
 
 	
@@ -140,14 +118,14 @@ public class DossierProfessionnelController {
 	}
 
 	@PutMapping(value = "/update/etudiant/{id}", consumes = "multipart/form-data", produces = "application/json")
-	public ResponseEntity<DossierProEtudiantDto> updateDossierProfessionnel(@PathVariable("id") long id, @RequestParam("dossierProfessionnel") String dpDto,
-			@RequestParam("pieceJointe") List<MultipartFile> file) throws TemplateException, DossierProfessionnelException, IOException {
-		 String path = storageFolder2 + "DossierProfessionnel" + "/";
-		 fileService.createDirectory(path);
-		 DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
-		 DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, file);
-		    dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
-		    return ResponseEntity.status(HttpStatus.CREATED).body(dpE);
+	public ResponseEntity<DossierProEtudiantDto> updateDossierProfessionnel(@RequestParam("dossierProfessionnel") String dpDto, @PathVariable("id") long id,
+	        @RequestParam("pieceJointe") List<MultipartFile> files) throws TemplateException, DossierProfessionnelException, IOException  {
+	    String path = storageFolder2 + "DossierProfessionnel" + "/";
+	    fileService.createDirectory(path);
+	    DossierProEtudiantDto dpEtDto = objMap.readValue(dpDto, DossierProEtudiantDto.class);
+	    DossierProEtudiantDto dpE = dossierProService.saveOrUpdateDossierProfessionnel(dpEtDto, id, files);
+	    dossierProService.emailTuteurDossierProfessionnelle(dpEtDto, id);
+	    return ResponseEntity.status(HttpStatus.CREATED).body(dpE);
 	}
 
 	
@@ -159,7 +137,7 @@ public class DossierProfessionnelController {
 	    Path path = Paths.get(f.getAbsolutePath());
 	    ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dossierEtudiant" + dossierId + "dp" + ".pdf");
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=dossierEtudiant" + dossierId + "dp" + ".pdf");
 	    headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
 	    headers.add("Pragma", "no-cache");
 	    headers.add("Expires", "0");

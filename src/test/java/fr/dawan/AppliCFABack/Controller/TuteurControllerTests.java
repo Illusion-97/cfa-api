@@ -39,7 +39,7 @@ class TuteurControllerTests {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private long idTuteur;
+	private long idTuteur = 1;
 	
 	@BeforeAll
 	void init() {
@@ -49,8 +49,7 @@ class TuteurControllerTests {
 	
 	@AfterAll
 	void clean(){
-//		testDelete();
-//		deleteDatabase();
+
 	}
 
 	@Test
@@ -69,8 +68,8 @@ class TuteurControllerTests {
 		try {
 			mockMvc.perform(get("/tuteur/" + idTuteur).accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
-					.andExpect(jsonPath("$.nom", is("tuteur 1")))
-					.andExpect(jsonPath("$.prenom", is("tuteur 1")));
+					.andExpect(jsonPath("$.utilisateurDto.nom", is("tuteur")))
+					.andExpect(jsonPath("$.utilisateurDto.prenom", is("TOTO")));
 
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -111,7 +110,7 @@ class TuteurControllerTests {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			String jsonReq = objectMapper.writeValueAsString(tDto);
 
-			String jsonReponse = mockMvc.perform(put("/formateurs") 
+			String jsonReponse = mockMvc.perform(put("/tuteur") 
 					.contentType(MediaType.APPLICATION_JSON) 
 					.accept(MediaType.APPLICATION_JSON) 
 					.content(jsonReq)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();

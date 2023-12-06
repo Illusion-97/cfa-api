@@ -16,15 +16,11 @@ import java.util.Optional;
 public interface TuteurRepository extends JpaRepository<Tuteur , Long>{
 	
 	long countByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(String prenom, String nom);
-	
-	//long countTuteursTitreContainingAllIgnoreCase( String search);
 
 	// liste des Tuteurs + recherche par mot clé
 	Page<Tuteur> findAllByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(String prenom, String nom, Pageable p);
 
 	Optional<Tuteur> findByUtilisateurId(long id);
-
-	//Page<Etudiant> findAllByEtudiantsId(long id, PageRequest p);
 	
 	@Query("SELECT e FROM Etudiant e JOIN e.tuteur tuteur WHERE tuteur.id=:id ")
 	List<Etudiant> findAllByTuteurId(@Param("id")long id );

@@ -29,6 +29,23 @@ public class DossierProfessionnel extends BaseEntity implements Serializable {
 	@Column(name = "fileImport", nullable = true)
 	private String fileImport;
 
+
+	public DossierProfessionnel() {
+		super();
+	}
+
+	public DossierProfessionnel(String nom, Cursus cursus, List<ExperienceProfessionnelle> experienceProfessionnelles,
+			Etudiant etudiant, List<Annexe> annexes, List<Facultatif> facultatifs, String fileImport) {
+		super();
+		this.nom = nom;
+		this.cursus = cursus;
+		this.experienceProfessionnelles = experienceProfessionnelles;
+		this.etudiant = etudiant;
+		this.annexes = annexes;
+		this.facultatifs = facultatifs;
+		this.fileImport = fileImport;
+	}
+
 	public String getNom() {
 		return nom;
 	}

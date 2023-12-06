@@ -27,7 +27,6 @@ public class Annexe extends BaseEntity implements Serializable {
 		this.libelleAnnexe = libelleAnnexe;
 	}
 
-
 	public String getPieceJointe() {
 		return pieceJointe;
 	}

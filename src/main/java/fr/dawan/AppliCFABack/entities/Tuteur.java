@@ -46,4 +46,9 @@ public class Tuteur extends BaseEntity implements Serializable{
 		this.utilisateur = utilisateur;
 	}
 
+	public Tuteur(long id, int version) {
+		super(id, version);
+		// TODO Auto-generated constructor stub
+	}
+
 }
