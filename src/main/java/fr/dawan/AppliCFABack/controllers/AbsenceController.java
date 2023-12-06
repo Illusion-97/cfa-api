@@ -56,7 +56,7 @@ public class AbsenceController extends GenericController<AbsenceDto> {
 	@Autowired
 	FilesService filesService;
 	
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 	
 	/**
 	 * 
@@ -119,7 +119,7 @@ public class AbsenceController extends GenericController<AbsenceDto> {
 		
 		AbsenceDto absDto = objectMapper.readValue(absStr, AbsenceDto.class);
 		
-		return ((AbsenceService) service).saveOrUpdate(absDto);
+		return service.saveOrUpdate(absDto);
 	}
 
 	
@@ -136,7 +136,7 @@ public class AbsenceController extends GenericController<AbsenceDto> {
 				
 		AbsenceDto absDto = objectMapper.readValue(absStr, AbsenceDto.class);
 		absDto.setJustificatif(pathJustificatif);		
-		return ((AbsenceService) service).saveOrUpdate(absDto);
+		return service.saveOrUpdate(absDto);
 	}
 	
 

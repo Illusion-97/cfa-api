@@ -27,9 +27,9 @@ public class FilesController {
 	@Value("${app.storagefolder}")
 	private String PARENT_DIRECTORY;
 	
-	private String users = "utilisateur";
-	private String promotions = "promotions";
-	private String projets = "projets";
+	private final String users = "utilisateur";
+	private final String promotions = "promotions";
+	private final String projets = "projets";
 	
 
 	@GetMapping(value = "/{directory}", produces = "application/json")

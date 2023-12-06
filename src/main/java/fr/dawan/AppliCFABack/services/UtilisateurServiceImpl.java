@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
 public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired
-	UtilisateurRepository utilisateurRepository;	
+	UtilisateurRepository utilisateurRepository;
 	@Autowired
 	AdresseRepository adresseRepository;
 	@Autowired
@@ -117,18 +117,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Value("${app.ldap.technical.pwd}")
 	private String ldapTechnicalAccPwd;
-	
-	@Value("${base_url_dg2}")
-    private String baseUrl;
-	
-	@Value("${domain.dawan}")
-    private String domainDawan;
 
-    @Value("${domain.jehann}")
-    private String domainJehann;
-    
-    @PersistenceContext
-    private EntityManager entityManager;
+	@Value("${base_url_dg2}")
+	private String baseUrl;
+
+	@Value("${domain.dawan}")
+	private String domainDawan;
+
+	@Value("${domain.jehann}")
+	private String domainJehann;
+
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	public HttpServletRequest getRequest() {
 		return request;
@@ -170,7 +170,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		this.ldapTechnicalAccPwd = ldapTechnicalAccPwd;
 	}
 
-	private static Logger logger = LoggerFactory.getLogger(UtilisateurRoleServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(UtilisateurRoleServiceImpl.class);
 
 	/**
 	 * Récupération de la liste des utilisateurs
@@ -511,6 +511,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		result.setTuteurDto(mapper.tuteurTotuteurDto(user.getTuteur()));
 
 		return result;
+
 	}	
 	;
 	/**
@@ -523,11 +524,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	 */
 	@Override
 	public UtilisateurDto insertTuteur(UtilisateurDto uDto) throws SaveInvalidException {
-		
+
 		if (uDto.getId() == 0 && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
 			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse mail login : " + uDto.getLogin());
 		}
-		
+
 		try {
 			// Si l'utilisateur n'est pas déjà en base, il faut hasher son mdp
 			if (uDto.getId() == 0) {
@@ -549,45 +550,48 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		} catch (Exception e) {
 			logger.error("hashPwd failed", e);
 		}
-		
+
 		Utilisateur user = mapper.utilisateurDtoToUtilisateur(uDto);
 		UtilisateurRole tuteurRole = utilisateurRoleRepository.findByIntituleContaining("TUTEUR");
-		//Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).get();
+		// Entreprise optEntreprise =
+		// entrepriseRepository.findById(user.getEntreprise().getId()).get();
 		if (user.getEntreprise() != null) {
-	        Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).orElse(null);
-	        user.setEntreprise(optEntreprise);
-	    }
+			Entreprise optEntreprise = entrepriseRepository.findById(user.getEntreprise().getId()).orElse(null);
+			user.setEntreprise(optEntreprise);
+		}
 		// Gestion de l'adresse
-	    if (user.getAdresse() != null) {
-	        Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).orElse(null);
-	        user.setAdresse(adresse);
-	    }
+		if (user.getAdresse() != null) {
+			Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).orElse(null);
+			user.setAdresse(adresse);
+		}
 
-	    // Gestion du centre de formation
-	    if (user.getCentreFormation() != null) {
-	        CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId()).orElse(null);
-	        user.setCentreFormation(centreFormation);
-	    }
+		// Gestion du centre de formation
+		if (user.getCentreFormation() != null) {
+			CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId())
+					.orElse(null);
+			user.setCentreFormation(centreFormation);
+		}
 //		Adresse adresse = adresseRepository.findById(user.getAdresse().getId()).get();
 //		CentreFormation centreFormation = centreFormationRepository.findById(user.getCentreFormation().getId()).get();
-	    
+
 		List<UtilisateurRole> utilisateurRoles = new ArrayList<>();
 		utilisateurRoles.add(tuteurRole);
 		user.setRoles(utilisateurRoles);
-		//user.setEntreprise(optEntreprise);
-		//user.setAdresse(adresse);
-		//user.setCentreFormation(centreFormation);
-		
-		user.setActive(false);//par defaut a false comme il y l'inscription du tuteur sera a modifier avec l'interface admin 
+		// user.setEntreprise(optEntreprise);
+		// user.setAdresse(adresse);
+		// user.setCentreFormation(centreFormation);
 
-		user.setExternalAccount(true);		
-		
+		user.setActive(false);// par defaut a false comme il y l'inscription du tuteur sera a modifier avec
+								// l'interface admin
+
+		user.setExternalAccount(true);
+
 		user = utilisateurRepository.save(user);
-		
+
 		Tuteur tuteur = new Tuteur();
 		tuteur.setUtilisateur(user);
 		tuteur = tuteurRepository.save(tuteur);
-		
+
 		if (uDto.getEtudiantDto() != null) {
 			Long idEtudiant = uDto.getEtudiantDto().getId();
 			Optional<Etudiant> etuOpt = etudiantRepository.findById(idEtudiant);
@@ -597,20 +601,25 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				etudiantRepository.save(etudiant);
 			} else {
 				throw new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + idEtudiant);
-			} 
+			}
 		}
 		user.setTuteur(tuteur);
 		user = utilisateurRepository.saveAndFlush(user);
-		
+
 		UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
-		
-		//Envoie de la notif aux admins
-		String message  = "Nouvelle inscription d'un tuteur externe veuillez modifier ses informations personnelles et activer son compte, Tuteur : " + user.getFullName();
-		emailService.sendMailSmtpUser(
-				user.getId(), "Nouvelle demande d'inscription Tuteur externe - mail automatique", 
-				message, Optional.of(""), Optional.of(""));
-		
+
+		// Envoie de la notif aux admins
+		String message = "Nouvelle inscription d'un tuteur externe veuillez modifier ses informations personnelles et activer son compte, Tuteur : "
+				+ user.getFullName() + " , email : " + user.getLogin();
+//				emailService.sendMailSmtpUser(
+//						user.getId(), "Nouvelle demande d'inscription Tuteur externe - mail automatique",
+//						message, Optional.of(""), Optional.of(""));
+
+		emailService.sendMailUser1ToUser2("cfadawan@gmail.com", "cfadawan@gmail.com",
+				"Nouvelle demande d'inscription Tuteur externe - mail automatique", message);
+
 		return userDto;
+
 	}
 
 	/**
@@ -621,90 +630,79 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	 * @throws SaveInvalidException
 	 * 
 	 */
-	
 	@Override
 	public UtilisateurDto updateTuteur(UtilisateurDto uDto) throws SaveInvalidException {
-	    if (uDto.getId() == 0) {
-	        throw new IllegalArgumentException("L'ID de l'utilisateur est nécessaire pour la mise à jour.");
-	    }
+		if (uDto.getId() == 0) {
+			throw new IllegalArgumentException("L'ID de l'utilisateur est nécessaire pour la mise à jour.");
+		}
 
-	    Utilisateur user = utilisateurRepository.findById(uDto.getId())
-	            .orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé avec l'ID : " + uDto.getId()));
+		Utilisateur user = utilisateurRepository.findById(uDto.getId())
+				.orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé avec l'ID : " + uDto.getId()));
 
-	    //vérifie si email a changé et s'il est déjà utilisé par un autre utilisateur
-	    if (!user.getLogin().equals(uDto.getLogin()) && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
-	        throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse e-mail : " + uDto.getLogin());
-	    }
+		// vérifie si email a changé et s'il est déjà utilisé par un autre utilisateur
+		if (!user.getLogin().equals(uDto.getLogin()) && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
+			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse e-mail : " + uDto.getLogin());
+		}
 
-	    try {
-	        //si le mot de passe a été modifié on hash le nouveau mot de passe
-	        if (!user.getPassword().equals(uDto.getPassword())) {
-	            uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
-	        }
-	    } catch (Exception e) {
-	        logger.error("hashPwd failed", e);
-	    }
+		try {
+			// si le mot de passe a été modifié on hash le nouveau mot de passe
+			if (!user.getPassword().equals(uDto.getPassword())) {
+				uDto.setPassword(HashTools.hashSHA512(uDto.getPassword()));
+			}
+		} catch (Exception e) {
+			logger.error("hashPwd failed", e);
+		}
 
-	    //mettre à jour les champs de l'utilisateur avec les valeurs de uDto
-	    user.setLogin(uDto.getLogin());
-	    user.setNom(uDto.getNom());
-	    user.setPrenom(uDto.getPrenom());
-	    user.setCivilite(uDto.getCivilite());
-	    user.setDateDeNaissance(uDto.getDateDeNaissance());
-	    user.setTelephone(uDto.getTelephone());
+		// mettre à jour les champs de l'utilisateur avec les valeurs de uDto
+		user.setLogin(uDto.getLogin());
+		user.setNom(uDto.getNom());
+		user.setPrenom(uDto.getPrenom());
+		user.setCivilite(uDto.getCivilite());
+		user.setDateDeNaissance(uDto.getDateDeNaissance());
+		user.setTelephone(uDto.getTelephone());
 
-	    if (uDto.getEntrepriseDto() != null) {
-	        Entreprise entreprise = entrepriseRepository.findById(uDto.getEntrepriseDto().getId())
-	                .orElse(null);
-	        user.setEntreprise(entreprise);
-	    }
-	    
-	    if (uDto.getAdresseDto() != null) {
-	        Adresse adresse = adresseRepository.findById(uDto.getAdresseDto().getId())
-	                .orElse(null);
-	        user.setAdresse(adresse);
-	    }
+		if (uDto.getEntrepriseDto() != null) {
+			Entreprise entreprise = entrepriseRepository.findById(uDto.getEntrepriseDto().getId()).orElse(null);
+			user.setEntreprise(entreprise);
+		}
 
-	    if (uDto.getCentreFormationId() != 0) {
-	        Long newCentreFormationId = uDto.getCentreFormationId();
-	        CentreFormation newCentreFormation = centreFormationRepository.findById(newCentreFormationId)
-	                .orElse(null);
-	        user.setCentreFormation(newCentreFormation);
-	    }
+		if (uDto.getAdresseDto() != null) {
+			Adresse adresse = adresseRepository.findById(uDto.getAdresseDto().getId()).orElse(null);
+			user.setAdresse(adresse);
+		}
 
+		if (uDto.getCentreFormationId() != 0) {
+			Long newCentreFormationId = uDto.getCentreFormationId();
+			CentreFormation newCentreFormation = centreFormationRepository.findById(newCentreFormationId).orElse(null);
+			user.setCentreFormation(newCentreFormation);
+		}
 
-	    user = utilisateurRepository.save(user);
+		user = utilisateurRepository.save(user);
 
-	    Tuteur tuteur = user.getTuteur(); 
+		Tuteur tuteur = user.getTuteur();
 
+		if (uDto.getEtudiantDto() != null) {
+			Long idEtudiant = uDto.getEtudiantDto().getId();
+			Optional<Etudiant> etuOpt = etudiantRepository.findById(idEtudiant);
+			if (etuOpt.isPresent()) {
+				Etudiant etudiant = etuOpt.get();
+				etudiant.setTuteur(tuteur);
+				etudiantRepository.save(etudiant);
+			} else {
+				throw new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + idEtudiant);
+			}
+		}
 
-	    if (uDto.getEtudiantDto() != null) {
-	        Long idEtudiant = uDto.getEtudiantDto().getId();
-	        Optional<Etudiant> etuOpt = etudiantRepository.findById(idEtudiant);
-	        if (etuOpt.isPresent()) {
-	            Etudiant etudiant = etuOpt.get();
-	            etudiant.setTuteur(tuteur);
-	            etudiantRepository.save(etudiant);
-	        } else {
-	            throw new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + idEtudiant);
-	        }
-	    }	   
+		user.setActive(uDto.isActive());
 
-	 if (uDto.isActive()) {
-	     user.setActive(true);
-	 } else {
-	     user.setActive(false); 
-	 } 
-	 
-	    user.setExternalAccount(true);
+		user.setExternalAccount(true);
 
-	    user = utilisateurRepository.save(user);
+		user = utilisateurRepository.save(user);
 
-	    UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
+		UtilisateurDto userDto = mapper.utilisateurToUtilisateurDto(user);
 
-	    return userDto;
+		return userDto;
 	}
-
 
 	/**
 	 * Suppression d'un utilisateur
@@ -1166,14 +1164,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	 * @return void
 	 */
 	@Override
-	public void fetchAllDG2Employees(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
+	public void fetchAllDG2Employees(String email, String password)
+			throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<EmployeeDG2Dto> cResJson;
-		
-		//url dg2 qui concerne la recupération des locations
+
+		// url dg2 qui concerne la recupération des locations
 		URI url = new URI(baseUrl + "employees");
-		
-		//recupérartion des headers / email / password dg2
+
+		// recupérartion des headers / email / password dg2
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("x-auth-token", email + ":" + password);
 
@@ -1183,55 +1182,54 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		if (repWs.getStatusCode() == HttpStatus.OK) {
 			String json = repWs.getBody();
-			//recuperation des values en json et lecture
+			// recuperation des values en json et lecture
 			cResJson = objectMapper.readValue(json, new TypeReference<List<EmployeeDG2Dto>>() {
 			});
-			//boucle pour récupérer toute la liste
+			// boucle pour récupérer toute la liste
 			for (EmployeeDG2Dto eDG2 : cResJson) {
 				Utilisateur utilisateurImport = mapper.employeeDg2ToUtilisateur(eDG2);
-				Optional<CentreFormation> centreFormationOpt = centreFormationRepository.findByIdDg2(eDG2.getLocationId());
+				Optional<CentreFormation> centreFormationOpt = centreFormationRepository
+						.findByIdDg2(eDG2.getLocationId());
 				Optional<Utilisateur> optUtlisateur = utilisateurRepository.findByIdDg2(utilisateurImport.getIdDg2());
 				if (centreFormationOpt.isPresent()) {
 					utilisateurImport.setCentreFormation(centreFormationOpt.get());
-				}
-				else {
-					logger.error("SaveAndFlush failed","Centre de formation Introuvable");
+				} else {
+					logger.error("SaveAndFlush failed", "Centre de formation Introuvable");
 					throw new FetchDG2Exception("Centre de formation Introuvable");
 				}
-				
+
 				if (optUtlisateur.isPresent()) {
-					
-					if (optUtlisateur.get().equals(utilisateurImport) && optUtlisateur.get().getCentreFormation().getId() == centreFormationOpt.get().getId()) {
-						continue;}
-					else  {
+
+					if (optUtlisateur.get().equals(utilisateurImport)
+							&& optUtlisateur.get().getCentreFormation().getId() == centreFormationOpt.get().getId()) {
+						continue;
+					} else {
 						if (utilisateurImport != null) {
 							utilisateurImport.setPassword(optUtlisateur.get().getPassword());
 							utilisateurImport.setId(optUtlisateur.get().getId());
 							utilisateurImport.setVersion(optUtlisateur.get().getVersion());
 							utilisateurImport.setActive(true);
-	
+
 						}
 					}
 					try {
-					utilisateurRepository.saveAndFlush(utilisateurImport);
+						utilisateurRepository.saveAndFlush(utilisateurImport);
 
 					} catch (Exception e) {
 						logger.error("SaveAndFlush failed", e);
 
 					}
 				} else {
-					
+
 					try {
-						
+
 						utilisateurImport.setPassword(null);
 						utilisateurImport.setActive(true);
-					    utilisateurRepository.saveAndFlush(utilisateurImport);
-
+						utilisateurRepository.saveAndFlush(utilisateurImport);
 
 					} catch (Exception e) {
 						logger.error("SaveAndFlush failed", e);
 
-					
 					}
 				}
 			}
@@ -1239,12 +1237,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 	}
-	
+
 	@Override
 	public LoginResponseDto checkLogin(LoginDto loginDto) throws Exception {
 
-		if (loginDto.getLogin().contains(domainDawan) 
-				|| loginDto.getLogin().contains(domainJehann)) {
+		if (loginDto.getLogin().contains(domainDawan) || loginDto.getLogin().contains(domainJehann)) {
 
 			// login via LDAP
 			try {
@@ -1363,14 +1360,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return result;
 	}
-	
-	public void modifierRolesUtilisateur(long utilisateurId, List<Long> nouveauRolesIds) throws NotFoundException {
-        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
-        List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);
 
-        
-        // ajout de rôle
-        for (UtilisateurRole role : nouveauxRoles) {
+	public void modifierRolesUtilisateur(long utilisateurId, List<Long> nouveauRolesIds) throws NotFoundException {
+		Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
+				.orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
+		List<UtilisateurRole> nouveauxRoles = utilisateurRoleRepository.findAllById(nouveauRolesIds);
+
+		// ajout de rôle
+		for (UtilisateurRole role : nouveauxRoles) {
 			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
 				switch (role.getIntitule()) {
 				case "ETUDIANT":
@@ -1379,73 +1376,79 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				case "FORMATEUR":
 					utilisateur.setFormateur(formateurService.saFormateur(utilisateur));
 					break;
-				case "TUTEUR":					
+				case "TUTEUR":
 					utilisateur.setTuteur(tuteurService.saveTuteur(utilisateur));
 					break;
 				default:
 					break;
 				}
-			}		
+			}
 		}
-        utilisateur.modifierRoles(nouveauxRoles);
-        
-        // suppression de rôle
-        for (UtilisateurRoleDto role : utilisateurRoleService.getAllUtilisateurRole()) {
+		utilisateur.modifierRoles(nouveauxRoles);
+
+		// suppression de rôle
+		for (UtilisateurRoleDto role : utilisateurRoleService.getAllUtilisateurRole()) {
 			if (!utilisateur.getRolesStr().contains(role.getIntitule())) {
 				switch (role.getIntitule()) {
 				case "ETUDIANT":
-					try {						
+					try {
 						long etudiantId = utilisateur.getEtudiant().getId();
-						//suppression de l'etudiant dans la promotion
-						//TODO Modifier promotionRespository par promotionService
+						// suppression de l'etudiant dans la promotion
+						// TODO Modifier promotionRespository par promotionService
 						List<Promotion> promotions = promotionRespository.getByEtudiantId(etudiantId);
 						if (!promotions.isEmpty()) {
 							promotions.forEach(promotion -> promotion.getEtudiants().remove(utilisateur.getEtudiant()));
-							promotionRespository.saveAll(promotions);							
-						}							
-						//suppression du dossierProjet
+							promotionRespository.saveAll(promotions);
+						}
+						// suppression du dossierProjet
 						List<DossierProjetDto> dossierProjets = DossierProjetService.getByIdEtudiant(etudiantId);
-						if (!dossierProjets.isEmpty()) {							
+						if (!dossierProjets.isEmpty()) {
 							for (DossierProjetDto dossierProjet : dossierProjets) {
-								List<CompetenceProfessionnelleDto> competenceProfessionnellesDtos = competenceProfessionnelleService.getAllByDossierProjets(dossierProjet.getId());
+								List<CompetenceProfessionnelleDto> competenceProfessionnellesDtos = competenceProfessionnelleService
+										.getAllByDossierProjets(dossierProjet.getId());
 								if (!competenceProfessionnellesDtos.isEmpty()) {
-									competenceProfessionnellesDtos.forEach(cp -> competenceProfessionnelleService.deleteById(cp.getId()));									
-								}								
-								DossierProjetService.deleteById(dossierProjet.getId());							
+									competenceProfessionnellesDtos
+											.forEach(cp -> competenceProfessionnelleService.deleteById(cp.getId()));
+								}
+								DossierProjetService.deleteById(dossierProjet.getId());
 							}
 						}
 						// suppression des devoirs de l'étudiant
 						List<DevoirEtudiantDto> devoirsEtudiant = devoirEtudiantService.getAllByEtudiantId(etudiantId);
-						if (!devoirsEtudiant.isEmpty()) {							
-							devoirsEtudiant.forEach(devoirEtudiant -> devoirEtudiantService.delete(devoirEtudiant.getId()));				
+						if (!devoirsEtudiant.isEmpty()) {
+							devoirsEtudiant
+									.forEach(devoirEtudiant -> devoirEtudiantService.delete(devoirEtudiant.getId()));
 						}
-						//suppression des dossierProfessionnel de l'étudiant
-						List<DossierProfessionnelDto> dosiDossierProfessionnelDtos = dosiDossierProfessionnelService.getByIdEtudiant(etudiantId);
+						// suppression des dossierProfessionnel de l'étudiant
+						List<DossierProfessionnelDto> dosiDossierProfessionnelDtos = dosiDossierProfessionnelService
+								.getByIdEtudiant(etudiantId);
 						if (!dosiDossierProfessionnelDtos.isEmpty()) {
-							dosiDossierProfessionnelDtos.forEach(dp -> dosiDossierProfessionnelService.delete(dp.getId()));							
+							dosiDossierProfessionnelDtos
+									.forEach(dp -> dosiDossierProfessionnelService.delete(dp.getId()));
 						}
-						//suppression des livretEvaluation de l'étudiant
-						List<LivretEvaluationDto> livretEvaluations = livretEvaluationService.getByEtudiantId(etudiantId);
+						// suppression des livretEvaluation de l'étudiant
+						List<LivretEvaluationDto> livretEvaluations = livretEvaluationService
+								.getByEtudiantId(etudiantId);
 						if (!livretEvaluations.isEmpty()) {
-							livretEvaluations.forEach(le -> livretEvaluationService.delete(le.getId()));							
+							livretEvaluations.forEach(le -> livretEvaluationService.delete(le.getId()));
 						}
-						//suppression des positionnement de l'étudiant
+						// suppression des positionnement de l'étudiant
 						PositionnementDto positionnement = positionnementService.getByIdEtudiant(etudiantId);
 						if (positionnement != null) {
-							positionnementService.delete(positionnement.getId());						
+							positionnementService.delete(positionnement.getId());
 						}
-						
-						etudiantService.deleteById(etudiantId);		
+
+						etudiantService.deleteById(etudiantId);
 						utilisateur.setEtudiant(null);
 					} catch (Exception e) {
 						System.out.println("l'utilisateur na pas d'étudiant");
 					}
 					break;
-					
+
 				case "FORMATEUR":
-					try {									
+					try {
 						long formateurId = utilisateur.getFormateur().getId();
-						//suppression des intervention liée au formateur
+						// suppression des intervention liée au formateur
 						List<InterventionDto> interventions = interventionService.findAllByFormateurId(formateurId);
 						if (!interventions.isEmpty()) {
 							interventionService.deleteLstIntervention(interventions);
@@ -1455,11 +1458,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						System.out.println("l'utilisateur na pas de formateur");
 					}
 					break;
-					
-				case "TUTEUR":					
+
+				case "TUTEUR":
 					try {
 						long tuteurId = utilisateur.getTuteur().getId();
-						//suppression du tuteur dans l'étudiant
+						// suppression du tuteur dans l'étudiant
 						List<EtudiantDto> etudiants = etudiantService.findAllByTuteurId(tuteurId);
 						if (!etudiants.isEmpty()) {
 							etudiants.forEach(etudiant -> {
@@ -1473,14 +1476,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						System.out.println("l'utilisateur na pas de tuteur");
 					}
 					break;
-					
+
 				default:
 					break;
 				}
 			}
-		}       
-        
-        utilisateurRepository.save(utilisateur);
-    }
+		}
+
+		utilisateurRepository.save(utilisateur);
+	}
 
 }

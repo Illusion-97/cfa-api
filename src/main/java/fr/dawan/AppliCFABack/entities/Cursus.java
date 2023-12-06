@@ -3,7 +3,6 @@ package fr.dawan.AppliCFABack.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @SuppressWarnings({ "serial", "unused" })
@@ -21,26 +20,26 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 
 	@Column(nullable = false, length = 255) // attribut de dg2
 	private String duree;
-	
+
 	@Column(nullable = false, length = 255, unique = true) // attribut de dg2
 	private String slug;
-	
+
 	@Column(nullable = true) // pour recupérer l'id dg2
 	private long idDg2;
-	
+
 	@Column(nullable = true)
 	private int niveau ;
-	
+
 	@Column(nullable = true)
 	private String sigle;
-	
+
 	@Column(nullable = true)
 	private String millesime;
-	
+
 	@Column(nullable = true)
 	private String codeTitre;
-	
-	
+
+
 	public Cursus() {
 		super();
 	}
@@ -50,10 +49,10 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 		this.titre = titre;
 		this.formations = formations;
 	}
-	
+
 
 	public Cursus(String titre, List<Formation> formations, Set<ActiviteType> activiteTypes,
-			String duree, String slug, long idDg2) {
+				  String duree, String slug, long idDg2) {
 		super();
 		this.titre = titre;
 		this.formations = formations;
@@ -62,11 +61,11 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 		this.slug = slug;
 		this.idDg2 = idDg2;
 	}
-	
-	
+
+
 
 	public Cursus(String titre, List<Formation> formations, Set<ActiviteType> activiteTypes, String duree, String slug,
-			long idDg2, int niveau, String sigle, String millesime) {
+				  long idDg2, int niveau, String sigle, String millesime) {
 		super();
 		this.titre = titre;
 		this.formations = formations;
@@ -129,7 +128,13 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(duree, idDg2, slug, titre);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((duree == null) ? 0 : duree.hashCode());
+		result = prime * result + (int) (idDg2 ^ (idDg2 >>> 32));
+		result = prime * result + ((slug == null) ? 0 : slug.hashCode());
+		result = prime * result + ((titre == null) ? 0 : titre.hashCode());
+		return result;
 	}
 
 	/**
@@ -141,7 +146,7 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 
 	/**
 	 * @param niveau le niveau à affecter
-	 
+
 	 */
 	public void setNiveau(int niveau) {
 		this.niveau = niveau;
@@ -156,26 +161,26 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 
 	/**
 	 * @param sigle le sigle à affecter
-	 
+
 	 */
 	public void setSigle(String sigle) {
 		this.sigle = sigle;
 	}
-	
+
 	/**
 	 * @return le millesime
 	 */
-	
+
 	public String getMillesime() {
 		return millesime;
 	}
 
 	/**
-	 * @param millesime 
+	 * @param millesime
 	 * le millesime à affecter
-	 
+
 	 */
-	
+
 	public void setMillesime(String millesime) {
 		this.millesime = millesime;
 	}
@@ -183,17 +188,17 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 	/**
 	 * @return le codeTitre
 	 */
-	
+
 	public String getCodeTitre() {
 		return codeTitre;
 	}
 
 	/**
-	 * @param codeTitre 
+	 * @param codeTitre
 	 * le codeTitre à affecter
-	 
+
 	 */
-	
+
 	public void setCodeTitre(String codeTitre) {
 		this.codeTitre = codeTitre;
 	}
@@ -207,7 +212,21 @@ public class Cursus extends BaseEntity implements Serializable { // cursus du ca
 		if (getClass() != obj.getClass())
 			return false;
 		Cursus other = (Cursus) obj;
-		return Objects.equals(duree, other.duree) && idDg2 == other.idDg2 && Objects.equals(slug, other.slug)
-				&& Objects.equals(titre, other.titre);
-	}
+		if (duree == null) {
+			if (other.duree != null)
+				return false;
+		} else if (!duree.equals(other.duree))
+			return false;
+		if (idDg2 != other.idDg2)
+			return false;
+		if (slug == null) {
+			if (other.slug != null)
+				return false;
+		} else if (!slug.equals(other.slug))
+			return false;
+		if (titre == null) {
+            return other.titre == null;
+		} else return titre.equals(other.titre);
+    }
+
 }

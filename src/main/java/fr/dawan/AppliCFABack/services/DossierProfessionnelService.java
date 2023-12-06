@@ -5,10 +5,7 @@ import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.DossierProEtudi
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.GetDossierProDto;
 import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
 import fr.dawan.AppliCFABack.tools.PdfTools;
-import freemarker.core.ParseException;
-import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
@@ -37,7 +34,7 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 
 	GetDossierProDto getAllDossierProfessionnelByEtudiant(long id);
 
-	DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws FileNotFoundException, IOException;
+	DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws IOException;
 
 	String generateDossierProPdf(long dossierId) throws PdfTools, IOException, TemplateException;
 	

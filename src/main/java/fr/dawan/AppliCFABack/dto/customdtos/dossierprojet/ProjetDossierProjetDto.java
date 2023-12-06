@@ -1,7 +1,5 @@
 package fr.dawan.AppliCFABack.dto.customdtos.dossierprojet;
 
-import fr.dawan.AppliCFABack.dto.ProjetDto;
-
 import java.io.Serializable;
 
 @SuppressWarnings("serial")

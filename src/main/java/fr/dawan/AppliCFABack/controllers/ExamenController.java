@@ -46,7 +46,7 @@ public class ExamenController {
 	@Autowired
 	private ObjectMapper objectMapper;
 	
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	// ##################################################
 	// # GET #

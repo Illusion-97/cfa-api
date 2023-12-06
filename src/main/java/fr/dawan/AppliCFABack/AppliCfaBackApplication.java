@@ -31,7 +31,7 @@ public class AppliCfaBackApplication {
 	private TokenInterceptor tokenInterceptor;
 
 	@Bean
-	public TimerCache userTimerCache(){return new TimerCache();};
+	public TimerCache userTimerCache(){return new TimerCache();}
 	@Bean
 	public RestTemplate restTemplate() {
 		SimpleClientHttpRequestFactory clientHttpRequestFactory  = new SimpleClientHttpRequestFactory();
@@ -56,6 +56,7 @@ public class AppliCfaBackApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/mail/schedule").allowedOrigins("*").allowedMethods("POST");
+				registry.addMapping("/utilisateurs/tuteur").allowedOrigins("*").allowedMethods("POST");
 				registry.addMapping("/swagger-ui/index.html").allowedMethods("POST", "PUT").allowedOrigins("*");
 				registry.addMapping("/**").allowedOrigins("*")
 						.allowedMethods("*", "GET", "POST", "PUT", "DELETE", "OPTIONS").allowedHeaders("*")
@@ -66,16 +67,16 @@ public class AppliCfaBackApplication {
 			}
 
 			// Intercepteurs
-			/*@Override
+			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
-			  registry.addInterceptor(tokenInterceptor);
-			}*/
+			 registry.addInterceptor(tokenInterceptor);
+			}
 
 			@Override
 			public void addResourceHandlers(ResourceHandlerRegistry registry) {
 				registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
 				registry.addResourceHandler("pictures/**").addResourceLocations("classpath:/pictures/");
-			};
+			}
 
 		};
 	}

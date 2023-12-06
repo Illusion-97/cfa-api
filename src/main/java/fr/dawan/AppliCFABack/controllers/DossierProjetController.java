@@ -36,11 +36,6 @@ public class DossierProjetController {
 	EtudiantService etudiantService;
 	@Autowired
 	FilesService fileService;
-	@Autowired
-	private EmailService emailService;
-	
-	@Value("${app.storagefolder}")
-	private String storageFolder;
 
 	@GetMapping(produces = "application/json")
 	public List<DossierProjetDto> getAll() {
@@ -83,6 +78,7 @@ public class DossierProjetController {
 
 		return ResponseEntity.ok().body(base64);
 	}
+
 	@DeleteMapping(value = "/{idEtudiant}/delete/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable("idEtudiant") long idEtudiant, @PathVariable("id") long id) {
 		try {
@@ -90,7 +86,6 @@ public class DossierProjetController {
 			for(int i=0;i<eDto.getDossierProjet().size();i++) {
 				if (eDto.getDossierProjet().get(i).getId()==id) {
 					eDto.getDossierProjet().remove(i);
-					
 				}
 			}
 			etudiantService.saveOrUpdate(eDto);
@@ -106,7 +101,7 @@ public class DossierProjetController {
 	public ResponseEntity<DossierProjetDto> updateDossierProjet(
 			@RequestBody DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
 		DossierProjetDto dpEtuDto = dossierProService.saveOrUpdate(dpDto);
-		return ResponseEntity.status(HttpStatus.CREATED).body(dpEtuDto);
+		return ResponseEntity.status(HttpStatus.OK).body(dpEtuDto);
 	}
 
 	@PostMapping(value = "/save", produces = "application/json")
@@ -135,11 +130,11 @@ public class DossierProjetController {
 													   @PathVariable("dpid") Long id) throws IOException {
 
 		DossierProjetDto dpDto =  dossierProService.saveAnnexesDossierProjet(files, id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
+		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
 	}
 	@DeleteMapping(value = "/{id}", produces = "text/plain")
-	public ResponseEntity<DossierProjetDto> deletefile(@RequestParam("file")String file, @PathVariable("id") Long id){
-		DossierProjetDto dpDto = dossierProService.deleteFile(file, id);
-		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
+	public ResponseEntity<Void> deletefile(@RequestParam("file")String file, @PathVariable("id") Long id){
+		dossierProService.deleteFile(file, id);
+		return ResponseEntity.noContent().build();
 	}
 }

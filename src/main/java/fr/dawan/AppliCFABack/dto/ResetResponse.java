@@ -36,9 +36,7 @@ public class ResetResponse implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ResetResponse [token=").append(token).append(", password=").append(password).append("]");
-		return builder.toString();
+        return "ResetResponse [token=" + token + ", password=" + password + "]";
 	}
 
 

@@ -27,8 +27,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.persistence.Query;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -106,7 +104,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static Logger logger = LoggerFactory.getLogger(EtudiantServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(EtudiantServiceImpl.class);
 
 	@Autowired
 	private AdresseRepository adresseRepository;
@@ -126,7 +124,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	 * @return res Liste des objets etudiants
 	 */
 	@Override
-	public List<EtudiantDto> getAll() {
+	public List<EtudiantDto> getAll(){
 		List<Etudiant> lst = etudiantRepository.findAll();
 		List<EtudiantDto> res = new ArrayList<>();
 
@@ -191,6 +189,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 			res.add(etuDto);
 		}
+		}
+		for (Etudiant e : lst){
+			res.add(mapper.etudiantToEtudiantDto(e));
 		}
 		return res;
 	}
@@ -898,12 +899,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 		}).orElseThrow(() -> new FetchDG2Exception("Promotion Introuvable"))) {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
-		;
 	}
 
 	@Async("myTaskExecutor")
 	public void importUserFromJson(String json, Optional<Promotion> promotion)
-			throws JsonMappingException, JsonProcessingException {
+			throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<EtudiantUtilisateurDG2Dto> cResJson;
 

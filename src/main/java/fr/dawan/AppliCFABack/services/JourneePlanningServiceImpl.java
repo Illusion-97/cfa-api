@@ -34,7 +34,7 @@ public class JourneePlanningServiceImpl implements JourneePlanningService{
 		
 		LocalDate compteur = i.getDateDebut();
 		
-		while(compteur.compareTo(i.getDateFin()) <= 0) {
+		while(!compteur.isAfter(i.getDateFin())) {
 			if(estJoursOuvrable(compteur)) {
 				
 								

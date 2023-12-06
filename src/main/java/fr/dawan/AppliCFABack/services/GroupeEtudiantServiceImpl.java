@@ -33,7 +33,7 @@ public class GroupeEtudiantServiceImpl implements GroupeEtudiantService{
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 	
 	/**
 	 * Récupération de la liste des groupes

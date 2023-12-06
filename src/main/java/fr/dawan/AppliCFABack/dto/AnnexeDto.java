@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.dto;
 
 
-import java.io.File;
 import java.io.Serializable;
 
 public class AnnexeDto extends BaseEntityDto implements Serializable {

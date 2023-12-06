@@ -3,7 +3,12 @@ package fr.dawan.AppliCFABack.entities;
 import javax.persistence.*;
 import java.util.List;
 
-
+/***
+ * @author Anas JIYAR
+ * @see fr.dawan.appliCfaBack.entities
+ * @since 1.0
+ * @version 2.0
+ */
 @SuppressWarnings("serial")
 @Entity
 public class DossierProjet extends BaseEntity {
@@ -29,7 +34,6 @@ public class DossierProjet extends BaseEntity {
 
 	@ElementCollection
 	private List<String> resumeDossierProjets;
-
 	@ManyToMany
 	private List<CompetenceProfessionnelle> competenceProfessionnelles;
 

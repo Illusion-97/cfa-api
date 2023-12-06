@@ -45,7 +45,7 @@ public class CursusServiceImpl implements CursusService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	@Value("${base_url_dg2}")
 	private String baseUrl;
@@ -219,7 +219,7 @@ public class CursusServiceImpl implements CursusService {
 
 				try {
 					//recuperation des values en json et lecture
-					fResJson = objectMapper.readValue(json, new TypeReference<List<CursusDG2Dto>>() { 
+					fResJson = objectMapper.readValue(json, new TypeReference<List<CursusDG2Dto>>() {
 					});
 				} catch (Exception e) {
 					logger.log(Level.WARNING, "failed json", e);
@@ -231,7 +231,7 @@ public class CursusServiceImpl implements CursusService {
 						if (optCursus.get().equals(cursusImport))
 							continue;
 						else if (!optCursus.get().equals(cursusImport)) {
-							cursusImport.setTitre(optCursus.get().getTitre());
+							//cursusImport.setTitre(optCursus.get().getTitre());
 							cursusImport.setVersion(optCursus.get().getVersion());
 							cursusImport.setId(optCursus.get().getId());
 						}
@@ -259,4 +259,5 @@ public class CursusServiceImpl implements CursusService {
 		}
 
 	}
+
 }

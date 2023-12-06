@@ -75,7 +75,7 @@ public class ExamenServiceImpl implements ExamenService {
 	@Value("src/main/resources/files/bulletinsEvaluations")
 	private String storageFolder;
 	
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	/**
 	 * Récupération de la liste des examens
@@ -253,7 +253,7 @@ public class ExamenServiceImpl implements ExamenService {
 	 */
 
 	@Override
-	public String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws ToPdf, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	public String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws ToPdf, IOException, TemplateException {
 		Optional<Etudiant> etuOpt = etudiantRepository.findById(etudiantId);
 		if (etuOpt.isPresent()) {
 			freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");

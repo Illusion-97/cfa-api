@@ -65,7 +65,7 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	@Autowired
 	private PromotionRepository promotionRepository;
 
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	@Autowired
 	private DtoTools mapper;
@@ -146,8 +146,8 @@ public class LivretEvaluationServiceImpl implements LivretEvaluationService {
 	 * TemplateException, LivretEvaluationException
 	 */
 	@Override
-	public String getLivretEvaluation(long idEtudiant, long idCursus) throws TemplateNotFoundException,
-			MalformedTemplateNameException, ParseException, IOException, TemplateException, LivretEvaluationException {
+	public String getLivretEvaluation(long idEtudiant, long idCursus) throws
+			IOException, TemplateException, LivretEvaluationException {
 		Optional<Etudiant> etudiant = etudiantRepository.findById(idEtudiant);
 		verificationSignature(etudiant);
 		if (!etudiant.isPresent())

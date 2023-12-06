@@ -83,15 +83,14 @@ public class Adresse extends BaseEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Adresse [libelle=");
-		builder.append(libelle);
-		builder.append(", ville=");
-		builder.append(ville);
-		builder.append(", codePostal=");
-		builder.append(codePostal);
-		builder.append("]");
-		return builder.toString();
+        String builder = "Adresse [libelle=" +
+                libelle +
+                ", ville=" +
+                ville +
+                ", codePostal=" +
+                codePostal +
+                "]";
+		return builder;
 	}
 
 
@@ -120,12 +119,9 @@ public class Adresse extends BaseEntity implements Serializable {
 		} else if (!libelle.equals(other.libelle))
 			return false;
 		if (ville == null) {
-			if (other.ville != null)
-				return false;
-		} else if (!ville.equals(other.ville))
-			return false;
-		return true;
-	}
+            return other.ville == null;
+		} else return ville.equals(other.ville);
+    }
 
 
 }

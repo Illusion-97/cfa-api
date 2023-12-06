@@ -72,7 +72,7 @@ class DossierProjetControllerTests {
             DossierProjet argument = invocationOnMock.getArgument(0);
             return new DossierProjetDto(argument.getId(), argument.getNom(), null, null,
                     null,null, null, null,
-                    null, null, argument.getVersion());
+                    null, null, null, argument.getVersion());
         });
 
         DossierProjetDto result = service.saveOrUpdate(dto);

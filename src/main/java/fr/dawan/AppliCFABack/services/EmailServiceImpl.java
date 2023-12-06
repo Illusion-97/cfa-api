@@ -29,14 +29,10 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,7 +59,7 @@ public class EmailServiceImpl implements EmailService {
 	private Configuration freemarkerConfig;
 	@Value("${app.storagefolder}")
 	private String storageFolder;
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	@Autowired
@@ -110,20 +106,19 @@ public class EmailServiceImpl implements EmailService {
 
 		msg.setSubject("noreply - Demande de Congés");
 
-		StringBuilder str = new StringBuilder("L'étudiant ");
-		str.append(c.getUtilisateur().getPrenom());
-		str.append(" ");
-		str.append(c.getUtilisateur().getNom());
-		str.append(" de la promotion : ");
-		str.append(pSelected.getNom());
-		str.append(" a fais une demande de congé du ");
-		str.append(c.getDateDebut());
-		str.append(" au ");
-		str.append(c.getDateFin());
-		str.append(".\n");
-		str.append("Veuillez mettre à jours le status de cette demande sur le Portail CFA Dawan.");
+        String str = "L'étudiant " + c.getUtilisateur().getPrenom() +
+                " " +
+                c.getUtilisateur().getNom() +
+                " de la promotion : " +
+                pSelected.getNom() +
+                " a fais une demande de congé du " +
+                c.getDateDebut() +
+                " au " +
+                c.getDateFin() +
+                ".\n" +
+                "Veuillez mettre à jours le status de cette demande sur le Portail CFA Dawan.";
 
-		msg.setText(str.toString());
+		msg.setText(str);
 
 		javaMailSender.send(msg);
 
@@ -155,7 +150,7 @@ public class EmailServiceImpl implements EmailService {
 		String token = jwtTokenUtil.doGenerateToken(claims, uDto.getLogin());
 		TokenSaver.getTokensbyemail().put(uDto.getLogin(), token);
 
-		String resetLink = "http://localhost:8081//#/reset-password?token=" + token;
+		String resetLink = "http://localhost:8081/#/reset-password?token=" + token;
 		String body = "<HTML><body> <a href=\"" + resetLink + "\">Réinitialiser mon mot de passe</a></body></HTML>";
 
 		MimeMessage msg = emailSender.createMimeMessage();

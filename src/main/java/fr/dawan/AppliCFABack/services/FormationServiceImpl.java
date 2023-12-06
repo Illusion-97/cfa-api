@@ -49,7 +49,7 @@ public class FormationServiceImpl implements FormationService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	private static Logger logger = LoggerFactory.getLogger(FormationServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(FormationServiceImpl.class);
 	
 	@Value("${base_url_dg2}")
     private String baseUrl;
@@ -330,6 +330,8 @@ public class FormationServiceImpl implements FormationService {
 
 			// Ajouter la formation importée à la liste de formations du cursus
 			cursusDb.get().getFormations().add(formationImported);
+			
+			result.add(formationImported);
 		}
 
 		// Mettre à jour l'entité Cursus dans la base de données
@@ -337,6 +339,7 @@ public class FormationServiceImpl implements FormationService {
 
 		return result;
 	}
+
 
 
 }

@@ -80,7 +80,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-12-06T12:20:47+0100",
+    date = "2023-12-06T12:25:53+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -934,6 +934,7 @@ public class DtoMapperImpl implements DtoMapper {
         utilisateur.setNom( eDg2.getLastName() );
         utilisateur.setLogin( eDg2.getEmail() );
         utilisateur.setDateDeNaissance( eDg2.getBornAt() );
+        utilisateur.setCivilite( eDg2.getHonorific() );
         utilisateur.setId( eDg2.getId() );
 
         return utilisateur;
