@@ -170,7 +170,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		this.ldapTechnicalAccPwd = ldapTechnicalAccPwd;
 	}
 
-	private static Logger logger = LoggerFactory.getLogger(UtilisateurRoleServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(UtilisateurRoleServiceImpl.class);
 
 	/**
 	 * Récupération de la liste des utilisateurs
@@ -676,11 +676,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			}
 		}
 
-		if (uDto.isActive()) {
-			user.setActive(true);
-		} else {
-			user.setActive(false);
-		}
+		user.setActive(uDto.isActive());
 
 		user.setExternalAccount(true);
 

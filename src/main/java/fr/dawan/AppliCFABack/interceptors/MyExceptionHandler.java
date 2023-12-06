@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 @ControllerAdvice
 public class MyExceptionHandler extends ResponseEntityExceptionHandler {
 	
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	@ExceptionHandler(value = { TokenException.class })
 	protected ResponseEntity<?> handleTokenException(Exception ex, WebRequest request) {

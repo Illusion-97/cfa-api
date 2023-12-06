@@ -18,6 +18,6 @@ public interface SoutenanceService extends GenericService<SoutenanceDto> {
 
     List<SoutenanceDto> getAll();
 
-    String genererLstSoutenance(String promotion, long idPromotion) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException, DossierProjetException;
+    String genererLstSoutenance(String promotion, long idPromotion) throws IOException, TemplateException, DossierProjetException;
 
 }

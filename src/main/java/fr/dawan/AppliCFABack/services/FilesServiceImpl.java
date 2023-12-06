@@ -31,7 +31,7 @@ public class FilesServiceImpl implements FilesService{
 	@Value("${app.storagefolder}")
 	private String myParentdirectory;
 	
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 	
 	@Override
 	public boolean createDirectory(String path) {

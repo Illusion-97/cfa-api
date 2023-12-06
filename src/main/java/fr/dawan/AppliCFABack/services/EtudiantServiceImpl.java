@@ -104,7 +104,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static Logger logger = LoggerFactory.getLogger(EtudiantServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(EtudiantServiceImpl.class);
 
 	@Autowired
 	private AdresseRepository adresseRepository;
@@ -837,12 +837,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 		}).orElseThrow(() -> new FetchDG2Exception("Promotion Introuvable"))) {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
-		;
 	}
 
 	@Async("myTaskExecutor")
 	public void importUserFromJson(String json, Optional<Promotion> promotion)
-			throws JsonMappingException, JsonProcessingException {
+			throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<EtudiantUtilisateurDG2Dto> cResJson;
 

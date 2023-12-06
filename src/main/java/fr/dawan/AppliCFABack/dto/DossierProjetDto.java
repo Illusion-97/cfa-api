@@ -30,26 +30,6 @@ public class DossierProjetDto extends BaseEntityDto implements Serializable {
 	private List<String> resumeDossierProjets;
 	private int version;
 
-	public DossierProjetDto(long id, String nom, String dossierImport, EtudiantDossierProjetDto etudiant,
-							ProjetDossierProjetDto projet,
-							List<String> annexeDossierProjets,
-							List<String> infoDossierProjets,
-							List<Long> competenceProfessionnelleIds,
-							List<String> contenuDossierProjets,
-							List<String> resumeDossierProjets, int version) {
-		this.id = id;
-		this.nom = nom;
-		this.dossierImport = dossierImport;
-		this.etudiant = etudiant;
-		this.projet = projet;
-		this.annexeDossierProjets = annexeDossierProjets;
-		this.infoDossierProjets = infoDossierProjets;
-		this.competenceProfessionnelleIds = competenceProfessionnelleIds;
-		this.contenuDossierProjets = contenuDossierProjets;
-		this.resumeDossierProjets = resumeDossierProjets;
-		this.version = version;
-	}
-
 	public DossierProjetDto() {
 	    super();
 	}

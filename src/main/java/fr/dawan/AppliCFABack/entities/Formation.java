@@ -240,11 +240,8 @@ public class Formation extends BaseEntity implements Serializable {
 		} else if (!slug.equals(other.slug))
 			return false;
 		if (titre == null) {
-			if (other.titre != null)
-				return false;
-		} else if (!titre.equals(other.titre))
-			return false;
-		return true;
+			return other.titre == null;
+		} else return titre.equals(other.titre);
 	}
 
 

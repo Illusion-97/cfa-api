@@ -34,7 +34,7 @@ public interface DossierProfessionnelService extends GenericService<DossierProfe
 
 	GetDossierProDto getAllDossierProfessionnelByEtudiant(long id);
 
-	DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws FileNotFoundException, IOException;
+	DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws IOException;
 
 	String generateDossierProPdf(long dossierId) throws PdfTools, IOException, TemplateException;
 	

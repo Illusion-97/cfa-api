@@ -46,7 +46,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 	@Value("${app.storagefolder}")
 	private String storageFolder;
 
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	/**
 	 * Récupération d'un absence par son ID

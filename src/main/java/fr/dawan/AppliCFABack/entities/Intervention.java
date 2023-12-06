@@ -229,11 +229,8 @@ public class Intervention extends BaseEntity implements Serializable { // interv
 				.equals(other.promotions.stream().map(p -> p.getId()).collect(Collectors.toList())))
 			return false;
 		if (supportsCours == null) {
-			if (other.supportsCours != null)
-				return false;
-		} else if (!supportsCours.equals(other.supportsCours))
-			return false;
-		return true;
+			return other.supportsCours == null;
+		} else return supportsCours.equals(other.supportsCours);
 	}
 
 //	@Override

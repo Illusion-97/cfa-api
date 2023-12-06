@@ -36,7 +36,7 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 	EtudiantRepository etudiantRepository;
 	@Autowired
 	EmailService emailService;
-	private static Logger logger =Logger.getGlobal();
+	private static final Logger logger =Logger.getGlobal();
 	@Value("${app.storagefolder}")
 	private String storageFolder;
 	@Value("${spring.mail.username}")
@@ -152,8 +152,8 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 	}
 
 	@Override
-	public String genererLstSoutenance(String promotion, long idPromotion) throws TemplateNotFoundException,
-			MalformedTemplateNameException, ParseException, IOException, TemplateException, DossierProjetException {
+	public String genererLstSoutenance(String promotion, long idPromotion) throws
+            IOException, TemplateException, DossierProjetException {
 		List<SoutenanceDto> soutenanceDto = getByPromotionId(idPromotion);
 		Map<String, Object> model = new HashMap<>();
 		model.put("backendUrl", backendUrl);

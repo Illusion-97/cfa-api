@@ -33,7 +33,7 @@ public class PromotionController {
 	@Autowired
 	FileService fileSevice;
 
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	@GetMapping(produces = "application/json")
 	public List<PromotionDto> getAll() {

@@ -65,7 +65,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	private EmailService emailService;
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	@Autowired
 	private DtoMapper mapper;
@@ -191,28 +191,32 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	}
 	
 	/**
-	 * Va permettre de récupérer tous les dossier projets avec pagination recherche
-	 * par nom
+	 * Sauvegarde du Dossier Projet
 	 * 
-	 * @param DossierProjet
-	 * @param id id de l'étudiant
-	 * @param files file pour les annexes
+	 * @param dpDto Dto du Dossier Projet
 	 * @return dpDto Dto du Dossier Projet
 	 */
 
 	@Override
-	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) throws DossierProjetException, TemplateException, IOException {
+	public DossierProjetDto saveOrUpdate(DossierProjetDto dpDto) throws DossierProjetException,
+			TemplateException, IOException {
 		DossierProjet dp = mapper.dossierProjetDtoToDossierProjet(dpDto);
 		dossierProRepo.saveAndFlush(dp);
 		directory(dpDto);
 		emailTuteur(dpDto);
 		return mapper.dossierProjetToDossierProjetDto(dp);
 	}
+	/**
+	 * Création d'un répertoire lors de la création d'un Dossier Projet
+	 *
+	 * @param dpDto Dto du Dossier Projet
+	 */
 	private void directory(DossierProjetDto dpDto){
 		if (dpDto.getEtudiant() == null){
 			return;
 		}
-		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dpDto.getEtudiant().getId()) + dpDto.getEtudiant().getId() + "_" + dpDto.getNom() +"/";
+		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dpDto.getEtudiant().getId())
+				+ dpDto.getEtudiant().getId() + "_" + dpDto.getNom() +"/";
 
 		Path isPathPresent = Paths.get(storageFolder + "/DossierProjet/" + nomDossierEtudiant);
 		if (!Files.isDirectory(isPathPresent)){
@@ -224,7 +228,7 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	 * Envoi un EMail au tuteur de l'étudiant pour l'informer de la modification du DossierProjet
 	 *
 	 * @param DossierProjetDto dp
-	 * @return
+	 * @return void
 	 */
 	private void emailTuteur(DossierProjetDto dp) throws IOException, TemplateException, DossierProjetException {
 		if (dp.getEtudiant() == null){
@@ -249,7 +253,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		String header = "Votre étudiant " + student.getUtilisateur().getFullName() + " a crée son Dossier Projet";
 		String message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été crée";
 
-		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.getId()+"\">Voir le dossier </a>";
+		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : " +
+				"<a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.getId()+"\">Voir le dossier </a>";
 
 		if (dp.getVersion() > 0) {
 			header = "Votre étudiant " + student.getUtilisateur().getFullName() + " à ajouté des modification à son Dossier Projet";
@@ -341,8 +346,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		return dpDto;
 	}
 	@Override
-	public String genererDossierProjet(long idDossierProjet) throws TemplateNotFoundException,
-			MalformedTemplateNameException, ParseException, IOException, TemplateException, DossierProjetException {
+	public String genererDossierProjet(long idDossierProjet) throws
+			IOException, TemplateException, DossierProjetException {
 
 		Optional<DossierProjet> dossierProjet = dossierProRepo.findById(idDossierProjet);
 

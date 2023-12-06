@@ -21,7 +21,7 @@ public class GroupeController {
 	@Autowired
 	GroupeEtudiantService groupeEtudiantService;
 	
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	// ##################################################
 	// # GET #

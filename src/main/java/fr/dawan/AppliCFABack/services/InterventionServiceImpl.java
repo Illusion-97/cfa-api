@@ -60,7 +60,7 @@ public class InterventionServiceImpl implements InterventionService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static Logger logger = LoggerFactory.getLogger(InterventionServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(InterventionServiceImpl.class);
 
 	@Value("${base_url_dg2}")
 	private String baseUrl;
@@ -419,7 +419,7 @@ public class InterventionServiceImpl implements InterventionService {
 	@Async("myTaskExecutor")
 	@Override
 	public List<Intervention> getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
-			throws Exception, FetchDG2Exception, URISyntaxException {
+			throws Exception {
 		Optional<Promotion> promotionOpt = promoRepository.findByIdDg2(idPrmotionDg2);
 		logger.info(">>>>>>>promo>>>>>" + promotionOpt.get().getIdDg2());
 		logger.info("FetchDg2Intervention >>> START");

@@ -325,11 +325,8 @@ public class Utilisateur extends BaseEntity implements Serializable {
 		} else if (!telephone.equals(other.telephone))
 			return false;
 		if (civilite == null) {
-			if (other.civilite != null)
-				return false;
-		} else if (!civilite.equals(other.civilite))
-			return false;
-		return true;
+			return other.civilite == null;
+		} else return civilite.equals(other.civilite);
 	}
 
 	@Override

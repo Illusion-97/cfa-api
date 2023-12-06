@@ -62,12 +62,12 @@ class DossierProjetControllerTests {
 	private EmailService emailService;
 	@Mock
 	private ObjectMapper objectMapper;
-	private String fileName = "importTest.txt";
+	private final String fileName = "importTest.txt";
 	private MockMultipartFile mockMultipartFile;
 	private List<MultipartFile> mockMultipartFileList;
 	private DossierProjetDto dpDtoTest;
 	private ProjetDossierProjetDto projetDossierProjetDto;
-	private long entityId = 1;
+	private final long entityId = 1;
 	@BeforeEach
 	void init() throws Exception {
 		MockitoAnnotations.initMocks(this);

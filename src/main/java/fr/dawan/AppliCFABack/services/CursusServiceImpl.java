@@ -45,7 +45,7 @@ public class CursusServiceImpl implements CursusService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	@Value("${base_url_dg2}")
 	private String baseUrl;

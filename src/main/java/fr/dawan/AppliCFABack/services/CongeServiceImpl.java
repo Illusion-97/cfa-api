@@ -185,12 +185,12 @@ public class CongeServiceImpl implements CongeService {
 			date = date.minusDays(1);
 			
 			//date.now < date debut => pas de calcul
-			if(date.compareTo(p.getDateDebut()) < 0)
+			if(date.isBefore(p.getDateDebut()))
 				continue;
 			
 			// date fin < date.now => [dateDebut,dateFin]
 			// dateDebut < date.now < dateFin => [dateDebut,date.now]
-			if(date.compareTo(p.getDateFin()) > 0)
+			if(date.isAfter(p.getDateFin()))
 				date = p.getDateFin();
 			
 				
@@ -239,7 +239,7 @@ public class CongeServiceImpl implements CongeService {
 			
 			LocalDate temp = c.getDateDebut();
 			
-			while(temp.compareTo(c.getDateFin()) <= 0) {
+			while(!temp.isAfter(c.getDateFin())) {
 				if(journeePlanningService.estJoursOuvrable(temp))
 					result++;
 				temp = temp.plusDays(1);

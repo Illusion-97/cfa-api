@@ -79,7 +79,7 @@ public interface EtudiantService {
     void fetchAllEtudiantDG2(String email, String password) throws Exception;
 
 	void fetchAllEtudiantDG2ByIdPromotion(String email, String password, long idPromotionDg2)
-			throws FetchDG2Exception, JsonProcessingException, URISyntaxException, Exception;
+			throws Exception;
 
 
 	AccueilEtudiantDto getAccueilEtudiant(long id);

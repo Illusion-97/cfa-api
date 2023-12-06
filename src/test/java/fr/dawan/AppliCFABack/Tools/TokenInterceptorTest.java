@@ -22,8 +22,8 @@ public class TokenInterceptorTest {
 
     @InjectMocks
     TokenInterceptor tokenInterceptor;
-    private static String token = "simulation.token.meow";
-    private static String malformedToken = "malformed.jwt.token.with.too.many.parts";
+    private static final String token = "simulation.token.meow";
+    private static final String malformedToken = "malformed.jwt.token.with.too.many.parts";
     HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
     HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
     JwtTokenUtil tokenUtil = Mockito.mock(JwtTokenUtil.class);

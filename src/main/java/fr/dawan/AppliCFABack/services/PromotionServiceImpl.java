@@ -69,7 +69,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Autowired
 	private DtoTools mapperTools;
 
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 	
 	@Value("${base_url_dg2}")
     private String baseUrl;
@@ -419,8 +419,8 @@ public class PromotionServiceImpl implements PromotionService {
 
 	
 	@Override
-	public String getGrillePositionnement(long idPromotion) throws GrilleException, TemplateNotFoundException, 
-	MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	public String getGrillePositionnement(long idPromotion) throws GrilleException,
+			IOException, TemplateException {
 		Optional<Promotion> promotion = promotionRepository.findById(idPromotion);
 		if (!promotion.isPresent())
 			throw new GrilleException("Promotion non trouvé");

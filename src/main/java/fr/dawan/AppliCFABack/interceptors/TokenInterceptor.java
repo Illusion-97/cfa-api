@@ -17,7 +17,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

@@ -59,7 +59,7 @@ public class EmailServiceImpl implements EmailService {
 	private Configuration freemarkerConfig;
 	@Value("${app.storagefolder}")
 	private String storageFolder;
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	@Autowired
@@ -106,20 +106,19 @@ public class EmailServiceImpl implements EmailService {
 
 		msg.setSubject("noreply - Demande de Congés");
 
-		StringBuilder str = new StringBuilder("L'étudiant ");
-		str.append(c.getUtilisateur().getPrenom());
-		str.append(" ");
-		str.append(c.getUtilisateur().getNom());
-		str.append(" de la promotion : ");
-		str.append(pSelected.getNom());
-		str.append(" a fais une demande de congé du ");
-		str.append(c.getDateDebut());
-		str.append(" au ");
-		str.append(c.getDateFin());
-		str.append(".\n");
-		str.append("Veuillez mettre à jours le status de cette demande sur le Portail CFA Dawan.");
+        String str = "L'étudiant " + c.getUtilisateur().getPrenom() +
+                " " +
+                c.getUtilisateur().getNom() +
+                " de la promotion : " +
+                pSelected.getNom() +
+                " a fais une demande de congé du " +
+                c.getDateDebut() +
+                " au " +
+                c.getDateFin() +
+                ".\n" +
+                "Veuillez mettre à jours le status de cette demande sur le Portail CFA Dawan.";
 
-		msg.setText(str.toString());
+		msg.setText(str);
 
 		javaMailSender.send(msg);
 

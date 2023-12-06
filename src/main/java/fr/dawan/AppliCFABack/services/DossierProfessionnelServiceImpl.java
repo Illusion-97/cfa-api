@@ -91,7 +91,7 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
     @Value("${app.storagefolder2}")
     private String storageFolder2;
     
-    private static Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getGlobal();
 
     /**
      * Récupération de la liste des dossiers professionnes

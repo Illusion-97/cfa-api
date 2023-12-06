@@ -58,7 +58,7 @@ public interface PromotionService {
 	
 	List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursus) throws FetchDG2Exception, URISyntaxException;
 
-	String getGrillePositionnement(long idPromotion) throws GrilleException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
+	String getGrillePositionnement(long idPromotion) throws GrilleException, IOException, TemplateException;
 	
 	List<PromotionDto> getPromoByCentreFormationIdPagination(int page, int size, long id, String search);
 

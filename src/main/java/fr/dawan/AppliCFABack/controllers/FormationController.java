@@ -29,7 +29,7 @@ public class FormationController {
 	@Autowired
 	CursusService cursusService;
 
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	// ##################################################
 	// # GET #

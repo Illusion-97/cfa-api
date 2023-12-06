@@ -24,7 +24,7 @@ public class EtudiantController {
 	EtudiantService etudiantService;
 	@Autowired
 	EmailService emailService;
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	// ##################################################
 	// # CRUD #

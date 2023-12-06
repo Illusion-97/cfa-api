@@ -36,7 +36,7 @@ public interface ExamenService {
 	 */
 //    List<EtudiantLivretEvaluationDto> getLivretEvaluation(long id);
 
-	String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws ToPdf, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
+	String generateBulletinPdfByStudentAndPromo(long etudiantId, long promotionId) throws ToPdf, IOException, TemplateException;
 
 	DoubleDto getAvgByEtudiantIdAndActiviteTypeId(long etudiantId, long activiteTypeId) throws AvgException;
 

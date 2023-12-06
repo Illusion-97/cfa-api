@@ -43,7 +43,7 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 		this.tuteurRepository = tuteurRepository;
 	}
 	
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 	
 	@Override
 	public List<TuteurDto> getAll() {

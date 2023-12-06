@@ -29,7 +29,7 @@ public class CEFServiceImpl implements CEFService {
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 	
-	private static Logger logger = Logger.getGlobal();
+	private static final Logger logger = Logger.getGlobal();
 
 	/**
 	 * Récupération de tous les CEF
