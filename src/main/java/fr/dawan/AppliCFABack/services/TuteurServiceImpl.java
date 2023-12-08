@@ -45,6 +45,11 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 	
 	private static final Logger logger = Logger.getGlobal();
 	
+	/**
+	 * Récupération de la liste des tuteurs
+	 * 
+	 * @return lstTDto	Liste des objets Tuteur
+	 */
 	@Override
 	public List<TuteurDto> getAll() {
 		List<Tuteur> lst = tuteurRepository.findAll();
@@ -56,6 +61,13 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 	
 	}
 	
+	/**
+	 * Va permettre de récupérer tous les Tuteurs avec pagination
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @return LstDto Liste des objets tuteurs
+	 */
 	@Override
 	public List<TuteurDto> getAllByPage(int page, int size) {
 		List<Tuteur> lst = tuteurRepository.findAll(PageRequest.of(page, size)).get()
@@ -66,6 +78,16 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 		}
 		return lstTDto;
 	}
+	
+	/**
+	 * Va permettre de récupérer tous les tuteurs avec pagination
+	 * recherche par nom ou prenom
+	 * 
+	 * @param page	numero de la page
+	 * @param size	éléments sur la page
+	 * @param search éléménts de l'utilisateur tuteur
+	 * @return LstDto Liste des objets tuteirs
+	 */
 	@Override
 	public List<TuteurDto> getAllByPageWithKeyword(int page, int size, String search) {
 		List<Tuteur> lst = tuteurRepository
@@ -78,6 +100,11 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 		return lstTDto;
 	}
 	
+	/**
+	 * Récupération des tuteurs en fonction de l'id
+	 * 
+	 * @param id	id du tuteur
+	 */	
 	@Override
 	public TuteurDto getById(long id) {
 		Optional<Tuteur> t= tuteurRepository.findById(id);
@@ -89,6 +116,12 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 
 		return null;
 	}
+	
+
+	/**
+	 * Sauvegarde ou mise à jour d'un tuteur
+	 * 
+	 */
 	@Override
 	public TuteurDto saveOrUpdate(TuteurDto tuteurDto) {
 		
@@ -117,6 +150,12 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 		return mapper.tuteurTotuteurDto(tuteur);
 	}
 
+	/**
+	 * Recherche tous les étudiants associés à un tuteur par son identifiant.
+	 *
+	 * @param id L'identifiant unique du tuteur.
+	 * @return Une liste d'objets EtudiantDto représentant les étudiants associés au tuteur.
+	 */
 	@Override
 	public List<EtudiantDto> findAllByTuteurId(long id) {
 		List<Etudiant> lstetud= tuteurRepository.findAllByTuteurId(id);
@@ -135,6 +174,14 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 				return lstetudDto;
 	}
 
+	/**
+	 * Récupère une liste paginée d'étudiants associés à un tuteur par son identifiant.
+	 *
+	 * @param id   L'identifiant unique du tuteur.
+	 * @param page Le numéro de la page à récupérer (commence à 0).
+	 * @param size Le nombre d'éléments par page.
+	 * @return Une liste d'objets EtudiantDto représentant les étudiants associés au tuteur pour la page spécifiée.
+	 */
 	@Override
 	public List<EtudiantDto> getAllEtudiantsByTuteurIdPerPage(long id, int page, int size) {
 		List<Etudiant> lstetud= etudiantRepository.findAllByTuteurId(id, PageRequest.of(page, size))
@@ -151,7 +198,15 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 				}
 				return lstetudDto;
 	}
-
+	/**
+	 * Récupère une liste paginée d'étudiants associés à un tuteur par son identifiant et en fonction d'une recherche.
+	 *
+	 * @param id    L'identifiant unique du tuteur.
+	 * @param page  Le numéro de la page à récupérer (commence à 0).
+	 * @param size  Le nombre d'éléments par page.
+	 * @param search Le terme de recherche pour filtrer les résultats.
+	 * @return Une liste d'objets EtudiantDto représentant les étudiants associés au tuteur et correspondant à la recherche pour la page spécifiée.
+	 */
 	@Override
 	public List<EtudiantDto> getEtudiantBySearch(long id, int page, int size, String search) {
 		List<Etudiant> lstetud= tuteurRepository.findEtudiantBySearch(id, PageRequest.of(page, size), search)
@@ -167,19 +222,36 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 					}
 				}
 				return lstetudDto;
-
 	}
-
+	
+	/**
+	 * Compte le nombre total d'étudiants associés à un tuteur par son identifiant.
+	 *
+	 * @param id L'identifiant unique du tuteur.
+	 * @return Un objet CountDto contenant le nombre d'étudiants associés au tuteur.
+	 */
 	@Override
 	public CountDto countEtudiantByIdTuteur(long id) {
 		return new CountDto(etudiantRepository.countByTuteurId(id));
 	}
-
+	/**
+	 * Compte le nombre total d'étudiants associés à un tuteur par son identifiant en fonction d'une recherche.
+	 *
+	 * @param id     L'identifiant unique du tuteur.
+	 * @param search Le terme de recherche pour filtrer les résultats.
+	 * @return Un objet CountDto contenant le nombre d'étudiants associés au tuteur correspondant à la recherche.
+	 */
 	@Override
 	public CountDto countEtudiantByIdTuteurSearch(long id, String search) {
 		return new CountDto(tuteurRepository.countByIdAndEtudiantsUtilisateurNomContainingAllIgnoringCase(id, search));
 	}
 
+	/**
+	 * Compte le nombre total d'étudiants en fonction d'une recherche sur les noms et prénoms.
+	 *
+	 * @param search Le terme de recherche pour filtrer les résultats.
+	 * @return Un objet CountDto contenant le nombre d'étudiants correspondant à la recherche.
+	 */
 	@Override
 	public CountDto count(String search) {
 		long nb = tuteurRepository.countByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(search, search);
@@ -188,6 +260,11 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 		return result;
 	}
 
+	/**
+	 * Supprime un tuteur par son identifiant.
+	 *
+	 * @param id L'identifiant unique du tuteur à supprimer.
+	 */
 	@Override
 	public void delete(long id) {
 		Optional<Tuteur> opt = tuteurRepository.findById(id);
@@ -202,6 +279,12 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 		
 	}
 
+	/**
+	 * Enregistre un nouveau tuteur avec l'utilisateur spécifié.
+	 *
+	 * @param utilisateur L'objet Utilisateur associé au nouveau tuteur.
+	 * @return L'objet Tuteur enregistré.
+	 */
 	@Override
 	public Tuteur saveTuteur(Utilisateur utilisateur) {
 		Tuteur tuteur = new Tuteur();

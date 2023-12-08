@@ -642,7 +642,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		// vérifie si email a changé et s'il est déjà utilisé par un autre utilisateur
 		if (!user.getLogin().equals(uDto.getLogin()) && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
 			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse e-mail : " + uDto.getLogin());
-		}
+
+		}	
 
 		try {
 			// si le mot de passe a été modifié on hash le nouveau mot de passe

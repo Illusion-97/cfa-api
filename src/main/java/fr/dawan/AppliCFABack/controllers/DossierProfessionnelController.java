@@ -199,9 +199,9 @@ public class DossierProfessionnelController extends GenericController<DossierPro
 		return ResponseEntity.status(HttpStatus.OK).body(dpDto);
 	}
 	
-	@PostMapping(value = "/uploadFile/{dossierId}", consumes = "multipart/form-data", produces = "application/json")
-	public ResponseEntity<DossierProEtudiantDto> saveFileImport(@Nullable @RequestParam("fileImport")MultipartFile fileImport,
-															 @PathVariable("dossierId") Long id) throws IOException {
+	@PostMapping(value = "/saveFile/{dossierId}", consumes = "multipart/form-data", produces = "application/json")
+	public ResponseEntity<DossierProEtudiantDto> saveFileImport(@RequestParam("fileImport")MultipartFile fileImport,
+															 @PathVariable("dossierId") long id) throws IOException, DossierProfessionnelException {
 		DossierProEtudiantDto dpDto = dossierProService.saveFileImport(fileImport, id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(dpDto);
 	}

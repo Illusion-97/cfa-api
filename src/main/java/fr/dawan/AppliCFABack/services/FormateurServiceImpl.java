@@ -69,7 +69,7 @@ public class FormateurServiceImpl implements FormateurService {
 
 	/**
 	 * Va permettre de récupérer tous les formateurs avec pagination
-	 * recherche par bom ou prenom
+	 * recherche par nom ou prenom
 	 * 
 	 * @param page	numero de la page
 	 * @param size	éléments sur la page

@@ -39,7 +39,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierProfessionnel, DossierProfessionnelDto> implements DossierProfessionnelService {
 
-
     @Autowired
     DossierProfessionnelRepository dossierProRepo;
     @Autowired
@@ -164,6 +163,9 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 
     /**
      * Sauvegarde ou mise à jour d'un dossier pro
+     * @param dpDto Les données à enregistrer ou mettre à jour sous forme de DossierProEtudiantDto.
+     * @param id L'identifiant unique de l'Étudiant associé au Dossier Professionnel.
+     * @param files Les annexes à associer au Dossier Professionnel sous forme de MultipartFiles.
      */
     @Override
     public DossierProEtudiantDto saveOrUpdateDossierProfessionnel(DossierProEtudiantDto dpDto, long id, List<MultipartFile> files) {
@@ -240,7 +242,6 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
      * @return dossier pro de l'etudiant concerné
      */
 
-
     @Override
     public List<DossierProfessionnelDto> getByIdEtudiant(long id) {
     	
@@ -281,7 +282,10 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         return null;
     }
 
-   
+    /**
+     * Recuperation des dossier pro
+     *
+     */
     @Override
     public List<DossierProEtudiantDto> getAllDossierProfessionnel() {
         List<DossierProfessionnel> lstDossierProfessionnel = dossierProRepo.findAllDossierPro();
@@ -294,7 +298,10 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         return lstDossierProfessionnelDto;
     }
 
-
+    /**
+     * Recuperation du dossier pro par etudiant id
+     *
+     */
     @Override
     public GetDossierProDto getAllDossierProfessionnelByEtudiant(long id) {
 
@@ -303,7 +310,11 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
         return eDto;
     }
     
-
+    /**
+     * Compte le nombre de Dossiers Professionnels dont le nom correspond à la recherche fournie.
+     *
+     * @param search La chaîne de recherche pour filtrer les Dossiers Professionnels par nom.
+     */
 	@Override
 	public CountDto count(String search) {
 		long nb = dossierProRepo.countByNom(search);
@@ -312,6 +323,11 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 		return result;
 	}
 
+	/**
+	 * Supprime un Dossier Professionnel par son identifiant.
+	 *
+	 * @param id L'identifiant unique du Dossier Professionnel à supprimer.
+	 */
 	@Override
 	public void delete(long id) {
 		Optional<DossierProfessionnel> opt = dossierProRepo.findById(id);
@@ -329,6 +345,12 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 		
 	}
 
+	/**
+	 * Supprime un fichier d'import spécifié d'un Dossier Professionnel par son identifiant.
+	 *
+	 * @param id L'identifiant unique du Dossier Professionnel.
+	 * @param fileImport Le nom du fichier d'import à supprimer.
+	 */
 
 	@Override
 	public DossierProEtudiantDto deleteFileImportById(long id, String fileImport) {
@@ -362,30 +384,58 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 	}
 
 
+	/**
+	 * Enregistre ou met à jour un fichier d'import dans un Dossier Professionnel.
+	 *
+	 * @param fileImport Le fichier à enregistrer.
+	 * @param dossierId L'identifiant unique du Dossier Professionnel.
+	 */
 	@Override
-	public DossierProEtudiantDto saveFileImport(MultipartFile fileImport, Long dossierId) throws IOException {
-		DossierProfessionnel dp = dossierProRepo.getByDossierbyId(dossierId);
-		String nomFile = dp.getFileImport();
-		String path = storageFolder2 + "DossierProfessionnel" + "/" + nomFile;
-		File fichier = new File(path);
-		if (fichier.exists()) {
-			fichier.delete();
-		}
-			String file = fileImport.getOriginalFilename();
-			String pathDossierProjet = storageFolder2 + "DossierProfessionnel" + "/" + file;
-			File newFile = new File(path);
-		    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
-		    bos.write(fileImport.getBytes());
-		    bos.close();
-			dp.setFileImport(file);
-			DossierProEtudiantDto dpDto = mapper.dossierProfessionnelToDossierProEtudiantDto(dp);
-			return dpDto;
+	public DossierProEtudiantDto saveFileImport(MultipartFile fileImport, long dossierId) throws IOException {
+	    DossierProfessionnel dp = dossierProRepo.getByDossierbyId(dossierId);
+	    
+	    String nomFile = dp.getFileImport();
+	    String path = storageFolder2 + "DossierProfessionnel" + "/" + nomFile;
+	    File fichier = new File(path);
+	    if (fichier.exists()) {
+	        fichier.delete();
+	    }
+	    
+	    String file = fileImport.getOriginalFilename();
+	    String pathDossier = storageFolder2 + "DossierProfessionnel" + "/" + file;
+	    File newFile = new File(pathDossier);
+	    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
+	    bos.write(fileImport.getBytes());
+	    bos.close();
+	    
+	    dp.setFileImport(file);
+	    try {
+            // Mettre à jour  dp dans la bd
+            dp = dossierProRepo.save(dp);
+            DossierProEtudiantDto dpDto = mapper.dossierProfessionnelToDossierProEtudiantDto(dp);
+            return dpDto;
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            return null;
+        }
 	}
 
+	/**
+	 * Génère un fichier PDF représentant les informations d'un Dossier Professionnel.
+	 *
+	 * @param dossierId L'identifiant unique du Dossier Professionnel.
+	 * @throws PdfTools Exception liée aux outils PDF.
+	 * @throws IOException Exception liée à l'entrée/sortie.
+	 * @throws TemplateException Exception liée au traitement des templates Freemarker.
+	 */
 	  @Override
 		public String generateDossierProPdf(long dossierId) throws PdfTools, IOException, TemplateException {
+		 
 		    Optional<DossierProfessionnel> dp = dossierProRepo.findById(dossierId);
-
+		    
+		    if (dp.isPresent()) {
+		        DossierProfessionnel d = dp.get();
+		
 		    if (dp.isPresent()) {
 		        DossierProfessionnel dossier = dp.get();
 
@@ -467,10 +517,16 @@ public class DossierProfessionnelServiceImpl extends GenericServiceImpl<DossierP
 				}
 	            return outputPdf;
 	        }
+		    }
 	        return null;
 	    } 
 
-
+	  /**
+	   * Envoie un e-mail au tuteur d'un étudiant pour l'informer de la création ou de la modification d'un Dossier Professionnel.
+	   *
+	   * @param dp Le DossierProEtudiantDto représentant les informations du Dossier Professionnel.
+	   * @param id L'identifiant unique de l'étudiant.
+	   */
     public void emailTuteurDossierProfessionnelle(DossierProEtudiantDto dp, long id)
             throws TemplateException, DossierProfessionnelException, IOException {
         Optional<Etudiant> student = etudiantRepository.findById(id);

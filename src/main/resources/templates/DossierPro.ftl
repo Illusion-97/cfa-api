@@ -38,6 +38,11 @@ margin-right:20%;}
 </head>
 <body>
 <#assign currentPage = 0>
+<#if dp.fileImport??>
+    <div>
+          <img class="fileImport" src="${backendUrl}/pictures/DossierProfessionnel/${dp.fileImport}" alt="File Importé">
+        </div>
+        <#else>
 <#---------------------------------------------------PAGE 1--------------------------------------------------------->
 <div class="divTitlePage1">
     <img class=" frenchRepublic" src="${backendUrl}/pictures/frenchRepublic.jpg" alt="image république française">
@@ -567,13 +572,12 @@ margin-right:20%;}
         </#list>
         </#if>
 </div>
+</#if>
 <div class="page-footer">
     Page ${currentPage}
 </div>
 <footer>
         <small>DOSSIER PROFESSIONNEL-Version du 11/09/2017</small>
         </footer>
-
-        
 </body>
 </html>

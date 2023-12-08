@@ -24,9 +24,14 @@ public class AnnexeServiceImpl extends GenericServiceImpl<Annexe, AnnexeDto> imp
 	public AnnexeServiceImpl(AnnexeRepository repository) {
 		super(repository, AnnexeDto.class, Annexe.class);
 		this.annexeRepo = repository;
-
 	}
 
+	/**
+	 * Supprime une annexe par son identifiant.
+	 *
+	 * @param annexeId L'identifiant unique de l'annexe à supprimer.
+	 * @return true si la suppression est réussie, false sinon.
+	 */
 	@Override
 	public boolean deleteAnnexe(Long annexeId) {
 

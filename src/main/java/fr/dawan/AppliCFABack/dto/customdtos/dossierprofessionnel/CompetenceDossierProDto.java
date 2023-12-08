@@ -13,6 +13,7 @@ public class CompetenceDossierProDto implements Serializable {
     private String libelle;
 
     private byte numeroFiche;
+    
 
     private int version;
 
@@ -26,7 +27,7 @@ public class CompetenceDossierProDto implements Serializable {
         this.id = id;
     }
 
-    public String getLibelle() {
+	public String getLibelle() {
         return libelle;
     }
 

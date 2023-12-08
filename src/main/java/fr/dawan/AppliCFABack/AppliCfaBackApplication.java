@@ -66,11 +66,11 @@ public class AppliCfaBackApplication {
 						.allowCredentials(true).maxAge(3600);
 			}
 
-			// Intercepteurs
+			/* Intercepteurs
 			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
 			 registry.addInterceptor(tokenInterceptor);
-			}
+			}*/
 
 			@Override
 			public void addResourceHandlers(ResourceHandlerRegistry registry) {
