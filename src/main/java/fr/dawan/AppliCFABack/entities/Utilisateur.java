@@ -287,7 +287,33 @@ public class Utilisateur extends BaseEntity implements Serializable {
             role.getUtilisateurs().add(this);
         }
     }
-
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (active ? 1231 : 1237);
+		result = prime * result + ((adresse == null) ? 0 : adresse.hashCode());
+		result = prime * result + ((cef == null) ? 0 : cef.hashCode());
+		result = prime * result + ((centreFormation == null) ? 0 : centreFormation.hashCode());
+		result = prime * result + ((civilite == null) ? 0 : civilite.hashCode());
+		result = prime * result + ((dateDeNaissance == null) ? 0 : dateDeNaissance.hashCode());
+		result = prime * result + ((entreprise == null) ? 0 : entreprise.hashCode());
+		result = prime * result + ((etudiant == null) ? 0 : etudiant.hashCode());
+		result = prime * result + (externalAccount ? 1231 : 1237);
+		result = prime * result + ((formateur == null) ? 0 : formateur.hashCode());
+		result = prime * result + (int) (idDg2 ^ (idDg2 >>> 32));
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());
+		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
+		result = prime * result + ((signature == null) ? 0 : signature.hashCode());
+		result = prime * result + ((telephone == null) ? 0 : telephone.hashCode());
+		result = prime * result + ((telephoneFixe == null) ? 0 : telephoneFixe.hashCode());
+		return result;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -328,6 +354,7 @@ public class Utilisateur extends BaseEntity implements Serializable {
 			return other.civilite == null;
 		} else return civilite.equals(other.civilite);
 	}
+
 
 	@Override
 	public String toString() {

@@ -1,17 +1,18 @@
 package fr.dawan.AppliCFABack.services;
 
-import fr.dawan.AppliCFABack.dto.PromotionDto;
-import fr.dawan.AppliCFABack.dto.UtilisateurDto;
-import fr.dawan.AppliCFABack.entities.Conge;
-import fr.dawan.AppliCFABack.entities.Utilisateur;
-import fr.dawan.AppliCFABack.interceptors.TokenSaver;
-import fr.dawan.AppliCFABack.repositories.*;
-import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
-import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
-import fr.dawan.AppliCFABack.tools.TimerCache;
-import fr.dawan.AppliCFABack.tools.ToPdf;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -24,17 +25,22 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import javax.transaction.Transactional;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.UtilisateurDto;
+import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.interceptors.TokenSaver;
+import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
+import fr.dawan.AppliCFABack.repositories.CongeRepository;
+import fr.dawan.AppliCFABack.repositories.FormateurRepository;
+import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
+import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
+import fr.dawan.AppliCFABack.tools.JwtTokenUtil;
+import fr.dawan.AppliCFABack.tools.TimerCache;
+import fr.dawan.AppliCFABack.tools.ToPdf;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 
 @Service
 @Transactional
@@ -71,6 +77,7 @@ public class EmailServiceImpl implements EmailService {
 
 	@Autowired
 	private TimerCache timerCache;
+
 	/**
 	 * Envoi de mail au referent pour la demande de congé
 	 *
@@ -106,17 +113,10 @@ public class EmailServiceImpl implements EmailService {
 
 		msg.setSubject("noreply - Demande de Congés");
 
-        String str = "L'étudiant " + c.getUtilisateur().getPrenom() +
-                " " +
-                c.getUtilisateur().getNom() +
-                " de la promotion : " +
-                pSelected.getNom() +
-                " a fais une demande de congé du " +
-                c.getDateDebut() +
-                " au " +
-                c.getDateFin() +
-                ".\n" +
-                "Veuillez mettre à jours le status de cette demande sur le Portail CFA Dawan.";
+		String str = "L'étudiant " + c.getUtilisateur().getPrenom() + " " + c.getUtilisateur().getNom()
+				+ " de la promotion : " + pSelected.getNom() + " a fais une demande de congé du " + c.getDateDebut()
+				+ " au " + c.getDateFin() + ".\n"
+				+ "Veuillez mettre à jours le status de cette demande sur le Portail CFA Dawan.";
 
 		msg.setText(str);
 
@@ -157,8 +157,8 @@ public class EmailServiceImpl implements EmailService {
 		msg.addRecipients(Message.RecipientType.TO, uDto.getLogin());
 		msg.setSubject("Réinitialisation du mot de passe du CFA Dawan");
 		msg.setText("Bonjour " + uDto.getNom()
-						+ ". <br /><br />Ce message vous a été envoyé car vous avez oublié votre mot de passe sur l'application"
-						+ " CFA Dawan. <br />Pour réinitialiser votre mot de passe, veuillez cliquer sur ce lien : " + body,
+				+ ". <br /><br />Ce message vous a été envoyé car vous avez oublié votre mot de passe sur l'application"
+				+ " CFA Dawan. <br />Pour réinitialiser votre mot de passe, veuillez cliquer sur ce lien : " + body,
 				"UTF-8", "html");
 
 		emailSender.send(msg);
@@ -166,7 +166,7 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
-	public void sendMailUser1ToUser2(String from, String to, String header, String msg){
+	public void sendMailUser1ToUser2(String from, String to, String header, String msg) {
 
 		try {
 			MimeMessage message = emailSender.createMimeMessage();
@@ -177,13 +177,12 @@ public class EmailServiceImpl implements EmailService {
 
 			emailSender.send(message);
 		} catch (Exception e) {
-			logger.log(Level.SEVERE,"sendMailUser1ToUser2 failed", e);
+			logger.log(Level.SEVERE, "sendMailUser1ToUser2 failed", e);
 		}
 	}
 
 	@Override
-	public <T> void sendMailUser1ToUser2(String from, String to, String header, String msg,
-										 String nameFile, T tDto){
+	public <T> void sendMailUser1ToUser2(String from, String to, String header, String msg, String nameFile, T tDto) {
 
 		try {
 			MimeMessage message = emailSender.createMimeMessage();
@@ -202,7 +201,7 @@ public class EmailServiceImpl implements EmailService {
 
 			String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 			// TODO modifier le fichier ftl
-			String outputPdf = storageFolder + "pdfEmail/"+ nameFile +".pdf";
+			String outputPdf = storageFolder + "pdfEmail/" + nameFile + ".pdf";
 			try {
 				ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
 			} catch (Exception e) {
@@ -213,12 +212,13 @@ public class EmailServiceImpl implements EmailService {
 
 			emailSender.send(message);
 		} catch (Exception e) {
-			logger.log(Level.SEVERE,"sendMailUser1ToUser2 failed", e);
+			logger.log(Level.SEVERE, "sendMailUser1ToUser2 failed", e);
 		}
 	}
 
 	@Override
-	public void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path, Optional<String> fileName) {
+	public void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path,
+			Optional<String> fileName) {
 		Optional<Utilisateur> user = userRepository.findById(idTo);
 
 		if (user.isPresent()) {
@@ -230,48 +230,46 @@ public class EmailServiceImpl implements EmailService {
 				helper.setText(msg, true);
 
 				// Partie pour ajouter un pdf si un "path" est renseigné
-				String pdfFilePath = path.get(); // Utilisez le chemin du fichier PDF s'il est présent
-				if (!pdfFilePath.isEmpty()) {
-					FileSystemResource pdfFile = new FileSystemResource(pdfFilePath);
-					helper.addAttachment(String.valueOf(fileName), pdfFile);
+				if (path.isPresent()) { // Vérifiez si path est présent avant d'y accéder
+					String pdfFilePath = path.get();
+					if (!pdfFilePath.isEmpty()) {
+						FileSystemResource pdfFile = new FileSystemResource(pdfFilePath);
+						helper.addAttachment(String.valueOf(fileName), pdfFile);
+					}
 				}
 
 				emailSender.send(message);
 			} catch (Exception e) {
-				logger.log(Level.SEVERE,"sendMailSmtpUser failed", e);
+				logger.log(Level.SEVERE, "sendMailSmtpUser failed", e);
 			}
 		} else {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
 		}
 	}
 
-	private void cacheTimer(long idUser){
+	private void cacheTimer(long idUser) {
 		LocalDate timer = LocalDate.now();
 
 	}
 	/**
-	 * Envoi de automatique pour prévenir le formateur de remplir le livret d'évaluation des étudiants lui étant affilié
-	 * avant 3
+	 * Envoi de automatique pour prévenir le formateur de remplir le livret
+	 * d'évaluation des étudiants lui étant affilié avant 3
 	 *
 	 * @param c objet Conge
 	 * @return SimpleMailMessage a être envoyé
-
-	@Override
-	public void scheduleMailSender(long idUser) {
-		boolean isInCache = timerCache.startTimerForUserConnected(idUser, 5);
-		if (isInCache){
-			if (userRepository.isLivretFormateurReferentEmpty(idUser)){
-				List<Optional<LocalDate>> dateFinPromotion = userRepository.findDatePromotionOfFormateurByUtilisateurId(idUser);
-				Period dateDiff = Period.between(LocalDate.now(), dateFinPromotion.get());
-				if (dateDiff.getYears() < 2 && dateDiff.getMonths() <= 3) {
-					ScheduledExecutorService threadUsesForSchedule = Executors.newScheduledThreadPool(1);
-					String message = "Pensez à remplir l'évaluation : " + idUser;
-					threadUsesForSchedule.schedule(() -> {
-						sendMailSmtpUser(idUser, "Titre automatique", message, Optional.of(""), Optional.of(""));
-					},1, TimeUnit.SECONDS);
-				}
-			}
-		}
-	}
-	*/
+	 * 
+	 * @Override public void scheduleMailSender(long idUser) { boolean isInCache =
+	 *           timerCache.startTimerForUserConnected(idUser, 5); if (isInCache){
+	 *           if (userRepository.isLivretFormateurReferentEmpty(idUser)){
+	 *           List<Optional<LocalDate>> dateFinPromotion =
+	 *           userRepository.findDatePromotionOfFormateurByUtilisateurId(idUser);
+	 *           Period dateDiff = Period.between(LocalDate.now(),
+	 *           dateFinPromotion.get()); if (dateDiff.getYears() < 2 &&
+	 *           dateDiff.getMonths() <= 3) { ScheduledExecutorService
+	 *           threadUsesForSchedule = Executors.newScheduledThreadPool(1); String
+	 *           message = "Pensez à remplir l'évaluation : " + idUser;
+	 *           threadUsesForSchedule.schedule(() -> { sendMailSmtpUser(idUser,
+	 *           "Titre automatique", message, Optional.of(""), Optional.of(""));
+	 *           },1, TimeUnit.SECONDS); } } } }
+	 */
 }

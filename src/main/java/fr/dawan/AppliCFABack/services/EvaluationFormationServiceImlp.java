@@ -53,7 +53,7 @@ public class EvaluationFormationServiceImlp implements EvaluationFormationServic
 	public EvaluationFormationDto saveOrUpdate(EvaluationFormationDto tDto) throws SaveInvalidException {
 
 		EvaluationFormation evaluationF =  mapper.evaluationDtoToEvaluation(tDto);
-		if(evaluationF.getDateEvaluation().equals(null) || evaluationF.getContenu().equals("") || evaluationF.getCompetencesEvaluees().isEmpty()){
+		if(evaluationF.getDateEvaluation() == null || evaluationF.getContenu() == null || evaluationF.getCompetencesEvaluees().isEmpty()){
 			throw new NullPointerException("Tout les champs doivent être rempli");
 		}
 		return mapper.evaluationToEvaluationDto(evaluationFormationRepository.saveAndFlush(evaluationF));
