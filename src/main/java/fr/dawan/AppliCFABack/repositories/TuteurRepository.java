@@ -17,7 +17,6 @@ public interface TuteurRepository extends JpaRepository<Tuteur , Long>{
 	
 	long countByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(String prenom, String nom);
 
-	// liste des Tuteurs + recherche par mot clé
 	Page<Tuteur> findAllByUtilisateurPrenomContainingOrUtilisateurNomContainingAllIgnoreCase(String prenom, String nom, Pageable p);
 
 	Optional<Tuteur> findByUtilisateurId(long id);

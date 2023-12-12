@@ -216,6 +216,7 @@ public class EmailServiceImpl implements EmailService {
 		}
 	}
 
+
 	@Override
 	public void sendMailSmtpUser(long idTo, String header, String msg, Optional<String> path,
 			Optional<String> fileName) {

@@ -12,6 +12,10 @@ import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -304,4 +308,46 @@ public interface DtoMapper {
     @Mapping(source = "utilisateur", target = "utilisateurDto")
     @Mapping(source = "promotions", target = "promotionsDto")
     EtudiantSoutenanceDto etudiantToEtudiantSoutenanceDto(Etudiant etudiant);
+
+    /*@Named("dateFormationReel")
+    default int dateFormationReels(LocalDate dateEntree, LocalDate dateFin){
+        return Period.between(dateEntree, dateFin).getMonths();
+    }*/
+    @Mapping(source = "utilisateur.telephone", target = "numeroTelephoneJeune")
+    @Mapping(source = "utilisateur.login", target = "adresseMailJeune")
+    @Mapping(source = "utilisateur.dateDeNaissance", target = "dateNaissanceJeune")
+    @Mapping(source = "utilisateur.civilite", target = "sexeJeune")
+    @Mapping(source = "utilisateur.prenom", target = "premierPrenomJeune")
+    @Mapping(source = "utilisateur.nom", target = "nomFamilleJeune")
+    @Mapping(source = "dureeMoisFormationReelle", target = "dureeMoisFormationReelle")
+    @Mapping(source = "promotion.dateDebut", target = "dateEntreeCfa")
+    //@Mapping(source = "promotion.dateFin", target = "dateDebutContratApprentissage")
+    @Mapping(source = "promotion.dateFin", target = "dateRuptureContrat")
+    @Mapping(source = "adresseUser.libelle", target = "adressePostaleJeune")
+    @Mapping(source = "adresseUser.codePostal", target = "codePostalResidenceJeune")
+   // @Mapping(source = "adresseUser.codePostal", target = "codeCommuneResidenceJeune")
+    @Mapping(source = "entreprise.naf", target = "codeNafEtablissementEmployeur")
+    @Mapping(source = "entreprise.effectifTotal", target = "nombreSalariesEntrepriseEmployeur")
+    @Mapping(source = "entreprise.siret", target = "numeroSiretEntrepriseEmployeur")
+    @Mapping(source = "entreprise.adresseSiege.codePostal", target = "codeCommuneEtablissementEmployeur")
+    SifaDto sifaToSifaDto(Sifa sifa);
+
+    @Mapping(source = "numeroTelephoneJeune", target = "utilisateur.telephone")
+    @Mapping(source = "adresseMailJeune", target = "utilisateur.login")
+    @Mapping(source = "dateNaissanceJeune", target = "utilisateur.dateDeNaissance")
+    @Mapping(source = "sexeJeune", target = "utilisateur.civilite")
+    @Mapping(source = "premierPrenomJeune", target = "utilisateur.prenom")
+    @Mapping(source = "nomFamilleJeune", target = "utilisateur.nom")
+    @Mapping(source = "dureeMoisFormationReelle", target = "dureeMoisFormationReelle")
+    @Mapping(source = "dateEntreeCfa", target = "promotion.dateDebut")
+    //@Mapping(source = "dateDebutContratApprentissage", target = "promotion.dateFin")
+    @Mapping(source = "dateRuptureContrat", target = "promotion.dateFin")
+    @Mapping(source = "adressePostaleJeune", target = "adresseUser.libelle")
+    @Mapping(source = "codePostalResidenceJeune", target = "adresseUser.codePostal")
+    //@Mapping(source = "codeCommuneResidenceJeune", target = "adresseUser.codePostal")
+    @Mapping(source = "codeNafEtablissementEmployeur", target = "entreprise.naf")
+    @Mapping(source = "nombreSalariesEntrepriseEmployeur", target = "entreprise.effectifTotal")
+    @Mapping(source = "numeroSiretEntrepriseEmployeur", target = "entreprise.siret")
+    @Mapping(source = "codeCommuneEtablissementEmployeur", target = "entreprise.adresseSiege.codePostal")
+    Sifa sifaDtoToSifa(SifaDto sifaDto);
 }

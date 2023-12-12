@@ -47,7 +47,7 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 	
 	/**
 	 * Récupération de la liste des tuteurs
-	 * 
+	 *
 	 * @return lstTDto	Liste des objets Tuteur
 	 */
 	@Override
@@ -63,7 +63,7 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 	
 	/**
 	 * Va permettre de récupérer tous les Tuteurs avec pagination
-	 * 
+	 *
 	 * @param page	numero de la page
 	 * @param size	éléments sur la page
 	 * @return LstDto Liste des objets tuteurs
@@ -78,11 +78,11 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 		}
 		return lstTDto;
 	}
-	
+
 	/**
 	 * Va permettre de récupérer tous les tuteurs avec pagination
 	 * recherche par nom ou prenom
-	 * 
+	 *
 	 * @param page	numero de la page
 	 * @param size	éléments sur la page
 	 * @param search éléménts de l'utilisateur tuteur
@@ -102,9 +102,9 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 	
 	/**
 	 * Récupération des tuteurs en fonction de l'id
-	 * 
+	 *
 	 * @param id	id du tuteur
-	 */	
+	 */
 	@Override
 	public TuteurDto getById(long id) {
 		Optional<Tuteur> t= tuteurRepository.findById(id);
@@ -116,12 +116,13 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 
 		return null;
 	}
-	
+
 
 	/**
 	 * Sauvegarde ou mise à jour d'un tuteur
-	 * 
+	 *
 	 */
+
 	@Override
 	public TuteurDto saveOrUpdate(TuteurDto tuteurDto) {
 		
@@ -222,8 +223,9 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 					}
 				}
 				return lstetudDto;
+
 	}
-	
+
 	/**
 	 * Compte le nombre total d'étudiants associés à un tuteur par son identifiant.
 	 *
