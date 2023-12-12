@@ -34,13 +34,18 @@ public class Formateur extends BaseEntity implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((utilisateur == null) ? 0 : utilisateur.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (!(obj instanceof Formateur)) return false;
 		Formateur formateur = (Formateur) obj;
 		return   Objects.equals(getUtilisateur(), formateur.getUtilisateur());
 	}
-	
-	
-
 }

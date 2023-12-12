@@ -125,9 +125,9 @@ public class ExamenController {
 			@RequestPart("file") MultipartFile file) throws SaveInvalidException, IOException {
 
 		File f = new File(storageFolder + "/examens/" + file.getOriginalFilename());
-		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f));
-		bos.write(file.getBytes());
-		bos.close();
+		try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f))) {
+	        bos.write(file.getBytes());
+	    }
 		ExamenDtoSave examenDto = objectMapper.readValue(examStr, ExamenDtoSave.class);
 		examenDto.setPieceJointe(file.getOriginalFilename());
 		ExamenDtoSave result = examenService.saveOrUpdate(examenDto);

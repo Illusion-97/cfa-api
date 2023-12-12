@@ -170,7 +170,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		this.ldapTechnicalAccPwd = ldapTechnicalAccPwd;
 	}
 
-	private static final Logger logger = LoggerFactory.getLogger(UtilisateurRoleServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(UtilisateurServiceImpl.class);
 
 	/**
 	 * Récupération de la liste des utilisateurs
@@ -1309,13 +1309,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 							try {
 								newUser.setNom(userAttr.get("sn").get(0).toString());
 							} catch (Exception e) {
-								e.printStackTrace();
+								logger.error("Exception setNom",e);
 							}
 
 							try {
 								newUser.setPrenom(userAttr.get("givenName").get(0).toString());
 							} catch (Exception e) {
-								e.printStackTrace();
+								logger.error("setPrenom setNom",e);
 							}
 							newUser = utilisateurRepository.saveAndFlush(newUser);
 							return createTokenFromUser(newUser);
@@ -1323,13 +1323,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 						namingEnum.close();
 						ctx.close();
 					} catch (Exception e) {
-						e.printStackTrace();
+						logger.error("ctx failed",e);
 						throw new Exception("Error : Directory search Error !");
 					}
 				}
 
 			} catch (Exception ex) {
-				// ex.printStackTrace(); // TODO comment before prod
 				throw new Exception("Error : invalid credentials !");
 			}
 		} else { // login via Db
