@@ -177,7 +177,7 @@ public class EmailServiceImpl implements EmailService {
 
 			emailSender.send(message);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"sendMailUser1ToUser2 failed", e);
 		}
 	}
 
@@ -213,7 +213,7 @@ public class EmailServiceImpl implements EmailService {
 
 			emailSender.send(message);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"sendMailUser1ToUser2 failed", e);
 		}
 	}
 
@@ -238,7 +238,7 @@ public class EmailServiceImpl implements EmailService {
 
 				emailSender.send(message);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE,"sendMailSmtpUser failed", e);
 			}
 		} else {
 			ResponseEntity.status(HttpStatus.NOT_FOUND);
