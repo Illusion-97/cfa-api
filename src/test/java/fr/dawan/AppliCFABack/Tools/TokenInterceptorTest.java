@@ -21,11 +21,10 @@ public class TokenInterceptorTest {
 
     @InjectMocks
     TokenInterceptor tokenInterceptor;
-    private static String token = "simulation.token.meow";
+    private static String token = "simulation.token.cfa";
     private static String malformedToken = "malformed.jwt.token.with.too.many.parts";
     HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
     HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
-    JwtTokenUtil tokenUtil = Mockito.mock(JwtTokenUtil.class);
     @BeforeEach
     public void init() {
         tokenInterceptor = new TokenInterceptor();

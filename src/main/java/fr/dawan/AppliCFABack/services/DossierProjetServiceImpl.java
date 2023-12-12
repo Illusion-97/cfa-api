@@ -191,12 +191,9 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	}
 	
 	/**
-	 * Va permettre de récupérer tous les dossier projets avec pagination recherche
-	 * par nom
+	 * Save du Dossier Projet en créant un directory + envoi de mail
 	 * 
 	 * @param DossierProjet
-	 * @param id id de l'étudiant
-	 * @param files file pour les annexes
 	 * @return dpDto Dto du Dossier Projet
 	 */
 
@@ -212,7 +209,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		if (dpDto.getEtudiant() == null){
 			return;
 		}
-		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dpDto.getEtudiant().getId()) + dpDto.getEtudiant().getId() + "_" + dpDto.getNom() +"/";
+		String nomDossierEtudiant = utilisateurRepository.findByIdEtudiant(dpDto.getEtudiant().getId())
+				+ dpDto.getEtudiant().getId() + "_" + dpDto.getNom() +"/";
 
 		Path isPathPresent = Paths.get(storageFolder + "/DossierProjet/" + nomDossierEtudiant);
 		if (!Files.isDirectory(isPathPresent)){
@@ -249,7 +247,8 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 		String header = "Votre étudiant " + student.getUtilisateur().getFullName() + " a crée son Dossier Projet";
 		String message = "Le Dossier " + dp.getNom() + " du projet " + dp.getProjet().getNom() + " a été crée";
 
-		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier : <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/"+ student.getId()+"\">Voir le dossier </a>";
+		String body = message + "</br>Veuillez cliquer sur ce lien pour voir le dossier :" +
+				" <a href=\"http://localhost:8080/#/tuteur/detailEtudiant/" + student.getId()+"\">Voir le dossier </a>";
 
 		if (dp.getVersion() > 0) {
 			header = "Votre étudiant " + student.getUtilisateur().getFullName() + " à ajouté des modification à son Dossier Projet";

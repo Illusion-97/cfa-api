@@ -89,6 +89,7 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 
 		return null;
 	}
+
 	@Override
 	public TuteurDto saveOrUpdate(TuteurDto tuteurDto) {
 		
@@ -153,7 +154,7 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 	}
 
 	@Override
-	public List<EtudiantDto> getEtudiantBySearch(long id, int page, int size, String search) {
+	public List<EtudiantDto> getEtudiantByTuteurAndBySearch(long id, int page, int size, String search) {
 		List<Etudiant> lstetud= tuteurRepository.findEtudiantBySearch(id, PageRequest.of(page, size), search)
 				.get()
 				.collect(Collectors.toList());
@@ -162,7 +163,6 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 				{
 					if (etudiant != null) {
 						EtudiantDto etudDto = mapper.etudiantToEtudiantDto(etudiant);
-						etudDto.setUtilisateurDto(mapper.utilisateurToUtilisateurDto(etudiant.getUtilisateur()));	
 						lstetudDto.add(etudDto);
 					}
 				}

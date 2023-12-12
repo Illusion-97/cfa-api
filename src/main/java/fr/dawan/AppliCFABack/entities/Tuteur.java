@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @SuppressWarnings("serial")
-@Entity //unmapped prb
+@Entity
 public class Tuteur extends BaseEntity implements Serializable{
 	
 	@OneToOne

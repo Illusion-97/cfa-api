@@ -36,11 +36,6 @@ public class DossierProjetController {
 	EtudiantService etudiantService;
 	@Autowired
 	FilesService fileService;
-	@Autowired
-	private EmailService emailService;
-	
-	@Value("${app.storagefolder}")
-	private String storageFolder;
 
 	@GetMapping(produces = "application/json")
 	public List<DossierProjetDto> getAll() {

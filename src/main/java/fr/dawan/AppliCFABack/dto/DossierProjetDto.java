@@ -16,7 +16,6 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class DossierProjetDto extends BaseEntityDto implements Serializable {
-
 	private long id;
 	private String nom;
 	private String fullName;
