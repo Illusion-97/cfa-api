@@ -209,7 +209,7 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 	 * @return Une liste d'objets EtudiantDto représentant les étudiants associés au tuteur et correspondant à la recherche pour la page spécifiée.
 	 */
 	@Override
-	public List<EtudiantDto> getEtudiantBySearch(long id, int page, int size, String search) {
+	public List<EtudiantDto> getEtudiantByTuteurAndBySearch(long id, int page, int size, String search) {
 		List<Etudiant> lstetud= tuteurRepository.findEtudiantBySearch(id, PageRequest.of(page, size), search)
 				.get()
 				.collect(Collectors.toList());
@@ -294,6 +294,8 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 		
 		return tuteurRepository.save(tuteur);
 	}
+
+	
 	
 	
 
