@@ -6,9 +6,7 @@ import java.io.Serializable;
 public class TuteurDto extends BaseEntityDto implements Serializable{
 
 	private UtilisateurDto utilisateurDto;
-	//private List<Etudiant> etudiants;
-	
-	
+
 	public TuteurDto() {
 		super();
 	}

@@ -4,6 +4,9 @@ import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.services.EtudiantService;
 import fr.dawan.AppliCFABack.services.FilesService;
 import fr.dawan.AppliCFABack.services.InterventionService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,8 @@ public class InterventionController {
 	EtudiantService etudiantService;
 	@Autowired
 	FilesService filesService;
+	
+	private static final Logger logger = LoggerFactory.getLogger(InterventionController.class);
 
 	// ##################################################
 	// # GET #
@@ -172,7 +177,7 @@ public class InterventionController {
 			}
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Interventions updated");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Exception", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error while fetching data from the webservice DG2");
 		}

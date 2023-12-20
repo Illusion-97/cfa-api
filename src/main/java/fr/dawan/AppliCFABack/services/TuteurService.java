@@ -26,7 +26,7 @@ public interface TuteurService extends GenericService<TuteurDto>{
 	
 	List<EtudiantDto> getAllEtudiantsByTuteurIdPerPage(long id, int page, int size);
 	
-	List<EtudiantDto> getEtudiantBySearch(long id, int page, int size, String search);
+	List<EtudiantDto> getEtudiantByTuteurAndBySearch(long id, int page, int size, String search);
 	
 	CountDto countEtudiantByIdTuteur(long id);
 

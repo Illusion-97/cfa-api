@@ -1,5 +1,30 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import fr.dawan.AppliCFABack.dto.DossierProjetDto;
 import fr.dawan.AppliCFABack.entities.DossierProjet;
 import fr.dawan.AppliCFABack.entities.Etudiant;
@@ -11,27 +36,9 @@ import fr.dawan.AppliCFABack.repositories.TuteurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import fr.dawan.AppliCFABack.tools.ToPdf;
-import freemarker.core.ParseException;
-import freemarker.template.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.transaction.Transactional;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 /**
  * 
@@ -73,12 +80,11 @@ public class DossierProjetServiceImpl implements DossierProjetService {
 	String pathDpRef = storageFolder + "/DossierProjet/";
 
 	private void saveFile(MultipartFile file, String filePath) throws IOException {
-	    File newFile = new File(filePath);
-	    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
-	    bos.write(file.getBytes());
-	    bos.close();
+	    try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(filePath)))) {
+	        bos.write(file.getBytes());
+	    }
 	}
-
+	
 	/**
 	 * Récupération de la liste des dossiers projets
 	 * 

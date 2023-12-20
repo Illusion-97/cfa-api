@@ -30,6 +30,7 @@ import fr.dawan.AppliCFABack.dto.NoteDto;
 import fr.dawan.AppliCFABack.dto.PassageExamenDto;
 import fr.dawan.AppliCFABack.dto.ProjetDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
+import fr.dawan.AppliCFABack.dto.SifaDto;
 import fr.dawan.AppliCFABack.dto.SoutenanceDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
@@ -68,10 +69,12 @@ import fr.dawan.AppliCFABack.entities.Note;
 import fr.dawan.AppliCFABack.entities.PassageExamen;
 import fr.dawan.AppliCFABack.entities.Projet;
 import fr.dawan.AppliCFABack.entities.Promotion;
+import fr.dawan.AppliCFABack.entities.Sifa;
 import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.entities.UtilisateurRole;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -80,7 +83,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-12-08T15:42:52+0100",
+    date = "2023-12-20T15:08:10+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
 )
 public class DtoMapperImpl implements DtoMapper {
@@ -1108,6 +1111,120 @@ public class DtoMapperImpl implements DtoMapper {
         return etudiantSoutenanceDto;
     }
 
+    @Override
+    public SifaDto sifaToSifaDto(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+
+        SifaDto sifaDto = new SifaDto();
+
+        sifaDto.setNumeroTelephoneJeune( sifaUtilisateurTelephone( sifa ) );
+        sifaDto.setAdresseMailJeune( sifaUtilisateurLogin( sifa ) );
+        sifaDto.setDateNaissanceJeune( sifaUtilisateurDateDeNaissance( sifa ) );
+        String civilite = sifaUtilisateurCivilite( sifa );
+        if ( civilite != null ) {
+            sifaDto.setSexeJeune( Integer.parseInt( civilite ) );
+        }
+        sifaDto.setPremierPrenomJeune( sifaUtilisateurPrenom( sifa ) );
+        sifaDto.setNomFamilleJeune( sifaUtilisateurNom( sifa ) );
+        sifaDto.setDureeMoisFormationReelle( sifa.getDureeMoisFormationReelle() );
+        sifaDto.setDateEntreeCfa( sifaPromotionDateDebut( sifa ) );
+        sifaDto.setDateRuptureContrat( sifaPromotionDateFin( sifa ) );
+        sifaDto.setAdressePostaleJeune( sifaAdresseUserLibelle( sifa ) );
+        sifaDto.setCodePostalResidenceJeune( sifaAdresseUserCodePostal( sifa ) );
+        String naf = sifaEntrepriseNaf( sifa );
+        if ( naf != null ) {
+            sifaDto.setCodeNafEtablissementEmployeur( Integer.parseInt( naf ) );
+        }
+        sifaDto.setNombreSalariesEntrepriseEmployeur( sifaEntrepriseEffectifTotal( sifa ) );
+        String siret = sifaEntrepriseSiret( sifa );
+        if ( siret != null ) {
+            sifaDto.setNumeroSiretEntrepriseEmployeur( Integer.parseInt( siret ) );
+        }
+        String codePostal1 = sifaEntrepriseAdresseSiegeCodePostal( sifa );
+        if ( codePostal1 != null ) {
+            sifaDto.setCodeCommuneEtablissementEmployeur( Integer.parseInt( codePostal1 ) );
+        }
+        sifaDto.setNumeroUaiEtablissement( sifa.getNumeroUaiEtablissement() );
+        sifaDto.setOrganismeGestionnaireEtablissement( sifa.getOrganismeGestionnaireEtablissement() );
+        sifaDto.setNumeroUaiSiteFormation( sifa.getNumeroUaiSiteFormation() );
+        sifaDto.setNumeroUaiFormation( sifa.getNumeroUaiFormation() );
+        sifaDto.setNatureStructureJuridique( sifa.getNatureStructureJuridique() );
+        sifaDto.setStatutJeune( sifa.getStatutJeune() );
+        sifaDto.setDiplomeOuTitrePrepare( sifa.getDiplomeOuTitrePrepare() );
+        sifaDto.setDureeMoisFormationTheorique( sifa.getDureeMoisFormationTheorique() );
+        sifaDto.setSituationFormation( sifa.getSituationFormation() );
+        sifaDto.setNomUsageJeune( sifa.getNomUsageJeune() );
+        sifaDto.setDeuxiemePrenomJeune( sifa.getDeuxiemePrenomJeune() );
+        sifaDto.setTroisiemePrenomJeune( sifa.getTroisiemePrenomJeune() );
+        sifaDto.setNumeroTelephonePersonnelResponsable1( sifa.getNumeroTelephonePersonnelResponsable1() );
+        sifaDto.setNumeroTelephoneProfessionnelResponsable1( sifa.getNumeroTelephoneProfessionnelResponsable1() );
+        sifaDto.setNumeroTelephonePersonnelResponsable2( sifa.getNumeroTelephonePersonnelResponsable2() );
+        sifaDto.setNumeroTelephoneProfessionnelResponsable2( sifa.getNumeroTelephoneProfessionnelResponsable2() );
+        sifaDto.setAdresseMailResponsable1( sifa.getAdresseMailResponsable1() );
+        sifaDto.setAdresseMailResponsable2( sifa.getAdresseMailResponsable2() );
+        sifaDto.setCodeCommuneNaissanceJeune( sifa.getCodeCommuneNaissanceJeune() );
+        sifaDto.setRegimeScolaireJeune( sifa.getRegimeScolaireJeune() );
+        sifaDto.setPcsRepresentantLegalJeune( sifa.getPcsRepresentantLegalJeune() );
+        sifaDto.setApprentisReconnaissanceTravailleurHandicape( sifa.isApprentisReconnaissanceTravailleurHandicape() );
+        sifaDto.setNationalite( sifa.getNationalite() );
+        sifaDto.setSituationAvantPremiereAnneeApprentissage( sifa.getSituationAvantPremiereAnneeApprentissage() );
+        sifaDto.setDernierDiplomeObtenu( sifa.getDernierDiplomeObtenu() );
+        sifaDto.setSituationOuClasseAnneeDerniere( sifa.getSituationOuClasseAnneeDerniere() );
+        sifaDto.setNumeroUaiEtablissementDerniereAnnee( sifa.getNumeroUaiEtablissementDerniereAnnee() );
+        sifaDto.setTypeEmployeur( sifa.getTypeEmployeur() );
+        sifaDto.setEtat( sifa.getEtat() );
+
+        return sifaDto;
+    }
+
+    @Override
+    public Sifa sifaDtoToSifa(SifaDto sifaDto) {
+        if ( sifaDto == null ) {
+            return null;
+        }
+
+        Sifa sifa = new Sifa();
+
+        sifa.setUtilisateur( sifaDtoToUtilisateur( sifaDto ) );
+        sifa.setPromotion( sifaDtoToPromotion( sifaDto ) );
+        sifa.setAdresseUser( sifaDtoToAdresse( sifaDto ) );
+        sifa.setEntreprise( sifaDtoToEntreprise( sifaDto ) );
+        sifa.setDureeMoisFormationReelle( sifaDto.getDureeMoisFormationReelle() );
+        sifa.setNationalite( sifaDto.getNationalite() );
+        sifa.setSituationOuClasseAnneeDerniere( sifaDto.getSituationOuClasseAnneeDerniere() );
+        sifa.setDureeMoisFormationTheorique( sifaDto.getDureeMoisFormationTheorique() );
+        sifa.setCodeCommuneNaissanceJeune( sifaDto.getCodeCommuneNaissanceJeune() );
+        sifa.setTypeEmployeur( sifaDto.getTypeEmployeur() );
+        sifa.setNumeroUaiEtablissement( sifaDto.getNumeroUaiEtablissement() );
+        sifa.setOrganismeGestionnaireEtablissement( sifaDto.getOrganismeGestionnaireEtablissement() );
+        sifa.setNumeroUaiSiteFormation( sifaDto.getNumeroUaiSiteFormation() );
+        sifa.setNumeroUaiFormation( sifaDto.getNumeroUaiFormation() );
+        sifa.setNatureStructureJuridique( sifaDto.getNatureStructureJuridique() );
+        sifa.setStatutJeune( sifaDto.getStatutJeune() );
+        sifa.setDiplomeOuTitrePrepare( sifaDto.getDiplomeOuTitrePrepare() );
+        sifa.setSituationFormation( sifaDto.getSituationFormation() );
+        sifa.setNomUsageJeune( sifaDto.getNomUsageJeune() );
+        sifa.setDeuxiemePrenomJeune( sifaDto.getDeuxiemePrenomJeune() );
+        sifa.setTroisiemePrenomJeune( sifaDto.getTroisiemePrenomJeune() );
+        sifa.setNumeroTelephonePersonnelResponsable1( sifaDto.getNumeroTelephonePersonnelResponsable1() );
+        sifa.setNumeroTelephoneProfessionnelResponsable1( sifaDto.getNumeroTelephoneProfessionnelResponsable1() );
+        sifa.setNumeroTelephonePersonnelResponsable2( sifaDto.getNumeroTelephonePersonnelResponsable2() );
+        sifa.setNumeroTelephoneProfessionnelResponsable2( sifaDto.getNumeroTelephoneProfessionnelResponsable2() );
+        sifa.setAdresseMailResponsable1( sifaDto.getAdresseMailResponsable1() );
+        sifa.setAdresseMailResponsable2( sifaDto.getAdresseMailResponsable2() );
+        sifa.setRegimeScolaireJeune( sifaDto.getRegimeScolaireJeune() );
+        sifa.setPcsRepresentantLegalJeune( sifaDto.getPcsRepresentantLegalJeune() );
+        sifa.setApprentisReconnaissanceTravailleurHandicape( sifaDto.isApprentisReconnaissanceTravailleurHandicape() );
+        sifa.setSituationAvantPremiereAnneeApprentissage( sifaDto.getSituationAvantPremiereAnneeApprentissage() );
+        sifa.setDernierDiplomeObtenu( sifaDto.getDernierDiplomeObtenu() );
+        sifa.setNumeroUaiEtablissementDerniereAnnee( sifaDto.getNumeroUaiEtablissementDerniereAnnee() );
+        sifa.setEtat( sifaDto.getEtat() );
+
+        return sifa;
+    }
+
     protected List<EtudiantDto> etudiantListToEtudiantDtoList(List<Etudiant> list) {
         if ( list == null ) {
             return null;
@@ -1679,5 +1796,286 @@ public class DtoMapperImpl implements DtoMapper {
         }
 
         return list1;
+    }
+
+    private String sifaUtilisateurTelephone(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Utilisateur utilisateur = sifa.getUtilisateur();
+        if ( utilisateur == null ) {
+            return null;
+        }
+        String telephone = utilisateur.getTelephone();
+        if ( telephone == null ) {
+            return null;
+        }
+        return telephone;
+    }
+
+    private String sifaUtilisateurLogin(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Utilisateur utilisateur = sifa.getUtilisateur();
+        if ( utilisateur == null ) {
+            return null;
+        }
+        String login = utilisateur.getLogin();
+        if ( login == null ) {
+            return null;
+        }
+        return login;
+    }
+
+    private LocalDate sifaUtilisateurDateDeNaissance(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Utilisateur utilisateur = sifa.getUtilisateur();
+        if ( utilisateur == null ) {
+            return null;
+        }
+        LocalDate dateDeNaissance = utilisateur.getDateDeNaissance();
+        if ( dateDeNaissance == null ) {
+            return null;
+        }
+        return dateDeNaissance;
+    }
+
+    private String sifaUtilisateurCivilite(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Utilisateur utilisateur = sifa.getUtilisateur();
+        if ( utilisateur == null ) {
+            return null;
+        }
+        String civilite = utilisateur.getCivilite();
+        if ( civilite == null ) {
+            return null;
+        }
+        return civilite;
+    }
+
+    private String sifaUtilisateurPrenom(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Utilisateur utilisateur = sifa.getUtilisateur();
+        if ( utilisateur == null ) {
+            return null;
+        }
+        String prenom = utilisateur.getPrenom();
+        if ( prenom == null ) {
+            return null;
+        }
+        return prenom;
+    }
+
+    private String sifaUtilisateurNom(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Utilisateur utilisateur = sifa.getUtilisateur();
+        if ( utilisateur == null ) {
+            return null;
+        }
+        String nom = utilisateur.getNom();
+        if ( nom == null ) {
+            return null;
+        }
+        return nom;
+    }
+
+    private LocalDate sifaPromotionDateDebut(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Promotion promotion = sifa.getPromotion();
+        if ( promotion == null ) {
+            return null;
+        }
+        LocalDate dateDebut = promotion.getDateDebut();
+        if ( dateDebut == null ) {
+            return null;
+        }
+        return dateDebut;
+    }
+
+    private LocalDate sifaPromotionDateFin(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Promotion promotion = sifa.getPromotion();
+        if ( promotion == null ) {
+            return null;
+        }
+        LocalDate dateFin = promotion.getDateFin();
+        if ( dateFin == null ) {
+            return null;
+        }
+        return dateFin;
+    }
+
+    private String sifaAdresseUserLibelle(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Adresse adresseUser = sifa.getAdresseUser();
+        if ( adresseUser == null ) {
+            return null;
+        }
+        String libelle = adresseUser.getLibelle();
+        if ( libelle == null ) {
+            return null;
+        }
+        return libelle;
+    }
+
+    private String sifaAdresseUserCodePostal(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Adresse adresseUser = sifa.getAdresseUser();
+        if ( adresseUser == null ) {
+            return null;
+        }
+        String codePostal = adresseUser.getCodePostal();
+        if ( codePostal == null ) {
+            return null;
+        }
+        return codePostal;
+    }
+
+    private String sifaEntrepriseNaf(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Entreprise entreprise = sifa.getEntreprise();
+        if ( entreprise == null ) {
+            return null;
+        }
+        String naf = entreprise.getNaf();
+        if ( naf == null ) {
+            return null;
+        }
+        return naf;
+    }
+
+    private int sifaEntrepriseEffectifTotal(Sifa sifa) {
+        if ( sifa == null ) {
+            return 0;
+        }
+        Entreprise entreprise = sifa.getEntreprise();
+        if ( entreprise == null ) {
+            return 0;
+        }
+        int effectifTotal = entreprise.getEffectifTotal();
+        return effectifTotal;
+    }
+
+    private String sifaEntrepriseSiret(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Entreprise entreprise = sifa.getEntreprise();
+        if ( entreprise == null ) {
+            return null;
+        }
+        String siret = entreprise.getSiret();
+        if ( siret == null ) {
+            return null;
+        }
+        return siret;
+    }
+
+    private String sifaEntrepriseAdresseSiegeCodePostal(Sifa sifa) {
+        if ( sifa == null ) {
+            return null;
+        }
+        Entreprise entreprise = sifa.getEntreprise();
+        if ( entreprise == null ) {
+            return null;
+        }
+        Adresse adresseSiege = entreprise.getAdresseSiege();
+        if ( adresseSiege == null ) {
+            return null;
+        }
+        String codePostal = adresseSiege.getCodePostal();
+        if ( codePostal == null ) {
+            return null;
+        }
+        return codePostal;
+    }
+
+    protected Utilisateur sifaDtoToUtilisateur(SifaDto sifaDto) {
+        if ( sifaDto == null ) {
+            return null;
+        }
+
+        Utilisateur utilisateur = new Utilisateur();
+
+        utilisateur.setTelephone( sifaDto.getNumeroTelephoneJeune() );
+        utilisateur.setLogin( sifaDto.getAdresseMailJeune() );
+        utilisateur.setDateDeNaissance( sifaDto.getDateNaissanceJeune() );
+        utilisateur.setCivilite( String.valueOf( sifaDto.getSexeJeune() ) );
+        utilisateur.setPrenom( sifaDto.getPremierPrenomJeune() );
+        utilisateur.setNom( sifaDto.getNomFamilleJeune() );
+
+        return utilisateur;
+    }
+
+    protected Promotion sifaDtoToPromotion(SifaDto sifaDto) {
+        if ( sifaDto == null ) {
+            return null;
+        }
+
+        Promotion promotion = new Promotion();
+
+        promotion.setDateDebut( sifaDto.getDateEntreeCfa() );
+        promotion.setDateFin( sifaDto.getDateRuptureContrat() );
+
+        return promotion;
+    }
+
+    protected Adresse sifaDtoToAdresse(SifaDto sifaDto) {
+        if ( sifaDto == null ) {
+            return null;
+        }
+
+        Adresse adresse = new Adresse();
+
+        adresse.setLibelle( sifaDto.getAdressePostaleJeune() );
+        adresse.setCodePostal( sifaDto.getCodePostalResidenceJeune() );
+
+        return adresse;
+    }
+
+    protected Adresse sifaDtoToAdresse1(SifaDto sifaDto) {
+        if ( sifaDto == null ) {
+            return null;
+        }
+
+        Adresse adresse = new Adresse();
+
+        adresse.setCodePostal( String.valueOf( sifaDto.getCodeCommuneEtablissementEmployeur() ) );
+
+        return adresse;
+    }
+
+    protected Entreprise sifaDtoToEntreprise(SifaDto sifaDto) {
+        if ( sifaDto == null ) {
+            return null;
+        }
+
+        Entreprise entreprise = new Entreprise();
+
+        entreprise.setAdresseSiege( sifaDtoToAdresse1( sifaDto ) );
+        entreprise.setNaf( String.valueOf( sifaDto.getCodeNafEtablissementEmployeur() ) );
+        entreprise.setEffectifTotal( sifaDto.getNombreSalariesEntrepriseEmployeur() );
+        entreprise.setSiret( String.valueOf( sifaDto.getNumeroSiretEntrepriseEmployeur() ) );
+
+        return entreprise;
     }
 }

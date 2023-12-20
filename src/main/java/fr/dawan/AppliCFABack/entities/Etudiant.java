@@ -79,11 +79,24 @@ public class Etudiant extends BaseEntity implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((groupes == null) ? 0 : groupes.hashCode());
+		result = prime * result + ((notes == null) ? 0 : notes.hashCode());
+		result = prime * result + ((promotions == null) ? 0 : promotions.hashCode());
+		result = prime * result + ((tuteur == null) ? 0 : tuteur.hashCode());
+		result = prime * result + ((utilisateur == null) ? 0 : utilisateur.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Etudiant)) return false;
 		Etudiant etudiant = (Etudiant) o;
 		return   Objects.equals(getUtilisateur(), etudiant.getUtilisateur());
 	}
+
 
 }

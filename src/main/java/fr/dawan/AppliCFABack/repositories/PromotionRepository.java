@@ -56,15 +56,23 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 			"END DESC", nativeQuery = true)
 	List<Promotion> findAllByNomOrCentreFormationNomIgnoreCase(@Param("search") String search,@Param("choix") String choix);
 
+	/**
+	 *
+	 * @param id
+	 * @param search
+	 * @param pageable
+	 * @return page of promotion
+	 */
 	@Query(value = "SELECT * FROM promotion p " +
-			"JOIN utilisateur u ON(p.referent_pedagogique_id = u.id) JOIN centre_formation cf ON(p.centre_formation_id = cf.id) " +
-			"JOIN formateur f ON(u.id = f.utilisateur_id) " +
-			"WHERE f.utilisateur_id = ?1 AND (?2 IS NULL " +
-			"OR LOWER(cf.nom) LIKE concat('%', LOWER(?2), '%') " +
-			"OR REPLACE(LOWER(p.nom), '-', ' ') LIKE concat('%', LOWER(?2), '%') " +
-			"OR REPLACE(LOWER(p.nom), '-', '') LIKE concat('%', LOWER(?2), '%') " +
-			"OR LOWER(p.nom) LIKE concat('%', LOWER(?2), '%'))", nativeQuery = true)
-	Page<Promotion> findAllByFormateurId( long id, String search, Pageable pageable);
+			"JOIN utilisateur u ON (p.referent_pedagogique_id = u.id) " +
+			"JOIN centre_formation cf ON (p.centre_formation_id = cf.id) " +
+			"JOIN formateur f ON (u.id = f.utilisateur_id) " +
+			"WHERE f.utilisateur_id = :id AND (:search IS NULL " +
+			"OR LOWER(cf.nom) LIKE concat('%', LOWER(:search), '%') " +
+			"OR REPLACE(LOWER(p.nom), '-', ' ') LIKE concat('%', LOWER(:search), '%') " +
+			"OR REPLACE(LOWER(p.nom), '-', '') LIKE concat('%', LOWER(:search), '%') " +
+			"OR LOWER(p.nom) LIKE concat('%', LOWER(:search), '%'))", nativeQuery = true)
+	Page<Promotion> findAllByFormateurId(@Param("id") long id, @Param("search") String search, Pageable pageable);
 	/**
 	 * 
 	 * @param id de l'intervention recherchée

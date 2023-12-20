@@ -1,5 +1,17 @@
 package fr.dawan.AppliCFABack.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
@@ -9,16 +21,6 @@ import fr.dawan.AppliCFABack.repositories.AbsenceRepository;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.tools.JustificatifException;
 import freemarker.template.Configuration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * @author Nico
@@ -129,19 +131,21 @@ public class AbsenceServiceImpl implements AbsenceService {
 	}
 
 	@Override
-	public String getJustificatifByAbsenceId(long idAbsence) throws JustificatifException{
-		Optional<Absence> absenceOpt = absenceRepository.findByAbsenceId(idAbsence);
-		Optional<Etudiant> etudiantOpt = etudiantRepository.findById(absenceOpt.get().getEtudiant().getId());
-		if(!etudiantOpt.isPresent())
-			throw new JustificatifException("Etudiant non trouvé");
+	public String getJustificatifByAbsenceId(long idAbsence) throws JustificatifException {
+	    Optional<Absence> absenceOpt = absenceRepository.findByAbsenceId(idAbsence);
 
-		String outputPdf = storageFolder + "justificatifAbsenceEtudiant/" + 
-				absenceOpt.get().getJustificatif();
+	    if (absenceOpt.isPresent()) {
+	        Absence absence = absenceOpt.get();
 
-		return outputPdf;
+	        Optional<Etudiant> etudiantOpt = etudiantRepository.findById(absence.getEtudiant().getId());
+
+	        if (etudiantOpt.isPresent()) {
+	            return storageFolder + "justificatifAbsenceEtudiant/" + absence.getJustificatif();
+	        } else {
+	            throw new JustificatifException("Etudiant non trouvé");
+	        }
+	    } else {
+	        throw new JustificatifException("Absence non trouvée");
+	    }
 	}
-
-
-
-
 }

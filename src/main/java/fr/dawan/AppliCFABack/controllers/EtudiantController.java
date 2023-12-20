@@ -246,12 +246,4 @@ public class EtudiantController {
 			
 		}
 	}
-
-	@PostMapping(value = "/mail")
-	public ResponseEntity<String> sendEmailToFormateur(@RequestParam String from,@RequestParam String to , @RequestParam String header,
-													   @RequestParam String msg){
-			emailService.sendMailUser1ToUser2(from, to, header, msg);
-			return ResponseEntity.status(HttpStatus.OK).build();
-
-	}
 }

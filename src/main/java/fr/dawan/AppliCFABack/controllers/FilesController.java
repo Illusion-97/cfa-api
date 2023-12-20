@@ -1,6 +1,9 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import fr.dawan.AppliCFABack.services.FilesService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -23,6 +26,8 @@ public class FilesController {
 	
 	@Autowired
 	FilesService fileService;
+	
+	private static final Logger logger = LoggerFactory.getLogger(FilesController.class);
 
 	@Value("${app.storagefolder}")
 	private String PARENT_DIRECTORY;
@@ -106,7 +111,7 @@ public class FilesController {
 		try {
 			Files.createDirectories(Paths.get(filePath));
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("IOException", e);
 		}
 		if(fileService.postFile(filePath, file))
 			return "OK";
