@@ -3,22 +3,25 @@ package fr.dawan.AppliCFABack.dto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantSoutenanceDto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class SoutenanceDto extends BaseEntityDto implements Serializable {
 
 	private EtudiantSoutenanceDto etudiant;
-	private String jour;
-	private String heure;
-	private String minAccueil;
-	private String minEntretien;
-	private String minQuestion;
-	private String minEntretienFinal;
-	private String minDeliberation;
+	private Date examDate;
+
+	private Date heure;
+	private Date minAccueil;
+	private Date minEntretien;
+	private Date minQuestion;
+	private Date minEntretienFinal;
+	private Date minDeliberation;
 
 	public SoutenanceDto() {
 		super();
 	}
+
 
 	public EtudiantSoutenanceDto getEtudiant() {
 		return etudiant;
@@ -28,60 +31,59 @@ public class SoutenanceDto extends BaseEntityDto implements Serializable {
 		this.etudiant = etudiant;
 	}
 
-	public String getJour() {
-		return jour;
+	public Date getExamDate() {
+		return examDate;
 	}
 
-	public void setJour(String jour) {
-		this.jour = jour;
+	public void setExamDate(Date examDate) {
+		this.examDate = examDate;
 	}
 
-	public String getHeure() {
+	public Date getHeure() {
 		return heure;
 	}
 
-	public void setHeure(String heure) {
+	public void setHeure(Date heure) {
 		this.heure = heure;
 	}
 
-	public String getMinAccueil() {
+	public Date getMinAccueil() {
 		return minAccueil;
 	}
 
-	public void setMinAccueil(String minAccueil) {
+	public void setMinAccueil(Date minAccueil) {
 		this.minAccueil = minAccueil;
 	}
 
-	public String getMinEntretien() {
+	public Date getMinEntretien() {
 		return minEntretien;
 	}
 
-	public void setMinEntretien(String minEntretien) {
+	public void setMinEntretien(Date minEntretien) {
 		this.minEntretien = minEntretien;
 	}
 
-	public String getMinQuestion() {
+	public Date getMinQuestion() {
 		return minQuestion;
 	}
 
-	public void setMinQuestion(String minQuestion) {
+	public void setMinQuestion(Date minQuestion) {
 		this.minQuestion = minQuestion;
 	}
 
-	public String getMinEntretienFinal() {
+	public Date getMinEntretienFinal() {
 		return minEntretienFinal;
 	}
 
-	public void setMinEntretienFinal(String minEntretienFinal) {
+	public void setMinEntretienFinal(Date minEntretienFinal) {
 		this.minEntretienFinal = minEntretienFinal;
 	}
 
-	public String getMinDeliberation() {
+	public Date getMinDeliberation() {
 		return minDeliberation;
 	}
 
-	public void setMinDeliberation(String minDeliberation) {
+	public void setMinDeliberation(Date minDeliberation) {
 		this.minDeliberation = minDeliberation;
 	}
-
 }

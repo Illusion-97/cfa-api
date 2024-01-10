@@ -1,8 +1,8 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.CreateSoutenanceDto;
 import fr.dawan.AppliCFABack.dto.SoutenanceDto;
-import fr.dawan.AppliCFABack.dto.customdtos.PromotionSoutenanceDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
@@ -11,8 +11,8 @@ import fr.dawan.AppliCFABack.repositories.SoutenanceRepository;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import fr.dawan.AppliCFABack.tools.ToPdf;
-import freemarker.core.ParseException;
 import freemarker.template.*;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -76,32 +76,28 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		return null;
 	}
 
-	@Override
 	public SoutenanceDto saveOrUpdate(SoutenanceDto tDto) throws SaveInvalidException {
+		throw new NotImplementedException("Invalid route");
+	}
+	@Override
+	public SoutenanceDto saveOrUpdate(CreateSoutenanceDto tDto) throws SaveInvalidException {
 		Soutenance soutenance = new Soutenance();
+
 		// Récupération Etudiant
-		if (tDto.getEtudiant().getId() > 0) {
-			Etudiant etudiant = etudiantRepository.getOne(tDto.getEtudiant().getId());
-			tDto.setEtudiant(mapper.etudiantToEtudiantSoutenanceDto(etudiant));
-			soutenance = mapper.soutenanceDtoToSoutenance(tDto);
+		if (tDto.getStudentId() > 0) {
+			Etudiant etudiant = etudiantRepository.getOne(tDto.getStudentId());
+			soutenance.setEtudiant(etudiant);
 		}
+		// CHECK SI ETUDIANT DANS LA PROMOTION
 
-		// Méthode envoie de mail
-		PromotionSoutenanceDto promotionSoutenance = new PromotionSoutenanceDto();
-		Date date = new Date();
-		int annee = date.getYear() + 1900;
-		for (PromotionSoutenanceDto promotion: tDto.getEtudiant().getPromotionsDto()) {
-
-			if (promotion.getDateDebut().getYear() == annee) {
-				promotionSoutenance = promotion;
-			}
-		}
-		String messageMail = "Vous étes convoquer pour l'éxamen "+ promotionSoutenance.getNom() + " le " + soutenance.getJour() +
-				".\nVous trouverez ci-joint la convocation.";
-		emailService.sendMailUser1ToUser2(mail, tDto.getEtudiant().getUtilisateurDto().getLogin(),
-				"Convocation " + promotionSoutenance.getNom()
-				, messageMail,
-				"convocationExamen", tDto );
+		// TRAITEMENT DES DATES
+		soutenance.setExamDate(tDto.getExamDate());
+		soutenance.setMinDeliberation(tDto.getMinDeliberation());
+		soutenance.setMinAccueil(tDto.getMinAccueil());
+		soutenance.setMinEntretien(tDto.getMinEntretien());
+		soutenance.setMinEntretienFinal(tDto.getMinEntretienFinal());
+		soutenance.setMinQuestion(tDto.getMinQuestion());
+		soutenance.setHasSpecialManagement(tDto.hasSpecialManagement());
 
 		//Sauvegarde de la soutenance
 		try {
@@ -112,6 +108,18 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 
 		return mapper.soutenanceToSoutenanceDto(soutenance);
 	}
+
+			/*// Méthode envoie de mail
+		PromotionSoutenanceDto promotionSoutenance = new PromotionSoutenanceDto();
+
+		// TODO corriger date dans le texte du mail
+		String messageMail = "Vous étes convoquer pour l'éxamen "+ promotionSoutenance.getNom() + " le " + soutenance.getExamDate().toString() +
+				".\nVous trouverez ci-joint la convocation.";
+		emailService.sendMailUser1ToUser2(mail, tDto.getEtudiant().getUtilisateurDto().getLogin(),
+				"Convocation " + promotionSoutenance.getNom()
+				, messageMail,
+				"convocationExamen", tDto );
+		*/
 
 	@Override
 	public CountDto count(String search) {

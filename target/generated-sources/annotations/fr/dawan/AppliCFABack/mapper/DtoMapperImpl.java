@@ -83,8 +83,8 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-12-20T15:08:10+0100",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
+    date = "2024-01-10T12:49:45+0100",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.5 (Oracle Corporation)"
 )
 public class DtoMapperImpl implements DtoMapper {
 
@@ -1062,8 +1062,7 @@ public class DtoMapperImpl implements DtoMapper {
         soutenanceDto.setId( soutenance.getId() );
         soutenanceDto.setVersion( soutenance.getVersion() );
         soutenanceDto.setEtudiant( etudiantToEtudiantSoutenanceDto( soutenance.getEtudiant() ) );
-        soutenanceDto.setJour( soutenance.getJour() );
-        soutenanceDto.setHeure( soutenance.getHeure() );
+        soutenanceDto.setExamDate( soutenance.getExamDate() );
         soutenanceDto.setMinAccueil( soutenance.getMinAccueil() );
         soutenanceDto.setMinEntretien( soutenance.getMinEntretien() );
         soutenanceDto.setMinQuestion( soutenance.getMinQuestion() );
@@ -1084,8 +1083,7 @@ public class DtoMapperImpl implements DtoMapper {
         soutenance.setId( soutenanceDto.getId() );
         soutenance.setVersion( soutenanceDto.getVersion() );
         soutenance.setEtudiant( etudiantSoutenanceDtoToEtudiant( soutenanceDto.getEtudiant() ) );
-        soutenance.setJour( soutenanceDto.getJour() );
-        soutenance.setHeure( soutenanceDto.getHeure() );
+        soutenance.setExamDate( soutenanceDto.getExamDate() );
         soutenance.setMinAccueil( soutenanceDto.getMinAccueil() );
         soutenance.setMinEntretien( soutenanceDto.getMinEntretien() );
         soutenance.setMinQuestion( soutenanceDto.getMinQuestion() );
