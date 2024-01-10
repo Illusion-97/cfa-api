@@ -97,6 +97,7 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		soutenance.setMinEntretien(tDto.getMinEntretien());
 		soutenance.setMinEntretienFinal(tDto.getMinEntretienFinal());
 		soutenance.setMinQuestion(tDto.getMinQuestion());
+		soutenance.setHasSpecialManagement(tDto.hasSpecialManagement());
 
 		//Sauvegarde de la soutenance
 		try {

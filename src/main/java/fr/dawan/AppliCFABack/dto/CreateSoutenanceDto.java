@@ -13,6 +13,7 @@ public class CreateSoutenanceDto {
     private Date minQuestion;
     private Date minEntretienFinal;
     private Date minDeliberation;
+    private boolean hasSpecialManagement;
 
     public Long getStudentId() {
         return studentId;
@@ -76,6 +77,14 @@ public class CreateSoutenanceDto {
 
     public void setMinDeliberation(Date minDeliberation) {
         this.minDeliberation = minDeliberation;
+    }
+
+    public boolean hasSpecialManagement() {
+        return hasSpecialManagement;
+    }
+
+    public boolean setHasSpecialManagement(boolean hasSpecialManagement) {
+        return this.hasSpecialManagement = hasSpecialManagement;
     }
 }
 

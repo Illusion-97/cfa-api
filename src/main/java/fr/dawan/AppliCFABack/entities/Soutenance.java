@@ -36,6 +36,8 @@ public class Soutenance extends BaseEntity implements Serializable {
 	@Temporal(TemporalType.TIME)
 	private Date minDeliberation;
 
+	private boolean hasSpecialManagement;
+
 
 	public Soutenance() {
 		super();
@@ -97,5 +99,13 @@ public class Soutenance extends BaseEntity implements Serializable {
 
 	public void setMinDeliberation(Date minDeliberation) {
 		this.minDeliberation = minDeliberation;
+	}
+
+	public boolean hasSpecialManagement() {
+		return hasSpecialManagement;
+	}
+
+	public boolean setHasSpecialManagement(boolean hasSpecialManagement) {
+		return this.hasSpecialManagement = hasSpecialManagement;
 	}
 }
