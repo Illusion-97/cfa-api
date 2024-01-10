@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import fr.dawan.AppliCFABack.dto.CountDto;
+import fr.dawan.AppliCFABack.dto.CreateSoutenanceDto;
 import fr.dawan.AppliCFABack.dto.SoutenanceDto;
 import fr.dawan.AppliCFABack.services.SoutenanceService;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
@@ -33,12 +34,12 @@ public class SoutenanceController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public SoutenanceDto save(@RequestBody SoutenanceDto soutenanceDto) throws SaveInvalidException {
+    public SoutenanceDto save(@RequestBody CreateSoutenanceDto soutenanceDto) throws SaveInvalidException {
         return soutenanceService.saveOrUpdate(soutenanceDto);
     }
 
     @PutMapping(consumes = "application/json", produces = "application/json")
-    public SoutenanceDto update(@RequestBody SoutenanceDto soutenanceDto) throws SaveInvalidException {
+    public SoutenanceDto update(@RequestBody CreateSoutenanceDto soutenanceDto) throws SaveInvalidException {
         return soutenanceService.saveOrUpdate(soutenanceDto);
     }
 

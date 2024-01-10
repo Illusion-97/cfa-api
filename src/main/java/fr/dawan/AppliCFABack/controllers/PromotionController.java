@@ -244,10 +244,7 @@ public class PromotionController {
 			@PathVariable("size") int size,
 			@PathVariable(value = "search",  required = false) Optional<String> search){
 
-		if (search.isPresent())
-			return  promoService.getPromotionByIdFormateur(id, page, size, search.get());
-		else
-			return  promoService.getPromotionByIdFormateur(id, page, size, "");
+		return  promoService.getPromotionByIdFormateur(id, page, size, search.orElse(""));
 	}
 
 	@GetMapping(value = {"/countByFormateurId/{idFormateur}/{search}", "/countByFormateurId/{idFormateur}"}, produces = "application/json")
@@ -255,10 +252,7 @@ public class PromotionController {
 			@PathVariable("idFormateur") long id,
 			@PathVariable(value = "search",  required = false) Optional<String> search) {
 
-		if (search.isPresent())
-			return  promoService.countByFormateur(id, search.get());
-		else
-			return  promoService.countByFormateur(id, "");
+		return  promoService.countByFormateur(id, search.orElse(""));
 	}
 
 	@GetMapping(value = "/countByNomOrCentreFormationOrDate/{search}", produces = "application/json")
