@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+	@page {
+		size: landscape
+	}
     .divGlobal
         {
             /* margin: 3px;
@@ -49,7 +52,7 @@
             <tr>
                 <td colspan="15" class="l2">
                     <p>
-                        Jour 1 - 12/09/2023<br/>
+                        Jour 1 - ${(soutenanceDto?first.examDate!"N/A")?string("dd/MM/yyyy")}<br/>
                         Mise en situation professionnelle (durée : 4h)<br/>
                         Accueil candidat et jury : 8h30<br/>
                         Ouverture de pli : 8h50<br/>
@@ -112,8 +115,47 @@
             <#list soutenanceDto as soutenance>
                 <tr>
                     <td>
-                        <p>${soutenance.etudiant.utilisateurDto.nom}</p>
-                    </td>
+                    							Monsieur
+                    						</td>
+                    						<td>
+                    							${soutenance.etudiant.utilisateurDto.nom}
+                    						</td>
+                    						<td>
+                    							${soutenance.etudiant.utilisateurDto.prenom}
+                    						</td>
+                    						<td>
+                    							N° candidat
+                    						</td>
+                    						<td>
+                    							${soutenance.etudiant.utilisateurDto.adresseDto.libelle}
+                    						</td>
+                    						<td>
+                    							${soutenance.etudiant.utilisateurDto.adresseDto.codePostal}
+                    						</td>
+                    						<td>
+                    							${soutenance.etudiant.utilisateurDto.adresseDto.ville}
+                    						</td>
+                    						<td>
+                    							${soutenance.examDate?string("dd/MM/yyyy")}
+                    						</td>
+                    						<td>
+                    							${soutenance.examDate?string("HH:mm")}
+                    						</td>
+                    						<td>
+                    							${soutenance.minAccueil?string("HH:mm")} à ${soutenance.minEntretien?string("HH:mm")}
+                    						</td>
+                    						<td>
+                    							${soutenance.minEntretien?string("HH:mm")} à ${soutenance.minQuestion?string("HH:mm")}
+                    						</td>
+                    						<td>
+                    							${soutenance.minQuestion?string("HH:mm")} à ${soutenance.minEntretienFinal?string("HH:mm")}
+                    						</td>
+                    						<td>
+                    							${soutenance.minEntretienFinal?string("HH:mm")} à ${soutenance.minDeliberation?string("HH:mm")}
+                    						</td>
+                    						<td>
+                    							${soutenance.minDeliberation?string("HH:mm")} - ${soutenance.minDeliberation?string("HH:mm")}
+                    						</td>
                 </tr>
             </#list>
     </table>

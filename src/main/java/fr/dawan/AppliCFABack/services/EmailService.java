@@ -2,6 +2,7 @@ package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.tools.EmailResetPasswordException;
 
 import javax.mail.MessagingException;
@@ -21,6 +22,8 @@ public interface EmailService {
 							  String fileName, T tDto);
 
 	void sendMailSmtpUser(long idUtilisateur, String header, String msg, Optional<String> path, Optional<String> fileName);
+
+	void scheduleConfirmationEmail(Soutenance soutenance);
 
 	// void scheduleMailSender(long user);
 }

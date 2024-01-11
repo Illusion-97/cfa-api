@@ -1,10 +1,15 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,9 +30,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import com.itextpdf.io.exceptions.IOException;
+
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.dto.UtilisateurDto;
 import fr.dawan.AppliCFABack.entities.Conge;
+import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.interceptors.TokenSaver;
 import fr.dawan.AppliCFABack.repositories.BlocEvaluationRepository;
@@ -252,6 +260,57 @@ public class EmailServiceImpl implements EmailService {
 		LocalDate timer = LocalDate.now();
 
 	}
+
+	@Override
+	public void scheduleConfirmationEmail(Soutenance soutenance) {
+		
+		Date dateSoutenance = soutenance.getExamDate();
+		
+		LocalDate dateNow = dateSoutenance.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate dateOneMonthAfter = dateNow.minusMonths(1);
+		
+		Date dateEnvoi = Date.from(dateOneMonthAfter.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		
+		scheduleEmailSending(dateEnvoi, soutenance);
+		
+	}
+
+	private void scheduleEmailSending(Date dateEnvoi, Soutenance soutenance) {
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+        long delay = dateEnvoi.getTime() - System.currentTimeMillis();
+
+        scheduler.schedule(() -> {
+            try {
+                sendConfirmationEmail(soutenance);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }, delay, TimeUnit.MILLISECONDS);
+	}
+
+	private void sendConfirmationEmail(Soutenance soutenance) {
+//		String to = soutenance.getEtudiant().getUtilisateur().getLogin();
+//        String subject = "Convocation Examen";
+//        String templateName = "convocationexamen.ftl";
+//
+//        Map<String, Object> model = new HashMap<>();
+//        model.put("nomUtilisateur", soutenance.getEtudiant().getUtilisateur().getFullName());
+//        model.put("dateSoutenance", soutenance.getExamDate());
+//
+//
+//        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+//        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+//
+//        helper.setTo(to);
+//        helper.setSubject(subject);
+//        helper.setText(content, true);
+//
+//
+//        javaMailSender.send(mimeMessage);
+		
+	}
+	
 	/**
 	 * Envoi de automatique pour prévenir le formateur de remplir le livret
 	 * d'évaluation des étudiants lui étant affilié avant 3
