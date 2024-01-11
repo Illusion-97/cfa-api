@@ -43,6 +43,7 @@ public class ConvocationMailSender {
         soutenances.forEach(soutenance -> {
             SoutenanceDto soutenanceDto = mapper.soutenanceToSoutenanceDto(soutenance);
             soutenanceMailService.sendMail(soutenanceDto);
+            // TODO check if property is set when an error occure with the mail service
             this.soutenanceService.markSoutenanceMailSentAsTrue(soutenance);
         });
     }
