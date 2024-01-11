@@ -44,6 +44,9 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 	EtudiantRepository etudiantRepository;
 	@Autowired
 	EmailService emailService;
+
+	@Autowired
+	SoutenanceMailService soutenanceMailService;
 	private static final Logger logger =Logger.getGlobal();
 	@Value("${app.storagefolder}")
 	private String storageFolder;
@@ -92,8 +95,9 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		Soutenance soutenance = new Soutenance();
 
 		// Récupération Etudiant
+		Etudiant etudiant = null;
 		if (tDto.getStudentId() > 0) {
-			Etudiant etudiant = etudiantRepository.getOne(tDto.getStudentId());
+			 etudiant = etudiantRepository.getOne(tDto.getStudentId());
 			soutenance.setEtudiant(etudiant);
 		}
 		// CHECK SI ETUDIANT DANS LA PROMOTION
@@ -113,28 +117,11 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 		} catch (Exception ex) {
 			logger.log(Level.WARNING, "Error save soutenance", ex);
 		}
-		
-		//Envoi de la convocation
-		//scheduleEmail(soutenance);
 
-		return mapper.soutenanceToSoutenanceDto(soutenance);
-	}
-	
-	private void scheduleEmail(Soutenance soutenance) {
-		emailService.scheduleConfirmationEmail(soutenance);
+        return mapper.soutenanceToSoutenanceDto(soutenance);
 	}
 
-			/*// Méthode envoie de mail
-		PromotionSoutenanceDto promotionSoutenance = new PromotionSoutenanceDto();
 
-		// TODO corriger date dans le texte du mail
-		String messageMail = "Vous étes convoquer pour l'éxamen "+ promotionSoutenance.getNom() + " le " + soutenance.getExamDate().toString() +
-				".\nVous trouverez ci-joint la convocation.";
-		emailService.sendMailUser1ToUser2(mail, tDto.getEtudiant().getUtilisateurDto().getLogin(),
-				"Convocation " + promotionSoutenance.getNom()
-				, messageMail,
-				"convocationExamen", tDto );
-		*/
 
 	@Override
 	public CountDto count(String search) {
@@ -172,6 +159,24 @@ public class SoutenanceServiceImpl implements SoutenanceService {
 			}
 		}
 		return lstSoutenanceDtos;
+	}
+
+
+	/**
+	 * Method to mark soutenance mail sent as true
+	 * @param soutenance
+	 */
+	public void markSoutenanceMailSentAsTrue(Soutenance soutenance) {
+		soutenance.setConvocationSent(true);
+		soutenanceRepository.save(soutenance);
+	}
+
+	/**
+	 * Return the list of all soutenance where exam date is before current date or in the next month time interval
+	 * @return List<Soutenance> list of all soutenances where studient should receive a mail
+	 */
+	public List<Soutenance> getSoutenanceWhereMailNotSent() {
+		return this.soutenanceRepository.getUnsentConvocations();
 	}
 
 	@Override
