@@ -23,7 +23,5 @@ public interface EmailService {
 
 	void sendMailSmtpUser(long idUtilisateur, String header, String msg, Optional<String> path, Optional<String> fileName);
 
-	void scheduleConfirmationEmail(Soutenance soutenance);
-
 	// void scheduleMailSender(long user);
 }

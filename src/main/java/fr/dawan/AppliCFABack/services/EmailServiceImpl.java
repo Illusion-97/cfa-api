@@ -261,56 +261,6 @@ public class EmailServiceImpl implements EmailService {
 
 	}
 
-	@Override
-	public void scheduleConfirmationEmail(Soutenance soutenance) {
-
-		Date dateSoutenance = soutenance.getExamDate();
-
-		LocalDate dateNow = dateSoutenance.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		LocalDate dateOneMonthAfter = dateNow.minusMonths(1);
-
-		Date dateEnvoi = Date.from(dateOneMonthAfter.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-		scheduleEmailSending(dateEnvoi, soutenance);
-
-	}
-
-	private void scheduleEmailSending(Date dateEnvoi, Soutenance soutenance) {
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
-        long delay = dateEnvoi.getTime() - System.currentTimeMillis();
-
-        scheduler.schedule(() -> {
-            try {
-                sendConfirmationEmail(soutenance);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }, delay, TimeUnit.MILLISECONDS);
-	}
-
-	private void sendConfirmationEmail(Soutenance soutenance) {
-//		String to = soutenance.getEtudiant().getUtilisateur().getLogin();
-//        String subject = "Convocation Examen";
-//        String templateName = "convocationexamen.ftl";
-//
-//        Map<String, Object> model = new HashMap<>();
-//        model.put("nomUtilisateur", soutenance.getEtudiant().getUtilisateur().getFullName());
-//        model.put("dateSoutenance", soutenance.getExamDate());
-//
-//
-//        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-//        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-//
-//        helper.setTo(to);
-//        helper.setSubject(subject);
-//        helper.setText(content, true);
-//
-//
-//        javaMailSender.send(mimeMessage);
-
-	}
-
 	/**
 	 * Envoi de automatique pour prévenir le formateur de remplir le livret
 	 * d'évaluation des étudiants lui étant affilié avant 3

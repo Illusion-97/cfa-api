@@ -115,7 +115,7 @@
             <#list soutenanceDto as soutenance>
                 <tr>
                     <td>
-                    							Monsieur
+                    							${soutenance.etudiant.utilisateurDto.civilite}
                     						</td>
                     						<td>
                     							${soutenance.etudiant.utilisateurDto.nom}
@@ -154,7 +154,7 @@
                     							${soutenance.minEntretienFinal?string("HH:mm")} à ${soutenance.minDeliberation?string("HH:mm")}
                     						</td>
                     						<td>
-                    							${soutenance.minDeliberation?string("HH:mm")} - ${soutenance.minDeliberation?string("HH:mm")}
+                    							${soutenance.minDeliberation?string("HH:mm")} à ${soutenance.minDeliberation?string("HH:mm")}
                     						</td>
                 </tr>
             </#list>
