@@ -31,7 +31,7 @@ public class ConvocationMailSender {
     }
     private static Logger LOGGER = LoggerFactory.getLogger(ConvocationMailSender.class);
 
-    @Scheduled(cron = "0 0 12 * * *") //chaque jour à 12h du matin
+    @Scheduled(cron = "0 45 15 * * *") //chaque jour à 12h du matin
     @Async("myTasksExecutor")
     public void importOffers() {
         LOGGER.info("Check for sending convocation");

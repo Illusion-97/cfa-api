@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
+@Transactional
 public class SoutenanceMailService {
 
     private final JavaMailSender emailSender;

@@ -21,6 +21,6 @@ public interface SoutenanceRepository extends JpaRepository<Soutenance, Long> {
     @Query(value = "SELECT COUNT(s) FROM Soutenance s JOIN s.etudiant e JOIN e.promotions p JOIN e.utilisateur u JOIN u.roles r WHERE p.id = :id")
     long countByPromotionId(long id);
 
-    @Query(value = "SELECT s FROM Soutenance s JOIN s.etudiant e JOIN e.promotions p JOIN e.utilisateur u WHERE s.convocationSent = FALSE")
+    @Query(value = "SELECT s FROM Soutenance s JOIN FETCH s.etudiant e JOIN FETCH e.promotions p JOIN FETCH e.utilisateur u WHERE s.convocationSent = FALSE")
     List<Soutenance> getUnsentConvocations();
 }
