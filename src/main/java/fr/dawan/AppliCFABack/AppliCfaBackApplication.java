@@ -10,25 +10,41 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.concurrent.Executor;
 
 
 @SpringBootApplication
 @EnableAsync
+@EnableScheduling
 public class AppliCfaBackApplication {
+
+
+	@Autowired
+	private TokenInterceptor tokenInterceptor;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppliCfaBackApplication.class, args);
 
 	}
 
-	@Autowired
-	private TokenInterceptor tokenInterceptor;
+	@Bean("myTasksExecutor")
+	public Executor asyncExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(6);
+		executor.setQueueCapacity(100);
+		executor.setThreadNamePrefix("asyncThread-");
+		executor.initialize();
+		return executor;
+	}
+
 
 	@Bean
 	public TimerCache userTimerCache(){return new TimerCache();}
@@ -77,7 +93,6 @@ public class AppliCfaBackApplication {
 				registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
 				registry.addResourceHandler("pictures/**").addResourceLocations("classpath:/pictures/");
 			}
-
 		};
 	}
 }

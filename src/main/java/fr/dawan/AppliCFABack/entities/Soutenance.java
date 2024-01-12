@@ -38,6 +38,8 @@ public class Soutenance extends BaseEntity implements Serializable {
 
 	private boolean hasSpecialManagement;
 
+	private boolean convocationSent = false;
+
 
 	public Soutenance() {
 		super();
@@ -108,4 +110,13 @@ public class Soutenance extends BaseEntity implements Serializable {
 	public boolean setHasSpecialManagement(boolean hasSpecialManagement) {
 		return this.hasSpecialManagement = hasSpecialManagement;
 	}
+
+	public boolean isConvocationSent() {
+		return convocationSent;
+	}
+
+	public void setConvocationSent(boolean convocationSent) {
+		this.convocationSent = convocationSent;
+	}
+
 }

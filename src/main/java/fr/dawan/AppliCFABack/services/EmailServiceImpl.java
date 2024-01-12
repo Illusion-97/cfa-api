@@ -263,16 +263,16 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	public void scheduleConfirmationEmail(Soutenance soutenance) {
-		
+
 		Date dateSoutenance = soutenance.getExamDate();
-		
+
 		LocalDate dateNow = dateSoutenance.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate dateOneMonthAfter = dateNow.minusMonths(1);
-		
+
 		Date dateEnvoi = Date.from(dateOneMonthAfter.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		
+
 		scheduleEmailSending(dateEnvoi, soutenance);
-		
+
 	}
 
 	private void scheduleEmailSending(Date dateEnvoi, Soutenance soutenance) {
@@ -308,16 +308,16 @@ public class EmailServiceImpl implements EmailService {
 //
 //
 //        javaMailSender.send(mimeMessage);
-		
+
 	}
-	
+
 	/**
 	 * Envoi de automatique pour prévenir le formateur de remplir le livret
 	 * d'évaluation des étudiants lui étant affilié avant 3
 	 *
 	 * @param c objet Conge
 	 * @return SimpleMailMessage a être envoyé
-	 * 
+	 *
 	 * @Override public void scheduleMailSender(long idUser) { boolean isInCache =
 	 *           timerCache.startTimerForUserConnected(idUser, 5); if (isInCache){
 	 *           if (userRepository.isLivretFormateurReferentEmpty(idUser)){
