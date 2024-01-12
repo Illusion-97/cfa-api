@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.SoutenanceDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantSoutenanceDto;
+import fr.dawan.AppliCFABack.dto.customdtos.PromotionSoutenanceDto;
 import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Soutenance;
 import fr.dawan.AppliCFABack.tools.ToPdf;
@@ -60,8 +61,8 @@ public class SoutenanceMailService {
             MimeMessage mail = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mail, true);
             helper.setFrom(from);
-            helper.setTo("rblanquet@dawan.fr");
-            helper.setSubject("CONVOCATION TEST");
+            helper.setTo("npotier@dawan.fr");//TODO changer en prod : getEtudiant().getUtilisateurDto().getLogin()
+            helper.setSubject("Convocation examen");
             helper.setText(mailContent, true);
             helper.addAttachment("convocation.pdf", buildConvocationPDF(soutenance));
             emailSender.send(mail);
@@ -70,9 +71,11 @@ public class SoutenanceMailService {
         }
     }
 
-    // TODO finish mail template
     private String buildConvocationText(SoutenanceDto soutenance, EtudiantSoutenanceDto student) {
-        return "Vous étes convoquer pour l'éxamen " + "EXAM_NAME" + " le " + soutenance.getExamDate().toString() +
+    	PromotionSoutenanceDto promotionSoutenance = new PromotionSoutenanceDto();
+
+        return "Bonjour"+ student.getUtilisateurDto().getFullName() +
+        		".\nVous étes convoquer pour l'éxamen " + "Nom de l'examen : " + promotionSoutenance.getNom()  + " le " + soutenance.getExamDate().toString() +
                 ".\nVous trouverez ci-joint la convocation.";
     }
 
@@ -84,7 +87,7 @@ public class SoutenanceMailService {
         Template template = freemarkerConfig.getTemplate("convocationExamen" + ".ftl");
 
         String htmlContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-        // TODO modifier le fichier ftl
+        
         String outputPdf = storageFolder + "pdfEmail/" + "convocationExamen" + ".pdf";
         try {
             ToPdf.convertHtmlToPdf(htmlContent, outputPdf);
