@@ -5,6 +5,7 @@ import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.dg2Imports.DG2Imports;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,18 +21,20 @@ import java.util.Optional;
 @RequestMapping("/cursus")
 public class CursusController {
 
-	
+	@Autowired
+	private DG2Imports dg2Imports;
+
 	@Autowired
 	private CursusService cursusService;
-	
+
 	@Autowired
 	private EtudiantService etudiantService;
-	
+
 	@GetMapping(produces = "application/json")
 	public List<CursusDto> getAll() {
 		return cursusService.getAll();
 	}
-	
+
 	@GetMapping(value = "/{id}",produces = "application/json")
 	public CursusDto getById(@PathVariable("id") long id) {
 		return cursusService.getById(id);
@@ -42,7 +45,7 @@ public class CursusController {
 			@PathVariable(value = "size") int size) {
 		return cursusService.getAllByPage(page, size, "");
 	}
-	
+
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
  	public @ResponseBody List<CursusDto> getAllByPage(@PathVariable("page") int page,
  			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
@@ -61,12 +64,12 @@ public class CursusController {
 	public CursusDto getByIdPromotion(@PathVariable("id") long id) {
 		return cursusService.getByIdPromotion(id);
 	}
-	
+
 	@GetMapping(value = "/{id}/promotions",produces = "application/json")
 	public List<PromotionDto> getPromotionsById(@PathVariable("id") long id) {
 		return cursusService.getPromotionsById(id);
 	}
-	
+
 	@GetMapping(value = "/etudiant/{id}",produces = "application/json")
 	public List<CursusDto> getByIdEtudiant(@PathVariable("id") long id) {
 		List<PromotionDto> lstpDto = etudiantService.getPromotionsByIdEtudiant(id);
@@ -95,7 +98,7 @@ public class CursusController {
 			lstCursusMostRecent.add(lstCursus.get(i));
 		}
 		List<CursusDto> lstPaginate =  new ArrayList<>();
-		
+
 		if(lstCursusMostRecent.size() >= (page*size)) {
 			for (int i=(page)*size;i <(page+1)*size;i++) {
 				lstPaginate.add(lstCursusMostRecent.get(i));
@@ -105,7 +108,7 @@ public class CursusController {
 				lstPaginate.add(lstCursusMostRecent.get(i));
 			}
 		}
-		
+
 		return lstPaginate;
 	}
 	@GetMapping(value = "/CurrentCursus/{id}",produces = "application/json")
@@ -118,12 +121,12 @@ public class CursusController {
 	public CountDto countPromotion(@PathVariable(value = "id") long id) {
 		return cursusService.countPromotion(id);
 	}
-		
+
 	@GetMapping(value = "/count", produces = "application/json")
 	public CountDto count() {
 		return cursusService.count("");
 	}
-    
+
     @GetMapping(value = "/count/{search}", produces = "application/json")
 	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
 		if(search.isPresent())
@@ -131,13 +134,13 @@ public class CursusController {
 		else
 			return cursusService.count("");
 	}
-	
+
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public CursusDto save(@RequestBody CursusDto cDto) {
 		return cursusService.saveOrUpdate(cDto);
 	}
-	
-	
+
+
 	@DeleteMapping(value = "/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		try {
@@ -148,13 +151,13 @@ public class CursusController {
 		}
 
 	}
-	
-	
+
+
 	@PutMapping(consumes = "application/json", produces = "application/json")
 	public CursusDto update(@RequestBody CursusDto cDto) {
 		return cursusService.saveOrUpdate(cDto);
 	}
-	
+
 	// ##################################################
 	// # FETCH Dawan webservice #
 	// ##################################################
@@ -164,12 +167,12 @@ public class CursusController {
 		String[] splitUserDG2String = userDG2.split(":");
 
 		try {
-			cursusService.fetchDG2Cursus(splitUserDG2String[0], splitUserDG2String[1]);
+			dg2Imports.fetchCursus(splitUserDG2String[0], splitUserDG2String[1]);
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error while fetching data from the webservice DG2");
 		}
 	}
-	
+
 }
