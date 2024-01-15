@@ -108,10 +108,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 	ProjetRepository projetRepository;
 	@Autowired
 	DossierProjetRepository dossierProRepo;
-	
-	@Autowired 
+
+	@Autowired
 	DossierProfessionnelRepository dossierRepo;
-	
+
 	@Autowired
 	TuteurRepository tuteurRepository;
 
@@ -169,10 +169,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 	private AdresseRepository adresseRepository;
 	@Autowired
 	private LivretEvaluationRepository livretEvaluationRepository;
-	
+
 	@Value("${base_url_dg2}")
     private String baseUrl;
-	
+
 	// ##################################################
 	// # CRUD #
 	// ##################################################
@@ -195,7 +195,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 			if (e != null && e.getUtilisateur() != null && e.getUtilisateur().getAdresse() != null) {
 			    AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
-			
+
 //			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
 
 			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
@@ -373,11 +373,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 //		if (etudiant == null)
 //			return;
-//		
+//
 //		Utilisateur Utilisateur = etudiant.getUtilisateur();
 //		etudiant.setUtilisateur(null);
 //		Utilisateur.setEtudiant(null);
-//		
+//
 //		etudiantRepository.save(etudiant);
 //		utilisateurRepository.save(Utilisateur);
 //
@@ -897,7 +897,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 							utilisateur.setAdresse(adresseDg2);
 						}
 					}
-					
+
 					//modif du rôle
 					List<UtilisateurRole> roles = utilisateur.getRoles() == null ? new ArrayList<>()
 							: utilisateur.getRoles();
@@ -1126,7 +1126,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return DtoTools.convert(e.get(), EtudiantDossierProjetDto.class);
 
 	}
-	
+
 	@Override
 	public List<EtudiantDto> getEtudiantByPromotion(long id, int page, int size, String search) {
 		List<Etudiant> result = etudiantRepository.getEtudiantByPromotion(id, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -1149,10 +1149,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public Etudiant savEtudiant(Utilisateur utilisateur) {
 		Etudiant etudiant = new Etudiant();
 		etudiant.setUtilisateur(utilisateur);
-		
+
 		return etudiantRepository.save(etudiant);
 	}
-	
+
 	@Override
 	public List<EtudiantDto> findAllByTuteurId(long tuteurId) {
 		List<Etudiant> etudiants = etudiantRepository.findAllByTuteurId(tuteurId);

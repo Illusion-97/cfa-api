@@ -1,61 +1,40 @@
 package fr.dawan.AppliCFABack.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.dawan.AppliCFABack.dto.CentreFormationDG2Dto;
 import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.dto.DtoTools;
-import fr.dawan.AppliCFABack.entities.Adresse;
 import fr.dawan.AppliCFABack.entities.CentreFormation;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
-import fr.dawan.AppliCFABack.repositories.AdresseRepository;
 import fr.dawan.AppliCFABack.repositories.CentreFormationRepository;
-import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class CentreFormationServiceImpl implements CentreFormationService {
 
-	@Autowired
-	CentreFormationRepository centreFormationRepository;
+	private final CentreFormationRepository centreFormationRepository;
 
-	@Autowired
-	AdresseRepository adresseRepository;
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	@Autowired
-	private RestTemplate restTemplate;
-
-	private static final Logger logger = Logger.getGlobal();
-
-	@Value("${base_url_dg2}")
-	private String baseUrl;
+	public CentreFormationServiceImpl(
+			@Autowired CentreFormationRepository centreFormationRepository
+	) {
+		this.centreFormationRepository = centreFormationRepository;
+	}
 
 	/**
 	 * Récupération de la liste des centres de formation
-	 * 
+	 *
 	 * @return lstDto	Liste des objets centre de formation
 	 */
 
@@ -74,7 +53,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 
 	/**
 	 * Va permettre de récupérer tous les centres de formations avec pagination
-	 * 
+	 *
 	 * @param page	numero de la page
 	 * @param size	éléments sur la page
 	 * @return LstDto Liste des objets centre de formation
@@ -86,19 +65,12 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 				.collect(Collectors.toList());
 
 		// conversion vers Dto
-		List<CentreFormationDto> lstDto = new ArrayList<>();
-		for (CentreFormation cf : lst) {
-			CentreFormationDto cDto = mapper.centreFormationToCentreFormationDto(cf);
-			cDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(cf.getEntreprise()));
-			cDto.setAdresseDto(mapper.adresseToAdresseDto(cf.getAdresse()));
-			lstDto.add(cDto);
-		}
-		return lstDto;
+		return convertCentreFormationToDto(lst);
 	}
 
 	/**
 	 * Récupération des centres de formation en fonction de l'id
-	 * 
+	 *
 	 */
 
 	@Override
@@ -106,14 +78,12 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 		Optional<CentreFormation> cf = centreFormationRepository.findById(id);
 		if (!cf.isPresent()) return null;
 
-		CentreFormationDto cDto = mapper.centreFormationToCentreFormationDto(cf.get());
-
-		return cDto;
+        return mapper.centreFormationToCentreFormationDto(cf.get());
 	}
 
 	/**
 	 * Sauvegarde ou mise à jour d'un centre de formation
-	 * 
+	 *
 	 */
 
 	@Override
@@ -127,7 +97,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 
 	/**
 	 * Suppression d'un centre de formation
-	 * 
+	 *
 	 * @param id	Id concernant un centre de formation
 	 */
 
@@ -139,7 +109,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 
 	/**
 	 * Recherche d'un centre de foramtion
-	 * 
+	 *
 	 * @param search recherche par nom
 	 */
 
@@ -151,7 +121,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 
 	/**
 	 * Va permettre de récupérer tous les centres de formation avec pagination
-	 * 
+	 *
 	 * @param page	numero de la page
 	 * @param size	éléments sur la page
 	 * @param search éléments centres de formation
@@ -161,100 +131,16 @@ public class CentreFormationServiceImpl implements CentreFormationService {
 	@Override
 	public List<CentreFormationDto> getAllCentreFormations(int page, int size, String search) {
 		List<CentreFormation> cf = centreFormationRepository.findAllByNomContaining(search, PageRequest.of(page, size)).get().collect(Collectors.toList());
-		List<CentreFormationDto> res = new ArrayList<>();
-		for (CentreFormation c : cf) {
+		return convertCentreFormationToDto(cf);
+	}
+
+	private List<CentreFormationDto> convertCentreFormationToDto(List<CentreFormation> cf) {
+        return cf.stream().map(c -> {
 			CentreFormationDto cfDto = mapper.centreFormationToCentreFormationDto(c);
 			cfDto.setEntrepriseDto(mapper.entrepriseToEntrepriseDto(c.getEntreprise()));
 			cfDto.setAdresseDto(mapper.adresseToAdresseDto(c.getAdresse()));
-			res.add(cfDto);
-		}
-		return res;
-	}
-
-	/**
-	 * Va récupérer tous les centres de formation de DG2
-	 * 
-	 * @param Id	Id concernant la session
-	 * @param email Email l'utilsateur dg2
-	 * @param password   Mot de passe de l'utlisateur dg2
-	 * @throws URISyntaxException 
-	 * @throws JsonProcessingException 
-	 * @throws JsonMappingException 
-	 * 
-	 * @exception Exception retourne une exception si erreur dans la récupération des centres
-	 */
-
-	@Override
-	public void fetchAllDG2CentreFormation(String email, String password) throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
-		ObjectMapper objectMapper = new ObjectMapper();
-		List<CentreFormationDG2Dto> cResJson;
-
-		//url dg2 qui concerne la recupération des locations
-		URI url = new URI(baseUrl + "locations");
-
-		//recupérartion des headers / email / password dg2
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("x-auth-token", email + ":" + password);
-
-		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-
-		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-
-		if (repWs.getStatusCode() == HttpStatus.OK) {
-			String json = repWs.getBody();
-			//recuperation des values en json et lecture
-			cResJson = objectMapper.readValue(json, new TypeReference<List<CentreFormationDG2Dto>>() {
-			});
-			//boucle pour récupérer toute la liste
-			for (CentreFormationDG2Dto cDG2 : cResJson) {
-				CentreFormation centreImport = mapper.centreFormationDG2DtoToCentreFormation(cDG2);
-				Optional<CentreFormation> optCentre = centreFormationRepository.findByIdDg2(centreImport.getIdDg2());
-				//Vérification et ajout de l'adresse 
-				if ( cDG2.getAddress() != null && !cDG2.getAddress().trim().isEmpty()) {
-
-					Adresse  adresse = new Adresse();
-					adresse.setLibelle(cDG2.getAddress());
-					adresse.setCodePostal(cDG2.getZipCode());
-					adresse.setVille(cDG2.getCity());
-					adresse.setCountryCode(cDG2.getCountry());
-					if (optCentre.isPresent()) {
-						if (!adresse.equals(optCentre.get().getAdresse())) {
-							if (optCentre.get().getAdresse() != null) {
-								adresse.setId(optCentre.get().getAdresse().getId());
-								adresse.setVersion(optCentre.get().getAdresse().getVersion());
-								adresseRepository.saveAndFlush(adresse);
-							}
-
-						}
-					}
-					else {
-						centreImport.setAdresse(adresse);
-					}
-
-				}
-
-				if (optCentre.isPresent()) {
-					if (optCentre.get().equals(centreImport))
-						continue;
-					else if (!optCentre.get().equals(centreImport)) {
-						if (centreImport != null) {
-							centreImport.setId(optCentre.get().getId());
-							centreImport.setVersion(optCentre.get().getVersion());
-						}
-					}
-					centreFormationRepository.saveAndFlush(centreImport);
-				} else {
-					try {
-						centreFormationRepository.saveAndFlush(centreImport);
-
-					} catch (Exception e) {
-						logger.log(Level.SEVERE,"SaveAndFlush failed", e);
-					}
-				}
-			}
-		} else {
-			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
-		}
+			return cfDto;
+		}).collect(Collectors.toList());
 	}
 
 }

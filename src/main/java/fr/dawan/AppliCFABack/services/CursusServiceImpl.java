@@ -1,7 +1,5 @@
 package fr.dawan.AppliCFABack.services;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Formation;
@@ -9,50 +7,45 @@ import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.PromotionRepository;
-import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Transactional
 @Service
 public class CursusServiceImpl implements CursusService {
 
-	@Autowired
-	CursusRepository cursusRepo;
-	@Autowired
-	PromotionRepository promoRepo;
-	@Autowired
-	PromotionService promoService;
+	private final CursusRepository cursusRepo;
+
+	private final PromotionRepository promoRepo;
+	private final PromotionService promoService;
 
 	@Autowired
 	private DtoMapper mapper = new DtoMapperImpl();
 
-	@Autowired
-	private RestTemplate restTemplate;
 
-	private static final Logger logger = Logger.getGlobal();
+	public CursusServiceImpl(
+			@Autowired CursusRepository cursusRepo,
+			@Autowired PromotionRepository promoRepo,
+			@Autowired PromotionService promoService
+	) {
+		this.cursusRepo = cursusRepo;
+		this.promoRepo = promoRepo;
+		this.promoService = promoService;
+	}
 
-	@Value("${base_url_dg2}")
-	private String baseUrl;
+
 
 	/**
 	 * Récupération de la liste des cursus
-	 * 
+	 *
 	 * @return lstDto	Liste des objets cursus
 	 */
 
@@ -78,7 +71,7 @@ public class CursusServiceImpl implements CursusService {
 	/**
 	 * Va permettre de récupérer tous les cursus avec pagination
 	 * recherche par titre ou formation
-	 * 
+	 *
 	 * @param page	numero de la page
 	 * @param size	éléments sur la page
 	 * @param search éléménts du cursus
@@ -107,7 +100,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Recherche d'un cursus
-	 * 
+	 *
 	 * @param search recherche par titre ou titre d'une formation
 	 */
 
@@ -119,7 +112,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Sauvegarde ou mise à jour d'un cursus
-	 * 
+	 *
 	 */
 
 	@Override
@@ -131,7 +124,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Suppression d'un cursus
-	 * 
+	 *
 	 * @param id	Id concernant le cursus
 	 */
 
@@ -143,7 +136,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Récupération des cursus en fonction de l'id
-	 * 
+	 *
 	 */
 
 	@Override
@@ -165,7 +158,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Récupération des cursus en fonction de l'id de la promotion
-	 * 
+	 *
 	 * @param id	id de la promotion
 	 * @return cDto	objet cursus
 	 */
@@ -177,7 +170,7 @@ public class CursusServiceImpl implements CursusService {
 
 	/**
 	 * Récupération des promo en fonction de l'id du cursus
-	 * 
+	 *
 	 * @param id Id du cursus
 	 */
 	//recuperation des promo par id cursus
@@ -185,79 +178,4 @@ public class CursusServiceImpl implements CursusService {
 	public List<PromotionDto> getPromotionsById(long id) {
 		return promoService.getAllByCursusId(id);
 	}
-
-	/**
-	 * Va récupérer tous les cursus de DG2
-	 * 
-	 * @param email Email l'utilisateur dg2
-	 * @param password   Mot de passe de l'utlisateur dg2
-	 * @throws URISyntaxException 
-	 * 
-	 * @exception Exception retourne une exception,
-	 * si erreur dans la récupération des cursus
-	 */
-
-	//import des cursus DG2
-	@Override
-	public void fetchDG2Cursus(String email, String password) throws  FetchDG2Exception, URISyntaxException {
-		ObjectMapper objectMapper = new ObjectMapper();
-		List<CursusDG2Dto> fResJson = new ArrayList<>();
-
-		//url dg2 qui concerne la recupération des cursus
-		URI url = new URI( baseUrl + "pro-titles");
-
-		//recupérartion des headers / email / password dg2
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("x-auth-token", email + ":" + password);
-
-		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-
-		try {
-			ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-			if (repWs.getStatusCode() == HttpStatus.OK) {
-				String json = repWs.getBody();
-
-				try {
-					//recuperation des values en json et lecture
-					fResJson = objectMapper.readValue(json, new TypeReference<List<CursusDG2Dto>>() {
-					});
-				} catch (Exception e) {
-					logger.log(Level.WARNING, "failed json", e);
-				}
-				for (CursusDG2Dto cDG2 : fResJson) {
-					Cursus cursusImport = mapper.cursusDG2DtoToCursus(cDG2);
-					Optional<Cursus> optCursus = cursusRepo.findByIdDg2(cursusImport.getIdDg2());
-					if (optCursus.isPresent()) {
-						if (optCursus.get().equals(cursusImport))
-							continue;
-						else if (!optCursus.get().equals(cursusImport)) {
-							//cursusImport.setTitre(optCursus.get().getTitre());
-							cursusImport.setVersion(optCursus.get().getVersion());
-							cursusImport.setId(optCursus.get().getId());
-						}
-						try {
-							cursusRepo.saveAndFlush(cursusImport);
-						} catch (Exception e) {
-							logger.log(Level.SEVERE, "Failed save dg2", e);
-						}
-					} else {
-						try {
-							cursusRepo.saveAndFlush(cursusImport);
-						} catch (Exception e) {
-
-							logger.log(Level.SEVERE, "Failed save dg2", e);
-						}
-					}
-				}
-			} else {
-				throw new FetchDG2Exception("Status Code in the webservice WDG2 not correct");
-			}
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Failed fetch dg2", e);
-
-			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
-		}
-
-	}
-
 }

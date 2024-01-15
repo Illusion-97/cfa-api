@@ -10,6 +10,7 @@ import fr.dawan.AppliCFABack.entities.*;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.*;
+import fr.dawan.AppliCFABack.services.dg2Imports.DG2ImportTools;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.GrilleException;
 import fr.dawan.AppliCFABack.tools.PdfTools;
@@ -36,11 +37,11 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class PromotionServiceImpl implements PromotionService {
-	
+public class PromotionServiceImpl extends DG2ImportTools implements PromotionService {
+
 	@Autowired
 	private PromotionRepository promoRepo;
-	
+
 	@Autowired
 	FilesService filesService;
 	@Autowired
@@ -53,12 +54,12 @@ public class PromotionServiceImpl implements PromotionService {
 	PromotionRepository promotionRepository;
 	@Autowired
 	PositionnementRepository positionnementRepository;
-	
+
 	@Autowired
 	NiveauService niveauService;
 	@Value("${app.storagefolder}")
 	private String storageFolder;
-	
+
 	@Autowired
 	private Configuration freemarkerConfig;
 	@Autowired
@@ -70,13 +71,13 @@ public class PromotionServiceImpl implements PromotionService {
 	private DtoTools mapperTools;
 
 	private static final Logger logger = Logger.getGlobal();
-	
+
 	@Value("${base_url_dg2}")
     private String baseUrl;
-	
+
 	/**
 	 * Récupération de la liste des promo
-	 * 
+	 *
 	 * @return lstDto	Liste des objets promotion
 	 */
 	//recuperation de la liste des promo
@@ -105,24 +106,24 @@ public class PromotionServiceImpl implements PromotionService {
 	}
 	/**
 	 * Sauvegarde ou mise à jour d'une promotion
-	 * 
+	 *
 	 */
-	
+
 	@Override
 	public PromotionDto saveOrUpdate(PromotionDto pDto) {
 		Promotion p = DtoTools.convert(pDto, Promotion.class);
 		p = promoRepo.saveAndFlush(p);
 		filesService.createDirectory("promotions/" + p.getId());
-		
+
 		return mapper.promotionToPromotionDto(p);
 	}
 
 	/**
 	 * Suppression d'une promotion
-	 * 
+	 *
 	 * @param id	Id concernant la promotion
 	 */
-	
+
 	@Override
 	public void deleteById(long id) {
 		promoRepo.deleteById(id);
@@ -131,10 +132,10 @@ public class PromotionServiceImpl implements PromotionService {
 
 	/**
 	 * Récuperation du referent avec id promo
-	 * 
+	 *
 	 * @param id	Id de la promotion
 	 */
-	
+
 	@Override
 	public UtilisateurDto getReferentById(long id) {
 		return mapper.utilisateurToUtilisateurDto(promoRepo.getOne(id).getReferentPedagogique());
@@ -142,14 +143,14 @@ public class PromotionServiceImpl implements PromotionService {
 
 	/**
 	 * Recherche d'une promotion
-	 * 
+	 *
 	 * @param search recherche par nom
 	 */
 	@Override
 	public CountDto count(String search) {
 		return new CountDto(promoRepo.countByNomContaining(search));
 	}
-	
+
 	@Override
 	public CountDto countByCentreFormationId(long id, String date) {
 		return new CountDto(promoRepo.countByCentreFormationIdAndDateDebutContainingAllIgnoringCase(id, date));
@@ -159,13 +160,13 @@ public class PromotionServiceImpl implements PromotionService {
 	/**
 	 * Va permettre de récupérer toutes les promotions avec pagination
 	 * et recherche
-	 * 
+	 *
 	 * @param page	numero de la page
 	 * @param size	éléments sur la page
 	 * @param search	éléments promotions (nom)
 	 * @return res Liste des objets promotions
 	 */
-	
+
 	@Override
 	public List<PromotionDto> getAllPromotions(int page, int size, Optional<String> choixOpt, String search) {
 		List<Promotion> promoVille = promoRepo.findAllByNomOrCentreFormationNomIgnoreCase(search,choixOpt.get());
@@ -200,10 +201,10 @@ public class PromotionServiceImpl implements PromotionService {
 
 	/**
 	 * Récupération des etudiants en fonction de l'id de la promotion
-	 * 
+	 *
 	 * @param id	id de la promotion
 	 */
-	
+
 	@Override
 	public List<EtudiantDto> getEtudiantsById(long id) {
 		List<Etudiant> lst = promoRepo.getOne(id).getEtudiants();
@@ -223,31 +224,31 @@ public class PromotionServiceImpl implements PromotionService {
 
 	/**
 	 * Récupération des promo en fonction de l'id du cursus
-	 * 
+	 *
 	 * @param id	id du cursus
 	 * @return result	List des promotions
 	 */
-	
+
 	@Override
 	public List<PromotionDto> getAllByCursusId(long id) {
 		List<Promotion> lst = promoRepo.findAllByCursusId(id);
-		
+
 		List<PromotionDto> result = new ArrayList<>();
-		
+
 		for(Promotion p : lst) {
 			result.add(mapper.promotionToPromotionDto(p));
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Erreur méthodes controller-service-repo à refaire avec un dto custom pour l'accueil entier
 	 * Récupération du cef en fonction de l'id de la promotion
 	 *
 	 * @param id	id de la promotion
 	 */
-	
+
 	@Override
     public UtilisateurDto getCefById(long id) {
         return mapper.utilisateurToUtilisateurDto(promoRepo.getOne(id).getCef().getUtilisateur());
@@ -255,7 +256,7 @@ public class PromotionServiceImpl implements PromotionService {
 
 	/**
 	 * Récupération des promotions en fonction de l'id du cursus et de l'etudiant
-	 * 
+	 *
 	 * @param id	id de l'etudiant
 	 * @return result	Liste des promotions
 	 */
@@ -263,7 +264,7 @@ public class PromotionServiceImpl implements PromotionService {
 	public List<PromotionDto> getPromotionByEtudiantIdAndByCursusId(long id) {
 		List<Promotion> promos = promoRepo.getByEtudiantId(id);
 		List<PromotionDto> result = new ArrayList<>();
-		
+
 		for(Promotion p : promos) {
 			PromotionDto pDto = mapper.promotionToPromotionDto(p);
 			result.add(pDto);
@@ -298,11 +299,11 @@ public class PromotionServiceImpl implements PromotionService {
 	public List<PromotionForSelectDto> getPromotionByInterventionIdForSelect(long idIntervention) {
 		List<PromotionForSelectDto> result = new ArrayList<>();
 		List<Promotion> promotions = promoRepo.findAllByInterventionsId(idIntervention);
-		
+
 		for (Promotion promotion : promotions) {
 			result.add(DtoTools.convert(promotion, PromotionForSelectDto.class));
 		}
-		
+
 		return result;
 	}
 
@@ -334,7 +335,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Override
 	public int fetchDGPromotions(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
 		List<Promotion> promoLst = getPromotionDG2ByIdCursusDG2(email, password, idCursusDg2);
-		
+
 		for(Promotion p : promoLst) {
 			try {
 				promotionRepository.saveAndFlush(p);
@@ -344,38 +345,35 @@ public class PromotionServiceImpl implements PromotionService {
 		}
 		return promoLst.size();
 	}
-	
+
 	@Override
 	public List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>(); 
+		List<PromotionOrInterventionDG2Dto> fetchResJson = new ArrayList<>();
 		List<Promotion> result = new ArrayList<>();
-		
+
 		URI url = new URI(baseUrl + "trainings/" +idCursusDg2+ "/sessions");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("x-auth-token", email+ ":" +password);
-		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+		ResponseEntity<String> rep = this.executeRequestOnDG2API(email, password, url);
 
 		if(rep.getStatusCode()  == HttpStatus.OK) {
 			String json = rep.getBody();
-			
+
 			try {
 				fetchResJson = objectMapper.readValue(json, new TypeReference<List<PromotionOrInterventionDG2Dto>>() {} );
 			} catch (Exception e) {
 				logger.log(Level.SEVERE,"objectMapper failed", e);
 			}
-			
-			
+
+
 			for(PromotionOrInterventionDG2Dto pDtoDG2 : fetchResJson) {
 				Optional<Promotion> promoDb = promotionRepository.findByIdDg2(pDtoDG2.getId());
-				
+
 				DtoTools dtoTools = new DtoTools();
 				Promotion promotionDG2 = new Promotion();
 				try {
 					 promotionDG2 = dtoTools.promotionOrInterventionDG2DtoToPromotion(pDtoDG2);
-					
+
 				} catch (Exception e) {
 					logger.log(Level.SEVERE,"dtoTools failed", e);
 				}
@@ -399,46 +397,46 @@ public class PromotionServiceImpl implements PromotionService {
 				if(!promoDb.isPresent()) {
 					result.add(promotionDG2);
 					//si existe en BDD -> comparer tous les champs et si différents -> faire update
-				} else {	
+				} else {
 					if(!promoDb.get().equals(promotionDG2)) {
 						promotionDG2.setId(promoDb.get().getId());
 						promotionDG2.setVersion(promoDb.get().getVersion());
 						promotionDG2.setType(pDtoDG2.getType());
 						promotionDG2.setNbParticipants(pDtoDG2.getNbParticipants());
 						result.add(promotionDG2);
-					} 
-				}	
+					}
+				}
 			}
 			return result;
 		} else {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
-		
-		
+
+
 	}
 
-	
+
 	@Override
 	public String getGrillePositionnement(long idPromotion) throws GrilleException,
 			IOException, TemplateException {
 		Optional<Promotion> promotion = promotionRepository.findById(idPromotion);
 		if (!promotion.isPresent())
 			throw new GrilleException("Promotion non trouvé");
-		
+
 		List<Intervention> interventions = interventionRepository.getInterventionsByIdPromotion(idPromotion);
 		if (interventions.isEmpty() || interventions == null)
 			throw new GrilleException("Pas d'interventions encore pour cette promotion non trouvé");
 
 		Map<String, List<?>> gp = new HashMap<>();
 		List<GrillePositionnementDto> grillesPositionnements = new ArrayList<>();
-		
+
 		for (Intervention i : interventions) {
 			GrillePositionnementDto gpd = new GrillePositionnementDto();
 			gpd.setDateDebut(i.getDateDebut());
 			gpd.setDateFin(i.getDateFin());
 			Formation f = i.getFormation();
 			if (f != null) {
-				gpd.setModule(f.getTitre());	
+				gpd.setModule(f.getTitre());
 			}else {
 				gpd.setModule("Pas de Formation");
 			}
@@ -446,9 +444,9 @@ public class PromotionServiceImpl implements PromotionService {
 			gpd.setFormateur(i.getFormateur().getUtilisateur().getFullName());
 			Map<String, Positionnement> etudiantsPositionnement = new HashMap<>();
 			List<Positionnement> positionnements =  positionnementRepository.getAllByInterventionId(i.getId());
-			
+
 			for (Positionnement p : positionnements) {
-				etudiantsPositionnement.put(p.getEtudiant().getUtilisateur().getNom() + " " 
+				etudiantsPositionnement.put(p.getEtudiant().getUtilisateur().getNom() + " "
 			+p.getEtudiant().getUtilisateur().getPrenom(), p);
 			}
 			gpd.setEtudiantsPositionnements(etudiantsPositionnement);
@@ -497,7 +495,7 @@ public class PromotionServiceImpl implements PromotionService {
 	public CountDto countByFormateur(long id, String search) {
 		return new CountDto(promoRepo.countByFormateurId(id, search));
 	}
-	
+
 	@Override
 	public CountDto countByNomOrCentreFormationOrDate(String search) {
 		return new CountDto(promoRepo.countByNomOrCentreFormationOrDate(search));
