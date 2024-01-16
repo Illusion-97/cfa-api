@@ -40,12 +40,6 @@ public class DevoirController extends GenericController<DevoirDto> {
 		return ((DevoirService) service).getAllByInterventionId(id);
 	}
 
-
-	@Override	@PutMapping(consumes="application/json", produces="application/json")
-	public DevoirDto update(@RequestBody DevoirDto dDto) throws Exception {
-		return service.saveOrUpdate(dDto);
-	}
-
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") long id){
 		service.delete(id);

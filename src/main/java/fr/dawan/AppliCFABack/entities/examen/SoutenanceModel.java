@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -26,7 +27,7 @@ public class SoutenanceModel extends BaseEntity {
 
     @OneToOne
     private Cursus cursus;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST})
     private List<Module> modules;
 
     public static SoutenanceModel getBaseModel(Cursus cursus) {

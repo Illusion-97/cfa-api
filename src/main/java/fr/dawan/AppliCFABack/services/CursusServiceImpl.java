@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.entities.Cursus;
 import fr.dawan.AppliCFABack.entities.Formation;
+import fr.dawan.AppliCFABack.event.cursus.CursusCreatedEvent;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
@@ -12,6 +13,9 @@ import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
@@ -44,6 +48,8 @@ public class CursusServiceImpl implements CursusService {
 
 	@Autowired
 	private RestTemplate restTemplate;
+	@Autowired
+	private ApplicationEventPublisher publisher;
 
 	private static final Logger logger = Logger.getGlobal();
 
@@ -242,7 +248,7 @@ public class CursusServiceImpl implements CursusService {
 						}
 					} else {
 						try {
-							cursusRepo.saveAndFlush(cursusImport);
+							publisher.publishEvent(new CursusCreatedEvent(this, cursusRepo.saveAndFlush(cursusImport)));
 						} catch (Exception e) {
 
 							logger.log(Level.SEVERE, "Failed save dg2", e);
@@ -258,6 +264,14 @@ public class CursusServiceImpl implements CursusService {
 			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
 		}
 
+	}
+
+	@EventListener(ApplicationStartedEvent.class)
+	public void checkCurrentCursus() {
+		cursusRepo.findAll().stream()
+				.filter(cursus -> cursus.getModel() == null)
+				.map(cursus -> new CursusCreatedEvent(this, cursus))
+				.forEach(publisher::publishEvent);
 	}
 
 }

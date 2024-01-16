@@ -34,14 +34,6 @@ public class LivretEvaluationController extends GenericController<LivretEvaluati
 		super(service);
 	}
 
-	@Override
-	@PostMapping(consumes = "application/json", produces = "application/json")
-	public ResponseEntity<LivretEvaluationDto> save(@RequestBody LivretEvaluationDto livret) throws NotFoundException, SaveInvalidException {
-		//On save le livret avant l'envoi de mail
-		LivretEvaluationDto livetValidation = service.saveOrUpdate(livret);
-		//livretEvaluationService.mailNotification(livret.getId(),);
-		return ResponseEntity.status(HttpStatus.CREATED).body(livetValidation);
-	}
 	@GetMapping(value = "/etudiant/{id}", produces = "application/json")
 	public List<LivretEvaluationDto> getAllByEtudiantId(@PathVariable("id") long id) {
 		return ((LivretEvaluationService) service).getByEtudiantId(id);
