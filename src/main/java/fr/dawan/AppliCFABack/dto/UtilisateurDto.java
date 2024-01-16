@@ -330,16 +330,4 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 	}
 	
 }
-	@Getter
-	@Setter
-	public class EtudiantUtilisateurDto {
-		private List<EtudiantPromotionDto> promotions;
-		
-	}
-	@Getter
-	@Setter
-	public class EtudiantPromotionDto {
-		private long id;
-		private String nom;
-		private LocalDate dateDebut;
-	}
+
