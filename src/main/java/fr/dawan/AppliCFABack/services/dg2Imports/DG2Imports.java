@@ -35,6 +35,10 @@ public class DG2Imports extends DG2ImportTools  {
         //this.dg2ImportUsers.fetchDG2Users(email, password);
     }
 
+    public void fetchStudents(String email, String password) throws FetchDG2Exception, URISyntaxException {
+
+    }
+
     public void fetchFormations(String email, String password) throws FetchDG2Exception, URISyntaxException {
         //this.dg2ImportFormations.fetchDG2Formations(email, password);
     }
