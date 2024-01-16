@@ -1,8 +1,8 @@
-package fr.dawan.AppliCFABack.controllers;
+package fr.dawan.AppliCFABack.controllers.generic;
 
 import fr.dawan.AppliCFABack.dto.BaseEntityDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
-import fr.dawan.AppliCFABack.services.GenericService;
+import fr.dawan.AppliCFABack.services.generic.GenericService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

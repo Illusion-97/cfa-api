@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import fr.dawan.AppliCFABack.dto.FacultatifDto;
 import fr.dawan.AppliCFABack.entities.Facultatif;
 import fr.dawan.AppliCFABack.repositories.FacultatifRepository;
+import fr.dawan.AppliCFABack.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

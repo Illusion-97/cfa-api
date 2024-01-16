@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.dawan.AppliCFABack.controllers.generic.GenericController;
 import fr.dawan.AppliCFABack.dto.SignatureDto;
 import fr.dawan.AppliCFABack.services.SignatureService;
 import org.springframework.beans.factory.annotation.Autowired;

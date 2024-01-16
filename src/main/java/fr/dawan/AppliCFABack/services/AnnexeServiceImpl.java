@@ -3,6 +3,7 @@ package fr.dawan.AppliCFABack.services;
 import fr.dawan.AppliCFABack.dto.AnnexeDto;
 import fr.dawan.AppliCFABack.entities.Annexe;
 import fr.dawan.AppliCFABack.repositories.AnnexeRepository;
+import fr.dawan.AppliCFABack.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

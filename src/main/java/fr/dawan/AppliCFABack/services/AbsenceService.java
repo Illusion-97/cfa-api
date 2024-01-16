@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.AbsenceDto;
+import fr.dawan.AppliCFABack.services.generic.GenericService;
 import fr.dawan.AppliCFABack.tools.JustificatifException;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * @version 1.0
  * @return Repository de l'entity Absence
  */
-public interface AbsenceService extends GenericService<AbsenceDto>{
+public interface AbsenceService extends GenericService<AbsenceDto> {
 
 	
 	List<AbsenceDto> getAllByInterventionId(long id);

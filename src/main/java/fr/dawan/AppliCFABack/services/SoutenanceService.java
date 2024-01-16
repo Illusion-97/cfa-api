@@ -3,12 +3,10 @@ package fr.dawan.AppliCFABack.services;
 import fr.dawan.AppliCFABack.dto.CreateSoutenanceDto;
 import fr.dawan.AppliCFABack.dto.SoutenanceDto;
 import fr.dawan.AppliCFABack.entities.Soutenance;
+import fr.dawan.AppliCFABack.services.generic.GenericService;
 import fr.dawan.AppliCFABack.tools.DossierProjetException;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
-import freemarker.core.ParseException;
-import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
 
 import java.io.IOException;
 import java.util.List;

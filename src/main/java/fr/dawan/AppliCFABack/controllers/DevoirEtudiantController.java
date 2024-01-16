@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.dawan.AppliCFABack.controllers.generic.GenericController;
 import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
 import fr.dawan.AppliCFABack.services.DevoirEtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;

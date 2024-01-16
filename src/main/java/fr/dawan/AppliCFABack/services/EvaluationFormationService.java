@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.EvaluationFormationDto;
+import fr.dawan.AppliCFABack.services.generic.GenericService;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 
 import java.util.List;

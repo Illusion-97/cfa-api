@@ -8,9 +8,9 @@ import fr.dawan.AppliCFABack.entities.Etudiant;
 import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.EtudiantRepository;
 import fr.dawan.AppliCFABack.repositories.TuteurRepository;
+import fr.dawan.AppliCFABack.services.generic.GenericServiceImpl;
 import fr.dawan.AppliCFABack.tools.HashTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +34,7 @@ public class TuteurServiceImpl extends GenericServiceImpl<Tuteur, TuteurDto> imp
 	@Autowired
 	EtudiantRepository etudiantRepository;
 	@Autowired
-	private DtoMapper mapper = new DtoMapperImpl();
+	private DtoMapper mapper;
 	
 	@Autowired
 	public TuteurServiceImpl(TuteurRepository tuteurRepository)

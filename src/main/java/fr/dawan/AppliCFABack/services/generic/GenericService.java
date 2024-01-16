@@ -1,4 +1,4 @@
-package fr.dawan.AppliCFABack.services;
+package fr.dawan.AppliCFABack.services.generic;
 
 import fr.dawan.AppliCFABack.dto.BaseEntityDto;
 import fr.dawan.AppliCFABack.dto.CountDto;

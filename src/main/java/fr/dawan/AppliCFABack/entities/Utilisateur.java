@@ -16,24 +16,18 @@ public class Utilisateur extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 255)
 	private String login;
 
-	@Column(nullable = true, length = 255)
 	private String password;
 
-	@Column(nullable = false, length = 255)
 	private String prenom;
 
-	@Column(nullable = false, length = 255)
 	private String nom;
 
-	@Column(nullable = true, length = 255)
 	private String civilite;
 
 	private LocalDate dateDeNaissance;
 
-	@Column(nullable = true, length = 255)
 	private String telephone;
 
-	@Column(nullable = true, length = 255)
 	private String telephoneFixe;
 
 	@ManyToOne(cascade = {CascadeType.PERSIST })

@@ -6,11 +6,12 @@ import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.TuteurDto;
 import fr.dawan.AppliCFABack.entities.Tuteur;
 import fr.dawan.AppliCFABack.entities.Utilisateur;
+import fr.dawan.AppliCFABack.services.generic.GenericService;
 
 import java.util.List;
 
 
-public interface TuteurService extends GenericService<TuteurDto>{
+public interface TuteurService extends GenericService<TuteurDto> {
 
 	List<TuteurDto> getAll();
 

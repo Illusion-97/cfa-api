@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import fr.dawan.AppliCFABack.controllers.generic.GenericController;
 import fr.dawan.AppliCFABack.dto.DevoirDto;
 import fr.dawan.AppliCFABack.services.DevoirService;
 import org.springframework.beans.factory.annotation.Autowired;

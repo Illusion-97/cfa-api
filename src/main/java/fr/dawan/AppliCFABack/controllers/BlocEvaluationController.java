@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import fr.dawan.AppliCFABack.controllers.generic.GenericController;
 import fr.dawan.AppliCFABack.dto.BlocEvaluationDto;
 import fr.dawan.AppliCFABack.services.BlocEvaluationService;
 import org.springframework.web.bind.annotation.GetMapping;

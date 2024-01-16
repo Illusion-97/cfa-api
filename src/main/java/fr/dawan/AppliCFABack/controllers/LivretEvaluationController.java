@@ -1,8 +1,9 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import fr.dawan.AppliCFABack.controllers.generic.GenericController;
 import fr.dawan.AppliCFABack.dto.LivretEvaluationDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantLivretEvaluationDto;
-import fr.dawan.AppliCFABack.services.GenericService;
+import fr.dawan.AppliCFABack.services.generic.GenericService;
 import fr.dawan.AppliCFABack.services.LivretEvaluationService;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;
 import javassist.NotFoundException;

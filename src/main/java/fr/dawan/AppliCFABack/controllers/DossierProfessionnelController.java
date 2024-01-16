@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.dawan.AppliCFABack.controllers.generic.GenericController;
 import fr.dawan.AppliCFABack.dto.DossierProfessionnelDto;
 import fr.dawan.AppliCFABack.dto.EtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.dossierprofessionnel.CursusDossierProDto;
@@ -11,7 +12,6 @@ import fr.dawan.AppliCFABack.tools.CursusNotFoundException;
 import fr.dawan.AppliCFABack.tools.DossierProfessionnelException;
 import fr.dawan.AppliCFABack.tools.EtudiantNotFoundException;
 import freemarker.template.TemplateException;
-import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -36,7 +36,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/dossierProfessionnel")
 @CrossOrigin(origins = "*")
-public class DossierProfessionnelController extends GenericController<DossierProfessionnelDto>{
+public class DossierProfessionnelController extends GenericController<DossierProfessionnelDto> {
 
 	protected DossierProfessionnelController(DossierProfessionnelService service) {
 		super(service);

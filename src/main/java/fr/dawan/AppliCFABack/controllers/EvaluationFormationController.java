@@ -1,5 +1,6 @@
 package fr.dawan.AppliCFABack.controllers;
 
+import fr.dawan.AppliCFABack.controllers.generic.GenericController;
 import fr.dawan.AppliCFABack.dto.EvaluationFormationDto;
 import fr.dawan.AppliCFABack.services.EvaluationFormationService;
 import fr.dawan.AppliCFABack.tools.SaveInvalidException;

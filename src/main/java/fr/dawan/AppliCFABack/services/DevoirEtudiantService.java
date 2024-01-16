@@ -1,6 +1,7 @@
 package fr.dawan.AppliCFABack.services;
 
 import fr.dawan.AppliCFABack.dto.DevoirEtudiantDto;
+import fr.dawan.AppliCFABack.services.generic.GenericService;
 
 import java.util.List;
 

@@ -1,8 +1,6 @@
 package fr.dawan.AppliCFABack;
 
 import fr.dawan.AppliCFABack.interceptors.TokenInterceptor;
-import fr.dawan.AppliCFABack.mapper.DtoMapper;
-import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.tools.TimerCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -54,13 +52,6 @@ public class AppliCfaBackApplication {
 		clientHttpRequestFactory.setConnectTimeout(20_000);
 		clientHttpRequestFactory.setReadTimeout(0);
 		return new RestTemplate(clientHttpRequestFactory);
-	}
-
-	@Bean
-	public DtoMapper dtoMapper() {
-		DtoMapper dtM = new DtoMapperImpl();
-
-		return new DtoMapperImpl();
 	}
 
 	@Bean
