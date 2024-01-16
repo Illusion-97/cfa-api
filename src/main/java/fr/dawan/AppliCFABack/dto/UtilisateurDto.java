@@ -1,6 +1,8 @@
 package fr.dawan.AppliCFABack.dto;
 
 import fr.dawan.AppliCFABack.entities.Entreprise;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,6 +17,8 @@ import java.util.List;
  * @return DTO-utilisateur Entity
  */
 @SuppressWarnings("serial")
+@Getter
+@Setter
 public class UtilisateurDto extends BaseEntityDto implements Serializable {
 
 	private String login;
@@ -29,6 +33,7 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 	private Entreprise entrepriseDto;
 	private List<UtilisateurRoleDto> rolesDto;
 	private EtudiantDto etudiantDto;
+	private EtudiantUtilisateurDto etudiant;
 	private FormateurDto formateurDto;
 	private TuteurDto tuteurDto;
 	private CEFDto cefDto;
@@ -323,5 +328,18 @@ public class UtilisateurDto extends BaseEntityDto implements Serializable {
 		super(id, version);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 }
+	@Getter
+	@Setter
+	public class EtudiantUtilisateurDto {
+		private List<EtudiantPromotionDto> promotions;
+		
+	}
+	@Getter
+	@Setter
+	public class EtudiantPromotionDto {
+		private long id;
+		private String nom;
+		private LocalDate dateDebut;
+	}
