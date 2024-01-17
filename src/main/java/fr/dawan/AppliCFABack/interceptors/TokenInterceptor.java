@@ -16,7 +16,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	
+
 	private static final Logger logger = Logger.getGlobal();
 
 	@Override
@@ -42,10 +42,10 @@ public class TokenInterceptor implements HandlerInterceptor {
 				try {
 					// validation du token
 					jwtTokenUtil.isTokenExpired(token);
-					String email = jwtTokenUtil.getUsernameFromToken(token);
+					/*String email = jwtTokenUtil.getUsernameFromToken(token);
 					if (!TokenSaver.tokensByEmail.containsKey(email) || !TokenSaver.tokensByEmail.get(email).equals(token)) {
 						throw new MalformedJwtException("Erreur : jeton non reconnu !");
-					}
+					}*/
 
 					// TODO: Autres extractions du jeton ou autres traitements
 
