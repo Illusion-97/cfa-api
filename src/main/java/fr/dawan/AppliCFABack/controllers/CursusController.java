@@ -5,7 +5,7 @@ import fr.dawan.AppliCFABack.dto.CursusDto;
 import fr.dawan.AppliCFABack.dto.PromotionDto;
 import fr.dawan.AppliCFABack.services.CursusService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
-import fr.dawan.AppliCFABack.services.dg2Imports.DG2Imports;
+import fr.dawan.AppliCFABack.services.dg2Imports.DG2ImportCursus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -21,14 +21,19 @@ import java.util.Optional;
 @RequestMapping("/cursus")
 public class CursusController {
 
-	@Autowired
-	private DG2Imports dg2Imports;
+	private final DG2ImportCursus dg2Imports;
+	private final CursusService cursusService;
+	private final EtudiantService etudiantService;
 
-	@Autowired
-	private CursusService cursusService;
-
-	@Autowired
-	private EtudiantService etudiantService;
+	public CursusController(
+			@Autowired DG2ImportCursus dg2Imports,
+			@Autowired CursusService cursusService,
+			@Autowired EtudiantService etudiantService
+	) {
+		this.dg2Imports = dg2Imports;
+		this.cursusService = cursusService;
+		this.etudiantService = etudiantService;
+	}
 
 	@GetMapping(produces = "application/json")
 	public List<CursusDto> getAll() {
@@ -167,7 +172,7 @@ public class CursusController {
 		String[] splitUserDG2String = userDG2.split(":");
 
 		try {
-			dg2Imports.fetchCursus(splitUserDG2String[0], splitUserDG2String[1]);
+			dg2Imports.fetchDG2Cursus(splitUserDG2String[0], splitUserDG2String[1]);
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

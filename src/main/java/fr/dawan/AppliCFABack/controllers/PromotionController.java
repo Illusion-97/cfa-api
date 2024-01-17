@@ -4,6 +4,7 @@ import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.dto.customdtos.PromotionEtudiantDto;
 import fr.dawan.AppliCFABack.services.FileService;
 import fr.dawan.AppliCFABack.services.PromotionService;
+import fr.dawan.AppliCFABack.services.dg2Imports.DG2ImportPromotions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -27,13 +28,23 @@ import java.util.logging.Logger;
 public class PromotionController {
 
 
-	@Autowired
-	private PromotionService promoService;
+	private final PromotionService promoService;
 
-	@Autowired
-	FileService fileSevice;
+	private DG2ImportPromotions dg2ImportPromotions;
+
+	private final FileService fileSevice;
 
 	private static final Logger logger = Logger.getGlobal();
+
+	public PromotionController(
+			@Autowired PromotionService promoService,
+			@Autowired DG2ImportPromotions dg2ImportPromotions,
+			@Autowired FileService fileService
+	) {
+		this.promoService = promoService;
+		this.dg2ImportPromotions = dg2ImportPromotions;
+		this.fileSevice = fileService;
+	}
 
 	@GetMapping(produces = "application/json")
 	public List<PromotionDto> getAll() {
@@ -166,11 +177,11 @@ public class PromotionController {
 			int nb = 0;
 			if (idCursusDg2.isPresent()) {
 
-				nb= promoService.fetchDGPromotions(splitUser[0], splitUser[1],idCursusDg2.get());
+				nb= dg2ImportPromotions.fetchDGPromotions(splitUser[0], splitUser[1],idCursusDg2.get());
 
 			}
 			else {
-				nb = promoService.fetchDGPromotions(splitUser[0], splitUser[1]);
+				nb = dg2ImportPromotions.fetchDGPromotions(splitUser[0], splitUser[1]);
 
 			}
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2. Promotions updated :" +nb);

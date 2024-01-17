@@ -4,7 +4,7 @@ import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.services.CentreFormationService;
 
-import fr.dawan.AppliCFABack.services.dg2Imports.DG2Imports;
+import fr.dawan.AppliCFABack.services.dg2Imports.DG2ImportCenters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,18 @@ import java.util.Optional;
 @RequestMapping("/centreFormations")
 public class CentreFormationController {
 
-	@Autowired
 	CentreFormationService centreFormationService;
-
-	@Autowired
-	DG2Imports dg2Imports;
+	DG2ImportCenters dg2ImportCenters;
 
 	private static final Logger logger = LoggerFactory.getLogger(CentreFormationController.class);
+
+	public CentreFormationController(
+			@Autowired CentreFormationService centreFormationService,
+			@Autowired DG2ImportCenters dg2ImportCenters
+	) {
+		this.centreFormationService = centreFormationService;
+		this.dg2ImportCenters = dg2ImportCenters;
+	}
 
 	// ##################################################
 	// # GET #
@@ -121,7 +126,7 @@ public class CentreFormationController {
 			String[] splitUserDG2String = userDG2.split(":");
 
 			try {
-				this.dg2Imports.fetchCenters(splitUserDG2String[0], splitUserDG2String[1]);
+				this.dg2ImportCenters.fetchAllDG2CentreFormation(splitUserDG2String[0], splitUserDG2String[1]);
 				return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
 			} catch (Exception e) {
 				logger.error("Exception", e);
