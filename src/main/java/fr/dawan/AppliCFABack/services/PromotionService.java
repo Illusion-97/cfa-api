@@ -29,7 +29,7 @@ public interface PromotionService {
 	UtilisateurDto getReferentById(long id);
 
 	CountDto count(String string);
-	
+
 	CountDto countByCentreFormationId(long id, String search);
 
 	List<PromotionDto> getAllPromotions(int page, int size, Optional<String> choix, String string);
@@ -49,17 +49,11 @@ public interface PromotionService {
 	 * @return toutes les données nécessaires pour remplir la section Cursus dans le front partie étudiant, par le service implémenté
 	 */
 	List<PromotionEtudiantDto> getCursusByIdEtudiant(long id);
-	
-	List<PromotionForSelectDto> getPromotionByInterventionIdForSelect(long idIntervention);
-	
-	int fetchDGPromotions(String email, String password) throws FetchDG2Exception, URISyntaxException;
-	int fetchDGPromotions(String email, String password, long idCursusDg2) throws FetchDG2Exception, URISyntaxException;
 
-	
-	List<Promotion> getPromotionDG2ByIdCursusDG2(String email, String password, long idCursus) throws FetchDG2Exception, URISyntaxException;
+	List<PromotionForSelectDto> getPromotionByInterventionIdForSelect(long idIntervention);
 
 	String getGrillePositionnement(long idPromotion) throws GrilleException, IOException, TemplateException;
-	
+
 	List<PromotionDto> getPromoByCentreFormationIdPagination(int page, int size, long id, String search);
 
 	List<PromotionDto> getPromotionByIdFormateur(long id, int page, int size, String search);

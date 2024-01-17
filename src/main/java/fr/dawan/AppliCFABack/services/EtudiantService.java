@@ -24,7 +24,7 @@ public interface EtudiantService {
 
 	List<EtudiantDto> getAllByPage(int page, int size, String search);
 
-	CountDto count(String search);	
+	CountDto count(String search);
 
 	EtudiantDto getById(long id);
 
@@ -76,22 +76,17 @@ public interface EtudiantService {
 	EtudiantDossierDto getByEtudiantIdForDossierPro(long id);
 	EtudiantDossierDto saveOrUpdateEtudiantDossier(EtudiantDossierDto e);
 
-    void fetchAllEtudiantDG2(String email, String password) throws Exception;
-
-	void fetchAllEtudiantDG2ByIdPromotion(String email, String password, long idPromotionDg2)
-			throws Exception;
-
 
 	AccueilEtudiantDto getAccueilEtudiant(long id);
 
     EtudiantDossierProjetDto getByEtudiantIdForDossierProjet(long id);
-	
+
 	List<EtudiantDto> getEtudiantByIdTuteurBySearch(long id, int page, int size, String search);
-	
+
 	List<EtudiantDto> getEtudiantByPromotion(long id, int page, int size, String search);
-	
+
 	CountDto countEtudiantByPromotion(long id, String search);
-	
+
 	Etudiant savEtudiant(Utilisateur utilisateur);
 
 	List<EtudiantDto> findAllByTuteurId(long tuteurId);

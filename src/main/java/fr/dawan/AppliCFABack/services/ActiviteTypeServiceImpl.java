@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 /***
- * 
+ *
  * @author Feres BG Valentin C.
  * @see fr.dawan.AppliCFABack.repositories.ActiviteTypeRepository
  * @see fr.dawan.AppliCFABack.dto.ActiviteTypeDto
@@ -39,7 +39,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 
 	/**
 	 * Récupération de tous les activites types
-	 * 
+	 *
 	 * @return ActiviteTypeDto Liste des objets Activite Type DTO
 	 */
 
@@ -74,10 +74,10 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 
 	/**
 	 * Récupération de activite types en fonction de son id
-	 * 
+	 *
 	 * @param id ActiviteType
 	 * @return ActiviteType DTO
-	 * 
+	 *
 	 */
 	@Override
 	public ActiviteTypeDto getById(long id) {
@@ -98,8 +98,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 
 	/**
 	 * Sauvegarde ou mise à jour d'une activité type
-	 * 
-	 * @param ActiviteType DTO
+	 *
 	 * @return ActiviteType DTO
 	 */
 	@Override
@@ -111,7 +110,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 
 	/**
 	 * Suppression d'une activité type
-	 * 
+	 *
 	 * @param id ActiviteType
 	 */
 	@Override
@@ -122,7 +121,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 
 	/***
 	 * Récupération des activites types en fonction de l'id de la promotion
-	 * 
+	 *
 	 * @param id Promotion
 	 * @return  ActiviteTypeDto Liste des objets Activite Type DTO
 	 */
@@ -158,7 +157,7 @@ public class ActiviteTypeServiceImpl implements ActiviteTypeService {
 			//on set pour renvoyé un ensemble set
 			Set<CompetenceProfessionnelle> cps = activiteType.getCompetenceProfessionnelles();
 			//on transform en list pour pouvoir trier
-			List<CompetenceProfessionnelle> cpList = new ArrayList<>(cps); 
+			List<CompetenceProfessionnelle> cpList = new ArrayList<>(cps);
 			//trie par id croissant
 			cpList.sort(Comparator.comparing(CompetenceProfessionnelle::getId)); // sort the list
 

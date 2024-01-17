@@ -1,7 +1,6 @@
 package fr.dawan.AppliCFABack.services;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,16 +15,9 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -95,7 +87,6 @@ import fr.dawan.AppliCFABack.repositories.PromotionRepository;
 import fr.dawan.AppliCFABack.repositories.TuteurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRepository;
 import fr.dawan.AppliCFABack.repositories.UtilisateurRoleRepository;
-import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import fr.dawan.AppliCFABack.tools.HashTools;
 
 @Service
@@ -108,10 +99,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 	ProjetRepository projetRepository;
 	@Autowired
 	DossierProjetRepository dossierProRepo;
-	
-	@Autowired 
+
+	@Autowired
 	DossierProfessionnelRepository dossierRepo;
-	
+
 	@Autowired
 	TuteurRepository tuteurRepository;
 
@@ -160,19 +151,14 @@ public class EtudiantServiceImpl implements EtudiantService {
 	@Autowired
 	private DtoTools mapperTools;
 
-	@Autowired
-	private RestTemplate restTemplate;
-
 	private static final Logger logger = LoggerFactory.getLogger(EtudiantServiceImpl.class);
 
 	@Autowired
 	private AdresseRepository adresseRepository;
 	@Autowired
 	private LivretEvaluationRepository livretEvaluationRepository;
-	
-	@Value("${base_url_dg2}")
-    private String baseUrl;
-	
+
+
 	// ##################################################
 	// # CRUD #
 	// ##################################################
@@ -195,7 +181,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 			if (e != null && e.getUtilisateur() != null && e.getUtilisateur().getAdresse() != null) {
 			    AdresseDto addrDto = mapper.adresseToAdresseDto(e.getUtilisateur().getAdresse());
-			
+
 //			EntrepriseDto entDto = mapper.EntrepriseToEntrepriseDto(e.getUtilisateur().getEntreprise());
 
 			List<GroupeEtudiant> lstGrpEtu = e.getGroupes();
@@ -373,11 +359,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 //		if (etudiant == null)
 //			return;
-//		
+//
 //		Utilisateur Utilisateur = etudiant.getUtilisateur();
 //		etudiant.setUtilisateur(null);
 //		Utilisateur.setEtudiant(null);
-//		
+//
 //		etudiantRepository.save(etudiant);
 //		utilisateurRepository.save(Utilisateur);
 //
@@ -830,137 +816,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return etudiantAbsencesDevoirsDtos;
 	}
 
-	@Async("myTaskExecutor")
-	public void fetchAllEtudiantDG2(String email, String password) throws Exception {
-		List<Promotion> promotions = promotionRepository.findAll();
 
-		for (Promotion promotion : promotions) {
-
-			fetchAllEtudiantDG2ByIdPromotion(email, password, promotion.getIdDg2());
-		}
-
-	}
-
-	@Async("myTaskExecutor")
-	@Override
-	public void fetchAllEtudiantDG2ByIdPromotion(String email, String password, long idPromotionDg2)
-			throws FetchDG2Exception, JsonProcessingException, URISyntaxException {
-		List<Etudiant> saved = new ArrayList<>();
-		Optional<Promotion> optionnalPromotion = promotionRepository.findByIdDg2(idPromotionDg2);
-
-		if (!optionnalPromotion.map(promotion -> {
-			logger.info(">>>>>>>promo>>>>" + promotion.getIdDg2());
-			logger.info("FetchDg2Etudiant >>> START");
-			ObjectMapper objectMapper = new ObjectMapper();
-			List<EtudiantUtilisateurDG2Dto> cResJson = new ArrayList<>();
-
-			String url =  baseUrl + "sessions/" + idPromotionDg2 + "/registrations";
-
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("x-auth-token", email + ":" + password);
-
-			HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-
-			ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-			logger.info("FetchDg2Etudiant >>> START /registration");
-
-			if (repWs.getStatusCode() == HttpStatus.OK) {
-				logger.info("FetchDg2Etudiant >>> START /registration OK");
-				String json = repWs.getBody();
-				// importUserFromJson(json, promotion);
-
-				try {
-					cResJson = objectMapper.readValue(json, new TypeReference<List<EtudiantUtilisateurDG2Dto>>() {
-					});
-				} catch (Exception ignored) {
-				}
-				for (EtudiantUtilisateurDG2Dto eDG2 : cResJson) {
-					logger.info("FetchDg2Etudiant >>> START /for" + eDG2.getPersonId());
-
-					Optional<Utilisateur> utiLisateurOptional = utilisateurRepository
-							.findDistinctByIdDg2(eDG2.getPersonId());
-					Etudiant etudiant = null;
-					Utilisateur utilisateur = null;
-					if (utiLisateurOptional.isPresent()) { //utilisateur existant, on cherche l'étudiant
-						etudiant = etudiantRepository.findByUtilisateurId(utiLisateurOptional.get().getId());
-						utilisateur = utiLisateurOptional.get();
-					} else { //utilisateur non existant => on le crée
-						utilisateur = mapper.etudiantUtilisateurDG2DtoToUtilisateur(eDG2);
-						Adresse userAdresse = utilisateur.getAdresse();
-						Adresse adresseDg2 = mapper.etudiantUtilisateurDG2DtoToAdresse(eDG2);
-						if (userAdresse != null) {
-							adresseDg2.setId(utilisateur.getAdresse().getId());
-							adresseDg2.setVersion(utilisateur.getAdresse().getVersion());
-							adresseRepository.saveAndFlush(adresseDg2);
-						} else {
-							adresseDg2 = adresseRepository.saveAndFlush(adresseDg2);
-							utilisateur.setAdresse(adresseDg2);
-						}
-					}
-					
-					//modif du rôle
-					List<UtilisateurRole> roles = utilisateur.getRoles() == null ? new ArrayList<>()
-							: utilisateur.getRoles();
-					if (roles.stream().noneMatch(r -> r.getId() == 1L)) {
-						UtilisateurRole r = new UtilisateurRole();
-						r.setId(1L);
-						roles.add(r);
-					}
-					utilisateur.setRoles(roles);
-					utilisateur.setActive(true);
-					utilisateur.setPassword(null);
-					utilisateurRepository.saveAndFlush(utilisateur);
-
-					final Utilisateur util = utilisateur;
-					if (etudiant == null) {
-						etudiant = saved.stream().filter(e -> e.getUtilisateur().getIdDg2() == util.getIdDg2())
-								.findFirst().orElse(null);
-						if (etudiant == null) {
-							etudiant = new Etudiant();
-							etudiant.setUtilisateur(utilisateur);
-							etudiant = etudiantRepository.saveAndFlush(etudiant);
-							saved.add(etudiant);
-						}
-					} else {
-						saved.add(etudiant);
-					}
-
-					long etudiantId = etudiant.getId();
-					if (promotion.getEtudiants().stream().anyMatch(e -> e.getId() == etudiantId))
-						continue;
-					else {
-						promotion.getEtudiants().add(etudiant);
-						promotionRepository.save(promotion);
-					}
-					Optional<LivretEvaluation> evaOptional = livretEvaluationRepository
-							.findByEtudiantIdAndTitreProfessionnelId(etudiant.getId(), promotion.getCursus().getId());
-					if (!evaOptional.isPresent()) {
-						LivretEvaluation livret = new LivretEvaluation();
-						livret.setEtudiant(etudiant);
-						livret.setTitreProfessionnel(promotion.getCursus());
-						livret.setOrganismeFormation(promotion.getCentreFormation());
-						livret.setEtat(EtatLivertEval.ENATTENTEDEVALIDATION);
-						livret = livretEvaluationRepository.saveAndFlush(livret);
-						final LivretEvaluation fLivret = livret;
-						promotion.getCursus().getActiviteTypes().forEach(at -> {
-							BlocEvaluation blocEvaluation = new BlocEvaluation();
-							blocEvaluation.setLivretEvaluation(fLivret);
-							blocEvaluation.setActiviteType(at);
-							blocEvaluationRepository.saveAndFlush(blocEvaluation);
-						});
-					}
-
-				}
-				logger.info("FetchDg2Etudiant>>>>>>END");
-				return true;
-			} else {
-				logger.error("FetchDg2Etudiant>>>>>>>>ERROR End failed");
-				return false;
-			}
-		}).orElseThrow(() -> new FetchDG2Exception("Promotion Introuvable"))) {
-			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
-		}
-	}
 
 	@Async("myTaskExecutor")
 	public void importUserFromJson(String json, Optional<Promotion> promotion)
@@ -1126,7 +982,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return DtoTools.convert(e.get(), EtudiantDossierProjetDto.class);
 
 	}
-	
+
 	@Override
 	public List<EtudiantDto> getEtudiantByPromotion(long id, int page, int size, String search) {
 		List<Etudiant> result = etudiantRepository.getEtudiantByPromotion(id, search, PageRequest.of(page, size)).get().collect(Collectors.toList());
@@ -1149,10 +1005,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public Etudiant savEtudiant(Utilisateur utilisateur) {
 		Etudiant etudiant = new Etudiant();
 		etudiant.setUtilisateur(utilisateur);
-		
+
 		return etudiantRepository.save(etudiant);
 	}
-	
+
 	@Override
 	public List<EtudiantDto> findAllByTuteurId(long tuteurId) {
 		List<Etudiant> etudiants = etudiantRepository.findAllByTuteurId(tuteurId);

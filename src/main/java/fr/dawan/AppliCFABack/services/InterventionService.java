@@ -29,14 +29,8 @@ public interface InterventionService {
 
 	List<FormateurDto> findFormateursByInterventionsId(long id);
 
-	List<Intervention> getInterventionDG2ByIdPromotionDG2(String email, String password, long idPrmotionDg2)
-			throws Exception;
-	void fetchDGInterventions(String email, String password) throws Exception;
-
-	int fetchDGInterventions(String email, String password, long idPrmotionDg2) throws Exception;
-	
 	List<InterventionDto> findInterventionByPromotionId(long id, int page, int size, String search);
-	
+
 	CountDto countInterventionByPromotionId(long id, String search);
 
 	List<InterventionDto> findAllByFormateurId(long formateurId);

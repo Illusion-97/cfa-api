@@ -13,17 +13,49 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 /**
-*
-* @author Valentin C, Feres BG.
-* @see fr.dawan.appliCFABack.dto
-* @since 1.0
-* @version 1.0
-* @return classe de convertion d'une entité vers DTO & vice-versa
-*/
+ *
+ * @author Valentin C, Feres BG.
+ * @see fr.dawan.appliCFABack.dto
+ * @since 1.0
+ * @version 1.0
+ * @return classe de convertion d'une entité vers DTO & vice-versa
+ */
 @Component
 public class DtoTools {
 
-    private static final ModelMapper myMapper = new ModelMapper();
+    private static final ModelMapper myMapper = DtoTools.initMapper();
+
+    private static ModelMapper initMapper() {
+        ModelMapper mapper = new ModelMapper();
+//        myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+//        myMapper.getConfiguration().setAmbiguityIgnored(true);
+//        myMapper.typeMap(NoteDto.class, Note.class).addMappings(mapper -> {
+//            mapper.map(src -> src.getId(), Note::setId);
+//            mapper.map(src -> src.getNoteObtenue(), Note::setNoteObtenue);
+//            mapper.map(src -> src.getEtudiantNoteId(), (dest, v) -> dest.getEtudiantNote().setId((long) v));
+//
+//        });
+
+//    	myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        mapper.getConfiguration().setAmbiguityIgnored(true);
+
+        mapper.typeMap(Etudiant.class, EtudiantInfoInterventionDto.class).addMappings(m ->{
+            m.map(BaseEntity::getId, EtudiantInfoInterventionDto::setIdEtudiant);
+            m.map(src -> src.getUtilisateur().getNom(), EtudiantInfoInterventionDto::setNom);
+            m.map(src -> src.getUtilisateur().getPrenom(), EtudiantInfoInterventionDto::setPrenom);
+        });
+
+        mapper.typeMap(FormationDG2Dto.class, Formation.class).addMappings(m ->{
+            m.map(FormationDG2Dto::getId, Formation::setIdDg2);
+            m.map(FormationDG2Dto::getTitle, Formation::setTitre);
+            m.map(FormationDG2Dto::getSlug, Formation::setSlug);
+            m.map(FormationDG2Dto::getDuration, Formation::setDuration);
+            m.map(FormationDG2Dto::getObjectives, Formation::setObjectif);
+            m.map(FormationDG2Dto::getPrerequisites, Formation::setPrerequis);
+            m.map(FormationDG2Dto::getPlan, Formation::setPlan);
+        });
+        return mapper;
+    }
 
     /**
      * @param obj
@@ -36,27 +68,11 @@ public class DtoTools {
      */
     public static <TSource, TDestination> TDestination convert(TSource obj, Class<TDestination> clazz) {
 
-//        myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-//        myMapper.getConfiguration().setAmbiguityIgnored(true);
-//        myMapper.typeMap(NoteDto.class, Note.class).addMappings(mapper -> {
-//            mapper.map(src -> src.getId(), Note::setId);
-//            mapper.map(src -> src.getNoteObtenue(), Note::setNoteObtenue);
-//            mapper.map(src -> src.getEtudiantNoteId(), (dest, v) -> dest.getEtudiantNote().setId((long) v));
-//
-//        });
-    	
-//    	myMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-    	myMapper.getConfiguration().setAmbiguityIgnored(true);
-    	
-        myMapper.typeMap(Etudiant.class, EtudiantInfoInterventionDto.class).addMappings(m ->{
-        	m.map(src -> src.getId(), EtudiantInfoInterventionDto::setIdEtudiant);
-        	m.map(src -> src.getUtilisateur().getNom(), EtudiantInfoInterventionDto::setNom);
-        	m.map(src -> src.getUtilisateur().getPrenom(), EtudiantInfoInterventionDto::setPrenom);
-        });
+
         if (obj == null) return null;
         return myMapper.map(obj, clazz);
     }
-    
+
 
     public static <TSource, TDestination> TDestination convert(TSource obj, Class<TDestination> clazz, Converter converter) {
         ModelMapper mapper = new ModelMapper();
@@ -65,59 +81,45 @@ public class DtoTools {
     }
 
     @SuppressWarnings("unchecked")
-	public static <TSource, TDestination> TDestination enumConvert(TSource Enum, Class<TDestination> clazz, Converter converter) {
+    public static <TSource, TDestination> TDestination enumConvert(TSource Enum, Class<TDestination> clazz, Converter converter) {
         ModelMapper mapper = new ModelMapper();
         mapper.createTypeMap(Enum, clazz).setConverter(converter);
         return mapper.map(Enum, clazz);
     }
     Converter<Positionnement.Niveau, NiveauDto> niveauEnumToNiveauDtoConverter = context -> {
 
-    	Positionnement.Niveau niveau =  context.getSource();
+        Positionnement.Niveau niveau =  context.getSource();
 
-    	NiveauDto ndto = new NiveauDto();
-    	ndto.setValeur(niveau.getValeur());
-    	ndto.setCodeCouleur(niveau.getCodeCouleur());
-    	ndto.setDescription(niveau.getDescription());
-		return ndto;
+        NiveauDto ndto = new NiveauDto();
+        ndto.setValeur(niveau.getValeur());
+        ndto.setCodeCouleur(niveau.getCodeCouleur());
+        ndto.setDescription(niveau.getDescription());
+        return ndto;
 
     };
 
-    
+
     Converter<PromotionOrInterventionDG2Dto, Promotion> promotionDG2DtoToPromotionConverter = context -> {
-    	PromotionOrInterventionDG2Dto pDG2 = context.getSource();
-    	Promotion promo = new Promotion();
-    	promo.setIdDg2(pDG2.getId());
-    	promo.setDateDebut(DateConverter.convertToLocalDate(pDG2.getDateStart()));
-    	promo.setDateFin(DateConverter.convertToLocalDate(pDG2.getDateEnd()));
-    	promo.setNom(pDG2.getSlug());
-    	return promo;
+        PromotionOrInterventionDG2Dto pDG2 = context.getSource();
+        Promotion promo = new Promotion();
+        promo.setIdDg2(pDG2.getId());
+        promo.setDateDebut(DateConverter.convertToLocalDate(pDG2.getDateStart()));
+        promo.setDateFin(DateConverter.convertToLocalDate(pDG2.getDateEnd()));
+        promo.setNom(pDG2.getSlug());
+        return promo;
     };
-    
-    Converter<FormationDG2Dto, Formation> formationDG2DtoToFormationConverter = context -> {
-    	FormationDG2Dto fDG2 = context.getSource();
-    	Formation formation = new Formation();
-    	
-    	formation.setTitre(fDG2.getTitle());
-    	formation.setIdDg2(fDG2.getId());
-    	formation.setSlug(fDG2.getSlug());
-    	formation.setDuration(fDG2.getDuration());
-    	formation.setObjectif(fDG2.getObjectives());
-    	formation.setPrerequis(fDG2.getPrerequisites());
-    	formation.setPlan(fDG2.getPlan());
-    	return formation;
-    };
-    
+
     Converter<PromotionOrInterventionDG2Dto, Intervention> promotionDG2DtoToInterventionConverter = context -> {
-    	PromotionOrInterventionDG2Dto pDG2 = context.getSource();
-    	Intervention intervention = new Intervention();
+        PromotionOrInterventionDG2Dto pDG2 = context.getSource();
+        Intervention intervention = new Intervention();
 
-    	intervention.setIdDg2(pDG2.getId());
-    	intervention.setDateDebut(DateConverter.convertToLocalDate(pDG2.getDateStart()));
-    	intervention.setDateFin(DateConverter.convertToLocalDate(pDG2.getDateEnd()));
-    	return intervention;
+        intervention.setIdDg2(pDG2.getId());
+        intervention.setDateDebut(DateConverter.convertToLocalDate(pDG2.getDateStart()));
+        intervention.setDateFin(DateConverter.convertToLocalDate(pDG2.getDateEnd()));
+        return intervention;
     };
 
-    
+
     /**
      * permet de mapper un objet Promotion en PromotionEtudiantDto (dto customisé) -
      * return l'objet dto custom mappé
@@ -139,10 +141,6 @@ public class DtoTools {
         }).collect(Collectors.toList()));
         return cDto;
     };
-    
-    
-    
- 
 
     /**
      * méthode appelée dans le PromotionServiceImpl
@@ -152,24 +150,20 @@ public class DtoTools {
     public PromotionEtudiantDto promotionToPromotionEtudiantDto(Promotion promotion) {
         return convert(promotion, PromotionEtudiantDto.class, promotionToPromotionEtudiantDtoConverter);
     }
-    
-   
+
+
 
     public NiveauDto niveauToNiveauDto (Positionnement.Niveau niveau) {
 
-    	return enumConvert(niveau, NiveauDto.class, niveauEnumToNiveauDtoConverter);
+        return enumConvert(niveau, NiveauDto.class, niveauEnumToNiveauDtoConverter);
     }
-    
+
     public Promotion promotionOrInterventionDG2DtoToPromotion(PromotionOrInterventionDG2Dto promoDG2Dto) {
-    	return convert(promoDG2Dto, Promotion.class, promotionDG2DtoToPromotionConverter);
-    }
-    
-    public Formation formationDG2DtoToFormation(FormationDG2Dto formationDG2Dto) {
-    	return convert(formationDG2Dto, Formation.class, formationDG2DtoToFormationConverter);
+        return convert(promoDG2Dto, Promotion.class, promotionDG2DtoToPromotionConverter);
     }
 
     public Intervention promotionOrInterventionDG2DtoToIntervention(PromotionOrInterventionDG2Dto promoDG2Dto) {
-    	return convert(promoDG2Dto, Intervention.class, promotionDG2DtoToInterventionConverter);
+        return convert(promoDG2Dto, Intervention.class, promotionDG2DtoToInterventionConverter);
     }
     /**
      * permet de mapper un objet Examen en LivretEvaluationDto (dto customisé) -
@@ -187,7 +181,6 @@ public class DtoTools {
 
     /**
      * méthode appelée dans l'ExamenServiceImpl
-     * @param examen
      * @return l'objet dto custom mappé
      */
     public EtudiantLivretEvaluationDto promotionToLivretEvaluationDto(Promotion promotion) {
@@ -213,7 +206,7 @@ public class DtoTools {
         nDto.setDate(n.getExamen().getDateExamen());
 
         nDto.setPromotions(n.getExamen().getPromotions().stream().map(
-        		Promotion::getNom
+                Promotion::getNom
         ).collect(Collectors.toSet()));
 
         return nDto;

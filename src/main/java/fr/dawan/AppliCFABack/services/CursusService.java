@@ -27,8 +27,6 @@ public interface CursusService {
 	Page<PromotionDto> getByIdPromotionAndByPage(long idCursus, int page, int size);
 	List<PromotionDto> getPromotionsById(long id);
 
-	void fetchDG2Cursus(String email, String password) throws FetchDG2Exception, URISyntaxException;
-
 	CountDto countPromotion(long id);
 
 }

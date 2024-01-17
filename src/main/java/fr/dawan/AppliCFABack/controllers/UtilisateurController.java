@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import fr.dawan.AppliCFABack.services.dg2Imports.DG2ImportUsers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,21 @@ import javassist.NotFoundException;
 @RequestMapping("/utilisateurs")
 public class UtilisateurController {
 
-	@Autowired
-	private UtilisateurService utilisateurService;
+	private final UtilisateurService utilisateurService;
+
+
+	private final DG2ImportUsers dg2ImportUsers;
 
 	private static final Logger logger = LoggerFactory.getLogger(UtilisateurController.class);
+
+	public UtilisateurController(
+			@Autowired UtilisateurService utilisateurService,
+			@Autowired DG2ImportUsers dg2ImportUsers
+
+	) {
+		this.utilisateurService = utilisateurService;
+		this.dg2ImportUsers = dg2ImportUsers;
+	}
 
 	@DeleteMapping(value = "/{id}", produces = "text/plain")
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
@@ -72,7 +84,7 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id
 	 * @return recuperation des user pat id
 	 */
@@ -82,7 +94,7 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	@GetMapping(produces = { "application/json", "application/xml" }, value = "/with-object")
@@ -91,7 +103,7 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return recuperation de tous les users
 	 */
 	@GetMapping(produces = { "application/json", "application/xml" })
@@ -100,7 +112,7 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param login
 	 * @return recherche par email
 	 */
@@ -110,7 +122,7 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id
 	 * @return
 	 */
@@ -120,7 +132,7 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 * @return ResponseEntity
 	 */
@@ -131,7 +143,7 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param uDto
 	 * @return ResponseEntity
 	 */
@@ -169,7 +181,7 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param uDto
 	 * @return mise à jour des user
 	 * @throws Exception
@@ -180,7 +192,7 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param ville
 	 * @return recjerche par adresse(ville)
 	 */
@@ -239,7 +251,7 @@ public class UtilisateurController {
 		String[] splitUserDG2String = userDG2.split(":");
 
 		try {
-			utilisateurService.fetchAllDG2Employees(splitUserDG2String[0], splitUserDG2String[1]);
+			this.dg2ImportUsers.fetchAllDG2Employees(splitUserDG2String[0], splitUserDG2String[1]);
 			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
 		} catch (Exception e) {
 			logger.error("Exception : ", e);

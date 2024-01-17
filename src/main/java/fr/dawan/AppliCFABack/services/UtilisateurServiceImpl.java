@@ -1,8 +1,5 @@
 package fr.dawan.AppliCFABack.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.univocity.parsers.common.record.Record;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
@@ -10,6 +7,7 @@ import fr.dawan.AppliCFABack.dto.*;
 import fr.dawan.AppliCFABack.entities.*;
 import fr.dawan.AppliCFABack.mapper.DtoMapper;
 import fr.dawan.AppliCFABack.repositories.*;
+import fr.dawan.AppliCFABack.services.dg2Imports.DG2ImportTools;
 import fr.dawan.AppliCFABack.tools.*;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
@@ -17,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,7 +38,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class UtilisateurServiceImpl implements UtilisateurService {
+public class UtilisateurServiceImpl extends DG2ImportTools implements UtilisateurService {
 
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
@@ -99,9 +96,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-
-	@Autowired
-	private RestTemplate restTemplate;
 
 	@Autowired
 	private HttpServletRequest request;
@@ -174,7 +168,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération de la liste des utilisateurs
-	 * 
+	 *
 	 * @return res Liste des objets utilisateurs
 	 */
 	@Override
@@ -198,7 +192,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Va permettre de récupérer tous les utilisateurs avec pagination et recherche
-	 * 
+	 *
 	 * @param page   numero de la page
 	 * @param size   éléments sur la page
 	 * @param search éléments utilisateurs (nom,prenom,login,adresse)
@@ -231,7 +225,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Recherche d'un utilisateur / nb
-	 * 
+	 *
 	 * @param search recherche par prenom / nom / login / adresse
 	 */
 
@@ -244,7 +238,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateurs en fonction de l'id
-	 * 
+	 *
 	 * @param id id de l'utilisateur
 	 * @return uDto objet utilsateur
 	 */
@@ -284,7 +278,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateurs en fonction de l'email
-	 * 
+	 *
 	 * @param email email utilisateur
 	 * @return utilisateurDto objet utilisateur
 	 */
@@ -319,7 +313,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateurs en fonction du nom
-	 * 
+	 *
 	 * @param name nom de l'utilisateur
 	 */
 
@@ -333,11 +327,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Sauvegarde ou mise à jour d'un utilisateur
-	 * 
+	 *
 	 * @param uDto objet utilisateur
 	 * @return result objet utilisateur (nouveau ou modifier)
 	 * @throws SaveInvalidException
-	 * 
+	 *
 	 */
 
 	@Override
@@ -464,7 +458,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			etudiantRepository.saveAndFlush(etudiant);
 
 			// On delete l'etudiant ?
-//			etudiantService.deleteById(etudiant.getId());			
+//			etudiantService.deleteById(etudiant.getId());
 		}
 		if (!isFormateur && user.getFormateur() != null) {
 			Formateur formateur = formateurRepository.getOne(user.getFormateur().getId());
@@ -474,7 +468,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			formateurRepository.saveAndFlush(formateur);
 
 			// On delete l'etudiant ?
-//			formateurService.deleteById(formateur.getId());		
+//			formateurService.deleteById(formateur.getId());
 		}
 		if (!isCEF && user.getCef() != null) {
 			CEF cef = cefRepository.getOne(user.getCef().getId());
@@ -484,7 +478,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			cefRepository.saveAndFlush(cef);
 
 			// On delete l'etudiant ?
-//			cefService.deleteById(cef.getId());	
+//			cefService.deleteById(cef.getId());
 		}
 		if (!isTuteur && isTuteur.getClass() != null) {
 			Tuteur tuteur = tuteurRepository.getOne(user.getTuteur().getId());
@@ -494,7 +488,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			tuteurRepository.saveAndFlush(tuteur);
 
 			// On delete l'etudiant ?
-//			cefService.deleteById(cef.getId());	
+//			cefService.deleteById(cef.getId());
 		}
 
 		user = utilisateurRepository.saveAndFlush(user);
@@ -512,15 +506,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return result;
 
-	}	
+	}
 	;
 	/**
 	 * Sauvegarde d'un Tuteur
-	 * 
+	 *
 	 * @param uDto objet utilisateur
 	 * @return result objet utilisateur (nouveau)
 	 * @throws SaveInvalidException
-	 * 
+	 *
 	 */
 	@Override
 	public UtilisateurDto insertTuteur(UtilisateurDto uDto) throws SaveInvalidException {
@@ -624,11 +618,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 *  Mise à jour d'un Tuteur
-	 * 
+	 *
 	 * @param uDto objet utilisateur
 	 * @return result objet utilisateur (modifier)
 	 * @throws SaveInvalidException
-	 * 
+	 *
 	 */
 	@Override
 	public UtilisateurDto updateTuteur(UtilisateurDto uDto) throws SaveInvalidException {
@@ -643,7 +637,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		if (!user.getLogin().equals(uDto.getLogin()) && utilisateurRepository.findByEmail(uDto.getLogin()) != null) {
 			throw new SaveInvalidException("Un utilisateur utilise déjà cette adresse e-mail : " + uDto.getLogin());
 
-		}	
+		}
 
 		try {
 			// si le mot de passe a été modifié on hash le nouveau mot de passe
@@ -707,7 +701,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Suppression d'un utilisateur
-	 * 
+	 *
 	 * @param id Id concernant un utilisateur
 	 */
 
@@ -754,7 +748,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	// recuperation des user par adresse id
 	/**
 	 * Récupération des utilisateurs par adresse en fonction de la ville
-	 * 
+	 *
 	 * @param ville adresse etudiant
 	 * @return res Liste utilisateur
 	 */
@@ -781,7 +775,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Planning de l'utilisateur
-	 * 
+	 *
 	 * @param id id de l'utilisateur
 	 * @return result Liste journee planning de l'utilisateur
 	 */
@@ -810,7 +804,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Congé de l'utilisateur
-	 * 
+	 *
 	 * @param id id de l'utilisateur
 	 * @return result liste des objets conge de l'utilisateur
 	 */
@@ -830,7 +824,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération de l'adresse en fonction de l'id de l'utilisateur
-	 * 
+	 *
 	 * @param id id de l'utilisateur
 	 * @return l'adresse utilisateur
 	 */
@@ -900,7 +894,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération des utilisateur pa role
-	 * 
+	 *
 	 * @param idRole objet utilisateur role
 	 * @return resfinal liste des utilisateurs en fonction du role
 	 */
@@ -948,7 +942,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	/**
 	 * Va permettre de récupérer tous utilisateurs par role avec pagination et
 	 * recherche
-	 * 
+	 *
 	 * @param page   numero de la page
 	 * @param size   éléments sur la page
 	 * @param search éléments role utilisateur (prenom, nom, login)
@@ -977,7 +971,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Recherche par role / nombre
-	 * 
+	 *
 	 * @param role   objet role utilisateur
 	 * @param search recherche par nom / prenom / login
 	 */
@@ -991,7 +985,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Utilisateur referent ou non
-	 * 
+	 *
 	 * @param id id referent
 	 */
 
@@ -1004,9 +998,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * File upload
-	 * 
+	 *
 	 * @throws FileException IOException
-	 * 
+	 *
 	 */
 
 	@Override
@@ -1078,7 +1072,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Récupération de l'utilisateur en fonction de l'id
-	 * 
+	 *
 	 * @param id id de l'utilisateur
 	 */
 	private Utilisateur getUtilisateurById(long id) {
@@ -1093,7 +1087,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Génération du mot de passe
-	 * 
+	 *
 	 * @return generatedString mot de passe généré
 	 */
 	// generation pwd
@@ -1117,9 +1111,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	/**
 	 * Reset du mot de passe
-	 * 
+	 *
 	 * @throws EmailResetPasswordException
-	 * 
+	 *
 	 */
 	// reset pwd
 	@Override
@@ -1158,86 +1152,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	}
 
-	/**
-	 * Enregistre en base de données le employees récupéré de DG2
-	 * 
-	 * @param email , password
-	 * @return void
-	 */
-	@Override
-	public void fetchAllDG2Employees(String email, String password)
-			throws FetchDG2Exception, URISyntaxException, JsonProcessingException {
-		ObjectMapper objectMapper = new ObjectMapper();
-		List<EmployeeDG2Dto> cResJson;
-
-		// url dg2 qui concerne la recupération des locations
-		URI url = new URI(baseUrl + "employees");
-
-		// recupérartion des headers / email / password dg2
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("x-auth-token", email + ":" + password);
-
-		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-
-		ResponseEntity<String> repWs = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-
-		if (repWs.getStatusCode() == HttpStatus.OK) {
-			String json = repWs.getBody();
-			// recuperation des values en json et lecture
-			cResJson = objectMapper.readValue(json, new TypeReference<List<EmployeeDG2Dto>>() {
-			});
-			// boucle pour récupérer toute la liste
-			for (EmployeeDG2Dto eDG2 : cResJson) {
-				Utilisateur utilisateurImport = mapper.employeeDg2ToUtilisateur(eDG2);
-				Optional<CentreFormation> centreFormationOpt = centreFormationRepository
-						.findByIdDg2(eDG2.getLocationId());
-				Optional<Utilisateur> optUtlisateur = utilisateurRepository.findByIdDg2(utilisateurImport.getIdDg2());
-				if (centreFormationOpt.isPresent()) {
-					utilisateurImport.setCentreFormation(centreFormationOpt.get());
-				} else {
-					logger.error("SaveAndFlush failed", "Centre de formation Introuvable");
-					throw new FetchDG2Exception("Centre de formation Introuvable");
-				}
-
-				if (optUtlisateur.isPresent()) {
-
-					if (optUtlisateur.get().equals(utilisateurImport)
-							&& optUtlisateur.get().getCentreFormation().getId() == centreFormationOpt.get().getId()) {
-						continue;
-					} else {
-						if (utilisateurImport != null) {
-							utilisateurImport.setPassword(optUtlisateur.get().getPassword());
-							utilisateurImport.setId(optUtlisateur.get().getId());
-							utilisateurImport.setVersion(optUtlisateur.get().getVersion());
-							utilisateurImport.setActive(true);
-
-						}
-					}
-					try {
-						utilisateurRepository.saveAndFlush(utilisateurImport);
-
-					} catch (Exception e) {
-						logger.error("SaveAndFlush failed", e);
-
-					}
-				} else {
-
-					try {
-
-						utilisateurImport.setPassword(null);
-						utilisateurImport.setActive(true);
-						utilisateurRepository.saveAndFlush(utilisateurImport);
-
-					} catch (Exception e) {
-						logger.error("SaveAndFlush failed", e);
-
-					}
-				}
-			}
-		} else {
-			throw new FetchDG2Exception("ResponseEntity from the webservice WDG2 not correct");
-		}
-	}
 
 	@Override
 	public LoginResponseDto checkLogin(LoginDto loginDto) throws Exception {

@@ -5,6 +5,7 @@ import fr.dawan.AppliCFABack.dto.customdtos.AccueilEtudiantDto;
 import fr.dawan.AppliCFABack.dto.customdtos.EtudiantAbsencesDevoirsDto;
 import fr.dawan.AppliCFABack.services.EmailService;
 import fr.dawan.AppliCFABack.services.EtudiantService;
+import fr.dawan.AppliCFABack.services.dg2Imports.DG2ImportStudents;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class EtudiantController {
 	EtudiantService etudiantService;
 	@Autowired
 	EmailService emailService;
+
+	@Autowired
+	DG2ImportStudents dg2ImportStudents;
 	private static final Logger logger = Logger.getGlobal();
 
 	// ##################################################
@@ -142,7 +146,7 @@ public class EtudiantController {
 	}
 
 	/***
-	 * 
+	 *
 	 * @param idIntervention : identifiant de l'intervention
 	 * @return List de EtudiantAbsencesDevoirsDto
 	 */
@@ -193,18 +197,15 @@ public class EtudiantController {
     // # FETCH Dawan webservice #
     // ##################################################
 
-    @GetMapping(value = {"dg2","/dg2/{idPromotionDg2}"}, produces = "application/json")
-    public ResponseEntity<String> fetchAllEtudiantDG2(@RequestHeader Map<String, String> headers, @PathVariable(value = "idPromotionDg2", required = false) Optional<Long> idPromotionDg2) {
+    @GetMapping(value = "dg2", produces = "application/json")
+    public ResponseEntity<String> fetchStudentsDG2(
+			@RequestHeader Map<String, String> headers
+	) {
         String userDG2 = headers.get("x-auth-token");
         String[] splitUserDG2String = userDG2.split(":");
 
         try {
-            if(idPromotionDg2.isPresent()){
-                etudiantService.fetchAllEtudiantDG2ByIdPromotion(splitUserDG2String[0], splitUserDG2String[1], idPromotionDg2.get());
-            }
-            else {
-				etudiantService.fetchAllEtudiantDG2(splitUserDG2String[0], splitUserDG2String[1]);
-			}
+			dg2ImportStudents.fetchAllEtudiantDG2(splitUserDG2String[0], splitUserDG2String[1]);
             return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
         } catch (Exception e) {
         	logger.log(Level.SEVERE,"ERROR", e);
@@ -212,6 +213,23 @@ public class EtudiantController {
                     ("Error while fetching data from the webservice DG2");
         }
     }
+	@GetMapping(value ="/dg2/{idPromotionDg2}", produces = "application/json")
+	public ResponseEntity<String> fetchStudentsByPromotionIdDG2(
+			@RequestHeader Map<String, String> headers,
+			@PathVariable(value = "idPromotionDg2") Long idPromotionDg2
+	) {
+		String userDG2 = headers.get("x-auth-token");
+		String[] splitUserDG2String = userDG2.split(":");
+
+		try {
+			dg2ImportStudents.fetchAllEtudiantDG2ByIdPromotion(splitUserDG2String[0], splitUserDG2String[1], idPromotionDg2);
+			return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
+		} catch (Exception e) {
+			logger.log(Level.SEVERE,"ERROR", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body
+					("Error while fetching data from the webservice DG2");
+		}
+	}
 
 	/**
 	 * méthode de récupération des données nécessaires pour la section Accueil de l'espace étudiant
@@ -221,14 +239,14 @@ public class EtudiantController {
 	public AccueilEtudiantDto getAccueilEtudiant(@PathVariable("id") long id) {
 		return etudiantService.getAccueilEtudiant(id);
 	}
-	
+
 	@GetMapping(value = {"/promotion/{id}/{page}/{size}/{search}", "/promotion/{id}/{page}/{size}"}, produces = "application/json")
 	public List<EtudiantDto> GetEtudiantByPromotion(
 			@PathVariable("id") long id,
 			@PathVariable("page") int page,
 			@PathVariable("size") int size,
 			@PathVariable(value = "search", required = false) Optional<String> search) {
-		if (search.isPresent()) {			
+		if (search.isPresent()) {
 			return etudiantService.getEtudiantByPromotion(id, page, size, search.get());
 		}else {
 			return etudiantService.getEtudiantByPromotion(id, page, size, "");
@@ -239,11 +257,11 @@ public class EtudiantController {
 	@GetMapping(value = {"/countEtudiantByPromotion/{id}/{search}", "/countEtudiantByPromotion/{id}" }, produces = "application/json")
 	public CountDto countEtudiantByPromotion(@PathVariable("id") long id,
 			@PathVariable(value = "search", required = false) Optional<String> search) {
-		if (search.isPresent()) {			
+		if (search.isPresent()) {
 			return etudiantService.countEtudiantByPromotion(id, search.get());
 		}else {
 			return etudiantService.countEtudiantByPromotion(id, "");
-			
+
 		}
 	}
 }

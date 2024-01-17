@@ -4,6 +4,7 @@ import fr.dawan.AppliCFABack.dto.CentreFormationDto;
 import fr.dawan.AppliCFABack.dto.CountDto;
 import fr.dawan.AppliCFABack.services.CentreFormationService;
 
+import fr.dawan.AppliCFABack.services.dg2Imports.DG2ImportCenters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,18 @@ import java.util.Optional;
 @RequestMapping("/centreFormations")
 public class CentreFormationController {
 
-	@Autowired
 	CentreFormationService centreFormationService;
-	
+	DG2ImportCenters dg2ImportCenters;
+
 	private static final Logger logger = LoggerFactory.getLogger(CentreFormationController.class);
+
+	public CentreFormationController(
+			@Autowired CentreFormationService centreFormationService,
+			@Autowired DG2ImportCenters dg2ImportCenters
+	) {
+		this.centreFormationService = centreFormationService;
+		this.dg2ImportCenters = dg2ImportCenters;
+	}
 
 	// ##################################################
 	// # GET #
@@ -40,7 +49,7 @@ public class CentreFormationController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param page
 	 * @param size
 	 * @return all centre formation by page
@@ -50,7 +59,7 @@ public class CentreFormationController {
 			@PathVariable(value = "size") int size) {
 		return centreFormationService.getAllCentreFormation(page, size);
 	}
-	
+
 	@GetMapping(value = "/{page}/{size}/{search}", produces = "application/json")
  	public @ResponseBody List<CentreFormationDto> getAllByPage(@PathVariable("page") int page,
  			@PathVariable(value = "size") int size, @PathVariable(value = "search", required = false) Optional<String> search) {
@@ -59,13 +68,13 @@ public class CentreFormationController {
  		else
  			return centreFormationService.getAllCentreFormations(page, size, "");
  	}
-	
-	
+
+
 	@GetMapping(value = "/count", produces = "application/json")
 	public CountDto count() {
 		return centreFormationService.count("");
 	}
-	
+
 	@GetMapping(value = "/count/{search}", produces = "application/json")
 	public CountDto count(@PathVariable(value = "search", required = false) Optional<String> search) {
 		if(search.isPresent())
@@ -73,7 +82,7 @@ public class CentreFormationController {
 		else
 			return centreFormationService.count("");
 	}
-	
+
 
 	// ##################################################
 	// # POST #
@@ -107,7 +116,7 @@ public class CentreFormationController {
 	public CentreFormationDto update(@RequestBody CentreFormationDto cfDto) {
 		return centreFormationService.saveOrUpdate(cfDto);
 	}
-	
+
 	// ##################################################
 	// # FETCH Dawan webservice #
 	// ##################################################
@@ -117,7 +126,7 @@ public class CentreFormationController {
 			String[] splitUserDG2String = userDG2.split(":");
 
 			try {
-				centreFormationService.fetchAllDG2CentreFormation(splitUserDG2String[0], splitUserDG2String[1]);
+				this.dg2ImportCenters.fetchAllDG2CentreFormation(splitUserDG2String[0], splitUserDG2String[1]);
 				return ResponseEntity.status(HttpStatus.OK).body("Succeed to fetch data from the webservice DG2");
 			} catch (Exception e) {
 				logger.error("Exception", e);

@@ -12,11 +12,11 @@ import fr.dawan.AppliCFABack.mapper.DtoMapperImpl;
 import fr.dawan.AppliCFABack.repositories.CursusRepository;
 import fr.dawan.AppliCFABack.repositories.FormationRepository;
 import fr.dawan.AppliCFABack.repositories.InterventionRepository;
+import fr.dawan.AppliCFABack.services.dg2Imports.DG2ImportTools;
 import fr.dawan.AppliCFABack.tools.FetchDG2Exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -32,34 +32,34 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class FormationServiceImpl implements FormationService {
+public class FormationServiceImpl extends DG2ImportTools implements FormationService {
 
-	@Autowired
-	FormationRepository formationRepository;
 
-	@Autowired
-	InterventionRepository interventionRepository;
+	private final FormationRepository formationRepository;
 
-	@Autowired
-	CursusRepository cursusRepository;
+	private final InterventionRepository interventionRepository;
 
-	@Autowired
-	private RestTemplate restTemplate;
+	private final CursusRepository cursusRepository;
 
-	@Autowired
-	private DtoMapper mapper = new DtoMapperImpl();
+	private final DtoMapper mapper = new DtoMapperImpl();
 
 	private static final Logger logger = LoggerFactory.getLogger(FormationServiceImpl.class);
-	
-	@Value("${base_url_dg2}")
-    private String baseUrl;
 
-//	@Autowired
-//	private RestTemplate restTemplate;
+	public FormationServiceImpl(
+			@Autowired FormationRepository formationRepository,
+			@Autowired InterventionRepository interventionRepository,
+			@Autowired CursusRepository cursusRepository,
+			@Autowired RestTemplate restTemplate
+	) {
+		this.interventionRepository = interventionRepository;
+		this.cursusRepository = cursusRepository;
+		this.formationRepository = formationRepository;
+		this.restTemplate = restTemplate;
+	}
 
 	/**
 	 * Récupération de la liste des formations
-	 * 
+	 *
 	 * @return lstDto Liste des objets formation
 	 */
 
@@ -67,6 +67,10 @@ public class FormationServiceImpl implements FormationService {
 	public List<FormationDto> getAllFormation() {
 		List<Formation> lst = formationRepository.findAll();
 
+		return convertFormationsToDto(lst);
+	}
+
+	private List<FormationDto> convertFormationsToDto(List<Formation> lst) {
 		List<FormationDto> lstDto = new ArrayList<>();
 		for (Formation f : lst) {
 			FormationDto formationDto = DtoTools.convert(f, FormationDto.class);
@@ -90,7 +94,7 @@ public class FormationServiceImpl implements FormationService {
 	/**
 	 * Va permettre de récupérer toutes les fiches entreprises avec pagination et
 	 * recherche par titre ou contenu
-	 * 
+	 *
 	 * @param page   numero de la page
 	 * @param size   éléments sur la page
 	 * @param search éléments formation (titre, contenu)
@@ -103,30 +107,12 @@ public class FormationServiceImpl implements FormationService {
 				.collect(Collectors.toList());
 
 		// conversion vers Dto
-
-		List<FormationDto> lstDto = new ArrayList<>();
-		for (Formation f : lst) {
-			FormationDto formationDto = DtoTools.convert(f, FormationDto.class);
-			List<Intervention> interventions = interventionRepository.findAllByFormationId(f.getId());
-			List<InterventionDto> interventionDtos = new ArrayList<>();
-			if (interventions != null) {
-
-				for (Intervention i : interventions) {
-					interventionDtos.add(DtoTools.convert(i, InterventionDto.class));
-				}
-			}
-			if (!interventionDtos.isEmpty()) {
-				formationDto.setInterventions(interventionDtos);
-			}
-			lstDto.add(formationDto);
-
-		}
-		return lstDto;
+		return convertFormationsToDto(lst);
 	}
 
 	/**
 	 * Recherche d'une formation
-	 * 
+	 *
 	 * @param search recherche par titre ou contenu
 	 */
 
@@ -137,7 +123,7 @@ public class FormationServiceImpl implements FormationService {
 
 	/**
 	 * Récupération des formations en fonction de l'id
-	 * 
+	 *
 	 * @param id id de la formation
 	 */
 
@@ -149,7 +135,7 @@ public class FormationServiceImpl implements FormationService {
 
 	/**
 	 * Sauvegarde ou mise à jour d'une formation
-	 * 
+	 *
 	 */
 
 	@Override
@@ -175,7 +161,7 @@ public class FormationServiceImpl implements FormationService {
 
 	/**
 	 * Suppression d'une formation
-	 * 
+	 *
 	 * @param id Id concernant la formation
 	 */
 
@@ -191,7 +177,7 @@ public class FormationServiceImpl implements FormationService {
 
 	/**
 	 * Récupération des interventions en fonction de l'id formation
-	 * 
+	 *
 	 * @param id id de la formation
 	 * @return lstInDto Liste des interventions
 	 */
@@ -210,7 +196,7 @@ public class FormationServiceImpl implements FormationService {
 
 	/**
 	 * Sauvegarde toute les formations à partir d'une liste de formation
-	 * 
+	 *
 	 * @param email    Email l'utilsateur dg2
 	 * @param password Mot de passe de l'utlisateur dg2
 	 * @return nombre de formation sauvgardé ou mise à jour
@@ -233,7 +219,7 @@ public class FormationServiceImpl implements FormationService {
 
 	/**
 	 * Sauvegarde toute les formations à partir d'une liste de formation
-	 * 
+	 *
 	 * @param email       Email l'utilsateur dg2
 	 * @param password    Mot de passe de l'utlisateur dg2
 	 * @param idCursusDg2 Identifiant du cursus
@@ -245,9 +231,7 @@ public class FormationServiceImpl implements FormationService {
 	public int fetchDG2Formations(String email, String password, long idCursusDg2)
 			throws FetchDG2Exception, URISyntaxException {
 
-		List<Formation> formations = new ArrayList<>();
-
-		formations.addAll(getFormationDG2ByIdCursus(email, password, idCursusDg2));
+        List<Formation> formations = new ArrayList<>(getFormationDG2ByIdCursus(email, password, idCursusDg2));
 
 		for (Formation formation : formations) {
 			try {
@@ -261,7 +245,7 @@ public class FormationServiceImpl implements FormationService {
 
 	/**
 	 * Récupére toute les formations de DG2
-	 * 
+	 *
 	 * @param email    Email l'utilsateur dg2
 	 * @param password Mot de passe de l'utlisateur dg2
 	 * @return Liste de formation à partir de DG2
@@ -287,10 +271,8 @@ public class FormationServiceImpl implements FormationService {
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 
 		URI url = new URI(baseUrl + "pro-titles/" + idCursusDg2 + "/children");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("x-auth-token", email + ":" + password);
-		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-		ResponseEntity<String> rep = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+		ResponseEntity<String> rep =this.executeRequestOnDG2API(email, password, url);
+
 
 		if (rep.getStatusCode() == HttpStatus.OK) {
 			String json = rep.getBody();
@@ -303,36 +285,10 @@ public class FormationServiceImpl implements FormationService {
 			}
 		}
 
-		DtoTools dtoTools = new DtoTools();
 
-		for (FormationDG2Dto fDtoDG2 : fetchResJson) {
-
-			Optional<Formation> formationDb = formationRepository.findByIdDg2(fDtoDG2.getId());
-			Formation formationImported = new Formation();
-
-			try {
-				formationImported = dtoTools.formationDG2DtoToFormation(fDtoDG2);
-			} catch (Exception e) {
-				logger.warn("mapper failed", e);
-			}
-
-			if (formationDb.isPresent()) {
-				if (formationDb.get().equals(formationImported)) {
-					continue;
-				}
-
-				formationImported.setId(formationDb.get().getId());
-				formationImported.setVersion(formationDb.get().getVersion());
-			}
-
-			// Sauvegarder la formation importée dans la base de données
-			formationImported = formationRepository.saveAndFlush(formationImported);
-
-			// Ajouter la formation importée à la liste de formations du cursus
-			cursusDb.get().getFormations().add(formationImported);
-			
-			result.add(formationImported);
-		}
+		fetchResJson.forEach(fDtoDG2 -> {
+			this.handleDG2Formation(fDtoDG2, cursusDb.get(), result);
+		});
 
 		// Mettre à jour l'entité Cursus dans la base de données
 		cursusRepository.saveAndFlush(cursusDb.get());
@@ -341,5 +297,32 @@ public class FormationServiceImpl implements FormationService {
 	}
 
 
+	private void handleDG2Formation(FormationDG2Dto fDtoDG2, Cursus cursusDb, List<Formation> result) {
 
+		Optional<Formation> formationDb = formationRepository.findByIdDg2(fDtoDG2.getId());
+		Formation formationImported = new Formation();
+
+		try {
+			formationImported = DtoTools.convert(fDtoDG2, Formation.class);
+		} catch (Exception e) {
+			logger.warn("mapper failed", e);
+		}
+
+		if (formationDb.isPresent()) {
+			if (formationDb.get().equals(formationImported)) {
+				return;
+			}
+
+			formationImported.setId(formationDb.get().getId());
+			formationImported.setVersion(formationDb.get().getVersion());
+		}
+
+		// Sauvegarder la formation importée dans la base de données
+		formationImported = formationRepository.saveAndFlush(formationImported);
+
+		// Ajouter la formation importée à la liste de formations du cursus
+		cursusDb.getFormations().add(formationImported);
+
+		result.add(formationImported);
+	}
 }
